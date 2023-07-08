@@ -1,0 +1,1 @@
+<i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="<?= (($pageInfo != '') ? $pageInfo : ''); ?>" >&nbsp</i><h5><?= (($pageTitle != '') ? $pageTitle : ''); ?></h5>

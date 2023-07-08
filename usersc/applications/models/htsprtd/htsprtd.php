@@ -1,0 +1,95 @@
+<?php
+	include( "../../../../users/init.php" );
+	include( "../../../../usersc/lib/DataTables.php" );
+	
+	use
+		DataTables\Editor,
+		DataTables\Editor\Field,
+		DataTables\Editor\Format,
+		DataTables\Editor\Mjoin,
+		DataTables\Editor\Options,
+		DataTables\Editor\Upload,
+		DataTables\Editor\Validate,
+		DataTables\Editor\ValidateOptions,
+		DataTables\Editor\Query,
+		DataTables\Editor\Result;
+	
+	// ----------- do not erase
+	$show_inactive_status = $_POST['show_inactive_status_htsprtd'];
+	// -----------
+	
+	$editor = Editor::inst( $db, 'htsprtd' )
+		->debug(true)
+		->fields(
+			Field::inst( 'htsprtd.id' ),
+			Field::inst( 'htsprtd.kode' )
+				->setFormatter( function ( $val ) {
+					return strtoupper($val);
+				} ),
+			Field::inst( 'htsprtd.nama' )
+				->setFormatter( function ( $val ) {
+					return ucwords($val);
+				} ),
+			Field::inst( 'htsprtd.keterangan' ),
+			Field::inst( 'htsprtd.is_active' ),
+			Field::inst( 'htsprtd.created_by' )
+				->set( Field::SET_CREATE )
+				->setValue($_SESSION['user']),
+			Field::inst( 'htsprtd.created_on' )
+				->set( Field::SET_CREATE ),
+			Field::inst( 'htsprtd.last_edited_by' )
+				->set( Field::SET_EDIT )
+				->setValue($_SESSION['user']),
+			Field::inst( 'htsprtd.is_approve' ),
+			Field::inst( 'htsprtd.is_defaultprogram' ),
+			Field::inst( 'htsprtd.tanggal' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null){
+						echo '';
+						}else{
+							return date( 'd M Y', strtotime( $val ) );
+					}
+				} ),
+			Field::inst( 'htsprtd.jam' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === null){
+						echo '';
+					}else{
+						return date( 'H:i', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'H:i',
+					'to' =>   'H:i:s'
+				) ),
+
+			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' )
+		)
+		->leftJoin( 'hemxxmh','hemxxmh.kode_finger','=','htsprtd.kode' );
+	
+	// do not erase
+	// function show / hide inactive document
+	if ($show_inactive_status == 0){
+		$editor
+			->where( 'htsprtd.is_active', 1);
+	}
+
+	if($_POST['id_hemxxmh'] > 0){
+		$editor->where( 'hemxxmh.id', $_POST['id_hemxxmh'] );
+	}
+
+	if($_POST['start_date'] != '' && $_POST['end_date'] != ''){
+		$editor
+			->where( 'htsprtd.tanggal', $_POST['start_date'], '>=' )
+			->where( 'htsprtd.tanggal', $_POST['end_date'], '<=' );
+	}
+
+
+	
+	include( "htsprtd_extra.php" );
+	include( "../../../helpers/edt_log.php" );
+	
+	$editor
+		->process( $_POST )
+		->json();
+?>

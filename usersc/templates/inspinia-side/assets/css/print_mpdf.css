@@ -1,0 +1,129 @@
+body {
+  font-family: sans-serif;
+  font-size: 10pt;
+}
+
+p {	
+  margin: 5px; 
+}
+/* table */
+table{
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td{
+  padding: 3px;
+}
+
+table.p1 td {
+  padding: 1px;
+}
+
+table.table-ba td{
+  border: 1px solid black;
+}
+
+table.table-bn td{
+  border: none;
+}
+
+/* font color */
+.font-red{
+	color: red;
+}
+.font-blue{
+	color: blue;
+}
+
+/* text alignment */
+.text-left{
+  text-align: left;
+}
+.text-center{
+  text-align: center;
+}
+.text-right{
+  text-align: right;
+}
+.vat{
+  vertical-align: text-top;
+}
+.vab{
+  vertical-align: bottom;
+}
+.vam{
+  vertical-align: text-middle;
+}
+
+
+/* font decoration */
+.font-bold{
+  font-weight: bold;
+}
+
+.font-underline{
+  text-decoration: underline;
+}
+
+/* border solid */
+.bas{
+  border: 1px solid black;
+}
+.bls{
+  border-left: 1px solid black;
+}
+.brs{
+  border-right: 1px solid black;
+}
+.bbs{
+  border-bottom: 1px solid black;
+}
+.bts{
+  border-top: 1px solid black;
+}
+
+/* border dashed */
+.bld{
+  border-left: 1px dashed black;
+}
+.brd{
+  border-right: 1px dashed black;
+}
+.bbd{
+  border-bottom: 1px dashed black;
+}
+.btd{
+  border-top: 1px dashed black;
+}
+
+/* padding */
+.pda5{
+  padding-left:5px;
+}
+.pdl5{
+  padding-left:5px;
+}
+.pdr5{
+  padding-right:5px;
+}
+.pdt5{
+  padding-top:5px;
+}
+.pdb5{
+  padding-bottom:5px;
+}
+
+/* margin */
+.mgl5{
+  margin-left:5px;
+}
+.mgr5{
+  margin-right:5px;
+}
+.mgt5{
+  margin-top:5px;
+}
+.mgb5{
+  margin-bottom:5px;
+}
