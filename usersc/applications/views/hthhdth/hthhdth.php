@@ -24,6 +24,7 @@
                                 <th>ID</th>
                                 <th>Kode</th>
                                 <th>Nama</th>
+                                <th>Approval</th>
                             </tr>
                         </thead>
                     </table>
@@ -180,7 +181,21 @@
 				columns: [
 					{ data: "hthhdth.id",visible:false },
 					{ data: "hthhdth.tanggal" },
-					{ data: "hthhdth.nama" }
+					{ data: "hthhdth.nama" },
+					{ 
+						data: "hthhdth.is_approve" ,
+						render: function (data){
+							if (data == 0){
+								return 'draft';
+							}else if(data == 1){
+								return '<i class="fa fa-check text-navy"></i>';
+							}else if(data == 2){
+								return '<i class="fa fa-undo text-muted"></i>';
+							}else if(data == -9){
+								return '<i class="fa fa-remove text-danger"></i>';
+							}
+						}
+					}
 				],
 				buttons: [
 					// BEGIN breaking generate button
