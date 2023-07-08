@@ -59,8 +59,7 @@ $.extend( true, $.fn.dataTable.defaults, {
 		header: true,
 		// footer: true
 	},
-	colReorder: true,
-	stateSave: true,
+	colReorder: true
 	
 } );
 
