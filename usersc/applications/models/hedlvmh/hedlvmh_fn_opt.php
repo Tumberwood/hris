@@ -55,7 +55,7 @@
                 ->or_where('hedlvmh.nama', '%' . $q . '%', 'LIKE' );
         } )
         ->order('hedlvmh.nama')
-        ->limit(10)
+        ->limit($resultCount)
         ->offset($offset)
         ->exec();
     $rs_hedlvmh_all = $qs_hedlvmh_all->fetchAll();
