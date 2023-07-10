@@ -22,6 +22,14 @@
 		->debug(true)
 		->fields(
 			Field::inst( 'hemxxmh.id' ),
+			Field::inst( 'hemjbmh.id_hovxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hodxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hosxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hetxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemxxmh.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);

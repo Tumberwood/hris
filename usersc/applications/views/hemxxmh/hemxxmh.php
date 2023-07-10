@@ -14,6 +14,19 @@
 
 <!-- begin content here -->
 <div class="row">
+    <div class="col">
+        <div class="ibox collapsed" id="iboxfilter">
+            <div class="ibox-title">
+                <h5 class="text-navy">Filter</h5>&nbsp
+                <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+            </div>
+            <div class="ibox-content">
+                <div id="searchPanes1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-content">
@@ -99,6 +112,7 @@
         var edthemfmmd, tblhemfmmd, show_inactive_status_hemfmmd = 0, id_hemfmmd;
 		// ------------- end of default variable
 
+		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0;
 		var id_hedlvmh_old = 0;
 
 		$(document).ready(function() {
@@ -132,13 +146,160 @@
 						name: "hemxxmh.is_active",
                         type: "hidden",
 						def: 1
-					},	{
+					},	
+					{
 						label: "Kode <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.kode"
-					}, 	{
+					}, 	
+					{
 						label: "Nama <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.nama"
-					}, 	{
+					}, 	
+					{
+						label: "Divisi",
+						name: "hemjbmh.id_hovxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hovxxmh/hovxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hovxxmh_old: id_hovxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "Department",
+						name: "hemjbmh.id_hodxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hodxxmh/hodxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hodxxmh_old: id_hodxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "Section",
+						name: "hemjbmh.id_hosxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hosxxmh/hosxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hosxxmh_old: id_hosxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "Jabatan",
+						name: "hemjbmh.id_hetxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hetxxmh/hetxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hetxxmh_old: id_hetxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
 						label: "Keterangan",
 						name: "hemxxmh.keterangan",
 						type: "textarea"
@@ -211,6 +372,26 @@
 			
 			//start datatables
 			tblhemxxmh = $('#tblhemxxmh').DataTable( {
+				dom: 
+					"<P>"+
+					"<lf>"+
+					"<B>"+
+					"<rt>"+
+					"<'row'<'col-sm-4'i><'col-sm-8'p>>",
+				columnDefs:[
+					{
+						searchPanes:{
+							show: true,
+						},
+						targets: [2,3,4,5]
+					},
+					{
+						searchPanes:{
+							show: false,
+						},
+						targets: [0,1,6]
+					}
+				],
 				ajax: {
 					url: "../../models/hemxxmh/hemxxmh.php",
 					type: 'POST',
@@ -260,9 +441,14 @@
 					if ( data.hemxxmh.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
+				},
+				initComplete: function() {
+					this.api().searchPanes.rebuildPane();
 				}
 			} );
 			
+			tblhemxxmh.searchPanes.container().appendTo( '#searchPanes1' );
+
 			tblhemxxmh.on( 'init', function () {
 				// atur hak akses
 				tbl_details = [tblhemfmmd];
@@ -277,6 +463,12 @@
 				is_nextprocess   = data_hemxxmh.is_nextprocess;
 				is_jurnal        = data_hemxxmh.is_jurnal;
 				is_active        = data_hemxxmh.is_active;
+
+				data_hemjbmh = tblhemxxmh.row( { selected: true } ).data().hemjbmh;
+				id_hovxxmh_old   = data_hemjbmh.id_hovxxmh;
+				id_hodxxmh_old   = data_hemjbmh.id_hodxxmh;
+				id_hosxxmh_old   = data_hemjbmh.id_hosxxmh;
+				id_hetxxmh_old   = data_hemjbmh.id_hetxxmh;
 				
 				// atur hak akses
 				tbl_details = [tblhemfmmd];
@@ -286,7 +478,12 @@
 			
 			tblhemxxmh.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
-				id_hemxxmh = '';
+				id_hemxxmh = 0;
+				
+				id_hovxxmh_old   = 0;
+				id_hodxxmh_old   = 0;
+				id_hosxxmh_old   = 0;
+				id_hetxxmh_old   = 0;
 
 				// atur hak akses
 				tbl_details = [tblhemfmmd];
