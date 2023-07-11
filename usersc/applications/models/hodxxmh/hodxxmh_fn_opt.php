@@ -28,6 +28,12 @@
         $id_hodxxmh_old = 0;
     }
 
+    if($_GET['id_hodxxmh'] > 0){
+        $id_hodxxmh = $_GET['id_hodxxmh'];
+    }else{
+        $id_hodxxmh = 0;
+    }
+
     // BEGIN query self.
     // Hanya dipanggil jika field ada nilai id nya
     if($id_hodxxmh_old > 0){
@@ -41,7 +47,20 @@
             ->exec();
         $rs_hodxxmh_self = $qs_hodxxmh_self->fetchAll();
     }else{
-        $rs_hodxxmh_self = [];
+        // $rs_hodxxmh_self = [];
+        if($id_hodxxmh > 0){
+            $qs_hodxxmh_self = $db
+                ->query('select', 'hodxxmh')
+                ->get([
+                    'id as id',
+                    'nama as text'
+                ])
+                ->where('id', $id_hodxxmh )
+                ->exec();
+            $rs_hodxxmh_self = $qs_hodxxmh_self->fetchAll();
+        }else{
+            $rs_hodxxmh_self = [];
+        }
     }
     // END query self
 
