@@ -113,7 +113,7 @@
         var edthemfmmd, tblhemfmmd, show_inactive_status_hemfmmd = 0, id_hemfmmd;
 		// ------------- end of default variable
 
-		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0;
+		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0, id_hevxxmh_old = 0;
 		var id_hedlvmh_old = 0;
 
 		$(document).ready(function() {
@@ -157,7 +157,7 @@
 						name: "hemxxmh.nama"
 					}, 	
 					{
-						label: "Divisi",
+						label: "Divisi <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_hovxxmh",
 						type: "select2",
 						opts: {
@@ -169,6 +169,7 @@
 								dataType: 'json',
 								data: function (params) {
 									var query = {
+										id_hovxxmh: 0,
 										id_hovxxmh_old: id_hovxxmh_old,
 										search: params.term || '',
 										page: params.page || 1
@@ -193,7 +194,7 @@
 						}
 					},
 					{
-						label: "Department",
+						label: "Department <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_hodxxmh",
 						type: "select2",
 						opts: {
@@ -205,6 +206,7 @@
 								dataType: 'json',
 								data: function (params) {
 									var query = {
+										id_hodxxmh: 0,
 										id_hodxxmh_old: id_hodxxmh_old,
 										search: params.term || '',
 										page: params.page || 1
@@ -229,7 +231,7 @@
 						}
 					},
 					{
-						label: "Section",
+						label: "Section <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_hosxxmh",
 						type: "select2",
 						opts: {
@@ -241,7 +243,45 @@
 								dataType: 'json',
 								data: function (params) {
 									var query = {
+										id_hosxxmh: 0,
 										id_hosxxmh_old: id_hosxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "Level <sup class='text-danger'>*<sup>",
+						name: "hemjbmh.id_hevxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hevxxmh/hevxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hevxxmh: 0,
+										id_hevxxmh_old: id_hevxxmh_old,
 										search: params.term || '',
 										page: params.page || 1
 									}
@@ -277,6 +317,7 @@
 								dataType: 'json',
 								data: function (params) {
 									var query = {
+										id_hetxxmh: 0,
 										id_hetxxmh_old: id_hetxxmh_old,
 										search: params.term || '',
 										page: params.page || 1
@@ -301,7 +342,7 @@
 						}
 					},
 					{
-						label: "Grup Hari Kerja",
+						label: "Grup Hari Kerja <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.grup_hk",
 						type: "select",
 						placeholder : "Select",
@@ -363,6 +404,55 @@
 					} );
 					// END of cek unik hemxxmh.kode 
 					// END of validasi hemxxmh.kode 
+
+					// BEGIN of validasi hemxxmh.nama 
+					nama = edthemxxmh.field('hemxxmh.nama').val();
+					if(!nama || nama == ''){
+						edthemxxmh.field('hemxxmh.nama').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemxxmh.nama 
+
+					// BEGIN of validasi hemjbmh.id_hovxxmh 
+					id_hovxxmh = edthemxxmh.field('hemjbmh.id_hovxxmh').val();
+					if(!id_hovxxmh || id_hovxxmh == ''){
+						edthemxxmh.field('hemjbmh.id_hovxxmh').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemjbmh.id_hovxxmh 
+
+					// BEGIN of validasi hemjbmh.id_hodxxmh 
+					id_hodxxmh = edthemxxmh.field('hemjbmh.id_hodxxmh').val();
+					if(!id_hodxxmh || id_hodxxmh == ''){
+						edthemxxmh.field('hemjbmh.id_hodxxmh').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemjbmh.id_hodxxmh 
+
+					// BEGIN of validasi hemjbmh.id_hosxxmh 
+					id_hosxxmh = edthemxxmh.field('hemjbmh.id_hosxxmh').val();
+					if(!id_hosxxmh || id_hosxxmh == ''){
+						edthemxxmh.field('hemjbmh.id_hosxxmh').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemjbmh.id_hosxxmh 
+
+					// BEGIN of validasi hemjbmh.id_hevxxmh 
+					id_hevxxmh = edthemxxmh.field('hemjbmh.id_hevxxmh').val();
+					if(!id_hevxxmh || id_hevxxmh == ''){
+						edthemxxmh.field('hemjbmh.id_hevxxmh').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemjbmh.id_hevxxmh 
+
+					// BEGIN of validasi hemjbmh.id_hetxxmh 
+					id_hetxxmh = edthemxxmh.field('hemjbmh.id_hetxxmh').val();
+					if(!id_hetxxmh || id_hetxxmh == ''){
+						edthemxxmh.field('hemjbmh.id_hetxxmh').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemjbmh.id_hetxxmh 
+
+					// BEGIN of validasi hemxxmh.grup_hk 
+					grup_hk = edthemxxmh.field('hemxxmh.grup_hk').val();
+					if(!grup_hk || grup_hk == ''){
+						edthemxxmh.field('hemxxmh.grup_hk').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemxxmh.grup_hk 
 				}
 				
 				if ( edthemxxmh.inError() ) {
@@ -493,6 +583,7 @@
 				id_hovxxmh_old   = data_hemjbmh.id_hovxxmh;
 				id_hodxxmh_old   = data_hemjbmh.id_hodxxmh;
 				id_hosxxmh_old   = data_hemjbmh.id_hosxxmh;
+				id_hevxxmh_old   = data_hemjbmh.id_hevxxmh;
 				id_hetxxmh_old   = data_hemjbmh.id_hetxxmh;
 				
 				// atur hak akses
@@ -508,6 +599,7 @@
 				id_hovxxmh_old   = 0;
 				id_hodxxmh_old   = 0;
 				id_hosxxmh_old   = 0;
+				id_hevxxmh_old   = 0;
 				id_hetxxmh_old   = 0;
 
 				// atur hak akses
