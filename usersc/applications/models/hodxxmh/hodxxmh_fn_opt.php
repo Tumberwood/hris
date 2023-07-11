@@ -44,6 +44,8 @@
                 'nama as text'
             ])
             ->where('id', $id_hodxxmh_old )
+            ->limit(1)
+            ->offset($offset)
             ->exec();
         $rs_hodxxmh_self = $qs_hodxxmh_self->fetchAll();
     }else{
@@ -56,6 +58,8 @@
                     'nama as text'
                 ])
                 ->where('id', $id_hodxxmh )
+                ->limit(1)
+                ->offset($offset)
                 ->exec();
             $rs_hodxxmh_self = $qs_hodxxmh_self->fetchAll();
         }else{
