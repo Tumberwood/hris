@@ -40,6 +40,7 @@
                                 <th>Department</th>
                                 <th>Section</th>
                                 <th>Jabatan</th>
+                                <th>Grup HK</th>
                                 <th>Aktif</th>
                             </tr>
                         </thead>
@@ -300,6 +301,16 @@
 						}
 					},
 					{
+						label: "Grup Hari Kerja",
+						name: "hemxxmh.grup_hk",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "5 HK", "value": 1 },
+							{ "label": "6 HK", "value": 2 }
+						]
+					},
+					{
 						label: "Keterangan",
 						name: "hemxxmh.keterangan",
 						type: "textarea"
@@ -407,6 +418,20 @@
 					{ data: "hodxxmh.nama" },
 					{ data: "hosxxmh.nama" },
 					{ data: "hetxxmh.nama" },
+					{ 
+						data: "hemjbmh.grup_hk",
+						render: function (data){
+							if (data == 0){
+								return '';
+							}else if(data == 1){
+								return '5HK';
+							}else if(data == 2){
+								return '6HK';
+							}else{
+								return '<span class="text-danger"> Data Invalid</span>';
+							}
+						}
+					},
 					{ 
 						data: "hemxxmh.is_active",
 						render: function (data){

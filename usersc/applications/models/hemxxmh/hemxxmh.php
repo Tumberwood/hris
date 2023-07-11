@@ -50,6 +50,8 @@
 				->setValue($_SESSION['user']),
 			Field::inst( 'hemxxmh.is_approve' ),
 			Field::inst( 'hemxxmh.is_defaultprogram' ),
+			
+			Field::inst( 'hemjbmh.grup_hk' ),
 
 			Field::inst( 'hovxxmh.nama' ),
 			Field::inst( 'hodxxmh.nama' ),
