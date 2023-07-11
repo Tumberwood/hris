@@ -22,6 +22,14 @@
 		->debug(true)
 		->fields(
 			Field::inst( 'hemxxmh.id' ),
+			Field::inst( 'hemjbmh.id_hovxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hodxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hosxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hetxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemxxmh.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);
@@ -42,6 +50,8 @@
 				->setValue($_SESSION['user']),
 			Field::inst( 'hemxxmh.is_approve' ),
 			Field::inst( 'hemxxmh.is_defaultprogram' ),
+			
+			Field::inst( 'hemjbmh.grup_hk' ),
 
 			Field::inst( 'hovxxmh.nama' ),
 			Field::inst( 'hodxxmh.nama' ),

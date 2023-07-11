@@ -64,7 +64,7 @@
                 ->or_where('hetxxmh.nama', '%' . $q . '%', 'LIKE' );
         } )
         ->order('hemxxmh.nama')
-        ->limit(10)
+        ->limit($resultCount)
         ->offset($offset)
         ->exec();
     $rs_hemxxmh_all = $qs_hemxxmh_all->fetchAll();
