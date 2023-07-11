@@ -40,6 +40,7 @@
                                 <th>Department</th>
                                 <th>Section</th>
                                 <th>Jabatan</th>
+                                <th>Tanggal Join</th>
                                 <th>Grup HK</th>
                                 <th>Aktif</th>
                             </tr>
@@ -342,6 +343,19 @@
 						}
 					},
 					{
+						label: "Tanggal",
+						name: "hemjbmh.tanggal_masuk",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},
+					{
 						label: "Grup Hari Kerja <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.grup_hk",
 						type: "select",
@@ -490,7 +504,7 @@
 						searchPanes:{
 							show: false,
 						},
-						targets: [0,1,6]
+						targets: [0,1,6,7,8]
 					}
 				],
 				ajax: {
@@ -508,6 +522,7 @@
 					{ data: "hodxxmh.nama" },
 					{ data: "hosxxmh.nama" },
 					{ data: "hetxxmh.nama" },
+					{ data: "hemjbmh.tanggal_masuk" },
 					{ 
 						data: "hemjbmh.grup_hk",
 						render: function (data){
