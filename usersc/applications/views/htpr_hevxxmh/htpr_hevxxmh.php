@@ -33,33 +33,27 @@
     </div>
 
 	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 p-w-xs">
-		<div class="tabs-container">
-			<ul class="nav nav-tabs" role="tablist">
-				<li><a class="nav-link active" data-toggle="tab" href="#tabhtpr_hevxxmh"> Komponen</a></li>
-			</ul>
-			<div class="tab-content">
-				<div role="tabpanel" id="tabhtpr_hevxxmh" class="tab-pane active">
-					<div class="panel-body">
-						<div class="table-responsive">
-							<table id="tblhtpr_hevxxmh" class="table table-striped table-bordered table-hover nowrap" width="100%">
-								<thead>
-									<tr>
-										<th>ID</th>
-										<th>id_hevxxmh</th>
-										<th>Tanggal</th>
-										<th>Komponen</th>
-										<th>Nominal</th>
-									</tr>
-								</thead>
-							</table>
-						</div> <!-- end of table -->
-
-					</div>
+		<div class="ibox ">
+			<div class="ibox-title">
+				<h5>Detail</h5>
+			</div>
+			<div class="ibox-content">
+				<div class="table-responsive">
+					<table id="tblhtpr_hevxxmh" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>id_hevxxmh</th>
+								<th>Tanggal</th>
+								<th>Komponen</th>
+								<th>Nominal</th>
+							</tr>
+						</thead>
+					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-
 </div> <!-- end of row -->
 
 <!-- BEGIN JS -->
