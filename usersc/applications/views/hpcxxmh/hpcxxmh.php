@@ -102,6 +102,7 @@
 						type: "select",
 						placeholder : "Select",
 						options: [
+							{ "label": "Jam", "value": "Jam" },
 							{ "label": "Harian", "value": "Harian" },
 							{ "label": "Mingguan", "value": "Mingguan" },
 							{ "label": "Bulanan", "value": "Bulanan" },
