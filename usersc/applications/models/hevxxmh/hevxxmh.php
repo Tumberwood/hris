@@ -22,6 +22,8 @@
 		->debug(true)
 		->fields(
 			Field::inst( 'hevxxmh.id' ),
+			Field::inst( 'hevxxmh.id_hevgrmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hevxxmh.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);
@@ -41,8 +43,11 @@
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
 			Field::inst( 'hevxxmh.is_approve' ),
-			Field::inst( 'hevxxmh.is_defaultprogram' )
-		);
+			Field::inst( 'hevxxmh.is_defaultprogram' ),
+
+			Field::inst( 'hevgrmh.nama' )
+		)
+		->leftJoin( 'hevgrmh','hevgrmh.id','=','hevxxmh.id_hevgrmh' );
 	
 	// do not erase
 	// function show / hide inactive document

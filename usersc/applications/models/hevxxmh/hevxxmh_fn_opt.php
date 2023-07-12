@@ -43,6 +43,8 @@
                 'id as id',
                 'nama as text'
             ])
+            ->limit(1)
+            ->offset($offset)
             ->where('id', $id_hevxxmh_old )
             ->exec();
         $rs_hevxxmh_self = $qs_hevxxmh_self->fetchAll();
