@@ -15,46 +15,46 @@
 		DataTables\Editor\Result;
 	
 	// ----------- do not erase
-	$show_inactive_status = $_POST['show_inactive_status_htlxxmh'];
+	$show_inactive_status = $_POST['show_inactive_status_hibksmh'];
 	// -----------
 	
-	$editor = Editor::inst( $db, 'htlxxmh' )
+	$editor = Editor::inst( $db, 'hibksmh' )
 		->debug(true)
 		->fields(
-			Field::inst( 'htlxxmh.id' ),
-			Field::inst( 'htlxxmh.kode' )
+			Field::inst( 'hibksmh.id' ),
+			Field::inst( 'hibksmh.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);
 				} ),
-			Field::inst( 'htlxxmh.nama' )
+			Field::inst( 'hibksmh.nama' )
 				->setFormatter( function ( $val ) {
 					return ucwords($val);
 				} ),
-			Field::inst( 'htlxxmh.keterangan' ),
-			Field::inst( 'htlxxmh.is_active' ),
-			Field::inst( 'htlxxmh.created_by' )
+			Field::inst( 'hibksmh.keterangan' ),
+			Field::inst( 'hibksmh.is_active' ),
+			Field::inst( 'hibksmh.created_by' )
 				->set( Field::SET_CREATE )
 				->setValue($_SESSION['user']),
-			Field::inst( 'htlxxmh.created_on' )
+			Field::inst( 'hibksmh.created_on' )
 				->set( Field::SET_CREATE ),
-			Field::inst( 'htlxxmh.last_edited_by' )
+			Field::inst( 'hibksmh.last_edited_by' )
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
-			Field::inst( 'htlxxmh.is_approve' ),
-			Field::inst( 'htlxxmh.is_defaultprogram' ),
-			Field::inst( 'htlxxmh.is_self' ),
-			Field::inst( 'htlxxmh.is_potongupah' ),
-			Field::inst( 'htlxxmh.is_potongcuti' )
+			Field::inst( 'hibksmh.is_approve' ),
+			Field::inst( 'hibksmh.is_defaultprogram' ),
+			Field::inst( 'hibksmh.persen_perusahaan' ),
+			Field::inst( 'hibksmh.persen_karyawan' ),
+			Field::inst( 'hibksmh.gaji_max' )
 		);
 	
 	// do not erase
 	// function show / hide inactive document
 	if ($show_inactive_status == 0){
 		$editor
-			->where( 'htlxxmh.is_active', 1);
+			->where( 'hibksmh.is_active', 1);
 	}
 	
-	include( "htlxxmh_extra.php" );
+	include( "hibksmh_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
 	$editor

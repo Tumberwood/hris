@@ -24,6 +24,8 @@
                                 <th>ID</th>
                                 <th>Kode</th>
                                 <th>Nama</th>
+                                <th>Potong Cuti</th>
+                                <th>Potong Upah</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -78,17 +80,40 @@
 						name: "htlxxmh.is_active",
                         type: "hidden",
 						def: 1
-					},	{
+					},	
+					{
 						label: "Kode <sup class='text-danger'>*<sup>",
 						name: "htlxxmh.kode"
-					}, 	{
+					}, 	
+					{
 						label: "Nama <sup class='text-danger'>*<sup>",
 						name: "htlxxmh.nama"
-					}, 	{
+					}, 	
+					{
 						label: "Keterangan",
 						name: "htlxxmh.keterangan",
 						type: "textarea"
-					}
+					},
+					{
+						label: "Potong Cuti",
+						name: "htlxxmh.is_potongcuti",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Ya", "value": 1 },
+							{ "label": "Tidak", "value": 0 }
+						]
+					},
+					{
+						label: "Potong Upah",
+						name: "htlxxmh.is_potongupah",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Ya", "value": 1 },
+							{ "label": "Tidak", "value": 0 }
+						]
+					},
 				]
 			} );
 
@@ -198,6 +223,30 @@
 					{ data: "htlxxmh.id",visible:false },
 					{ data: "htlxxmh.kode" },
 					{ data: "htlxxmh.nama" },
+					{ 
+						data: "htlxxmh.is_potongcuti" ,
+						render: function (data){
+							if (data == 0){
+								return '<i data-toggle="tooltip" data-placement="top" title="Tidak" class="fa fa-remove text-danger"></i>';
+							}else if(data == 1){
+								return '<i data-toggle="tooltip" data-placement="top" title="Ya" class="fa fa-check text-navy"></i>';
+							}else{
+								return '<i data-toggle="tooltip" data-placement="top" title="Invalid Data" class="fa fa-exclamation-triangle text-muted"></i>';
+							}
+						}
+					},
+					{ 
+						data: "htlxxmh.is_potongupah" ,
+						render: function (data){
+							if (data == 0){
+								return '<i data-toggle="tooltip" data-placement="top" title="Tidak" class="fa fa-remove text-danger"></i>';
+							}else if(data == 1){
+								return '<i data-toggle="tooltip" data-placement="top" title="Ya" class="fa fa-check text-navy"></i>';
+							}else{
+								return '<i data-toggle="tooltip" data-placement="top" title="Invalid Data" class="fa fa-exclamation-triangle text-muted"></i>';
+							}
+						}
+					},
 					{ data: "htlxxmh.keterangan" }
 				],
 				buttons: [

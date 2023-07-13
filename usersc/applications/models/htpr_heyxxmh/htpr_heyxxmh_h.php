@@ -15,46 +15,43 @@
 		DataTables\Editor\Result;
 	
 	// ----------- do not erase
-	$show_inactive_status = $_POST['show_inactive_status_htlxxmh'];
+	$show_inactive_status = $_POST['show_inactive_status_heyxxmh'];
 	// -----------
 	
-	$editor = Editor::inst( $db, 'htlxxmh' )
+	$editor = Editor::inst( $db, 'heyxxmh' )
 		->debug(true)
 		->fields(
-			Field::inst( 'htlxxmh.id' ),
-			Field::inst( 'htlxxmh.kode' )
+			Field::inst( 'heyxxmh.id' ),
+			Field::inst( 'heyxxmh.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);
 				} ),
-			Field::inst( 'htlxxmh.nama' )
+			Field::inst( 'heyxxmh.nama' )
 				->setFormatter( function ( $val ) {
 					return ucwords($val);
 				} ),
-			Field::inst( 'htlxxmh.keterangan' ),
-			Field::inst( 'htlxxmh.is_active' ),
-			Field::inst( 'htlxxmh.created_by' )
+			Field::inst( 'heyxxmh.keterangan' ),
+			Field::inst( 'heyxxmh.is_active' ),
+			Field::inst( 'heyxxmh.created_by' )
 				->set( Field::SET_CREATE )
 				->setValue($_SESSION['user']),
-			Field::inst( 'htlxxmh.created_on' )
+			Field::inst( 'heyxxmh.created_on' )
 				->set( Field::SET_CREATE ),
-			Field::inst( 'htlxxmh.last_edited_by' )
+			Field::inst( 'heyxxmh.last_edited_by' )
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
-			Field::inst( 'htlxxmh.is_approve' ),
-			Field::inst( 'htlxxmh.is_defaultprogram' ),
-			Field::inst( 'htlxxmh.is_self' ),
-			Field::inst( 'htlxxmh.is_potongupah' ),
-			Field::inst( 'htlxxmh.is_potongcuti' )
+			Field::inst( 'heyxxmh.is_approve' ),
+			Field::inst( 'heyxxmh.is_defaultprogram' )
 		);
 	
 	// do not erase
 	// function show / hide inactive document
 	if ($show_inactive_status == 0){
 		$editor
-			->where( 'htlxxmh.is_active', 1);
+			->where( 'heyxxmh.is_active', 1);
 	}
 	
-	include( "htlxxmh_extra.php" );
+	include( "htpr_heyxxmh_h_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
 	$editor

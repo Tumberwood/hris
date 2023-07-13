@@ -22,25 +22,7 @@
 		->debug(true)
 		->fields(
 			Field::inst( 'hemxxmh.id' ),
-			Field::inst( 'hemjbmh.id_hovxxmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemjbmh.id_hodxxmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemjbmh.id_hosxxmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemjbmh.id_hevxxmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemjbmh.id_hetxxmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemxxmh.kode' )
-				->setFormatter( function ( $val ) {
-					return strtoupper($val);
-				} ),
-			Field::inst( 'hemxxmh.nama' )
-				->setFormatter( function ( $val ) {
-					return ucwords($val);
-				} ),
-			Field::inst( 'hemxxmh.keterangan' ),
+			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' ),
 			Field::inst( 'hemxxmh.is_active' ),
 			Field::inst( 'hemxxmh.created_by' )
 				->set( Field::SET_CREATE )
@@ -52,34 +34,17 @@
 				->setValue($_SESSION['user']),
 			Field::inst( 'hemxxmh.is_approve' ),
 			Field::inst( 'hemxxmh.is_defaultprogram' ),
-			
-			Field::inst( 'hemjbmh.tanggal_masuk' )
-				->getFormatter( function ( $val, $data, $opts ) {
-					if ($val === '0000-00-00' || $val === null){
-						echo '';
-					}else{
-						return date( 'd M Y', strtotime( $val ) );
-					}
-				} )
-				->setFormatter( 'Format::datetime', array(
-					'from' => 'd M Y',
-					'to' =>   'Y-m-d'
-				) ),
-			Field::inst( 'hemjbmh.grup_hk' ),
 
-			Field::inst( 'hovxxmh.nama' ),
 			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'hosxxmh.nama' ),
 			Field::inst( 'hevxxmh.nama' ),
 			Field::inst( 'hetxxmh.nama' )
 		)
 		->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
-		->leftJoin( 'hovxxmh','hovxxmh.id','=','hemjbmh.id_hovxxmh' )
 		->leftJoin( 'hodxxmh','hodxxmh.id','=','hemjbmh.id_hodxxmh' )
 		->leftJoin( 'hosxxmh','hosxxmh.id','=','hemjbmh.id_hosxxmh' )
 		->leftJoin( 'hevxxmh','hevxxmh.id','=','hemjbmh.id_hevxxmh' )
-		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
-		;
+		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' );
 	
 	// do not erase
 	// function show / hide inactive document
@@ -88,7 +53,7 @@
 			->where( 'hemxxmh.is_active', 1);
 	}
 	
-	include( "hemxxmh_extra.php" );
+	include( "htpr_hemxxmh_h_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
 	$editor

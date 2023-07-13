@@ -1,9 +1,9 @@
 <?php 
     /**
      * Digunakan untuk populate options data currency / mata uang
-     * Table terkait    : hevxxmh
+     * Table terkait    : hevgrmh
      * Parameter        : 
-     *  - id_hevxxmh_old       : data existing (untuk keperluan edit), dipakai di query self
+     *  - id_hevgrmh_old       : data existing (untuk keperluan edit), dipakai di query self
      */
     require_once( "../../../../users/init.php" );
 	require_once( "../../../../usersc/lib/DataTables.php" );
@@ -22,61 +22,40 @@
     $offset      = ($page - 1) * $resultCount;
     // END select2 pagination preparation
 
-    if($_GET['id_hevxxmh_old'] > 0){
-        $id_hevxxmh_old = $_GET['id_hevxxmh_old'];
+    if($_GET['id_hevgrmh_old'] > 0){
+        $id_hevgrmh_old = $_GET['id_hevgrmh_old'];
     }else{
-        $id_hevxxmh_old = 0;
-    }
-
-    if($_GET['id_hevxxmh'] > 0){
-        $id_hevxxmh = $_GET['id_hevxxmh'];
-    }else{
-        $id_hevxxmh = 0;
+        $id_hevgrmh_old = 0;
     }
 
     // BEGIN query self.
     // Hanya dipanggil jika field ada nilai id nya
-    if($id_hevxxmh_old > 0){
-        $qs_hevxxmh_self = $db
-            ->query('select', 'hevxxmh')
+    if($id_hevgrmh_old > 0){
+        $qs_hevgrmh_self = $db
+            ->query('select', 'hevgrmh')
             ->get([
                 'id as id',
                 'nama as text'
             ])
+            ->where('id', $id_hevgrmh_old )
             ->limit(1)
             ->offset($offset)
-            ->where('id', $id_hevxxmh_old )
             ->exec();
-        $rs_hevxxmh_self = $qs_hevxxmh_self->fetchAll();
+        $rs_hevgrmh_self = $qs_hevgrmh_self->fetchAll();
     }else{
-        // $rs_hevxxmh_self = [];
-        if($id_hevxxmh > 0){
-            $qs_hevxxmh_self = $db
-                ->query('select', 'hevxxmh')
-                ->get([
-                    'id as id',
-                    'nama as text'
-                ])
-                ->where('id', $id_hevxxmh )
-                ->limit(1)
-                ->offset($offset)
-                ->exec();
-            $rs_hevxxmh_self = $qs_hevxxmh_self->fetchAll();
-        }else{
-          $rs_hevxxmh_self = [];  
-        }
+        $rs_hevgrmh_self = [];
     }
     // END query self
 
     // BEGIN query options all except self
-    $qs_hevxxmh_all = $db
-        ->query('select', 'hevxxmh')
+    $qs_hevgrmh_all = $db
+        ->query('select', 'hevgrmh')
         ->get([
             'id as id',
             'nama as text'
         ])
         ->where('is_active',1)
-        ->where('id', $id_hevxxmh_old, '<>' )
+        ->where('id', $id_hevgrmh_old, '<>' )
         ->where( function ( $r ) {
             $q = $_GET['search'];
             $r
@@ -86,14 +65,14 @@
         ->limit($resultCount)
         ->offset($offset)
         ->exec();
-    $rs_hevxxmh_all = $qs_hevxxmh_all->fetchAll();
+    $rs_hevgrmh_all = $qs_hevgrmh_all->fetchAll();
     // END query options all except self
 
     // BEGIN menggabungkan options
-    if(count($rs_hevxxmh_self) > 0){
-        $rs_opt = array_merge($rs_hevxxmh_self, $rs_hevxxmh_all);
+    if(count($rs_hevgrmh_self) > 0){
+        $rs_opt = array_merge($rs_hevgrmh_self, $rs_hevgrmh_all);
     }else{
-        $rs_opt = $rs_hevxxmh_all;
+        $rs_opt = $rs_hevgrmh_all;
     }
     $c_rs_opt = count($rs_opt);
     // END menggabungkan options

@@ -26,7 +26,7 @@
                                 <th>Nama</th>
                                 <th>Jenis</th>
                                 <th>Periode</th>
-                                <th>Pendapatan</th>
+                                <th>Komp Tetap</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -102,6 +102,7 @@
 						type: "select",
 						placeholder : "Select",
 						options: [
+							{ "label": "Jam", "value": "Jam" },
 							{ "label": "Harian", "value": "Harian" },
 							{ "label": "Mingguan", "value": "Mingguan" },
 							{ "label": "Bulanan", "value": "Bulanan" },
@@ -112,7 +113,7 @@
 						name: "hpcxxmh.is_fix",
 						type: "select",
 						placeholder : "Select",
-						def: "",
+						def: 1,
 						options: [
 							{ "label": "Variable", "value": 0 },
 							{ "label": "Fix", "value": 1 }
@@ -223,15 +224,6 @@
 						}
 					}
 					// END of validasi hpcxxmh.periode
-
-					// BEGIN of validasi hpcxxmh.is_fix
-					if ( ! edthpcxxmh.field('hpcxxmh.is_fix').isMultiValue() ) {
-						is_fix = edthpcxxmh.field('hpcxxmh.is_fix').val();
-						if(!is_fix || is_fix == ''){
-							edthpcxxmh.field('hpcxxmh.is_fix').error( 'Wajib diisi!' );
-						}
-					}
-					// END of validasi hpcxxmh.is_fix
 				}
 				
 				if ( edthpcxxmh.inError() ) {
@@ -258,9 +250,31 @@
 					{ data: "hpcxxmh.id",visible:false },
 					{ data: "hpcxxmh.kode" },
 					{ data: "hpcxxmh.nama" },
-					{ data: "hpcxxmh.jenis" },
+					{ 
+						data: "hpcxxmh.jenis" ,
+						render: function (data){
+							if (data == 1){
+								return 'Penambah';
+							}else if(data == 2){
+								return 'Penguran';
+							}else{
+								return '<span class="text-danger">Invalid Data</span>';
+							}
+						}
+					},
 					{ data: "hpcxxmh.periode" },
-					{ data: "hpcxxmh.pendapatan" },
+					{ 
+						data: "hpcxxmh.is_fix" ,
+						render: function (data){
+							if (data == 0){
+								return 'Tidak';
+							}else if(data == 1){
+								return 'Ya';
+							}else{
+								return '<span class="text-danger">Invalid Data</span>';
+							}
+						}
+					},
 					{ data: "hpcxxmh.keterangan" }
 				],
 				buttons: [

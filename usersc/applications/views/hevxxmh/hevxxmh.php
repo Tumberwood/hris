@@ -24,6 +24,7 @@
                                 <th>ID</th>
                                 <th>Kode</th>
                                 <th>Nama</th>
+                                <th>Group</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -47,6 +48,8 @@
 		// ------------- default variable, do not erase
 		var edthevxxmh, tblhevxxmh, show_inactive_status_hevxxmh = 0, id_hevxxmh;
 		// ------------- end of default variable
+
+		var id_hevgrmh_old = 0;
 		
 		$(document).ready(function() {
 			//start datatables editor
@@ -78,13 +81,52 @@
 						name: "hevxxmh.is_active",
                         type: "hidden",
 						def: 1
-					},	{
+					},	
+					{
 						label: "Kode <sup class='text-danger'>*<sup>",
 						name: "hevxxmh.kode"
-					}, 	{
+					}, 	
+					{
 						label: "Nama <sup class='text-danger'>*<sup>",
 						name: "hevxxmh.nama"
-					}, 	{
+					}, 	
+					{
+						label: "Group",
+						name: "hevxxmh.id_hevgrmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hevgrmh/hevgrmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hevgrmh_old: id_hevgrmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
 						label: "Keterangan",
 						name: "hevxxmh.keterangan",
 						type: "textarea"
@@ -194,10 +236,17 @@
 					}
 				},
 				order: [[ 1, "asc" ]],
+				rowGroup: {
+    				dataSrc: 'hevgrmh.nama',
+				},
 				columns: [
 					{ data: "hevxxmh.id",visible:false },
 					{ data: "hevxxmh.kode" },
 					{ data: "hevxxmh.nama" },
+					{ 
+						data: "hevgrmh.nama",
+						visible: false
+					},
 					{ data: "hevxxmh.keterangan" }
 				],
 				buttons: [
@@ -237,13 +286,16 @@
 				is_jurnal      = hevxxmh_data.is_jurnal;
 				is_active      = hevxxmh_data.is_active;
 
+				id_hevgrmh_old = hevxxmh_data.id_hevgrmh;
+
 				// atur hak akses
 				CekSelectHeaderH(tblhevxxmh);
 			} );
 
 			tblhevxxmh.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
-				id_hevxxmh = '';
+				id_hevxxmh = 0;
+				id_hevgrmh_old = 0;
 
 				// atur hak akses
 				CekDeselectHeaderH(tblhevxxmh);

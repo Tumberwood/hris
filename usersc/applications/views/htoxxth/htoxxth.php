@@ -47,7 +47,7 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-w-xs">
+    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
 			<div class="ibox-content">
 				<div class="table-responsive">
@@ -55,11 +55,11 @@
                         <thead>
 							<tr>
 								<th>ID</th>
-								<th>Nomor</th>
-								<th>Tanggal</th>
+								<th data-priority="1">Nomor</th>
+								<th data-priority="2">Tanggal</th>
 								<th>Area Kerja</th>
 								<th>Keterangan</th>
-								<th>Approval</th>
+								<th data-priority="3">Approval</th>
 							</tr>
                         </thead>
                     </table>
@@ -68,7 +68,7 @@
         </div>
     </div>
 
-	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 p-w-xs">
+	<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
 			<div class="ibox-title">
 				<h5>Detail</h5>
@@ -128,7 +128,10 @@
         var edthtoemtd, tblhtoemtd, show_inactive_status_htoemtd = 0, id_htoemtd;
 		// ------------- end of default variable
 
-		is_need_approval = 1, is_need_generate_kode = 1;
+		is_need_approval = 1;
+
+		// sementara di 0 kan
+		// is_need_generate_kode = 1;
 
 		var id_holxxmd_old = 0, id_heyxxmh_old = 0;
 		var id_heyxxmh = 0, id_htotpmh_old  = 0, id_hemxxmh_old = 0;
@@ -194,16 +197,18 @@
 						name: "htoxxth.is_active",
                         type: "hidden",
 						def: 1
-					}, 	{
-						label: "Tanggal",
+					}, 	
+					{
+						label: "Tanggal <sup class='text-danger'>*<sup>",
 						name: "htoxxth.tanggal",
 						type: "datetime",
 						def: function () { 
 							return new Date(); 
 						},
 						format: 'DD MMM YYYY'
-					},	{
-						label: "Area Kerja",
+					},	
+					{
+						label: "Area Kerja <sup class='text-danger'>*<sup>",
 						name: "htoxxth.id_holxxmd",
 						type: "select2",
 						opts: {
@@ -237,7 +242,8 @@
 								minimumResultsForSearch: -1,
 							},
 						}
-					}, 	{
+					}, 	
+					{
 						label: "Tipe Karyawan",
 						name: "htoxxth.id_heyxxmh",
 						type: "select2",
@@ -272,7 +278,8 @@
 								minimumResultsForSearch: -1,
 							},
 						}
-					}, 	{
+					}, 	
+					{
 						label: "Keterangan",
 						name: "htoxxth.keterangan",
 						type: "textarea"

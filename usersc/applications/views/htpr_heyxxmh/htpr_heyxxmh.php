@@ -7,9 +7,9 @@
 ?>
 
 <?php
-	$nama_tabel       = 'hevxxmh';
+	$nama_tabel       = 'heyxxmh';
     $nama_tabels_d 	  = [];
-    $nama_tabels_d[0] = 'htpr_hevxxmh';
+    $nama_tabels_d[0] = 'htpr_heyxxmh';
 ?>
 
 <!-- begin content here -->
@@ -18,11 +18,10 @@
 		<div class="ibox ">
 			<div class="ibox-content">
 				<div class="table-responsive">
-                    <table id="tblhevxxmh" class="table table-striped table-bordered table-hover nowrap" width="100%">
+                    <table id="tblheyxxmh" class="table table-striped table-bordered table-hover nowrap" width="100%">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Kode</th>
                                 <th>Nama</th>
                             </tr>
                         </thead>
@@ -39,11 +38,11 @@
 			</div>
 			<div class="ibox-content">
 				<div class="table-responsive">
-					<table id="tblhtpr_hevxxmh" class="table table-striped table-bordered table-hover nowrap" width="100%">
+					<table id="tblhtpr_heyxxmh" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
 							<tr>
 								<th>ID</th>
-								<th>id_hevxxmh</th>
+								<th>id_heyxxmh</th>
 								<th>Tanggal</th>
 								<th>Komponen</th>
 								<th>Nominal</th>
@@ -62,41 +61,40 @@
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_datatables_load.php'; ?>
 <script src="<?=$us_url_root?>usersc/helpers/hakaksescrud_hd_fn.js"></script>
 
-<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/htpr_hevxxmh/fn/htpr_hevxxmh_fn.php'; ?>
+<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/htpr_heyxxmh/fn/htpr_heyxxmh_fn.php'; ?>
 
 <!-- BEGIN datatables here -->
 <script type="text/javascript">
 		// ------------- default variable, do not erase
-		var edthevxxmh, tblhevxxmh, show_inactive_status_hevxxmh = 0, id_hevxxmh;
-        var edthtpr_hevxxmh, tblhtpr_hevxxmh, show_inactive_status_htpr_hevxxmh = 0, id_htpr_hevxxmh;
+		var edtheyxxmh, tblheyxxmh, show_inactive_status_heyxxmh = 0, id_heyxxmh;
+        var edthtpr_heyxxmh, tblhtpr_heyxxmh, show_inactive_status_htpr_heyxxmh = 0, id_htpr_heyxxmh;
 		// ------------- end of default variable
 	
 		var id_hpcxxmh_old = 0;
 
 		$(document).ready(function() {
 			//start datatables
-			tblhevxxmh = $('#tblhevxxmh').DataTable( {
+			tblheyxxmh = $('#tblheyxxmh').DataTable( {
 				ajax: {
-					url: "../../models/htpr_hevxxmh/htpr_hevxxmh_h.php",
+					url: "../../models/htpr_heyxxmh/htpr_heyxxmh_h.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hevxxmh = show_inactive_status_hevxxmh;
+						d.show_inactive_status_heyxxmh = show_inactive_status_heyxxmh;
 					}
 				},
 				order: [[ 1, "desc" ]],
 				columns: [
-					{ data: "hevxxmh.id",visible:false },
-					{ data: "hevxxmh.kode" },
-					{ data: "hevxxmh.nama" }
+					{ data: "heyxxmh.id",visible:false },
+					{ data: "heyxxmh.nama" }
 				],
 				buttons: [
 
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_hevxxmh';
-						$table       = 'tblhevxxmh';
-						$edt         = 'edthevxxmh';
-						$show_status = '_hevxxmh';
+						$id_table    = 'id_heyxxmh';
+						$table       = 'tblheyxxmh';
+						$edt         = 'edtheyxxmh';
+						$show_status = '_heyxxmh';
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
@@ -107,55 +105,55 @@
 					// END breaking generate button
 				],
 				rowCallback: function( row, data, index ) {
-					if ( data.hevxxmh.is_active == 0 ) {
+					if ( data.heyxxmh.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
 				}
 			} );
 			
-			tblhevxxmh.on( 'init', function () {
+			tblheyxxmh.on( 'init', function () {
 				// atur hak akses
-				tbl_details = [tblhtpr_hevxxmh];
-				CekInitHeaderHD(tblhevxxmh, tbl_details);
+				tbl_details = [tblhtpr_heyxxmh];
+				CekInitHeaderHD(tblheyxxmh, tbl_details);
 			} );
 			
-			tblhevxxmh.on( 'select', function( e, dt, type, indexes ) {
-				data_hevxxmh = tblhevxxmh.row( { selected: true } ).data().hevxxmh;
-				id_hevxxmh  = data_hevxxmh.id;
-				id_transaksi_h   = id_hevxxmh; // dipakai untuk general
-				is_approve       = data_hevxxmh.is_approve;
-				is_nextprocess   = data_hevxxmh.is_nextprocess;
-				is_jurnal        = data_hevxxmh.is_jurnal;
-				is_active        = data_hevxxmh.is_active;
+			tblheyxxmh.on( 'select', function( e, dt, type, indexes ) {
+				data_heyxxmh = tblheyxxmh.row( { selected: true } ).data().heyxxmh;
+				id_heyxxmh  = data_heyxxmh.id;
+				id_transaksi_h   = id_heyxxmh; // dipakai untuk general
+				is_approve       = data_heyxxmh.is_approve;
+				is_nextprocess   = data_heyxxmh.is_nextprocess;
+				is_jurnal        = data_heyxxmh.is_jurnal;
+				is_active        = data_heyxxmh.is_active;
 				
 				// atur hak akses
-				tbl_details = [tblhtpr_hevxxmh];
-				CekSelectHeaderHD(tblhevxxmh, tbl_details);
+				tbl_details = [tblhtpr_heyxxmh];
+				CekSelectHeaderHD(tblheyxxmh, tbl_details);
 
 			} );
 			
-			tblhevxxmh.on( 'deselect', function () {
+			tblheyxxmh.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
-				id_hevxxmh = '';
+				id_heyxxmh = '';
 
 				// atur hak akses
-				tbl_details = [tblhtpr_hevxxmh];
-				CekDeselectHeaderHD(tblhevxxmh, tbl_details);
+				tbl_details = [tblhtpr_heyxxmh];
+				CekDeselectHeaderHD(tblheyxxmh, tbl_details);
 			} );
 			
 // --------- start _detail --------------- //
 
 			//start datatables editor
-			edthtpr_hevxxmh = new $.fn.dataTable.Editor( {
+			edthtpr_heyxxmh = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/htpr_hevxxmh/htpr_hevxxmh_d.php",
+					url: "../../models/htpr_heyxxmh/htpr_heyxxmh_d.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_htpr_hevxxmh = show_inactive_status_htpr_hevxxmh;
-						d.id_hevxxmh = id_hevxxmh;
+						d.show_inactive_status_htpr_heyxxmh = show_inactive_status_htpr_heyxxmh;
+						d.id_heyxxmh = id_heyxxmh;
 					}
 				},
-				table: "#tblhtpr_hevxxmh",
+				table: "#tblhtpr_heyxxmh",
 				formOptions: {
 					main: {
 						focus: 3
@@ -173,21 +171,21 @@
 					},	{
 						label: "nama_tabel",
 						name: "nama_tabel",
-						def: "htpr_hevxxmh",
+						def: "htpr_heyxxmh",
 						type: "hidden"
 					},	{
-						label: "id_hevxxmh",
-						name: "htpr_hevxxmh.id_hevxxmh",
+						label: "id_heyxxmh",
+						name: "htpr_heyxxmh.id_heyxxmh",
 						type: "hidden"
 					},	{
 						label: "Active Status",
-						name: "htpr_hevxxmh.is_active",
+						name: "htpr_heyxxmh.is_active",
                         type: "hidden",
 						def: 1
 					},
 					{
 						label: "Komponen <sup class='text-danger'>*<sup>",
-						name: "htpr_hevxxmh.id_hpcxxmh",
+						name: "htpr_heyxxmh.id_hpcxxmh",
 						type: "select2",
 						opts: {
 							placeholder : "Select",
@@ -223,7 +221,7 @@
 					},
 					{
 						label: "Tanggal Efektif <sup class='text-danger'>*<sup>",
-						name: "htpr_hevxxmh.tanggal_efektif",
+						name: "htpr_heyxxmh.tanggal_efektif",
 						type: "datetime",
 						def: function () { 
 							return new Date(); 
@@ -236,105 +234,105 @@
 					},
 					{
 						label: "Nominal <sup class='text-danger'>*<sup>",
-						name: "htpr_hevxxmh.nominal"
+						name: "htpr_heyxxmh.nominal"
 					},
 					{
 						label: "Keterangan",
-						name: "htpr_hevxxmh.keterangan",
+						name: "htpr_heyxxmh.keterangan",
 						type: "textarea"
 					}
 				]
 			} );
 			
-			edthtpr_hevxxmh.on( 'preOpen', function( e, mode, action ) {
-				edthtpr_hevxxmh.field('htpr_hevxxmh.id_hevxxmh').val(id_hevxxmh);
+			edthtpr_heyxxmh.on( 'preOpen', function( e, mode, action ) {
+				edthtpr_heyxxmh.field('htpr_heyxxmh.id_heyxxmh').val(id_heyxxmh);
 				
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthtpr_hevxxmh.field('start_on').val(start_on);
+				edthtpr_heyxxmh.field('start_on').val(start_on);
 				
 				if(action == 'create'){
-					tblhtpr_hevxxmh.rows().deselect();
+					tblhtpr_heyxxmh.rows().deselect();
 				}
 			});
 
-            edthtpr_hevxxmh.on("open", function (e, mode, action) {
+            edthtpr_heyxxmh.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
 			
-			edthtpr_hevxxmh.on( 'preSubmit', function (e, data, action) {
+			edthtpr_heyxxmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					// BEGIN of validasi htpr_hevxxmh.id_hpcxxmh 
-					id_hpcxxmh = edthtpr_hevxxmh.field('htpr_hevxxmh.id_hpcxxmh').val();
+					// BEGIN of validasi htpr_heyxxmh.id_hpcxxmh 
+					id_hpcxxmh = edthtpr_heyxxmh.field('htpr_heyxxmh.id_hpcxxmh').val();
 					if(!id_hpcxxmh || id_hpcxxmh == ''){
-						edthtpr_hevxxmh.field('htpr_hevxxmh.id_hpcxxmh').error( 'Wajib diisi!' );
+						edthtpr_heyxxmh.field('htpr_heyxxmh.id_hpcxxmh').error( 'Wajib diisi!' );
 					}
-					// END of validasi htpr_hevxxmh.id_hpcxxmh 
+					// END of validasi htpr_heyxxmh.id_hpcxxmh 
 
-					// BEGIN of validasi htpr_hevxxmh.tanggal_efektif 
-					tanggal_efektif = edthtpr_hevxxmh.field('htpr_hevxxmh.tanggal_efektif').val();
+					// BEGIN of validasi htpr_heyxxmh.tanggal_efektif 
+					tanggal_efektif = edthtpr_heyxxmh.field('htpr_heyxxmh.tanggal_efektif').val();
 					if(!tanggal_efektif || tanggal_efektif == ''){
-						edthtpr_hevxxmh.field('htpr_hevxxmh.tanggal_efektif').error( 'Wajib diisi!' );
+						edthtpr_heyxxmh.field('htpr_heyxxmh.tanggal_efektif').error( 'Wajib diisi!' );
 					}
-					// END of validasi htpr_hevxxmh.tanggal_efektif 
+					// END of validasi htpr_heyxxmh.tanggal_efektif 
 
-					// BEGIN of validasi htpr_hevxxmh.nominal 
-					nominal = edthtpr_hevxxmh.field('htpr_hevxxmh.nominal').val();
+					// BEGIN of validasi htpr_heyxxmh.nominal 
+					nominal = edthtpr_heyxxmh.field('htpr_heyxxmh.nominal').val();
 					if(!nominal || nominal == ''){
-						edthtpr_hevxxmh.field('htpr_hevxxmh.nominal').error( 'Wajib diisi!' );
+						edthtpr_heyxxmh.field('htpr_heyxxmh.nominal').error( 'Wajib diisi!' );
 					}
 					if(nominal <= 0 ){
-						edthtpr_hevxxmh.field('htpr_hevxxmh.nominal').error( 'Inputan harus > 0' );
+						edthtpr_heyxxmh.field('htpr_heyxxmh.nominal').error( 'Inputan harus > 0' );
 					}
 					if(isNaN(nominal) ){
-						edthtpr_hevxxmh.field('htpr_hevxxmh.nominal').error( 'Inputan harus berupa Angka!' );
+						edthtpr_heyxxmh.field('htpr_heyxxmh.nominal').error( 'Inputan harus berupa Angka!' );
 					}
-					// END of validasi htpr_hevxxmh.nominal 
+					// END of validasi htpr_heyxxmh.nominal 
 				}
 				
-				if ( edthtpr_hevxxmh.inError() ) {
+				if ( edthtpr_heyxxmh.inError() ) {
 					return false;
 				}
 			});
 
-			edthtpr_hevxxmh.on('initSubmit', function(e, action) {
+			edthtpr_heyxxmh.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthtpr_hevxxmh.field('finish_on').val(finish_on);
+				edthtpr_heyxxmh.field('finish_on').val(finish_on);
 			});
 
 			
-			edthtpr_hevxxmh.on( 'postSubmit', function (e, json, data, action, xhr) {
+			edthtpr_heyxxmh.on( 'postSubmit', function (e, json, data, action, xhr) {
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
 			} );
 			
 			//start datatables
-			tblhtpr_hevxxmh = $('#tblhtpr_hevxxmh').DataTable( {
+			tblhtpr_heyxxmh = $('#tblhtpr_heyxxmh').DataTable( {
 				ajax: {
-					url: "../../models/htpr_hevxxmh/htpr_hevxxmh_d.php",
+					url: "../../models/htpr_heyxxmh/htpr_heyxxmh_d.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_htpr_hevxxmh = show_inactive_status_htpr_hevxxmh;
-						d.id_hevxxmh = id_hevxxmh;
+						d.show_inactive_status_htpr_heyxxmh = show_inactive_status_htpr_heyxxmh;
+						d.id_heyxxmh = id_heyxxmh;
 					}
 				},
 				order: [[ 2, "desc" ]],
 				rowGroup: {
-					dataSrc: 'htpr_hevxxmh.tanggal_efektif',
+					dataSrc: 'htpr_heyxxmh.tanggal_efektif',
 				},
 				columns: [
-					{ data: "htpr_hevxxmh.id",visible:false },
+					{ data: "htpr_heyxxmh.id",visible:false },
 					{ 
-						data: "htpr_hevxxmh.id_hevxxmh",
+						data: "htpr_heyxxmh.id_heyxxmh",
 						visible:false 
 					},
 					{ 
-						data: "htpr_hevxxmh.tanggal_efektif" ,
+						data: "htpr_heyxxmh.tanggal_efektif" ,
 						visible:false 
 					},
 					{ data: "hpcxxmh.nama" },
 					{ 
-						data: "htpr_hevxxmh.nominal" ,
+						data: "htpr_heyxxmh.nominal" ,
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right"
 					}
@@ -342,10 +340,10 @@
 				buttons: [
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_htpr_hevxxmh';
-						$table       = 'tblhtpr_hevxxmh';
-						$edt         = 'edthtpr_hevxxmh';
-						$show_status = '_htpr_hevxxmh';
+						$id_table    = 'id_htpr_heyxxmh';
+						$table       = 'tblhtpr_heyxxmh';
+						$edt         = 'edthtpr_heyxxmh';
+						$show_status = '_htpr_heyxxmh';
 						$table_name  = $nama_tabels_d[0];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
@@ -356,38 +354,38 @@
 					// END breaking generate button
 				],
 				rowCallback: function( row, data, index ) {
-					if ( data.htpr_hevxxmh.is_active == 0 ) {
+					if ( data.htpr_heyxxmh.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
 				}
 			} );
 
-			tblhtpr_hevxxmh.on( 'draw', function( e, settings ) { 
+			tblhtpr_heyxxmh.on( 'draw', function( e, settings ) { 
 				// atur hak akses
 				cek_c_detail= 1;
-				CekDrawDetailHD(tblhevxxmh, tblhtpr_hevxxmh, 'htpr_hevxxmh' );
-				CekDrawDetailHDFinal(tblhevxxmh);
+				CekDrawDetailHD(tblheyxxmh, tblhtpr_heyxxmh, 'htpr_heyxxmh' );
+				CekDrawDetailHDFinal(tblheyxxmh);
 			} );
 
-			tblhtpr_hevxxmh.on( 'select', function( e, dt, type, indexes ) {
-				data_htpr_hevxxmh = tblhtpr_hevxxmh.row( { selected: true } ).data().htpr_hevxxmh;
-				id_htpr_hevxxmh   = data_htpr_hevxxmh.id;
-				id_transaksi_d    = id_htpr_hevxxmh; // dipakai untuk general
-				is_active_d       = data_htpr_hevxxmh.is_active;
+			tblhtpr_heyxxmh.on( 'select', function( e, dt, type, indexes ) {
+				data_htpr_heyxxmh = tblhtpr_heyxxmh.row( { selected: true } ).data().htpr_heyxxmh;
+				id_htpr_heyxxmh   = data_htpr_heyxxmh.id;
+				id_transaksi_d    = id_htpr_heyxxmh; // dipakai untuk general
+				is_active_d       = data_htpr_heyxxmh.is_active;
 				
-				id_hpcxxmh_old       = data_htpr_hevxxmh.id_hpcxxmh;
+				id_hpcxxmh_old       = data_htpr_heyxxmh.id_hpcxxmh;
 				
 				// atur hak akses
-				CekSelectDetailHD(tblhevxxmh, tblhtpr_hevxxmh );
+				CekSelectDetailHD(tblheyxxmh, tblhtpr_heyxxmh );
 			} );
 
-			tblhtpr_hevxxmh.on( 'deselect', function() {
-				id_htpr_hevxxmh = '';
+			tblhtpr_heyxxmh.on( 'deselect', function() {
+				id_htpr_heyxxmh = '';
 				is_active_d = 0;
 				id_hpcxxmh_old = 0;
 				
 				// atur hak akses
-				CekDeselectDetailHD(tblhevxxmh, tblhtpr_hevxxmh );
+				CekDeselectDetailHD(tblheyxxmh, tblhtpr_heyxxmh );
 			} );
 
 // --------- end _detail --------------- //
