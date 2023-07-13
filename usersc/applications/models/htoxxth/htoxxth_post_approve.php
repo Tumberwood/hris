@@ -19,10 +19,11 @@
     try{
         $db->transaction();
 
-            if($state == 1){
-                $qs_htoemtd = $db
+        if($state == 1){
+            $qs_htoemtd = $db
                 ->query('select', 'htoemtd' )
                 ->get([
+                    'htoemtd.id_hemxxmh as id_hemxxmh',
                     'htoxxth.id as id_htoxxth',
                     'htoemtd.id as id_htoemtd',
                     'htoemtd.id_htotpmh as id_htotpmh',
@@ -45,6 +46,7 @@
             foreach ($rs_htoemtd as $row_htoemtd) {
                 $qi_htoxxrd = $db
                     ->query('insert', 'htoxxrd')
+                    ->set( 'id_hemxxmh', $row_htoemtd['id_hemxxmh'] )
                     ->set( 'id_htoxxth', $row_htoemtd['id_htoxxth'] )
                     ->set( 'id_htoemtd', $row_htoemtd['id_htoemtd'] )
                     ->set( 'id_htotpmh', $row_htoemtd['id_htotpmh'] )
@@ -67,8 +69,6 @@
                 ->exec();
 
         }
-
-        
 
         $db->commit();
         $data = array(
