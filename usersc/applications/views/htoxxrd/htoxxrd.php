@@ -148,43 +148,43 @@
 						targets: [0,6,7,8,9,10,11]
 					}
 				],
-				// rowGroup: {
-				// 	startRender: function ( rows, group ) {
-				// 		return $('<tr/>')
-				// 			.append( '<td colspan="2" class="font-bold">'+group+'</td>' )
-				// 			.append( '<td></td>' )
-				// 			.append( '<td></td>' )
-				// 			.append( '<td></td>' )
-				// 			.append( '<td></td>' )
-				// 			.append( '<td></td>' )
-				// 			.append( '<td></td>' )
-				// 			.append( '<td></td>' )
-				// 			.append( '<td></td>' )
-				// 			.append( '<td></td>' );
-				// 	},
-				// 	endRender: function ( rows, group ) {
-				// 		var sumJam = rows
-				// 			.data()
-				// 			.pluck('htoxxrd.durasi_jam') 
-				// 			.reduce( function (a, b) {
-				// 				return parseFloat(a) + parseFloat(b);
-				// 			}, 0);
-				// 		sumJam = $.fn.dataTable.render.number(',', '.', 1, '').display( sumJam );
+				rowGroup: {
+					startRender: function ( rows, group ) {
+						return $('<tr/>')
+							.append( '<td colspan="2" class="font-bold">'+group+'</td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' );
+					},
+					endRender: function ( rows, group ) {
+						var sumJam = rows
+							.data()
+							.pluck('htoxxrd.durasi_jam') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sumJam = $.fn.dataTable.render.number(',', '.', 1, '').display( sumJam );
 
-				// 		return $('<tr/>')
-				// 			.append( '<td colspan="2" class="font-bold">Total</td>' )
-				// 			.append( '<td></td>' )
-				// 			.append( '<td></td>' )
-				// 			.append( '<td></td>' )
-				// 			.append( '<td></td>' )
-				// 			.append( '<td></td>' )
-				// 			.append( '<td class="text-right bg-warning">'+sumJam+'</td>' )
-				// 			.append( '<td class="text-right"></td>' )
-				// 			.append( '<td></td>' )
-				// 			.append( '<td></td>' );
-				// 	},
-				// 	dataSrc: 'htoxxrd.kode'
-				// },
+						return $('<tr/>')
+							.append( '<td colspan="2" class="font-bold">Total</td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td class="text-right bg-warning">'+sumJam+'</td>' )
+							.append( '<td class="text-right"></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' );
+					},
+					dataSrc: 'htoxxrd.kode'
+				},
 				ajax: {
 					url: "../../models/htoxxrd/htoxxrd.php",
 					type: 'POST',
