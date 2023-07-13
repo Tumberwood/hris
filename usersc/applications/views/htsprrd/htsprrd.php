@@ -69,14 +69,14 @@
 								<th>Tanggal</th>
 								<th>Shift In</th>
 								<th>Shift Out</th>
-								<th>Status Penjadwalan</th>
+								<th>Jadwal</th>
 								<th>Clock In</th>
 								<th>Clock Out</th>
-								<th>Status Clock In</th>
-								<th>Status Clock Out</th>
+								<th>Cek CI</th>
+								<th>Cek CO</th>
 								
-								<th>Status Presensi In</th>
-								<th>Status Presensi Out</th>
+								<th>Cek In</th>
+								<th>Cek Out</th>
 								
 								<!-- <th rowspan=2>Status Lembur</th>
 								<th colspan=2>Lembur Libur</th>
@@ -217,8 +217,14 @@
 					{ data: "hodxxmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "htsprrd.tanggal" },
-					{ data: "htsprrd.shift_in" },
-					{ data: "htsprrd.shift_out" },
+					{ 
+						data: "htsprrd.shift_in",
+						visible: false 
+					},
+					{ 
+						data: "htsprrd.shift_out" ,
+						visible: false
+					},
 					{ data: "htsprrd.st_jadwal" },
 
 					{ data: "htsprrd.clock_in" },
