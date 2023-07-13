@@ -41,7 +41,10 @@
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
 			Field::inst( 'htlxxmh.is_approve' ),
-			Field::inst( 'htlxxmh.is_defaultprogram' )
+			Field::inst( 'htlxxmh.is_defaultprogram' ),
+			Field::inst( 'htlxxmh.is_self' ),
+			Field::inst( 'htlxxmh.is_potongupah' ),
+			Field::inst( 'htlxxmh.is_potongcuti' )
 		);
 	
 	// do not erase
