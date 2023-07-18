@@ -80,11 +80,11 @@
 							<tr>
 								<th rowspan=2 class="text-center">ID</th>
 								<th rowspan=2 class="text-center">id_htoxxth</th>
-								<th rowspan=2 class="text-center">Tipe</th>
-								<th rowspan=2 class="text-center">Karyawan</th>
+								<th data-priority="1" rowspan=2 class="text-center">Tipe</th>
+								<th data-priority="2" rowspan=2 class="text-center">Karyawan</th>
 								<th colspan=2 class="text-center">Jam Lembur</th>
 								<th rowspan=2 class="text-center">Istirahat</th>	
-								<th rowspan=2 class="text-center">Durasi (Jam)</th>	
+								<th data-priority="3" rowspan=2 class="text-center">Durasi (Jam)</th>	
 								<th rowspan=2 class="text-center">Keterangan</th>
 							</tr>
 							<tr>
@@ -384,6 +384,8 @@
 								return '';
 							}else if(data == 1){
 								return '<i class="fa fa-check text-navy"></i>';
+							}else if(data == 2){
+								return '<i class="fa fa-undo text-muted"></i>';
 							}else if(data == -9){
 								return '<i class="fa fa-remove text-danger"></i>';
 							}

@@ -65,8 +65,7 @@
 								<th>Jam Awal</th>
 								<th>Jam Akhir</th>
 								<th>Durasi</th>
-								<th>Makan</th>
-								<th>Keterangan</th>
+								<!-- <th>Makan</th> -->
 								<th>Approve</th>
 							</tr>
 						</thead>
@@ -79,10 +78,9 @@
 								<th></th>
 								<th></th>
 								<th></th>
-								<th></th>
 								<th>Grand Total</th>
 								<th class="text-right bg-primary" id="s_jam"></th>
-								<th id=""></th>
+								<!-- <th id=""></th> -->
 								<th></th>
 								<th></th>
 							</tr>
@@ -145,11 +143,22 @@
 						searchPanes:{
 							show: false,
 						},
-						targets: [0,6,7,8,9,10,11,12]
+						targets: [0,6,7,8,9,10]
 					}
 				],
 				rowGroup: {
-					startRender: null,
+					startRender: function ( rows, group ) {
+						return $('<tr/>')
+							.append( '<td colspan="2" class="font-bold">'+group+'</td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' );
+					},
 					endRender: function ( rows, group ) {
 						var sumJam = rows
 							.data()
@@ -160,9 +169,7 @@
 						sumJam = $.fn.dataTable.render.number(',', '.', 1, '').display( sumJam );
 
 						return $('<tr/>')
-							.append( '<td colspan="2" class="font-bold">Total Lembur '+group+'</td>' )
-							.append( '<td></td>' )
-							.append( '<td></td>' )
+							.append( '<td colspan="2" class="font-bold">Total</td>' )
 							.append( '<td></td>' )
 							.append( '<td></td>' )
 							.append( '<td></td>' )
@@ -185,8 +192,14 @@
 				},
 				order: [[ 1, "asc" ]],
 				columns: [
-					{ data: "htoxxrd.id",visible:false },
-					{ data: "htoxxrd.kode" },
+					{ 
+						data: "htoxxrd.id",
+						visible:false 
+					},
+					{ 
+						data: "htoxxrd.kode" ,
+						visible:false 
+					},
 					{ data: "htoxxrd.tanggal" },
 					{ data: "hemxxmh_data" },
 					{ data: "heyxxmh.nama" },
@@ -212,8 +225,7 @@
 						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
 						class: "text-right"
 					},
-					{ data: null },
-					{ data: "htoxxrd.keterangan" },
+					// { data: null },
 					{ 
 						data: "htoxxrd.is_approve" ,
 						render: function (data){

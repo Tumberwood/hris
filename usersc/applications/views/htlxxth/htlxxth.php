@@ -89,6 +89,7 @@
 		// ------------- end of default variable
 		var notifyprogress;
 		is_need_approval = 1;
+		
 		var id_hemxxmh_old = 0, id_htlxxmh_old = 0;
 		
 		// BEGIN datepicker init
@@ -370,13 +371,13 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [2,3,4,5]
+						targets: [2,3,4,5,9]
 					},
 					{
 						searchPanes:{
 							show: false,
 						},
-						targets: [0,1,6,7,8,9]
+						targets: [0,1,6,7,8]
 					}
 				],
 				ajax: {
