@@ -66,13 +66,11 @@
 								<th>Jam Akhir</th>
 								<th>Durasi</th>
 								<!-- <th>Makan</th> -->
-								<th>Keterangan</th>
 								<th>Approve</th>
 							</tr>
 						</thead>
 						<tfoot>
 							<tr>
-								<th></th>
 								<th></th>
 								<th></th>
 								<th></th>
@@ -145,14 +143,13 @@
 						searchPanes:{
 							show: false,
 						},
-						targets: [0,6,7,8,9,10,11]
+						targets: [0,6,7,8,9,10]
 					}
 				],
 				rowGroup: {
 					startRender: function ( rows, group ) {
 						return $('<tr/>')
 							.append( '<td colspan="2" class="font-bold">'+group+'</td>' )
-							.append( '<td></td>' )
 							.append( '<td></td>' )
 							.append( '<td></td>' )
 							.append( '<td></td>' )
@@ -173,7 +170,6 @@
 
 						return $('<tr/>')
 							.append( '<td colspan="2" class="font-bold">Total</td>' )
-							.append( '<td></td>' )
 							.append( '<td></td>' )
 							.append( '<td></td>' )
 							.append( '<td></td>' )
@@ -230,7 +226,6 @@
 						class: "text-right"
 					},
 					// { data: null },
-					{ data: "htoxxrd.keterangan" },
 					{ 
 						data: "htoxxrd.is_approve" ,
 						render: function (data){
