@@ -61,48 +61,79 @@
                     <table id="tblhtsprrd" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
 							<tr>
-								<th>ID</th>
-								<!-- <th rowspan=2>Nama</th> -->
-								<th>Nama</th>
-								<th>Department</th>
-								<th>Jabatan</th>
-								<th>Tanggal</th>
-								<th>Shift In</th>
-								<th>Shift Out</th>
-								<th>Jadwal</th>
-								<th>Clock In</th>
-								<th>Clock Out</th>
-								<th>Cek CI</th>
-								<th>Cek CO</th>
+								<th rowspan=2>ID</th>
+								<th rowspan=2>Nama</th>
+								<th rowspan=2>Department</th>
+								<th rowspan=2>Jabatan</th>
+								<th rowspan=2>Tanggal</th>
+								<th rowspan=2>Shift In</th>
+								<th rowspan=2>Shift Out</th>
+								<th rowspan=2>Jadwal</th>
+								<th rowspan=2>Clock In</th>
+								<th rowspan=2>Clock Out</th>
+								<th rowspan=2>Cek CI</th>
+								<th rowspan=2>Cek CO</th>
 								
-								<th>Cek In</th>
-								<th>Cek Out</th>
+								<th rowspan=2>Cek In</th>
+								<th rowspan=2>Cek Out</th>
 								
-								<!-- <th rowspan=2>Status Lembur</th>
 								<th colspan=2>Lembur Libur</th>
 								<th colspan=2>Lembur Awal</th>
 								<th colspan=2>Lembur Akhir</th>
-								<th colspan=2>Lembur Istirahat 1</th>
-								<th colspan=2>Lembur Istirahat 2</th>
-								<th colspan=2>Lembur Istirahat 3</th>
-								<th rowspan=2>Jam Lembur</th> -->
+								<th colspan=7>Durasi Lembur (Jam)</th>
+
 							</tr>
-							<!-- <tr>
-								<th></th>
+							<tr>
 								<th>Awal</th>
 								<th>Akhir</th>
 								<th>Awal</th>
 								<th>Akhir</th>
 								<th>Awal</th>
 								<th>Akhir</th>
-								<th>Awal</th>
-								<th>Akhir</th>
-								<th>Awal</th>
-								<th>Akhir</th>
-								<th>Awal</th>
-								<th>Akhir</th>
-							</tr> -->
+
+								<th>LB</th>
+								<th>AW</th>
+								<th>AK</th>
+								<th>I1</th>
+								<th>I2</th>
+								<th>I3</th>
+								<th>Total</th>
+
+							</tr>
 						</thead>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th>Total</th>
+								
+								<th id="s_lb"></th>
+								<th id="s_aw"></th>
+								<th id="s_ak"></th>
+								<th id="s_i1"></th>
+								<th id="s_i2"></th>
+								<th id="s_i3"></th>
+								<th id="s_tl"></th>
+
+							</tr>
+						</tfoot>
                     </table>
 				</div>
 			</div>
@@ -197,7 +228,7 @@
 						searchPanes:{
 							show: false,
 						},
-						targets: [0,3,5,6,8,9]
+						targets: [0,3,5,6,8,9,14,15,16,17,18,19,20,21,22,23,24,25,26]
 					}
 				],
 				ajax: {
@@ -211,6 +242,8 @@
 					}
 				},
 				order: [[ 1, "asc" ]],
+				scrollX: true,
+				responsive: false,
 				columns: [
 					{ data: "htsprrd.id",visible:false },
 					{ data: "hemxxmh_data" },
@@ -233,7 +266,50 @@
 					{ data: "htsprrd.st_clock_out" },
 
 					{ data: "htsprrd.status_presensi_in" },
-					{ data: "htsprrd.status_presensi_out" }
+					{ data: "htsprrd.status_presensi_out" },
+
+					{ data: "htsprrd.jam_awal_lembur_libur" },
+					{ data: "htsprrd.jam_akhir_lembur_libur" },
+					{ data: "htsprrd.jam_awal_lembur_awal" },
+					{ data: "htsprrd.jam_akhir_lembur_awal" },
+					{ data: "htsprrd.jam_awal_lembur_akhir" },
+					{ data: "htsprrd.jam_akhir_lembur_akhir" },
+					{ 
+						data: "htsprrd.durasi_lembur_libur",
+						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_awal" ,
+						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_akhir" ,
+						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat1" ,
+						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat2" ,
+						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat3" ,
+						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_total" ,
+						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						class: "text-right"
+					}
+					
 				],
 				buttons: [	
 					// BEGIN breaking generate button
@@ -255,6 +331,27 @@
 					if ( data.htsprrd.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
+				},
+				footerCallback: function ( row, data, start, end, display ) {
+					var api       = this.api(), data;
+					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+					
+					s_lb = api.column( 20 ).data().sum();
+					s_aw = api.column( 21 ).data().sum();
+					s_ak = api.column( 22 ).data().sum();
+					s_i1 = api.column( 23 ).data().sum();
+					s_i2 = api.column( 24 ).data().sum();
+					s_i3 = api.column( 25 ).data().sum();
+					s_tl = api.column( 26 ).data().sum();
+
+					$( '#s_lb' ).html( numFormat(s_lb) );
+					$( '#s_aw' ).html( numFormat(s_aw) );
+					$( '#s_ak' ).html( numFormat(s_ak) );
+					$( '#s_i1' ).html( numFormat(s_i1) );
+					$( '#s_i2' ).html( numFormat(s_i2) );
+					$( '#s_i3' ).html( numFormat(s_i3) );
+					$( '#s_tl' ).html( numFormat(s_tl) );
+
 				},
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
