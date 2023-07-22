@@ -9,6 +9,9 @@
 
 	include( "../../../../users/init.php" );
 	include( "../../../../usersc/lib/DataTables.php" );
+
+	require '../../../../usersc/vendor/autoload.php';
+	use Carbon\Carbon;
 	
 	use
 		DataTables\Editor,
@@ -16,7 +19,12 @@
 		DataTables\Editor\Result;
 
 	$start_date = $_POST['start_date'];
-	$end_date = $_POST['end_date'];
+	$end_date 	= $_POST['end_date'];
+
+	$awal 			= new Carbon($_POST['start_date']);
+	$akhir 			= new Carbon($_POST['end_date']);
+	$jumlah_hari 	= $awal->diffInDays($akhir) + 1;
+	
 
 	$qs_htpxxth = $db
 		->query('select', 'htpxxth' )
@@ -60,11 +68,12 @@
 		->where('htsprrd.tanggal', $end_date, '<=' )
 		->order('htsprrd.tanggal')
 		->exec();
-	$rs_htsprrd1 = $qs_htsprrd->fetchAll();
+	$rs_htsprrd_presensi = $qs_htsprrd->fetchAll();
 
-	$rs_htsprrd = array_merge($rs_htpxxth, $rs_htsprrd1);
+	$rs_htsprrd = array_merge($rs_htpxxth, $rs_htsprrd_presensi);
 	
-	if( count($rs_htsprrd) > 0){
+	// if( count($rs_htsprrd) > 0){
+	if( !empty($rs_htsprrd) ){
 
 		// Initialize variables to hold transformed data
 		$data = array();
@@ -231,7 +240,10 @@
 			$sum_off = ($in_off  +  $out_off) / 2;
 			$sum_nj = ($in_nj  +  $out_nj) / 2;
 			
+			$sum_calc = $sum_hk + $sum_hl + $sum_cb + $sum_ct + $sum_ik + $sum_al + $sum_sd + $sum_sk + $sum_ip + $sum_off;
+			//$sum_nj
 			
+			$cek = $jumlah_hari - $sum_calc;
 
 			// Add kode and nama to data array if not already present
 			if (!isset($data[$id_hemxxmh])) {
@@ -240,17 +252,19 @@
 					'hemxxmh_data'          => $hemxxmh_data,
 					'hodxxmh_nama'          => $hodxxmh_nama,
 					'hetxxmh_nama'          => $hetxxmh_nama,
+					'HR'          			=> $jumlah_hari,
+					'Cek'					=> $cek,
 					'HK'        		    => $sum_hk,
+					'OFF'        		    => $sum_off,
+					'NJ'        		    => $sum_nj,
 					'HL'        		    => $sum_hl,
 					'CB'        		    => $sum_cb,
 					'CT'        		    => $sum_ct,
 					'IK'        		    => $sum_ik,
-					'AL'        		    => $sum_al,
 					'SD'        		    => $sum_sd,
 					'SK'        		    => $sum_sk,
 					'IP'        		    => $sum_ip,
-					'OFF'        		    => $sum_off,
-					'NJ'        		    => $sum_nj
+					'AL'        		    => $sum_al
 				);
 			}
 			
@@ -261,7 +275,6 @@
 			// Add tanggal to columns array if not already present
 			$columnInFound = false;
 			foreach ($columns as $column) {
-				
 				if ($column['data'] == $tanggal_in) {
 					$columnInFound = true;
 					break;
@@ -287,7 +300,6 @@
 					'name' => 'o__' . date('d M Y', strtotime($row['tanggal']))
 				);
 			}
-
 		}
 
 		// Sort columns by tanggal key
@@ -304,21 +316,22 @@
 					array('data' => 'hemxxmh_data', 'name' => 'hemxxmh_data'),
 					array('data' => 'hodxxmh_nama', 'name' => 'hodxxmh_nama'),
 					array('data' => 'hetxxmh_nama', 'name' => 'hetxxmh_nama'),
+					array('data' => 'HR', 'name' => 'HR'),
+					array('data' => 'Cek', 'name' => 'Cek'),
+					array('data' => 'NJ', 'name' => 'NJ'),
 					array('data' => 'HK', 'name' => 'HK'),
+					array('data' => 'OFF', 'name' => 'OFF'),
 					array('data' => 'HL', 'name' => 'HL'),
 					array('data' => 'CB', 'name' => 'CB'),
 					array('data' => 'CT', 'name' => 'CT'),
 					array('data' => 'IK', 'name' => 'IK'),
-					array('data' => 'AL', 'name' => 'AL'),
 					array('data' => 'SD', 'name' => 'SD'),
 					array('data' => 'SK', 'name' => 'SK'),
 					array('data' => 'IP', 'name' => 'IP'),
-					array('data' => 'OFF', 'name' => 'OFF'),
-					array('data' => 'NJ', 'name' => 'NJ')
-					// array('data' => 'Total', 'name' => 'Total')
+					array('data' => 'AL', 'name' => 'AL')
 				),
 				$columns
-			),
+			)
 		);
 
 	}else{
