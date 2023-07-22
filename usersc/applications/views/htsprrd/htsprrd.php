@@ -80,7 +80,7 @@
 								<th colspan=2>Lembur Libur</th>
 								<th colspan=2>Lembur Awal</th>
 								<th colspan=2>Lembur Akhir</th>
-								<th colspan=7>Durasi Lembur (Jam)</th>
+								<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
 
 							</tr>
 							<tr>
@@ -91,13 +91,13 @@
 								<th>Awal</th>
 								<th>Akhir</th>
 
-								<th>LB</th>
-								<th>AW</th>
-								<th>AK</th>
-								<th>I1</th>
-								<th>I2</th>
-								<th>I3</th>
-								<th>Total</th>
+								<th data-toggle="tooltip" data-placement="top" title="Lembur Hari Libur">LB</th>
+								<th data-toggle="tooltip" data-placement="top" title="Lembur Awal">AW</th>
+								<th data-toggle="tooltip" data-placement="top" title="Lembur Akhir">AK</th>
+								<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Pagi">I1</th>
+								<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Sore">I2</th>
+								<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Malam">I3</th>
+								<th data-toggle="tooltip" data-placement="top" title="Total Lembur">Total</th>
 
 							</tr>
 						</thead>
@@ -241,7 +241,7 @@
 						d.id_hemxxmh = id_hemxxmh;
 					}
 				},
-				order: [[ 1, "asc" ]],
+				order: [[ 4, "asc" ],[1, "asc"]],
 				scrollX: true,
 				responsive: false,
 				columns: [
