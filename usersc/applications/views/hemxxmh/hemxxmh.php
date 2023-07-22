@@ -42,6 +42,7 @@
                                 <th>Jabatan</th>
                                 <th>Tanggal Join</th>
                                 <th>Grup HK</th>
+                                <th>Pola Shift</th>
                                 <th>Aktif</th>
                             </tr>
                         </thead>
@@ -498,13 +499,13 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [2,3,4,5]
+						targets: [2,3,4,5,8]
 					},
 					{
 						searchPanes:{
 							show: false,
 						},
-						targets: [0,1,6,7,8]
+						targets: [0,1,6,7,9]
 					}
 				],
 				ajax: {
@@ -537,6 +538,7 @@
 							}
 						}
 					},
+					{ data: "v_hemxxmh_htsptth.pola_shift" },
 					{ 
 						data: "hemxxmh.is_active",
 						render: function (data){
