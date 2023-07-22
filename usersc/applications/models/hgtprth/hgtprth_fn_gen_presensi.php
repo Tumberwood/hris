@@ -1,8 +1,6 @@
 <?php 
     /**
-     * Digunakan untuk INSERT data hari libur nasional hthhdth ke table htlxxrh
-     * Notes:
-     *  Masih kurang where karyawan yang aktif berdasarkan tanggal resign
+     * Digunakan untuk melakukan perhitungan presensi karyawan
      */
     require_once( "../../../../users/init.php" );
 	require_once( "../../../../usersc/lib/DataTables.php" );
@@ -58,7 +56,7 @@
               ->or_where( 'hemjbmh.tanggal_keluar', null)
               ->or_where( 'hemjbmh.tanggal_keluar', $tanggal , '<' );
         } )
-        // ->where('hemxxmh.id', 80 )   // untuk tes
+        // ->where('hemxxmh.id', 69 )   // untuk tes
         ->where('hemxxmh.is_active', 1 )
         ->where('hemjbmh.is_checkclock', 1 ) // skip yang tidak perlu checkclock
         ->where('hemjbmh.id_heyxxmh', $id_heyxxmh ) // skip yang tidak perlu checkclock
@@ -68,7 +66,7 @@
     try{
         $db->transaction();
 
-        if (count($rs_hemxxmh) > 0){
+        if (!empty($rs_hemxxmh)){
             foreach ($rs_hemxxmh as $row_hemxxmh) {
 
                 $id_hemxxmh = $row_hemxxmh['id_hemxxmh'];
@@ -126,8 +124,7 @@
                 
                 // L01: cek apakah sudah ada jadwal
                 // BEGIN cek jadwal 
-                if (count($rs_htssctd) > 0){
-
+                if(!empty($rs_htssctd)){
                     // jika jadwal sudah dibuat
                     $shift_in  = $rs_htssctd[0]['jam_awal'];
                     $shift_out = $rs_htssctd[0]['jam_akhir'];
@@ -177,7 +174,7 @@
                             ->limit(1)
                             ->exec();
                         $rs_htlxxrh = $qs_htlxxrh->fetchAll();
-                        if(count($rs_htlxxrh) > 0){
+                        if(!empty($rs_htlxxrh)){
                             // jika ada absen
                             $status_presensi_in = $rs_htlxxrh[0]['htlgrmh_kode'];
                             $status_presensi_out = $rs_htlxxrh[0]['htlgrmh_kode'];
@@ -248,7 +245,7 @@
                                 ->exec();
                             $rs_htsprtd_clock_in = $qs_htsprtd_clock_in->fetch();
 
-                            if(isset($rs_htsprtd_clock_in['dt_checkclock'])){
+                            if(!empty($rs_htsprtd_clock_in['dt_checkclock'])){
                                 // clock_in dalam rentang
                                 $clock_in           = $rs_htsprtd_clock_in['dt_checkclock'];
                                 $st_clock_in        = 'OK';
@@ -269,7 +266,7 @@
                                     ->exec();
                                 $rs_htsprtd_clock_in_late = $qs_htsprtd_clock_in_late->fetch();
 
-                                if(isset($rs_htsprtd_clock_in_late['dt_checkclock'])){
+                                if(!empty($rs_htsprtd_clock_in_late['dt_checkclock'])){
                                     $clock_in       = $rs_htsprtd_clock_in_late['dt_checkclock'];
                                     $st_clock_in    = 'LATE';  // TERLAMBAT
                                     $status_presensi_in = 'OK';
@@ -297,7 +294,7 @@
                                 ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
                                 ->exec();
                             $rs_htsprtd_clock_out = $qs_htsprtd_clock_out->fetch();
-                            if(isset($rs_htsprtd_clock_out['dt_checkclock'])){
+                            if(!empty($rs_htsprtd_clock_out['dt_checkclock'])){
                                 // clock_out dalam rentang
                                 $clock_out              = $rs_htsprtd_clock_out['dt_checkclock'];
                                 $st_clock_out           = 'OK';
@@ -318,7 +315,7 @@
                                     ->exec();
                                 $rs_htsprtd_clock_out_early = $qs_htsprtd_clock_out_early->fetch();
 
-                                if(isset($rs_htsprtd_clock_out_early['dt_checkclock'])){
+                                if(!empty($rs_htsprtd_clock_out_early['dt_checkclock'])){
                                     $clock_out      = $rs_htsprtd_clock_out_early['dt_checkclock'];
                                     $st_clock_out   = 'EARLY';    // PULANG AWAL
                                     $status_presensi_out = 'OK';
@@ -405,17 +402,17 @@
                                         ->where('htlxxrh.id_htlxxmh', 1)
                                         ->where('htlxxrh.jenis', 2 )    // izin
                                         ->exec();
-                                    $rs_htlxxrh_in = $qs_htlxxrh_in->fetchAll();
+                                    $rs_htlxxrh_in = $qs_htlxxrh_in->fetch();
 
-                                    if(count($rs_htlxxrh_in) > 0){
+                                    if(!empty($rs_htlxxrh_in) ){
                                         // jika ada data izin
                                         // check apakah disetujui
-                                        if($rs_htlxxrh_in[0]['is_approve'] == 1){
-                                            $status_presensi_in = $rs_htlxxrh_in[0]['status_presensi'];
+                                        if($rs_htlxxrh_in['is_approve'] == 1){
+                                            $status_presensi_in = $rs_htlxxrh_in['htlxxmh_kode'];
                                         }else{
                                             $status_presensi_in = 'Izin Belum Disetujui';
                                         }
-                                        $keterangan =  $keterangan . " - " . $rs_htlxxrh_in[0]['htlxxrh_kode'];
+                                        $keterangan =  $keterangan . " - " . $rs_htlxxrh_in['htlxxrh_kode'];
                                     }else{
                                         // tidak membuat izin
                                         $status_presensi_in = 'Belum ada Izin';
@@ -441,17 +438,18 @@
                                         ->where('htlxxrh.id_htlxxmh', 2)
                                         ->where('htlxxrh.jenis', 2 )    // izin
                                         ->exec();
-                                    $rs_htlxxrh_out = $qs_htlxxrh_out->fetchAll();
-
-                                    if(count($rs_htlxxrh_out) > 0){
+                                    $rs_htlxxrh_out = $qs_htlxxrh_out->fetch();
+                                    
+                                    // echo  ' | ' . empty($rs_htlxxrh_out) . ' - ' . $id_hemxxmh . ' | ';
+                                    if(!empty($rs_htlxxrh_out)){
                                         // jika ada data izin
                                         // check apakah disetujui
-                                        if($rs_htlxxrh_out[0]['is_approve'] == 1){
-                                            $status_presensi_out = $rs_htlxxrh_out[0]['status_presensi'];
+                                        if($rs_htlxxrh_out['is_approve'] == 1){
+                                            $status_presensi_out = $rs_htlxxrh_out['htlxxmh_kode'];
                                         }else{
                                             $status_presensi_out = 'Izin Belum Disetujui';
                                         }
-                                        $keterangan =  $keterangan . " - " . $rs_htlxxrh_out[0]['htlxxrh_kode'];
+                                        $keterangan =  $keterangan . " - " . $rs_htlxxrh_out['htlxxrh_kode'];
                                     }else{
                                         // tidak membuat izin
                                         $status_presensi_out = 'Belum ada Izin';
@@ -476,6 +474,85 @@
                     $status_presensi_out    = 'NJ';
                 }
 
+                /**
+                 * Lembur
+                 * 1: Awal
+                 * 2: Akhir
+                 * 4: Hari Libur
+                 * 5: Istirahat1
+                 * 6: Istirahat2
+                 * 7: Istirahat3
+                 */
+                $qs_htoxxrd = $db
+                    ->query('select', 'htoxxrd' )
+                    ->get([
+                        'htoxxrd.id_htotpmh as id_htotpmh',
+                        'htoxxrd.tanggal as tanggal',
+                        'htoxxrd.jam_awal as jam_awal',
+                        'htoxxrd.jam_akhir as jam_akhir',
+                        'htoxxrd.durasi_jam as durasi_jam'
+                    ] )
+                    ->where('htoxxrd.id_hemxxmh', $id_hemxxmh )
+                    ->exec();
+                
+                $rs_htoxxrd = $qs_htoxxrd->fetchAll();
+
+                $jam_awal_lembur_libur 		= null;
+                $jam_akhir_lembur_libur 	= null;
+                $jam_awal_lembur_awal 		= null;
+                $jam_akhir_lembur_awal 		= null;
+                $jam_awal_lembur_akhir 		= null;
+                $jam_akhir_lembur_akhir 	= null;
+                $jam_awal_lembur_istirahat1 = null;
+                $jam_akhir_lembur_istirahat1= null;
+                $jam_awal_lembur_istirahat2 = null;
+                $jam_akhir_lembur_istirahat2= null;
+                $jam_awal_lembur_istirahat3 = null;
+                $jam_akhir_lembur_istirahat3= null;
+                $durasi_lembur_awal         = 0;
+                $durasi_lembur_akhir        = 0;
+                $durasi_lembur_libur        = 0;
+                $durasi_lembur_istirahat1   = 0;
+                $durasi_lembur_istirahat2   = 0;
+                $durasi_lembur_istirahat3   = 0;
+
+                foreach ($rs_htoxxrd as $row_htoxxrd) {
+                    if($row_htoxxrd['id_htotpmh'] == 1){
+                        $jam_awal_lembur_awal 		= $row_htoxxrd['jam_awal'];
+                        $jam_akhir_lembur_awal 		= $row_htoxxrd['jam_akhir'];
+                        $durasi_lembur_awal         = $row_htoxxrd['durasi_jam'];
+                        
+                    }elseif($row_htoxxrd['id_htotpmh'] == 2){
+                        $jam_awal_lembur_akhir 		= $row_htoxxrd['jam_awal'];
+                        $jam_akhir_lembur_akhir 	= $row_htoxxrd['jam_akhir'];
+                        $durasi_lembur_akhir        = $row_htoxxrd['durasi_jam'];
+
+                    }elseif($row_htoxxrd['id_htotpmh'] == 4){
+                        $jam_awal_lembur_libur 		= $row_htoxxrd['jam_awal'];
+                        $jam_akhir_lembur_libur 	= $row_htoxxrd['jam_akhir'];
+                        $durasi_lembur_libur        = $row_htoxxrd['durasi_jam'];
+
+                    }elseif($row_htoxxrd['id_htotpmh'] == 5){
+                        $jam_awal_lembur_istirahat1 = $row_htoxxrd['jam_awal'];
+                        $jam_akhir_lembur_istirahat1= $row_htoxxrd['jam_akhir'];
+                        $durasi_lembur_istirahat1   = $row_htoxxrd['durasi_jam'];
+                                    
+                    }elseif($row_htoxxrd['id_htotpmh'] == 6){
+                        $jam_awal_lembur_istirahat2 = $row_htoxxrd['jam_awal'];
+                        $jam_akhir_lembur_istirahat2= $row_htoxxrd['jam_akhir'];
+                        $durasi_lembur_istirahat2   = $row_htoxxrd['durasi_jam'];
+
+                    }elseif($row_htoxxrd['id_htotpmh'] == 7){
+                        $jam_awal_lembur_istirahat3 = $row_htoxxrd['jam_awal'];
+                        $jam_akhir_lembur_istirahat3= $row_htoxxrd['jam_akhir'];
+                        $durasi_lembur_istirahat3   = $row_htoxxrd['durasi_jam'];
+
+                    }
+                    
+                }
+
+                $durasi_lembur_total = $durasi_lembur_awal + $durasi_lembur_akhir + $durasi_lembur_libur + $durasi_lembur_istirahat1 + $durasi_lembur_istirahat2 + $durasi_lembur_istirahat3;
+
                 $qi_htsprrd = $db
                     ->query('insert', 'htsprrd')
                     ->set('id_hemxxmh',$id_hemxxmh)
@@ -498,8 +575,28 @@
                     ->set('status_presensi_in',$status_presensi_in)
                     ->set('status_presensi_out',$status_presensi_out)
                     ->set('htlxxrh_kode',$htlxxrh_kode)
-                    ->exec();
 
+                    ->set('jam_awal_lembur_libur',$jam_awal_lembur_libur)
+                    ->set('jam_akhir_lembur_libur',$jam_akhir_lembur_libur)
+                    ->set('durasi_lembur_libur',$durasi_lembur_libur)
+
+                    ->set('jam_awal_lembur_awal',$jam_awal_lembur_awal)
+                    ->set('jam_akhir_lembur_awal',$jam_akhir_lembur_awal)
+                    ->set('durasi_lembur_awal',$durasi_lembur_awal)
+                    ->set('jam_awal_lembur_akhir',$jam_awal_lembur_akhir)
+                    ->set('jam_akhir_lembur_akhir',$jam_akhir_lembur_akhir)
+                    ->set('durasi_lembur_akhir',$durasi_lembur_akhir)
+                    ->set('jam_awal_lembur_istirahat1',$jam_awal_lembur_istirahat1)
+                    ->set('jam_akhir_lembur_istirahat1',$jam_akhir_lembur_istirahat1)
+                    ->set('durasi_lembur_istirahat1',$durasi_lembur_istirahat1)
+                    ->set('jam_awal_lembur_istirahat2',$jam_awal_lembur_istirahat2)
+                    ->set('jam_akhir_lembur_istirahat2',$jam_akhir_lembur_istirahat2)
+                    ->set('durasi_lembur_istirahat2',$durasi_lembur_istirahat2)
+                    ->set('jam_awal_lembur_istirahat3',$jam_awal_lembur_istirahat3)
+                    ->set('jam_akhir_lembur_istirahat3',$jam_akhir_lembur_istirahat3)
+                    ->set('durasi_lembur_istirahat3',$durasi_lembur_istirahat3)
+                    ->set('durasi_lembur_total', $durasi_lembur_total)
+                    ->exec();
             }
         }
 
@@ -528,4 +625,33 @@
     // tampilkan results
     require_once( "../../../../usersc/helpers/fn_ajax_results.php" );
 
+    /**
+     * tes query
+     * fetchAll()
+     * Jika hasil query DB blank, maka 
+     *  empty()     = 1
+     *  is_null()   = blank
+     *  isset       = 1
+     * 
+     * fetch()
+     */
+    // $qs_htlxxrh = $db
+    //     ->query('select', 'htlxxrh' )
+    //     ->get([
+    //         'htlxxrh.kode as htlxxrh_kode',
+    //         'htlxxmh_kode as htlxxmh_kode',
+    //         'htlgrmh.kode as htlgrmh_kode'
+    //     ] )
+    //     ->join('htlxxmh','htlxxmh.id = htlxxrh.id_htlxxmh','LEFT' )
+    //     ->join('htlgrmh','htlgrmh.id = htlxxmh.id_htlgrmh','LEFT' )
+    //     ->where('htlxxrh.id_hemxxmh', $id_hemxxmh)
+    //     ->where('htlxxrh.tanggal', $tanggal )
+    //     ->where('htlxxrh.jenis', 1 )
+    //     ->limit(1)
+    //     ->exec();
+    // $rs_htlxxrh = $qs_htlxxrh->fetchAll();
+    // print_r ($rs_htlxxrh);
+    // echo 'empty: ' . empty($rs_htlxxrh);
+    // echo 'is_null: ' . is_null($rs_htlxxrh);
+    // echo 'isset: ' . isset($rs_htlxxrh);
 ?>

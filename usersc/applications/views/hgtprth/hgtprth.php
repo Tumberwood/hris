@@ -161,9 +161,44 @@
 						tanggal = edthgtprth.field('hgtprth.tanggal').val();
 						if(!tanggal || tanggal == ''){
 							edthgtprth.field('hgtprth.tanggal').error( 'Wajib diisi!' );
+						}else{
+							tanggal_ymd = moment(tanggal).format('YYYY-MM-DD');
 						}
 					}
 					// END of validasi hgtprth.tanggal
+
+					// BEGIN of validasi hgtprth.id_heyxxmh
+					if ( ! edthgtprth.field('hgtprth.id_heyxxmh').isMultiValue() ) {
+						id_heyxxmh = edthgtprth.field('hgtprth.id_heyxxmh').val();
+						if(!id_heyxxmh || id_heyxxmh == ''){
+							edthgtprth.field('hgtprth.id_heyxxmh').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi hgtprth.id_heyxxmh
+
+					// BEGIN of cek unik hgtprth.id_heyxxmh dan hgtprth.tanggal
+					if(action == 'create'){
+						id_hgtprth = 0;
+					}
+					
+					$.ajax( {
+						url: '../../../helpers/validate_fn_unique.php',
+						dataType: 'json',
+						type: 'POST',
+						async: false,
+						data: {
+							table_name: 'hgtprth',
+							nama_field: 'tanggal,id_heyxxmh',
+							nama_field_value: '"'+tanggal_ymd+'",' + id_heyxxmh,
+							id_transaksi: id_hgtprth
+						},
+						success: function ( json ) {
+							if(json.data.count == 1){
+								edthgtprth.field('hgtprth.id_heyxxmh').error( 'Data tidak boleh kembar!' );
+							}
+						}
+					} );
+					// END of cek unik hgtprth.id_heyxxmh dan hgtprth.tanggal
 				}
 				
 				if ( edthgtprth.inError() ) {
