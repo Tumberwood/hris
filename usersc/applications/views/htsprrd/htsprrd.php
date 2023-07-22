@@ -66,6 +66,7 @@
 								<th rowspan=2>Department</th>
 								<th rowspan=2>Jabatan</th>
 								<th rowspan=2>Tanggal</th>
+								<th rowspan=2>Cek</th>
 								<th rowspan=2>Shift In</th>
 								<th rowspan=2>Shift Out</th>
 								<th rowspan=2>Jadwal</th>
@@ -103,6 +104,7 @@
 						</thead>
 						<tfoot>
 							<tr>
+								<th></th>
 								<th></th>
 								<th></th>
 								<th></th>
@@ -210,7 +212,7 @@
 			//start datatables
 			tblhtsprrd = $('#tblhtsprrd').DataTable( {
 				searchPanes:{
-					layout: 'columns-4',
+					layout: 'columns-4'
 				},
 				dom:
 					"<'row'<'col-lg-4 col-md-4 col-sm-12 col-xs-12'l><'col-lg-8 col-md-8 col-sm-12 col-xs-12'f>>" +
@@ -220,15 +222,15 @@
 				columnDefs:[
 					{
 						searchPanes:{
-							show: true,
+							show: true
 						},
-						targets: [1,2,4,7,10,11,12,13]
+						targets: [1,2,4,5,11,12,13,14]
 					},
 					{
 						searchPanes:{
-							show: false,
+							show: false
 						},
-						targets: [0,3,5,6,8,9,14,15,16,17,18,19,20,21,22,23,24,25,26]
+						targets: [0,3,5,6,7,8,9,10,15,16,17,18,19,20,21,22,23,24,25,26,27]
 					}
 				],
 				ajax: {
@@ -250,6 +252,22 @@
 					{ data: "hodxxmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "htsprrd.tanggal" },
+					{ 
+						data: null ,
+						render: function (data, type, row) {
+							cek = 0;
+							if(row.htsprrd.st_jadwal == 'NJ'){
+								cek = cek + 1;
+							}
+
+							if(cek > 0){
+								return '<span class="text-danger">' + cek + '</span>';
+							}else{
+								return cek;
+							}
+					   	},
+						class: "text-right"
+					},
 					{ 
 						data: "htsprrd.shift_in",
 						visible: false 
@@ -276,37 +294,79 @@
 					{ data: "htsprrd.jam_akhir_lembur_akhir" },
 					{ 
 						data: "htsprrd.durasi_lembur_libur",
-						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						render: function (data){
+							if (data > 0){
+								return incfFormatNumberWithDecimal(data,1);
+							}else {
+								return '';
+							}
+						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.durasi_lembur_awal" ,
-						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						render: function (data){
+							if (data > 0){
+								return incfFormatNumberWithDecimal(data,1);
+							}else {
+								return '';
+							}
+						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.durasi_lembur_akhir" ,
-						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						render: function (data){
+							if (data > 0){
+								return incfFormatNumberWithDecimal(data,1);
+							}else {
+								return '';
+							}
+						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.durasi_lembur_istirahat1" ,
-						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						render: function (data){
+							if (data > 0){
+								return incfFormatNumberWithDecimal(data,1);
+							}else {
+								return '';
+							}
+						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.durasi_lembur_istirahat2" ,
-						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						render: function (data){
+							if (data > 0){
+								return incfFormatNumberWithDecimal(data,1);
+							}else {
+								return '';
+							}
+						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.durasi_lembur_istirahat3" ,
-						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						render: function (data){
+							if (data > 0){
+								return incfFormatNumberWithDecimal(data,1);
+							}else {
+								return '';
+							}
+						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.durasi_lembur_total" ,
-						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						render: function (data){
+							if (data > 0){
+								return incfFormatNumberWithDecimal(data,1);
+							}else {
+								return '';
+							}
+						},
 						class: "text-right"
 					}
 					
@@ -336,13 +396,13 @@
 					var api       = this.api(), data;
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					
-					s_lb = api.column( 20 ).data().sum();
-					s_aw = api.column( 21 ).data().sum();
-					s_ak = api.column( 22 ).data().sum();
-					s_i1 = api.column( 23 ).data().sum();
-					s_i2 = api.column( 24 ).data().sum();
-					s_i3 = api.column( 25 ).data().sum();
-					s_tl = api.column( 26 ).data().sum();
+					s_lb = api.column( 21 ).data().sum();
+					s_aw = api.column( 22 ).data().sum();
+					s_ak = api.column( 23 ).data().sum();
+					s_i1 = api.column( 24 ).data().sum();
+					s_i2 = api.column( 25 ).data().sum();
+					s_i3 = api.column( 26 ).data().sum();
+					s_tl = api.column( 27 ).data().sum();
 
 					$( '#s_lb' ).html( numFormat(s_lb) );
 					$( '#s_aw' ).html( numFormat(s_aw) );

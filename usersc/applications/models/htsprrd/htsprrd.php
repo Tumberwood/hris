@@ -58,8 +58,24 @@
 			// Field::inst( 'htsprrd.tanggaljam_awal_t2' ),
 			// Field::inst( 'htsprrd.tanggaljam_akhir_t1' ),
 			// Field::inst( 'htsprrd.tanggaljam_akhir_t2' ),
-			Field::inst( 'htsprrd.clock_in' ),
-			Field::inst( 'htsprrd.clock_out' ),
+			Field::inst( 'htsprrd.clock_in')
+				->getFormatter( 'Format::datetime', array(
+					'from' => 'Y-m-d H:i:s',
+					'to' =>   'd M Y H:i:s'
+				) )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y H:i:s',
+					'to' =>   'Y-m-d H:i:s'
+				) ),
+			Field::inst( 'htsprrd.clock_out' )
+				->getFormatter( 'Format::datetime', array(
+					'from' => 'Y-m-d H:i:s',
+					'to' =>   'd M Y H:i:s'
+				) )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y H:i:s',
+					'to' =>   'Y-m-d H:i:s'
+				) ),
 			Field::inst( 'htsprrd.st_clock_in' ),
 			Field::inst( 'htsprrd.st_clock_out' ),
 			Field::inst( 'htsprrd.status_presensi_in' ),
