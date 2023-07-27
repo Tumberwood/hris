@@ -242,8 +242,7 @@
 
                 $data = array(
                     'message'=>'Generate Jadwal Berhasil Dibuat', 
-                    'type_message'=>'success',
-                    'error' => $e
+                    'type_message'=>'success'
                 );
                 
             }catch(PDOException $e){
