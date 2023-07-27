@@ -89,6 +89,7 @@
 		// ------------- end of default variable
 		var notifyprogress;
 		is_need_approval = 1;
+		// is_need_generate_kode = 1;
 		
 		var id_hemxxmh_old = 0, id_htlxxmh_old = 0;
 		
@@ -407,6 +408,8 @@
 								return '';
 							}else if(data == 1){
 								return '<i class="fa fa-check text-navy"></i>';
+							}else if(data == 2){
+								return '<i class="fa fa-undo text-muted"></i>';
 							}else if(data == -9){
 								return '<i class="fa fa-remove text-danger"></i>';
 							}
