@@ -70,6 +70,7 @@
 		$qd_htlxxrh = $db
 			->query('delete', 'htlxxrh')
 			->where('id_transaksi', $id_htpxxth )
+			->where('jenis', 2 )
 			->exec();
 
 	}elseif($state == -9){
@@ -77,6 +78,7 @@
 			->query('update', 'htlxxrh')
 			->set('is_approve', $state)
 			->where('id_transaksi', $id_htpxxth )
+			->where('jenis', 2 )
 			->exec();
 	}
 
