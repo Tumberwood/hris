@@ -10,6 +10,13 @@
 		DataTables\Editor,
 		DataTables\Editor\Query,
 		DataTables\Editor\Result;
+
+	// BEGIN definisi variable untuk fn_ajax_results.php
+	$data      = array();
+	$rs_opt    = array();
+	$c_rs_opt  = 0;
+	$morePages = 0;
+	// END definisi variable untuk fn_ajax_results.php
 	
 	$id_htpxxth = $_POST['id_transaksi_h'];
 	$state = $_POST['state'];

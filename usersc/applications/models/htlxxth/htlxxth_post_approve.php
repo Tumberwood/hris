@@ -101,8 +101,4 @@
 			->where('id_transaksi', $id_htlxxth )
 			->exec();
 	}
-
-
-	// tampilkan results
-    require_once( "../../../../usersc/helpers/fn_ajax_results.php" );
 ?>
