@@ -239,6 +239,12 @@
                 $siklus_ke = 0;
     
                 $db->commit(); 
+
+                $data = array(
+                    'message'=>'Generate Jadwal Berhasil Dibuat', 
+                    'type_message'=>'success',
+                    'error' => $e
+                );
                 
             }catch(PDOException $e){
                 // rollback on error
