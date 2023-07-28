@@ -255,8 +255,20 @@
 					{ 
 						data: null ,
 						render: function (data, type, row) {
-							cek = 0;
-							if(row.htsprrd.st_jadwal == 'NJ'){
+							var cek = 0;
+							// console.log(row.htsprrd.status_presensi_in);
+							status_presensi_in = row.htsprrd.status_presensi_in;
+							status_presensi_out = row.htsprrd.status_presensi_out;
+							if(
+								status_presensi_in == 'NJ' || 
+								status_presensi_in == 'AL' || 
+								status_presensi_in == 'Belum ada Izin' || 
+								status_presensi_in == 'Izin Belum Disetujui' || 
+								status_presensi_in == 'No CI' || 
+								status_presensi_out == 'Belum ada Izin' || 
+								status_presensi_out == 'Izin Belum Disetujui' || 
+								status_presensi_out == 'No CO'
+								){
 								cek = cek + 1;
 							}
 
@@ -265,6 +277,7 @@
 							}else{
 								return cek;
 							}
+							return row.htsprrd.status_presensi_in;
 					   	},
 						class: "text-right"
 					},
@@ -419,6 +432,11 @@
 			} );
 
 			tblhtsprrd.searchPanes.container().appendTo( '#searchPanes1' );
+
+			tblhtsprrd.on( 'select', function( e, dt, type, indexes ) {
+				htsprrd_data    = tblhtsprrd.row( { selected: true } ).data().htsprrd;
+				console.log(htsprrd_data.status_presensi_in);
+			} );
 
 			$("#frmhtsprrd").submit(function(e) {
 				e.preventDefault();
