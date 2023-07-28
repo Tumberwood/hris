@@ -17,6 +17,14 @@
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-content">
+				<div class="alert alert-info alert-dismissable">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+					Sebelum melakukan generate presensi, pastikan data-data ini sudah diinput
+					<ul>
+						<li>Jadwal & Check clock</li>
+						<li>Izin, Absensi, Overtime, Cuti Bersama, Libur Nasional (Wajib Approve)</li>
+					</ul>
+				</div>
 				<div class="table-responsive">
                     <table id="tblhgtprth" class="table table-striped table-bordered table-hover nowrap" width="100%">
                         <thead>
