@@ -22,10 +22,8 @@
 		->debug(true)
 		->fields(
 			Field::inst( 'htsprtd.id' ),
-			Field::inst( 'htsprtd.kode' )
-				->setFormatter( function ( $val ) {
-					return strtoupper($val);
-				} ),
+			Field::inst( 'htsprtd.id_hemxxmh' ),
+			Field::inst( 'htsprtd.kode' ),
 			Field::inst( 'htsprtd.nama' )
 				->setFormatter( function ( $val ) {
 					return ucwords($val);
@@ -42,14 +40,21 @@
 				->setValue($_SESSION['user']),
 			Field::inst( 'htsprtd.is_approve' ),
 			Field::inst( 'htsprtd.is_defaultprogram' ),
+			Field::inst( 'htsprtd.tipe' )
+				->set( Field::SET_CREATE )
+				->setValue( 'manual' ),
 			Field::inst( 'htsprtd.tanggal' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === '0000-00-00' || $val === null){
 						echo '';
-						}else{
-							return date( 'd M Y', strtotime( $val ) );
+					}else{
+						return date( 'd M Y', strtotime( $val ) );
 					}
-				} ),
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y',
+					'to' =>   'Y-m-d'
+				) ),
 			Field::inst( 'htsprtd.jam' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === null){
