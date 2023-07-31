@@ -1,4 +1,7 @@
 <?php
+    /**
+     * tes case SLO/2305/0082
+     */
     require_once( "../../../../users/init.php" );
     require_once( "../../../../usersc/lib/DataTables.php" );
     require_once( "../../../../usersc/helpers/datatables_fn_debug.php" );
@@ -20,6 +23,7 @@
         $db->transaction();
 
         if($state == 1){
+            // BEGIN ambil data htoemtd
             $qs_htoemtd = $db
                 ->query('select', 'htoemtd' )
                 ->get([
@@ -34,16 +38,22 @@
                     'htoemtd.is_istirahat as is_istirahat',
                     'htoemtd.jam_awal as jam_awal',
                     'htoemtd.jam_akhir as jam_akhir',
-                    'htoemtd.durasi_lembur_jam as durasi_jam'
+                    'htoemtd.durasi_lembur_jam as durasi_lembur_jam',
+                    'htoemtd.durasi_lembur_menit as durasi_lembur_menit',
+                    'hemjbmh.id_hesxxmh as id_hesxxmh'
                 ] )
                 ->join('htoxxth','htoxxth.id = htoemtd.id_htoxxth','LEFT' )
+                ->join('hemjbmh','hemjbmh.id_hemxxmh = htoemtd.id_hemxxmh','LEFT' )
                 ->where('htoemtd.is_active', 1 )
                 ->where('htoxxth.is_active', 1 )
                 ->where('htoxxth.id', $_POST['id_transaksi_h'] )
                 ->exec();
             $rs_htoemtd = $qs_htoemtd->fetchAll();
+            // END ambil data htoemtd
 
             foreach ($rs_htoemtd as $row_htoemtd) {
+                $durasi_lembur_menit = $row_htoemtd['durasi_lembur_jam'] * 60;
+                // INSERT htoxxrd
                 $qi_htoxxrd = $db
                     ->query('insert', 'htoxxrd')
                     ->set( 'id_hemxxmh', $row_htoemtd['id_hemxxmh'] )
@@ -56,7 +66,8 @@
                     ->set( 'tanggal', $row_htoemtd['tanggal'] )
                     ->set( 'jam_awal', $row_htoemtd['jam_awal'] )
                     ->set( 'jam_akhir', $row_htoemtd['jam_akhir'] )
-                    ->set( 'durasi_jam', $row_htoemtd['durasi_jam'] )
+                    ->set( 'durasi_lembur_jam', $row_htoemtd['durasi_lembur_jam'] )
+                    ->set( 'durasi_lembur_menit', $durasi_lembur_menit )
                     ->set( 'is_istirahat', $row_htoemtd['is_istirahat'] )
                     ->exec();
             }
@@ -71,10 +82,10 @@
         }
 
         $db->commit();
-        $data = array(
-            'message'=> 'Data Berhasil Di Insert' , 
-            'type_message'=>'success' 
-        );
+        // $data = array(
+        //     'message'=> 'Data Berhasil Di Insert' , 
+        //     'type_message'=>'success' 
+        // );
     }catch(PDOException $e){
         // rollback on error
         $db->rollback();
