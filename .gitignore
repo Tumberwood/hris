@@ -3,8 +3,8 @@
 *.bak
 /users/init.php
 /usersc/lib/config.php
+/usersc/files
 /data
-/files
 /@
 z_us_root.php
 README.md
