@@ -35,15 +35,6 @@
 						'system_path' => Upload::DB_SYSTEM_PATH,
 						'extn' 		  => Upload::DB_EXTN
 					) )
-					->dbClean( function ( $data ) {
-						// Remove the files from the file system
-						for ( $i=0, $ien=count($data) ; $i<$ien ; $i++ ) {
-							unlink( $data[$i]['system_path'] );
-						}
-		
-						// Have Editor remove the rows from the database
-						return true;
-					} )
 					->validator( Validate::fileSize( 500000, 'Ukuran lampiran maksimal 500Kb' ) )
 					->validator( Validate::fileExtensions( array( 'png', 'jpg', 'jpeg'), "Hanya boleh format png, jpg atau jpeg" ) )
 				),
@@ -68,8 +59,30 @@
 			Field::inst( 'htsprtd.is_approve' ),
 			Field::inst( 'htsprtd.is_defaultprogram' ),
 			Field::inst( 'htsprtd.tipe' ),
-			Field::inst( 'htsprtd.tanggal' ),
-			Field::inst( 'htsprtd.jam' ),
+			Field::inst( 'htsprtd.tanggal' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y',
+					'to' =>   'Y-m-d'
+				) ),
+			Field::inst( 'htsprtd.jam' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '00:00:00' || $val === null){
+						echo '';
+					}else{
+						return date( 'H:i', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'H:i',
+					'to' =>   'H:i:s'
+				) ),
 			Field::inst( 'htsprtd.lat' ),
 			Field::inst( 'htsprtd.lng' ),
 			
