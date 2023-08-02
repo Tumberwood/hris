@@ -1,5 +1,5 @@
 <script>
-    // BEGIN geolocation html5
+    // start get location html5
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
@@ -9,8 +9,8 @@
     }
 
     function showPosition(position) {
-        $('#lat').val(position.coords.latitude);
-        $('#lng').val(position.coords.longitude);
+        edthtsprtd.field('htsprtd.lat').val(position.coords.latitude);
+        edthtsprtd.field('htsprtd.lng').val(position.coords.longitude);
     }
 
     function showError(error) {
@@ -28,7 +28,7 @@
                 geo_error = "An unknown error occurred."
                 break;
         }
-        edtproyek_t.error(geo_error);
+        edthtsprtd.error(geo_error);
     }
-    // END geolocation html5
+    // end get location html5
 </script>

@@ -15,43 +15,77 @@
 		DataTables\Editor\Result;
 	
 	// ----------- do not erase
-	$show_inactive_status = $_POST['show_inactive_status__blank'];
+	$show_inactive_status = $_POST['show_inactive_status_htsprtd'];
 	// -----------
 	
-	$editor = Editor::inst( $db, '_blank' )
+	$editor = Editor::inst( $db, 'htsprtd' )
 		->debug(true)
 		->fields(
-			Field::inst( '_blank.id' ),
-			Field::inst( '_blank.kode' )
+			Field::inst( 'htsprtd.id' ),
+			Field::inst( 'htsprtd.id_hemxxmh' )
+				->set( Field::SET_CREATE )
+				->setValue( $_SESSION['id_hemxxmh'] ),
+			Field::inst( 'htsprtd.id_files_foto' )
+				->setFormatter( Format::ifEmpty( 0 ) )
+				->upload( Upload::inst(  $abs_us_root.$us_url_root.'usersc/files/__ID__.__EXTN__' )
+					->db( 'files', 'id', array(
+						'filename'    => Upload::DB_FILE_NAME,
+						'filesize'    => Upload::DB_FILE_SIZE,
+						'web_path'    => Upload::DB_WEB_PATH,
+						'system_path' => Upload::DB_SYSTEM_PATH,
+						'extn' 		  => Upload::DB_EXTN
+					) )
+					->dbClean( function ( $data ) {
+						// Remove the files from the file system
+						for ( $i=0, $ien=count($data) ; $i<$ien ; $i++ ) {
+							unlink( $data[$i]['system_path'] );
+						}
+		
+						// Have Editor remove the rows from the database
+						return true;
+					} )
+					->validator( Validate::fileSize( 500000, 'Ukuran lampiran maksimal 500Kb' ) )
+					->validator( Validate::fileExtensions( array( 'png', 'jpg', 'jpeg'), "Hanya boleh format png, jpg atau jpeg" ) )
+				),
+			Field::inst( 'htsprtd.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);
 				} ),
-			Field::inst( '_blank.nama' )
+			Field::inst( 'htsprtd.nama' )
 				->setFormatter( function ( $val ) {
 					return ucwords($val);
 				} ),
-			Field::inst( '_blank.keterangan' ),
-			Field::inst( '_blank.is_active' ),
-			Field::inst( '_blank.created_by' )
+			Field::inst( 'htsprtd.keterangan' ),
+			Field::inst( 'htsprtd.is_active' ),
+			Field::inst( 'htsprtd.created_by' )
 				->set( Field::SET_CREATE )
 				->setValue($_SESSION['user']),
-			Field::inst( '_blank.created_on' )
+			Field::inst( 'htsprtd.created_on' )
 				->set( Field::SET_CREATE ),
-			Field::inst( '_blank.last_edited_by' )
+			Field::inst( 'htsprtd.last_edited_by' )
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
-			Field::inst( '_blank.is_approve' ),
-			Field::inst( '_blank.is_defaultprogram' )
-		);
+			Field::inst( 'htsprtd.is_approve' ),
+			Field::inst( 'htsprtd.is_defaultprogram' ),
+			Field::inst( 'htsprtd.tipe' ),
+			Field::inst( 'htsprtd.tanggal' ),
+			Field::inst( 'htsprtd.jam' ),
+			Field::inst( 'htsprtd.lat' ),
+			Field::inst( 'htsprtd.lng' ),
+			
+			Field::inst( 'CONCAT(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' )
+		)
+		->leftJoin( 'hemxxmh','hemxxmh.id','=','htsprtd.id_hemxxmh' )
+		->where( 'htsprtd.id_hemxxmh', $_SESSION['id_hemxxmh'] );
 	
 	// do not erase
 	// function show / hide inactive document
 	if ($show_inactive_status == 0){
 		$editor
-			->where( '_blank.is_active', 1);
+			->where( 'htsprtd.is_active', 1);
 	}
 	
-	include( "_blank_extra.php" );
+	include( "htsprtd_ol_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
 	$editor
