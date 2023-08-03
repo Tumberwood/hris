@@ -3,7 +3,7 @@
 *.bak
 /users/init.php
 /usersc/lib/config.php
-/usersc/files
+/usersc/files/
 /data
 /@
 z_us_root.php
