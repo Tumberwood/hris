@@ -344,7 +344,7 @@
 						}
 					},
 					{
-						label: "Tanggal",
+						label: "Tanggal Join",
 						name: "hemjbmh.tanggal_masuk",
 						type: "datetime",
 						def: function () { 

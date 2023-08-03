@@ -414,12 +414,14 @@
 						$('td', row).addClass('text-danger');
 					}
 				}
+				
 			} );
 			
 			tblhtoxxth.on( 'init', function () {
 				// atur hak akses
 				tbl_details = [tblhtoemtd];
 				CekInitHeaderHD(tblhtoxxth, tbl_details);
+
 			} );
 			
 			tblhtoxxth.on( 'select', function( e, dt, type, indexes ) {

@@ -102,6 +102,7 @@
 						->query('insert', 'htsprtd')
 						->set('kode',$kode)
 						->set('nama',$nama)
+						->set('tipe', 'upload')
 						->set('tanggal',$tanggal)
 						->set('jam',$jam)
 						->exec();

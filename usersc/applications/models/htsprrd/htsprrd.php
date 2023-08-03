@@ -100,7 +100,7 @@
 			Field::inst( 'htsprrd.jam_awal_lembur_istirahat3' ),
 			Field::inst( 'htsprrd.jam_akhir_lembur_istirahat3' ),
 			Field::inst( 'htsprrd.durasi_lembur_istirahat3' ),
-			Field::inst( 'htsprrd.durasi_lembur_total' ),
+			Field::inst( 'htsprrd.durasi_lembur_total_jam' ),
 			
 			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'hetxxmh.nama' ),

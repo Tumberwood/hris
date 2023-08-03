@@ -55,6 +55,8 @@ if($_SESSION['user'] < 101){
 	$_SESSION['str_arr_ha_gbrxxmh'] = 0;
 	
 	$_SESSION['where_data_permission'] 	  = 0;
+
+	$_SESSION['id_hemxxmh'] = 1;
 	
 	Redirect::to($us_url_root.'usersc/applications/views/core/dashboard.php');
 
@@ -75,6 +77,21 @@ if($_SESSION['user'] < 101){
 	if($count_udpxxsh > 0){
 		$result_udpxxsh = $query_udpxxsh->results();
 		$_SESSION['where_data_permission'] = $result_udpxxsh[0]->data_permission;
+
+		// BEGIN get data hemxxmh
+		$qs_hemxxmh = "
+			SELECT 
+				id
+			FROM hemxxmh a
+			WHERE 
+				a.id_users = " . $_SESSION['user'];
+		$query_hemxxmh = $db->query($qs_hemxxmh);
+		$c_ha_hemxxmh = $query_hemxxmh->count();
+		if($c_ha_gcpxxmh  > 0){
+			$rs_hemxxmh = $query_gcpxxmh->results();
+			$_SESSION['id_hemxxmh'] = $rs_hemxxmh[0]>id;
+		}
+		// END get data hemxxmh
 
 		// BEGIN get hak akses gcpxxmh
 		// $qs_gcpxxmh = "
@@ -127,6 +144,8 @@ if($_SESSION['user'] < 101){
 		// 	$_SESSION['str_arr_ha_gbrxxmh'] 	= (0);
 		// }
 		// END get hak akses gbrxxmh
+
+
 
 		Redirect::to($us_url_root.'usersc/applications/views/core/dashboard.php');
 

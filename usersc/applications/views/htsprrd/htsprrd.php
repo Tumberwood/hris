@@ -372,7 +372,7 @@
 						class: "text-right"
 					},
 					{ 
-						data: "htsprrd.durasi_lembur_total" ,
+						data: "htsprrd.durasi_lembur_total_jam" ,
 						render: function (data){
 							if (data > 0){
 								return incfFormatNumberWithDecimal(data,1);

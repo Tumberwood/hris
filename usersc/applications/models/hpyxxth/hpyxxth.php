@@ -15,35 +15,36 @@
 		DataTables\Editor\Result;
 	
 	// ----------- do not erase
-	$show_inactive_status = $_POST['show_inactive_status_htsprtd'];
+	$show_inactive_status = $_POST['show_inactive_status_hpyxxth'];
 	// -----------
 	
-	$editor = Editor::inst( $db, 'htsprtd' )
+	$editor = Editor::inst( $db, 'hpyxxth' )
 		->debug(true)
 		->fields(
-			Field::inst( 'htsprtd.id' ),
-			Field::inst( 'htsprtd.id_hemxxmh' ),
-			Field::inst( 'htsprtd.kode' ),
-			Field::inst( 'htsprtd.nama' )
+			Field::inst( 'hpyxxth.id' ),
+			Field::inst( 'hpyxxth.id_heyxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hpyxxth.kode' )
+				->setFormatter( function ( $val ) {
+					return strtoupper($val);
+				} ),
+			Field::inst( 'hpyxxth.nama' )
 				->setFormatter( function ( $val ) {
 					return ucwords($val);
 				} ),
-			Field::inst( 'htsprtd.keterangan' ),
-			Field::inst( 'htsprtd.is_active' ),
-			Field::inst( 'htsprtd.created_by' )
+			Field::inst( 'hpyxxth.keterangan' ),
+			Field::inst( 'hpyxxth.is_active' ),
+			Field::inst( 'hpyxxth.created_by' )
 				->set( Field::SET_CREATE )
 				->setValue($_SESSION['user']),
-			Field::inst( 'htsprtd.created_on' )
+			Field::inst( 'hpyxxth.created_on' )
 				->set( Field::SET_CREATE ),
-			Field::inst( 'htsprtd.last_edited_by' )
+			Field::inst( 'hpyxxth.last_edited_by' )
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
-			Field::inst( 'htsprtd.is_approve' ),
-			Field::inst( 'htsprtd.is_defaultprogram' ),
-			Field::inst( 'htsprtd.tipe' )
-				->set( Field::SET_CREATE )
-				->setValue( 'manual' ),
-			Field::inst( 'htsprtd.tanggal' )
+			Field::inst( 'hpyxxth.is_approve' ),
+			Field::inst( 'hpyxxth.is_defaultprogram' ),
+			Field::inst( 'hpyxxth.tanggal_awal' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === '0000-00-00' || $val === null){
 						echo '';
@@ -55,43 +56,30 @@
 					'from' => 'd M Y',
 					'to' =>   'Y-m-d'
 				) ),
-			Field::inst( 'htsprtd.jam' )
+			Field::inst( 'hpyxxth.tanggal_akhir' )
 				->getFormatter( function ( $val, $data, $opts ) {
-					if ($val === null){
+					if ($val === '0000-00-00' || $val === null){
 						echo '';
 					}else{
-						return date( 'H:i', strtotime( $val ) );
+						return date( 'd M Y', strtotime( $val ) );
 					}
 				} )
 				->setFormatter( 'Format::datetime', array(
-					'from' => 'H:i',
-					'to' =>   'H:i:s'
+					'from' => 'd M Y',
+					'to' =>   'Y-m-d'
 				) ),
-
-			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' )
+			Field::inst( 'heyxxmh.nama' )
 		)
-		->leftJoin( 'hemxxmh','hemxxmh.kode_finger','=','htsprtd.kode' );
+		->leftJoin( 'heyxxmh','heyxxmh.id','=','hpyxxth.id_heyxxmh' );
 	
 	// do not erase
 	// function show / hide inactive document
 	if ($show_inactive_status == 0){
 		$editor
-			->where( 'htsprtd.is_active', 1);
+			->where( 'hpyxxth.is_active', 1);
 	}
-
-	if($_POST['id_hemxxmh'] > 0){
-		$editor->where( 'hemxxmh.id', $_POST['id_hemxxmh'] );
-	}
-
-	if($_POST['start_date'] != '' && $_POST['end_date'] != ''){
-		$editor
-			->where( 'htsprtd.tanggal', $_POST['start_date'], '>=' )
-			->where( 'htsprtd.tanggal', $_POST['end_date'], '<=' );
-	}
-
-
 	
-	include( "htsprtd_extra.php" );
+	include( "hpyxxth_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
 	$editor
