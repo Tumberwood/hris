@@ -16,6 +16,6 @@
 			// script diletakkan disini
 		})
 		->on('postRemove',function( $editor, $id, $values ) {
-			// script diletakkan disini
+			// script diletakkan disini dd
 		});
 ?>
