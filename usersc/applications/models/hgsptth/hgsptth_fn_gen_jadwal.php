@@ -206,7 +206,21 @@ if( $rs_htststd['jam_awal'] < $rs_htststd['jam_akhir']){
 }
 $temp_tanggaljam_akhir_t2 = $temp_tanggaljam_akhir;
 $tanggaljam_akhir_t2 = $temp_tanggaljam_akhir_t2->addMinutes($rs_htststd['menit_toleransi_akhir_out'])->format('Y-m-d H:i:s');
-                                
+
+// BEGIN concat tanggal jam istirahat (tanpa toleransi)
+$tanggaljam_awal_istirahat = new Carbon( $tanggal_ymd . ' ' . $rs_htststd['jam_awal_istirahat'] );
+
+if( $rs_htststd['jam_awal_istirahat'] < $rs_htststd['jam_akhir_istirahat']){
+    $temp_tanggaljam_akhir_istirahat    = new Carbon( $tanggal_ymd . ' ' . $rs_htststd['jam_akhir_istirahat'] );
+}else{
+    $temp_tanggaljam_akhir_istirahat    = new Carbon( $tanggal_ymd . ' ' . $rs_htststd['jam_akhir_istirahat'] );
+    $temp_tanggaljam_akhir_istirahat->addDays(1);
+}
+$tanggaljam_akhir_istirahat = $temp_tanggaljam_akhir_istirahat->format('Y-m-d H:i:s');
+// END concat tanggal jam istirahat (tanpa toleransi)
+
+
+
                         // BEGIN insert jadwal htssctd
                         $qi_htssctd = $db
                             ->query('insert', 'htssctd')
@@ -228,6 +242,8 @@ $tanggaljam_akhir_t2 = $temp_tanggaljam_akhir_t2->addMinutes($rs_htststd['menit_
                             ->set('tanggaljam_akhir_t1',$tanggaljam_akhir_t1)
                             ->set('tanggaljam_akhir',$tanggaljam_akhir)
                             ->set('tanggaljam_akhir_t2',$tanggaljam_akhir_t2)
+                            ->set('tanggaljam_awal_istirahat',$tanggaljam_awal_istirahat)
+                            ->set('tanggaljam_akhir_istirahat',$tanggaljam_akhir_istirahat)
 
                             ->exec();
                         // END insert jadwal htssctd
