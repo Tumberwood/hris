@@ -115,7 +115,7 @@
         var edthemfmmd, tblhemfmmd, show_inactive_status_hemfmmd = 0, id_hemfmmd;
 		// ------------- end of default variable
 
-		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0, id_hevxxmh_old = 0;
+		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0, id_hevxxmh_old = 0, id_heyxxmh_old = 0, id_hesxxmh_old = 0;
 		var id_hedlvmh_old = 0;
 
 		$(document).ready(function() {
@@ -344,6 +344,80 @@
 						}
 					},
 					{
+						label: "Tipe",
+						name: "hemjbmh.id_heyxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/heyxxmh/heyxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_heyxxmh: 0,
+										id_heyxxmh_old: id_heyxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "Status",
+						name: "hemjbmh.id_hesxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hesxxmh/hesxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hesxxmh: 0,
+										id_hesxxmh_old: id_hesxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
 						label: "Tanggal Join",
 						name: "hemjbmh.tanggal_masuk",
 						type: "datetime",
@@ -449,10 +523,10 @@
 					// END of validasi hemjbmh.id_hosxxmh 
 
 					// BEGIN of validasi hemjbmh.id_hevxxmh 
-					id_hevxxmh = edthemxxmh.field('hemjbmh.id_hevxxmh').val();
-					if(!id_hevxxmh || id_hevxxmh == ''){
-						edthemxxmh.field('hemjbmh.id_hevxxmh').error( 'Wajib diisi!' );
-					}
+					// id_hevxxmh = edthemxxmh.field('hemjbmh.id_hevxxmh').val();
+					// if(!id_hevxxmh || id_hevxxmh == ''){
+					// 	edthemxxmh.field('hemjbmh.id_hevxxmh').error( 'Wajib diisi!' );
+					// }
 					// END of validasi hemjbmh.id_hevxxmh 
 
 					// BEGIN of validasi hemjbmh.id_hetxxmh 
@@ -602,6 +676,8 @@
 				id_hosxxmh_old   = data_hemjbmh.id_hosxxmh;
 				id_hevxxmh_old   = data_hemjbmh.id_hevxxmh;
 				id_hetxxmh_old   = data_hemjbmh.id_hetxxmh;
+				id_heyxxmh_old   = data_hemjbmh.id_heyxxmh;
+				id_hesxxmh_old   = data_hemjbmh.id_hesxxmh;
 				
 				// atur hak akses
 				tbl_details = [tblhemfmmd];
@@ -612,12 +688,7 @@
 			tblhemxxmh.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
 				id_hemxxmh = 0;
-				
-				id_hovxxmh_old   = 0;
-				id_hodxxmh_old   = 0;
-				id_hosxxmh_old   = 0;
-				id_hevxxmh_old   = 0;
-				id_hetxxmh_old   = 0;
+				id_hovxxmh_old   = 0, id_hodxxmh_old   = 0, id_hosxxmh_old   = 0, id_hevxxmh_old   = 0, id_hetxxmh_old   = 0, id_heyxxmh_old   = 0, id_hesxxmh_old   = 0;
 
 				// atur hak akses
 				tbl_details = [tblhemfmmd];
