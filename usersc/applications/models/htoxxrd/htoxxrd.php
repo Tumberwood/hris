@@ -58,7 +58,7 @@
 				} ),
 			Field::inst( 'htoxxrd.jam_awal' ),
 			Field::inst( 'htoxxrd.jam_akhir' ),
-			Field::inst( 'htoxxrd.durasi_jam' ),
+			Field::inst( 'htoxxrd.durasi_lembur_jam' ),
 			Field::inst( 'htoxxrd.durasi_jam_final' ),
 			Field::inst( 'htoxxrd.upah_lembur' ),
 			Field::inst( 'htoxxrd.is_istirahat' ),

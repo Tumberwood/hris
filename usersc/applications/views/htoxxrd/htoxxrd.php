@@ -162,7 +162,7 @@
 					endRender: function ( rows, group ) {
 						var sumJam = rows
 							.data()
-							.pluck('htoxxrd.durasi_jam') 
+							.pluck('htoxxrd.durasi_lembur_jam') 
 							.reduce( function (a, b) {
 								return parseFloat(a) + parseFloat(b);
 							}, 0);
@@ -221,7 +221,7 @@
 					{ data: "htoxxrd.jam_awal" },
 					{ data: "htoxxrd.jam_akhir" },
 					{ 
-						data: "htoxxrd.durasi_jam" ,
+						data: "htoxxrd.durasi_lembur_jam" ,
 						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
 						class: "text-right"
 					},
