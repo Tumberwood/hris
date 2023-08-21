@@ -290,7 +290,6 @@
 				is_jurnal      = udpxxsh_data.is_jurnal;
 				is_active      = udpxxsh_data.is_active;
                 id_users       = udpxxsh_data.id_users;
-                id_gbrxxmh_old = udpxxsh_data.id_gbrxxmh;
                 id_users_old   = udpxxsh_data.id_users;
 				
 				// atur hak akses
@@ -305,7 +304,6 @@
 				// reload dipanggil di function CekDeselectHeader
 				id_udpxxsh = 0;
                 id_users = 0;
-                id_gbrxxmh_old = 0;
                 id_users_old = 0;
 
 				// atur hak akses
@@ -461,14 +459,18 @@
 				id_transaksi_d    = id_udpbrsd; // dipakai untuk general
 				is_active_d       = udpbrsd_data.is_active;
 
+                id_gbrxxmh_old = udpxxsh_data.id_gbrxxmh; 
+
 				// atur hak akses
 				CekSelectDetailHD(tbludpxxsh, tbludpbrsd );
 			} );
 
 			tbludpbrsd.on( 'deselect', function() {
 				// set variable on deselect
-				id_udpbrsd  = '';
+				id_udpbrsd  = 0;
 				is_active_d = 0;
+
+                id_gbrxxmh_old = 0;
 				
 				// atur hak akses
 				CekDeselectDetailHD(tbludpxxsh, tbludpbrsd );
