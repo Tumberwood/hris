@@ -58,7 +58,12 @@
         ->where('users.active',1)
         ->where('users.id', 100, '>' )
         ->where('users.id', $id_users_old, '<>' )
-        ->where('users_extend.is_hakakses', 1, '<>' )
+        
+        ->where( function ( $r ) {
+            $r
+                ->or_where('users_extend.is_hakakses', 1, '<>' )
+                ->or_where('users_extend.is_hakakses', null, '=' );
+        } )
         ->where( function ( $r ) {
             $q = $_GET['search'];
             $r->where('users.username', '%' . $q . '%', 'LIKE' );
