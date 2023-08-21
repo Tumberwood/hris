@@ -25,6 +25,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Username</th>
+                                <th>Nama</th>
                                 <th>Akses Data</th>
                                 <th>Keterangan</th>
                             </tr>
@@ -235,6 +236,7 @@
 				columns: [
 					{ data: "udpxxsh.id",visible:false },
 					{ data: "users.username" },
+					{ data: "hemxxmh.nama" },
 					{ 
 						data: "udpxxsh.data_permission",
 						render: function (data){

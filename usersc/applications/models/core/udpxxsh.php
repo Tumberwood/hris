@@ -38,9 +38,11 @@
 			Field::inst( 'udpxxsh.created_on' )
 				->set( Field::SET_CREATE ),
 			Field::inst( 'udpxxsh.data_permission' ),
+			Field::inst( 'hemxxmh.nama' ),
 			Field::inst( 'users.username' )
 				->set( Field::SET_NONE )
 		)
+		->leftJoin( 'hemxxmh','hemxxmh.id_users','=','udpxxsh.id_users' )
 		->leftJoin( 'users','users.id','=','udpxxsh.id_users' )
 		->leftJoin( 'users_extend','users_extend.id','=','users.id' );
 	
