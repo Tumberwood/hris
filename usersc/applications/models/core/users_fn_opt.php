@@ -34,10 +34,11 @@
         $qs_users_self = $db
             ->query('select', 'users')
             ->get([
-                'id as id',
-                'username as text'
+                'users.id as id',
+                'concat(users.username," - ",hemxxmh.nama) as text'
             ])
-            ->where('id', $id_users_old )
+            ->join('hemxxmh','hemxxmh.id_users = users.id','LEFT' )
+            ->where('users.id', $id_users_old )
             ->exec();
         $rs_users_self = $qs_users_self->fetchAll();
     }else{
@@ -49,14 +50,18 @@
     $qs_users_all = $db
         ->query('select', 'users')
         ->get([
-            'id as id',
-            'username as text'
+            'users.id as id',
+            'concat(users.username," - ",hemxxmh.nama) as text'
         ])
-        ->where('active',1)
-        ->where('id', $id_users_old, '<>' )
+        ->join('users_extend','users_extend.id = users.id','LEFT' )
+        ->join('hemxxmh','hemxxmh.id_users = users.id','LEFT' )
+        ->where('users.active',1)
+        ->where('users.id', 100, '>' )
+        ->where('users.id', $id_users_old, '<>' )
+        ->where('users_extend.is_hakakses', 1, '<>' )
         ->where( function ( $r ) {
             $q = $_GET['search'];
-            $r->where('username', '%' . $q . '%', 'LIKE' );
+            $r->where('users.username', '%' . $q . '%', 'LIKE' );
         } )
         ->limit($resultCount)
         ->offset($offset)
@@ -79,6 +84,32 @@
     // END finalisasi paginasi select2
     
     // tampilkan results
-    require_once( "../../../../usersc/helpers/fn_ajax_results.php" );
+    // tidak pakai fn_ajax_result.php
+    // karena ada username yang depannya 0, sehingga hilang kena JSON_NUMERIC_CHECK
+
+    // BEGIN results akhir
+    $is_debug = true;
+    if($is_debug == true){
+        $results = array(
+            "debug" => $debug,
+            "data" => $data,
+            "results" => $rs_opt,
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+    }else{
+        $results = array(
+            "data" => $data,
+            "results" => $rs_opt,
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+    }
+    
+    // END results akhir
+
+    echo json_encode($results);
 
 ?>
