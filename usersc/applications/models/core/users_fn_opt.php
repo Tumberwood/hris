@@ -52,7 +52,7 @@
         ->get([
             'users.id as id',
             'if(
-                hemxxmh.nama = null,
+                hemxxmh.nama is null,
                 concat(users.username," - ",users.fname, " ", users.lname),
                 concat(users.username," - ",hemxxmh.nama)
             ) as text'
