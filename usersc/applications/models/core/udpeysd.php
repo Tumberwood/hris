@@ -20,35 +20,35 @@
 	if ( ! isset($_POST['id_udpxxsh']) || ! is_numeric($_POST['id_udpxxsh']) ) {
 		echo json_encode( [ "data" => [] ] );
 	}else{
-		$editor = Editor::inst( $db, 'udpbrsd' )
+		$editor = Editor::inst( $db, 'udpeysd' )
 			->debug(true)
 			->fields(
-				Field::inst( 'udpbrsd.id' ),
-				Field::inst( 'udpbrsd.id_udpxxsh' ),
-				Field::inst( 'udpbrsd.id_gbrxxmh' )
+				Field::inst( 'udpeysd.id' ),
+				Field::inst( 'udpeysd.id_udpxxsh' ),
+				Field::inst( 'udpeysd.id_heyxxmh' )
 					->setFormatter( Format::ifEmpty( 0 ) ),
-				Field::inst( 'udpbrsd.kode' ),
-				Field::inst( 'udpbrsd.nama' ),
-				Field::inst( 'udpbrsd.keterangan' ),
-				Field::inst( 'udpbrsd.is_active' ),
-				Field::inst( 'udpbrsd.created_by' )
+				Field::inst( 'udpeysd.kode' ),
+				Field::inst( 'udpeysd.nama' ),
+				Field::inst( 'udpeysd.keterangan' ),
+				Field::inst( 'udpeysd.is_active' ),
+				Field::inst( 'udpeysd.created_by' )
 					->set( Field::SET_CREATE )
 					->setValue($_SESSION['user']),
-				Field::inst( 'udpbrsd.created_on' )
+				Field::inst( 'udpeysd.created_on' )
 					->set( Field::SET_CREATE ),
-				Field::inst( 'udpbrsd.last_edited_by' )
+				Field::inst( 'udpeysd.last_edited_by' )
 					->set( Field::SET_EDIT )
 					->setValue($_SESSION['user']),
-				Field::inst( 'gbrxxmh.nama' )
+				Field::inst( 'heyxxmh.nama' )
 			)
-			->leftJoin( 'gbrxxmh','gbrxxmh.id','=','udpbrsd.id_gbrxxmh' )
-			->where('udpbrsd.id_udpxxsh',$_POST['id_udpxxsh']);
+			->leftJoin( 'heyxxmh','heyxxmh.id','=','udpeysd.id_heyxxmh' )
+			->where('udpeysd.id_udpxxsh',$_POST['id_udpxxsh']);
 		
 		// do not erase
 		// function show / hide inactive document
 		if ($show_inactive_status == 0){
 			$editor
-				->where( 'udpbrsd.is_active', 1);
+				->where( 'udpeysd.is_active', 1);
 		}
 		
 		// input log
