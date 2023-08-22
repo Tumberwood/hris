@@ -54,7 +54,7 @@
             'if(
                 hemxxmh.nama = null,
                 concat(users.username," - ",users.fname, " ", users.lname),
-                concat(users.username," - ",hemxxmh.nama),
+                concat(users.username," - ",hemxxmh.nama)
             ) as text'
         ])
         ->join('users_extend','users_extend.id = users.id','LEFT' )
