@@ -92,7 +92,7 @@ if($_SESSION['user'] < 101){
 			$_SESSION['id_hemxxmh'] = $rs_hemxxmh[0]>id;
 		}
 		// END get data hemxxmh
-		// tes
+		
 		// BEGIN get hak akses gcpxxmh
 		// $qs_gcpxxmh = "
 		// 	SELECT 
@@ -144,6 +144,32 @@ if($_SESSION['user'] < 101){
 		// 	$_SESSION['str_arr_ha_gbrxxmh'] 	= (0);
 		// }
 		// END get hak akses gbrxxmh
+
+		// BEGIN get hak akses heyxxmh
+		$qs_heyxxmh = "
+			SELECT 
+				id_heyxxmh
+			FROM udpeysd a
+			WHERE 
+				a.is_active = 1 AND 
+				a.id_udpxxsh = " . $result_udpxxsh[0]->id;
+		$query_heyxxmh = $db->query($qs_heyxxmh);
+		$c_ha_heyxxmh = $query_heyxxmh->count();
+
+		if($c_ha_heyxxmh  > 0){
+			$rs_ha_heyxxmh = $query_heyxxmh->results();
+			
+			$arr_ha_heyxxmh=array();
+			foreach ($rs_ha_heyxxmh as $key => $value) {	
+				array_push($arr_ha_heyxxmh,$rs_ha_heyxxmh[$key]->id_heyxxmh);
+			}
+			$_SESSION['arr_ha_heyxxmh'] 		= $arr_ha_heyxxmh;
+			$_SESSION['str_arr_ha_heyxxmh'] 	= implode(",",$_SESSION['arr_ha_heyxxmh']);
+		}else{
+			$_SESSION['arr_ha_heyxxmh'] 		= [0];
+			$_SESSION['str_arr_ha_heyxxmh'] 	= (0);
+		}
+		// END get hak akses heyxxmh
 
 
 
