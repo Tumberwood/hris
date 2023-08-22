@@ -92,7 +92,7 @@ if($_SESSION['user'] < 101){
 			$_SESSION['id_hemxxmh'] = $rs_hemxxmh[0]>id;
 		}
 		// END get data hemxxmh
-
+		// tes
 		// BEGIN get hak akses gcpxxmh
 		// $qs_gcpxxmh = "
 		// 	SELECT 
