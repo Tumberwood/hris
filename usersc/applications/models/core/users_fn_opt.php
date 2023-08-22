@@ -51,7 +51,11 @@
         ->query('select', 'users')
         ->get([
             'users.id as id',
-            'concat(users.username," - ",hemxxmh.nama) as text'
+            'if(
+                hemxxmh.nama = null,
+                concat(users.username," - ",users.fname, " ", users.lname),
+                concat(users.username," - ",hemxxmh.nama),
+            ) as text'
         ])
         ->join('users_extend','users_extend.id = users.id','LEFT' )
         ->join('hemxxmh','hemxxmh.id_users = users.id','LEFT' )
