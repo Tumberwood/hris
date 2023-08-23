@@ -95,6 +95,9 @@
 		var id_hemxxmh_old = 0;
 		var kode_finger;
 
+		id_heyxxmh = "<?php echo $_SESSION['str_arr_ha_heyxxmh']; ?>";
+		console.log(id_heyxxmh);
+
 		// BEGIN datepicker init
 		$('#periode').datepicker({
 			setDate: new Date(),
@@ -211,6 +214,7 @@
 								data: function (params) {
 									var query = {
 										id_hemxxmh_old: id_hemxxmh_old,
+										id_heyxxmh: id_heyxxmh,
 										search: params.term || '',
 										page: params.page || 1
 									}

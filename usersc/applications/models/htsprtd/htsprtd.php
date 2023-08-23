@@ -70,7 +70,10 @@
 
 			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' )
 		)
-		->leftJoin( 'hemxxmh','hemxxmh.kode_finger','=','htsprtd.kode' );
+		->leftJoin( 'hemxxmh as peg','peg.id','=','htsprtd.id_hemxxmh' )
+		->leftJoin('hemjbmh','hemjbmh.id_hemxxmh','=','peg.id','LEFT' )
+		->leftJoin( 'hemxxmh','hemxxmh.kode_finger','=','htsprtd.kode' )
+		;
 	
 	// do not erase
 	// function show / hide inactive document
@@ -89,7 +92,12 @@
 			->where( 'htsprtd.tanggal', $_POST['end_date'], '<=' );
 	}
 
-
+	if ($_SESSION['user'] > 100){
+		$editor
+			->where( function ( $q ) {
+				$q->where('hemjbmh.id_heyxxmh', '(' . $_SESSION['str_arr_ha_heyxxmh'] . ')', 'IN', false );
+			} );
+	}
 	
 	include( "htsprtd_extra.php" );
 	include( "../../../helpers/edt_log.php" );
