@@ -28,6 +28,20 @@
         $id_heyxxmh_old = 0;
     }
 
+    if (isset($_GET['id_heyxxmh_session'])) {
+        $id_heyxxmh_session = $_GET['id_heyxxmh_session'];
+        if ($id_heyxxmh_session > 0) {
+            $w_id_heyxxmh_session = $id_heyxxmh_session;
+            $s_id_heyxxmh_session = '=';
+        } else {
+            $w_id_heyxxmh_session = -1;
+            $s_id_heyxxmh_session = '<>';
+        }
+    } else {
+        $w_id_heyxxmh_session = -1;
+        $s_id_heyxxmh_session = '<>';
+    }
+    
     // BEGIN query self.
     // Hanya dipanggil jika field ada nilai id nya
     if($id_heyxxmh_old > 0){
@@ -53,6 +67,7 @@
             'nama as text'
         ])
         ->where('is_active',1)
+        ->where('id', $w_id_heyxxmh_session, $s_id_heyxxmh_session)
         ->where('id', $id_heyxxmh_old, '<>' )
         ->where( function ( $r ) {
             $q = $_GET['search'];
