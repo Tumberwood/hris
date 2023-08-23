@@ -22,6 +22,29 @@
         $id_hemxxmh_old = 0;
     }
 
+    if (isset($_GET['id_heyxxmh'])) {
+        $id_heyxxmh = $_GET['id_heyxxmh'];
+        if ($id_heyxxmh > 0) {
+            if (strpos($id_heyxxmh, ',') !== false) {
+                // Jika terdapat tanda koma, maka pecah string menjadi array
+                $id_values = explode(',', $id_heyxxmh);
+                $w_id_heyxxmh = '(' . implode(',', $id_values) . ')';
+                $s_id_heyxxmh = 'IN';
+            } else {
+                // Jika hanya satu nilai atau bukan array, gunakan default
+                $w_id_heyxxmh = '(' . $id_heyxxmh . ')';
+                $s_id_heyxxmh = 'IN';
+            }
+        } else {
+            $w_id_heyxxmh = '(-1)';
+            $s_id_heyxxmh = 'NOT IN';
+        }
+    } else {
+        // Handle the case where id_heyxxmh is not defined
+        $w_id_heyxxmh = '(-1)';
+        $s_id_heyxxmh = 'NOT IN';
+    }
+
     // BEGIN query options self.
     // Hanya dipanggil jika field ada nilai id nya
     if($id_hemxxmh_old > 0){
@@ -51,6 +74,7 @@
 		->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
 		->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
         ->where('hemxxmh.is_active',1)
+        ->where('hemjbmh.id_heyxxmh', $w_id_heyxxmh, $s_id_heyxxmh, false )
         ->where('hemxxmh.id', $id_hemxxmh_old, '<>' )
         ->where( function ( $r ) {
             $q = $_GET['search'];
