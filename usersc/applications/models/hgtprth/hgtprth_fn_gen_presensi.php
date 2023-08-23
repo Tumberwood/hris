@@ -53,8 +53,8 @@
         ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
         ->where( function ( $q ) use ($tanggal) {
             $q
-              ->where( 'hemjbmh.tanggal_keluar', '0000-00-00')
-              ->or_where( 'hemjbmh.tanggal_keluar', null)
+            //   ->where( 'hemjbmh.tanggal_keluar', '0000-00-00')
+              ->where( 'hemjbmh.tanggal_keluar', null)
               ->or_where( 'hemjbmh.tanggal_keluar', $tanggal , '<' );
         } )
         // ->where('hemxxmh.id', 69 )   // untuk tes
