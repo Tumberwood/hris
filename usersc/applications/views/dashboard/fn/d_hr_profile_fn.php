@@ -1,4 +1,8 @@
 <script>
+    /**
+     * Untuk load data-data dashboard
+     */
+
     // BEGIN highchart generate options
     Highcharts.setOptions({
         chart: {
