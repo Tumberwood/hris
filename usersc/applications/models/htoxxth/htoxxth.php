@@ -75,6 +75,13 @@
 			->where( 'htoxxth.is_active', 1);
 	}
 	
+	if ($_SESSION['user'] > 100){
+		$editor
+			->where( function ( $q ) {
+				$q->where('htoxxth.id_heyxxmh', '(' . $_SESSION['str_arr_ha_heyxxmh'] . ')', 'IN', false );
+			} );
+	}
+	
 	include( "htoxxth_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
