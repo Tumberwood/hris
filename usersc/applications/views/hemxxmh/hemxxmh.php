@@ -10,6 +10,9 @@
 	$nama_tabel       = 'hemxxmh';
     $nama_tabels_d 	= [];
     $nama_tabels_d[0] = 'hemfmmd';
+    $nama_tabels_d[1] = 'hadxxtd';
+    $nama_tabels_d[2] = 'htlxxth';
+    $nama_tabels_d[3] = 'htpxxth';
 ?>
 
 <!-- begin content here -->
@@ -51,7 +54,9 @@
 					<div class="tabs-container">
 						<ul class="nav nav-tabs" role="tablist">
 							<li><a class="nav-link active" data-toggle="tab" href="#tabhemfmmd"> Family</a></li>
-							<!-- <li><a class="nav-link" data-toggle="tab" href="#tab_blankdetail_2"> Tab 2</a></li> -->
+							<li><a class="nav-link" data-toggle="tab" href="#tabhadxxtd "> Pelanggaran</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhtlxxth"> Absensi</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhtpxxth"> Izin</a></li>
 						</ul>
 						<div class="tab-content">
 							<div role="tabpanel" id="tabhemfmmd" class="tab-pane active">
@@ -75,21 +80,65 @@
 
 								</div>
 							</div>
-							<div role="tabpanel" id="tab_blankdetail_2" class="tab-pane">
+							<div role="tabpanel" id="tabhadxxtd" class="tab-pane">
 								<div class="panel-body">
 									<div class="table-responsive">
-										<table id="tbl_blankdetail_2" class="table table-striped table-bordered table-hover nowrap" width="100%">
+										<table id="tblhadxxtd" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
 												<tr>
 													<th>ID</th>
-													<th>id__blankheader</th>
+													<th>id_hemxxmh</th>
 													<th>Kode</th>
-													<th>Nama</th>
+													<th>Jenis</th>
+													<th>Pelanggaran</th>
+													<th>Tanggal Berlaku</th>
 													<th>Keterangan</th>
 												</tr>
 											</thead>
 										</table>
-									</div>
+									</div> <!-- end of table -->
+
+								</div>
+							</div>
+							<div role="tabpanel" id="tabhtlxxth" class="tab-pane">
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table id="tblhtlxxth" class="table table-striped table-bordered table-hover nowrap" width="100%">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>id_hemxxmh</th>
+													<th>Kode</th>
+													<th>Tanggal Awal</th>
+													<th>Tanggal Akhir</th>
+                                					<th>Jenis</th>
+													<th>Keterangan</th>
+												</tr>
+											</thead>
+										</table>
+									</div> <!-- end of table -->
+
+								</div>
+							</div>
+							<div role="tabpanel" id="tabhtpxxth" class="tab-pane">
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table id="tblhtpxxth" class="table table-striped table-bordered table-hover nowrap" width="100%">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>id_hemxxmh</th>
+													<th>Kode</th>
+													<th>Tanggal </th>
+                                					<th>Jenis</th>
+													<th>Jam Awal</th>
+													<th>Jam Akhir</th>
+													<th>Keterangan</th>
+												</tr>
+											</thead>
+										</table>
+									</div> <!-- end of table -->
+
 								</div>
 							</div>
 						</div>
@@ -113,6 +162,9 @@
 		// ------------- default variable, do not erase
 		var edthemxxmh, tblhemxxmh, show_inactive_status_hemxxmh = 0, id_hemxxmh;
         var edthemfmmd, tblhemfmmd, show_inactive_status_hemfmmd = 0, id_hemfmmd;
+        var edthadxxtd, tblhadxxtd, show_inactive_status_hadxxtd = 0, id_hadxxtd;
+        var edthtlxxth, tblhtlxxth, show_inactive_status_htlxxth = 0, id_htlxxth;
+        var edthtpxxth, tblhtpxxth, show_inactive_status_htpxxth = 0, id_htpxxth;
 		// ------------- end of default variable
 
 		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0, id_hevxxmh_old = 0, id_heyxxmh_old = 0, id_hesxxmh_old = 0;
@@ -657,7 +709,7 @@
 
 			tblhemxxmh.on( 'init', function () {
 				// atur hak akses
-				tbl_details = [tblhemfmmd];
+				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth];
 				CekInitHeaderHD(tblhemxxmh, tbl_details);
 			} );
 			
@@ -680,7 +732,7 @@
 				id_hesxxmh_old   = data_hemjbmh.id_hesxxmh;
 				
 				// atur hak akses
-				tbl_details = [tblhemfmmd];
+				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth];
 				CekSelectHeaderHD(tblhemxxmh, tbl_details);
 
 			} );
@@ -691,7 +743,7 @@
 				id_hovxxmh_old   = 0, id_hodxxmh_old   = 0, id_hosxxmh_old   = 0, id_hevxxmh_old   = 0, id_hetxxmh_old   = 0, id_heyxxmh_old   = 0, id_hesxxmh_old   = 0;
 
 				// atur hak akses
-				tbl_details = [tblhemfmmd];
+				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth];
 				CekDeselectHeaderHD(tblhemxxmh, tbl_details);
 			} );
 			
@@ -959,6 +1011,873 @@
 			} );
 
 // --------- end _detail --------------- //
+// --------- start _detail --------------- //
+
+			//start datatables editor
+			edthadxxtd = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/hemxxmh/hadxxtd.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hadxxtd = show_inactive_status_hadxxtd;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				table: "#tblhadxxtd",
+				formOptions: {
+					main: {
+						focus: 3
+					}
+				},
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "hadxxtd",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "hadxxtd.is_active",
+                        type: "hidden",
+						def: 1
+					}, 	
+					{
+						label: "Nama",
+						name: "hadxxtd.id_hemxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hemxxmh_old: id_hemxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "Pelanggaran <sup class='text-danger'>*<sup>",
+						name: "hadxxtd.id_havxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/havxxmh/havxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_havxxmh_old: id_havxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "Tindakan <sup class='text-danger'>*<sup>",
+						name: "hadxxtd.id_hadxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hadxxmh/hadxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hadxxmh_saran: id_hadxxmh_saran,
+										id_hadxxmh_old: id_hadxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "Tanggal Mulai Berlaku",
+						name: "hadxxtd.tanggal_awal",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},
+					{
+						label: "Tanggal Selesai Berlaku",
+						name: "hadxxtd.tanggal_akhir",
+						type: "datetime",
+						format: 'DD MMM YYYY'
+					},
+					{
+						label: "Bukti",
+						name: "hadxxtd.id_files_bukti",
+						type: "upload",
+						display: function ( fileId, counter ) {
+							if(fileId > 0){
+								return '<img src="'+edthadxxtd.file( 'files', fileId ).web_path+'"/>';
+							}
+						},
+						noFileText: 'Belum ada lampiran'
+					},
+					{
+						label: "Dokumen",
+						name: "hadxxtd.id_files_dokumen",
+						type: "upload",
+						display: function ( fileId, counter ) {
+							if(fileId > 0){
+								return '<img src="'+edthadxxtd.file( 'files', fileId ).web_path+'"/>';
+							}
+						},
+						noFileText: 'Belum ada lampiran'
+					},
+					{
+						label: "Keterangan",
+						name: "hadxxtd.keterangan",
+						type: "textarea"
+					}
+				]
+			} );
+			
+			edthadxxtd.on( 'preOpen', function( e, mode, action ) {
+				edthadxxtd.field('hadxxtd.id_hemxxmh').val(id_hemxxmh);
+				
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthadxxtd.field('start_on').val(start_on);
+
+				if(action == 'create'){
+					tblhadxxtd.rows().deselect();
+				}
+			});
+
+            edthadxxtd.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+			});
+			
+            edthadxxtd.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+					// BEGIN of validasi hadxxtd.id_hemxxmh
+					if ( ! edthadxxtd.field('hadxxtd.id_hemxxmh').isMultiValue() ) {
+						id_hemxxmh = edthadxxtd.field('hadxxtd.id_hemxxmh').val();
+						if(!id_hemxxmh || id_hemxxmh == ''){
+							edthadxxtd.field('hadxxtd.id_hemxxmh').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi hadxxtd.id_hemxxmh
+
+					// BEGIN of validasi hadxxtd.id_havxxmh
+					if ( ! edthadxxtd.field('hadxxtd.id_havxxmh').isMultiValue() ) {
+						id_havxxmh = edthadxxtd.field('hadxxtd.id_havxxmh').val();
+						if(!id_havxxmh || id_havxxmh == ''){
+							edthadxxtd.field('hadxxtd.id_havxxmh').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi hadxxtd.id_havxxmh
+
+					// BEGIN of validasi hadxxtd.id_hadxxmh
+					if ( ! edthadxxtd.field('hadxxtd.id_hadxxmh').isMultiValue() ) {
+						id_hadxxmh = edthadxxtd.field('hadxxtd.id_hadxxmh').val();
+						if(!id_hadxxmh || id_hadxxmh == ''){
+							edthadxxtd.field('hadxxtd.id_hadxxmh').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi hadxxtd.id_hadxxmh
+				}
+				
+				if ( edthadxxtd.inError() ) {
+					return false;
+				}
+			});
+
+			edthadxxtd.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthadxxtd.field('finish_on').val(finish_on);
+			});
+			
+			edthadxxtd.on( 'postSubmit', function (e, json, data, action, xhr) {
+				// event setelah Create atau Edit, dibedakan dari parameter action
+				// action : "create" | "edit"
+				// do something
+			} );
+			
+			//start datatables
+			tblhadxxtd = $('#tblhadxxtd').DataTable( {
+				ajax: {
+					url: "../../models/hemxxmh/hadxxtd.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hadxxtd = show_inactive_status_hadxxtd;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				order: [[ 0, "desc" ]],
+				columns: [
+					{ data: "hadxxtd.id",visible:false },
+					{ data: "hadxxtd.id_hemxxmh",visible:false },
+					{ data: "hadxxtd.kode" },
+					{ data: "hadxxmh.nama" },
+					{ data: "havxxmh.nama" },
+					{ data: "hadxxtd.tanggal_awal" },
+					{ data: "hadxxtd.keterangan" }
+				],
+				buttons: [
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_hadxxtd';
+						$table       = 'tblhadxxtd';
+						$edt         = 'edthadxxtd';
+						$show_status = '_hadxxtd';
+						$table_name  = $nama_tabels_d[1];
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
+						$arr_buttons_action 	= [];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+				],
+				rowCallback: function( row, data, index ) {
+					if ( data.hadxxtd.is_active == 0 ) {
+						$('td', row).addClass('text-danger');
+					}
+				}
+			} );
+
+			tblhadxxtd.on( 'draw', function( e, settings ) { 
+				// atur hak akses
+				cek_c_detail= 1;
+				CekDrawDetailHD(tblhemxxmh, tblhadxxtd, 'hadxxtd' );
+				CekDrawDetailHDFinal(tblhemxxmh);
+			} );
+
+			tblhadxxtd.on( 'select', function( e, dt, type, indexes ) {
+				data_hadxxtd = tblhadxxtd.row( { selected: true } ).data().hadxxtd;
+				id_hadxxtd   = data_hadxxtd.id;
+				id_transaksi_d    = id_hadxxtd; // dipakai untuk general
+				is_active_d       = data_hadxxtd.is_active;
+
+				id_hedlvmh_old       = data_hadxxtd.id_hadxxtd;
+				
+				// atur hak akses
+				CekSelectDetailHD(tblhemxxmh, tblhadxxtd );
+			} );
+
+			tblhadxxtd.on( 'deselect', function() {
+				id_hadxxtd = 0;
+				is_active_d = 0;
+				id_hedlvmh_old = 0;
+				
+				// atur hak akses
+				CekDeselectDetailHD(tblhemxxmh, tblhadxxtd );
+			} );
+
+// --------- end _detail --------------- //
+// --------- start _detail --------------- //
+
+			//start datatables editor
+			edthtlxxth = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/hemxxmh/htlxxth.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_htlxxth = show_inactive_status_htlxxth;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				table: "#tblhtlxxth",
+				formOptions: {
+					main: {
+						focus: 3
+					}
+				},
+				fields: [ 
+					{
+						label: "kategori_dokumen",
+						name: "kategori_dokumen",
+						type: "hidden"
+					},	{
+						label: "kategori_dokumen_value",
+						name: "kategori_dokumen_value",
+						type: "hidden"
+					},	{
+						label: "field_tanggal",
+						name: "field_tanggal",
+						type: "hidden"
+					},	{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "htlxxth",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "htlxxth.is_active",
+                        type: "hidden",
+						def: 1
+					},	{
+						label: "Nama <sup class='text-danger'>*<sup>",
+						name: "htlxxth.id_hemxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hemxxmh_old: id_hemxxmh_old,
+										id_heyxxmh: id_heyxxmh,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},	{
+						label: "Jenis <sup class='text-danger'>*<sup>",
+						name: "htlxxth.id_htlxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/htlxxmh/htlxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_htlxxmh_old: id_htlxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},	{
+						label: "Tanggal Awal <sup class='text-danger'>*<sup>",
+						name: "htlxxth.tanggal_awal",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},	{
+						label: "Tanggal Akhir <sup class='text-danger'>*<sup>",
+						name: "htlxxth.tanggal_akhir",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					}, 	{
+						label: "Keterangan <sup class='text-danger'>*<sup>",
+						name: "htlxxth.keterangan",
+						type: "textarea"
+					},	{
+						label: "Lampiran",
+						name: "htlxxth.id_files_lampiran",
+						type: "upload",
+						display: function ( fileId, counter ) {
+							if(fileId > 0){
+								return '<img src="'+edthtlxxth.file( 'files', fileId ).web_path+'"/>';
+							}
+						},
+						noFileText: 'Belum ada gambar'
+					}
+				]
+			} );
+			
+			edthtlxxth.on( 'preOpen', function( e, mode, action ) {
+				edthtlxxth.field('htlxxth.id_hemxxmh').val(id_hemxxmh);
+				
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthtlxxth.field('start_on').val(start_on);
+
+				if(action == 'create'){
+					tblhtlxxth.rows().deselect();
+				}
+			});
+
+            edthtlxxth.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+			});
+			
+            edthtlxxth.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+				}
+				
+				if ( edthtlxxth.inError() ) {
+					return false;
+				}
+			});
+
+			edthtlxxth.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthtlxxth.field('finish_on').val(finish_on);
+			});
+			
+			edthtlxxth.on( 'postSubmit', function (e, json, data, action, xhr) {
+				// event setelah Create atau Edit, dibedakan dari parameter action
+				// action : "create" | "edit"
+				// do something
+			} );
+			
+			//start datatables
+			tblhtlxxth = $('#tblhtlxxth').DataTable( {
+				ajax: {
+					url: "../../models/hemxxmh/htlxxth.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_htlxxth = show_inactive_status_htlxxth;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				order: [[ 4, "desc" ]],
+				order: [[ 2, "desc" ]],
+				columns: [
+					{ data: "htlxxth.id",visible:false },
+					{ data: "htlxxth.id_hemxxmh",visible:false },
+					{ data: "htlxxth.kode" },
+					{ data: "htlxxth.tanggal_awal" },
+					{ data: "htlxxth.tanggal_akhir" },
+					{ data: "htlxxmh.nama" },
+					{ data: "htlxxth.keterangan" },
+				],
+				buttons: [
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_htlxxth';
+						$table       = 'tblhtlxxth';
+						$edt         = 'edthtlxxth';
+						$show_status = '_htlxxth';
+						$table_name  = $nama_tabels_d[2];
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
+						$arr_buttons_action 	= [];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+				],
+				rowCallback: function( row, data, index ) {
+					if ( data.htlxxth.is_active == 0 ) {
+						$('td', row).addClass('text-danger');
+					}
+				}
+			} );
+
+			tblhtlxxth.on( 'draw', function( e, settings ) { 
+				// atur hak akses
+				cek_c_detail= 1;
+				CekDrawDetailHD(tblhemxxmh, tblhtlxxth, 'htlxxth' );
+				CekDrawDetailHDFinal(tblhemxxmh);
+			} );
+
+			tblhtlxxth.on( 'select', function( e, dt, type, indexes ) {
+				data_htlxxth = tblhtlxxth.row( { selected: true } ).data().htlxxth;
+				id_htlxxth   = data_htlxxth.id;
+				id_transaksi_d    = id_htlxxth; // dipakai untuk general
+				is_active_d       = data_htlxxth.is_active;
+
+				id_hedlvmh_old       = data_htlxxth.id_htlxxth;
+				
+				// atur hak akses
+				CekSelectDetailHD(tblhemxxmh, tblhtlxxth );
+			} );
+
+			tblhtlxxth.on( 'deselect', function() {
+				id_htlxxth = 0;
+				is_active_d = 0;
+				id_hedlvmh_old = 0;
+				
+				// atur hak akses
+				CekDeselectDetailHD(tblhemxxmh, tblhtlxxth );
+			} );
+
+// --------- end _detail --------------- //
+// --------- start _detail --------------- //
+
+			//start datatables editor
+			edthtpxxth = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/hemxxmh/htpxxth.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_htpxxth = show_inactive_status_htpxxth;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				table: "#tblhtpxxth",
+				formOptions: {
+					main: {
+						focus: 3
+					}
+				},
+				fields: [ 
+					{
+						label: "kategori_dokumen",
+						name: "kategori_dokumen",
+						type: "hidden"
+					},	{
+						label: "kategori_dokumen_value",
+						name: "kategori_dokumen_value",
+						type: "hidden"
+					},	{
+						label: "field_tanggal",
+						name: "field_tanggal",
+						type: "hidden"
+					},	{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "htpxxth",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "htpxxth.is_active",
+                        type: "hidden",
+						def: 1
+					},	{
+						label: "Tanggal <sup class='text-danger'>*<sup>",
+						name: "htpxxth.tanggal",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},	{
+						label: "Employee <sup class='text-danger'>*<sup>",
+						name: "htpxxth.id_hemxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hemxxmh_old: id_hemxxmh_old,
+										id_heyxxmh: id_heyxxmh,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					}, 	{
+						label: "Jenis <sup class='text-danger'>*<sup>",
+						name: "htpxxth.id_htpxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/htpxxmh/htpxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_htpxxmh_old: id_htpxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},	{
+						label: "Jam Awal",
+						name: "htpxxth.jam_awal",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'HH:mm'
+					},	{
+						label: "Jam Akhir",
+						name: "htpxxth.jam_akhir",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'HH:mm'
+					}, 	{
+						label: "Keterangan <sup class='text-danger'>*<sup>",
+						name: "htpxxth.keterangan",
+						type: "textarea"
+					}
+				]
+			} );
+			
+			edthtpxxth.on( 'preOpen', function( e, mode, action ) {
+				edthtpxxth.field('htpxxth.id_hemxxmh').val(id_hemxxmh);
+				
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthtpxxth.field('start_on').val(start_on);
+
+				if(action == 'create'){
+					tblhtpxxth.rows().deselect();
+				}
+			});
+
+            edthtpxxth.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+			});
+			
+            edthtpxxth.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+				}
+				
+				if ( edthtpxxth.inError() ) {
+					return false;
+				}
+			});
+
+			edthtpxxth.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthtpxxth.field('finish_on').val(finish_on);
+			});
+			
+			edthtpxxth.on( 'postSubmit', function (e, json, data, action, xhr) {
+				// event setelah Create atau Edit, dibedakan dari parameter action
+				// action : "create" | "edit"
+				// do something
+			} );
+			
+			//start datatables
+			tblhtpxxth = $('#tblhtpxxth').DataTable( {
+				ajax: {
+					url: "../../models/hemxxmh/htpxxth.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_htpxxth = show_inactive_status_htpxxth;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				order: [[ 3, "desc" ]],
+				// order: [[ 2, "desc" ]], sementara disable karena kode kosong
+				columns: [
+					{ data: "htpxxth.id",visible:false },
+					{ data: "htpxxth.id_hemxxmh",visible:false },
+					{ data: "htpxxth.kode" },
+					{ data: "htpxxth.tanggal" },
+					{ data: "htpxxmh.nama" },
+					{ data: "htpxxth.jam_awal" },
+					{ data: "htpxxth.jam_akhir" },
+					{ data: "htpxxth.keterangan" }
+				],
+				buttons: [
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_htpxxth';
+						$table       = 'tblhtpxxth';
+						$edt         = 'edthtpxxth';
+						$show_status = '_htpxxth';
+						$table_name  = $nama_tabels_d[3];
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
+						$arr_buttons_action 	= [];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+				],
+				rowCallback: function( row, data, index ) {
+					if ( data.htpxxth.is_active == 0 ) {
+						$('td', row).addClass('text-danger');
+					}
+				}
+			} );
+
+			tblhtpxxth.on( 'draw', function( e, settings ) { 
+				// atur hak akses
+				cek_c_detail= 1;
+				CekDrawDetailHD(tblhemxxmh, tblhtpxxth, 'htpxxth' );
+				CekDrawDetailHDFinal(tblhemxxmh);
+			} );
+
+			tblhtpxxth.on( 'select', function( e, dt, type, indexes ) {
+				data_htpxxth = tblhtpxxth.row( { selected: true } ).data().htpxxth;
+				id_htpxxth   = data_htpxxth.id;
+				id_transaksi_d    = id_htpxxth; // dipakai untuk general
+				is_active_d       = data_htpxxth.is_active;
+
+				id_hedlvmh_old       = data_htpxxth.id_htpxxth;
+				
+				// atur hak akses
+				CekSelectDetailHD(tblhemxxmh, tblhtpxxth );
+			} );
+
+			tblhtpxxth.on( 'deselect', function() {
+				id_htpxxth = 0;
+				is_active_d = 0;
+				id_hedlvmh_old = 0;
+				
+				// atur hak akses
+				CekDeselectDetailHD(tblhemxxmh, tblhtpxxth );
+			} );
+
+// --------- end _detail --------------- //
+
 			
 		} );// end of document.ready
 	
