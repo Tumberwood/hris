@@ -57,6 +57,7 @@ if($_SESSION['user'] < 101){
 	$_SESSION['where_data_permission'] 	  = 0;
 
 	$_SESSION['id_hemxxmh'] = 1;
+	$_SESSION['str_arr_ha_heyxxmh'] = 0;
 	
 	Redirect::to($us_url_root.'usersc/applications/views/core/dashboard.php');
 
