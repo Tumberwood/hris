@@ -432,7 +432,7 @@
 					},
 					{
 						label: "Grup Hari Kerja <sup class='text-danger'>*<sup>",
-						name: "hemxxmh.grup_hk",
+						name: "hemjbmh.grup_hk",
 						type: "select",
 						placeholder : "Select",
 						options: [
