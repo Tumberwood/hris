@@ -83,9 +83,6 @@
 					<div class="col-lg-12">
 						<div class="" id="chartEmpDept"></div>
 					</div>
-					<!-- <div class="col-lg-6">
-						<div class="" id=""></div>
-					</div> -->
 				</div>
 			</div>
 		</div>
