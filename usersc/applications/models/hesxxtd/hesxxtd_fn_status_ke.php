@@ -36,12 +36,20 @@
     // $rs_hemxxmh = $qs_hemxxmh->fetch();
 
     
+    $qs_hemxxmh_nama = $db
+        ->query('select', 'hemxxmh')
+        ->get('nama')
+        ->where('hemxxmh.id', $id_hemxxmh)
+        ->exec();
+    $rs_hemxxmh_nama = $qs_hemxxmh_nama->fetch();
+    $nama = $rs_hemxxmh_nama['nama'];
+
     $qs_hemxxmh = $db
         ->query('select', 'hemxxmh')
         ->get('count(hemxxmh.id) as status_ke')
         ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
-        ->where('hemxxmh.id', $id_hemxxmh)
-        ->where('hemjbmh.id_hesxxmh', $id_hesxxmh)
+        ->where('hemxxmh.nama', $nama) //Where dengan nama, karena kalau pakai id_hasilnya akan tetap 1
+        ->where('hemjbmh.id_hesxxmh', $id_hesxxmh) //dengan status yang sama dengan yang dipilih
         ->exec();
     $rs_hemxxmh = $qs_hemxxmh->fetch();
 
