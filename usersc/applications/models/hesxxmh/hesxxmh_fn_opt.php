@@ -28,6 +28,28 @@
         $id_hesxxmh_old = 0;
     }
 
+    if (isset($_GET['id_hesxxmh_tetap'])) {
+        $id_hesxxmh_tetap = $_GET['id_hesxxmh_tetap'];
+        if ($id_hesxxmh_tetap > 0) {
+            if (strpos($id_hesxxmh_tetap, ',') !== false) {
+                // Jika terdapat tanda koma, maka pecah string menjadi array
+                $id_values = explode(',', $id_hesxxmh_tetap);
+                $w_id_hesxxmh_tetap = '(' . implode(',', $id_values) . ')';
+                $s_id_hesxxmh_tetap = 'IN';
+            } else {
+                // Jika hanya satu nilai atau bukan array, gunakan default
+                $w_id_hesxxmh_tetap = '(' . $id_hesxxmh_tetap . ')';
+                $s_id_hesxxmh_tetap = 'IN';
+            }
+        } else {
+            $w_id_hesxxmh_tetap = '(-1)';
+            $s_id_hesxxmh_tetap = 'NOT IN';
+        }
+    } else {
+        // Handle the case where id_hesxxmh_tetap is not defined
+        $w_id_hesxxmh_tetap = '(-1)';
+        $s_id_hesxxmh_tetap = 'NOT IN';
+    }
     // BEGIN query self.
     // Hanya dipanggil jika field ada nilai id nya
     if($id_hesxxmh_old > 0){
@@ -53,6 +75,7 @@
             'nama as text'
         ])
         ->where('is_active',1)
+        ->where('id', $w_id_hesxxmh_tetap, $s_id_hesxxmh_tetap, false )
         ->where('id', $id_hesxxmh_old, '<>' )
         ->where( function ( $r ) {
             $q = $_GET['search'];

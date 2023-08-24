@@ -45,6 +45,22 @@
         $s_id_heyxxmh = 'NOT IN';
     }
 
+    //ambil status pegawai (ex: kontrak , tetap , ect)
+    if (isset($_GET['id_hesxxmh'])) {
+        $id_hesxxmh = $_GET['id_hesxxmh'];
+        if ($id_hesxxmh != '') {
+            $w_id_hesxxmh = $id_hesxxmh;
+            $s_id_hesxxmh = '=';
+        } else {
+            $w_id_hesxxmh = -1;
+            $s_id_hesxxmh = '<>';
+        }
+    } else {
+        // Handle the case where id_hesxxmh is not defined
+        $w_id_hesxxmh = -1;
+        $s_id_hesxxmh = '<>';
+    }
+
     // BEGIN query options self.
     // Hanya dipanggil jika field ada nilai id nya
     if($id_hemxxmh_old > 0){
@@ -75,6 +91,7 @@
 		->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
         ->where('hemxxmh.is_active',1)
         ->where('hemjbmh.id_heyxxmh', $w_id_heyxxmh, $s_id_heyxxmh, false )
+        ->where('hemjbmh.id_hesxxmh', $w_id_hesxxmh, $s_id_hesxxmh)
         ->where('hemxxmh.id', $id_hemxxmh_old, '<>' )
         ->where( function ( $r ) {
             $q = $_GET['search'];
