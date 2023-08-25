@@ -34,7 +34,7 @@
         ->where( function ( $r ) use ($tanggal_akhir) {
             $r
                 ->where( 'hemjbmh.tanggal_keluar', NULL)
-                ->or_where( 'hemjbmh.tanggal_keluar', '0000-00-00')
+                // ->or_where( 'hemjbmh.tanggal_keluar', '0000-00-00')
                 ->or_where( 'hemjbmh.tanggal_keluar', $tanggal_akhir->format('Y-m-d') , '>=');
         } )
         ->group_by('hemxxmh.gender')

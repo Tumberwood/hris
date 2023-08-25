@@ -27,7 +27,7 @@
         ] )
         ->where( function ( $r ) {
             $r
-                ->where( 'hemjbmh.tanggal_keluar', '0000-00-00', '<>')
+                // ->where( 'hemjbmh.tanggal_keluar', '0000-00-00', '<>')
                 ->or_where( 'hemjbmh.tanggal_keluar', NULL, '<>');
         } )
         ->group_by('masakerja')
