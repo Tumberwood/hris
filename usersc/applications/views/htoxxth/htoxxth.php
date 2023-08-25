@@ -753,10 +753,10 @@
 				edthtoemtd.field('finish_on').val(finish_on);
 				
 				// BEGIN update terkait validasi checkclock
-				// check_valid_checkclock();
-				// if(is_valid_checkclock > 0){
-				// 	edthtoemtd.field('htoemtd.is_valid_checkclock').val(1);
-				// }
+				check_valid_checkclock();
+				if(is_valid_checkclock > 0){
+					edthtoemtd.field('htoemtd.is_valid_checkclock').val(1);
+				}
 				// END update terkait validasi checkclock
 			});
 
