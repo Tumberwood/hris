@@ -89,10 +89,10 @@
     }catch(PDOException $e){
         // rollback on error
         $db->rollback();
-        $data = array(
-            'message'=>'Data Gagal Di Insert', 
-            'type_message'=>'danger' 
-        );
+        // $data = array(
+        //     'message'=>'Data Gagal Di Insert', 
+        //     'type_message'=>'danger' 
+        // );
     }
 
     // tampilkan results
