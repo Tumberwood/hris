@@ -47,7 +47,7 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 p-w-xs">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
 			<div class="ibox-content">
 				<div class="table-responsive">
@@ -57,9 +57,9 @@
 								<th>ID</th>
 								<th data-priority="1">Nomor</th>
 								<th data-priority="2">Tanggal</th>
-								<th>Area Kerja</th>
+								<th data-priority="3">Area Kerja</th>
 								<th>Keterangan</th>
-								<th data-priority="3">Approval</th>
+								<th>Approval</th>
 							</tr>
                         </thead>
                     </table>
@@ -68,7 +68,7 @@
         </div>
     </div>
 
-	<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 p-w-xs">
+	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
 			<div class="ibox-title">
 				<h5>Detail</h5>
@@ -86,6 +86,7 @@
 								<th rowspan=2 class="text-center">Istirahat</th>	
 								<th data-priority="3" rowspan=2 class="text-center">Durasi (Jam)</th>	
 								<th rowspan=2 class="text-center">Keterangan</th>
+								<th data-priority="4" rowspan=2 class="text-center">Valid</th>
 							</tr>
 							<tr>
 								<th class = "text-center">Mulai</th>
@@ -102,6 +103,7 @@
 								<th></th>
 								<th></th>
 								<th id="sum_durasi_lembur_jam"></th>
+								<th></th>
 								<th></th>
 							</tr>
 						</tfoot>
@@ -414,6 +416,9 @@
 					if ( data.htoxxth.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
+					if ( data.htoxxth.is_approve == 1 ) {
+						$('td', row).addClass('text-approved');
+					}
 				}
 				
 			} );
@@ -722,7 +727,7 @@
 					// BEGIN validasi checkclock
 					check_valid_checkclock();
 					if(is_valid_checkclock == 0){
-						edthtoemtd.field('is_valid_checkclock').error( 'Checkclock belum valid!' );
+						edthtoemtd.field('htoemtd.is_valid_checkclock').error( 'Checkclock belum valid!' );
 					}
 					// END validasi checkclock
 				}
@@ -788,7 +793,19 @@
 						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
 						class: "text-right"
 					},
-					{ data: "htoemtd.keterangan"}
+					{ data: "htoemtd.keterangan"},
+					{ 
+						data: "htoemtd.is_valid_checkclock" ,
+						render: function (data){
+							if (data == 0){
+								return '<i class="fa fa-remove text-danger"></i>';
+							}else if(data == 1){
+								return '<i class="fa fa-check text-navy"></i>';
+							}else{
+								return '';
+							}
+						}
+					}
 				],
 				buttons: [
 					// BEGIN breaking generate button
