@@ -92,10 +92,7 @@
 					) ),
 				Field::inst( 'htoemtd.durasi_istirahat_menit' ),
 				Field::inst( 'htoemtd.is_istirahat' ),
-				// Field::inst( 'htoemtd.is_valid_ti' ),
-				// Field::inst( 'htoemtd.is_valid_checkclock' ),
-				// Field::inst( 'htoemtd.jam_potongan_lembur' ),
-				// Field::inst( 'htoemtd.durasi_lembur_jam_final' ),
+				Field::inst( 'htoemtd.is_valid_checkclock' ),
 				
 				Field::inst( 'htotpmh.nama' ),
 				Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' )
