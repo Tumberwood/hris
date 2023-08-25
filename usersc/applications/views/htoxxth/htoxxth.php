@@ -86,6 +86,7 @@
 								<th rowspan=2 class="text-center">Istirahat</th>	
 								<th data-priority="3" rowspan=2 class="text-center">Durasi (Jam)</th>	
 								<th rowspan=2 class="text-center">Keterangan</th>
+								<th rowspan=2 class="text-center">Valid</th>
 							</tr>
 							<tr>
 								<th class = "text-center">Mulai</th>
@@ -102,6 +103,7 @@
 								<th></th>
 								<th></th>
 								<th id="sum_durasi_lembur_jam"></th>
+								<th></th>
 								<th></th>
 							</tr>
 						</tfoot>
@@ -788,7 +790,19 @@
 						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
 						class: "text-right"
 					},
-					{ data: "htoemtd.keterangan"}
+					{ data: "htoemtd.keterangan"},
+					{ 
+						data: "htoemtd.is_valid_checkclock" ,
+						render: function (data){
+							if (data == 0){
+								return '<i class="fa fa-remove text-danger"></i>';
+							}else if(data == 1){
+								return '<i class="fa fa-check text-navy"></i>';
+							}else{
+								return '';
+							}
+						}
+					}
 				],
 				buttons: [
 					// BEGIN breaking generate button
