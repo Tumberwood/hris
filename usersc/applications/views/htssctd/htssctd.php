@@ -34,6 +34,12 @@
                             </div>
                         </div>
                     </div>
+					<div class="form-group row">
+						<label class="col-lg-2 col-md-2">Pegawai</label>
+						<div class="col-lg-4 col-sm-4">
+							<select class="form-control" id="selectPegawai" name="selectPegawai" multiple="multiple"></select>
+						</div>
+					</div>
                     <div class="form-group row">
                         <div class="col-lg-4">
                             <button class="btn btn-primary" type="submit" id="go">Submit</button>
@@ -87,7 +93,7 @@
 		var edthtssctd, tblhtssctd, show_inactive_status_htssctd = 0, id_htssctd;
 		// ------------- end of default variable
 
-		var id_htsxxmh_old = 0, id_hemxxmh_old = 0;
+		var id_htsxxmh_old = 0, id_hemxxmh_old = 0, id_hemxxmh_filter= 0;
 
 		// BEGIN datepicker init
 		$('#periode').datepicker({
@@ -102,6 +108,38 @@
 		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
         // END datepicker init
 		
+		$("#selectPegawai").select2({
+			placeholder : "Select",
+			allowClear: true,
+			multiple: false,
+			ajax: {
+				url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+				dataType: 'json',
+				data: function (params) {
+					var query = {
+						id_hemxxmh_old: id_hemxxmh_filter,
+						search: params.term || '',
+						page: params.page || 1
+					}
+						return query;
+				},
+				processResults: function (data, params) {
+					return {
+						results: data.results,
+						pagination: {
+							more: true
+						}
+					};
+				},
+				cache: true,
+				minimumInputLength: 1,
+				maximum: 10,
+				delay: 500,
+				maximumSelectionLength: 5,
+				minimumResultsForSearch: -1,
+			}
+		});
+		
 		$(document).ready(function() {
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
@@ -115,6 +153,7 @@
 						d.show_inactive_status_htssctd = show_inactive_status_htssctd;
 						d.start_date = start_date;
 						d.end_date = end_date;
+						d.id_hemxxmh_filter = id_hemxxmh_filter;
 					}
 				},
 				table: "#tblhtssctd",
@@ -339,6 +378,7 @@
 						d.show_inactive_status_htssctd = show_inactive_status_htssctd;
 						d.start_date = start_date;
 						d.end_date = end_date;
+						d.id_hemxxmh_filter = id_hemxxmh_filter;
 					}
 				},
 				order: [[ 2, "desc" ],[3, "asc"]],
@@ -429,6 +469,13 @@
 					
 				},
 				submitHandler: function(frmhtssctd) {
+					
+					if( $('#selectPegawai').val() > 0){
+						id_hemxxmh_filter  = $('#selectPegawai').val();
+					}else{
+						id_hemxxmh_filter = '';
+					}
+
 					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
 					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
 					
