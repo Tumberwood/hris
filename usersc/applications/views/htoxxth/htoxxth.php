@@ -137,12 +137,6 @@
 		var id_heyxxmh = 0, id_htotpmh_old  = 0, id_hemxxmh_old = 0;
 		var tanggal;
 		
-		id_user = "<?php echo $_SESSION['user']; ?>";
-		id_heyxxmh_session = "<?php echo $_SESSION['str_arr_ha_heyxxmh']; ?>";
-		count_id_heyxxmh_session = <?php echo substr_count($_SESSION['str_arr_ha_heyxxmh'], ',') + 1; ?>;
-		console.log(id_heyxxmh_session);
-		console.log('count = '+count_id_heyxxmh_session);
-		
 		// BEGIN datepicker init
 		$('#periode').datepicker({
 			setDate: new Date(),
@@ -261,23 +255,13 @@
 								url: "../../models/heyxxmh/heyxxmh_fn_opt.php",
 								dataType: 'json',
 								data: function (params) {
-									if (id_user > 100) {
-										if (count_id_heyxxmh_session == 1) {
-											var query = {
-												id_heyxxmh_old: id_heyxxmh_old,
-												id_heyxxmh_session: id_heyxxmh_session,
-												search: params.term || '',
-												page: params.page || 1
-											}
-										} else {
-											var query = {
-												id_heyxxmh_old: id_heyxxmh_old,
-												search: params.term || '',
-												page: params.page || 1
-											}
-										}
+									var query = {
+										id_heyxxmh_old: id_heyxxmh_old,
+										is_validate_session: 1,
+										search: params.term || '',
+										page: params.page || 1
 									}
-										return query;
+									return query;
 								},
 								processResults: function (data, params) {
 									return {

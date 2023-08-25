@@ -28,18 +28,19 @@
         $id_heyxxmh_old = 0;
     }
 
-    if (isset($_GET['id_heyxxmh_session'])) {
-        $id_heyxxmh_session = $_GET['id_heyxxmh_session'];
-        if ($id_heyxxmh_session > 0) {
-            $w_id_heyxxmh_session = $id_heyxxmh_session;
-            $s_id_heyxxmh_session = '=';
+    //jika dibutuhkan validasi sesuai sesi
+    if (isset($_GET['is_validate_session'])) {
+        $user = $_SESSION['user'];
+        if ($user > 100) {
+            $w_id_heyxxmh_session = '(' . $_SESSION['str_arr_ha_heyxxmh'] . ')';
+            $s_id_heyxxmh_session = 'IN';
         } else {
-            $w_id_heyxxmh_session = -1;
-            $s_id_heyxxmh_session = '<>';
+            $w_id_heyxxmh_session = '(-1)';
+            $s_id_heyxxmh_session = 'NOT IN';
         }
     } else {
-        $w_id_heyxxmh_session = -1;
-        $s_id_heyxxmh_session = '<>';
+        $w_id_heyxxmh_session = '(-1)';
+        $s_id_heyxxmh_session = 'NOT IN';
     }
     
     // BEGIN query self.
@@ -67,7 +68,7 @@
             'nama as text'
         ])
         ->where('is_active',1)
-        ->where('id', $w_id_heyxxmh_session, $s_id_heyxxmh_session)
+        ->where('id', $w_id_heyxxmh_session, $s_id_heyxxmh_session, false)
         ->where('id', $id_heyxxmh_old, '<>' )
         ->where( function ( $r ) {
             $q = $_GET['search'];
