@@ -57,9 +57,9 @@
 								<th>ID</th>
 								<th data-priority="1">Nomor</th>
 								<th data-priority="2">Tanggal</th>
-								<th>Area Kerja</th>
+								<th data-priority="3">Area Kerja</th>
 								<th>Keterangan</th>
-								<th data-priority="3">Approval</th>
+								<th>Approval</th>
 							</tr>
                         </thead>
                     </table>
@@ -415,6 +415,9 @@
 				rowCallback: function( row, data, index ) {
 					if ( data.htoxxth.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
+					}
+					if ( data.htoxxth.is_approve == 1 ) {
+						$('td', row).addClass('text-approved');
 					}
 				}
 				
