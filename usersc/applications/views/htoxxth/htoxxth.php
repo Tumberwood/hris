@@ -47,7 +47,7 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 p-w-xs">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
 			<div class="ibox-content">
 				<div class="table-responsive">
@@ -68,7 +68,7 @@
         </div>
     </div>
 
-	<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12 p-w-xs">
+	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
 			<div class="ibox-title">
 				<h5>Detail</h5>
@@ -86,7 +86,7 @@
 								<th rowspan=2 class="text-center">Istirahat</th>	
 								<th data-priority="3" rowspan=2 class="text-center">Durasi (Jam)</th>	
 								<th rowspan=2 class="text-center">Keterangan</th>
-								<th rowspan=2 class="text-center">Valid</th>
+								<th data-priority="4" rowspan=2 class="text-center">Valid</th>
 							</tr>
 							<tr>
 								<th class = "text-center">Mulai</th>
