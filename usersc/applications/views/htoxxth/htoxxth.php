@@ -722,7 +722,7 @@
 					// BEGIN validasi checkclock
 					check_valid_checkclock();
 					if(is_valid_checkclock == 0){
-						edthtoemtd.field('is_valid_checkclock').error( 'Checkclock belum valid!' );
+						edthtoemtd.field('htoemtd.is_valid_checkclock').error( 'Checkclock belum valid!' );
 					}
 					// END validasi checkclock
 				}
