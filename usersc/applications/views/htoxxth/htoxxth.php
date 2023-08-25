@@ -135,7 +135,7 @@
 
 		var id_holxxmd_old = 0, id_heyxxmh_old = 0;
 		var id_heyxxmh = 0, id_htotpmh_old  = 0, id_hemxxmh_old = 0;
-		var tanggal;
+		var tanggal, is_valid_checkclock;
 		
 		// BEGIN datepicker init
 		$('#periode').datepicker({
@@ -504,7 +504,8 @@
 						name: "htoemtd.is_active",
                         type: "hidden",
 						def: 1
-					},	{
+					},	
+					{
 						label: "Tipe <sup class='text-danger'>*<sup>",
 						name: "htoemtd.id_htotpmh",
 						type: "select2",
@@ -539,7 +540,8 @@
 								minimumResultsForSearch: -1,
 							},
 						}
-					},	{
+					},	
+					{
 						label: "Karyawan <sup class='text-danger'>*<sup>",
 						name: "htoemtd.id_hemxxmh",
 						type: "select2",
@@ -575,21 +577,25 @@
 								minimumResultsForSearch: -1,
 							},
 						}
-					},	{
+					},	
+					{
 						label: "Jadwal",
 						name: "jadwal",
 						type: "readonly"
-					},	{
+					},	
+					{
 						label: "Jam Mulai",
 						name: "htoemtd.jam_awal",
 						type: "datetime",
 						format: 'HH:mm'
-					},	{
+					},	
+					{
 						label: "Jam Selesai",
 						name: "htoemtd.jam_akhir",
 						type: "datetime",
 						format: 'HH:mm'
-					},	{
+					},	
+					{
 						label: "Istirahat",
 						name: "htoemtd.is_istirahat",
 						type: "select",
@@ -598,7 +604,13 @@
 							{ "label": "TI", "value":2 },
 							{ "label": "Tidak", "value": 0 }
 						]
-					}, 	{
+					}, 	
+					{
+						label: "Checkclock Valid",
+						name: "htoemtd.is_valid_checkclock",
+						type: "readonly"
+					},
+					{
 						label: "Keterangan",
 						name: "htoemtd.keterangan",
 						type: "textarea"
@@ -622,26 +634,19 @@
 			});
 
 			edthtoemtd.dependent( 'htoemtd.id_htotpmh', function ( val, data, callback ) {
-				id_htotpmh = edthtoemtd.field('htoemtd.id_htotpmh').val();
-				id_hemxxmh = edthtoemtd.field('htoemtd.id_hemxxmh').val();
-				if(id_htotpmh > 0 && id_hemxxmh > 0){
-					get_htsxxmh();
-				}
+				get_htsxxmh();
 				return {}
 			}, {event: 'keyup change'});
 
 			edthtoemtd.dependent( 'htoemtd.id_hemxxmh', function ( val, data, callback ) {
-				id_htotpmh = edthtoemtd.field('htoemtd.id_htotpmh').val();
-				id_hemxxmh = edthtoemtd.field('htoemtd.id_hemxxmh').val();
-				if(id_htotpmh > 0 && id_hemxxmh > 0){
-					get_htsxxmh();
-				}
+				get_htsxxmh();
 				return {}
 			}, {event: 'keyup change'});
 
 			edthtoemtd.dependent( 'htoemtd.id_htotpmh', function ( val, data, callback ) {
 				id_htotpmh = edthtoemtd.field('htoemtd.id_htotpmh').val();
 				if (id_htotpmh == 5 || id_htotpmh == 6 || id_htotpmh == 7){
+					// jika tipe overtime = Istirahat1, Istirahat2, atau Istirahat3
 					edthtoemtd.field('htoemtd.jam_awal').hide();
 					edthtoemtd.field('htoemtd.jam_awal').val('');
 					edthtoemtd.field('htoemtd.jam_akhir').hide();
@@ -706,6 +711,20 @@
 						}
 					} );
 					// END of cek unik kombinasi htoemtd.id_htotpmh dan htoemtd.id_hemxxmh 
+
+					// BEGIN validasi jadwal
+					jadwal = edthtoemtd.field('jadwal').val();
+					if(jadwal == ''){
+						edthtoemtd.field('jadwal').error( 'Jadwal belum ada!' );
+					}
+					// END validasi jadwal
+
+					// BEGIN validasi checkclock
+					check_valid_checkclock();
+					if(is_valid_checkclock == 0){
+						edthtoemtd.field('is_valid_checkclock').error( 'Checkclock belum valid!' );
+					}
+					// END validasi checkclock
 				}
 				
 				if ( edthtoemtd.inError() ) {
@@ -716,6 +735,13 @@
 			edthtoemtd.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthtoemtd.field('finish_on').val(finish_on);
+				
+				// BEGIN update terkait validasi checkclock
+				check_valid_checkclock();
+				if(is_valid_checkclock > 0){
+					edthtoemtd.field('htoemtd.is_valid_checkclock').val(1);
+				}
+				// END update terkait validasi checkclock
 			});
 
 			
@@ -773,11 +799,9 @@
 						$show_status = '_htoemtd';
 						$table_name  = $nama_tabels_d[0];
 
-						$arr_buttons_tools = array();
-						$arr_buttons_tools = ['show_hide','copy','excel','colvis'];
-
-						$arr_buttons_action = array();
-						$arr_buttons_action = ['create', 'edit', 'nonaktif_d'];
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
+						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_h'];
+						$arr_buttons_approve 	= [];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button

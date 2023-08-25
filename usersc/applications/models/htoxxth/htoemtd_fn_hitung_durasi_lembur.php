@@ -7,22 +7,27 @@
      * 1: Istirahat Full
      * 2: TI (30 menit)
      */
-    $is_istirahat = $values['htoemtd']['is_istirahat'];
-    $id_htotpmh = $values['htoemtd']['id_htotpmh'];
+    $is_istirahat   = $values['htoemtd']['is_istirahat'];
+    $id_htotpmh     = $values['htoemtd']['id_htotpmh'];
 
     if($id_htotpmh == 1 || $id_htotpmh == 2 || $id_htotpmh == 4){
         /**
          * jika lembur awal atau akhir atau hari libur
-         * cek apakah TI
+         * cek jenis istirahat
+         * is_istirahat
+         *  0: Tidak    : tidak ada potongan
+         *  1: Ya       : potong 60 menit
+         *  2: TI       : potong 30 menit
          */
+
         if($is_istirahat == 0){
-            $addminutes = 0;
+            $subminutes = 0;
         }elseif($is_istirahat == 1){
-            $addminutes = 60;
+            $subminutes = 60;
         }else{
-            $addminutes = 30;
+            $subminutes = 30;
         }
-        
+
         $jam_awal	= new Carbon($values['htoemtd']['jam_awal']);
         $jam_akhir	= new Carbon($values['htoemtd']['jam_akhir']);
 
@@ -33,7 +38,7 @@
             $jam_akhir_final = $jam_akhir;
         }
 
-        $durasi_menit = $jam_akhir_final->diffInMinutes($jam_awal) - $addminutes;
+        $durasi_menit = $jam_akhir_final->diffInMinutes($jam_awal) - $subminutes;
 
     }elseif($id_htotpmh == 5 || $id_htotpmh == 6 || $id_htotpmh == 7){
         /* jika lembur istirahat shift */
