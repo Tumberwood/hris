@@ -801,6 +801,8 @@
 								return '<i class="fa fa-remove text-danger"></i>';
 							}else if(data == 1){
 								return '<i class="fa fa-check text-navy"></i>';
+							}else if(data == 2){
+								return '<i class="fa fa-check text-warning"></i>';
 							}else{
 								return '';
 							}
