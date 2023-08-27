@@ -20,6 +20,7 @@
 
 	$start_date = $_POST['start_date'];
 	$end_date   = $_POST['end_date'];
+	$id_hemxxmh_filter   = $_POST['id_hemxxmh_filter'];
 	
 	$editor = Editor::inst( $db, 'htssctd' )
 		->debug(true)
@@ -84,6 +85,11 @@
 	if ($show_inactive_status == 0){
 		$editor
 			->where( 'htssctd.is_active', 1);
+	}
+
+	if ($id_hemxxmh_filter > 0){
+		$editor
+			->where( 'htssctd.id_hemxxmh', $id_hemxxmh_filter);
 	}
 	
 	include( "htssctd_extra.php" );
