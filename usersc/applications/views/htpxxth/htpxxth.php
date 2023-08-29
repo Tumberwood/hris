@@ -439,6 +439,8 @@
 						d.show_inactive_status_htpxxth = show_inactive_status_htpxxth;
 					}
 				},
+				scrollX: true,
+				responsive: false,
 				order: [[ 2, "desc" ],[1, "desc"]],
 				columns: [
 					{ data: "htpxxth.id",visible:false },

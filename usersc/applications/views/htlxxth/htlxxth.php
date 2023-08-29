@@ -393,6 +393,8 @@
 						d.end_date = end_date;
 					}
 				},
+				scrollX: true,
+				responsive: false,
 				order: [[ 6, "desc" ],[ 1, "desc" ]],
 				columns: [
 					{ data: "htlxxth.id",visible:false },
