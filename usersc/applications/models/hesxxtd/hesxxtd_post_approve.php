@@ -131,10 +131,33 @@
 			->set($rs_hemjbmh)
 			->set('tanggal_keluar',$tanggal_keluar)
 			->exec();
-		}
-
-
 		
+			$qi_hemxxmh_hemjbmh = $db
+			->query('insert', 'hemjbrd')
+			->set('id_hemxxmh',$id_insert_hemx)
+			->set('id_hesxxmh',$id_hesxxmh)
+			->set('id_gcpxxmh_awal',$rs_hemjbmh['id_gcpxxmh'])
+			->set('id_gcpxxmh_akhir',$rs_hemjbmh['id_gcpxxmh'])
+			->set('id_gbrxxmh_awal',$rs_hemjbmh['id_gbrxxmh'])
+			->set('id_gbrxxmh_akhir',$rs_hemjbmh['id_gbrxxmh'])
+			->set('id_holxxmh_awal',$rs_hemjbmh['id_holxxmh'])
+			->set('id_holxxmh_akhir',$rs_hemjbmh['id_holxxmh'])
+			->set('id_hovxxmh_awal',$rs_hemjbmh['id_hovxxmh'])
+			->set('id_hovxxmh_akhir',$rs_hemjbmh['id_hovxxmh'])
+			->set('id_hodxxmh_awal',$rs_hemjbmh['id_hodxxmh'])
+			->set('id_hodxxmh_akhir',$rs_hemjbmh['id_hodxxmh'])
+			->set('id_hosxxmh_awal',$rs_hemjbmh['id_hosxxmh'])
+			->set('id_hosxxmh_akhir',$rs_hemjbmh['id_hosxxmh'])
+			->set('id_hobxxmh_awal',$rs_hemjbmh['id_hobxxmh'])
+			->set('id_hobxxmh_akhir',$rs_hemjbmh['id_hobxxmh'])
+			->set('id_hevxxmh_awal',$rs_hemjbmh['id_hevxxmh'])
+			->set('id_hevxxmh_akhir',$rs_hemjbmh['id_hevxxmh'])
+			->set('id_hetxxmh_awal',$rs_hemjbmh['id_hetxxmh'])
+			->set('id_hetxxmh_akhir',$rs_hemjbmh['id_hetxxmh'])
+			->set('tanggal_awal',$tanggal_masuk)
+			->set('tanggal_akhir',$tanggal_keluar)
+			->exec();
+		}
 
 	}elseif($state == 2){
 		$qd_hemxxmh = $db
