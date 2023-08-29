@@ -124,7 +124,7 @@
 				$id_hesxxmh = $id_hesxxmh_tetap;
 			}
 		
-			$qi_hemxxmh_hemjbmh = $db
+			$qi_hemjbmh = $db
 			->query('insert', 'hemjbmh')
 			->set('id_hemxxmh',$id_insert_hemx)
 			->set('id_hesxxmh',$id_hesxxmh)
@@ -132,7 +132,7 @@
 			->set('tanggal_keluar',$tanggal_keluar)
 			->exec();
 		
-			$qi_hemxxmh_hemjbmh = $db
+			$qi_hemjbrd = $db
 			->query('insert', 'hemjbrd')
 			->set('id_hemxxmh',$id_insert_hemx)
 			->set('id_hesxxmh',$id_hesxxmh)
@@ -157,6 +157,22 @@
 			->set('tanggal_awal',$tanggal_masuk)
 			->set('tanggal_akhir',$tanggal_keluar)
 			->exec();
+
+			$qs_pola_shift = $db
+				->query('select', 'htsptth' )
+				->get(['htsemtd.id_htsptth as id_htsptth'] )
+				->get(['htsemtd.grup_ke as grup_ke'] )
+				->join('htsemtd','htsemtd.id_htsptth = htsptth.id','LEFT' )
+				->where('htsemtd.id_hemxxmh', $id_hemxxmh )
+				->exec();
+			$rs_pola_shift = $qs_pola_shift->fetch();
+
+			$qi_pola_shift = $db
+				->query('insert', 'htsemtd')
+				->set('id_hemxxmh',$id_insert_hemx)
+				->set($rs_pola_shift)
+				->exec();
+			
 		}
 
 	}elseif($state == 2){
