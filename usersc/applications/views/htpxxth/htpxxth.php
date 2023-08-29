@@ -88,7 +88,7 @@
 		// ------------- end of default variable
 		
 		is_need_approval = 1;
-		// is_need_generate_kode = 1;
+		is_need_generate_kode = 1;
 
 		var id_hemxxmh_old = 0, id_htpxxmh_old = 0;
 		var jenis_jam;

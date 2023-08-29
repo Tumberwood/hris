@@ -91,7 +91,7 @@
 		is_need_approval = 1;
 		id_heyxxmh = "<?php echo $_SESSION['str_arr_ha_heyxxmh']; ?>";
 		console.log(id_heyxxmh);
-		// is_need_generate_kode = 1;
+		is_need_generate_kode = 1;
 		
 		var id_hemxxmh_old = 0, id_htlxxmh_old = 0;
 		
