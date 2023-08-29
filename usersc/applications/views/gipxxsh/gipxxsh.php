@@ -19,6 +19,11 @@
 			<div class="ibox-content">
 				<h3 class="text-info">Format file harus dalam .xlsx dan disesuaikan dengan format template</h3>
 				<hr>
+				<div>
+					<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/template_checkclock.xls');">
+						<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
+					</button>
+				</div>
 				<form id="frmUploadthimportcheckclock_staff" enctype="multipart/form-data">
 					<div class="form-group row">
 						<label class="col-lg-2 col-form-label">File Checkclock Staff</label>
