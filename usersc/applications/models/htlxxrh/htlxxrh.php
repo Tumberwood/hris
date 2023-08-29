@@ -1,87 +1,57 @@
 <?php
 	include( "../../../../users/init.php" );
+
+	// DataTables PHP library
 	include( "../../../../usersc/lib/DataTables.php" );
-	
-	use
-		DataTables\Editor,
-		DataTables\Editor\Field,
-		DataTables\Editor\Format,
-		DataTables\Editor\Mjoin,
-		DataTables\Editor\Options,
-		DataTables\Editor\Upload,
-		DataTables\Editor\Validate,
-		DataTables\Editor\ValidateOptions,
-		DataTables\Editor\Query,
-		DataTables\Editor\Result;
-	
-	// ----------- do not erase
-	$show_inactive_status = $_POST['show_inactive_status_htlxxrh'];
-	// -----------
-	
-	$editor = Editor::inst( $db, 'htlxxrh' )
-		->debug(true)
-		->fields(
-			Field::inst( 'htlxxrh.id' ),
-			Field::inst( 'htlxxrh.kode' )
-				->setFormatter( function ( $val ) {
-					return strtoupper($val);
-				} ),
-			Field::inst( 'htlxxrh.nama' )
-				->setFormatter( function ( $val ) {
-					return ucwords($val);
-				} ),
-			Field::inst( 'htlxxrh.keterangan' ),
-			Field::inst( 'htlxxrh.is_active' ),
-			Field::inst( 'htlxxrh.created_by' )
-				->set( Field::SET_CREATE )
-				->setValue($_SESSION['user']),
-			Field::inst( 'htlxxrh.created_on' )
-				->set( Field::SET_CREATE ),
-			Field::inst( 'htlxxrh.last_edited_by' )
-				->set( Field::SET_EDIT )
-				->setValue($_SESSION['user']),
-			Field::inst( 'htlxxrh.is_approve' ),
-			Field::inst( 'htlxxrh.is_defaultprogram' ),
-			Field::inst( 'htlxxrh.tanggal' )
-				->getFormatter( function ( $val, $data, $opts ) {
-					if ($val === '0000-00-00' || $val === null){
-						echo '';
-						}else{
-							return date( 'd M Y', strtotime( $val ) );
-					}
-				} ),
-			
-			Field::inst( 'htlxxmh.nama' ),
 
-			Field::inst( 'hemxxmh.kode' ),
-			Field::inst( 'hemxxmh.nama' )
-		)
-		->leftJoin( 'htlxxmh','htlxxmh.id','=','htlxxrh.id_htlxxmh' )
-		->leftJoin( 'hemxxmh','hemxxmh.id','=','htlxxrh.id_hemxxmh' );
+	use Carbon\Carbon;
+	$start_date = $_POST['start_date'];
+	$end_date = $_POST['end_date'];
+	$where = " AND htlxxrh.tanggal BETWEEN '" . $start_date . "' AND '" . $end_date . "'";
 	
-	// do not erase
-	// function show / hide inactive document
-	if ($show_inactive_status == 0){
-		$editor
-			->where( 'htlxxrh.is_active', 1);
+	if (isset($_POST['id_hemxxmh'])) {
+		$id_hemxxmh = $_POST['id_hemxxmh'];
+		if ($id_hemxxmh > 0) {
+			$where = $where . " AND htlxxrh.id_hemxxmh = " . $id_hemxxmh;
+		}
 	}
-
-	if($_POST['id_hemxxmh'] > 0){
-		$editor->where( 'htlxxrh.id_hemxxmh', $_POST['id_hemxxmh'] );
-	}
-
-	if($_POST['start_date'] != '' && $_POST['end_date'] != ''){
-		$editor
-			->where( 'htlxxrh.tanggal', $_POST['start_date'], '>=' )
-			->where( 'htlxxrh.tanggal', $_POST['end_date'], '<=' );
-	}
-
-
 	
-	include( "htlxxrh_extra.php" );
-	include( "../../../helpers/edt_log.php" );
-	
-	$editor
-		->process( $_POST )
-		->json();
+	// Your SQL query
+	$sql = "SELECT
+				htlxxrh.id,
+				UPPER(htlxxrh.kode) AS kode,
+				htlxxrh.nama AS nama,
+				htlxxrh.keterangan,
+				htlxxrh.is_active,
+				IFNULL(htlxxrh.created_by, '') AS created_by,
+				IFNULL(htlxxrh.created_on, '') AS created_on,
+				IFNULL(htlxxrh.last_edited_by, '') AS last_edited_by,
+				htlxxrh.is_approve,
+				htlxxrh.is_defaultprogram,
+				DATE_FORMAT(htlxxrh.tanggal, '%d %b %Y') AS tanggal,
+				IFNULL(htlxxmh.nama, htpxxmh.nama)  AS htlxxmh_nama,
+				hemxxmh.kode AS hemxxmh_kode,
+				hemxxmh.nama AS hemxxmh_nama
+			FROM
+				htlxxrh
+			LEFT JOIN htlxxmh ON htlxxrh.jenis = 1 AND htlxxmh.id = htlxxrh.id_htlxxmh
+			LEFT JOIN htpxxmh ON htlxxrh.jenis = 2 AND htpxxmh.id = htlxxrh.id_htlxxmh
+			LEFT JOIN hemxxmh ON hemxxmh.id = htlxxrh.id_hemxxmh
+			WHERE htlxxrh.is_active = 1" . $where;
+		;
+
+		// echo $sql;
+		$result = $db->sql($sql)->fetchAll();
+		$count = $db->sql($sql)->count();
+
+
+		if ($count > 0){
+			$results = $result;
+			echo json_encode( ['data' => $results]);
+		}else{
+			echo json_encode( [ "data" => [] ] );
+		}
+		// include( "htlxxrh_extra.php" );
+		// include( "../../../helpers/edt_log.php" );
+	exit();
 ?>

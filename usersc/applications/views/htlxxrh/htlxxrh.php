@@ -179,13 +179,13 @@
 				},
 				order: [[ 1, "asc" ]],
 				columns: [
-					{ data: "htlxxrh.id",visible:false },
-					{ data: "htlxxrh.tanggal" },
-					{ data: "htlxxrh.kode" },
-					{ data: "hemxxmh.kode" },
-					{ data: "hemxxmh.nama" },
-					{ data: "htlxxmh.nama" },
-					{ data: "htlxxrh.keterangan" }
+					{ data: "id",visible:false },
+					{ data: "tanggal" },
+					{ data: "kode" },
+					{ data: "hemxxmh_kode" },
+					{ data: "hemxxmh_nama" },
+					{ data: "htlxxmh_nama" },
+					{ data: "keterangan" }
 				],
 				buttons: [	
 					// BEGIN breaking generate button
@@ -196,7 +196,7 @@
 						$show_status = '_htlxxrh';
 						$table_name  = $nama_tabel;
 
-						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
+						$arr_buttons_tools 		= ['copy','excel','colvis'];
 						$arr_buttons_action 	= [];
 						$arr_buttons_approve 	= [];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
@@ -204,7 +204,7 @@
 					// END breaking generate button
 				],
 				rowCallback: function( row, data, index ) {
-					if ( data.htlxxrh.is_active == 0 ) {
+					if ( data.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
 				},
