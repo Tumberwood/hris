@@ -589,9 +589,9 @@
 					// END of validasi hemjbmh.id_hetxxmh 
 
 					// BEGIN of validasi hemjbmh.grup_hk 
-					grup_hk = edthemjbmh.field('hemjbmh.grup_hk').val();
+					grup_hk = edthemxxmh.field('hemjbmh.grup_hk').val();
 					if(!grup_hk || grup_hk == ''){
-						edthemjbmh.field('hemjbmh.grup_hk').error( 'Wajib diisi!' );
+						edthemxxmh.field('hemjbmh.grup_hk').error( 'Wajib diisi!' );
 					}
 					// END of validasi hemjbmh.grup_hk 
 				}
