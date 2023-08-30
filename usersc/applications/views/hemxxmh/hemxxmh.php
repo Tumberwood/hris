@@ -44,6 +44,7 @@
                                 <th>Section</th>
                                 <th>Jabatan</th>
                                 <th>Tanggal Join</th>
+                                <th>Tanggal Keluar</th>
                                 <th>Grup HK</th>
                                 <th>Pola Shift</th>
                                 <th>Aktif</th>
@@ -322,7 +323,7 @@
 						}
 					},
 					{
-						label: "Level <sup class='text-danger'>*<sup>",
+						label: "Level",
 						name: "hemjbmh.id_hevxxmh",
 						type: "select2",
 						opts: {
@@ -472,6 +473,19 @@
 					{
 						label: "Tanggal Join",
 						name: "hemjbmh.tanggal_masuk",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},
+					{
+						label: "Tanggal Keluar",
+						name: "hemjbmh.tanggal_keluar",
 						type: "datetime",
 						def: function () { 
 							return new Date(); 
@@ -650,6 +664,7 @@
 					{ data: "hosxxmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "hemjbmh.tanggal_masuk" },
+					{ data: "hemjbmh.tanggal_keluar" },
 					{ 
 						data: "hemjbmh.grup_hk",
 						render: function (data){
