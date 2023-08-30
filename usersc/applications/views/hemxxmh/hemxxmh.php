@@ -588,12 +588,12 @@
 					}
 					// END of validasi hemjbmh.id_hetxxmh 
 
-					// BEGIN of validasi hemxxmh.grup_hk 
-					grup_hk = edthemxxmh.field('hemxxmh.grup_hk').val();
+					// BEGIN of validasi hemjbmh.grup_hk 
+					grup_hk = edthemjbmh.field('hemjbmh.grup_hk').val();
 					if(!grup_hk || grup_hk == ''){
-						edthemxxmh.field('hemxxmh.grup_hk').error( 'Wajib diisi!' );
+						edthemjbmh.field('hemjbmh.grup_hk').error( 'Wajib diisi!' );
 					}
-					// END of validasi hemxxmh.grup_hk 
+					// END of validasi hemjbmh.grup_hk 
 				}
 				
 				if ( edthemxxmh.inError() ) {
