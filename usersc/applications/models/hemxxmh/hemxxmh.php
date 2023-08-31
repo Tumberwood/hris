@@ -82,14 +82,15 @@
 					'to' =>   'Y-m-d'
 				) ),
 			Field::inst( 'hemjbmh.grup_hk' ),
-
 			Field::inst( 'hovxxmh.nama' ),
 			Field::inst( 'hodxxmh.nama' ),
+			Field::inst( 'hemdcmh.ktp_no' ),
 			Field::inst( 'hosxxmh.nama' ),
 			Field::inst( 'hevxxmh.nama' ),
 			Field::inst( 'hetxxmh.nama' ),
 			Field::inst( 'v_hemxxmh_htsptth.pola_shift' )
 		)
+		->leftJoin( 'hemdcmh','hemdcmh.id_hemxxmh','=','hemxxmh.id' )
 		->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
 		->leftJoin( 'hovxxmh','hovxxmh.id','=','hemjbmh.id_hovxxmh' )
 		->leftJoin( 'hodxxmh','hodxxmh.id','=','hemjbmh.id_hodxxmh' )

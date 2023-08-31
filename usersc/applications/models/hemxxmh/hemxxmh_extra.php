@@ -1,16 +1,93 @@
 <?php
+	use Carbon\Carbon;
     $editor
 		->on('preCreate',function( $editor, $values ) {
 			// script diletakkan disini
 		})
 		->on('postCreate',function( $editor, $id, $values, $row ) {
 			// script diletakkan disini
+			$tanggal_akhir = $values['tanggal_akhir'];
+			$tanggal_akhir_kontrak = date("Y-m-d", strtotime($tanggal_akhir));
+			// print_r($tanggal_akhir_kontrak);
+			$qs_hemjbmh = $editor->db()
+				->query('select', 'hemjbmh' )
+				->get(['id_hesxxmh'] )
+				->get(['id_hodxxmh'] )
+				->get(['id_hovxxmh'] )
+				->get(['id_hosxxmh'] )
+				->get(['id_hevxxmh'] )
+				->get(['id_hetxxmh'] )
+				->get(['tanggal_masuk'] )
+				->where('id_hemxxmh', $id )
+				->exec();
+			$rs_hemjbmh = $qs_hemjbmh->fetch();
+			// $tanggal_masuk = Carbon::parse($rs_hemjbmh['tanggal_masuk']);
+
+			// Add 6 months to the date
+			// $tanggal_akhir_kontrak = $tanggal_masuk->addMonths(6);
+
+			$qi_hemjbrd = $editor->db()
+				->query('insert', 'hemjbrd')
+				->set('id_harxxmh',1)
+				->set('id_hesxxmh',$rs_hemjbmh['id_hesxxmh'])
+				->set('id_hovxxmh_awal',$rs_hemjbmh['id_hovxxmh'])
+				->set('id_hovxxmh_akhir',$rs_hemjbmh['id_hovxxmh'])
+				->set('id_hodxxmh_awal',$rs_hemjbmh['id_hodxxmh'])
+				->set('id_hodxxmh_akhir',$rs_hemjbmh['id_hodxxmh'])
+				->set('id_hosxxmh_awal',$rs_hemjbmh['id_hosxxmh'])
+				->set('id_hosxxmh_akhir',$rs_hemjbmh['id_hosxxmh'])
+				->set('id_hevxxmh_awal',$rs_hemjbmh['id_hevxxmh'])
+				->set('id_hevxxmh_akhir',$rs_hemjbmh['id_hevxxmh'])
+				->set('id_hetxxmh_awal',$rs_hemjbmh['id_hetxxmh'])
+				->set('id_hetxxmh_akhir',$rs_hemjbmh['id_hetxxmh'])
+				->set('tanggal_awal',$rs_hemjbmh['tanggal_masuk'])
+				->set('tanggal_akhir',$tanggal_akhir_kontrak)
+				->set('id_hemxxmh',$id)
+				->exec();
 		})
 		->on('preEdit',function( $editor, $id, $values ) {
 			// script diletakkan disini
 		})
 		->on('postEdit',function( $editor, $id, $values, $row ) {
 			// script diletakkan disini
+			$tanggal_akhir = $values['tanggal_akhir'];
+			$tanggal_akhir_kontrak = date("Y-m-d", strtotime($tanggal_akhir));
+
+			// print_r($tanggal_akhir_kontrak);
+			$qs_hemjbmh = $editor->db()
+				->query('select', 'hemjbmh' )
+				->get(['id_hesxxmh'] )
+				->get(['id_hodxxmh'] )
+				->get(['id_hovxxmh'] )
+				->get(['id_hosxxmh'] )
+				->get(['id_hevxxmh'] )
+				->get(['id_hetxxmh'] )
+				->get(['tanggal_masuk'] )
+				->where('id_hemxxmh', $id )
+				->exec();
+			$rs_hemjbmh = $qs_hemjbmh->fetch();
+			// $tanggal_masuk = Carbon::parse($rs_hemjbmh['tanggal_masuk']);
+
+			// Add 6 months to the date
+			// $tanggal_akhir_kontrak = $tanggal_masuk->addMonths(6);
+
+			$qu_hemjbrd = $editor->db()
+				->query('update', 'hemjbrd')
+				->set('id_hesxxmh',$rs_hemjbmh['id_hesxxmh'])
+				->set('id_hovxxmh_awal',$rs_hemjbmh['id_hovxxmh'])
+				->set('id_hovxxmh_akhir',$rs_hemjbmh['id_hovxxmh'])
+				->set('id_hodxxmh_awal',$rs_hemjbmh['id_hodxxmh'])
+				->set('id_hodxxmh_akhir',$rs_hemjbmh['id_hodxxmh'])
+				->set('id_hosxxmh_awal',$rs_hemjbmh['id_hosxxmh'])
+				->set('id_hosxxmh_akhir',$rs_hemjbmh['id_hosxxmh'])
+				->set('id_hevxxmh_awal',$rs_hemjbmh['id_hevxxmh'])
+				->set('id_hevxxmh_akhir',$rs_hemjbmh['id_hevxxmh'])
+				->set('id_hetxxmh_awal',$rs_hemjbmh['id_hetxxmh'])
+				->set('id_hetxxmh_akhir',$rs_hemjbmh['id_hetxxmh'])
+				->set('tanggal_awal',$rs_hemjbmh['tanggal_masuk'])
+				->set('tanggal_akhir',$tanggal_akhir_kontrak)
+				->where('id_hemxxmh',$id)
+				->exec();
 		})
 		->on('preRemove',function( $editor, $id, $values ) {
 			// script diletakkan disini
