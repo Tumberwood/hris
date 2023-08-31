@@ -93,6 +93,20 @@
 						</div>
 					</div>
 				</form>
+				<hr>
+				<form id="frmUploadthimportcheckclock_makan_manual" enctype="multipart/form-data">
+					<div class="form-group row">
+						<label class="col-lg-2 col-form-label">File Checkclock Makan Manual</label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input type="file" name="filename" class="form-control" id="inputfilethimportcheckclock_makan_manual">
+								<span class="input-group-append"> 
+									<button type="submit" class="btn btn-primary">Import</button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -348,6 +362,54 @@
 				}
 			});
 			// END upload data finger makan
+
+			// BEGIN upload data finger makan_manual
+			var frmUploadthimportcheckclock_makan_manual = $("#frmUploadthimportcheckclock_makan_manual").submit(function(e) {
+				e.preventDefault();
+			}).validate({
+				rules: {
+					inputfilethimportcheckclock_makan_manual	: {required: true}
+				},
+				submitHandler: function(form) { 
+					
+					var notifyprogress;
+					var fd = new FormData();
+					var files = $('#inputfilethimportcheckclock_makan_manual')[0].files[0];
+					fd.append('filename',files);
+
+					notifyprogress = $.notify({
+						message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
+					},{
+						allow_dismiss: false,
+						type: 'danger',
+						delay: 0
+					});
+					
+					$.ajax( {
+						url: "../../models/gipxxsh/gipxxsh_fn_checkclock_makan_manual.php",
+						type: 'POST',
+						dataType: 'json',
+						data: fd,
+						async: false,
+						contentType: false,
+						processData: false,
+						success: function ( json ) {
+							notifyprogress.close();
+							$.notify({
+								message: json.data.message
+							},{
+								type: json.data.type_message
+							});
+							$("#frmUploadthimportcheckclock_staff")[0].reset();
+						},
+						error: function (xhr, Status, err){
+							console.log('x');
+						}
+					} );
+					return false;  //This doesn't prevent the form from submitting.
+				}
+			});
+			// END upload data finger makan_manual
 
 		} );// end of document.ready
 	
