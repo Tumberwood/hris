@@ -22,7 +22,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <!-- <th>Kode</th> -->
+                                <th>Kode</th>
                                 <th>Nama</th>
                                 <th>Department</th>
                                 <th>Jabatan</th>
@@ -59,6 +59,7 @@
 		var id_hesxxmh_old = 0;
 		var id_hesxxmh_old_tetap = 0;
 		var is_need_approval = 1;
+		var is_need_generate_kode = 1;
 		
 		$(document).ready(function() {
 			//start datatables editor
@@ -72,6 +73,22 @@
 				},
 				table: "#tblhesxxtd",
 				fields: [ 
+					{
+						// untuk generate_kode
+						label: "kategori_dokumen",
+						name: "kategori_dokumen",
+						type: "hidden"
+					},	{
+						// untuk generate_kode
+						label: "kategori_dokumen_value",
+						name: "kategori_dokumen_value",
+						type: "hidden"
+					},	{
+						// untuk generate_kode
+						label: "field_tanggal",
+						name: "field_tanggal",
+						type: "hidden"
+					},
 					{
 						label: "start_on",
 						name: "start_on",
@@ -172,6 +189,29 @@
 						type: "readonly"
 					},
 					{
+						label: "Tanggal awal Sebelumnya",
+						name: "tanggal_masuk",
+						type: "readonly"
+					},
+					{
+						label: "Tanggal Akhir Sebelumnya",
+						name: "tanggal_keluar",
+						type: "readonly"
+					},
+					{
+						label: "Keputusan<sup class='text-danger'>*<sup>",
+						name: "hesxxtd.keputusan",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Rekontrak", "value": "Rekontrak" },
+							{ "label": "Kontrak", "value": "Kontrak" },
+							{ "label": "Perpanjangan Latihan", "value": "Perpanjangan Latihan" },
+							{ "label": "Tetap", "value": "Tetap" },
+							{ "label": "Terminasi", "value": "Terminasi" }
+						]
+					},	
+					{
 						label: "Tanggal Mulai",
 						name: "hesxxtd.tanggal_mulai",
 						type: "datetime",
@@ -201,19 +241,6 @@
 						},
 						format: 'DD MMM YYYY'
 					},
-					{
-						label: "Keputusan<sup class='text-danger'>*<sup>",
-						name: "hesxxtd.keputusan",
-						type: "select",
-						placeholder : "Select",
-						options: [
-							{ "label": "Rekontrak", "value": "Rekontrak" },
-							{ "label": "Kontrak", "value": "Kontrak" },
-							{ "label": "Perpanjangan Latihan", "value": "Perpanjangan Latihan" },
-							{ "label": "Tetap", "value": "Tetap" },
-							{ "label": "Terminasi", "value": "Terminasi" }
-						]
-					},	
 					{
 						label: "Jenis Tetap<sup class='text-danger'>*<sup>",
 						name: "hesxxtd.id_hesxxmh_tetap",
@@ -270,6 +297,9 @@
 				
 				if(action == 'create'){
 					tblhesxxtd.rows().deselect();
+					edthesxxtd.field('kategori_dokumen').val('');
+					edthesxxtd.field('kategori_dokumen_value').val('');
+					edthesxxtd.field('field_tanggal').val('created_on');			// jika menggunakan created_on
 				}
 
 			});
@@ -281,6 +311,12 @@
 			edthesxxtd.dependent( 'hesxxtd.id_hesxxmh', function ( val, data, callback ) {
 				edthesxxtd.field('hesxxtd.id_hemxxmh').val('');
 				edthesxxtd.field('hesxxtd.status_ke').val('');
+				return {}
+			}, {event: 'keyup change'});
+
+			edthesxxtd.dependent( 'hesxxtd.tanggal_mulai', function ( val, data, callback ) {
+				tanggal_selesai = moment(val).add('month', 6).format('DD MMM YYYY');
+				edthesxxtd.field('hesxxtd.tanggal_selesai').val(tanggal_selesai);
 				return {}
 			}, {event: 'keyup change'});
 			
@@ -297,6 +333,22 @@
 				} else {
 					edthesxxtd.field('hesxxtd.id_hesxxmh_tetap').hide();
 				}
+
+				if (val == 'Terminasi') {
+					edthesxxtd.field('hesxxtd.tanggal_mulai').val('');
+					edthesxxtd.field('hesxxtd.tanggal_selesai').val('');
+					edthesxxtd.field('hesxxtd.tanggal_mulai').hide();
+					edthesxxtd.field('hesxxtd.tanggal_selesai').hide();
+				} else {
+					edthesxxtd.field('hesxxtd.tanggal_mulai').show();
+					edthesxxtd.field('hesxxtd.tanggal_selesai').show();
+					edthesxxtd.field('hesxxtd.tanggal_mulai').val();
+					edthesxxtd.field('hesxxtd.tanggal_selesai').val();
+				}
+
+				//Jika Kontrak maka tanggal_awal baru == tanggal_akhir lama + 2;
+				find_status();
+				
 				return {}
 			}, {event: 'keyup change'});
 
@@ -387,6 +439,11 @@
 				edthesxxtd.field('finish_on').val(finish_on);
 			});
 
+			edthesxxtd.on( 'postSubmit', function (e, json, data, action, xhr) {
+				tblhesxxtd.rows().deselect();
+				tblhesxxtd.ajax.reload(null, false);
+			} );
+
 			//start datatables
 			tblhesxxtd = $('#tblhesxxtd').DataTable( {
 				ajax: {
@@ -399,7 +456,7 @@
 				order: [[ 0, "desc" ]],
 				columns: [
 					{ data: "hesxxtd.id",visible:false },
-					// { data: "hesxxtd.kode" },
+					{ data: "hesxxtd.kode" },
 					{ data: "hemxxmh.nama" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hetxxmh.nama" },
@@ -451,7 +508,7 @@
 				id_hemxxmh_old      = hesxxtd_data.id_hemxxmh;
 				id_havxxmh_old      = hesxxtd_data.id_havxxmh;
 				id_hadxxmh_old      = hesxxtd_data.id_hadxxmh;
-
+				find_status();
 				// atur hak akses
 				CekSelectHeaderH(tblhesxxtd);
 			} );

@@ -44,17 +44,43 @@
     $rs_hemxxmh_nama = $qs_hemxxmh_nama->fetch();
     $nama = $rs_hemxxmh_nama['nama'];
 
-    $qs_hemxxmh = $db
-        ->query('select', 'hemxxmh')
-        ->get('count(hemxxmh.id) as status_ke')
-        ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
-        ->where('hemxxmh.nama', $nama) //Where dengan nama, karena kalau pakai id_hasilnya akan tetap 1
-        ->where('hemjbmh.id_hesxxmh', $id_hesxxmh) //dengan status yang sama dengan yang dipilih
-        ->exec();
-    $rs_hemxxmh = $qs_hemxxmh->fetch();
+	$qs_hemxxmh  = $db
+		->raw()
+		->bind(':nama', $nama )
+		->exec(' SELECT
+                    a.nama,
+                    a.id,
+                    c.nama,
+                    b.tanggal_awal as tanggal_masuk,
+                    b.tanggal_akhir as tanggal_keluar
+                FROM hemxxmh AS a
+                LEFT JOIN hemjbrd AS b ON b.id_hemxxmh = a.id
+                LEFT JOIN hesxxmh AS c ON c.id = b.id_hesxxmh
+                WHERE a.nama = :nama
+                ORDER BY a.id DESC
+                LIMIT 1;
+    
+				'
+				);
+    $rs_hemxxmh  = $qs_hemxxmh ->fetch();
+
+	$qs_c_hemxxmh  = $db
+		->raw()
+		->bind(':nama', $nama )
+		->exec(' SELECT
+                    COUNT(a.id) AS status_ke
+                FROM hemxxmh AS a
+                LEFT JOIN hemjbmh AS b ON b.id_hemxxmh = a.id
+                LEFT JOIN hesxxmh AS c ON c.id = b.id_hesxxmh
+                WHERE a.nama = :nama;
+    
+				'
+				);
+    $rs_c_hemxxmh  = $qs_c_hemxxmh ->fetch();
 
 	$data = array(
-        'rs_hemxxmh'=>$rs_hemxxmh
+        'rs_hemxxmh'=>$rs_hemxxmh,
+        'rs_c_hemxxmh'=>$rs_c_hemxxmh,
     );
 
     // tampilkan results

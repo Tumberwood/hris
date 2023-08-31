@@ -26,22 +26,32 @@
 		$qs_hesxxtd = $db
 			->query('select', 'hesxxtd' )
 			->get([
+				'hesxxtd.kode as kode_hesxxtd',
 				'hesxxtd.id_hemxxmh as id_hemxxmh',
 				'hesxxtd.id_hesxxmh as id_hesxxmh',
+				'hesxxtd.tanggal_mulai as tanggal_mulai',
+				'hesxxtd.tanggal_selesai as tanggal_selesai',
 				'hesxxtd.id_hesxxmh_tetap as id_hesxxmh_tetap',
 				'hesxxtd.keterangan as keterangan',
 				'hesxxtd.keputusan as keputusan',
+				'hemxxmh.kode as kode',
 				'hesxxtd.nik_baru as nik_baru'
 			] )
 			->where('hesxxtd.id', $id_hesxxtd )
+			->join('hemxxmh','hemxxmh.id = hesxxtd.id_hemxxmh','LEFT' )
 			->exec();
 
 		$rs_hesxxtd = $qs_hesxxtd->fetch();
+
+		$kode_hesxxtd = $rs_hesxxtd['kode_hesxxtd'];
 		$keputusan = $rs_hesxxtd['keputusan'];
 		$id_hemxxmh = $rs_hesxxtd['id_hemxxmh'];
+		$tanggal_selesai = $rs_hesxxtd['tanggal_selesai'];
+		$tanggal_mulai = $rs_hesxxtd['tanggal_mulai'];
 		$id_hesxxmh = $rs_hesxxtd['id_hesxxmh'];
 		$id_hesxxmh_tetap = $rs_hesxxtd['id_hesxxmh_tetap'];
 		$nik_baru = $rs_hesxxtd['nik_baru'];
+		$kode_lama = $rs_hesxxtd['kode'];
 
 		$qs_hemxxmh = $db
 			->query('select', 'hemxxmh' )
@@ -62,6 +72,16 @@
 			->exec();
 		$rs_hemxxmh = $qs_hemxxmh->fetch();
 
+		$qs_hemdcmh = $db
+			->query('select', 'hemxxmh' )
+			->get([
+				'hemdcmh.ktp_no as ktp_no',
+			] )
+			->join('hemdcmh','hemdcmh.id_hemxxmh = hemxxmh.id','LEFT' )
+			->where('hemxxmh.id', $id_hemxxmh )
+			->exec();
+		$rs_hemdcmh = $qs_hemdcmh->fetch();
+
 		$qs_hemjbmh = $db
 			->query('select', 'hemxxmh' )
 			->get([
@@ -79,7 +99,6 @@
 				'hemjbmh.id_hbnxxmh as id_hbnxxmh',
 				'hemjbmh.is_checkclock as is_checkclock',
 				'hemjbmh.email_perusahaan as email_perusahaan',
-				'hemjbmh.tanggal_masuk as tanggal_masuk',
 				'hemjbmh.jenis_lembur as jenis_lembur',
 				'hemjbmh.rekening_no as rekening_no',
 				'hemjbmh.rekening_nama as rekening_nama',
@@ -92,8 +111,8 @@
 			->exec();
 		$rs_hemjbmh = $qs_hemjbmh->fetch();
 		
-		$tanggal_masuk = $rs_hemjbmh['tanggal_masuk'];
-		$tanggal_keluar = date('Y-m-d', strtotime($tanggal_masuk . ' +6 months'));
+		// $tanggal_masuk = $rs_hemjbmh['tanggal_masuk'];
+		// $tanggal_keluar = date('Y-m-d', strtotime($tanggal_masuk . ' +6 months'));
 		// print_r($tanggal_masuk);
 		// print_r($tanggal_keluar);
 
@@ -104,36 +123,62 @@
 		// 	->where('id', $id_hemxxmh )
 		// 	->exec();
 
-		if ($keputusan != 'Terminasi') {
-			//Insert ke Hemxxmh
-			$qi_hemxxmh = $db
-				->query('insert', 'hemxxmh')
-				->set($rs_hemxxmh)
-				->set('kode', $nik_baru )
-				->exec();
-
-			$id_insert_hemx = $qi_hemxxmh->insertId();
-
+		if ($keputusan != 'Terminasi' && $keputusan != 'Rekontrak') {
+			$is_htpr_no_hemxxmh = 0;
 			if ($keputusan == 'Rekontrak') {
 				$id_hesxxmh = 2;
 			} else if ($keputusan == 'Kontrak') {
 				$id_hesxxmh = 2;
+				$is_htpr_no_hemxxmh = 1;
+
 			} else if ($keputusan == 'Perpanjangan Pelatihan') {
 				$id_hesxxmh = 3;
 			} else if ($keputusan == 'Tetap') {
 				$id_hesxxmh = $id_hesxxmh_tetap;
 			}
-		
+			
+			$qi_hemxxmh = $db
+				->query('insert', 'hemxxmh')
+				->set($rs_hemxxmh)
+				->set('kode', $nik_baru )
+				->exec();
+			$id_insert_hemx = $qi_hemxxmh->insertId();
+
+			//flag jika kontrak maka insert ke htpr_no_hemxxmh
+			if ($is_htpr_no_hemxxmh == 1) {
+				$tanggal_selesai_old = Carbon::parse($tanggal_mulai)->subDays(2);
+
+				//dapatkan data antara tanggal selesai old dengan tanggal mulai baru (jarak 2 hari)
+				for ($date = $tanggal_selesai_old; $date <= Carbon::parse($tanggal_mulai); $date->addDay()) {
+					$qi_htpr_no_hemxxmh = $db
+						->query('insert', 'htpr_no_hemxxmh')
+						->set('tanggal', $date->toDateString())
+						->set('id_hemxxmh',$id_insert_hemx)
+						->set('id_hodxxmh',$rs_hemjbmh['id_hodxxmh'])
+						->set('id_hetxxmh',$rs_hemjbmh['id_hetxxmh'])
+						->exec();
+				}
+			}
+			
 			$qi_hemjbmh = $db
 			->query('insert', 'hemjbmh')
 			->set('id_hemxxmh',$id_insert_hemx)
 			->set('id_hesxxmh',$id_hesxxmh)
 			->set($rs_hemjbmh)
-			->set('tanggal_keluar',$tanggal_keluar)
+			->set('tanggal_masuk',$tanggal_mulai)
+			->set('tanggal_keluar',$tanggal_selesai)
+			->exec();
+
+			$qi_hemdcmh = $db
+			->query('insert', 'hemdcmh')
+			->set('id_hemxxmh',$id_insert_hemx)
+			->set('ktp_no',$ktp_no)
 			->exec();
 		
 			$qi_hemjbrd = $db
 			->query('insert', 'hemjbrd')
+			->set('kode', $kode_hesxxtd)
+			->set('id_harxxmh',1)
 			->set('id_hemxxmh',$id_insert_hemx)
 			->set('id_hesxxmh',$id_hesxxmh)
 			->set('id_gcpxxmh_awal',$rs_hemjbmh['id_gcpxxmh'])
@@ -154,8 +199,8 @@
 			->set('id_hevxxmh_akhir',$rs_hemjbmh['id_hevxxmh'])
 			->set('id_hetxxmh_awal',$rs_hemjbmh['id_hetxxmh'])
 			->set('id_hetxxmh_akhir',$rs_hemjbmh['id_hetxxmh'])
-			->set('tanggal_awal',$tanggal_masuk)
-			->set('tanggal_akhir',$tanggal_keluar)
+			->set('tanggal_awal',$tanggal_mulai)
+			->set('tanggal_akhir',$tanggal_selesai)
 			->exec();
 
 			$qs_pola_shift = $db
@@ -173,6 +218,41 @@
 				->set($rs_pola_shift)
 				->exec();
 			
+		} else {
+			if ($keputusan == 'Terminasi') {
+				$id_har = 3;
+			}  else if ($keputusan == 'Rekontrak') {
+				$id_hesxxmh = 2;
+				$id_har = 2;
+			}
+			
+			$qi_hemjbrd = $db
+			->query('insert', 'hemjbrd')
+			->set('kode', $kode_hesxxtd)
+			->set('id_harxxmh',$id_har)
+			->set('id_hemxxmh',$id_hemxxmh)
+			->set('id_hesxxmh',$id_hesxxmh)
+			->set('id_gcpxxmh_awal',$rs_hemjbmh['id_gcpxxmh'])
+			->set('id_gcpxxmh_akhir',$rs_hemjbmh['id_gcpxxmh'])
+			->set('id_gbrxxmh_awal',$rs_hemjbmh['id_gbrxxmh'])
+			->set('id_gbrxxmh_akhir',$rs_hemjbmh['id_gbrxxmh'])
+			->set('id_holxxmh_awal',$rs_hemjbmh['id_holxxmh'])
+			->set('id_holxxmh_akhir',$rs_hemjbmh['id_holxxmh'])
+			->set('id_hovxxmh_awal',$rs_hemjbmh['id_hovxxmh'])
+			->set('id_hovxxmh_akhir',$rs_hemjbmh['id_hovxxmh'])
+			->set('id_hodxxmh_awal',$rs_hemjbmh['id_hodxxmh'])
+			->set('id_hodxxmh_akhir',$rs_hemjbmh['id_hodxxmh'])
+			->set('id_hosxxmh_awal',$rs_hemjbmh['id_hosxxmh'])
+			->set('id_hosxxmh_akhir',$rs_hemjbmh['id_hosxxmh'])
+			->set('id_hobxxmh_awal',$rs_hemjbmh['id_hobxxmh'])
+			->set('id_hobxxmh_akhir',$rs_hemjbmh['id_hobxxmh'])
+			->set('id_hevxxmh_awal',$rs_hemjbmh['id_hevxxmh'])
+			->set('id_hevxxmh_akhir',$rs_hemjbmh['id_hevxxmh'])
+			->set('id_hetxxmh_awal',$rs_hemjbmh['id_hetxxmh'])
+			->set('id_hetxxmh_akhir',$rs_hemjbmh['id_hetxxmh'])
+			->set('tanggal_awal',$tanggal_mulai)
+			->set('tanggal_akhir',$tanggal_selesai)
+			->exec();
 		}
 
 	}elseif($state == 2){
