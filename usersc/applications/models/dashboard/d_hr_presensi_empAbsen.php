@@ -68,6 +68,8 @@
         $qs_department = $db
         ->raw()
         ->bind(':absen', $absen)
+        ->bind(':start_date', $start_date)
+        ->bind(':end_date', $end_date)
         ->exec('SELECT
                     absen.nama AS nama_absen,
                     COUNT(peg.id) AS c_absen,
@@ -79,6 +81,7 @@
                 LEFT JOIN hodxxmh AS dep ON dep.id = job.id_hodxxmh
                 WHERE a.jenis = 1 
                     AND a.id_htlxxmh = :absen
+                    AND a.tanggal BETWEEN :start_date AND :end_date
                 GROUP BY dep.id
                 ORDER BY dep.id ASC;
                 '
