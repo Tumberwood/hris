@@ -89,14 +89,14 @@
 
 				$dt = explode(" ",$sheetData[$i]['2']);
 				
-				foreach ($dt as $key => $value) {
+				// foreach ($dt as $key => $value) {
 					$str_tanggal = $dt[0];
 					$tahun = substr($str_tanggal,6,4);
 					$bulan = substr($str_tanggal,3,2);
 					$tgl = substr($str_tanggal,0,2);
 					$tanggal = $tahun .'-'.$bulan.'-'.$tgl;
 					$jam     = $dt[1];
-				}
+				// }
 				
 				$qs_htsprtd = $db
 					->query('select', 'htsprtd' )
