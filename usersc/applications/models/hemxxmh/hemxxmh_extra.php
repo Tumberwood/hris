@@ -29,6 +29,7 @@
 			$qi_hemjbrd = $editor->db()
 				->query('insert', 'hemjbrd')
 				->set('id_harxxmh',1)
+				->set('is_email_status',1)
 				->set('id_hesxxmh',$rs_hemjbmh['id_hesxxmh'])
 				->set('id_hovxxmh_awal',$rs_hemjbmh['id_hovxxmh'])
 				->set('id_hovxxmh_akhir',$rs_hemjbmh['id_hovxxmh'])

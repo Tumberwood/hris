@@ -146,19 +146,23 @@
 
 			//flag jika kontrak maka insert ke htpr_no_hemxxmh
 			if ($is_htpr_no_hemxxmh == 1) {
-				$tanggal_selesai_old = Carbon::parse($tanggal_mulai)->subDays(2);
-
-				//dapatkan data antara tanggal selesai old dengan tanggal mulai baru (jarak 2 hari)
-				for ($date = $tanggal_selesai_old; $date <= Carbon::parse($tanggal_mulai); $date->addDay()) {
+				// 2 hari sebelum $tanggal_mulai
+				$datesBefore = [];
+				$datesBefore[] = Carbon::parse($tanggal_mulai)->subDays(2);
+				$datesBefore[] = Carbon::parse($tanggal_mulai)->subDays(1);
+				
+				// Insert data for each date in the array
+				foreach ($datesBefore as $dateBefore) {
 					$qi_htpr_no_hemxxmh = $db
 						->query('insert', 'htpr_no_hemxxmh')
-						->set('tanggal', $date->toDateString())
-						->set('id_hemxxmh',$id_insert_hemx)
-						->set('id_hodxxmh',$rs_hemjbmh['id_hodxxmh'])
-						->set('id_hetxxmh',$rs_hemjbmh['id_hetxxmh'])
+						->set('tanggal', $dateBefore->toDateString())
+						->set('id_hemxxmh', $id_insert_hemx)
+						->set('id_hodxxmh', $rs_hemjbmh['id_hodxxmh'])
+						->set('id_hetxxmh', $rs_hemjbmh['id_hetxxmh'])
 						->exec();
 				}
 			}
+
 			
 			$qi_hemjbmh = $db
 			->query('insert', 'hemjbmh')
@@ -179,6 +183,7 @@
 			->query('insert', 'hemjbrd')
 			->set('kode', $kode_hesxxtd)
 			->set('id_harxxmh',1)
+			->set('is_email_status',1)
 			->set('id_hemxxmh',$id_insert_hemx)
 			->set('id_hesxxmh',$id_hesxxmh)
 			->set('id_gcpxxmh_awal',$rs_hemjbmh['id_gcpxxmh'])
@@ -230,6 +235,7 @@
 			->query('insert', 'hemjbrd')
 			->set('kode', $kode_hesxxtd)
 			->set('id_harxxmh',$id_har)
+			->set('is_email_status',1)
 			->set('id_hemxxmh',$id_hemxxmh)
 			->set('id_hesxxmh',$id_hesxxmh)
 			->set('id_gcpxxmh_awal',$rs_hemjbmh['id_gcpxxmh'])
