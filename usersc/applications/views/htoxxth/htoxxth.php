@@ -295,8 +295,8 @@
 				edthtoxxth.field('start_on').val(start_on);
 
 				if(action == 'create'){
-					tblhtoxxth.rows().deselect();
-					edthtoxxth.field('field_tanggal').val('created_on');	
+					tblhtoxxth.rows().deselect();	
+					edthtoxxth.field('field_tanggal').val('tanggal');
 				}
 			});
 
@@ -355,6 +355,11 @@
 			edthtoxxth.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthtoxxth.field('finish_on').val(finish_on);
+				id_heyxxmh = edthtoxxth.field('htoxxth.id_heyxxmh').val();
+				tanggal = edthtoxxth.field('htoxxth.tanggal').val();
+
+				edthtoxxth.field('kategori_dokumen').val('id_heyxxmh');
+				edthtoxxth.field('kategori_dokumen_value').val(id_heyxxmh);
 			});
 
 			edthtoxxth.on( 'postSubmit', function (e, json, data, action, xhr) {
