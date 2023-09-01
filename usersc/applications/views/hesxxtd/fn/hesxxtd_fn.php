@@ -14,7 +14,7 @@
                 id_hesxxmh: id_hesxxmh
             },
             success: function ( json ) {
-                status_ke = json.data.rs_c_hemxxmh.status_ke;
+                status_ke = json.data.status_ke;
                 tanggal_keluar = json.data.rs_hemxxmh.tanggal_keluar;
                 tanggal_masuk = json.data.rs_hemxxmh.tanggal_masuk;
                 

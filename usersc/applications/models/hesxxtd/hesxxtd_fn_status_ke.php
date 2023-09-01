@@ -78,9 +78,25 @@
 				);
     $rs_c_hemxxmh  = $qs_c_hemxxmh ->fetch();
 
+	$qs_c_hemjbrd  = $db
+		->raw()
+		->bind(':nama', $nama )
+		->exec(' SELECT
+                    COUNT(b.id) AS status_ke
+                FROM hemxxmh AS a
+                LEFT JOIN hemjbrd AS b ON b.id_hemxxmh = a.id
+                WHERE a.nama = :nama 
+                    AND b.id_harxxmh = 2;
+    
+				'
+				);
+    $rs_c_hemjbrd  = $qs_c_hemjbrd ->fetch();
+
+    $status_ke = $rs_c_hemxxmh['status_ke'] + $rs_c_hemjbrd['status_ke'];
+
 	$data = array(
         'rs_hemxxmh'=>$rs_hemxxmh,
-        'rs_c_hemxxmh'=>$rs_c_hemxxmh,
+        'status_ke'=>$status_ke,
     );
 
     // tampilkan results
