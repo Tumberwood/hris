@@ -11,8 +11,8 @@
                 {
                     extend: 'collection',
                     name: 'btnSetName',
-                    text: '<i class="fa fa-wrench">',
-                    className: 'btn btn-outline',
+                    text: '<span class="fa fa-wrench">',
+                    className: 'btn btn-xs btn-outline',
                     autoClose: true,
                     buttons: [
                         berisi button-button yang ada
@@ -83,9 +83,8 @@
         {
             extend: 'collection',
             name: 'btnSetTools',
-            //text: 'Tools',
-            text: '<i class="fa fa-wrench"></i>',
-            className: 'btn btn-outline',
+            text: '<span class="fa fa-wrench"></span>',
+            className: 'btn btn-xs btn-warning',
             autoClose: true,
             buttons: [
 <?php     
@@ -98,9 +97,9 @@
                     if($value == 'show_hide'){
 ?>
                         {
-                            text: '<i class="fa fa-adjust" id="bf_active_status">&nbsp &nbsp Show / Hide Document</i>',
+                            text: '<span class="fa fa-adjust" id="bf_active_status">&nbsp &nbsp Show / Hide Document</span>',
                             name: 'btnShowHide', 
-                            className: 'btn',
+                            className: 'btn btn-xs',
                             titleAttr: 'Show / Hide Inactive Document',
                             action: function ( e, dt, node, config, tbl_details ) {
                                 
@@ -129,8 +128,8 @@
                         { 
                             extend: "excel",
                             name: 'btnExcel', 
-                            text: '<i class="fa fa-file-excel-o">&nbsp &nbsp Excel</i>', 
-                            className: 'btn btn-outline',
+                            text: '<span class="fa fa-file-excel-o">&nbsp &nbsp Excel</span>', 
+                            className: 'btn btn-xs btn-outline',
                             titleAttr: 'Export to Excel'
                         },
 <?php
@@ -144,8 +143,8 @@
                         { 
                             extend: "pdf", 
                             name: 'btnPdf', 
-                            text: '<i class="fa fa-file-pdf-o">&nbsp &nbsp pdf</i>', 
-                            className: 'btn btn-outline',
+                            text: '<span class="fa fa-file-pdf-o">&nbsp &nbsp pdf</span>', 
+                            className: 'btn btn-xs btn-outline',
                             titleAttr: 'Export to pdf'
                         },
 <?php
@@ -159,8 +158,8 @@
                         { 
                             extend: "copy", 
                             name: 'btnCopy',
-                            text: '<i class="fa fa-copy">&nbsp &nbsp Copy</i>', 
-                            className: 'btn btn-outline',
+                            text: '<span class="fa fa-copy">&nbsp &nbsp Copy</span>', 
+                            className: 'btn btn-xs btn-outline',
                             titleAttr: 'Copy'
                         },
 <?php
@@ -173,9 +172,9 @@
 ?>
                         { 
                             extend: 'colvis',
-                            text: '<i class="fa fa-eye-slash" id="bf_active_status">&nbsp &nbsp Show / Hide Column</i>',
+                            text: '<span class="fa fa-eye-slash" id="bf_active_status">&nbsp &nbsp Show / Hide Column</span>',
                             name: 'btnColVis',
-                            className: 'btn btn-outline',
+                            className: 'btn btn-xs btn-outline',
                             titleAttr: 'Show / Hide Column',
                             columns: colvisCount,
                             columnText: function ( dt, idx, title ) {
@@ -209,7 +208,7 @@
             extend: 'collection',
             name: 'btnSetTools',
             text: 'Action',
-            className: 'btn btn-outline',
+            className: 'btn btn-xs btn-outline',
             autoClose: true,
             buttons: [
 <?php
@@ -225,8 +224,8 @@
                             extend: 'create',
                             name: 'btnCreate', 
                             editor: <?php echo $edt;?>, 
-                            text: '<i class="fa fa-plus">&nbsp &nbsp Add New</i>', 
-                            className: 'btn btn-outline', 
+                            text: '<span class="fa fa-plus">&nbsp &nbsp Add New</span>', 
+                            className: 'btn btn-xs btn-outline', 
                             titleAttr: 'Add New',
                             key: {
                                 key: 'n',
@@ -246,8 +245,8 @@
                             extend: 'edit', 
                             name: 'btnEdit', 
                             editor: <?php echo $edt;?>,
-                            text: '<i class="fa fa-edit">&nbsp &nbsp Edit</i>', 
-                            className: 'btn btn-outline',
+                            text: '<span class="fa fa-edit">&nbsp &nbsp Edit</span>', 
+                            className: 'btn btn-xs btn-outline',
                             titleAttr: 'Edit',
                             key: {
                                 key: 'e',
@@ -267,8 +266,8 @@
                             extend: 'remove', 
                             name: 'btnRemove',
                             editor: <?php echo $edt;?>, 
-                            text: '<i class="fa fa-trash">&nbsp &nbsp Delete</i>', 
-                            className: 'btn btn-danger',
+                            text: '<span class="fa fa-trash">&nbsp &nbsp Delete</span>', 
+                            className: 'btn btn-xs btn-danger',
                             titleAttr: 'Remove',
                             key: {
                                 key: 'd',
@@ -287,11 +286,10 @@
                         {
                             extend: "selected",
                             name: 'BtnView',
-                            text: '<i class="fa fa-window-maximize">&nbsp &nbsp View Data</i>', 
-                            className: 'btn btn-outline',
+                            text: '<span class="fa fa-window-maximize">&nbsp &nbsp View Data</span>', 
+                            className: 'btn btn-xs btn-outline',
                             titleAttr: 'View Data',
                             action: function(e, dt, node, config) {
-                                act = 'view';
                                 <?php echo $edt;?>.edit(<?php echo $table;?>.row({
                                     selected: true
                                 }).index(), {
@@ -306,13 +304,51 @@
 ?>
 
 <?php
+    // BEGIN button view
+                    if($value == 'log'){
+?>
+                        {
+                            extend: "selected",
+                            name: 'BtnLog',
+                            text: '<span class="fa fa-dedent">&nbsp &nbsp View Log</span>', 
+                            className: 'btn btn-xs btn-outline',
+                            titleAttr: 'View Data Log',
+                            action: function(e, dt, node, config) {
+                                e.preventDefault();
+                                $("#mdlLog").modal("show");
+
+                                $.ajax({
+                                    url: '../../../helpers/fn_log_view.php',
+                                    dataType: 'json',
+                                    type: 'POST',
+                                    async: false,
+                                    data: {
+                                        table_name	 : '<?php echo $table_name;?>',
+                                        id_transaksi : id_transaksi_h,
+                                    },
+                                    success: function(json) {
+                                        str_log = '';
+                                        log_data = json.data.rs_activity_log_ml;
+                                        $.each(log_data, function(index, value) {
+                                            str_log = str_log + '[' + log_data[index].kode + '] by ' + log_data[index].username + ' at ' + log_data[index].created_on + '</br>';
+                                        });
+                                        $("#contentLog").html(str_log);
+                                    }
+                                });
+                            }
+                        },
+<?php
+                    }   // END button view
+?>
+
+<?php
     // BEGIN button nonaktif_h
                     if($value == 'nonaktif_h'){
 ?>
                         { 
-                            text: '<i class="fa fa-trash" id="btnNonAktif">&nbsp &nbsp Delete</i>', 
+                            text: '<span class="fa fa-trash" id="btnNonAktif">&nbsp &nbsp Delete</span>', 
                             name: 'btnNonAktif',
-                            className: 'btn btn-danger',
+                            className: 'btn btn-xs btn-danger',
                             titleAttr: 'Remove',
                             action: function ( e, dt, node, config ) {
                                 if(is_active == 1){
@@ -363,9 +399,9 @@
                     if($value == 'nonaktif_d'){
 ?>
                         { 
-                            text: '<i class="fa fa-trash" id="btnNonAktif">&nbsp &nbsp Delete</i>', 
+                            text: '<span class="fa fa-trash" id="btnNonAktif">&nbsp &nbsp Delete</span>', 
                             name: 'btnNonAktif',
-                            className: 'btn btn-danger',
+                            className: 'btn btn-xs btn-danger',
                             titleAttr: 'Remove',
                             action: function ( e, dt, node, config ) {
                                 var rows = <?php echo $table;?>.rows( {selected: true} ).indexes();
@@ -423,9 +459,9 @@
                     if($value == 'nonaktif_o_d'){
 ?>
                         { 
-                            text: '<i class="fa fa-trash" id="btnNonAktifOnly">&nbsp &nbsp Delete</i>', 
+                            text: '<span class="fa fa-trash" id="btnNonAktifOnly">&nbsp &nbsp Delete</span>', 
                             name: 'btnNonAktifOnly',
-                            className: 'btn btn-danger',
+                            className: 'btn btn-xs btn-danger',
                             titleAttr: 'Remove',
                             action: function ( e, dt, node, config ) {
                                 var rows          = <?php echo $table;?>.rows( {selected: true} ).indexes();
@@ -466,7 +502,7 @@
                     extend: 'collection',
                     name: 'btnSetApprove',
                     text: 'Approval',
-                    className: 'btn btn-outline',
+                    className: 'btn btn-xs btn-outline',
                     autoClose: true,
                     buttons: [
 <?php
@@ -478,9 +514,9 @@
 ?>
 
                                 { 
-                                    text: '<i class="fa fa-check">&nbsp &nbsp Approve</i>', 
+                                    text: '<span class="fa fa-check">&nbsp &nbsp Approve</span>', 
                                     name: 'btnApprove',
-                                    className: 'btn btn-primary',
+                                    className: 'btn btn-xs btn-primary',
                                     titleAttr: 'Approve',
                                     action: function ( e, dt, node, config ) {
 
@@ -591,9 +627,9 @@
                             if($value == 'cancel_approve'){
 ?>
                                 { 
-                                    text: '<i class="fa fa-undo">&nbsp &nbsp Cancel Approve</i>', 
+                                    text: '<span class="fa fa-undo">&nbsp &nbsp Cancel Approve</span>', 
                                     name: 'btnCancelApprove',
-                                    className: 'btn btn-outline',
+                                    className: 'btn btn-xs btn-outline',
                                     titleAttr: 'Cancel Approve',
                                     action: function ( e, dt, node, config ) {
 
@@ -704,9 +740,9 @@
                             if($value == 'void'){
 ?>
                                 {
-                                    text: '<i class="fa fa-remove">&nbsp &nbsp Void</i>', 
+                                    text: '<span class="fa fa-remove">&nbsp &nbsp Void</span>', 
                                     name: 'btnVoid',
-                                    className: 'btn btn-danger',
+                                    className: 'btn btn-xs btn-danger',
                                     titleAttr: 'Void',
                                     action: function ( e, dt, node, config ) {
                                         $.ajax( {

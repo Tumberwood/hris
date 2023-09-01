@@ -34,6 +34,8 @@
 	</div>
 </div>
 
+<?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_modal_log.php'; ?>
+
 <!-- BEGIN JS -->
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_load.php'; ?>
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_setup.php'; ?>
@@ -213,7 +215,7 @@
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
-						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_h'];
+						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_h', 'log'];
 						$arr_buttons_approve 	= [];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
