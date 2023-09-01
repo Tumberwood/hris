@@ -24,13 +24,13 @@
                     
                 if (keputusan == 'Kontrak') {
 					if (tanggal_keluar != null) {
-						tanggal_awal_baru = moment(tanggal_keluar).add('day', 2).format('DD MMM YYYY');
-						tanggal_akhir_baru = moment(tanggal_awal_baru).add('month', 6).format('DD MMM YYYY');
+						tanggal_awal_baru = moment(tanggal_keluar).add('day', 3).format('DD MMM YYYY');
+						tanggal_akhir_baru = moment(tanggal_awal_baru).add('month', 6).subtract(1, 'day').format('DD MMM YYYY');
 						edthesxxtd.field('hesxxtd.tanggal_mulai').val(tanggal_awal_baru);
 						edthesxxtd.field('hesxxtd.tanggal_selesai').val(tanggal_akhir_baru);
 					} else {
-						tanggal_awal_baru = moment(tanggal_masuk).add('month', 6).add('day', 2).format('DD MMM YYYY');
-						tanggal_akhir_baru = moment(tanggal_awal_baru).add('month', 6).format('DD MMM YYYY');
+						tanggal_awal_baru = moment(tanggal_masuk).add('month', 6).add('day', 3).format('DD MMM YYYY');
+						tanggal_akhir_baru = moment(tanggal_awal_baru).add('month', 6).subtract(1, 'day').format('DD MMM YYYY');
 						edthesxxtd.field('hesxxtd.tanggal_mulai').val(tanggal_awal_baru);
 						edthesxxtd.field('hesxxtd.tanggal_selesai').val(tanggal_akhir_baru);
 					}

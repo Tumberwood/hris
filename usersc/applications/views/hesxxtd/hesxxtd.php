@@ -315,7 +315,7 @@
 			}, {event: 'keyup change'});
 
 			edthesxxtd.dependent( 'hesxxtd.tanggal_mulai', function ( val, data, callback ) {
-				tanggal_selesai = moment(val).add('month', 6).format('DD MMM YYYY');
+				tanggal_selesai = moment(val).add('month', 6).subtract(1, 'day').format('DD MMM YYYY');
 				edthesxxtd.field('hesxxtd.tanggal_selesai').val(tanggal_selesai);
 				return {}
 			}, {event: 'keyup change'});
