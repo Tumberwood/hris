@@ -130,7 +130,7 @@
         var edthtoemtd, tblhtoemtd, show_inactive_status_htoemtd = 0, id_htoemtd;
 		// ------------- end of default variable
 
-		is_need_approval = 1;
+		// is_need_approval = 1;
 
 		// sementara di 0 kan
 		// is_need_generate_kode = 1;
@@ -296,6 +296,7 @@
 
 				if(action == 'create'){
 					tblhtoxxth.rows().deselect();
+					edthtoxxth.field('field_tanggal').val('created_on');	
 				}
 			});
 
@@ -360,6 +361,8 @@
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
+				tblhtoxxth.rows().deselect();
+				tblhtoxxth.ajax.reload(null, false);
 			} );
 			
 			//start datatables
