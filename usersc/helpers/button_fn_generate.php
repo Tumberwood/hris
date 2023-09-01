@@ -310,7 +310,7 @@
                         {
                             extend: "selected",
                             name: 'BtnLog',
-                            text: '<span class="fa fa-window-maximize">&nbsp &nbsp View Log</span>', 
+                            text: '<span class="fa fa-dedent">&nbsp &nbsp View Log</span>', 
                             className: 'btn btn-xs btn-outline',
                             titleAttr: 'View Data Log',
                             action: function(e, dt, node, config) {
