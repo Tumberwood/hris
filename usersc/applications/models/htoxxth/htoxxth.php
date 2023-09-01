@@ -84,7 +84,7 @@
 	
 	include( "htoxxth_extra.php" );
 	include( "../../../helpers/edt_log.php" );
-	include( "../../../helpers/kode_fn_generate_c.php" );
+	// include( "../../../helpers/kode_fn_generate_c.php" );
 	
 	$editor
 		->process( $_POST )
