@@ -130,7 +130,7 @@
         var edthtoemtd, tblhtoemtd, show_inactive_status_htoemtd = 0, id_htoemtd;
 		// ------------- end of default variable
 
-		// is_need_approval = 1;
+		is_need_approval = 1;
 
 		// sementara di 0 kan
 		// is_need_generate_kode = 1;
