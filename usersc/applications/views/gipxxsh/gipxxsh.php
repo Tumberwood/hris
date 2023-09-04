@@ -375,14 +375,15 @@
 					var notifyprogress;
 					var fd = new FormData();
 					var files = $('#inputfilethimportcheckclock_makan_manual')[0].files[0];
-					fd.append('filename',files);
+					fd.append('filename', files);
 
 					notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
-					},{
+					}, {
 						allow_dismiss: false,
 						type: 'danger',
-						delay: 0
+						delay: 0,
+						element: 'body' // Specify the HTML element where the notification should appear (e.g., 'body')
 					});
 					
 					$.ajax( {
@@ -398,7 +399,8 @@
 							$.notify({
 								message: json.data.message
 							},{
-								type: json.data.type_message
+								type: json.data.type_message,
+								delay: 10000
 							});
 							$("#frmUploadthimportcheckclock_staff")[0].reset();
 						},

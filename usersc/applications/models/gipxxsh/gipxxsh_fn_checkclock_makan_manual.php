@@ -83,7 +83,7 @@
 
 				if ($rs_hemxxmh['id'] == 0) {
 					$emptyPeg[] = array(
-						'rowIndex' => $i
+						'rowIndex' => $i + 1
 					);
 				}
 
@@ -138,7 +138,7 @@
 					}
 				}
 				$data = array(
-					"message" => "No Akun tidak sesuai pada kolom " . $errorMessage,
+					"message" => "No Akun tidak sesuai pada Baris " . $errorMessage,
 					"type_message" => "danger"
 				);
 			} else {
