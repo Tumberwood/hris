@@ -574,118 +574,121 @@
             
                         $rs_htoxxrd = $qs_htoxxrd->fetchAll();
 
-                        $jam_awal_lembur_libur 		= null;
-                        $jam_akhir_lembur_libur 	= null;
-                        $jam_awal_lembur_awal 		= null;
-                        $jam_akhir_lembur_awal 		= null;
-                        $jam_awal_lembur_akhir 		= null;
-                        $jam_akhir_lembur_akhir 	= null;
-                        $jam_awal_lembur_istirahat1 = null;
-                        $jam_akhir_lembur_istirahat1= null;
-                        $jam_awal_lembur_istirahat2 = null;
-                        $jam_akhir_lembur_istirahat2= null;
-                        $jam_awal_lembur_istirahat3 = null;
-                        $jam_akhir_lembur_istirahat3= null;
-                        $durasi_lembur_awal_jam         = 0;
-                        $durasi_lembur_akhir_jam        = 0;
-                        $durasi_lembur_libur_jam        = 0;
-                        $durasi_lembur_istirahat1_jam   = 0;
-                        $durasi_lembur_istirahat2_jam   = 0;
-                        $durasi_lembur_istirahat3_jam   = 0;
+                        if(!empty(rs_htoxxrd)){    
+                            // BEGIN looping lemburnya apa saja
+                            foreach ($rs_htoxxrd as $row_htoxxrd) {
+                                if($row_htoxxrd['id_htotpmh'] == 1){
+                                    $jam_awal_lembur_awal 		= $row_htoxxrd['jam_awal'];
+                                    $jam_akhir_lembur_awal 		= $row_htoxxrd['jam_akhir'];
+                                    $durasi_lembur_awal_jam         = $row_htoxxrd['durasi_lembur_jam'];
+                                    $durasi_lembur_awal_menit   = $row_htoxxrd['durasi_lembur_menit'];
+                                    
+                                }elseif($row_htoxxrd['id_htotpmh'] == 2){
+                                    $jam_awal_lembur_akhir 		= $row_htoxxrd['jam_awal'];
+                                    $jam_akhir_lembur_akhir 	= $row_htoxxrd['jam_akhir'];
+                                    $durasi_lembur_akhir_jam    = $row_htoxxrd['durasi_lembur_jam'];
+                                    $durasi_lembur_akhir_menit  = $row_htoxxrd['durasi_lembur_menit'];
 
-                        $durasi_lembur_awal_menit         = 0;
-                        $durasi_lembur_akhir_menit        = 0;
-                        $durasi_lembur_libur_menit        = 0;
-                        $durasi_lembur_istirahat1_menit   = 0;
-                        $durasi_lembur_istirahat2_menit   = 0;
-                        $durasi_lembur_istirahat3_menit   = 0;
+                                }elseif($row_htoxxrd['id_htotpmh'] == 4){
+                                    $jam_awal_lembur_libur 		= $row_htoxxrd['jam_awal'];
+                                    $jam_akhir_lembur_libur 	= $row_htoxxrd['jam_akhir'];
+                                    $durasi_lembur_libur_jam    = $row_htoxxrd['durasi_lembur_jam'];
+                                    $durasi_lembur_libur_menit  = $row_htoxxrd['durasi_lembur_menit'];
 
-                        // BEGIN looping lemburnya apa saja
-                        foreach ($rs_htoxxrd as $row_htoxxrd) {
-                            if($row_htoxxrd['id_htotpmh'] == 1){
-                                $jam_awal_lembur_awal 		= $row_htoxxrd['jam_awal'];
-                                $jam_akhir_lembur_awal 		= $row_htoxxrd['jam_akhir'];
-                                $durasi_lembur_awal_jam         = $row_htoxxrd['durasi_lembur_jam'];
-                                $durasi_lembur_awal_menit   = $row_htoxxrd['durasi_lembur_menit'];
-                                
-                            }elseif($row_htoxxrd['id_htotpmh'] == 2){
-                                $jam_awal_lembur_akhir 		= $row_htoxxrd['jam_awal'];
-                                $jam_akhir_lembur_akhir 	= $row_htoxxrd['jam_akhir'];
-                                $durasi_lembur_akhir_jam    = $row_htoxxrd['durasi_lembur_jam'];
-                                $durasi_lembur_akhir_menit  = $row_htoxxrd['durasi_lembur_menit'];
+                                }elseif($row_htoxxrd['id_htotpmh'] == 5){
+                                    $jam_awal_lembur_istirahat1     = $row_htoxxrd['jam_awal'];
+                                    $jam_akhir_lembur_istirahat1    = $row_htoxxrd['jam_akhir'];
+                                    $durasi_lembur_istirahat1_jam   = $row_htoxxrd['durasi_lembur_jam'];
+                                    $durasi_lembur_istirahat1_menit = $row_htoxxrd['durasi_lembur_menit'];
+                                                
+                                }elseif($row_htoxxrd['id_htotpmh'] == 6){
+                                    $jam_awal_lembur_istirahat2     = $row_htoxxrd['jam_awal'];
+                                    $jam_akhir_lembur_istirahat2    = $row_htoxxrd['jam_akhir'];
+                                    $durasi_lembur_istirahat2_jam   = $row_htoxxrd['durasi_lembur_jam'];
+                                    $durasi_lembur_istirahat2_menit = $row_htoxxrd['durasi_lembur_menit'];
 
-                            }elseif($row_htoxxrd['id_htotpmh'] == 4){
-                                $jam_awal_lembur_libur 		= $row_htoxxrd['jam_awal'];
-                                $jam_akhir_lembur_libur 	= $row_htoxxrd['jam_akhir'];
-                                $durasi_lembur_libur_jam    = $row_htoxxrd['durasi_lembur_jam'];
-                                $durasi_lembur_libur_menit  = $row_htoxxrd['durasi_lembur_menit'];
+                                }elseif($row_htoxxrd['id_htotpmh'] == 7){
+                                    $jam_awal_lembur_istirahat3     = $row_htoxxrd['jam_awal'];
+                                    $jam_akhir_lembur_istirahat3    = $row_htoxxrd['jam_akhir'];
+                                    $durasi_lembur_istirahat3_jam   = $row_htoxxrd['durasi_lembur_jam'];
+                                    $durasi_lembur_istirahat3_menit = $row_htoxxrd['durasi_lembur_menit'];
+                                }
 
-                            }elseif($row_htoxxrd['id_htotpmh'] == 5){
-                                $jam_awal_lembur_istirahat1     = $row_htoxxrd['jam_awal'];
-                                $jam_akhir_lembur_istirahat1    = $row_htoxxrd['jam_akhir'];
-                                $durasi_lembur_istirahat1_jam   = $row_htoxxrd['durasi_lembur_jam'];
-                                $durasi_lembur_istirahat1_menit = $row_htoxxrd['durasi_lembur_menit'];
-                                            
-                            }elseif($row_htoxxrd['id_htotpmh'] == 6){
-                                $jam_awal_lembur_istirahat2     = $row_htoxxrd['jam_awal'];
-                                $jam_akhir_lembur_istirahat2    = $row_htoxxrd['jam_akhir'];
-                                $durasi_lembur_istirahat2_jam   = $row_htoxxrd['durasi_lembur_jam'];
-                                $durasi_lembur_istirahat2_menit = $row_htoxxrd['durasi_lembur_menit'];
+                                if($row_htoxxrd['id_htotpmh'] == 5 > 0 || $row_htoxxrd['id_htotpmh'] == 6 > 0 || $row_htoxxrd['id_htotpmh'] == 7 > 0){
+                                    // BEGIN validasi TI
+                                    // Ambil data checkclock Istirahat yang ada dalam range tersebut ( $durasi_break_menit )
+                                    // untuk menentukan lama waktu istirahat yang diambil oleh karyawan
+                                    $qs_htsprtd_break = $db
+                                        ->query('select', 'htsprtd' )
+                                        ->get(['TIMESTAMPDIFF(MINUTE,MIN(CONCAT(htsprtd.tanggal," ",htsprtd.jam)),	MAX(CONCAT(htsprtd.tanggal," ",htsprtd.jam))) as durasi_break_menit'
+                                        ] )
+                                        ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
+                                        ->where('htsprtd.nama', 'istirahat' )
+                                        ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_istirahat, '>=' )
+                                        ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_istirahat, '<=' )
+                                        ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
+                                        ->exec();
+                                    $rs_htsprtd_break = $qs_htsprtd_break->fetch();
+                                    $durasi_break_menit = $rs_htsprtd_break['durasi_break_menit'];
 
-                            }elseif($row_htoxxrd['id_htotpmh'] == 7){
-                                $jam_awal_lembur_istirahat3     = $row_htoxxrd['jam_awal'];
-                                $jam_akhir_lembur_istirahat3    = $row_htoxxrd['jam_akhir'];
-                                $durasi_lembur_istirahat3_jam   = $row_htoxxrd['durasi_lembur_jam'];
-                                $durasi_lembur_istirahat3_menit = $row_htoxxrd['durasi_lembur_menit'];
-                            }
-
-                            if($row_htoxxrd['id_htotpmh'] == 5 > 0 || $row_htoxxrd['id_htotpmh'] == 6 > 0 || $row_htoxxrd['id_htotpmh'] == 7 > 0){
-                                // BEGIN validasi TI
-                                // Ambil data checkclock Istirahat yang ada dalam range tersebut ( $durasi_break_menit )
-                                // untuk menentukan lama waktu istirahat yang diambil oleh karyawan
-                                $qs_htsprtd_break = $db
-                                    ->query('select', 'htsprtd' )
-                                    ->get(['TIMESTAMPDIFF(MINUTE,MIN(CONCAT(htsprtd.tanggal," ",htsprtd.jam)),	MAX(CONCAT(htsprtd.tanggal," ",htsprtd.jam))) as durasi_break_menit'
-                                    ] )
-                                    ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
-                                    ->where('htsprtd.nama', 'istirahat' )
-                                    ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_istirahat, '>=' )
-                                    ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_istirahat, '<=' )
-                                    ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
-                                    ->exec();
-                                $rs_htsprtd_break = $qs_htsprtd_break->fetch();
-                                $durasi_break_menit = $rs_htsprtd_break['durasi_break_menit'];
-
-                                if(!empty($rs_htsprtd_break)){
-                                    // jika $durasi_break_menit > 20, maka TI tidak berlaku
-                                    // jika check clock istirahat gitang, dianggap tidak melewati 20 menit
-                                    if($row_htoxxrd['is_istirahat'] == 2){
-                                        if($durasi_break_menit > 20){
-                                            $potongan_ti_menit = 30;
-                                            $potongan_ti_jam = 0.5;
+                                    if(!empty($rs_htsprtd_break)){
+                                        // jika $durasi_break_menit > 20, maka TI tidak berlaku
+                                        // jika check clock istirahat gitang, dianggap tidak melewati 20 menit
+                                        if($row_htoxxrd['is_istirahat'] == 2){
+                                            if($durasi_break_menit > 20){
+                                                $potongan_ti_menit = 30;
+                                                $potongan_ti_jam = 0.5;
+                                            }else{
+                                                $potongan_ti_menit = 0;
+                                                $potongan_ti_jam = 0;
+                                            }
                                         }else{
                                             $potongan_ti_menit = 0;
                                             $potongan_ti_jam = 0;
                                         }
+                                        // END validasi TI
                                     }else{
                                         $potongan_ti_menit = 0;
                                         $potongan_ti_jam = 0;
                                     }
                                     // END validasi TI
-                                }else{
-                                    $potongan_ti_menit = 0;
-                                    $potongan_ti_jam = 0;
                                 }
-                                // END validasi TI
-                            }
 
-                            
-                        } // end foreach $rs_htoxxrd
+                                
+                            } // end foreach $rs_htoxxrd
 
-                        // hitung total lembur kotor
-                        $durasi_lembur_total_menit = $durasi_lembur_awal_menit + $durasi_lembur_akhir_menit + $durasi_lembur_libur_menit + $durasi_lembur_istirahat1_menit + $durasi_lembur_istirahat2_menit + $durasi_lembur_istirahat3_menit;
+                            // hitung total lembur kotor
+                            $durasi_lembur_total_menit = $durasi_lembur_awal_menit + $durasi_lembur_akhir_menit + $durasi_lembur_libur_menit + $durasi_lembur_istirahat1_menit + $durasi_lembur_istirahat2_menit + $durasi_lembur_istirahat3_menit;
 
-                        $durasi_lembur_total_jam = $durasi_lembur_awal_jam + $durasi_lembur_akhir_jam + $durasi_lembur_libur_jam + $durasi_lembur_istirahat1_jam + $durasi_lembur_istirahat2_jam + $durasi_lembur_istirahat3_jam;
+                            $durasi_lembur_total_jam = $durasi_lembur_awal_jam + $durasi_lembur_akhir_jam + $durasi_lembur_libur_jam + $durasi_lembur_istirahat1_jam + $durasi_lembur_istirahat2_jam + $durasi_lembur_istirahat3_jam;
+                        
+                        }else{
+                            $jam_awal_lembur_libur 		= null;
+                            $jam_akhir_lembur_libur 	= null;
+                            $jam_awal_lembur_awal 		= null;
+                            $jam_akhir_lembur_awal 		= null;
+                            $jam_awal_lembur_akhir 		= null;
+                            $jam_akhir_lembur_akhir 	= null;
+                            $jam_awal_lembur_istirahat1 = null;
+                            $jam_akhir_lembur_istirahat1= null;
+                            $jam_awal_lembur_istirahat2 = null;
+                            $jam_akhir_lembur_istirahat2= null;
+                            $jam_awal_lembur_istirahat3 = null;
+                            $jam_akhir_lembur_istirahat3= null;
+                            $durasi_lembur_awal_jam         = 0;
+                            $durasi_lembur_akhir_jam        = 0;
+                            $durasi_lembur_libur_jam        = 0;
+                            $durasi_lembur_istirahat1_jam   = 0;
+                            $durasi_lembur_istirahat2_jam   = 0;
+                            $durasi_lembur_istirahat3_jam   = 0;
+
+                            $durasi_lembur_awal_menit         = 0;
+                            $durasi_lembur_akhir_menit        = 0;
+                            $durasi_lembur_libur_menit        = 0;
+                            $durasi_lembur_istirahat1_menit   = 0;
+                            $durasi_lembur_istirahat2_menit   = 0;
+                            $durasi_lembur_istirahat3_menit   = 0;
+                        }
 
                         // POTONGAN JAM
                         // Aturan potongan jam adalah kelipatan 1 jam, pembulatan ke atas. Dilihat dari Jam bulat, contoh 08:00, 09:00, 10:00 dst
