@@ -574,7 +574,7 @@
             
                         $rs_htoxxrd = $qs_htoxxrd->fetchAll();
 
-                        if(!empty(rs_htoxxrd)){    
+                        if(!empty($rs_htoxxrd)){    
                             // BEGIN looping lemburnya apa saja
                             foreach ($rs_htoxxrd as $row_htoxxrd) {
                                 if($row_htoxxrd['id_htotpmh'] == 1){
@@ -688,6 +688,7 @@
                             $durasi_lembur_istirahat1_menit   = 0;
                             $durasi_lembur_istirahat2_menit   = 0;
                             $durasi_lembur_istirahat3_menit   = 0;
+                            $durasi_lembur_total_jam          = 0;
                         }
 
                         // POTONGAN JAM
@@ -758,6 +759,7 @@
 
                         // hitung final durasi lembur
                         // mungkin $potongan_ti masih salah
+                        // print_r($durasi_lembur_total_jam);
                         $jam_pengali = $durasi_lembur_total_jam - $potongan_ti_jam + $pot_jam;
                         $durasi_lembur_final = $jam_pengali;
                         // jika $jam_pengali > 0, maka ada lembur
