@@ -425,7 +425,7 @@
 						}
 					},
 					{
-						label: "Tipe",
+						label: "Tipe <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_heyxxmh",
 						type: "select2",
 						opts: {
@@ -462,7 +462,7 @@
 						}
 					},
 					{
-						label: "Status",
+						label: "Status <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_hesxxmh",
 						type: "select2",
 						opts: {
@@ -669,6 +669,20 @@
 						edthemxxmh.field('hemjbmh.id_hetxxmh').error( 'Wajib diisi!' );
 					}
 					// END of validasi hemjbmh.id_hetxxmh 
+
+					// BEGIN of validasi hemjbmh.id_heyxxmh 
+					id_heyxxmh = edthemxxmh.field('hemjbmh.id_heyxxmh').val();
+					if(!id_heyxxmh || id_heyxxmh == ''){
+						edthemxxmh.field('hemjbmh.id_heyxxmh').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemjbmh.id_heyxxmh 
+
+					// BEGIN of validasi hemjbmh.id_hesxxmh 
+					id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
+					if(!id_hesxxmh || id_hesxxmh == ''){
+						edthemxxmh.field('hemjbmh.id_hesxxmh').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemjbmh.id_hesxxmh 
 
 					// BEGIN of validasi hemjbmh.grup_hk 
 					grup_hk = edthemxxmh.field('hemjbmh.grup_hk').val();
