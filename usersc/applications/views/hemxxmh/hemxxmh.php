@@ -45,6 +45,8 @@
                                 <th>Department</th>
                                 <th>Section</th>
                                 <th>Jabatan</th>
+                                <th>Tipe</th>
+                                <th>Status</th>
                                 <th>Tanggal Join</th>
                                 <th>Tanggal Keluar</th>
                                 <th>Grup HK</th>
@@ -749,6 +751,8 @@
 					{ data: "hodxxmh.nama" },
 					{ data: "hosxxmh.nama" },
 					{ data: "hetxxmh.nama" },
+					{ data: "heyxxmh.nama" },
+					{ data: "hesxxmh.nama" },
 					{ data: "hemjbmh.tanggal_masuk" },
 					{ data: "hemjbmh.tanggal_keluar" },
 					{ 
