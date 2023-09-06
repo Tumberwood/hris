@@ -36,6 +36,19 @@
 					->validator( Validate::fileSize( 500000, 'Ukuran lampiran maksimal 500Kb' ) )
 					->validator( Validate::fileExtensions( array( 'png', 'jpg', 'jpeg'), "Hanya boleh format png, jpg atau jpeg" ) )
 				),
+			Field::inst( 'hcdxxmh.id_files_cv' )
+				->setFormatter( Format::ifEmpty( 0 ) )
+				->upload( Upload::inst(  $abs_us_root.$us_url_root.'usersc/files/kandidat/__ID__.__EXTN__' )
+					->db( 'files', 'id', array(
+						'filename'    => Upload::DB_FILE_NAME,
+						'filesize'    => Upload::DB_FILE_SIZE,
+						'web_path'    => Upload::DB_WEB_PATH,
+						'system_path' => Upload::DB_SYSTEM_PATH,
+						'extn' 		  => Upload::DB_EXTN
+					) )
+					->validator( Validate::fileSize( 2000000, 'Ukuran lampiran maksimal 2Mb' ) )
+					->validator( Validate::fileExtensions( array( 'png', 'jpg', 'jpeg', 'pdf'), "Hanya boleh format png, jpg, jpeg atau PDF" ) )
+				),
 			Field::inst( 'hcdxxmh.id_files_vaksin' )
 				->setFormatter( Format::ifEmpty( 0 ) )
 				->upload( Upload::inst(  $abs_us_root.$us_url_root.'usersc/files/kandidat/__ID__.__EXTN__' )
@@ -76,19 +89,7 @@
 					->validator( Validate::fileExtensions( array( 'png', 'jpg', 'jpeg'), "Hanya boleh format png, jpg atau jpeg" ) )
 				),
 			Field::inst( 'hcdxxmh.id_gctxxmh_lahir' )
-				->setFormatter( Format::ifEmpty( 0 ) )
-				->options( Options::inst()
-					->table( 'v_gctxxmh_gpvxxmh' )
-					->value( 'id' )
-					->label( ['gpvxxmh_nama','nama'] )
-					->where( function ($q) {
-						$q->where( 'is_active', 1 );
-					})
-					->render( function ( $row ) {
-						return $row['gpvxxmh_nama'] . ' - ' . $row['nama'];
-					} )
-					->order( 'nama' )
-				),
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hcdxxmh.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);
@@ -139,56 +140,22 @@
 
 			// contact & sosmed
 			Field::inst( 'hcdcsmh.id_gctxxmh_tinggal' )
-				->setFormatter( Format::ifEmpty( 0 ) )
-				->options( Options::inst()
-					->table( 'v_gctxxmh_gpvxxmh' )
-					->value( 'id' )
-					->label( ['gpvxxmh_nama','nama'] )
-					->where( function ($q) {
-						$q->where( 'is_active', 1 );
-					})
-					->render( function ( $row ) {
-						return $row['gpvxxmh_nama'] . ' - ' . $row['nama'];
-					} )
-					->order( 'nama' )
-				),
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hcdcsmh.email_personal' ),
 			Field::inst( 'hcdcsmh.handphone' ),
 			Field::inst( 'hcdcsmh.whatsapp' ),
 			Field::inst( 'hcdcsmh.facebook' ),
 			Field::inst( 'hcdcsmh.twitter' ),
+			Field::inst( 'hcdcsmh.linkedin' ),
+			Field::inst( 'hcdcsmh.instagram' ),
+			Field::inst( 'hcdcsmh.tiktok' ),
 			Field::inst( 'hcdcsmh.alamat_tinggal' ),
-			Field::inst( 'gctxxmh_tinggal.nama' ),
 
 			// document
 			Field::inst( 'hcddcmh.id_gctxxmh_ktp' )
-				->setFormatter( Format::ifEmpty( 0 ) )
-				->options( Options::inst()
-					->table( 'v_gctxxmh_gpvxxmh' )
-					->value( 'id' )
-					->label( ['gpvxxmh_nama','nama'] )
-					->where( function ($q) {
-						$q->where( 'is_active', 1 );
-					})
-					->render( function ( $row ) {
-						return $row['gpvxxmh_nama'] . ' - ' . $row['nama'];
-					} )
-					->order( 'nama' )
-				),
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hcddcmh.id_gctxxmh_npwp' )
-				->setFormatter( Format::ifEmpty( 0 ) )
-				->options( Options::inst()
-					->table( 'v_gctxxmh_gpvxxmh' )
-					->value( 'id' )
-					->label( ['gpvxxmh_nama','nama'] )
-					->where( function ($q) {
-						$q->where( 'is_active', 1 );
-					})
-					->render( function ( $row ) {
-						return $row['gpvxxmh_nama'] . ' - ' . $row['nama'];
-					} )
-					->order( 'nama' )
-				),
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hcddcmh.ktp_no' ),
 			Field::inst( 'hcddcmh.ktp_alamat' ),
 			Field::inst( 'hcddcmh.sim_a' ),
@@ -200,29 +167,39 @@
 			Field::inst( 'hcddcmh.kecamatan' ),
 			Field::inst( 'hcddcmh.asal_sekolah' ),
 			Field::inst( 'hcddcmh.jurusan' ),
+			Field::inst( 'hcddcmh.is_npwp' ),
+			Field::inst( 'hcddcmh.npwp_no' ),
+			Field::inst( 'hcddcmh.npwp_alamat' ),
+			Field::inst( 'hcddcmh.id_gtxpkmh' ),
 
 			Field::inst( 'gctxxmh_ktp.nama' ),
 
 			// job
 			Field::inst( 'hcdjbmh.id_hetxxmh' )
-			->setFormatter( Format::ifEmpty( 0 ) )
-			->options( Options::inst()
-			->table( 'hetxxmh' )
-					->value( 'id' )
-					->label( ['nama'] )
-					->where( function ($q) {
-						$q->where( 'is_active', 1 );
-					})
-					->render( function ( $row ) {
-						return $row['nama'];
-					} )
-					->order( 'nama' )
-				),
+			->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hcdjbmh.quiz1' ),
 			Field::inst( 'hcdjbmh.quiz2' ),
 			Field::inst( 'hcdjbmh.quiz3' ),
 			Field::inst( 'hcdjbmh.quiz4' ),
 			Field::inst( 'hcdjbmh.quiz5' ),
+			Field::inst( 'hcdjbmh.bpjskes_no' ),
+			Field::inst( 'hcdjbmh.bpjstk_no' ),
+			Field::inst( 'hcdjbmh.tempat_tinggal' ),
+			Field::inst( 'hcdjbmh.kendaraan' ),
+			Field::inst( 'hcdjbmh.kendaraan_milik' ),
+			Field::inst( 'hcdjbmh.intrv_self_1' ),
+			Field::inst( 'hcdjbmh.intrv_self_2' ),
+			Field::inst( 'hcdjbmh.intrv_self_3' ),
+			Field::inst( 'hcdjbmh.intrv_self_4' ),
+			Field::inst( 'hcdjbmh.intrv_self_5' ),
+			Field::inst( 'hcdjbmh.intrv_self_6' ),
+			Field::inst( 'hcdjbmh.intrv_self_7' ),
+			Field::inst( 'hcdjbmh.intrv_self_8' ),
+			Field::inst( 'hcdjbmh.intrv_self_9' ),
+			Field::inst( 'hcdjbmh.intrv_self_10' ),
+			Field::inst( 'hcdjbmh.intrv_self_11' ),
+			Field::inst( 'hcdjbmh.intrv_self_12' ),
+			Field::inst( 'hcdjbmh.intrv_self_13' ),
 				
 			Field::inst( 'hetxxmh.nama' )
 			

@@ -31,8 +31,9 @@
 					<div class="tabs-container">
 						<ul class="nav nav-tabs" role="tablist">
 							<li><a class="nav-link active" data-toggle="tab" href="#tabpersonaldata"> Personal Data</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabkontaksosmed"> Kontak & SosMed</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabpekerjaan"> Pekerjaan</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabsosmed"> Kontak & SosMed</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabdokumen"> Dokumen</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tablain"> Lain-lain</a></li>
 						</ul>
 						<div class="tab-content">
 							<div role="tabpanel" id="tabpersonaldata" class="tab-pane active">
@@ -55,14 +56,6 @@
 									</div>
 									<div class="row">
 										<div class="col-lg-6">
-											<editor-field name="hcdxxmh.suku"></editor-field>
-										</div>
-										<div class="col-lg-6">
-											<editor-field name="hcdmdmh.gol_darah"></editor-field>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-lg-6">
 											<editor-field name="hcdxxmh.agama"></editor-field>
 										</div>
 										<div class="col-lg-6">
@@ -71,15 +64,10 @@
 									</div>
 									<div class="row">
 										<div class="col-lg-6">
-											<editor-field name="hcdxxmh.berat"></editor-field>
+											<editor-field name="hcdxxmh.suku"></editor-field>
 										</div>
 										<div class="col-lg-6">
-											<editor-field name="hcdxxmh.tinggi"></editor-field>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-lg-6">
-											<editor-field name="hcdxxmh.vaksin"></editor-field>
+											<editor-field name="hcdmdmh.gol_darah"></editor-field>
 										</div>
 									</div>
 									<div class="row">
@@ -87,21 +75,21 @@
 											<editor-field name="hcdxxmh.id_files_foto"></editor-field>
 										</div>
 										<div class="col-lg-6">
-											<editor-field name="hcdxxmh.id_files_vaksin"></editor-field>
+											<editor-field name="hcdxxmh.id_files_cv"></editor-field>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div role="tabpanel" id="tabkontaksosmed" class="tab-pane">
+							<div role="tabpanel" id="tabsosmed" class="tab-pane">
 								<div class="panel-body">
-									<div class="row">
+									<!-- <div class="row">
 										<div class="col-lg-6">
 											<editor-field name="hcddcmh.asal_sekolah"></editor-field>
 										</div>
 										<div class="col-lg-6">
 											<editor-field name="hcddcmh.jurusan"></editor-field>
 										</div>
-									</div>
+									</div> -->
 									<div class="row">
 										<div class="col-lg-6">
 											<editor-field name="hcdcsmh.email_personal"></editor-field>
@@ -120,10 +108,18 @@
 									</div>
 									<div class="row">
 										<div class="col-lg-6">
-											<editor-field name="hcdcsmh.handphone"></editor-field>
+											<editor-field name="hcdcsmh.linkedin"></editor-field>
 										</div>
 										<div class="col-lg-6">
-											<editor-field name="hcddcmh.ktp_no"></editor-field>
+											<editor-field name="hcdcsmh.instagram"></editor-field>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-6">
+											<editor-field name="hcdcsmh.tiktok"></editor-field>
+										</div>
+										<div class="col-lg-6">
+											<editor-field name="hcdcsmh.handphone"></editor-field>
 										</div>
 									</div>
 									<div class="row">
@@ -134,20 +130,16 @@
 											<editor-field name="hcdcsmh.id_gctxxmh_tinggal"></editor-field>
 										</div>
 									</div>
+								</div>
+							</div>
+							<div role="tabpanel" id="tabdokumen" class="tab-pane">
+								<div class="panel-body">
 									<div class="row">
 										<div class="col-lg-6">
-											<editor-field name="hcddcmh.rt"></editor-field>
+											<editor-field name="hcddcmh.ktp_no"></editor-field>
 										</div>
 										<div class="col-lg-6">
-											<editor-field name="hcddcmh.rw"></editor-field>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-lg-6">
-											<editor-field name="hcddcmh.kecamatan"></editor-field>
-										</div>
-										<div class="col-lg-6">
-											<editor-field name="hcddcmh.kelurahan"></editor-field>
+											<editor-field name="hcddcmh.ktp_alamat"></editor-field>
 										</div>
 									</div>
 									<div class="row">
@@ -155,15 +147,44 @@
 											<editor-field name="hcddcmh.id_gctxxmh_ktp"></editor-field>
 										</div>
 										<div class="col-lg-6">
+											<editor-field name="hcddcmh.sim_a"></editor-field>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-6">
+											<editor-field name="hcddcmh.sim_b"></editor-field>
+										</div>
+										<div class="col-lg-6">
 											<editor-field name="hcddcmh.sim_c"></editor-field>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-lg-6">
-											<editor-field name="hcddcmh.sim_a"></editor-field>
+											<editor-field name="hcddcmh.is_npwp"></editor-field>
+										</div>
+									</div>
+									<div class="row npwp">
+										<div class="col-lg-6">
+											<editor-field name="hcddcmh.npwp_no"></editor-field>
 										</div>
 										<div class="col-lg-6">
-											<editor-field name="hcddcmh.sim_b"></editor-field>
+											<editor-field name="hcddcmh.npwp_alamat"></editor-field>
+										</div>
+									</div>
+									<div class="row npwp">
+										<div class="col-lg-6">
+											<editor-field name="hcddcmh.id_gctxxmh_npwp"></editor-field>
+										</div>
+										<div class="col-lg-6">
+											<editor-field name="hcddcmh.id_gtxpkmh"></editor-field>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-6">
+											<editor-field name="hcdjbmh.bpjskes_no"></editor-field>
+										</div>
+										<div class="col-lg-6">
+											<editor-field name="hcdjbmh.bpjstk_no"></editor-field>
 										</div>
 									</div>
 									<div class="row">
@@ -176,35 +197,70 @@
 									</div>
 								</div>
 							</div>
-							<div role="tabpanel" id="tabpekerjaan" class="tab-pane">
+							<div role="tabpanel" id="tablain" class="tab-pane">
 								<div class="panel-body">
 									<div class="row">
 										<div class="col-lg-6">
-											<editor-field name="hcdjbmh.id_hetxxmh"></editor-field>
+											<editor-field name="hcdjbmh.tempat_tinggal"></editor-field>
 										</div>
 										<div class="col-lg-6">
-											<editor-field name="hcdxxmh.hobby"></editor-field>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-lg-6">
-											<editor-field name="hcdjbmh.quiz1"></editor-field>
-										</div>
-										<div class="col-lg-6">
-											<editor-field name="hcdjbmh.quiz2"></editor-field>
+											<editor-field name="hcdjbmh.kendaraan"></editor-field>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-lg-6">
-											<editor-field name="hcdjbmh.quiz3"></editor-field>
+											<editor-field name="hcdjbmh.kendaraan_milik"></editor-field>
 										</div>
 										<div class="col-lg-6">
-											<editor-field name="hcdjbmh.quiz4"></editor-field>
+											<editor-field name="hcdjbmh.intrv_self_1"></editor-field>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-lg-6">
-											<editor-field name="hcdjbmh.quiz5"></editor-field>
+											<editor-field name="hcdjbmh.intrv_self_2"></editor-field>
+										</div>
+										<div class="col-lg-6">
+											<editor-field name="hcdjbmh.intrv_self_3"></editor-field>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-6">
+											<editor-field name="hcdjbmh.intrv_self_4"></editor-field>
+										</div>
+										<div class="col-lg-6">
+											<editor-field name="hcdjbmh.intrv_self_5"></editor-field>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-6">
+											<editor-field name="hcdjbmh.intrv_self_6"></editor-field>
+										</div>
+										<div class="col-lg-6">
+											<editor-field name="hcdjbmh.intrv_self_7"></editor-field>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-6">
+											<editor-field name="hcdjbmh.intrv_self_8"></editor-field>
+										</div>
+										<div class="col-lg-6">
+											<editor-field name="hcdjbmh.intrv_self_9"></editor-field>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-6">
+											<editor-field name="hcdjbmh.intrv_self_10"></editor-field>
+										</div>
+										<div class="col-lg-6">
+											<editor-field name="hcdjbmh.intrv_self_11"></editor-field>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-6">
+											<editor-field name="hcdjbmh.intrv_self_12"></editor-field>
+										</div>
+										<div class="col-lg-6">
+											<editor-field name="hcdjbmh.intrv_self_13"></editor-field>
 										</div>
 									</div>
 								</div>
@@ -222,9 +278,7 @@
                                 <th>Nama Lengkap</th>
 								<th>No. KTP</th>
 								<th>No. WhatsApp</th>
-                                <th>Jabatan Yang Dilamar</th>
-								<th>Asal Sekolah</th>
-								<th>Jurusan</th>
+								<th>Alamat Tinggal</th>
                             </tr>
                         </thead>
                     </table>
@@ -454,6 +508,8 @@
 		id_gctxxmh_tinggal_old = 0;
 		id_gctxxmh_lahir_fam_old = 0;
 		id_gctxxmh_ktp_old = 0;
+		id_gctxxmh_npwp_old = 0;
+		id_gtxpkmh_old = 0;
 		id_gctxxmh_edu_old = 0;
 		id_gctxxmh_job_old = 0;
 		id_hetxxmh_old = 0;
@@ -543,7 +599,108 @@
 							
 						},
 						noFileText: 'Belum ada gambar'
-					}, 	{
+					},	{
+						label: "File CV",
+						name: "hcdxxmh.id_files_cv",
+						type: "upload",
+						display: function ( fileId, counter ) {
+							if(fileId > 0){
+								return '<img src="'+edthcdxxmh.file( 'files', fileId ).web_path+'"/>';
+							}else{
+								return '';
+							}
+							
+						},
+						noFileText: 'Belum ada gambar'
+					}, 	
+					{
+						label: "Rumah Tempat Tinggal",
+						name: "hcdjbmh.tempat_tinggal",
+						type: "select",
+						options: [
+							{ "label": "Select", "value": "" },
+							{ "label": "Milik Sendiri", "value": "Milik Sendiri" },
+							{ "label": "Orang Tua", "value": "Orang Tua" },
+							{ "label": "Sewa/Kontrak", "value": "Sewa/Kontrak" },
+							{ "label": "Kost", "value": "Kost" },
+							{ "label": "Lain-lain", "value": "Lain-lain" }
+						]
+					},
+					{
+						label: "Kendaraan",
+						name: "hcdjbmh.kendaraan",
+						type: "select",
+						options: [
+							{ "label": "Select", "value": "" },
+							{ "label": "Mobil", "value": "Mobil" },
+							{ "label": "Motor", "value": "Motor" }
+						]
+					},
+					{
+						label: "Kendaraan Milik",
+						name: "hcdjbmh.kendaraan_milik",
+						type: "select",
+						options: [
+							{ "label": "Select", "value": "" },
+							{ "label": "Sendiri", "value": "Sendiri" },
+							{ "label": "Orang Tua", "value": "Orang Tua" },
+							{ "label": "Suami/Istri", "value": "Suami/Istri" },
+							{ "label": "Kantor", "value": "Kantor" },
+							{ "label": "Lain-lain", "value": "Lain-lain" }
+						]
+					},	{
+						label: "Apakah anda pernah melamar di group perusahaan ini sebelumnya? Kapan dan sebagai apa?",
+						name: "hcdjbmh.intrv_self_1",
+						type: "textarea"
+					},	{
+						label: "Selain di perusahaan ini, di Perusahaan mana lagi anda melamar saat ini dan sebagai apa?",
+						name: "hcdjbmh.intrv_self_2",
+						type: "textarea"
+					},	{
+						label: "Apakah anda mempunyai pekerjaan sampingan? Jelaskan.",
+						name: "hcdjbmh.intrv_self_3",
+						type: "textarea"
+					},	{
+						label: "Apakah anda mempunyai teman/keluarga yang bekerja di group perusahaan ini? Jelaskan.",
+						name: "hcdjbmh.intrv_self_4",
+						type: "textarea"
+					},	{
+						label: "Apakah anda pernah menderita sakit kronis / sakit keras / kecelakaan / operasi? Jelaskan.",
+						name: "hcdjbmh.intrv_self_5",
+						type: "textarea"
+					},	{
+						label: "Apakah anda pernah berurusan dengan polisi karena tindak kejahatan?",
+						name: "hcdjbmh.intrv_self_6",
+						type: "textarea"
+					},	{
+						label: "Apakah anda bersedia bertugas keluar kota?",
+						name: "hcdjbmh.intrv_self_7",
+						type: "textarea"
+					},	{
+						label: "Apakah anda bersedia ditempatkan keluar kota? Sebutkan nama kotanya",
+						name: "hcdjbmh.intrv_self_8",
+						type: "textarea"
+					},	{
+						label: "Jenis pekerjaan apa yang anda sukai?",
+						name: "hcdjbmh.intrv_self_9",
+						type: "textarea"
+					},	{
+						label: "Jenis pekerjaan apa yang tidak anda suka?",
+						name: "hcdjbmh.intrv_self_10",
+						type: "textarea"
+					},	{
+						label: "Gaji yang diharapkan",
+						name: "hcdjbmh.intrv_self_11",
+						type: "textarea"
+					},	{
+						label: "Fasilitas yang diharapkan",
+						name: "hcdjbmh.intrv_self_12",
+						type: "textarea"
+					},	{
+						label: "Kapankah anda dapat mulai bekerja?",
+						name: "hcdjbmh.intrv_self_13",
+						type: "textarea"
+					},	{
 						label: "Nama Lengkap <sup class='text-danger'>*<sup>",
 						name: "hcdxxmh.nama"
 					}, 	{
@@ -682,10 +839,19 @@
 						label: "Facebook",
 						name: "hcdcsmh.facebook"
 					}, 	{
+						label: "Linkedin",
+						name: "hcdcsmh.linkedin"
+					}, 	{
+						label: "Instagram",
+						name: "hcdcsmh.instagram"
+					}, 	{
+						label: "Tiktok",
+						name: "hcdcsmh.tiktok"
+					}, 	{
 						label: "No Handphone",
 						name: "hcdcsmh.handphone"
 					}, 	{
-						label: "Alamat Tinggal",
+						label: "Alamat Tinggal<sup class='text-danger'>*<sup>",
 						name: "hcdcsmh.alamat_tinggal",
 						type: "textarea"
 					}, 	{
@@ -724,11 +890,15 @@
 							},
 						}
 					}, 	{
-						label: "NO. KTP<sup class='text-danger'>*<sup>",
+						label: "No. KTP<sup class='text-danger'>*<sup>",
 						name: "hcddcmh.ktp_no"
 					}, 	{
 						label: "Alamat KTP",
 						name: "hcddcmh.ktp_alamat",
+						type: "textarea"
+					},	{
+						label: "Alamat NPWP",
+						name: "hcddcmh.npwp_alamat",
 						type: "textarea"
 					},	{
 						label: "Kota KTP",
@@ -766,6 +936,76 @@
 							},
 						}
 					},	{
+						label: "Kota NPWP",
+						name: "hcddcmh.id_gctxxmh_npwp",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/core/gctxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_gctxxmh_old: id_gctxxmh_npwp_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},	{
+						label: "Status PTKP",
+						name: "hcddcmh.id_gtxpkmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/gtxpkmh/gtxpkmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_gtxpkmh_old: id_gtxpkmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},	{
 						label: "SIM A",
 						name: "hcddcmh.sim_a"
 					},	{
@@ -778,14 +1018,34 @@
 						label: "RT",
 						name: "hcddcmh.rt"
 					},	{
+						label: "No. BPJS Kesehatan",
+						name: "hcdjbmh.bpjskes_no"
+					},	{
+						label: "No. BPJS Ketenagakerjaan",
+						name: "hcdjbmh.bpjstk_no"
+					},	{
 						label: "RW",
 						name: "hcddcmh.rw"
 					},	{
 						label: "Asal Sekolah<sup class='text-danger'>*<sup>",
 						name: "hcddcmh.asal_sekolah"
-					},	{
+					},	
+					{
+						label: "Ber-NPWP",
+						name: "hcddcmh.is_npwp",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Yes", "value": 1 },
+							{ "label": "No", "value": 2 }
+						]
+					},
+					{
 						label: "Jurusan",
 						name: "hcddcmh.jurusan"
+					},	{
+						label: "No. NPWP <sup class='text-danger'>*<sup>",
+						name: "hcddcmh.npwp_no"
 					},	{
 						label: "Kelurahan",
 						name: "hcddcmh.kelurahan"
@@ -872,6 +1132,17 @@
 				$(".modal-dialog").addClass("modal-xl");
 			});
 			
+			edthcdxxmh.dependent( 'hcddcmh.is_npwp', function ( val, data, callback ) {
+				// code here
+				if (val == 1) {
+					$('.npwp').show();
+				} else {
+					$('.npwp').hide();
+				}
+				
+				return {}
+			}, {event: 'keyup change'});
+			
 			edthcdxxmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 
@@ -881,6 +1152,13 @@
 						edthcdxxmh.field('hcdxxmh.nama').error( 'Wajib diisi!' );
 					}
 					// END of validasi hcdxxmh.nama 
+
+					// BEGIN of validasi hcdcsmh.alamat_tinggal 
+					alamat_tinggal = edthcdxxmh.field('hcdcsmh.alamat_tinggal').val();
+					if(!alamat_tinggal || alamat_tinggal == ''){
+						edthcdxxmh.field('hcdcsmh.alamat_tinggal').error( 'Wajib diisi!' );
+					}
+					// END of validasi hcdxxmh.alamat_tinggal 
 
 					// BEGIN of validasi hcdcsmh.whatsapp 
 					whatsapp = edthcdxxmh.field('hcdcsmh.whatsapp').val();
@@ -908,8 +1186,32 @@
 					sim_a = edthcdxxmh.field('hcddcmh.sim_a').val();
 					sim_b = edthcdxxmh.field('hcddcmh.sim_b').val();
 					sim_c = edthcdxxmh.field('hcddcmh.sim_c').val();
+					npwp_no = edthcdxxmh.field('hcddcmh.npwp_no').val();
+					is_npwp = edthcdxxmh.field('hcddcmh.is_npwp').val();
+					bpjskes_no = edthcdxxmh.field('hcdjbmh.bpjskes_no').val();
+					bpjstk_no = edthcdxxmh.field('hcdjbmh.bpjstk_no').val();
+
+					if (is_npwp == 1) {
+						if(!npwp_no || npwp_no == ''){
+						edthcdxxmh.field('hcddcmh.npwp_no').error( 'Wajib diisi!' );
+						}
+						// validasi min atau max angka
+						if(npwp_no <= 0 ){
+							edthcdxxmh.field('hcddcmh.npwp_no').error( 'Inputan harus > 0' );
+						}
+						if(isNaN(npwp_no) ){
+							edthcdxxmh.field('hcddcmh.npwp_no').error( 'Inputan harus berupa Angka!' );
+						}
+					}
+
 					if(isNaN(tinggi) ){
 						edthcdxxmh.field('hcdxxmh.tinggi').error( 'Inputan harus berupa Angka!' );
+					}
+					if(isNaN(bpjskes_no) ){
+						edthcdxxmh.field('hcdjbmh.bpjskes_no').error( 'Inputan harus berupa Angka!' );
+					}
+					if(isNaN(bpjstk_no) ){
+						edthcdxxmh.field('hcdjbmh.bpjstk_no').error( 'Inputan harus berupa Angka!' );
 					}
 					if(isNaN(berat) ){
 						edthcdxxmh.field('hcdxxmh.berat').error( 'Inputan harus berupa Angka!' );
@@ -972,20 +1274,6 @@
 						edthcdxxmh.field('hcddcmh.ktp_no').error( 'Inputan harus berupa Angka!' );
 					}
 					// END of validasi hcddcmh.ktp_no 
-
-					// BEGIN of validasi hcddcmh.asal_sekolah 
-					asal_sekolah = edthcdxxmh.field('hcddcmh.asal_sekolah').val();
-					if(!asal_sekolah || asal_sekolah == ''){
-						edthcdxxmh.field('hcddcmh.asal_sekolah').error( 'Wajib diisi!' );
-					}
-					// END of validasi hcddcmh.asal_sekolah 
-
-					// BEGIN of validasi hcdjbmh.id_hetxxmh 
-					id_hetxxmh = edthcdxxmh.field('hcdjbmh.id_hetxxmh').val();
-					if(!id_hetxxmh || id_hetxxmh == ''){
-						edthcdxxmh.field('hcdjbmh.id_hetxxmh').error( 'Wajib diisi!' );
-					}
-					// END of validasi hcdjbmh.id_hetxxmh 
 				}
 				
 				if ( edthcdxxmh.inError() ) {
@@ -1019,9 +1307,7 @@
 					{ data: "hcdxxmh.nama" },
 					{ data: "hcddcmh.ktp_no" },
 					{ data: "hcdcsmh.whatsapp" },
-					{ data: "hetxxmh.nama" },
-					{ data: "hcddcmh.asal_sekolah" },
-					{ data: "hcddcmh.jurusan" }
+					{ data: "hcdcsmh.alamat_tinggal" }
 				],
 				buttons: [
 
@@ -1071,6 +1357,8 @@
 				
 				data_hcddcmh = tblhcdxxmh.row( { selected: true } ).data().hcddcmh;
 				id_gctxxmh_ktp_old        = data_hcddcmh.id_gctxxmh_ktp;
+				id_gctxxmh_npwp_old        = data_hcddcmh.id_gctxxmh_npwp;
+				id_gtxpkmh_old        = data_hcddcmh.id_gtxpkmh;
 
 				data_hcdjbmh = tblhcdxxmh.row( { selected: true } ).data().hcdjbmh;
 				id_hetxxmh_old        = data_hcdjbmh.id_hetxxmh;
@@ -1085,6 +1373,8 @@
 				// reload dipanggil di function CekDeselectHeader
 				id_hcdxxmh = '';
 				id_gctxxmh_lahir_old = 0;
+				id_gctxxmh_npwp_old = 0;
+				id_gtxpkmh_old = 0;
 				id_gctxxmh_ktp_old = 0;
 				id_hetxxmh_old = 0;
 				id_gctxxmh_tinggal_old = 0;
