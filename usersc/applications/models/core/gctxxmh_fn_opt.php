@@ -35,7 +35,7 @@
             ->query('select', 'gctxxmh')
             ->get([
                 'gctxxmh.id as id',
-                'concat(gctxxmh.nama," - ",gctxxmh.nama) as text'
+                'concat(gpvxxmh.nama," - ",gctxxmh.nama) as text'
             ])
             ->join('gpvxxmh','gpvxxmh.id = gctxxmh.id_gpvxxmh','LEFT')
             ->where('gctxxmh.id', $id_gctxxmh_old )
@@ -51,7 +51,7 @@
         ->query('select', 'gctxxmh')
         ->get([
             'gctxxmh.id as id',
-            'concat(gctxxmh.nama," - ",gctxxmh.nama) as text'
+            'concat(gpvxxmh.nama," - ",gctxxmh.nama) as text'
         ])
         ->join('gpvxxmh','gpvxxmh.id = gctxxmh.id_gpvxxmh','LEFT')
         ->where('gctxxmh.is_active',1)
