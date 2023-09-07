@@ -51,7 +51,7 @@
         // BEGIN insert pengganti tambahan
         $qr_htssctd = $db
             ->raw()
-            ->bind(':id_htsxxmh_pengganti', $rs_htsrptd['id_htsxxmh_pengganti'])
+            ->bind(':id_htsxxmh_pengaju', $rs_htsrptd['id_htsxxmh_pengaju'])
             ->exec('
                 INSERT INTO htssctd
                 (
@@ -70,7 +70,7 @@
                 )
                 SELECT
                     '.$rs_htsrptd["id_hemxxmh_pengganti"].',
-                    '.$rs_htsrptd["id_htsxxmh_pengganti"].',
+                    '.$rs_htsrptd["id_htsxxmh_pengaju"].',
                     "'.$keterangan.'",
                     "'.$rs_htsrptd["tanggal"].'",
                     htsxxmh.jam_awal,
@@ -83,7 +83,7 @@
                     htsxxmh.menit_toleransi_akhir_out
                 FROM htsxxmh
                 WHERE 
-                    id = :id_htsxxmh_pengaju
+                    htsxxmh.id = :id_htsxxmh_pengaju
             ');
         // END insert pengganti tambahan
     
