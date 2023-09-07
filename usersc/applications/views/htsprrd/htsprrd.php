@@ -57,6 +57,10 @@
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-content">
+				<div class="alert alert-info alert-dismissable">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+					Apabila data presensi sudah final pada satu tanggal, mohon lakukan approval untuk mengunci data yang ada. Pastikan hanya memilih satu tanggal saja.
+				</div>
 				<div class="table-responsive">
                     <table id="tblhtsprrd" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>

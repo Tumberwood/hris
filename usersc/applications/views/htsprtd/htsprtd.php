@@ -195,7 +195,7 @@
 							{ "label": "Istirahat", "value": "istirahat" },
 							{ "label": "Makan", "value": "makan" },
 							{ "label": "Makan Manual", "value": "makan manual" },
-							{ "label": "Outsourcing", "value": "out" },
+							{ "label": "Outsourcing", "value": "os" },
 							{ "label": "PMI", "value": "pmi" },
 							{ "label": "Staff", "value": "staff" }
 						]
@@ -280,11 +280,44 @@
 				$(".modal-dialog").addClass("modal-lg");
 			});
 
+			edthtsprtd.dependent( 'htsprtd.nama', function ( val, data, callback ) {
+				nama = edthtsprtd.field('htsprtd.nama').val();
+				if (nama ==  "makan manual") {
+					jamMakanManual();
+					edthtsprtd.field('htsprtd.jam').disable();
+				}else {
+            		edthtsprtd.field('htsprtd.jam').enable();
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+			edthtsprtd.dependent( 'htsprtd.id_hemxxmh', function ( val, data, callback ) {
+				nama = edthtsprtd.field('htsprtd.nama').val();
+				if (nama ==  "makan manual") {
+					jamMakanManual();
+					edthtsprtd.field('htsprtd.jam').disable();
+				}else {
+            		edthtsprtd.field('htsprtd.jam').enable();
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+			edthtsprtd.dependent( 'htsprtd.tanggal', function ( val, data, callback ) {
+				nama = edthtsprtd.field('htsprtd.nama').val();
+				if (nama ==  "makan manual") {
+					jamMakanManual();
+					edthtsprtd.field('htsprtd.jam').disable();
+				}else {
+            		edthtsprtd.field('htsprtd.jam').enable();
+				}
+				return {}
+			}, {event: 'keyup change'});
+
             edthtsprtd.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					// BEGIN of validasi htsprtd.nama
+					nama = edthtsprtd.field('htsprtd.nama').val();
 					if ( ! edthtsprtd.field('htsprtd.nama').isMultiValue() ) {
-						nama = edthtsprtd.field('htsprtd.nama').val();
 						if(!nama || nama == ''){
 							edthtsprtd.field('htsprtd.nama').error( 'Wajib diisi!' );
 						}
@@ -309,14 +342,16 @@
 					}
 					// END of validasi htsprtd.tanggal
 
-					// BEGIN of validasi htsprtd.jam
-					if ( ! edthtsprtd.field('htsprtd.jam').isMultiValue() ) {
-						jam = edthtsprtd.field('htsprtd.jam').val();
-						if(!jam || jam == ''){
-							edthtsprtd.field('htsprtd.jam').error( 'Wajib diisi!' );
+					if (nama != "makan manual") {
+						// BEGIN of validasi htsprtd.jam
+						if ( ! edthtsprtd.field('htsprtd.jam').isMultiValue() ) {
+							jam = edthtsprtd.field('htsprtd.jam').val();
+							if(!jam || jam == ''){
+								edthtsprtd.field('htsprtd.jam').error( 'Wajib diisi!' );
+							}
 						}
+						// END of validasi htsprtd.jam
 					}
-					// END of validasi htsprtd.jam
 
 					// BEGIN of validasi htsprtd.keterangan
 					if ( ! edthtsprtd.field('htsprtd.keterangan').isMultiValue() ) {

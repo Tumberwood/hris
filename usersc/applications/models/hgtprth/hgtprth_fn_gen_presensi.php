@@ -68,6 +68,31 @@
     try{
         $db->transaction();
         $menit_toleransi_terlambat = 5;
+        $jam_awal_lembur_libur = 0;
+        $jam_akhir_lembur_libur = 0;
+        $durasi_lembur_libur_jam = 0;
+        $jam_awal_lembur_awal = 0;
+        $jam_akhir_lembur_awal = 0;
+        $durasi_lembur_awal_jam = 0;
+        $jam_awal_lembur_akhir = 0;
+        $jam_akhir_lembur_akhir = 0;
+        $durasi_lembur_akhir_jam = 0;
+        $jam_awal_lembur_istirahat1 = 0;
+        $jam_akhir_lembur_istirahat1 = 0;
+        $durasi_lembur_istirahat1_jam = 0;
+        $jam_awal_lembur_istirahat2 = 0;
+        $jam_akhir_lembur_istirahat2 = 0;
+        $durasi_lembur_istirahat2_jam = 0;
+        $jam_awal_lembur_istirahat3 = 0;
+        $jam_akhir_lembur_istirahat3 = 0;
+        $durasi_lembur_istirahat3_jam = 0;
+        $durasi_lembur_total_jam = 0;
+        $durasi_lembur_istirahat1_menit   = 0;
+        $durasi_lembur_istirahat2_menit   = 0;
+        $durasi_lembur_istirahat3_menit   = 0;
+        $durasi_lembur_awal_menit         = 0;
+        $durasi_lembur_akhir_menit        = 0;
+        $durasi_lembur_libur_menit        = 0;
 
         if (!empty($rs_hemxxmh)){
             foreach ($rs_hemxxmh as $row_hemxxmh) {

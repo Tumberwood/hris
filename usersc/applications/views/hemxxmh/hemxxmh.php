@@ -45,6 +45,8 @@
                                 <th>Department</th>
                                 <th>Section</th>
                                 <th>Jabatan</th>
+                                <th>Tipe</th>
+                                <th>Status</th>
                                 <th>Tanggal Join</th>
                                 <th>Tanggal Keluar</th>
                                 <th>Grup HK</th>
@@ -551,13 +553,23 @@
 						label: "Keterangan",
 						name: "hemxxmh.keterangan",
 						type: "textarea"
-					}
+					},
+					{
+						label: "Status Aktif",
+						name: "status_aktif",
+						type: "select",
+						options: [
+							{ "label": "Aktif", "value": 1 },
+							{ "label": "Non Aktif", "value": 0 }
+						]
+					},
 				]
 			} );
 			
 			edthemxxmh.on( 'preOpen', function( e, mode, action ) {
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthemxxmh.field('start_on').val(start_on);
+				edthemxxmh.field('status_aktif').hide();
 				
 				if(action == 'create'){
 					tblhemxxmh.rows().deselect();
@@ -567,17 +579,22 @@
 					edthemxxmh.field('hemjbmh.tanggal_keluar').show();
 					edthemxxmh.field('hemjbmh.tanggal_keluar').val();
 				}
-			});
 
-			edthemxxmh.dependent( 'hemjbmh.tanggal_masuk', function ( val, data, callback ) {
-				tanggal_akhir = moment(val).add('month', 6).format('DD MMM YYYY');
-				edthemxxmh.field('tanggal_akhir').val(tanggal_akhir);
-				return {}
-			}, {event: 'keyup change'});
+				if (action == 'edit') {
+					edthemxxmh.field('status_aktif').show();
+					edthemxxmh.field('status_aktif').val(is_active);
+				}
+			});
 
             edthemxxmh.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
+			
+			edthemxxmh.dependent( 'hemjbmh.tanggal_masuk', function ( val, data, callback ) {
+				tanggal_akhir = moment(val).add('month', 6).subtract(1, 'day').format('DD MMM YYYY');
+				edthemxxmh.field('tanggal_akhir').val(tanggal_akhir);
+				return {}
+			}, {event: 'keyup change'});
 			
 			edthemxxmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
@@ -700,6 +717,10 @@
 			edthemxxmh.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthemxxmh.field('finish_on').val(finish_on);
+				if (action == 'edit') {
+					status_aktif = edthemxxmh.field('status_aktif').val()
+					edthemxxmh.field('hemxxmh.is_active').val(status_aktif);
+				}
 			});
 			
 			edthemxxmh.on( 'postSubmit', function (e, json, data, action, xhr) {
@@ -722,13 +743,13 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [2,3,4,5,8]
+						targets: [4,5,6,7,8]
 					},
 					{
 						searchPanes:{
 							show: false,
 						},
-						targets: [0,1,6,7,9]
+						targets: [0,1,2,6,7,9,10]
 					}
 				],
 				ajax: {
@@ -749,6 +770,8 @@
 					{ data: "hodxxmh.nama" },
 					{ data: "hosxxmh.nama" },
 					{ data: "hetxxmh.nama" },
+					{ data: "heyxxmh.nama" },
+					{ data: "hesxxmh.nama" },
 					{ data: "hemjbmh.tanggal_masuk" },
 					{ data: "hemjbmh.tanggal_keluar" },
 					{ 
