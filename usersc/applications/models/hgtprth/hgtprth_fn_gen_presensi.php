@@ -420,7 +420,11 @@
                                 ->join('htlgrmh','htlgrmh.id = htlxxmh.id_htlgrmh','LEFT' )
                                 ->where('htlxxrh.id_hemxxmh', $id_hemxxmh)
                                 ->where('htlxxrh.tanggal', $tanggal )
-                                ->where('htlxxrh.id_htlxxmh', 3 )
+                                ->where( function ( $r ) {
+                                    $r
+                                        ->where('htlxxrh.id_htlxxmh', 3 )
+                                        ->or_where('htlxxrh.id_htlxxmh', 4 );
+                                } )
                                 ->where('htlxxrh.jenis', 2 )    // izin
                                 ->exec();
                             $rs_htlxxrh_izin = $qs_htlxxrh_izin->fetchAll();
@@ -512,7 +516,11 @@
                                         ->join('htlgrmh','htlgrmh.id = htlxxmh.id_htlgrmh','LEFT' )
                                         ->where('htlxxrh.id_hemxxmh', $id_hemxxmh)
                                         ->where('htlxxrh.tanggal', $tanggal )
-                                        ->where('htlxxrh.id_htlxxmh', 1)
+                                        ->where( function ( $r ) {
+                                            $r
+                                                ->where('htlxxrh.id_htlxxmh', 1)
+                                                ->or_where('htlxxrh.id_htlxxmh', 5 );
+                                        } )
                                         ->where('htlxxrh.jenis', 2 )    // izin
                                         ->exec();
                                     $rs_htlxxrh_in = $qs_htlxxrh_in->fetch();
@@ -548,7 +556,11 @@
                                         ->join('htlgrmh','htlgrmh.id = htlxxmh.id_htlgrmh','LEFT' )
                                         ->where('htlxxrh.id_hemxxmh', $id_hemxxmh)
                                         ->where('htlxxrh.tanggal', $tanggal )
-                                        ->where('htlxxrh.id_htlxxmh', 2)
+                                        ->where( function ( $r ) {
+                                            $r
+                                                ->where('htlxxrh.id_htlxxmh', 2)
+                                                ->or_where('htlxxrh.id_htlxxmh', 6 );
+                                        } )
                                         ->where('htlxxrh.jenis', 2 )    // izin
                                         ->exec();
                                     $rs_htlxxrh_out = $qs_htlxxrh_out->fetch();
