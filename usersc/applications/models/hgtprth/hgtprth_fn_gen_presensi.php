@@ -87,6 +87,9 @@
         $jam_akhir_lembur_istirahat3 = 0;
         $durasi_lembur_istirahat3_jam = 0;
         $durasi_lembur_total_jam = 0;
+        $durasi_lembur_istirahat1_menit   = 0;
+        $durasi_lembur_istirahat2_menit   = 0;
+        $durasi_lembur_istirahat3_menit   = 0;
 
         if (!empty($rs_hemxxmh)){
             foreach ($rs_hemxxmh as $row_hemxxmh) {
