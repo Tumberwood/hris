@@ -23,4 +23,26 @@
             }
         } );
     };
+    function jamMakanManual(){
+        nama = edthtsprtd.field('htsprtd.nama').val();
+        var originalDate = edthtsprtd.field('htsprtd.tanggal').val();
+        var tanggal = moment(originalDate).format('YYYY-MM-DD');
+        id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
+
+        $.ajax( {
+            url: "../../models/htsprtd/fn_jam_istirahat.php",
+            dataType: 'json',
+            async: false,
+            type: 'POST',
+            data: {
+                tanggal: tanggal,
+                id_hemxxmh: id_hemxxmh
+            },
+            success: function ( json ) {
+                jam = json.data.jam_istirahat.jam;
+                console.log(json.data.jam_istirahat.jam);
+                edthtsprtd.field('htsprtd.jam').val(json.data.jam_istirahat.jam);
+            }
+        } );
+    };
 </script>
