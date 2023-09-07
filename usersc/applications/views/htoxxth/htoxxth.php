@@ -205,7 +205,7 @@
 						name: "htoxxth.tanggal",
 						type: "datetime",
 						def: function () { 
-							return new Date(); 
+							return moment($('#end_date').val()).format('DD MMM YYYY'); 
 						},
 						format: 'DD MMM YYYY'
 					},	
@@ -248,6 +248,7 @@
 					{
 						label: "Tipe Karyawan",
 						name: "htoxxth.id_heyxxmh",
+						id: "select2_tipe_karyawan", //tambahkan id di select2nya
 						type: "select2",
 						opts: {
 							placeholder : "Select",
@@ -266,8 +267,22 @@
 									return query;
 								},
 								processResults: function (data, params) {
+									var options = data.results.map(function (result) {
+										return {
+											id: result.id,
+											text: result.text
+										};
+									});
+
+									//add by ferry agar auto select 07 sep 23
+									if (params.page && params.page === 1) {
+										$('#select2_tipe_karyawan').empty().select2({ data: options });
+									} else {
+										$('#select2_tipe_karyawan').append(new Option(options[0].text, options[0].id, false, false)).trigger('change');
+									}
+
 									return {
-										results: data.results,
+										results: options,
 										pagination: {
 											more: true
 										}
@@ -302,6 +317,14 @@
 
             edthtoxxth.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
+				
+				//add by ferry agar auto select 07 sep 23
+				//perlu dibuka dulu, set 5 detik terus close select2 nya. setelah itu bisa auto select value
+				$('#select2_tipe_karyawan').select2('open');
+
+				setTimeout(function() {
+					$('#select2_tipe_karyawan').select2('close');
+				}, 5);
 			});
 			
 			edthtoxxth.on( 'preSubmit', function (e, data, action) {
@@ -519,13 +542,15 @@
 						def: 1
 					},	
 					{
-						label: "Tipe <sup class='text-danger'>*<sup>",
+						label: "Tipe <sup class='text-danger'>*</sup>",
 						name: "htoemtd.id_htotpmh",
+						id: "select2_tipe", //tambahkan id di select2nya
 						type: "select2",
 						opts: {
-							placeholder : "Select",
+							placeholder: "Select",
 							allowClear: true,
 							multiple: false,
+							async: false,
 							ajax: {
 								url: "../../models/htotpmh/htotpmh_fn_opt.php",
 								dataType: 'json',
@@ -534,12 +559,26 @@
 										id_htotpmh_old: id_htotpmh_old,
 										search: params.term || '',
 										page: params.page || 1
-									}
-										return query;
+									};
+									return query;
 								},
 								processResults: function (data, params) {
+									var options = data.results.map(function (result) {
+										return {
+											id: result.id,
+											text: result.text
+										};
+									});
+
+									//add by ferry agar auto select 07 sep 23
+									if (params.page && params.page === 1) {
+										$('#select2_tipe').empty().select2({ data: options });
+									} else {
+										$('#select2_tipe').append(new Option(options[1].text, options[1].id, false, false)).trigger('change');
+									}
+
 									return {
-										results: data.results,
+										results: options,
 										pagination: {
 											more: true
 										}
@@ -551,9 +590,10 @@
 								delay: 500,
 								maximumSelectionLength: 5,
 								minimumResultsForSearch: -1,
-							},
+							}
 						}
-					},	
+					},
+	
 					{
 						label: "Karyawan <sup class='text-danger'>*<sup>",
 						name: "htoemtd.id_hemxxmh",
@@ -644,6 +684,15 @@
 
             edthtoemtd.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
+				
+				//add by ferry agar auto select 07 sep 23
+				//perlu dibuka dulu, set 5 detik terus close select2 nya. setelah itu bisa auto select value
+				$('#select2_tipe').select2('open');
+
+				setTimeout(function() {
+					$('#select2_tipe').select2('close');
+				}, 5);
+				
 			});
 
 			edthtoemtd.dependent( 'htoemtd.id_htotpmh', function ( val, data, callback ) {
