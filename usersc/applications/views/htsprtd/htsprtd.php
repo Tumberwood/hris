@@ -284,6 +284,9 @@
 				nama = edthtsprtd.field('htsprtd.nama').val();
 				if (nama ==  "makan manual") {
 					jamMakanManual();
+					edthtsprtd.field('htsprtd.jam').disable();
+				}else {
+            		edthtsprtd.field('htsprtd.jam').enable();
 				}
 				return {}
 			}, {event: 'keyup change'});
@@ -292,6 +295,9 @@
 				nama = edthtsprtd.field('htsprtd.nama').val();
 				if (nama ==  "makan manual") {
 					jamMakanManual();
+					edthtsprtd.field('htsprtd.jam').disable();
+				}else {
+            		edthtsprtd.field('htsprtd.jam').enable();
 				}
 				return {}
 			}, {event: 'keyup change'});
@@ -300,6 +306,9 @@
 				nama = edthtsprtd.field('htsprtd.nama').val();
 				if (nama ==  "makan manual") {
 					jamMakanManual();
+					edthtsprtd.field('htsprtd.jam').disable();
+				}else {
+            		edthtsprtd.field('htsprtd.jam').enable();
 				}
 				return {}
 			}, {event: 'keyup change'});
@@ -333,6 +342,16 @@
 					}
 					// END of validasi htsprtd.tanggal
 
+					if (nama != "makan manual") {
+						// BEGIN of validasi htsprtd.jam
+						if ( ! edthtsprtd.field('htsprtd.jam').isMultiValue() ) {
+							jam = edthtsprtd.field('htsprtd.jam').val();
+							if(!jam || jam == ''){
+								edthtsprtd.field('htsprtd.jam').error( 'Wajib diisi!' );
+							}
+						}
+						// END of validasi htsprtd.jam
+					}
 
 					// BEGIN of validasi htsprtd.keterangan
 					if ( ! edthtsprtd.field('htsprtd.keterangan').isMultiValue() ) {
