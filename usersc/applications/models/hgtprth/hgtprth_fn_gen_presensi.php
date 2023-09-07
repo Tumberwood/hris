@@ -90,6 +90,9 @@
         $durasi_lembur_istirahat1_menit   = 0;
         $durasi_lembur_istirahat2_menit   = 0;
         $durasi_lembur_istirahat3_menit   = 0;
+        $durasi_lembur_awal_menit         = 0;
+        $durasi_lembur_akhir_menit        = 0;
+        $durasi_lembur_libur_menit        = 0;
 
         if (!empty($rs_hemxxmh)){
             foreach ($rs_hemxxmh as $row_hemxxmh) {
