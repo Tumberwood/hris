@@ -83,7 +83,7 @@
                     htsxxmh.menit_toleransi_akhir_out
                 FROM htsxxmh
                 WHERE 
-                    id = :id_htsxxmh_pengganti
+                    id = :id_htsxxmh_pengaju
             ');
         // END insert pengganti tambahan
     
