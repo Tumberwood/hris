@@ -63,6 +63,55 @@
 					'to' =>   'Y-m-d'
 				) ),
 
+			Field::inst( 'htssctd.tanggaljam_awal_t1' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00 00:00:00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y h:i:s', strtotime( $val ) );
+					}
+				} ),
+			Field::inst( 'htssctd.tanggaljam_awal' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00 00:00:00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y h:i:s', strtotime( $val ) );
+					}
+				} ),
+			Field::inst( 'htssctd.tanggaljam_awal_t2' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00 00:00:00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y h:i:s', strtotime( $val ) );
+					}
+				} ),
+			Field::inst( 'htssctd.tanggaljam_akhir_t1' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00 00:00:00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y h:i:s', strtotime( $val ) );
+					}
+				} ),
+			Field::inst( 'htssctd.tanggaljam_akhir' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00 00:00:00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y h:i:s', strtotime( $val ) );
+					}
+				} ),
+			Field::inst( 'htssctd.tanggaljam_akhir_t2' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00 00:00:00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y h:i:s', strtotime( $val ) );
+					}
+				} ),
+
 			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' ),
 
 			Field::inst( 'hetxxmh.nama' ),
