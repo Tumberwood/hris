@@ -39,10 +39,10 @@
             $keterangan = $rs_htsrptd['keterangan'];
 
             // BEGIN non aktif pengaju
-            // harusnya bisa pakai where or, tapi belum berhasil
+            // harusnya bisa pakai where or, tapi belum berhasil diganti off
             $qu_htssctd_pengaju = $db
                 ->query('update', 'htssctd')
-                ->set('is_active',0)
+                ->set('id_htsxxmh', 1)
                 ->set('keterangan', $keterangan)
                 ->where('tanggal', $rs_htsrptd['tanggal'])
                 ->where('id_hemxxmh', $rs_htsrptd['id_hemxxmh_pengaju'])
