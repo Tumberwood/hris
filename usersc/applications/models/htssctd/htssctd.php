@@ -68,7 +68,7 @@
 					if ($val === '0000-00-00 00:00:00' || $val === null){
 						echo '';
 					}else{
-						return date( 'd M Y h:i:s', strtotime( $val ) );
+						return date( 'd M Y H:i:s', strtotime( $val ) );
 					}
 				} ),
 			Field::inst( 'htssctd.tanggaljam_awal' )
@@ -76,7 +76,7 @@
 					if ($val === '0000-00-00 00:00:00' || $val === null){
 						echo '';
 					}else{
-						return date( 'd M Y h:i:s', strtotime( $val ) );
+						return date( 'd M Y H:i:s', strtotime( $val ) );
 					}
 				} ),
 			Field::inst( 'htssctd.tanggaljam_awal_t2' )
@@ -84,7 +84,7 @@
 					if ($val === '0000-00-00 00:00:00' || $val === null){
 						echo '';
 					}else{
-						return date( 'd M Y h:i:s', strtotime( $val ) );
+						return date( 'd M Y H:i:s', strtotime( $val ) );
 					}
 				} ),
 			Field::inst( 'htssctd.tanggaljam_akhir_t1' )
@@ -92,7 +92,7 @@
 					if ($val === '0000-00-00 00:00:00' || $val === null){
 						echo '';
 					}else{
-						return date( 'd M Y h:i:s', strtotime( $val ) );
+						return date( 'd M Y H:i:s', strtotime( $val ) );
 					}
 				} ),
 			Field::inst( 'htssctd.tanggaljam_akhir' )
@@ -100,7 +100,7 @@
 					if ($val === '0000-00-00 00:00:00' || $val === null){
 						echo '';
 					}else{
-						return date( 'd M Y h:i:s', strtotime( $val ) );
+						return date( 'd M Y H:i:s', strtotime( $val ) );
 					}
 				} ),
 			Field::inst( 'htssctd.tanggaljam_akhir_t2' )
@@ -108,7 +108,7 @@
 					if ($val === '0000-00-00 00:00:00' || $val === null){
 						echo '';
 					}else{
-						return date( 'd M Y h:i:s', strtotime( $val ) );
+						return date( 'd M Y H:i:s', strtotime( $val ) );
 					}
 				} ),
 
