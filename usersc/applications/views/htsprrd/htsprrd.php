@@ -264,6 +264,7 @@
 							// console.log(row.htsprrd.status_presensi_in);
 							status_presensi_in = row.htsprrd.status_presensi_in;
 							status_presensi_out = row.htsprrd.status_presensi_out;
+							st_clock_in = row.htsprrd.st_clock_in;
 							if(
 								status_presensi_in == 'NJ' || 
 								status_presensi_in == 'AL' || 
@@ -277,12 +278,17 @@
 								cek = cek + 1;
 							}
 
-							if(cek > 0){
-								return '<span class="text-danger">' + cek + '</span>';
-							}else{
-								return cek;
+							if (st_clock_in == "LATE 1") {
+								return 0;
+							} else {
+								if(cek > 0){
+									return '<span class="text-danger">' + cek + '</span>';
+								}else{
+									return cek;
+								}
 							}
 							return row.htsprrd.status_presensi_in;
+							
 					   	},
 						class: "text-right"
 					},

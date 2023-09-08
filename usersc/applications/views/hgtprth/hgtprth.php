@@ -250,6 +250,8 @@
 								return '<i class="fa fa-undo text-muted"></i>';
 							}else if(data == -9){
 								return '<i class="fa fa-remove text-danger"></i>';
+							} else {
+								return '';
 							}
 						} 
 					}
