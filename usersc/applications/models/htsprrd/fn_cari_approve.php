@@ -33,8 +33,24 @@
         ->exec();
     $rs_htsprrd_total = $qs_htsprrd_total->fetch();
 
+	$qs_cek = $db
+        ->raw()
+        ->bind(':tanggal', $_POST['start_date'])
+        ->exec('SELECT
+                    COUNT(a.id) AS cek
+                FROM htsprrd AS a
+                WHERE a.tanggal = :tanggal
+                    AND (
+                        a.status_presensi_in IN ("NJ", "AL", "Belum ada Izin", "Izin Belum Disetujui", "No CI")
+                        OR a.status_presensi_out IN ("Belum ada Izin", "Izin Belum Disetujui", "No CO")
+                    );
+                '
+                );
+    $rs_cek = $qs_cek->fetch();
+    
     $data = array(
         'rs_htsprrd' => $rs_htsprrd,
+        'rs_cek' => $rs_cek,
         'rs_htsprrd_total' => $rs_htsprrd_total
     );
     
