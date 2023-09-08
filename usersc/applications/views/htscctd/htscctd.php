@@ -317,7 +317,7 @@
 					{ 
 						data: "htscctd.is_approve" ,
 						render: function (data){
-							if (data == 0){
+							if (data == 0 || data == 2){ //edited by ferry, tambah || data == 2, karena kalau tidak dikasih itu akan error
 								return '';
 							}else if(data == 1){
 								return '<i class="fa fa-check text-navy"></i>';
