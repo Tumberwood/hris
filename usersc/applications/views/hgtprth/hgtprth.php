@@ -22,7 +22,7 @@
 					Sebelum melakukan generate presensi, pastikan data-data ini sudah diinput
 					<ul>
 						<li>Jadwal & Check clock</li>
-						<li>Izin, Absensi, Overtime, Cuti Bersama, Libur Nasional (Wajib Approve)</li>
+						<li>Izin, Absensi, Overtime, Cuti Bersama, Libur Nasional, Tukar Jadwal, Replacement, Tukar Hari (Wajib Approve)</li>
 					</ul>
 				</div>
 				<div class="table-responsive">
