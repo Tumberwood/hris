@@ -154,6 +154,7 @@
 
                     ] )
                     ->join('htsxxmh','htsxxmh.id = htssctd.id_htsxxmh','LEFT')
+                    ->where('htssctd.is_active', 1 )
                     ->where('htssctd.id_hemxxmh', $id_hemxxmh )
                     ->where('htssctd.tanggal', $tanggal )
                     ->limit(1)
@@ -386,7 +387,7 @@
                                     ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
                                     ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t1, '>=' )
                                     ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir, '<=' )
-                                    ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
+                                    ->order('concat(htsprtd.tanggal," ",htsprtd.jam) DESC')
                                     ->exec();
                                 $rs_htsprtd_clock_out_early = $qs_htsprtd_clock_out_early->fetch();
 

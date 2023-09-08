@@ -67,8 +67,12 @@
                                 <th>Jabatan</th>
                                 <th>Department</th>
                                 <th>Shift</th>
-                                <th>Jam Awal</th>
-                                <th>Jam Akhir</th>
+                                <th>Awal T1</th>
+                                <th>Awal</th>
+                                <th>Awal T2</th>
+                                <th>Akhir T1</th>
+                                <th>Akhir</th>
+                                <th>Akhir T2</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -382,6 +386,8 @@
 					}
 				},
 				order: [[ 2, "desc" ],[3, "asc"]],
+				responsive: false,
+				scrollX: true,
 				columns: [
 					{ data: "htssctd.id",visible:false },
 					{ 
@@ -399,8 +405,13 @@
 					{ data: "hetxxmh.nama" },
 					{ data: "hodxxmh.nama" },
 					{ data: "htsxxmh.kode" },
-					{ data: "htsxxmh.jam_awal" },
-					{ data: "htsxxmh.jam_akhir" },
+					{ data: "htssctd.tanggaljam_awal_t1" },
+					{ data: "htssctd.tanggaljam_awal" },
+					{ data: "htssctd.tanggaljam_awal_t2" },
+					{ data: "htssctd.tanggaljam_akhir_t1" },
+					{ data: "htssctd.tanggaljam_akhir" },
+					{ data: "htssctd.tanggaljam_akhir_t2" },
+					
 					{ data: "htssctd.keterangan" }
 				],
 				buttons: [
