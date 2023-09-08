@@ -26,7 +26,7 @@
             ->join('htsxxmh','htsxxmh.id = htssctd.id_htsxxmh','LEFT' )
             ->where('htssctd.id_hemxxmh', $_POST['id_hemxxmh'] )
             ->where('htssctd.tanggal', $tanggal->format('Y-m-d') )
-            ->where('htssctd.is_active', 1 ) //add by ferry, jika tidak dikasih ini maka data yang cancel approve akan dipilih pertama
+            ->where('htssctd.is_active', 1 ) //add by ferry, jika tidak dikasih ini maka data yang is_active 0 akan dipilih pertama
             ->exec();
         $rs_htsxxmh = $qs_htsxxmh->fetch();
         $data = array(

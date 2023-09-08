@@ -317,10 +317,12 @@
 					{ 
 						data: "htscctd.is_approve" ,
 						render: function (data){
-							if (data == 0 || data == 2){ //edited by ferry, tambah || data == 2, karena kalau tidak dikasih itu akan error
+							if (data == 0){
 								return '';
 							}else if(data == 1){
 								return '<i class="fa fa-check text-navy"></i>';
+							}else if(data == 2){
+								return '<i class="fa fa-undo text-muted"></i>';
 							}else if(data == -9){
 								return '<i class="fa fa-remove text-danger"></i>';
 							}
