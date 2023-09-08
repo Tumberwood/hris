@@ -387,7 +387,7 @@
                                     ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
                                     ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t1, '>=' )
                                     ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir, '<=' )
-                                    ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
+                                    ->order('concat(htsprtd.tanggal," ",htsprtd.jam) DESC')
                                     ->exec();
                                 $rs_htsprtd_clock_out_early = $qs_htsprtd_clock_out_early->fetch();
 
