@@ -56,9 +56,12 @@
 					'from' => 'd M Y',
 					'to' =>   'Y-m-d'
 				) ),
-			Field::inst( 'heyxxmh.nama' )
+			Field::inst( 'heyxxmh.nama' ),
+			Field::inst( 'v_hgtprth_htsprrd.is_approve' )
 		)
-		->leftJoin( 'heyxxmh','heyxxmh.id','=','hgtprth.id_heyxxmh' );
+		->leftJoin( 'heyxxmh','heyxxmh.id','=','hgtprth.id_heyxxmh' )
+		->leftJoin( 'v_hgtprth_htsprrd','v_hgtprth_htsprrd.id','=','hgtprth.id' )
+		;
 	
 	// do not erase
 	// function show / hide inactive document

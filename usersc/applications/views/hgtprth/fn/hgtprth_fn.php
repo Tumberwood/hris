@@ -7,7 +7,7 @@
             tanggal = moment(tanggal_select).format('YYYY-MM-DD');
         }
         
-        console.log(tanggal);
+        // console.log(tanggal);
         $.ajax( {
             url: "../../models/hgtprth/fn_cari_approve_presensi.php",
             dataType: 'json',

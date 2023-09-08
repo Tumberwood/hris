@@ -33,6 +33,7 @@
                                 <th>Tanggal</th>
                                 <th>Jenis</th>
                                 <th>Keterangan</th>
+                                <th>Approval</th>
                             </tr>
                         </thead>
                     </table>
@@ -237,7 +238,21 @@
 					{ data: "hgtprth.id",visible:false },
 					{ data: "hgtprth.tanggal" },
 					{ data: "heyxxmh.nama" },
-					{ data: "hgtprth.keterangan" }
+					{ data: "hgtprth.keterangan" },
+					{ 
+						data: "v_hgtprth_htsprrd.is_approve",
+						render: function (data){
+							if (data == 0){
+								return '';
+							}else if(data == 1){
+								return '<i class="fa fa-check text-navy"></i>';
+							}else if(data == 2){
+								return '<i class="fa fa-undo text-muted"></i>';
+							}else if(data == -9){
+								return '<i class="fa fa-remove text-danger"></i>';
+							}
+						} 
+					}
 				],
 				buttons: [
 					// BEGIN breaking generate button
@@ -322,7 +337,7 @@
 				// atur hak akses
 				CekSelectHeaderH(tblhgtprth);
 				cariApprove();
-				console.log(total_approve);
+				// console.log(total_approve);
 				if (total_approve > 0) {
 					tblhgtprth.button( 'btnGeneratePresensi:name' ).disable();
 				} else {
