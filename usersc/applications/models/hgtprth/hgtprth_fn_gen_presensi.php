@@ -149,6 +149,7 @@
 
                     ] )
                     ->join('htsxxmh','htsxxmh.id = htssctd.id_htsxxmh','LEFT')
+                    ->where('htssctd.is_active', 1 )
                     ->where('htssctd.id_hemxxmh', $id_hemxxmh )
                     ->where('htssctd.tanggal', $tanggal )
                     ->limit(1)
