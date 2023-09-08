@@ -321,6 +321,8 @@
 								return '';
 							}else if(data == 1){
 								return '<i class="fa fa-check text-navy"></i>';
+							}else if(data == 2){
+								return '<i class="fa fa-undo text-muted"></i>';
 							}else if(data == -9){
 								return '<i class="fa fa-remove text-danger"></i>';
 							}
