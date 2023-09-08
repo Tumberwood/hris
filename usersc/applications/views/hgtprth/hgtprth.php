@@ -33,6 +33,7 @@
                                 <th>Tanggal</th>
                                 <th>Jenis</th>
                                 <th>Keterangan</th>
+                                <th>Approval</th>
                             </tr>
                         </thead>
                     </table>
@@ -57,6 +58,7 @@
 		// ------------- end of default variable
 
 		var id_heyxxmh_old = 0;
+		var tanggal_select = 0;
 		
 		$(document).ready(function() {
 			//start datatables editor
@@ -106,7 +108,7 @@
 						},
 						format: 'DD MMM YYYY'
 					}, 	{
-						label: "Jenis",
+						label: "Jenis<sup class='text-danger'>*<sup>",
 						name: "hgtprth.id_heyxxmh",
 						type: "select2",
 						opts: {
@@ -165,22 +167,25 @@
 				if(action != 'remove'){
 
 					// BEGIN of validasi hgtprth.tanggal
-					if ( ! edthgtprth.field('hgtprth.tanggal').isMultiValue() ) {
-						tanggal = edthgtprth.field('hgtprth.tanggal').val();
-						if(!tanggal || tanggal == ''){
-							edthgtprth.field('hgtprth.tanggal').error( 'Wajib diisi!' );
-						}else{
-							tanggal_ymd = moment(tanggal).format('YYYY-MM-DD');
-						}
+					//edit by ferry, hapus is multi value karena tidak diperlukan.
+					tanggal = edthgtprth.field('hgtprth.tanggal').val();
+					if(!tanggal || tanggal == ''){
+						edthgtprth.field('hgtprth.tanggal').error( 'Wajib diisi!' );
+					}else{
+						tanggal_ymd = moment(tanggal).format('YYYY-MM-DD');
+					}
+					cariApprove();
+					if (total_approve > 0) {
+						edthgtprth.field('hgtprth.tanggal').error( 'Data Presensi Pada Tanggal Ini Sudah di Approve!<br> Silahkan Ganti Tanggal Atau Lakukan Cancel Approve Pada Tanggal Ini!' );
 					}
 					// END of validasi hgtprth.tanggal
 
 					// BEGIN of validasi hgtprth.id_heyxxmh
-					if ( ! edthgtprth.field('hgtprth.id_heyxxmh').isMultiValue() ) {
-						id_heyxxmh = edthgtprth.field('hgtprth.id_heyxxmh').val();
-						if(!id_heyxxmh || id_heyxxmh == ''){
-							edthgtprth.field('hgtprth.id_heyxxmh').error( 'Wajib diisi!' );
-						}
+					
+					//edit by ferry, hapus is multi value karena tidak diperlukan. Jika jika pakai is multi value, maka validasi tidak berjalan dengan baik
+					id_heyxxmh = edthgtprth.field('hgtprth.id_heyxxmh').val();
+					if(!id_heyxxmh || id_heyxxmh == ''){
+						edthgtprth.field('hgtprth.id_heyxxmh').error( 'Wajib diisi!' );
 					}
 					// END of validasi hgtprth.id_heyxxmh
 
@@ -233,7 +238,23 @@
 					{ data: "hgtprth.id",visible:false },
 					{ data: "hgtprth.tanggal" },
 					{ data: "heyxxmh.nama" },
-					{ data: "hgtprth.keterangan" }
+					{ data: "hgtprth.keterangan" },
+					{ 
+						data: "v_hgtprth_htsprrd.is_approve",
+						render: function (data){
+							if (data == 0){
+								return '';
+							}else if(data == 1){
+								return '<i class="fa fa-check text-navy"></i>';
+							}else if(data == 2){
+								return '<i class="fa fa-undo text-muted"></i>';
+							}else if(data == -9){
+								return '<i class="fa fa-remove text-danger"></i>';
+							} else {
+								return '';
+							}
+						} 
+					}
 				],
 				buttons: [
 					// BEGIN breaking generate button
@@ -311,12 +332,19 @@
 				is_nextprocess = hgtprth_data.is_nextprocess;
 				is_jurnal      = hgtprth_data.is_jurnal;
 				is_active      = hgtprth_data.is_active;
+				tanggal_select      = hgtprth_data.tanggal;
 
 				id_heyxxmh_old = hgtprth_data.id_heyxxmh;
 
 				// atur hak akses
 				CekSelectHeaderH(tblhgtprth);
-				tblhgtprth.button( 'btnGeneratePresensi:name' ).enable();
+				cariApprove();
+				// console.log(total_approve);
+				if (total_approve > 0) {
+					tblhgtprth.button( 'btnGeneratePresensi:name' ).disable();
+				} else {
+					tblhgtprth.button( 'btnGeneratePresensi:name' ).enable();
+				}
 			} );
 
 			tblhgtprth.on( 'deselect', function () {
@@ -324,6 +352,7 @@
 				id_hgtprth = 0;
 				id_heyxxmh_old = 0;
 				id_heyxxmh = 0;
+				tanggal_select = 0;
 
 				// atur hak akses
 				CekDeselectHeaderH(tblhgtprth);

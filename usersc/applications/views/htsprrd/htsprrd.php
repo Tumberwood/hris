@@ -153,6 +153,7 @@
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_datatables_load.php'; ?>
 <script src="<?=$us_url_root?>usersc/helpers/hakaksescrud_hd_fn.js"></script>
 
+<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/htsprrd/fn/htsprrd_fn.php'; ?>
 <!-- BEGIN datatables here -->
 <script type="text/javascript">
 		// ------------- default variable, do not erase
@@ -263,6 +264,7 @@
 							// console.log(row.htsprrd.status_presensi_in);
 							status_presensi_in = row.htsprrd.status_presensi_in;
 							status_presensi_out = row.htsprrd.status_presensi_out;
+							st_clock_in = row.htsprrd.st_clock_in;
 							if(
 								status_presensi_in == 'NJ' || 
 								status_presensi_in == 'AL' || 
@@ -276,12 +278,17 @@
 								cek = cek + 1;
 							}
 
-							if(cek > 0){
-								return '<span class="text-danger">' + cek + '</span>';
-							}else{
-								return cek;
+							if (st_clock_in == "LATE 1") {
+								return 0;
+							} else {
+								if(cek > 0){
+									return '<span class="text-danger">' + cek + '</span>';
+								}else{
+									return cek;
+								}
 							}
 							return row.htsprrd.status_presensi_in;
+							
 					   	},
 						class: "text-right"
 					},
@@ -403,6 +410,70 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					,{
+						extend: 'collection',
+						name: 'btnSetApprovePresensi',
+						id: 'btnSetApprovePresensi',
+						text: 'Approval Presensi',
+						className: 'btn btn-outline',
+						autoClose: true,
+						buttons: [
+							{ 
+								text: '<span class="fa fa-check">&nbsp &nbsp Approve Presensi</span>', 
+								name: 'btnApprovePresensi',
+								className: 'btn btn-primary',
+								titleAttr: 'Approve',
+								action: function ( e, dt, node, config ) {
+									var approve_presensi = 1;
+									$.ajax( {
+										url: '../../models/htsprrd/fn_approve_presensi.php',
+										dataType: 'json',
+										type: 'POST',
+										data: {
+											start_date: start_date,
+											approve_presensi: approve_presensi
+										},
+										success: function ( json ) {
+											$.notify({
+												message: json.message
+											},{
+												type: json.type_message
+											});
+											tblhtsprrd.ajax.reload(null,false);
+											cariApprove();
+										}
+									});
+								}
+							},
+							{ 
+								text: '<span class="fa fa-undo">&nbsp &nbsp Cancel Approve Presensi</span>', 
+								name: 'btnCancelApprovePresensi',
+								className: 'btn btn-outline',
+								titleAttr: 'Cancel Approve',
+								action: function ( e, dt, node, config ) {
+									var approve_presensi = 0;
+									$.ajax( {
+										url: '../../models/htsprrd/fn_approve_presensi.php',
+										dataType: 'json',
+										type: 'POST',
+										data: {
+											start_date: start_date,
+											approve_presensi: approve_presensi
+										},
+										success: function ( json ) {
+											$.notify({
+												message: json.message
+											},{
+												type: json.type_message
+											});
+											tblhtsprrd.ajax.reload(null,false);
+											cariApprove();
+										}
+									});
+								}
+							},
+						]
+					}
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.htsprrd.is_active == 0 ) {
@@ -434,6 +505,7 @@
 					this.api().searchPanes.rebuildPane();
 				}
 			} );
+			tblhtsprrd.button('btnSetApprovePresensi:name').disable();
 
 			tblhtsprrd.searchPanes.container().appendTo( '#searchPanes1' );
 
@@ -441,7 +513,7 @@
 				htsprrd_data    = tblhtsprrd.row( { selected: true } ).data().htsprrd;
 				console.log(htsprrd_data.status_presensi_in);
 			} );
-
+				
 			$("#frmhtsprrd").submit(function(e) {
 				e.preventDefault();
 			}).validate({
@@ -452,6 +524,8 @@
 					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
 					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
 					id_hemxxmh = $('#select_hemxxmh').val();
+
+					cariApprove();
 					
 					notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'

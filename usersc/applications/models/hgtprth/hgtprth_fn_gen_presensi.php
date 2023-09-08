@@ -93,6 +93,11 @@
         $durasi_lembur_awal_menit         = 0;
         $durasi_lembur_akhir_menit        = 0;
         $durasi_lembur_libur_menit        = 0;
+        $durasi_lembur_final        = 0;
+        $pot_jam_final        = 0;
+        $nominal_lembur_jam        = 0;
+        $is_makan        = 0;
+        $nominal_lembur_final        = 0;
 
         if (!empty($rs_hemxxmh)){
             foreach ($rs_hemxxmh as $row_hemxxmh) {
