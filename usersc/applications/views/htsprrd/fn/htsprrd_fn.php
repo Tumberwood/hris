@@ -15,9 +15,10 @@
             success: function ( json ) {
                 total_approve = json.data.rs_htsprrd.approve;
                 total_data = json.data.rs_htsprrd_total.total;
+                is_payroll = json.data.rs_htsprrd_total.is_payroll;
                 // console.log(json.data.rs_htsprrd_total.total);
 
-                if (start_date == end_date && total_data > 0) {
+                if (start_date == end_date && total_data > 0 && is_payroll == 0) {
                     tblhtsprrd.button('btnSetApprovePresensi:name').enable();
                     if (total_approve > 0) {
                         tblhtsprrd.button('btnCancelApprovePresensi:name').enable();

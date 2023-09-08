@@ -26,13 +26,12 @@
     $qs_htsprrd_total = $db
         ->query('select', 'htsprrd')
         ->get([
-            'count(id) as total'
+            'count(id) as total',
+            'is_payroll'
         ])
         ->where('tanggal', $_POST['start_date'] )
         ->exec();
     $rs_htsprrd_total = $qs_htsprrd_total->fetch();
-
-    //belum flag is_payroll
 
     $data = array(
         'rs_htsprrd' => $rs_htsprrd,
