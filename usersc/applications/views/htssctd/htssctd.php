@@ -180,7 +180,8 @@
 						name: "htssctd.is_active",
                         type: "hidden",
 						def: 1
-					},	{
+					},	
+					{
 						label: "Nama <sup class='text-danger'>*<sup>",
 						name: "htssctd.id_hemxxmh",
 						type: "select2",
@@ -215,7 +216,8 @@
 								minimumResultsForSearch: -1,
 							},
 						}
-					},	{
+					},	
+					{
 						label: "Tanggal <sup class='text-danger'>*<sup>",
 						name: "htssctd.tanggal",
 						type: "datetime",
@@ -227,7 +229,8 @@
 							firstDay: 0
 						},
 						format: 'DD MMM YYYY'
-					},	{
+					},	
+					{
 						label: "Shift <sup class='text-danger'>*<sup>",
 						name: "htssctd.id_htsxxmh",
 						type: "select2",
@@ -262,7 +265,48 @@
 								minimumResultsForSearch: -1,
 							},
 						}
-					},	{
+					},	
+					{
+						label: "Awal T1 <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_awal_t1",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Awal T2 <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_awal_t2",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Akhir T1 <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_akhir_t1",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Akhir T2 <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_akhir_t2",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
 						label: "Keterangan",
 						name: "htssctd.keterangan",
 						type: "textarea"
