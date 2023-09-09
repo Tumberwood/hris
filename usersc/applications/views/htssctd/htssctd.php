@@ -320,7 +320,18 @@
 				
 				if(action == 'create'){
 					tblhtssctd.rows().deselect();
+					edthtssctd.field('htssctd.tanggaljam_awal_t1').disable();
+					edthtssctd.field('htssctd.tanggaljam_awal_t2').disable();
+					edthtssctd.field('htssctd.tanggaljam_akhir_t1').disable();
+					edthtssctd.field('htssctd.tanggaljam_akhir_t2').disable();
+					
+				}else if(action == 'edit'){
+					edthtssctd.field('htssctd.tanggaljam_awal_t1').enable();
+					edthtssctd.field('htssctd.tanggaljam_awal_t2').enable();
+					edthtssctd.field('htssctd.tanggaljam_akhir_t1').enable();
+					edthtssctd.field('htssctd.tanggaljam_akhir_t2').enable();
 				}
+
 			});
 
 			edthtssctd.on("open", function (e, mode, action) {
