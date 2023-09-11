@@ -90,7 +90,8 @@
 			Field::inst( 'hetxxmh.nama' ),
 			Field::inst( 'heyxxmh.nama' ),
 			Field::inst( 'hesxxmh.nama' ),
-			Field::inst( 'v_hemxxmh_htsptth.pola_shift' )
+			Field::inst( 'v_hemxxmh_htsptth.pola_shift' ),
+			Field::inst( 'v_hemxxmh_htsptth.grup_ke' )
 		)
 		->leftJoin( 'hemdcmh','hemdcmh.id_hemxxmh','=','hemxxmh.id' )
 		->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )

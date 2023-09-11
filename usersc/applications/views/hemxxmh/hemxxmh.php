@@ -51,6 +51,7 @@
                                 <th>Tanggal Keluar</th>
                                 <th>Grup HK</th>
                                 <th>Pola Shift</th>
+                                <th>Grup Ke</th>
                                 <th>Aktif</th>
                             </tr>
                         </thead>
@@ -743,7 +744,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [4,5,6,7,8]
+						targets: [4,5,6,7,8,13]
 					},
 					{
 						searchPanes:{
@@ -789,6 +790,7 @@
 						}
 					},
 					{ data: "v_hemxxmh_htsptth.pola_shift" },
+					{ data: "v_hemxxmh_htsptth.grup_ke" },
 					{ 
 						data: "hemxxmh.is_active",
 						render: function (data){
