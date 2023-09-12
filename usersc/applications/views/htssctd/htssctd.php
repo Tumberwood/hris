@@ -373,8 +373,8 @@
 			edthtssctd.dependent( 'htssctd.tanggaljam_akhir', function ( val, data, callback ) {
 				var tanggal_akhir = edthtssctd.field('htssctd.tanggaljam_akhir').val();
 				
-				akhir = moment(tanggal_akhir).add('hour', 2).format('DD MMM YYYY HH:mm');
-				awal = moment(tanggal_akhir).subtract(2, 'hour').format('DD MMM YYYY HH:mm');
+				akhir = moment(tanggal_akhir).add('hour', 5).format('DD MMM YYYY HH:mm');
+				awal = moment(tanggal_akhir).subtract(5, 'hour').format('DD MMM YYYY HH:mm');
 				
 				edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(awal);
 				edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(akhir);
