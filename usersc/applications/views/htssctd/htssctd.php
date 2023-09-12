@@ -231,7 +231,7 @@
 						format: 'DD MMM YYYY'
 					},	
 					{
-						label: "Shift <sup class='text-danger'>*<sup>",
+						label: "Shift",
 						name: "htssctd.id_htsxxmh",
 						type: "select2",
 						opts: {
@@ -270,6 +270,24 @@
 						label: "Awal T1 <sup class='text-danger'>*<sup>",
 						name: "htssctd.tanggaljam_awal_t1",
 						type: "datetime",
+						def: function () {  
+							const currentDate = new Date();
+							currentDate.setHours(currentDate.getHours() - 2);
+							return currentDate;
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Awal <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_awal",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
 						opts:{
 							minDate: new Date('1900-01-01'),
 							firstDay: 0
@@ -290,6 +308,19 @@
 						label: "Akhir T1 <sup class='text-danger'>*<sup>",
 						name: "htssctd.tanggaljam_akhir_t1",
 						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Akhir <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_akhir",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
 						opts:{
 							minDate: new Date('1900-01-01'),
 							firstDay: 0
@@ -320,16 +351,6 @@
 				
 				if(action == 'create'){
 					tblhtssctd.rows().deselect();
-					edthtssctd.field('htssctd.tanggaljam_awal_t1').disable();
-					edthtssctd.field('htssctd.tanggaljam_awal_t2').disable();
-					edthtssctd.field('htssctd.tanggaljam_akhir_t1').disable();
-					edthtssctd.field('htssctd.tanggaljam_akhir_t2').disable();
-					
-				}else if(action == 'edit'){
-					edthtssctd.field('htssctd.tanggaljam_awal_t1').enable();
-					edthtssctd.field('htssctd.tanggaljam_awal_t2').enable();
-					edthtssctd.field('htssctd.tanggaljam_akhir_t1').enable();
-					edthtssctd.field('htssctd.tanggaljam_akhir_t2').enable();
 				}
 
 			});
@@ -337,6 +358,28 @@
 			edthtssctd.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
+
+			edthtssctd.dependent( 'htssctd.tanggaljam_awal', function ( val, data, callback ) {
+				var tanggal_awal = edthtssctd.field('htssctd.tanggaljam_awal').val();
+				
+				akhir = moment(tanggal_awal).add('hour', 2).format('DD MMM YYYY HH:mm');
+				awal = moment(tanggal_awal).subtract(2, 'hour').format('DD MMM YYYY HH:mm');
+				
+				edthtssctd.field('htssctd.tanggaljam_awal_t1').val(awal);
+				edthtssctd.field('htssctd.tanggaljam_awal_t2').val(akhir);
+				return {}
+			}, {event: 'keyup change'});
+
+			edthtssctd.dependent( 'htssctd.tanggaljam_akhir', function ( val, data, callback ) {
+				var tanggal_akhir = edthtssctd.field('htssctd.tanggaljam_akhir').val();
+				
+				akhir = moment(tanggal_akhir).add('hour', 2).format('DD MMM YYYY HH:mm');
+				awal = moment(tanggal_akhir).subtract(2, 'hour').format('DD MMM YYYY HH:mm');
+				
+				edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(awal);
+				edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(akhir);
+				return {}
+			}, {event: 'keyup change'});
 
             edthtssctd.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
@@ -358,41 +401,6 @@
 						}
 					}
 					// END of validasi htssctd.tanggal
-
-					// BEGIN of validasi htssctd.id_htsxxmh
-					if ( ! edthtssctd.field('htssctd.id_htsxxmh').isMultiValue() ) {
-						id_htsxxmh = edthtssctd.field('htssctd.id_htsxxmh').val();
-						if(!id_htsxxmh || id_htsxxmh == ''){
-							edthtssctd.field('htssctd.id_htsxxmh').error( 'Wajib diisi!' );
-						}
-					}
-					// END of validasi htssctd.id_htsxxmh
-						
-					// BEGIN of cek unik 
-					if(action == 'create'){
-						id_htssctd = 0;
-					}
-					
-					$.ajax( {
-						url: '../../../helpers/validate_fn_unique.php',
-						dataType: 'json',
-						type: 'POST',
-						async: false,
-						data: {
-							table_name       : 'htssctd',
-							nama_field       : 'id_hemxxmh, tanggal, id_htsxxmh',
-							nama_field_value : id_hemxxmh + ',"' + moment(tanggal).format('YYYY-MM-DD') + '",' + id_htsxxmh,
-							id_transaksi     : id_htssctd
-						},
-						success: function ( json ) {
-							if(json.data.count == 1){
-								edthtssctd.field('htssctd.id_hemxxmh').error( 'Data tidak boleh kembar!' );
-								edthtssctd.field('htssctd.tanggal').error( 'Data tidak boleh kembar!' );
-								edthtssctd.field('htssctd.id_htsxxmh').error( 'Data tidak boleh kembar!' );
-							}
-						}
-					} );
-					// END of cek unik 
 					
 				}
 				
