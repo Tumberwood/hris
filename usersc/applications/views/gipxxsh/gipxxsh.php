@@ -102,6 +102,15 @@
 
 				submitHandler: function(form) { 
 					
+					notifyprogress = $.notify({
+						message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
+					},{
+						allow_dismiss: false,
+						type: 'danger',
+						delay: 0,
+						element: 'body'
+					});
+
 					var notifyprogress;
 					//STAFF
 					var fd_staff = new FormData();
@@ -109,16 +118,7 @@
 					console.log(staff);
 					if (staff != undefined) {
 						fd_staff.append('filename',staff);
-
-						notifyprogress = $.notify({
-							message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
-						},{
-							allow_dismiss: false,
-							type: 'danger',
-							delay: 0,
-							element: 'body'
-						});
-						
+			
 						$.ajax( {
 							url: "../../models/gipxxsh/gipxxsh_fn_checkclock_staff.php",
 							type: 'POST',
@@ -133,7 +133,13 @@
 									message: json.data.message
 								},{
 									type: json.data.type_message,
-									delay: 10000
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
 								});
 								$("#inputfilethimportcheckclock_staff").val('');
 							},
@@ -151,16 +157,7 @@
 					
 					if (pmi != undefined) {
 						fd_pmi.append('filename',pmi);
-
-						notifyprogress = $.notify({
-							message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
-						},{
-							allow_dismiss: false,
-							type: 'danger',
-							delay: 0,
-							element: 'body'
-						});
-						
+			
 						$.ajax( {
 							url: "../../models/gipxxsh/gipxxsh_fn_checkclock_pmi.php",
 							type: 'POST',
@@ -175,7 +172,13 @@
 									message: json.data.message
 								},{
 									type: json.data.type_message,
-									delay: 10000
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
 								});
 								$("#inputfilethimportcheckclock_pmi").val('');
 							},
@@ -193,16 +196,7 @@
 					
 					if (os != undefined) {
 						fd_os.append('filename',os);
-
-						notifyprogress = $.notify({
-							message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
-						},{
-							allow_dismiss: false,
-							type: 'danger',
-							delay: 0,
-							element: 'body'
-						});
-						
+			
 						$.ajax( {
 							url: "../../models/gipxxsh/gipxxsh_fn_checkclock_os.php",
 							type: 'POST',
@@ -217,7 +211,13 @@
 									message: json.data.message
 								},{
 									type: json.data.type_message,
-									delay: 10000
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
 								});
 								$("#inputfilethimportcheckclock_os").val('');
 							},
@@ -235,16 +235,7 @@
 					
 					if (istirahat != undefined) {
 						fd_istirahat.append('filename',istirahat);
-
-						notifyprogress = $.notify({
-							message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
-						},{
-							allow_dismiss: false,
-							type: 'danger',
-							delay: 0,
-							element: 'body'
-						});
-						
+			
 						$.ajax( {
 							url: "../../models/gipxxsh/gipxxsh_fn_checkclock_istirahat.php",
 							type: 'POST',
@@ -259,7 +250,13 @@
 									message: json.data.message
 								},{
 									type: json.data.type_message,
-									delay: 10000
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
 								});
 								$("#inputfilethimportcheckclock_istirahat").val('');
 							},
@@ -278,16 +275,7 @@
 					
 					if (makan != undefined) {
 						fd_makan.append('filename',makan);
-
-						notifyprogress = $.notify({
-							message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
-						},{
-							allow_dismiss: false,
-							type: 'danger',
-							delay: 0,
-							element: 'body'
-						});
-						
+			
 						$.ajax( {
 							url: "../../models/gipxxsh/gipxxsh_fn_checkclock_makan.php",
 							type: 'POST',
@@ -302,7 +290,13 @@
 									message: json.data.message
 								},{
 									type: json.data.type_message,
-									delay: 10000
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
 								});
 								$("#inputfilethimportcheckclock_makan").val('');
 							},
@@ -321,16 +315,7 @@
 					
 					if (makan_manual != undefined) {
 						fd_makan_manual.append('filename',makan_manual);
-
-						notifyprogress = $.notify({
-							message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
-						},{
-							allow_dismiss: false,
-							type: 'danger',
-							delay: 0,
-							element: 'body'
-						});
-						
+			
 						$.ajax( {
 							url: "../../models/gipxxsh/gipxxsh_fn_checkclock_makan_manual.php",
 							type: 'POST',
@@ -345,7 +330,13 @@
 									message: json.data.message
 								},{
 									type: json.data.type_message,
-									delay: 10000
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
 								});
 								$("#inputfilethimportcheckclock_makan_manual").val('');
 							},

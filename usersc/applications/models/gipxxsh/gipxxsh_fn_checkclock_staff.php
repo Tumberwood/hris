@@ -115,20 +115,20 @@
 			}
 			$db->commit();
 			$data = array(
-				"message" => "Upload Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
+				"message" => "Upload Staff Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
 				"type_message" => "success"
 			);
 			
 		}catch (PDOException $e){
 			$db->rollback();
 			$data = array(
-				"message" => "Upload gagal," . $e,
+				"message" => "Upload Staff gagal," . $e,
 				"type_message" => "danger"
 			);
 		}
 	}else{
 		$data = array(
-			"message" => "Upload gagal, format file salah!",
+			"message" => "Upload Staff gagal, format file salah!",
 			"type_message" => "danger"
 		);
 	}
