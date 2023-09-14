@@ -82,8 +82,9 @@
 			->where( 'htsprtd.is_active', 1);
 	}
 
-	if($_POST['id_hemxxmh'] > 0){
-		$editor->where( 'hemxxmh.id', $_POST['id_hemxxmh'] );
+	//UPDATE BY FERRY , BUG FILTER 14 SEP 2023
+	if($_POST['select_hemxxmh'] > 0){
+		$editor->where( 'hemxxmh.id', $_POST['select_hemxxmh'] );
 	}
 
 	if($_POST['start_date'] != '' && $_POST['end_date'] != ''){

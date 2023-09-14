@@ -93,6 +93,9 @@
 
 		var id_hemxxmh = 0;
 		var id_hemxxmh_old = 0;
+		var id_hemxxmh_old_select = 0;
+		//UPDATE BY FERRY , BUG FILTER 14 SEP 2023
+		var select_hemxxmh = 0;
 		var kode_finger;
 
 		id_heyxxmh = "<?php echo $_SESSION['str_arr_ha_heyxxmh']; ?>";
@@ -112,6 +115,8 @@
         // END datepicker init
 
         // BEGIN select2 init
+		
+		//UPDATE BY FERRY , BUG FILTER 14 SEP 2023
         $("#select_hemxxmh").select2({
 			placeholder: 'Ketik atau TekanTanda Panah Kanan',
 			allowClear: true,
@@ -120,7 +125,7 @@
 				dataType: 'json',
 				data: function (params) {
 					var query = {
-						id_hemxxmh_old: id_hemxxmh_old,
+						id_hemxxmh_old: id_hemxxmh_old_select,
 						search: params.term || '',
 						page: params.page || 1
 					}
@@ -157,7 +162,7 @@
 						d.show_inactive_status_htsprtd = show_inactive_status_htsprtd;
 						d.start_date = start_date;
 						d.end_date = end_date;
-						d.id_hemxxmh = id_hemxxmh;
+						d.select_hemxxmh = select_hemxxmh;
 					}
 				},
 				table: "#tblhtsprtd",
@@ -380,6 +385,7 @@
 			});
 
 			edthtsprtd.on( 'postSubmit', function (e, json, data, action, xhr) {
+				
 				tblhtsprtd.ajax.reload(null, false);
 			});
 			
@@ -414,7 +420,7 @@
 						d.show_inactive_status_htsprtd = show_inactive_status_htsprtd;
 						d.start_date = start_date;
 						d.end_date = end_date;
-						d.id_hemxxmh = id_hemxxmh;
+						d.select_hemxxmh = select_hemxxmh;
 					}
 				},
 				order: [[ 1, "asc" ]],
@@ -461,7 +467,9 @@
 				submitHandler: function(frmhtsprtd) {
 					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
 					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
-					id_hemxxmh 		= $('#select_hemxxmh').val();
+					
+					//UPDATE BY FERRY , BUG FILTER 14 SEP 2023
+					select_hemxxmh 	= $('#select_hemxxmh').val();
 					
 					notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
