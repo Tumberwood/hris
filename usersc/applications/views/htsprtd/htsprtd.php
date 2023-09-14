@@ -423,7 +423,7 @@
 						d.select_hemxxmh = select_hemxxmh;
 					}
 				},
-				order: [[ 1, "asc" ]],
+				order: [[ 0, "desc" ]],
 				columns: [
 					{ data: "htsprtd.id",visible:false },
 					{ data: "htsprtd.tanggal" },

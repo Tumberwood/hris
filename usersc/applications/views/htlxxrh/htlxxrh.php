@@ -64,10 +64,10 @@
                                 <th>ID</th>
                                 <th>Tanggal</th>
                                 <th>Kode</th>
-                                <th>NIK</th>
                                 <th>Nama</th>
                                 <th>Jenis</th>
                                 <th>Keterangan</th>
+                                <th>Approval</th>
                             </tr>
                         </thead>
                     </table>
@@ -158,13 +158,13 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [1,3,4,5]
+						targets: [1,3,4,6]
 					},
 					{
 						searchPanes:{
 							show: false,
 						},
-						targets: [0,2,6]
+						targets: [0,2,5]
 					}
 				],
 				ajax: {
@@ -182,10 +182,25 @@
 					{ data: "id",visible:false },
 					{ data: "tanggal" },
 					{ data: "kode" },
-					{ data: "hemxxmh_kode" },
 					{ data: "hemxxmh_nama" },
 					{ data: "htlxxmh_nama" },
-					{ data: "keterangan" }
+					{ data: "keterangan" },
+					{ 
+						data: "is_approve",
+						render: function (data){
+							if (data == 0){
+								return '';
+							}else if(data == 1){
+								return '<i class="fa fa-check text-navy"></i>';
+							}else if(data == 2){
+								return '<i class="fa fa-undo text-muted"></i>';
+							}else if(data == -9){
+								return '<i class="fa fa-remove text-danger"></i>';
+							} else {
+								return '';
+							}
+						} 
+					}
 				],
 				buttons: [	
 					// BEGIN breaking generate button

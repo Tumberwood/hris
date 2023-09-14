@@ -23,6 +23,7 @@
 				htlxxrh.nama AS nama,
 				htlxxrh.keterangan,
 				htlxxrh.is_active,
+				htlxxrh.is_approve,
 				IFNULL(htlxxrh.created_by, '') AS created_by,
 				IFNULL(htlxxrh.created_on, '') AS created_on,
 				IFNULL(htlxxrh.last_edited_by, '') AS last_edited_by,
@@ -30,8 +31,7 @@
 				htlxxrh.is_defaultprogram,
 				DATE_FORMAT(htlxxrh.tanggal, '%d %b %Y') AS tanggal,
 				IFNULL(htlxxmh.nama, htpxxmh.nama)  AS htlxxmh_nama,
-				hemxxmh.kode AS hemxxmh_kode,
-				hemxxmh.nama AS hemxxmh_nama
+				concat(hemxxmh.kode, ' - ' ,hemxxmh.nama) AS hemxxmh_nama
 			FROM
 				htlxxrh
 			LEFT JOIN htlxxmh ON htlxxrh.jenis = 1 AND htlxxmh.id = htlxxrh.id_htlxxmh
