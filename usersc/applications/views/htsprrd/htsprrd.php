@@ -515,10 +515,11 @@
 						]
 					},
 					{ 
-						text: '<i class="fa fa-exchange" aria-hidden="true"></i>', 
+						// text: '<i class="fa fa-exchange" aria-hidden="true"></i>', 
+						text: '<span class="text-danger"> AL </span>', 
 						name: 'btncekNol',
 						className: 'btn btn-primary',
-						titleAttr: 'Ubah Cek Jadi Nol',
+						titleAttr: 'Meng Alpha-kan',
 						action: function ( e, dt, node, config ) {
 							$.ajax( {
 								url: '../../models/htsprrd/fn_ganti_alpha.php',
