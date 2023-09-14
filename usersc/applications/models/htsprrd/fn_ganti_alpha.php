@@ -1,0 +1,34 @@
+<?php
+
+include( "../../../../users/init.php" );
+include( "../../../../usersc/lib/DataTables.php" );
+
+use
+    DataTables\Editor,
+    DataTables\Editor\Query,
+    DataTables\Editor\Result;
+
+	$editor = Editor::inst( $db, '' );
+	
+	$id_htsprrd   = $_POST['id_htsprrd'];
+
+    try {
+        $db->transaction();
+
+        $sql_update = $editor->db()
+        ->query('update', 'htsprrd')
+        ->set('cek', 0)
+        ->where('id', $id_htsprrd)
+        ->exec();
+            
+
+        $db->commit();
+        echo json_encode(array('message' => 'Transaksi Berhasil Diproses', 'type_message' => 'success'));
+    } catch (PDOException $e) {
+        // rollback on error
+        $db->rollback();
+        echo json_encode(array('message' => 'Transaksi Gagal Diproses! ' . $e->getMessage(), 'type_message' => 'danger'));
+    }
+    
+	
+?>

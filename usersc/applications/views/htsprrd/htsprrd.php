@@ -81,6 +81,8 @@
 								
 								<th rowspan=2>Cek In</th>
 								<th rowspan=2>Cek Out</th>
+
+								<th rowspan=2>Kode Izin/Dinas</th>
 								
 								<th colspan=2>Lembur Libur</th>
 								<th colspan=2>Lembur Awal</th>
@@ -108,6 +110,7 @@
 						</thead>
 						<tfoot>
 							<tr>
+								<th></th>
 								<th></th>
 								<th></th>
 								<th></th>
@@ -251,44 +254,66 @@
 				order: [[ 4, "asc" ],[1, "asc"]],
 				scrollX: true,
 				responsive: false,
+				// rowGroup: {
+				// 	dataSrc: function (row) {
+				// 		return row.hemxxmh_data + ' - ' + row.hodxxmh.nama + ' - ' + row.hetxxmh.nama + ' (' + row.htsprrd.tanggal + ')';
+				// 	}
+				// },
 				columns: [
 					{ data: "htsprrd.id",visible:false },
-					{ data: "hemxxmh_data" },
-					{ data: "hodxxmh.nama" },
-					{ data: "hetxxmh.nama" },
-					{ data: "htsprrd.tanggal" },
 					{ 
-						data: null ,
+						data: "hemxxmh_data"
+						// ,visible:false 
+					},
+					{ 
+						data: "hodxxmh.nama"
+						// ,visible:false 
+					},
+					{ 
+						data: "hetxxmh.nama"
+						// ,visible:false 
+					},
+					{ 
+						data: "htsprrd.tanggal"
+						// ,visible:false 
+					},
+					{ 
+						data: "htsprrd.cek" ,
 						render: function (data, type, row) {
 							var cek = 0;
-							// console.log(row.htsprrd.status_presensi_in);
-							status_presensi_in = row.htsprrd.status_presensi_in;
-							status_presensi_out = row.htsprrd.status_presensi_out;
-							st_clock_in = row.htsprrd.st_clock_in;
-							if(
-								status_presensi_in == 'NJ' || 
-								status_presensi_in == 'AL' || 
-								status_presensi_in == 'Belum ada Izin' || 
-								status_presensi_in == 'Izin Belum Disetujui' || 
-								status_presensi_in == 'No CI' || 
-								status_presensi_out == 'Belum ada Izin' || 
-								status_presensi_out == 'Izin Belum Disetujui' || 
-								status_presensi_out == 'No CO'
-								){
-								cek = cek + 1;
-							}
-
-							if (st_clock_in == "LATE 1") {
-								return 0;
-							} else {
-								if(cek > 0){
-									return '<span class="text-danger">' + cek + '</span>';
-								}else{
-									return cek;
+							if(row.htsprrd.cek == null) {
+								// console.log(row.htsprrd.status_presensi_in);
+								status_presensi_in = row.htsprrd.status_presensi_in;
+								status_presensi_out = row.htsprrd.status_presensi_out;
+								st_clock_in = row.htsprrd.st_clock_in;
+								if(
+									status_presensi_in == 'NJ' || 
+									status_presensi_in == 'AL' || 
+									status_presensi_in == 'Belum ada Izin' || 
+									status_presensi_in == 'Belum ada Absen' || 
+									status_presensi_in == 'Izin Belum Disetujui' || 
+									status_presensi_in == 'No CI' || 
+									status_presensi_out == 'Belum ada Absen' || 
+									status_presensi_out == 'Belum ada Izin' || 
+									status_presensi_out == 'Izin Belum Disetujui' || 
+									status_presensi_out == 'No CO'
+									){
+									cek = cek + 1;
 								}
+
+								if (st_clock_in == "LATE 1") {
+									return 0;
+								} else {
+									if(cek > 0){
+										return '<span class="text-danger">' + cek + '</span>';
+									}else{
+										return cek;
+									}
+								}
+								return row.htsprrd.status_presensi_in;
+							} else {
+								return row.htsprrd.cek
 							}
-							return row.htsprrd.status_presensi_in;
-							
 					   	},
 						class: "text-right"
 					},
@@ -309,6 +334,8 @@
 
 					{ data: "htsprrd.status_presensi_in" },
 					{ data: "htsprrd.status_presensi_out" },
+
+					{ data: "htsprrd.htlxxrh_kode" },
 
 					{ data: "htsprrd.jam_awal_lembur_libur" },
 					{ data: "htsprrd.jam_akhir_lembur_libur" },
@@ -473,6 +500,30 @@
 								}
 							},
 						]
+					},
+					{ 
+						text: '<i class="fa fa-exchange" aria-hidden="true"></i>', 
+						name: 'btncekNol',
+						className: 'btn btn-primary',
+						titleAttr: 'Ubah Cek Jadi Nol',
+						action: function ( e, dt, node, config ) {
+							$.ajax( {
+								url: '../../models/htsprrd/fn_ganti_alpha.php',
+								dataType: 'json',
+								type: 'POST',
+								data: {
+									id_htsprrd: id_htsprrd
+								},
+								success: function ( json ) {
+									$.notify({
+										message: json.message
+									},{
+										type: json.type_message
+									});
+									tblhtsprrd.ajax.reload(null,false);
+								}
+							});
+						}
 					}
 				],
 				rowCallback: function( row, data, index ) {
@@ -484,13 +535,13 @@
 					var api       = this.api(), data;
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					
-					s_lb = api.column( 21 ).data().sum();
-					s_aw = api.column( 22 ).data().sum();
-					s_ak = api.column( 23 ).data().sum();
-					s_i1 = api.column( 24 ).data().sum();
-					s_i2 = api.column( 25 ).data().sum();
-					s_i3 = api.column( 26 ).data().sum();
-					s_tl = api.column( 27 ).data().sum();
+					s_lb = api.column( 22 ).data().sum();
+					s_aw = api.column( 23 ).data().sum();
+					s_ak = api.column( 24 ).data().sum();
+					s_i1 = api.column( 25 ).data().sum();
+					s_i2 = api.column( 26 ).data().sum();
+					s_i3 = api.column( 27 ).data().sum();
+					s_tl = api.column( 28 ).data().sum();
 
 					$( '#s_lb' ).html( numFormat(s_lb) );
 					$( '#s_aw' ).html( numFormat(s_aw) );
@@ -506,12 +557,26 @@
 				}
 			} );
 			tblhtsprrd.button('btnSetApprovePresensi:name').disable();
+			tblhtsprrd.button('btncekNol:name').disable();
 
 			tblhtsprrd.searchPanes.container().appendTo( '#searchPanes1' );
 
 			tblhtsprrd.on( 'select', function( e, dt, type, indexes ) {
 				htsprrd_data    = tblhtsprrd.row( { selected: true } ).data().htsprrd;
+				id_htsprrd      = htsprrd_data.id;
+				status_presensi_in      = htsprrd_data.status_presensi_in;
+				status_presensi_out      = htsprrd_data.status_presensi_out;
+
+				if (status_presensi_in == "AL" && status_presensi_out == "AL") {
+					tblhtsprrd.button('btncekNol:name').enable();
+				} else {
+					tblhtsprrd.button('btncekNol:name').disable();
+				}
 				console.log(htsprrd_data.status_presensi_in);
+			} );
+			
+			tblhtsprrd.on( 'deselect', function () {
+				tblhtsprrd.button('btncekNol:name').disable();
 			} );
 				
 			$("#frmhtsprrd").submit(function(e) {

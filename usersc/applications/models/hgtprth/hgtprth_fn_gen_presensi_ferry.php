@@ -17,23 +17,13 @@
     // END definisi variable untuk fn_ajax_results.php
 
     $awal = new Carbon();
-
-    $qs_hgtprth = $db
-        ->query('select', 'hgtprth' )
-        ->get([
-            'hgtprth.id as id_hgtprth',
-            'hgtprth.tanggal as tanggal',
-            'hgtprth.id_heyxxmh as id_heyxxmh'
-        ] )
-        ->where('hgtprth.id', $_POST['id_transaksi_h'] )
-        ->exec();
     
-    $rs_hgtprth = $qs_hgtprth->fetch();
+    //tanggal
+    $tanggal_select = new Carbon($_POST['tanggal_select']); //gunakan carbon untuk ambil data tanggal
+    $tanggal = $tanggal_select->format('Y-m-d'); //format jadi 2023-09-12
 
-    // $tanggal       = new Carbon ($rs_hgtprth['tanggal']);
-    // $tanggal_ymd   = $tanggal->format('Y-m-d');
-    $tanggal        = $rs_hgtprth['tanggal'];
-    $id_heyxxmh     = $rs_hgtprth['id_heyxxmh'];
+    // outsourcing or organik
+    $id_heyxxmh     = $_POST['id_heyxxmh_select'];
 
     // BEGIN delete old data
     $qd_htsprrd = $db
@@ -43,6 +33,7 @@
         ->exec();
     // END delete old data
     
+    //STEP 0 PILIH PEGAWAI AKTIF
     $qs_hemxxmh = $db
         ->query('select', 'hemxxmh' )
         ->get([
@@ -53,11 +44,9 @@
         ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
         ->where( function ( $q ) use ($tanggal) {
             $q
-            //   ->where( 'hemjbmh.tanggal_keluar', '0000-00-00')
               ->where( 'hemjbmh.tanggal_keluar', null)
               ->or_where( 'hemjbmh.tanggal_keluar', $tanggal , '<' );
         } )
-        // ->where('hemxxmh.id', 69 )   // untuk tes
         ->where('hemjbmh.tanggal_masuk', $tanggal, '<=' )
         ->where('hemxxmh.is_active', 1 )
         ->where('hemjbmh.is_checkclock', 1 ) // skip yang tidak perlu checkclock
@@ -98,7 +87,10 @@
         $nominal_lembur_jam        = 0;
         $is_makan        = 0;
         $nominal_lembur_final        = 0;
+        $is_longshift = 0;
+        $cek = 0;
 
+        //CEK JIKA ADA KARYAWAN AKTIF
         if (!empty($rs_hemxxmh)){
             foreach ($rs_hemxxmh as $row_hemxxmh) {
 
@@ -126,8 +118,12 @@
                 $st_clock_out = "";
 
                 $pot_jam = 0;
+                
+                //UNTUK MULTIPLE IZIN
+                $kode_izin = array();
+                $kode_dinas_multi = array();
 
-                // BEGIN select jadwal
+                // STEP 1 CEK JADWAL
                 $qs_htssctd = $db
                     ->query('select', 'htssctd' )
                     ->get([
@@ -157,273 +153,294 @@
                     ->where('htssctd.is_active', 1 )
                     ->where('htssctd.id_hemxxmh', $id_hemxxmh )
                     ->where('htssctd.tanggal', $tanggal )
-                    ->limit(1)
                     ->exec();
                 $rs_htssctd = $qs_htssctd->fetchAll();
+                $total_shift = count($rs_htssctd);
+                // print_r($total_shift);
+
+                //cari berapa shift
+                // if ($total_shift > 1) {
+                //     $is_longshift = 1;
+                // } 
                 
-                // L01: cek apakah sudah ada jadwal
-                // BEGIN cek jadwal 
+                // // L01: cek apakah sudah ada jadwal
                 if(!empty($rs_htssctd)){
-                    // jika jadwal sudah dibuat
-                    $shift_in  = $rs_htssctd[0]['jam_awal'];
-                    $shift_out = $rs_htssctd[0]['jam_akhir'];
-                    $st_jadwal = $rs_htssctd[0]['htsxxmh_kode'];
+                    foreach ($rs_htssctd as $key => $jadwal) {
+                        // jika jadwal sudah dibuat
+                        $id_shift  = $jadwal['id_htsxxmh'];
+                        $shift_in  = $jadwal['jam_awal'];
+                        $shift_out = $jadwal['jam_akhir'];
+                        $st_jadwal = $jadwal['htsxxmh_kode'];
 
-                    $tanggaljam_awal_t1         = $rs_htssctd[0]['tanggaljam_awal_t1'];
-                    $tanggaljam_awal            = $rs_htssctd[0]['tanggaljam_awal'];
+                        $tanggaljam_awal_t1         = $jadwal['tanggaljam_awal_t1'];
+                        $tanggaljam_awal            = $jadwal['tanggaljam_awal'];
 
-                    // BEGIN untuk keperluan toleransi terlambat
-                    $tanggaljam_awal_toleransi  = $rs_htssctd[0]['tanggaljam_awal'];
-                    $tanggaljam_awal_toleransi  = new Carbon($tanggaljam_awal_toleransi);
-                    $tanggaljam_awal_toleransi  = $tanggaljam_awal_toleransi->subMinutes($menit_toleransi_terlambat);
+                        // BEGIN untuk keperluan toleransi terlambat
+                        $tanggaljam_awal_toleransi  = $jadwal['tanggaljam_awal'];
+                        $tanggaljam_awal_toleransi  = new Carbon($tanggaljam_awal_toleransi);
+                        $tanggaljam_awal_toleransi  = $tanggaljam_awal_toleransi->subMinutes($menit_toleransi_terlambat);
 
-                    $tanggaljam_akhir_toleransi  = $rs_htssctd[0]['tanggaljam_awal'];
-                    $tanggaljam_akhir_toleransi  = new Carbon($tanggaljam_akhir_toleransi);
-                    $tanggaljam_akhir_toleransi  = $tanggaljam_akhir_toleransi->addMinutes($menit_toleransi_terlambat);
-                    // END untuk keperluan toleransi terlambat
+                        $tanggaljam_akhir_toleransi  = $jadwal['tanggaljam_awal'];
+                        $tanggaljam_akhir_toleransi  = new Carbon($tanggaljam_akhir_toleransi);
+                        $tanggaljam_akhir_toleransi  = $tanggaljam_akhir_toleransi->addMinutes($menit_toleransi_terlambat);
+                        // END untuk keperluan toleransi terlambat
 
-                    $tanggaljam_awal_t2         = $rs_htssctd[0]['tanggaljam_awal_t2'];
-                    $tanggaljam_akhir_t1        = $rs_htssctd[0]['tanggaljam_akhir_t1'];
-                    $tanggaljam_akhir           = $rs_htssctd[0]['tanggaljam_akhir'];
-                    $tanggaljam_akhir_t2        = $rs_htssctd[0]['tanggaljam_akhir_t2'];
+                        $tanggaljam_awal_t2         = $jadwal['tanggaljam_awal_t2'];
+                        $tanggaljam_akhir_t1        = $jadwal['tanggaljam_akhir_t1'];
+                        $tanggaljam_akhir           = $jadwal['tanggaljam_akhir'];
+                        $tanggaljam_akhir_t2        = $jadwal['tanggaljam_akhir_t2'];
 
-                    $tanggaljam_awal_istirahat  = $rs_htssctd[0]['tanggaljam_awal_istirahat'];
-                    $tanggaljam_akhir_istirahat = $rs_htssctd[0]['tanggaljam_akhir_istirahat'];
+                        $tanggaljam_awal_istirahat  = $jadwal['tanggaljam_awal_istirahat'];
+                        $tanggaljam_akhir_istirahat = $jadwal['tanggaljam_akhir_istirahat'];
 
-                    // init var
-                    $pot_jam_late = 0;
-                    $pot_jam_izin = 0;
-                    $pot_jam_early_early = 0;
-                    $pot_jam_final = 0;
-                    $potongan_ti_jam = 0;
+                        // init var
+                        $pot_jam_late = 0;
+                        $pot_jam_izin = 0;
+                        $pot_jam_early = 0;
+                        $pot_jam_final = 0;
+                        $potongan_ti_jam = 0;
 
-                    $durasi_lembur_final = 0;
-                    $nominal_lembur_jam = 0;
-                    $nominal_lembur_final = 0;
-                    $is_makan = 0;
+                        $durasi_lembur_final = 0;
+                        $nominal_lembur_jam = 0;
+                        $nominal_lembur_final = 0;
+                        $is_makan = 0;
 
-                    // jika OFF
-                    if($rs_htssctd[0]['id_htsxxmh'] == 1){
-                        $status_presensi_in = $rs_htssctd[0]['htsxxmh_kode'];
-                        $status_presensi_out = $rs_htssctd[0]['htsxxmh_kode'];
-                    }else{
-                        // Jika tidak OFF
-
-                        // L02: Cek Apakah ada Absen
-                        $qs_htlxxrh = $db
-                            ->query('select', 'htlxxrh' )
+                        //STEP 2 CEK CHECK IN
+                        $qs_htsprtd_clock_in = $db
+                            ->query('select', 'htsprtd')
                             ->get([
-                                'htlxxrh.kode as htlxxrh_kode',
-                                'htlxxmh_kode as htlxxmh_kode',
-                                'htlgrmh.kode as htlgrmh_kode'
-                            ] )
-                            ->join('htlxxmh','htlxxmh.id = htlxxrh.id_htlxxmh','LEFT' )
-                            ->join('htlgrmh','htlgrmh.id = htlxxmh.id_htlgrmh','LEFT' )
-                            ->where('htlxxrh.id_hemxxmh', $id_hemxxmh)
-                            ->where('htlxxrh.tanggal', $tanggal )
-                            ->where('htlxxrh.jenis', 1 )    // absensi
-                            /**
-                             * Bisa ditambahkan exclude where id_htlgrmh atau id_htlxxmh
-                             * ->where('htlxxrh.id_htlxxmh', 20, '<>' )
-                             * Tergantung urutan pengecekan sesuai kebutuhan klien
-                             * Misal, 
-                             * case 1:
-                             *      hari libur nasional lebih tinggi urutannya dibanding check clock, 
-                             *      maka hari libur TIDAK perlu di exclude kan, karena check clock akan diabaikan
-                             * 
-                             * case 2:
-                             *      check clock lebih tinggi urutannya dari hari libur
-                             *      maka di bagian ini hari libur harus di exclude kan
-                             *      hari libur akan di check di bagian L04 
-                             */
-                            ->limit(1)
+                                'CONCAT(htsprtd.tanggal, " ", htsprtd.jam) as dt_checkclock'
+                            ])
+                            ->where('htsprtd.kode', $row_hemxxmh['kode_finger'])
+                            ->where('htsprtd.nama', '("os", "out", "staff", "pmi")', 'IN', false )
+                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_t1, '>=' )
+                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_t2, '<=' )
+                            ->order('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)')
                             ->exec();
-                        $rs_htlxxrh = $qs_htlxxrh->fetchAll();
-                        if(!empty($rs_htlxxrh)){
-                            // jika ada absen
-                            $status_presensi_in = $rs_htlxxrh[0]['htlgrmh_kode'];
-                            $status_presensi_out = $rs_htlxxrh[0]['htlgrmh_kode'];
-
-                            $keterangan = $keterangan . " - " . $rs_htlxxrh[0]['htlxxrh_kode'];
-                        }else{
-                            // jika tidak ada absensi
-                            $htlxxrh_kode       = '';
-
-                            // L03: Cek Apakah Check Clock sesuai Jadwal
-                            // Ambil data Shift
-                            // Hitung Jam Toleransi
-                            // Toleransi Masuk
-
-                            /*
-                            diganti ambil dari htssctd
-
-
-                            $temp_tanggaljam_awal    = new Carbon( $tanggal . ' ' . $rs_htssctd[0]['jam_awal'] );
-                            $tanggaljam_awal = $temp_tanggaljam_awal->format('Y-m-d H:i:s');
-                            
-                            $temp_tanggaljam_awal_t1 = new Carbon( $tanggal . ' ' . $rs_htssctd[0]['jam_awal'] );
-                            $tanggaljam_awal_t1 = $temp_tanggaljam_awal_t1
-                                ->subMinutes( $rs_htssctd[0]['menit_toleransi_awal_in'] )
-                                ->format('Y-m-d H:i:s');
-                            
-                            $temp_tanggaljam_awal_t2 = new Carbon( $tanggal . ' ' . $rs_htssctd[0]['jam_awal'] );
-                            $tanggaljam_awal_t2 = $temp_tanggaljam_awal_t2
-                                ->addMinutes($rs_htssctd[0]['menit_toleransi_akhir_in'])
-                                ->format('Y-m-d H:i:s');
-
-                            // Toleransi Pulang
-                            if( $rs_htssctd[0]['jam_awal'] < $rs_htssctd[0]['jam_akhir']){
-                                $temp_tanggaljam_akhir    = new Carbon( $tanggal . ' ' . $rs_htssctd[0]['jam_akhir'] );
-                            }else{
-                                $temp_tanggaljam_akhir    = new Carbon( $tanggal . ' ' . $rs_htssctd[0]['jam_akhir'] );
-                                $temp_tanggaljam_akhir->addDays(1);
-                            }
-                            $tanggaljam_akhir = $temp_tanggaljam_akhir->format('Y-m-d H:i:s');
-        
-                            $temp_tanggaljam_akhir_t1 = new Carbon( $tanggal . ' ' . $rs_htssctd[0]['jam_akhir'] );
-                            $tanggaljam_akhir_t1 = $temp_tanggaljam_akhir_t1
-                                ->subMinutes( $rs_htssctd[0]['menit_toleransi_awal_out'] )
-                                ->format('Y-m-d H:i:s');
-                            
-                            $temp_tanggaljam_akhir_t2 = new Carbon( $tanggal . ' ' . $rs_htssctd[0]['jam_akhir'] );
-                            $tanggaljam_akhir_t2 = $temp_tanggaljam_akhir_t2
-                                ->addMinutes($rs_htssctd[0]['menit_toleransi_akhir_out'])
-                                ->format('Y-m-d H:i:s');
-
-                            */
-
-                            // BEGIN get Data Clock
-                            $cekizin_in = 0;
-                            $cekizin_out = 0;
-
-                            // L03-a: Check In
-                            // BEGIN check clock_in
-                            $qs_htsprtd_clock_in = $db
-                                ->query('select', 'htsprtd' )
-                                ->get([
-                                    'concat(htsprtd.tanggal," ",htsprtd.jam) as dt_checkclock'
-                                ] )
-                                ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
-                                ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_t1, '>=' )
-                                ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal, '<=' )
-                                ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
-                                ->exec();
-                            $rs_htsprtd_clock_in = $qs_htsprtd_clock_in->fetch();
-
-                            if(!empty($rs_htsprtd_clock_in['dt_checkclock'])){
-                                // clock_in dalam rentang
-                                $clock_in           = $rs_htsprtd_clock_in['dt_checkclock'];
+                        $rs_htsprtd_clock_in = $qs_htsprtd_clock_in->fetch();
+                        // print_r($rs_htsprtd_clock_in);
+                        
+                        if (!empty($rs_htsprtd_clock_in)) {
+                            $ceklok_in = new Carbon($rs_htsprtd_clock_in['dt_checkclock']);
+                            if($ceklok_in >= $tanggaljam_awal_t1 && $ceklok_in <= $tanggaljam_awal_toleransi){
+                                $clock_in           = $ceklok_in;
                                 $st_clock_in        = 'OK';
-                                $status_presensi_in = 'OK';
+                                // $status_presensi_in = 'OK';
+                            } else if($ceklok_in >= $tanggaljam_awal_toleransi && $ceklok_in <= $tanggaljam_akhir_toleransi){
+                                $clock_in           = $ceklok_in;
+                                $st_clock_in        = 'Late 1';
+                                // $status_presensi_in = 'Late 1';
+                            } else if($ceklok_in >= $tanggaljam_akhir_toleransi && $ceklok_in <= $tanggaljam_awal_t2){
+                                $clock_in           = $ceklok_in;
+                                $st_clock_in        = 'Late';
+                                // $status_presensi_in = 'Late';
                                 
-                            }else{
-                                // jika tidak ada antara toleransi awal dan jam awal, cek apakah terlambat
-                                // clock_in_late
-                                $qs_htsprtd_clock_in_late = $db
-                                    ->query('select', 'htsprtd' )
-                                    ->get([
-                                        'concat(htsprtd.tanggal," ",htsprtd.jam) as dt_checkclock'
-                                    ] )
-                                    ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
-                                    ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal, '>=' )
-                                    ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_t2, '<=' )
-                                    ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
-                                    ->exec();
-                                $rs_htsprtd_clock_in_late = $qs_htsprtd_clock_in_late->fetch();
-
-                                if(!empty($rs_htsprtd_clock_in_late['dt_checkclock'])){
-                                    $clock_in       = new Carbon($rs_htsprtd_clock_in_late['dt_checkclock']);
-                                    // 5 menit sebelum dan sesudah jam awal shift dianggap terlambat, tetapi tidak ada efek apa-apa
-                                    if( $clock_in >= $tanggaljam_awal_toleransi && $clock_in <= $tanggaljam_akhir_toleransi ){
-                                        // jika dalam toleransi menit terlambat
-                                        $st_clock_in    = 'LATE 1';  // TERLAMBAT dalam toleransi
-                                    }else{
-                                        // jika tidak dalam toleransi
-                                        $st_clock_in    = 'LATE';  // TERLAMBAT
-                                        
-                                        // hitung potongan jam late
-                                        $pot_jam_late_cek       = $clock_in->diffInMinutes($tanggaljam_awal_toleransi);
-                                        $pot_jam_late           = ceil($pot_jam_late_cek/60);
-                                    }
-                                    $status_presensi_in = 'OK';
-
-                                    $cekizin_in = 1; // dipakai di L04
-                                }else{
-                                    $clock_in       = null;
-                                    $st_clock_in    = 'No CI';
-                                    $status_presensi_in = 'No CI';
-                                }
-
+                                // hitung potongan jam late (DIPINDAH DI STEP 5 IZIN)
+                                // $pot_jam_late_cek       = $clock_in->diffInMinutes($tanggaljam_awal_toleransi);
+                                // $pot_jam_late           = ceil($pot_jam_late_cek/60);
                             }
-                            // END check clock_in
+                        } else {
+                            $clock_in           = null;
+                            $st_clock_in        = 'No CI';
+                            // $status_presensi_in = 'No CI';
+                        }
 
-                            // L03-b: Check Out
-                            // BEGIN check clock_out
-                            $qs_htsprtd_clock_out = $db
-                                ->query('select', 'htsprtd' )
+                        // print_r($pot_jam_late . '<br>');
+
+                        //STEP 3 clock_out
+                        // BEGIN check clock_out
+                        $qs_htsprtd_clock_out = $db
+                            ->query('select', 'htsprtd' )
+                            ->get([
+                                'concat(htsprtd.tanggal," ",htsprtd.jam) as dt_checkclock'
+                            ] )
+                            
+                            ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
+                            ->where('htsprtd.nama', '("os", "out", "staff", "pmi")', 'IN', false )
+                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t1, '>=' )
+                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t2, '<=' )
+                            ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
+                            ->exec();
+                        $rs_htsprtd_clock_out = $qs_htsprtd_clock_out->fetch();
+
+                        if (!empty($rs_htsprtd_clock_out)) {
+                            $ceklok_out = new Carbon($rs_htsprtd_clock_out['dt_checkclock']);
+                            if($ceklok_out >= $tanggaljam_akhir && $ceklok_out <= $tanggaljam_akhir_t2){
+                                $clock_out           = $ceklok_out;
+                                $st_clock_out        = 'OK';
+                                // $status_presensi_out = 'OK';
+                            } else if($ceklok_out >= $tanggaljam_akhir_t1 && $ceklok_out <= $tanggaljam_akhir){
+                                $clock_out           = $ceklok_out;
+                                $st_clock_out        = 'EARLY';
+                                // $status_presensi_out = 'EARLY';
+                                
+                                // hitung potongan jam early (DIPINDAH DI STEP 5 IZIN)
+                                // $pot_jam_early_cek     = $clock_out->diffInMinutes($tanggaljam_akhir);
+                                // $pot_jam_early   = ceil($pot_jam_early_cek/60);
+                            }
+                        } else {
+                            $clock_out           = null;
+                            $st_clock_out        = 'No CO';
+                            // $status_presensi_out = 'No CO';
+                        }
+                        
+                        //NEXT STEP
+                        $next_step = 0;
+                        if ($st_clock_in == "OK" && $st_clock_out == "OK") {
+                            $status_presensi_in = "HK";
+                            $status_presensi_out = "HK";
+                            $next_step = 5;
+                        } else if ($st_clock_in == "No CI" && $st_clock_out == "No CO") {
+                            $next_step = 6; //absen
+                        } else if ($st_clock_in == "Late 1" && $st_clock_out == "OK") {
+                            $status_presensi_in = "HK";
+                            $status_presensi_out = "HK";
+                            $next_step = 5;
+                        } else {
+                            $next_step = 5;
+                        }
+
+                        //STEP 5 IZIN
+                        if ($next_step == 5) {
+
+                            //BEGIN DINAS DAN IZIN
+                            $qs_htlxxrh_dinas_in = $db
+                                ->query('select', 'htlxxrh' )
                                 ->get([
-                                    'concat(htsprtd.tanggal," ",htsprtd.jam) as dt_checkclock'
+                                    'htlxxrh.id_htlxxmh as id_htlxxmh',
+                                    'htlxxrh.kode as htlxxrh_kode',
+                                    'htlxxrh.htlxxmh_kode as htlxxmh_kode',
+                                    'htpxxmh.is_potong_gaji as is_potong_gaji',
+                                    'htlgrmh.kode as htlgrmh_kode',
+                                    'htlxxrh.is_approve as is_approve'
                                 ] )
-                                ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
-                                ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir, '>=' )
-                                ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t2, '<=' )
-                                ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
+                                ->join('htpxxmh','htpxxmh.id = htlxxrh.id_htlxxmh','LEFT' )
+                                ->join('htlgrmh','htlgrmh.id = htpxxmh.id_htlgrmh','LEFT' )
+                                ->where('htlxxrh.id_hemxxmh', $id_hemxxmh)
+                                ->where('htlxxrh.is_active', 1)
+                                ->where('htlxxrh.tanggal', $tanggal )
+                                ->where( function ( $r ) {
+                                    $r
+                                        ->where('htlxxrh.id_htlxxmh', 1) //IZIN  TERLAMBAT TL
+                                        ->or_where('htlxxrh.id_htlxxmh', 5 ); // IZIN DINAS AWAL
+                                } )
+                                ->where('htlxxrh.jenis', 2 )    // izin
                                 ->exec();
-                            $rs_htsprtd_clock_out = $qs_htsprtd_clock_out->fetch();
-                            if(!empty($rs_htsprtd_clock_out['dt_checkclock'])){
-                                // clock_out dalam rentang
-                                $clock_out              = $rs_htsprtd_clock_out['dt_checkclock'];
-                                $st_clock_out           = 'OK';
-                                $status_presensi_out    = 'OK';
-                                
-                            }else{
-                                // jika tidak ada antara toleransi awal dan jam_akhir, cek apakah pulang awal
-                                // clock_out_early
-                                $qs_htsprtd_clock_out_early = $db
-                                    ->query('select', 'htsprtd' )
-                                    ->get([
-                                        'concat(htsprtd.tanggal," ",htsprtd.jam) as dt_checkclock'
-                                    ] )
-                                    ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
-                                    ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t1, '>=' )
-                                    ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir, '<=' )
-                                    ->order('concat(htsprtd.tanggal," ",htsprtd.jam) DESC')
-                                    ->exec();
-                                $rs_htsprtd_clock_out_early = $qs_htsprtd_clock_out_early->fetch();
+                            $rs_htlxxrh_dinas_in = $qs_htlxxrh_dinas_in->fetchAll();
+                            // print_r($rs_htlxxrh_dinas_in);
+                            
+                            $is_late_pot = 0;
+                            if(!empty($rs_htlxxrh_dinas_in) ){
+                                foreach ($rs_htlxxrh_dinas_in as $key => $izin_dinas_in) {
+                                    if($izin_dinas_in['is_approve'] == 1){
+                                        $kode_izin[] = $izin_dinas_in['htlxxmh_kode'] . " [" . $izin_dinas_in['htlxxrh_kode'] . "]"; //tamnbahkan kode dokumen
 
-                                if(!empty($rs_htsprtd_clock_out_early['dt_checkclock'])){
-                                    $clock_out      = new Carbon($rs_htsprtd_clock_out_early['dt_checkclock']);
-                                    $st_clock_out   = 'EARLY';    // PULANG AWAL
-                                    $status_presensi_out = 'OK';
+                                        $status_presensi_in = $izin_dinas_in['htlxxmh_kode']; //KODE IZIN TL / DLW
 
-                                    $cekizin_out = 1; // dipakai di L04
-
-                                    // hitung potongan jam early
-                                    $tanggaljam_akhir_early = $tanggaljam_akhir;
-                                    $pot_jam_early_cek     = $clock_out->diffInMinutes($tanggaljam_akhir_early);
-                                    $pot_jam_early_early   = ceil($pot_jam_early_cek/60);
-                                }else{
-                                    $clock_out = null;
-                                    $st_clock_out = 'No CO';
-                                    $status_presensi_out = 'No CO';
+                                        $cek = 0;
+                                        //KALAU ADA SURAT IZIN TERLAMBAT MAKA BARU DILAKUKAN POTONGAN JAM
+                                        if ($izin_dinas_in['is_potong_gaji'] == 1) { //DIGANTI IS POTONG GAJI
+                                            $is_late_pot = 1;
+                                        }
+                                    }else{
+                                        // if ($status_presensi_in != "HK" && $st_clock_in != "OK") {
+                                            $status_presensi_in = 'Izin Belum Disetujui';
+                                            $is_late_pot = 1;
+                                            $cek = 1;
+                                        // }
+                                    }
+                                    //FLAG LATE UNTUK YANG TIDAK ADA IZIN, BUKAN DINAS (IZIN DENGAN POTONGAN) & IZIN/DINAS YANG BELUM DI APPROVE
+                                    if ($is_late_pot == 1) {
+                                        // hitung potongan jam late
+                                        $pot_jam_late_cek     = $clock_in->diffInMinutes($tanggaljam_awal_toleransi);
+                                        $pot_jam_late   = ceil($pot_jam_late_cek/60);
+                                    }
                                 }
-
+                            } else {
+                                if ($st_clock_in != "OK") {
+                                    $status_presensi_in = "Belum ada Izin";
+                                    $cek = 1;
+                                } else {
+                                    $status_presensi_in = "HK";
+                                    $cek = 0;
+                                }
+                                
                             }
-                            // END check clock_out
 
-                            // BEGIN cek izin ditengah jam kerja
+                            $qs_htlxxrh_dinas_out = $db
+                                ->query('select', 'htlxxrh' )
+                                ->get([
+                                    'htlxxrh.id_htlxxmh as id_htlxxmh',
+                                    'htlxxrh.kode as htlxxrh_kode',
+                                    'htpxxmh.is_potong_gaji as is_potong_gaji',
+                                    'htlxxrh.htlxxmh_kode as htlxxmh_kode',
+                                    'htlgrmh.kode as htlgrmh_kode',
+                                    'htlxxrh.is_approve as is_approve'
+                                ] )
+                                ->join('htpxxmh','htpxxmh.id = htlxxrh.id_htlxxmh','LEFT' )
+                                ->join('htlgrmh','htlgrmh.id = htpxxmh.id_htlgrmh','LEFT' )
+                                ->where('htlxxrh.id_hemxxmh', $id_hemxxmh)
+                                ->where('htlxxrh.tanggal', $tanggal )
+                                ->where( function ( $r ) {
+                                    $r
+                                        ->where('htlxxrh.id_htlxxmh', 2) //IZIN BUKAN DINAS DENGAN POTONGAN
+                                        ->or_where('htlxxrh.id_htlxxmh', 6 ); //IZIN DINAS AKHIR
+                                } )
+                                ->where('htlxxrh.jenis', 2 )    // izin
+                                ->exec();
+                            $rs_htlxxrh_dinas_out = $qs_htlxxrh_dinas_out->fetchAll();
+                            // print_r($rs_htlxxrh_dinas_out);
+                            
+                            $is_early_pot = 0;
+                            if(!empty($rs_htlxxrh_dinas_out) ){
+                                foreach ($rs_htlxxrh_dinas_out as $key => $izin_dinas_out) {
+                                    if($izin_dinas_out['is_approve'] == 1){
+                                        $kode_izin[] = $izin_dinas_out['htlxxmh_kode'] . " [" . $izin_dinas_out['htlxxrh_kode'] . "]";
+                                        
+                                        $status_presensi_out = $izin_dinas_out['htlxxmh_kode'];
+                                        
+                                        $cek = 0;
+                                        //KALAU ADA SURAT IZIN PULANG AWAL (BUKAN DINAS) MAKA BARU DILAKUKAN POTONGAN JAM
+                                        if ($izin_dinas_out['is_potong_gaji'] == 1) { //IS POTONG GAJI
+                                            $is_early_pot = 1;
+                                        }
+                                    }else{
+                                        $status_presensi_out = 'Izin Belum Disetujui';
+                                        $is_early_pot = 1;
+                                        $cek = 1;
+                                        
+                                    }
+                                    //FLAG EARLY UNTUK YANG TIDAK ADA IZIN, BUKAN DINAS (IZIN DENGAN POTONGAN) & IZIN/DINAS YANG BELUM DI APPROVE
+                                    if ($is_early_pot == 1) {
+                                        // hitung potongan jam early
+                                        $pot_jam_early_cek     = $clock_out->diffInMinutes($tanggaljam_akhir);
+                                        $pot_jam_early   = ceil($pot_jam_early_cek/60);
+                                    }
+                                }
+                            } else {
+                                if ($st_clock_out != "OK") {
+                                    $status_presensi_out = "Belum ada Izin";
+                                    $cek = 1;
+                                } else {
+                                    $status_presensi_out = "HK";
+                                    $cek = 0;
+                                }
+                            }
+
+                            // BEGIN cek izin ditengah jam kerja DENGAN POTONGAN
                             $qs_htlxxrh_izin = $db
                                 ->query('select', 'htlxxrh' )
                                 ->get([
                                     'htlxxrh.kode as htlxxrh_kode',
                                     'htlxxmh_kode as htlxxmh_kode',
                                     'htlgrmh.kode as htlgrmh_kode',
+                                    'htpxxmh.is_potong_gaji as is_potong_gaji',
                                     'htlxxrh.is_approve as is_approve',
                                     'htlxxrh.jam_awal as jam_awal',
                                     'htlxxrh.jam_akhir as jam_akhir'
                                 ] )
-                                ->join('htlxxmh','htlxxmh.id = htlxxrh.id_htlxxmh','LEFT' )
-                                ->join('htlgrmh','htlgrmh.id = htlxxmh.id_htlgrmh','LEFT' )
+                                ->join('htpxxmh','htpxxmh.id = htlxxrh.id_htlxxmh','LEFT' )
+                                ->join('htlgrmh','htlgrmh.id = htpxxmh.id_htlgrmh','LEFT' )
                                 ->where('htlxxrh.id_hemxxmh', $id_hemxxmh)
                                 ->where('htlxxrh.tanggal', $tanggal )
                                 ->where( function ( $r ) {
@@ -436,164 +453,143 @@
                             $rs_htlxxrh_izin = $qs_htlxxrh_izin->fetchAll();
                             // ada kemungkinan izin lebih dari 1x selama jam kerja
                             foreach ($rs_htlxxrh_izin as $row_htlxxrh_izin) {
-                                $tanggaljam_izin_awal    = new Carbon( $tanggal . ' ' . $row_htlxxrh_izin['jam_awal'] );
-                                if( $row_htlxxrh_izin['jam_awal'] < $row_htlxxrh_izin['jam_akhir']){
-                                    $temp_tanggaljam_izin_akhir    = new Carbon( $tanggal . ' ' . $row_htlxxrh_izin['jam_akhir'] );
-                                }else{
-                                    $temp_tanggaljam_izin_akhir    = new Carbon( $tanggal . ' ' . $row_htlxxrh_izin['jam_akhir'] );
-                                    $temp_tanggaljam_izin_akhir->addDays(1);
+                                $kode_izin[] = $row_htlxxrh_izin['htlxxmh_kode'] . " [" . $row_htlxxrh_izin['htlxxrh_kode'] . "]";
+                                
+                                if ($row_htlxxrh_izin['is_potong_gaji']) {
+                                    $tanggaljam_izin_awal    = new Carbon( $tanggal . ' ' . $row_htlxxrh_izin['jam_awal'] );
+                                    if( $row_htlxxrh_izin['jam_awal'] < $row_htlxxrh_izin['jam_akhir']){
+                                        $temp_tanggaljam_izin_akhir    = new Carbon( $tanggal . ' ' . $row_htlxxrh_izin['jam_akhir'] );
+                                    }else{
+                                        $temp_tanggaljam_izin_akhir    = new Carbon( $tanggal . ' ' . $row_htlxxrh_izin['jam_akhir'] );
+                                        $temp_tanggaljam_izin_akhir->addDays(1);
+                                    }
+                                    $temp_tanggaljam_akhir_izin = $temp_tanggaljam_izin_akhir;
+    
+                                    $pot_jam_izin_cek       = $tanggaljam_izin_awal->diffInMinutes($temp_tanggaljam_akhir_izin);
+                                    $pot_jam_izin_temp      = ceil($pot_jam_izin_cek/60);
+                                    $pot_jam_izin           = $pot_jam_izin + $pot_jam_izin_temp;
                                 }
-                                $temp_tanggaljam_akhir_izin = $temp_tanggaljam_izin_akhir;
-
-                                $pot_jam_izin_cek       = $tanggaljam_izin_awal->diffInMinutes($temp_tanggaljam_akhir_izin);
-                                $pot_jam_izin_temp      = ceil($pot_jam_izin_cek/60);
-                                $pot_jam_izin           = $pot_jam_izin + $pot_jam_izin_temp;
                             
                             }
-
-                            // END cek izin ditengah jam kerja
-
-                            // L04
-                            // BEGIN tentukan status_presensi
-                            // untuk yang No CI, No CO
-                            if($st_clock_in == 'OK' && $st_clock_out == 'OK'){
-                                $htlxxrh_kode           = '';
-                                $status_presensi_in     = "HK";
-                                $status_presensi_out    = "HK";
-                            }else if($st_clock_in == 'No CI' && $st_clock_out == 'No CO'){
-                                /**
-                                 * Lanjutan dari L02
-                                 * Jika urutan check clock lebih tinggi dari absensi tertentu, 
-                                 * maka dilakukan dilakukan pengencekan di bagian ini
-                                 * sesuaikan bagian where $id_htlxxmh_exclude
-                                 */
-
-                                /*
-                                $qs_htlxxrh_exclude = $db
-                                    ->query('select', 'htlxxrh' )
-                                    ->get([
-                                        'htlxxrh.kode as htlxxrh_kode',
-                                        'htlxxmh_kode as htlxxmh_kode',
-                                        'htlgrmh.kode as htlgrmh_kode'
-                                    ] )
-                                    ->join('htlxxmh','htlxxmh.id = htlxxrh.id_htlxxmh','LEFT' )
-                                    ->join('htlgrmh','htlgrmh.id = htlxxmh.id_htlgrmh','LEFT' )
-                                    ->where('htlxxrh.id_hemxxmh', $id_hemxxmh)
-                                    ->where('htlxxrh.id_htlxxmh', $id_htlxxmh_exclude , '<>' )
-                                    ->where('htlxxrh.tanggal', $tanggal )
-                                    ->limit(1)
-                                    ->exec();
-                                $rs_htlxxrh_exclude = $qs_htlxxrh_exclude->fetchAll();
-
-                                if(count($rs_hthhdth) > 0){
-                                    $htlxxrh_kode           = $rs_htlxxrh_exclude[0]['htlxxmh_kode];
-                                    $status_presensi_in     = $rs_htlxxrh_exclude[0]['htlxxmh_kode];
-                                    $status_presensi_out    = $rs_htlxxrh_exclude[0]['htlxxmh_kode];
-                                }else{
-                                    $htlxxrh_kode           = 'AL';
-                                    $status_presensi_in     = "AL";
-                                    $status_presensi_out    = "AL";
-                                }
-                                */
-
-                                /**
-                                 * Jika check clock lebih tinggi dari absensi tertentu, 
-                                 * maka karyawan dinyatakan Alpa, 
-                                 * karena tidak ada check in dan check out
-                                 */
-                                $htlxxrh_kode           = 'AL';
-                                $status_presensi_in     = "AL";
-                                $status_presensi_out    = "AL";
-
-                                
-                            }else{
-
-                                if($cekizin_in == 1){
-                                    // id_htpxxmh = 1
-                                    $qs_htlxxrh_in = $db
-                                        ->query('select', 'htlxxrh' )
-                                        ->get([
-                                            'htlxxrh.kode as htlxxrh_kode',
-                                            'htlxxmh_kode as htlxxmh_kode',
-                                            'htlgrmh.kode as htlgrmh_kode',
-                                            'htlxxrh.is_approve as is_approve'
-                                        ] )
-                                        ->join('htlxxmh','htlxxmh.id = htlxxrh.id_htlxxmh','LEFT' )
-                                        ->join('htlgrmh','htlgrmh.id = htlxxmh.id_htlgrmh','LEFT' )
-                                        ->where('htlxxrh.id_hemxxmh', $id_hemxxmh)
-                                        ->where('htlxxrh.tanggal', $tanggal )
-                                        ->where( function ( $r ) {
-                                            $r
-                                                ->where('htlxxrh.id_htlxxmh', 1)
-                                                ->or_where('htlxxrh.id_htlxxmh', 5 );
-                                        } )
-                                        ->where('htlxxrh.jenis', 2 )    // izin
-                                        ->exec();
-                                    $rs_htlxxrh_in = $qs_htlxxrh_in->fetch();
-
-                                    if(!empty($rs_htlxxrh_in) ){
-                                        // jika ada data izin
-                                        // check apakah disetujui
-                                        if($rs_htlxxrh_in['is_approve'] == 1){
-                                            $status_presensi_in = $rs_htlxxrh_in['htlxxmh_kode'];
-                                        }else{
-                                            $status_presensi_in = 'Izin Belum Disetujui';
-                                        }
-                                        $keterangan =  $keterangan . " - " . $rs_htlxxrh_in['htlxxrh_kode'];
-                                    }else{
-                                        // tidak membuat izin
-                                        $status_presensi_in = 'Belum ada Izin';
-                                        $htlxxrh_kode = '';
-                                    }
-
-                                }
-
-                                if($cekizin_out == 1){
-                                    // id_htpxxmh = 2
-                                    $qs_htlxxrh_out = $db
-                                        ->query('select', 'htlxxrh' )
-                                        ->get([
-                                            'htlxxrh.kode as htlxxrh_kode',
-                                            'htlxxmh_kode as htlxxmh_kode',
-                                            'htlgrmh.kode as htlgrmh_kode',
-                                            'htlxxrh.is_approve as is_approve'
-                                        ] )
-                                        ->join('htlxxmh','htlxxmh.id = htlxxrh.id_htlxxmh','LEFT' )
-                                        ->join('htlgrmh','htlgrmh.id = htlxxmh.id_htlgrmh','LEFT' )
-                                        ->where('htlxxrh.id_hemxxmh', $id_hemxxmh)
-                                        ->where('htlxxrh.tanggal', $tanggal )
-                                        ->where( function ( $r ) {
-                                            $r
-                                                ->where('htlxxrh.id_htlxxmh', 2)
-                                                ->or_where('htlxxrh.id_htlxxmh', 6 );
-                                        } )
-                                        ->where('htlxxrh.jenis', 2 )    // izin
-                                        ->exec();
-                                    $rs_htlxxrh_out = $qs_htlxxrh_out->fetch();
-                                    
-                                    // echo  ' | ' . empty($rs_htlxxrh_out) . ' - ' . $id_hemxxmh . ' | ';
-                                    if(!empty($rs_htlxxrh_out)){
-                                        // jika ada data izin
-                                        // check apakah disetujui
-                                        if($rs_htlxxrh_out['is_approve'] == 1){
-                                            $status_presensi_out = $rs_htlxxrh_out['htlxxmh_kode'];
-                                        }else{
-                                            $status_presensi_out = 'Izin Belum Disetujui';
-                                        }
-                                        $keterangan =  $keterangan . " - " . $rs_htlxxrh_out['htlxxrh_kode'];
-                                    }else{
-                                        // tidak membuat izin
-                                        $status_presensi_out = 'Belum ada Izin';
-                                        $htlxxrh_kode = '';
-                                    }
-
-                                }
-                            }
-                            // END tentukan status_presensi
                         }
 
+                        // print_r($htlxxrh_kode);
+                        
+                        //STEP 6 ABSEN
+                        if ($next_step == 6) {
+                            $qs_htlxxrh = $db
+                                ->query('select', 'htlxxrh' )
+                                ->get([
+                                    'htlxxrh.kode as htlxxrh_kode',
+                                    'htlxxmh_kode as htlxxmh_kode',
+                                    'htlgrmh.kode as htlgrmh_kode'
+                                ] )
+                                ->join('htlxxmh','htlxxmh.id = htlxxrh.id_htlxxmh','LEFT' )
+                                ->join('htlgrmh','htlgrmh.id = htlxxmh.id_htlgrmh','LEFT' )
+                                ->where('htlxxrh.id_hemxxmh', $id_hemxxmh)
+                                ->where('htlxxrh.is_active', 1)
+                                ->where('htlxxrh.tanggal', $tanggal )
+                                ->where('htlxxrh.jenis', 1 )    // absensi
+                                ->exec();
+                            $rs_htlxxrh = $qs_htlxxrh->fetch();
+                            if(!empty($rs_htlxxrh)){
+                                // jika ada absen
+                                $kode_izin[] = $rs_htlxxrh['htlxxmh_kode'] . " [" . $rs_htlxxrh['htlxxrh_kode'] . "]";
+                                $status_presensi_in = $rs_htlxxrh['htlgrmh_kode'];
+                                $status_presensi_out = $rs_htlxxrh['htlgrmh_kode'];
+    
+                                $cek = 0;
+                            }else{
+                                
+                                //Cek apakah ada check clock antara Tgl 04:00:00 s/d Tgl + 1 12:00:00
+                                $besok = date('Y-m-d', strtotime($tanggal . ' +1 day'));
+                                // print_r($besok);
+                                $qs_ceklok_today04_besok12 = $db
+                                    ->query('select', 'htsprtd')
+                                    ->get([
+                                        'CONCAT(htsprtd.tanggal, " ", htsprtd.jam) as dt_checkclock'
+                                    ])
+                                    ->where('htsprtd.kode', $row_hemxxmh['kode_finger'])
+                                    ->where('htsprtd.nama', '("os", "out", "staff", "pmi")', 'IN', false )
+                                    ->where('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)', $tanggal . ' 04:00:00', '>=')
+                                    ->where('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)', $besok . ' 12:00:00', '<=')                                    
+                                    ->order('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)')
+                                    ->exec();
+                                $rs_ceklok_today04_besok12 = $qs_ceklok_today04_besok12->fetch();
+                                
+                                //KODE STOP SAMPAI DISINI
+
+                                // print_r($rs_ceklok_today04_besok12);
+                                if (!empty($rs_ceklok_today04_besok12)) {
+                                    $status_presensi_in = "Diluar Range";
+                                    $status_presensi_out = "Diluar Range";
+                                    $cek = 1;
+                                    
+                                    //STEP 7 CEK IZIN DINAS MULTIPLE 
+                                    $qs_cek_dinas_multi = $db
+                                        ->query('select', 'htlxxrh' )
+                                        ->get([
+                                            'htlxxrh.kode as htlxxrh_kode',
+                                            'htlxxrh.htlxxmh_kode as htlxxmh_kode',
+                                            'htlgrmh.kode as htlgrmh_kode',
+                                            'CONCAT(htlxxrh.tanggal, " ", htlxxrh.jam_awal) as tanggal_jam_awal',
+                                            'CONCAT(htlxxrh.tanggal, " ", htlxxrh.jam_akhir) as tanggal_jam_akhir'
+                                        ] )
+                                        ->join('htpxxmh','htpxxmh.id = htlxxrh.id_htlxxmh','LEFT' )
+                                        ->join('htlgrmh','htlgrmh.id = htpxxmh.id_htlgrmh','LEFT' )
+                                        ->where('htlxxrh.id_hemxxmh', $id_hemxxmh)
+                                        ->where('htlxxrh.tanggal', $tanggal )
+                                        ->where('htlxxrh.is_approve', 1 )
+                                        ->where('htlxxrh.is_active', 1 )
+                                        ->where('htlxxrh.id_htlxxmh', '(4, 5, 6)', 'IN', false ) //PILIH IZIN DINAS (DINAS LUAR, DINAS LUAR AWAL, DINAS LUAR AKHIR)
+                                        ->where('htlxxrh.jenis', 2 )    // izin
+                                        ->exec();
+                                    $rs_cek_dinas_multi = $qs_cek_dinas_multi->fetchAll();
+
+                                    //STEP 7 - JIKA ADA DINAS MULTIPLE
+                                    if(!empty($rs_cek_dinas_multi) ){
+                                        foreach ($rs_cek_dinas_multi as $key => $dinas_multi) {
+                                            $kode_izin[] = $kode_izin[] = $dinas_multi['htlxxmh_kode'] . " [" . $dinas_multi['htlxxrh_kode'] . "]"; //DIJADIKAN SATU SAJA KODE DINAS/IZINYA
+
+                                            $status_presensi_in = "HK";
+                                            $status_presensi_out = "HK";
+                                            $cek = 0;
+                                        }
+                                        $htlxxrh_kode = implode(', ', $kode_dinas_multi);
+                                    //STEP 7 - Jika TIDAK ADA DINAS MULTIPLE
+                                    } else {
+                                        $status_presensi_in = "Jadwal Salah";
+                                        $status_presensi_out = "Jadwal Salah"; 
+                                        $cek = 1;
+                                    }
+                                }
+                                 
+                                //JIKA SHIFT OFF MAKA STATUS OFF
+                                if($jadwal['id_htsxxmh'] == 1){
+                                    $status_presensi_in = $jadwal['htsxxmh_kode'];
+                                    $status_presensi_out = $jadwal['htsxxmh_kode'];
+                                    $st_clock_in = $jadwal['htsxxmh_kode'];
+                                    $st_clock_out = $jadwal['htsxxmh_kode'];
+                                    $cek = 0;
+                                } else {
+                                    // jika tidak ada absensi
+                                    $status_presensi_in = 'AL'; //BUTTON KALAU DI CLIK MAKA CEK 1 BERUBAH JADI CEK 0
+                                    $status_presensi_out = 'AL';
+                                    $cek = 1;
+                                }
+
+                            }
+                        }
+
+                        $htlxxrh_kode = implode(', ', $kode_izin);
+
+                        // print_r($pot_jam_late . '<br>');
+                        // print_r($pot_jam_early . '<br>');
+
                         // gabungan dari potongan 
-                        $pot_jam = $pot_jam_late + $pot_jam_izin + $pot_jam_early_early;
+                        $pot_jam = $pot_jam_late + $pot_jam_izin + $pot_jam_early;
+
+                        // SAMPAI LEMBUR KEBAWAH DEFAULT CODING LAMA
 
                         // BEGIN LEMBUR
                         // Jenis Lembur:
@@ -799,9 +795,6 @@
                         //      |    | is_istirahat <> 2                        | 0        |
                         //      +----+------------------------------------------+----------+
             
-                        $tanggaljam_awal_istirahat     = $rs_htssctd[0]['tanggaljam_awal_istirahat']; 
-                        $tanggaljam_akhir_istirahat    = $rs_htssctd[0]['tanggaljam_akhir_istirahat']; 
-
                         // hitung final durasi lembur
                         // mungkin $potongan_ti masih salah
                         // print_r($durasi_lembur_total_jam);
@@ -962,9 +955,61 @@
                             $is_makan = 1;
                         }
 
+
+                        //INSERT KE REPORT PRESENSI
+                        $qi_htsprrd = $db
+                            ->query('insert', 'htsprrd')
+                            ->set('id_hemxxmh',$id_hemxxmh)
+                            ->set('keterangan',$keterangan)
+                            ->set('kode_finger', $kode_finger)
+                            ->set('tanggal',$tanggal)
+                            
+                            ->set('shift_in',$shift_in)
+                            ->set('shift_out',$shift_out)
+                            ->set('st_jadwal',$st_jadwal)
+                            ->set('tanggaljam_awal_t1',$tanggaljam_awal_t1)
+                            ->set('tanggaljam_awal',$tanggaljam_awal)
+                            ->set('tanggaljam_awal_t2',$tanggaljam_awal_t2)
+                            ->set('tanggaljam_akhir_t1',$tanggaljam_akhir_t1)
+                            ->set('tanggaljam_akhir',$tanggaljam_akhir)
+                            ->set('tanggaljam_akhir_t2',$tanggaljam_akhir_t2)
+                            ->set('clock_in',$clock_in)
+                            ->set('clock_out',$clock_out)
+                            ->set('st_clock_in',$st_clock_in)
+                            ->set('st_clock_out',$st_clock_out)
+                            ->set('status_presensi_in',$status_presensi_in)
+                            ->set('status_presensi_out',$status_presensi_out)
+                            ->set('htlxxrh_kode',$htlxxrh_kode)
+                            
+                            ->set('jam_awal_lembur_libur',$jam_awal_lembur_libur)
+                            ->set('jam_akhir_lembur_libur',$jam_akhir_lembur_libur)
+                            ->set('durasi_lembur_libur',$durasi_lembur_libur_jam)
+
+                            ->set('jam_awal_lembur_awal',$jam_awal_lembur_awal)
+                            ->set('jam_akhir_lembur_awal',$jam_akhir_lembur_awal)
+                            ->set('durasi_lembur_awal',$durasi_lembur_awal_jam)
+                            ->set('jam_awal_lembur_akhir',$jam_awal_lembur_akhir)
+                            ->set('jam_akhir_lembur_akhir',$jam_akhir_lembur_akhir)
+                            ->set('durasi_lembur_akhir',$durasi_lembur_akhir_jam)
+                            ->set('jam_awal_lembur_istirahat1',$jam_awal_lembur_istirahat1)
+                            ->set('jam_akhir_lembur_istirahat1',$jam_akhir_lembur_istirahat1)
+                            ->set('durasi_lembur_istirahat1',$durasi_lembur_istirahat1_jam)
+                            ->set('jam_awal_lembur_istirahat2',$jam_awal_lembur_istirahat2)
+                            ->set('jam_akhir_lembur_istirahat2',$jam_akhir_lembur_istirahat2)
+                            ->set('durasi_lembur_istirahat2',$durasi_lembur_istirahat2_jam)
+                            ->set('jam_awal_lembur_istirahat3',$jam_awal_lembur_istirahat3)
+                            ->set('jam_akhir_lembur_istirahat3',$jam_akhir_lembur_istirahat3)
+                            ->set('durasi_lembur_istirahat3',$durasi_lembur_istirahat3_jam)
+                            ->set('durasi_lembur_total_jam', $durasi_lembur_total_jam)
+                            ->set('pot_jam', $pot_jam)
+                            ->set('durasi_lembur_final', $durasi_lembur_final)
+                            ->set('pot_jam_final', $pot_jam_final)
+                            ->set('nominal_lembur_jam', $nominal_lembur_jam)
+                            ->set('nominal_lembur_final', $nominal_lembur_final)
+                            ->set('is_makan', $is_makan)
+                            ->set('cek', $cek)
+                        ->exec();
                     }
-
-
                 }else{
                     // jika jadwal belum dibuat
                     $shift_in  = null;
@@ -975,61 +1020,23 @@
                     $status_presensi_in     = 'NJ';
                     $status_presensi_out    = 'NJ';
 
-                    // Perhitungan Lembur tidak dapat dilakukan jika jadwal belum dibuat
-                    // karena perlu untuk melihat jam istirahat di master shift
+                    //INSERT ALAKADARNYA KARENA SEDIKIT YANG BISA DILAKUKAN SAAT JADWAL BELUM DIBUAT
+                    $qi_htsprrd = $db
+                        ->query('insert', 'htsprrd')
+                        ->set('id_hemxxmh',$id_hemxxmh)
+                        ->set('keterangan',$keterangan)
+                        ->set('kode_finger', $kode_finger)
+                        ->set('tanggal',$tanggal)
+                        
+                        ->set('shift_in',$shift_in)
+                        ->set('shift_out',$shift_out)
+                        ->set('st_jadwal',$st_jadwal)
+                        ->set('status_presensi_in',$status_presensi_in)
+                        ->set('status_presensi_out',$status_presensi_out)
+                        ->set('htlxxrh_kode',$htlxxrh_kode)
+                    ->exec();
 
                 }
-
-                $qi_htsprrd = $db
-                    ->query('insert', 'htsprrd')
-                    ->set('id_hemxxmh',$id_hemxxmh)
-                    ->set('keterangan',$keterangan)
-                    ->set('kode_finger', $kode_finger)
-                    ->set('tanggal',$tanggal)
-                    ->set('shift_in',$shift_in)
-                    ->set('shift_out',$shift_out)
-                    ->set('st_jadwal',$st_jadwal)
-                    ->set('tanggaljam_awal_t1',$tanggaljam_awal_t1)
-                    ->set('tanggaljam_awal',$tanggaljam_awal)
-                    ->set('tanggaljam_awal_t2',$tanggaljam_awal_t2)
-                    ->set('tanggaljam_akhir_t1',$tanggaljam_akhir_t1)
-                    ->set('tanggaljam_akhir',$tanggaljam_akhir)
-                    ->set('tanggaljam_akhir_t2',$tanggaljam_akhir_t2)
-                    ->set('clock_in',$clock_in)
-                    ->set('clock_out',$clock_out)
-                    ->set('st_clock_in',$st_clock_in)
-                    ->set('st_clock_out',$st_clock_out)
-                    ->set('status_presensi_in',$status_presensi_in)
-                    ->set('status_presensi_out',$status_presensi_out)
-                    ->set('htlxxrh_kode',$htlxxrh_kode)
-
-                    ->set('jam_awal_lembur_libur',$jam_awal_lembur_libur)
-                    ->set('jam_akhir_lembur_libur',$jam_akhir_lembur_libur)
-                    ->set('durasi_lembur_libur',$durasi_lembur_libur_jam)
-
-                    ->set('jam_awal_lembur_awal',$jam_awal_lembur_awal)
-                    ->set('jam_akhir_lembur_awal',$jam_akhir_lembur_awal)
-                    ->set('durasi_lembur_awal',$durasi_lembur_awal_jam)
-                    ->set('jam_awal_lembur_akhir',$jam_awal_lembur_akhir)
-                    ->set('jam_akhir_lembur_akhir',$jam_akhir_lembur_akhir)
-                    ->set('durasi_lembur_akhir',$durasi_lembur_akhir_jam)
-                    ->set('jam_awal_lembur_istirahat1',$jam_awal_lembur_istirahat1)
-                    ->set('jam_akhir_lembur_istirahat1',$jam_akhir_lembur_istirahat1)
-                    ->set('durasi_lembur_istirahat1',$durasi_lembur_istirahat1_jam)
-                    ->set('jam_awal_lembur_istirahat2',$jam_awal_lembur_istirahat2)
-                    ->set('jam_akhir_lembur_istirahat2',$jam_akhir_lembur_istirahat2)
-                    ->set('durasi_lembur_istirahat2',$durasi_lembur_istirahat2_jam)
-                    ->set('jam_awal_lembur_istirahat3',$jam_awal_lembur_istirahat3)
-                    ->set('jam_akhir_lembur_istirahat3',$jam_akhir_lembur_istirahat3)
-                    ->set('durasi_lembur_istirahat3',$durasi_lembur_istirahat3_jam)
-                    ->set('durasi_lembur_total_jam', $durasi_lembur_total_jam)
-                    ->set('pot_jam', $pot_jam)
-                    ->set('durasi_lembur_final', $durasi_lembur_final)
-                    ->set('pot_jam_final', $pot_jam_final)
-                    ->set('nominal_lembur_jam', $nominal_lembur_jam)
-                    ->set('nominal_lembur_final', $nominal_lembur_final)
-                    ->set('is_makan', $is_makan)
-                    ->exec();
             }
         }
         

@@ -271,6 +271,45 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					// {
+					// 	text: '<i class="fa fa-google"></i>',
+					// 	name: 'btnGeneratePresensi',
+					// 	className: 'btn btn-xs btn-outline',
+					// 	titleAttr: '',
+					// 	action: function ( e, dt, node, config ) {
+					// 		e.preventDefault(); 
+
+					// 		notifyprogress = $.notify({
+					// 			message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
+					// 		},{
+					// 			z_index: 9999,
+					// 			allow_dismiss: false,
+					// 			type: 'info',
+					// 			delay: 0
+					// 		});
+
+					// 		$.ajax( {
+					// 			url: "../../models/hgtprth/hgtprth_fn_gen_presensi.php",
+					// 			dataType: 'json',
+					// 			type: 'POST',
+					// 			data: {
+					// 				id_transaksi_h: id_transaksi_h
+					// 			},
+					// 			success: function ( json ) {
+
+					// 				$.notify({
+					// 					message: json.data.message
+					// 				},{
+					// 					type: json.data.type_message
+					// 				});
+
+					// 				tblhgtprth.ajax.reload(function ( json ) {
+					// 					notifyprogress.close();
+					// 				}, false);
+					// 			}
+					// 		} );
+					// 	}
+					// },
 					{
 						text: '<i class="fa fa-google"></i>',
 						name: 'btnGeneratePresensi',
@@ -289,11 +328,12 @@
 							});
 
 							$.ajax( {
-								url: "../../models/hgtprth/hgtprth_fn_gen_presensi.php",
+								url: "../../models/hgtprth/hgtprth_fn_gen_presensi_ferry.php",
 								dataType: 'json',
 								type: 'POST',
 								data: {
-									id_transaksi_h: id_transaksi_h
+									tanggal_select: tanggal_select,
+									id_heyxxmh_select: id_heyxxmh_select,
 								},
 								success: function ( json ) {
 
@@ -333,6 +373,7 @@
 				is_jurnal      = hgtprth_data.is_jurnal;
 				is_active      = hgtprth_data.is_active;
 				tanggal_select      = hgtprth_data.tanggal;
+				id_heyxxmh_select      = hgtprth_data.id_heyxxmh;
 
 				id_heyxxmh_old = hgtprth_data.id_heyxxmh;
 
@@ -353,6 +394,7 @@
 				id_heyxxmh_old = 0;
 				id_heyxxmh = 0;
 				tanggal_select = 0;
+				id_heyxxmh_select = 0;
 
 				// atur hak akses
 				CekDeselectHeaderH(tblhgtprth);
