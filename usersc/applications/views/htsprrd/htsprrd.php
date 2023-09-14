@@ -82,7 +82,8 @@
 								<th rowspan=2>Cek In</th>
 								<th rowspan=2>Cek Out</th>
 
-								<th rowspan=2>Kode Izin/Dinas</th>
+								<th rowspan=2>Keterangan</th>
+								<th rowspan=2>Potongan Jam</th>
 								
 								<th colspan=2>Lembur Libur</th>
 								<th colspan=2>Lembur Awal</th>
@@ -110,6 +111,7 @@
 						</thead>
 						<tfoot>
 							<tr>
+								<th></th>
 								<th></th>
 								<th></th>
 								<th></th>
@@ -238,7 +240,7 @@
 						searchPanes:{
 							show: false
 						},
-						targets: [0,3,5,6,7,8,9,10,15,16,17,18,19,20,21,22,23,24,25,26,27]
+						targets: [0,3,5,6,7,8,9,10,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29]
 					}
 				],
 				ajax: {
@@ -336,6 +338,17 @@
 					{ data: "htsprrd.status_presensi_out" },
 
 					{ data: "htsprrd.htlxxrh_kode" },
+					{ 
+						data: "htsprrd.pot_jam",
+						render: function (data){
+							if (data > 0){
+								return incfFormatNumberWithDecimal(data,1);
+							}else {
+								return '';
+							}
+						},
+						class: "text-right"
+					},
 
 					{ data: "htsprrd.jam_awal_lembur_libur" },
 					{ data: "htsprrd.jam_akhir_lembur_libur" },
@@ -535,13 +548,13 @@
 					var api       = this.api(), data;
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					
-					s_lb = api.column( 22 ).data().sum();
-					s_aw = api.column( 23 ).data().sum();
-					s_ak = api.column( 24 ).data().sum();
-					s_i1 = api.column( 25 ).data().sum();
-					s_i2 = api.column( 26 ).data().sum();
-					s_i3 = api.column( 27 ).data().sum();
-					s_tl = api.column( 28 ).data().sum();
+					s_lb = api.column( 23 ).data().sum();
+					s_aw = api.column( 24 ).data().sum();
+					s_ak = api.column( 25 ).data().sum();
+					s_i1 = api.column( 26 ).data().sum();
+					s_i2 = api.column( 27 ).data().sum();
+					s_i3 = api.column( 28 ).data().sum();
+					s_tl = api.column( 29 ).data().sum();
 
 					$( '#s_lb' ).html( numFormat(s_lb) );
 					$( '#s_aw' ).html( numFormat(s_aw) );

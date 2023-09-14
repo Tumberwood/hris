@@ -82,6 +82,7 @@
 			Field::inst( 'htsprrd.status_presensi_out' ),
 			Field::inst( 'htsprrd.htlxxrh_kode' ),
 			Field::inst( 'htsprrd.cek' ),
+			Field::inst( 'htsprrd.pot_jam' ),
 
 			Field::inst( 'htsprrd.jam_awal_lembur_libur' ),
 			Field::inst( 'htsprrd.jam_akhir_lembur_libur' ),
