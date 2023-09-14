@@ -465,6 +465,16 @@
 						}
 					},
 					{
+						label: "Nama Outsourcing <sup class='text-danger'>*<sup>",
+						name: "hemxxmh.nama_os",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "KBM", "value": "KBM" },
+							{ "label": "KMJ", "value": "KMJ" }
+						]
+					},
+					{
 						label: "Status <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_hesxxmh",
 						type: "select2",
@@ -571,6 +581,7 @@
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthemxxmh.field('start_on').val(start_on);
 				edthemxxmh.field('status_aktif').hide();
+				edthemxxmh.field('hemxxmh.nama_os').hide();
 				
 				if(action == 'create'){
 					tblhemxxmh.rows().deselect();
@@ -590,6 +601,17 @@
             edthemxxmh.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
+			
+			edthemxxmh.dependent( 'hemjbmh.id_heyxxmh', function ( val, data, callback ) {
+				if (val == 2) {
+					edthemxxmh.field('hemxxmh.nama_os').val();
+					edthemxxmh.field('hemxxmh.nama_os').show();
+				} else {
+					edthemxxmh.field('hemxxmh.nama_os').val('');
+					edthemxxmh.field('hemxxmh.nama_os').hide();
+				}
+				return {}
+			}, {event: 'keyup change'});
 			
 			edthemxxmh.dependent( 'hemjbmh.tanggal_masuk', function ( val, data, callback ) {
 				tanggal_akhir = moment(val).add('month', 6).subtract(1, 'day').format('DD MMM YYYY');
@@ -694,6 +716,14 @@
 						edthemxxmh.field('hemjbmh.id_heyxxmh').error( 'Wajib diisi!' );
 					}
 					// END of validasi hemjbmh.id_heyxxmh 
+
+					if (id_heyxxmh == 2) {
+						nama_os = edthemxxmh.field('hemxxmh.nama_os').val();
+						if(!nama_os || nama_os == ''){
+							edthemxxmh.field('hemxxmh.nama_os').error( 'Wajib diisi!' );
+						}
+						// END of validasi hemxxmh.nama_os 
+					}
 
 					// BEGIN of validasi hemjbmh.id_hesxxmh 
 					id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
