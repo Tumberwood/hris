@@ -352,6 +352,7 @@
                                     //FLAG LATE UNTUK YANG TIDAK ADA IZIN, BUKAN DINAS (IZIN DENGAN POTONGAN) & IZIN/DINAS YANG BELUM DI APPROVE
                                     if ($is_late_pot == 1) {
                                         // hitung potongan jam late
+                                        $clock_in = new Carbon($clock_in);
                                         $pot_jam_late_cek     = $clock_in->diffInMinutes($tanggaljam_awal_toleransi);
                                         $pot_jam_late   = ceil($pot_jam_late_cek/60);
                                     }
@@ -413,6 +414,7 @@
                                     //FLAG EARLY UNTUK YANG TIDAK ADA IZIN, BUKAN DINAS (IZIN DENGAN POTONGAN) & IZIN/DINAS YANG BELUM DI APPROVE
                                     if ($is_early_pot == 1) {
                                         // hitung potongan jam early
+                                        $clock_out = new Carbon($clock_out);
                                         $pot_jam_early_cek     = $clock_out->diffInMinutes($tanggaljam_akhir);
                                         $pot_jam_early   = ceil($pot_jam_early_cek/60);
                                     }
