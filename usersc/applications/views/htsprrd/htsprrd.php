@@ -516,9 +516,9 @@
 					},
 					{ 
 						// text: '<i class="fa fa-exchange" aria-hidden="true"></i>', 
-						text: '<span class="text-danger"> AL </span>', 
+						text: 'AL', 
 						name: 'btncekNol',
-						className: 'btn btn-primary',
+						className: 'btn btn-danger',
 						titleAttr: 'Meng Alpha-kan',
 						action: function ( e, dt, node, config ) {
 							$.ajax( {
