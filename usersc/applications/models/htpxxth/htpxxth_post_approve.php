@@ -66,6 +66,51 @@
 			->set('jam_awal', $rs_htpxxth['jam_awal'] )
 			->set('jam_akhir', $rs_htpxxth['jam_akhir'] )
 			->exec();
+
+			$qs_hasil_awal_akhir = $db
+				->raw()
+				->bind(':id_hemxxmh', $rs_htpxxth['id_hemxxmh'])
+				->bind(':tanggal', $rs_htpxxth['tanggal'])
+				->bind(':jam_awal', $rs_htpxxth['jam_awal'])
+				->bind(':jam_akhir', $rs_htpxxth['jam_akhir'])
+				->exec('SELECT
+							DATE_FORMAT(
+								CASE
+									WHEN (TIME(:jam_awal) >= "22:00:00" AND TIME(:jam_awal) <= "23:59:59")
+										OR (TIME(:jam_awal) >= "00:00:00" AND TIME(:jam_awal) <= "12:00:00" AND b.kode LIKE "malam%")
+									THEN DATE_ADD(CONCAT(DATE_ADD(a.tanggal, INTERVAL 1 DAY), " ", TIME(:jam_awal)), INTERVAL 1 HOUR)
+									ELSE DATE_ADD(CONCAT(a.tanggal, " ", :jam_awal), INTERVAL 1 HOUR)
+								END,
+								"%Y-%m-%d %H:%i:%s"
+							) AS tanggaljam_awal_t2,
+							DATE_FORMAT(DATE_ADD(CONCAT(a.tanggal, " ", :jam_akhir), INTERVAL -2 HOUR), "%Y-%m-%d %H:%i:%s") AS tanggaljam_akhir_t1
+							
+						FROM htssctd AS a
+						LEFT JOIN htsxxmh AS b ON b.id = a.id_htsxxmh
+						WHERE a.tanggal = :tanggal 
+							AND a.id_hemxxmh = :id_hemxxmh
+							AND a.is_active = 1
+						'
+						);
+			$rs_hasil_awal_akhir = $qs_hasil_awal_akhir->fetch();
+
+			if (in_array($rs_htpxxth['id_htpxxmh'], [1, 5])) {
+				$qu_jadwal = $db
+					->query('update', 'htssctd')
+					->set('tanggaljam_awal_t2',$rs_hasil_awal_akhir['tanggaljam_awal_t2'])
+					->where('id_hemxxmh',$rs_htpxxth['id_hemxxmh'])
+					->where('tanggal',$rs_htpxxth['tanggal'])
+				->exec();
+
+			} else if (in_array($rs_htpxxth['id_htpxxmh'], [2, 6])) {
+				$qu_jadwal = $db
+					->query('update', 'htssctd')
+					->set('tanggaljam_akhir_t1',$rs_hasil_awal_akhir['tanggaljam_akhir_t1'])
+					->where('id_hemxxmh',$rs_htpxxth['id_hemxxmh'])
+					->where('tanggal',$rs_htpxxth['tanggal'])
+				->exec();
+			}
+
 	}elseif($state == 2){
 		$qd_htlxxrh = $db
 			->query('delete', 'htlxxrh')
