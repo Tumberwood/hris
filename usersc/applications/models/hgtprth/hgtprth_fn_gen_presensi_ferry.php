@@ -259,7 +259,7 @@
                             ->where('htsprtd.nama', '("os", "out", "staff", "pmi")', 'IN', false )
                             ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t1, '>=' )
                             ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t2, '<=' )
-                            ->order('concat(htsprtd.tanggal," ",htsprtd.jam)', 'DESC')
+                            ->order('concat(htsprtd.tanggal," ",htsprtd.jam) DESC')
                             ->exec();
                         $rs_htsprtd_clock_out = $qs_htsprtd_clock_out->fetch();
 
