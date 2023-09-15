@@ -359,25 +359,52 @@
 				$(".modal-dialog").addClass("modal-lg");
 			});
 
+			edthtssctd.dependent( 'htssctd.id_htsxxmh', function ( val, data, callback ) {
+				if (val > 0) {
+					shift();
+				}
+				return {}
+			}, {event: 'keyup change'});
+
 			edthtssctd.dependent( 'htssctd.tanggaljam_awal', function ( val, data, callback ) {
 				var tanggal_awal = edthtssctd.field('htssctd.tanggaljam_awal').val();
+      		 	id_htsxxmh = edthtssctd.field('htssctd.id_htsxxmh').val();
 				
-				akhir = moment(tanggal_awal).add('hour', 2).format('DD MMM YYYY HH:mm');
-				awal = moment(tanggal_awal).subtract(2, 'hour').format('DD MMM YYYY HH:mm');
-				
-				edthtssctd.field('htssctd.tanggaljam_awal_t1').val(awal);
-				edthtssctd.field('htssctd.tanggaljam_awal_t2').val(akhir);
+				if (id_htsxxmh == 1) {
+					edthtssctd.field('htssctd.tanggaljam_awal_t1').val(tanggal_awal);
+					edthtssctd.field('htssctd.tanggaljam_awal_t2').val(tanggal_awal);
+				} else {
+					akhir = moment(tanggal_awal).add(2, 'hour').format('DD MMM YYYY HH:mm');
+					awal = moment(tanggal_awal).subtract(2, 'hour').format('DD MMM YYYY HH:mm');
+					
+					edthtssctd.field('htssctd.tanggaljam_awal_t1').val(awal);
+					edthtssctd.field('htssctd.tanggaljam_awal_t2').val(akhir);
+				}
 				return {}
 			}, {event: 'keyup change'});
 
 			edthtssctd.dependent( 'htssctd.tanggaljam_akhir', function ( val, data, callback ) {
 				var tanggal_akhir = edthtssctd.field('htssctd.tanggaljam_akhir').val();
+				var tanggal_awal = edthtssctd.field('htssctd.tanggaljam_awal').val();
+				id_htsxxmh = edthtssctd.field('htssctd.id_htsxxmh').val();
+				// tanggaljam_akhir_t2 = edthtssctd.field('htssctd.tanggaljam_akhir_t2').val();
 				
-				akhir = moment(tanggal_akhir).add('hour', 5).format('DD MMM YYYY HH:mm');
-				awal = moment(tanggal_akhir).subtract(5, 'hour').format('DD MMM YYYY HH:mm');
-				
-				edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(awal);
-				edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(akhir);
+				if (id_htsxxmh == 1) {
+					edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(tanggal_akhir);
+					edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(tanggal_akhir);
+				} else {
+						akhir = moment(tanggal_akhir).add(5, 'hour').format('DD MMM YYYY HH:mm');
+						awal = moment(tanggal_akhir).subtract(5, 'hour').format('DD MMM YYYY HH:mm');
+
+						if (tanggal_awal > awal) {
+							akhir = moment(tanggal_akhir).add(5, 'hour').add(1, 'day').format('DD MMM YYYY HH:mm');
+							awal = moment(tanggal_akhir).subtract(5, 'hour').add(1, 'day').format('DD MMM YYYY HH:mm');
+							tanggal_akhir = moment(tanggal_akhir).add(1, 'day').format('DD MMM YYYY HH:mm');
+							edthtssctd.field('htssctd.tanggaljam_akhir').val(tanggal_akhir);
+						}
+						edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(awal);
+						edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(akhir);
+				}
 				return {}
 			}, {event: 'keyup change'});
 
