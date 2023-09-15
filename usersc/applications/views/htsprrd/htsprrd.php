@@ -611,6 +611,7 @@
 				id_hemxxmh_select      = htsprrd_data.id_hemxxmh;
 				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
 				tanggal      = htsprrd_data.tanggal;
+				cek      = htsprrd_data.cek;
 
 				if (status_presensi_in == "AL" && status_presensi_out == "AL") {
 					tblhtsprrd.button('btncekNol:name').enable();

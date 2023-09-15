@@ -34,7 +34,7 @@ use
         $rs_htsrptd = $qs_htsrptd->fetch();
         // print_r($rs_htsrptd['nama']);
         if (!empty($rs_htsrptd)) {
-            $kode[] = "Replacement - " . $rs_htsrptd['nama'];
+            $kode[] = "Replacement [" . $rs_htsrptd['nama'] . "]";
             $flag = 1;
         }
 
@@ -50,13 +50,13 @@ use
         $rs_htscctd = $qs_htscctd->fetch();
         
         if (!empty($rs_htscctd)) {
-            $kode[] = "Replacement - " . $rs_htscctd['nama'];
+            $kode[] = "Replacement [" . $rs_htscctd['nama'] . "]";
             $flag = 1;
         }
 
         $katerangan = $htlxxrh_kode . " " . implode(', ', $kode);
 
-        // print_r($flag);
+        print_r($htlxxrh_kode);
         // print_r($tanggal);
         // print_r($id_hemxxmh_select);
         if ($flag == 1) {

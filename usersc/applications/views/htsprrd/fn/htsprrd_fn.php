@@ -48,7 +48,7 @@
             success: function ( json ) {
                 nama_os = json.data.rs_kmj.nama_os;
                 
-                if (nama_os == "KMJ") {
+                if (nama_os == "KMJ" && cek == 1) {
 				    tblhtsprrd.button('btnPresensiOK:name').enable();
                 } else {
 				    tblhtsprrd.button('btnPresensiOK:name').disable();
