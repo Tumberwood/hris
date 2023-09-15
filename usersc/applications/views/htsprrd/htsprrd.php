@@ -128,14 +128,14 @@
 								<th></th>
 								<th></th>
 								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
 								<th>Total</th>
+								<th id="s_makan"></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
 								
 								<th id="s_lb"></th>
 								<th id="s_aw"></th>
@@ -329,17 +329,14 @@
 						data: "htsprrd.shift_out" ,
 						visible: false
 					},
-					{ data: "htsprrd.st_jadwal" },
-
+					{ data: "htsprrd.st_jadwal" }, //8
 					{ data: "htsprrd.clock_in" },
 					{ data: "htsprrd.clock_out" },
 					{ data: "htsprrd.st_clock_in" },
-					{ data: "htsprrd.st_clock_out" },
-
+					{ data: "htsprrd.st_clock_out" },//12
 					{ data: "htsprrd.status_presensi_in" },
 					{ data: "htsprrd.status_presensi_out" },
-
-					{ data: "htsprrd.htlxxrh_kode" },
+					{ data: "htsprrd.htlxxrh_kode" }, //15
 					{ 
 						data: "htsprrd.pot_jam",
 						render: function (data){
@@ -355,20 +352,19 @@
 						data: "htsprrd.is_makan",
 						render: function (data){
 							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
+								return data;
 							}else {
 								return '';
 							}
 						},
 						class: "text-right"
-					},
-
-					{ data: "htsprrd.jam_awal_lembur_libur" },
+					}, //17
+					{ data: "htsprrd.jam_awal_lembur_libur" },//18
 					{ data: "htsprrd.jam_akhir_lembur_libur" },
 					{ data: "htsprrd.jam_awal_lembur_awal" },
 					{ data: "htsprrd.jam_akhir_lembur_awal" },
 					{ data: "htsprrd.jam_awal_lembur_akhir" },
-					{ data: "htsprrd.jam_akhir_lembur_akhir" },
+					{ data: "htsprrd.jam_akhir_lembur_akhir" }, //23
 					{ 
 						data: "htsprrd.durasi_lembur_libur",
 						render: function (data){
@@ -379,7 +375,7 @@
 							}
 						},
 						class: "text-right"
-					},
+					}, //24
 					{ 
 						data: "htsprrd.durasi_lembur_awal" ,
 						render: function (data){
@@ -445,7 +441,7 @@
 							}
 						},
 						class: "text-right"
-					}
+					} //30
 					
 				],
 				buttons: [	
@@ -589,14 +585,16 @@
 					var api       = this.api(), data;
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					
+					s_makan = api.column( 17 ).data().sum();
 					s_lb = api.column( 24 ).data().sum();
 					s_aw = api.column( 25 ).data().sum();
 					s_ak = api.column( 26 ).data().sum();
 					s_i1 = api.column( 27 ).data().sum();
 					s_i2 = api.column( 28 ).data().sum();
 					s_i3 = api.column( 29 ).data().sum();
-					s_tl = api.column( 23 ).data().sum();
+					s_tl = api.column( 30 ).data().sum();
 
+					$( '#s_makan' ).html( numFormat(s_makan) );
 					$( '#s_lb' ).html( numFormat(s_lb) );
 					$( '#s_aw' ).html( numFormat(s_aw) );
 					$( '#s_ak' ).html( numFormat(s_ak) );
