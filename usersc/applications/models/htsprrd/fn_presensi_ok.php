@@ -96,6 +96,8 @@ use
                 ->query('update', 'htsprrd')
                 ->set('htlxxrh_kode', $katerangan)
                 ->set('cek', 0)
+                ->set('status_presensi_in', "HK")
+                ->set('status_presensi_out', "HK")
                 ->where('id', $id_htsprrd)
             ->exec();
         }
