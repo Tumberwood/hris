@@ -90,13 +90,16 @@
         display: block;
         padding: 10px 15px;
         padding-right: 200px;
+        margin-left: 16px;
         text-decoration: none;
         color: rgb(167, 177, 194);
         background-color: rgb(47, 64, 80);
         margin-bottom: 5px;
+        margin-top: 4px;
         border-radius: 4px;
         white-space: nowrap; 
         font-size: 13px;
+        font-weight: 600;
         transition: background-color 0.3s, color 0.3s;
     }
 
@@ -169,11 +172,6 @@ $(document).ready(function () {
             $("#results").append($listItem);
         });
     }
-
-    $("#searchInput").on("input", function () {
-        var query = $(this).val();
-        updateSearchResults(query);
-    });
 
     $("#searchInput").on("input", function () {
         var query = $(this).val();

@@ -83,8 +83,9 @@
                                     DATE_FORMAT(DATE_ADD(CONCAT(a.tanggal, " ", :jam_awal), INTERVAL -1 HOUR), "%Y-%m-%d %H:%i:%s") AS tanggaljam_awal_t1,
                                     DATE_FORMAT(
                                         CASE
-                                            WHEN (TIME(:jam_akhir) >= "22:00:00" AND TIME(:jam_akhir) <= "23:59:59")
-                                                OR (TIME(:jam_akhir) >= "00:00:00" AND TIME(:jam_akhir) <= "12:00:00" AND b.kode LIKE "malam%")
+                                            WHEN (TIME(:jam_akhir) >= "19:00:00" AND TIME(:jam_akhir) <= "23:59:59")
+                                                OR (TIME(:jam_akhir) >= "00:00:00" AND TIME(:jam_akhir) <= "12:00:00" AND b.kode LIKE "malam%"
+                                                OR :jam_awal > :jam_akhir )
                                             THEN DATE_ADD(CONCAT(DATE_ADD(a.tanggal, INTERVAL 1 DAY), " ", TIME(:jam_akhir)), INTERVAL 2 HOUR)
                                             ELSE DATE_ADD(CONCAT(a.tanggal, " ", :jam_akhir), INTERVAL 2 HOUR)
                                         END,
