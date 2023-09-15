@@ -45,7 +45,7 @@
         ->where( function ( $q ) use ($tanggal) {
             $q
               ->where( 'hemjbmh.tanggal_keluar', null)
-              ->or_where( 'hemjbmh.tanggal_keluar', $tanggal , '<' );
+              ->or_where( 'hemjbmh.tanggal_keluar', $tanggal , '>' ); //revisi dari < menjadi >
         } )
         ->where('hemjbmh.tanggal_masuk', $tanggal, '<=' )
         ->where('hemxxmh.is_active', 1 )
