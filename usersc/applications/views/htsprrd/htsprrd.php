@@ -538,6 +538,33 @@
 								}
 							});
 						}
+					},
+					{ 
+						text: '<i class="fa fa-exchange" aria-hidden="true"></i>',  
+						name: 'btnPresensiOK',
+						className: 'btn btn-primary',
+						titleAttr: 'Presensi OK',
+						action: function ( e, dt, node, config ) {
+							$.ajax( {
+								url: '../../models/htsprrd/fn_presensi_ok.php',
+								dataType: 'json',
+								type: 'POST',
+								data: {
+									id_htsprrd: id_htsprrd,
+									id_hemxxmh_select: id_hemxxmh_select,
+									tanggal: tanggal,
+									htlxxrh_kode: htlxxrh_kode,
+								},
+								success: function ( json ) {
+									$.notify({
+										message: json.message
+									},{
+										type: json.type_message
+									});
+									tblhtsprrd.ajax.reload(null,false);
+								}
+							});
+						}
 					}
 				],
 				rowCallback: function( row, data, index ) {
@@ -572,6 +599,7 @@
 			} );
 			tblhtsprrd.button('btnSetApprovePresensi:name').disable();
 			tblhtsprrd.button('btncekNol:name').disable();
+			tblhtsprrd.button('btnPresensiOK:name').disable();
 
 			tblhtsprrd.searchPanes.container().appendTo( '#searchPanes1' );
 
@@ -580,17 +608,23 @@
 				id_htsprrd      = htsprrd_data.id;
 				status_presensi_in      = htsprrd_data.status_presensi_in;
 				status_presensi_out      = htsprrd_data.status_presensi_out;
+				id_hemxxmh_select      = htsprrd_data.id_hemxxmh;
+				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
+				tanggal      = htsprrd_data.tanggal;
 
 				if (status_presensi_in == "AL" && status_presensi_out == "AL") {
 					tblhtsprrd.button('btncekNol:name').enable();
 				} else {
 					tblhtsprrd.button('btncekNol:name').disable();
 				}
-				console.log(htsprrd_data.status_presensi_in);
+
+				cariKMJ();
+				// console.log(htsprrd_data.status_presensi_in);
 			} );
 			
 			tblhtsprrd.on( 'deselect', function () {
 				tblhtsprrd.button('btncekNol:name').disable();
+				tblhtsprrd.button('btnPresensiOK:name').disable();
 			} );
 				
 			$("#frmhtsprrd").submit(function(e) {

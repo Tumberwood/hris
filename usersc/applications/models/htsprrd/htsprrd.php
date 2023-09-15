@@ -32,6 +32,7 @@
 				} ),
 			Field::inst( 'htsprrd.keterangan' ),
 			Field::inst( 'htsprrd.is_active' ),
+			Field::inst( 'htsprrd.id_hemxxmh' ),
 			Field::inst( 'htsprrd.created_by' )
 				->set( Field::SET_CREATE )
 				->setValue($_SESSION['user']),

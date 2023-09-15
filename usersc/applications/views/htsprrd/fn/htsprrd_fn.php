@@ -35,4 +35,25 @@
             }
         } );
     };
+    function cariKMJ(){
+
+        $.ajax( {
+            url: "../../models/htsprrd/fn_cari_os_kmj.php",
+            dataType: 'json',
+            type: 'POST',
+            async: false,
+            data: {
+                id_hemxxmh_select: id_hemxxmh_select
+            },
+            success: function ( json ) {
+                nama_os = json.data.rs_kmj.nama_os;
+                
+                if (nama_os == "KMJ") {
+				    tblhtsprrd.button('btnPresensiOK:name').enable();
+                } else {
+				    tblhtsprrd.button('btnPresensiOK:name').disable();
+                }
+            }
+        } );
+    };
 </script>
