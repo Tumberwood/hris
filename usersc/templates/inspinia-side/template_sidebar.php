@@ -11,7 +11,21 @@
         $main_nav_all = $db->query("SELECT * FROM menus WHERE menu_title='side' AND parent = ". $parent_id .  " ORDER BY display_order");
         $main_nav = $main_nav_all->results(true);
         $menu = '';
-    
+        
+        // foreach ($main_nav as $value){
+        //     $authorizedGroups = array();
+        //     foreach (fetchGroupsByMenu($value['id']) as $g) {
+        //         $authorizedGroups[] = $g->group_id;
+        //     }
+        
+        //     if ((hasPerm($authorizedGroups, $_SESSION['user']) || in_array(0, $authorizedGroups)) && $value['logged_in'] == 1) {
+        //         echo '<a class="menu-item" href="/' . $genpath . $value['link'] . '">' . $value['label'] . '</a>';
+        
+        //         if ($value['dropdown'] == 1) {
+        //             echo '<ul class="nav nav-second-level collapse">' . get_menu_tree($value['id']) . '</ul>';
+        //         }
+        //     }
+        // }
         foreach ($main_nav as $value){
         
             $authorizedGroups = array();
@@ -24,7 +38,7 @@
                 $hasicon = '<span class='. $value['icon_class'] . '</span>';
                 $hascaret = '<span class="caret"></span>';
                 
-                $menu .= '<li><a href="/'.$genpath. $value['link'] . '"><i class="' . $value['icon_class'] . '"></i><span class="nav-label">' . $value['label'];
+                $menu .= '<li class= "non-search"><a href="/'.$genpath. $value['link'] . '"><i class="' . $value['icon_class'] . '"></i><span class="nav-label">' . $value['label'];
 
                 if($value['dropdown'] == 1){
                     $menu .= '</span><span class="fa arrow"></span></a>';
@@ -36,7 +50,62 @@
     
         return $menu;
     }
+
+    function menus_search() {
+        $db = DB::getInstance();
+    
+        $qs_ggsxxsh = "SELECT genpath FROM ggsxxsh WHERE is_active=1";
+        $query_ggsxxsh = $db->query($qs_ggsxxsh);
+        $result_ggsxxsh = $query_ggsxxsh->results();
+        $genpath = $result_ggsxxsh[0]->genpath;
+    
+        $main_nav_all = $db->query("SELECT * FROM menus WHERE menu_title='side' AND link != '#' ORDER BY display_order");
+        $main_nav = $main_nav_all->results(true);
+    
+        $menu_data = array();
+    
+        foreach ($main_nav as $value) {
+    
+            $authorizedGroups = array();
+            foreach (fetchGroupsByMenu($value['id']) as $g) {
+                $authorizedGroups[] = $g->group_id;
+            }
+    
+            if ((hasPerm($authorizedGroups, $_SESSION['user']) || in_array(0, $authorizedGroups)) && $value['logged_in'] == 1) {
+                
+                $value['link'] = '/' . $genpath . $value['link'];
+    
+                
+                $menu_data[] = $value;
+            }
+        }
+    
+        return $menu_data;
+    }
+    $menu_data = menus_search();
+    
 ?>
+<style>
+    .menu-item {
+        display: block;
+        padding: 10px 15px;
+        padding-right: 200px;
+        text-decoration: none;
+        color: rgb(167, 177, 194);
+        background-color: rgb(47, 64, 80);
+        margin-bottom: 5px;
+        border-radius: 4px;
+        white-space: nowrap; 
+        font-size: 13px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .menu-item:hover {
+        color: white; 
+        background-color: rgb(41, 56, 70); 
+    }
+
+</style>
 
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse" id="main_nav">
@@ -57,15 +126,15 @@
                     </ul>
                 </div>
             </li>
+            <li class="nav-item">
+                <input class="form-control mr-sm-2" type="search" id="searchInput" placeholder="Search">
+            </li>
+            <ul id="results" class="list-group">
+                <!-- Search results disini -->
+            </ul>
 
             <?php echo get_menu_tree(-1); ?>
-            
-            <?php
-            /**
-             * bagian bawah ini seharusnya tidak ada
-             * tetapi jika dihilangkankan, toogle side bar nya jadi ke tengah
-             */
-            ?>
+           
             <li>
                 <a href="#"><span class="nav-label"></span>Version 2.4.0</a>
             </li>
@@ -73,3 +142,43 @@
 
     </div>
 </nav>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    var menuData = <?php echo json_encode($menu_data); ?>;
+    
+    function updateSearchResults(query) {
+        if (query.trim() === "") {
+            $(".non-search").show();
+        } else {
+            $(".non-search").hide();
+        }
+
+        $("#results").empty();
+
+        var filteredData = menuData.filter(function (item) {
+            return (
+                query.trim() !== "" &&
+                item.label.toLowerCase().includes(query.toLowerCase())
+            );
+        });
+
+        filteredData.forEach(function (item) {
+            var $listItem = $("<a class='menu-item' href='" + item.link + "'>" + item.label + "</a>");
+            $("#results").append($listItem);
+        });
+    }
+
+    $("#searchInput").on("input", function () {
+        var query = $(this).val();
+        updateSearchResults(query);
+    });
+
+    $("#searchInput").on("input", function () {
+        var query = $(this).val();
+        updateSearchResults(query);
+    });
+
+});
+</script>

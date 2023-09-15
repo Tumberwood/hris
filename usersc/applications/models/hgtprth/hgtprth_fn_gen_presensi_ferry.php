@@ -947,8 +947,8 @@
                             ] )
                             ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
                             ->where('htsprtd.nama', 'makan' )
-                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal, '>=' )
-                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir, '<=' )
+                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_t1, '>=' )
+                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t2, '<=' )
                             ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
                             ->exec();
                         $rs_htsprtd_makan = $qs_htsprtd_makan->fetch();
