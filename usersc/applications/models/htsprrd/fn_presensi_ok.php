@@ -22,8 +22,8 @@ use
 
         $kode = array();
         $flag = 0;
-        //SELECT REPLACEMENT
-        $qs_htsrptd = $db
+        //SELECT REPLACEMENT pengaju
+        $qs_htsrptd_pengaju = $db
             ->query('select', 'htsrptd' )
             ->get(['concat(hemxxmh.kode, " - ", hemxxmh.nama) as nama'] )
             ->join('hemxxmh','hemxxmh.id = htsrptd.id_hemxxmh_pengganti','LEFT' ) //pengganti
@@ -31,15 +31,31 @@ use
             ->where('htsrptd.is_approve', 1 )
             ->where('htsrptd.id_hemxxmh_pengaju', $id_hemxxmh_select ) //peg sekarang = pengaju
         ->exec();
-        $rs_htsrptd = $qs_htsrptd->fetch();
+        $rs_htsrptd_pengaju = $qs_htsrptd_pengaju->fetch();
         // print_r($rs_htsrptd['nama']);
-        if (!empty($rs_htsrptd)) {
-            $kode[] = "Replacement [" . $rs_htsrptd['nama'] . "]";
+        if (!empty($rs_htsrptd_pengaju)) {
+            $kode[] = "Replacement [" . $rs_htsrptd_pengaju['nama'] . "]";
             $flag = 1;
         }
 
-        //SELECT Tukar Jadwal
-        $qs_htscctd = $db
+        //SELECT REPLACEMENT pengganti
+        $qs_htsrptd_pengganti = $db
+            ->query('select', 'htsrptd' )
+            ->get(['concat(hemxxmh.kode, " - ", hemxxmh.nama) as nama'] )
+            ->join('hemxxmh','hemxxmh.id = htsrptd.id_hemxxmh_pengaju','LEFT' ) //pengganti
+            ->where('htsrptd.tanggal', $tanggal )
+            ->where('htsrptd.is_approve', 1 )
+            ->where('htsrptd.id_hemxxmh_pengganti', $id_hemxxmh_select ) //peg sekarang = pengaju
+        ->exec();
+        $rs_htsrptd_pengganti = $qs_htsrptd_pengganti->fetch();
+        // print_r($rs_htsrptd_pengganti['nama']);
+        if (!empty($rs_htsrptd_pengganti)) {
+            $kode[] = "Replacement [" . $rs_htsrptd_pengganti['nama'] . "]";
+            $flag = 1;
+        }
+
+        //SELECT Tukar Jadwal pengaju
+        $qs_htscctd_pengaju = $db
             ->query('select', 'htscctd' )
             ->get(['concat(hemxxmh.kode, " - ", hemxxmh.nama) as nama'] )
             ->join('hemxxmh','hemxxmh.id = htscctd.id_hemxxmh_pengganti','LEFT' )//pengganti
@@ -47,10 +63,26 @@ use
             ->where('htscctd.is_approve', 1 )
             ->where('htscctd.id_hemxxmh_pengaju', $id_hemxxmh_select )//peg sekarang = pengaju
         ->exec();
-        $rs_htscctd = $qs_htscctd->fetch();
+        $rs_htscctd_pengaju = $qs_htscctd_pengaju->fetch();
         
-        if (!empty($rs_htscctd)) {
-            $kode[] = "Replacement [" . $rs_htscctd['nama'] . "]";
+        if (!empty($rs_htscctd_pengaju)) {
+            $kode[] = "Replacement [" . $rs_htscctd_pengaju['nama'] . "]";
+            $flag = 1;
+        }
+
+        //SELECT Tukar Jadwal pengganti
+        $qs_htscctd_pengganti = $db
+            ->query('select', 'htscctd' )
+            ->get(['concat(hemxxmh.kode, " - ", hemxxmh.nama) as nama'] )
+            ->join('hemxxmh','hemxxmh.id = htscctd.id_hemxxmh_pengaju','LEFT' )//pengganti
+            ->where('htscctd.tanggal', $tanggal )
+            ->where('htscctd.is_approve', 1 )
+            ->where('htscctd.id_hemxxmh_pengganti', $id_hemxxmh_select )//peg sekarang = pengaju
+        ->exec();
+        $rs_htscctd_pengganti = $qs_htscctd_pengganti->fetch();
+        
+        if (!empty($rs_htscctd_pengganti)) {
+            $kode[] = "Replacement [" . $rs_htscctd_pengganti['nama'] . "]";
             $flag = 1;
         }
 
