@@ -127,8 +127,8 @@
 								<th></th>
 								<th></th>
 								<th></th>
-								<th></th>
 								<th>Total</th>
+								<th id="s_pot_jam"></th>
 								<th id="s_makan"></th>
 								<th></th>
 								<th></th>
@@ -585,6 +585,7 @@
 					var api       = this.api(), data;
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					
+					s_pot_jam = api.column( 16 ).data().sum();
 					s_makan = api.column( 17 ).data().sum();
 					s_lb = api.column( 24 ).data().sum();
 					s_aw = api.column( 25 ).data().sum();
@@ -594,6 +595,7 @@
 					s_i3 = api.column( 29 ).data().sum();
 					s_tl = api.column( 30 ).data().sum();
 
+					$( '#s_pot_jam' ).html( numFormat(s_pot_jam) );
 					$( '#s_makan' ).html( numFormat(s_makan) );
 					$( '#s_lb' ).html( numFormat(s_lb) );
 					$( '#s_aw' ).html( numFormat(s_aw) );
