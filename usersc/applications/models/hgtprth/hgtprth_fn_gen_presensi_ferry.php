@@ -377,6 +377,12 @@
                                 }
                                 
                             }
+                            //TAMBAHAN CEK 18 SEP
+                            if ($st_clock_in == "No CI" && $status_presensi_in != "HK") {
+                                $cek = 1;
+                            } else {
+                               $cek = 0; 
+                            }
 
                             $qs_htlxxrh_dinas_out = $db
                                 ->query('select', 'htlxxrh' )
@@ -446,6 +452,12 @@
                                     $status_presensi_out = "HK";
                                     $cek = 0;
                                 }
+                            }
+
+                            if ($st_clock_out == "No CO" && $status_presensi_out != "HK") {
+                                $cek = 1;
+                            } else {
+                               $cek = 0; 
                             }
 
                             // BEGIN cek izin ditengah jam kerja DENGAN POTONGAN
