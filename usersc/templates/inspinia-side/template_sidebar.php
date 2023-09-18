@@ -109,7 +109,7 @@
     }
 
     #searchInput {
-        border-radius: 10px; 
+        border-radius: 5px; 
         width: 200px; 
         margin-left: 7px;
     }
