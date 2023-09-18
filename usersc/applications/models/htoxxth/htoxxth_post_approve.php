@@ -133,7 +133,7 @@
                     $rs_hasil_awal_akhir = $qs_hasil_awal_akhir->fetch();
 
                 //JIKA LEMBUR AWAL DAN ISTIRAHAT BUKAN TI MAKA UPDATE AWAL T1
-                if ($row_htoemtd['id_htotpmh'] == 1 && $row_htoemtd['is_istirahat'] != 2) {
+                if ($row_htoemtd['id_htotpmh'] == 1) {
                     $qu_jadwal = $db
                         ->query('update', 'htssctd')
                         ->set('tanggaljam_awal_t1',$rs_hasil_awal_akhir['tanggaljam_awal_t1'])
@@ -143,7 +143,7 @@
                 }
 
                 //JIKA LEMBUR AKHIR DAN ISTIRAHAT BUKAN TI MAKA UPDATE AKHIR T2
-                if ($row_htoemtd['id_htotpmh'] == 2 && $row_htoemtd['is_istirahat'] != 2) {
+                if ($row_htoemtd['id_htotpmh'] == 2) {
                     $qu_jadwal = $db
                         ->query('update', 'htssctd')
                         ->set('tanggaljam_akhir_t2',$rs_hasil_awal_akhir['tanggaljam_akhir_t2'])
@@ -153,7 +153,7 @@
                 }
 
                 //JIKA LEMBUR HARI LIBUR DAN ISTIRAHAT BUKAN TI MAKA UDATE KEDUANYA
-                if ($row_htoemtd['id_htotpmh'] == 4 && $row_htoemtd['is_istirahat'] != 2) {
+                if ($row_htoemtd['id_htotpmh'] == 4) {
                     $qu_jadwal = $db
                         ->query('update', 'htssctd')
                         ->set('tanggaljam_awal_t1',$rs_hasil_awal_akhir['tanggaljam_awal_t1'])

@@ -637,13 +637,13 @@
 						type: "readonly"
 					},	
 					{
-						label: "Jam Mulai",
+						label: "Jam Mulai <sup class='text-danger'>*<sup>",
 						name: "htoemtd.jam_awal",
 						type: "datetime",
 						format: 'HH:mm'
 					},	
 					{
-						label: "Jam Selesai",
+						label: "Jam Selesai <sup class='text-danger'>*<sup>",
 						name: "htoemtd.jam_akhir",
 						type: "datetime",
 						format: 'HH:mm'
