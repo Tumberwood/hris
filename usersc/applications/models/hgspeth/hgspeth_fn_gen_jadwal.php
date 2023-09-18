@@ -174,7 +174,8 @@
     $temp_tanggaljam_awal_t2 = new Carbon( $tanggal_ymd . ' ' . $rs_htststd['jam_awal'] );
     $tanggaljam_awal_t2 = $temp_tanggaljam_awal_t2->addMinutes($rs_htststd['menit_toleransi_akhir_in'])->format('Y-m-d H:i:s');
     
-    if( $rs_htststd['jam_awal'] < $rs_htststd['jam_akhir']){
+    //DITAMBAHKAN SHIFT OFF TIDAK PERLU ADD 1 DAYS BARIS 177 SAMPAI 191
+    if( $rs_htststd['jam_awal'] < $rs_htststd['jam_akhir'] || $rs_htststd['id_htsxxmh'] == 1){
         $temp_tanggaljam_akhir    = new Carbon( $tanggal_ymd . ' ' . $rs_htststd['jam_akhir'] );
     }else{
         $temp_tanggaljam_akhir    = new Carbon( $tanggal_ymd . ' ' . $rs_htststd['jam_akhir'] );
@@ -187,7 +188,7 @@
     
     // resetting $temp_tanggaljam_akhir
     // agak aneh, harusnya tidak perlu sih
-    if( $rs_htststd['jam_awal'] < $rs_htststd['jam_akhir']){
+    if( $rs_htststd['jam_awal'] < $rs_htststd['jam_akhir'] || $rs_htststd['id_htsxxmh'] == 1){
         $temp_tanggaljam_akhir    = new Carbon( $tanggal_ymd . ' ' . $rs_htststd['jam_akhir'] );
     }else{
         $temp_tanggaljam_akhir    = new Carbon( $tanggal_ymd . ' ' . $rs_htststd['jam_akhir'] );
