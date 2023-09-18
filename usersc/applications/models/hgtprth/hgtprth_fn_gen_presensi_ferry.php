@@ -946,7 +946,7 @@
                                 'id'
                             ] )
                             ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
-                            ->where('htsprtd.nama', 'makan' )
+                            ->where('htsprtd.nama', '("makan", "makan manual")', 'IN', false ) // tambah makan manual
                             ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_t1, '>=' )
                             ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t2, '<=' )
                             ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
