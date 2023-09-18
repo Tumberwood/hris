@@ -335,12 +335,13 @@
                                     if($izin_dinas_in['is_approve'] == 1){
                                         $kode_izin[] = $izin_dinas_in['htlxxmh_kode'] . " [" . $izin_dinas_in['htlxxrh_kode'] . "]"; //tamnbahkan kode dokumen
 
-                                        $status_presensi_in = $izin_dinas_in['htlxxmh_kode']; //KODE IZIN TL / DLW
-
+                                        $status_presensi_in = "HK";
                                         $cek = 0;
                                         //KALAU ADA SURAT IZIN TERLAMBAT MAKA BARU DILAKUKAN POTONGAN JAM
                                         if ($izin_dinas_in['is_potong_gaji'] == 1) { //DIGANTI IS POTONG GAJI
                                             $is_late_pot = 1;
+                                            $status_presensi_in = $izin_dinas_in['htlxxmh_kode']; //KODE IZIN TL / DLW
+    
                                         }
                                     }else{
                                         // if ($status_presensi_in != "HK" && $st_clock_in != "OK") {
@@ -398,12 +399,13 @@
                                     if($izin_dinas_out['is_approve'] == 1){
                                         $kode_izin[] = $izin_dinas_out['htlxxmh_kode'] . " [" . $izin_dinas_out['htlxxrh_kode'] . "]";
                                         
-                                        $status_presensi_out = $izin_dinas_out['htlxxmh_kode'];
+                                        $status_presensi_out = "HK";
                                         
                                         $cek = 0;
                                         //KALAU ADA SURAT IZIN PULANG AWAL (BUKAN DINAS) MAKA BARU DILAKUKAN POTONGAN JAM
                                         if ($izin_dinas_out['is_potong_gaji'] == 1) { //IS POTONG GAJI
                                             $is_early_pot = 1;
+                                            $status_presensi_out = $izin_dinas_out['htlxxmh_kode'];
                                         }
                                     }else{
                                         $status_presensi_out = 'Izin Belum Disetujui';
