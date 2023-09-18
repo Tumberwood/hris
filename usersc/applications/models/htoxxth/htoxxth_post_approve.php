@@ -83,7 +83,7 @@
                                     DATE_FORMAT(DATE_ADD(CONCAT(a.tanggal, " ", :jam_awal), INTERVAL -1 HOUR), "%Y-%m-%d %H:%i:%s") AS tanggaljam_awal_t1,
                                     DATE_FORMAT(
                                         CASE
-                                            WHEN (TIME(:jam_awal) >= "19:00:00" AND TIME(:jam_awal) <= "23:59:59")
+                                            WHEN (TIME(:jam_awal) >= "23:59:59" AND TIME(:jam_awal) <= "24:00:00")
                                                 OR (TIME(:jam_awal) >= "00:00:00" AND TIME(:jam_awal) <= "12:00:00" AND b.kode LIKE "malam%"
                                                 OR :jam_awal > :jam_awal )
                                             THEN CONCAT(DATE_ADD(a.tanggal, INTERVAL 1 DAY), " ", TIME(:jam_awal))
@@ -93,7 +93,7 @@
                                     ) AS tanggaljam_awal,
                                     DATE_FORMAT(
                                         CASE
-                                            WHEN (TIME(:jam_awal) >= "19:00:00" AND TIME(:jam_awal) <= "23:59:59")
+                                            WHEN (TIME(:jam_awal) >= "23:59:59" AND TIME(:jam_awal) <= "24:00:00")
                                                 OR (TIME(:jam_awal) >= "00:00:00" AND TIME(:jam_awal) <= "12:00:00" AND b.kode LIKE "malam%"
                                                 OR :jam_awal > :jam_awal )
                                             THEN DATE_ADD(CONCAT(DATE_ADD(a.tanggal, INTERVAL 1 DAY), " ", TIME(:jam_awal)), INTERVAL 1 HOUR)
