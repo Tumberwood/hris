@@ -83,11 +83,43 @@
                                     DATE_FORMAT(DATE_ADD(CONCAT(a.tanggal, " ", :jam_awal), INTERVAL -1 HOUR), "%Y-%m-%d %H:%i:%s") AS tanggaljam_awal_t1,
                                     DATE_FORMAT(
                                         CASE
+                                            WHEN (TIME(:jam_awal) >= "19:00:00" AND TIME(:jam_awal) <= "23:59:59")
+                                                OR (TIME(:jam_awal) >= "00:00:00" AND TIME(:jam_awal) <= "12:00:00" AND b.kode LIKE "malam%"
+                                                OR :jam_awal > :jam_awal )
+                                            THEN CONCAT(DATE_ADD(a.tanggal, INTERVAL 1 DAY), " ", TIME(:jam_awal))
+                                            ELSE CONCAT(a.tanggal, " ", :jam_awal)
+                                        END,
+                                        "%Y-%m-%d %H:%i:%s"
+                                    ) AS tanggaljam_awal,
+                                    DATE_FORMAT(
+                                        CASE
+                                            WHEN (TIME(:jam_awal) >= "19:00:00" AND TIME(:jam_awal) <= "23:59:59")
+                                                OR (TIME(:jam_awal) >= "00:00:00" AND TIME(:jam_awal) <= "12:00:00" AND b.kode LIKE "malam%"
+                                                OR :jam_awal > :jam_awal )
+                                            THEN DATE_ADD(CONCAT(DATE_ADD(a.tanggal, INTERVAL 1 DAY), " ", TIME(:jam_awal)), INTERVAL 1 HOUR)
+                                            ELSE DATE_ADD(CONCAT(a.tanggal, " ", :jam_awal), INTERVAL 1 HOUR)
+                                        END,
+                                        "%Y-%m-%d %H:%i:%s"
+                                    ) AS tanggaljam_awal_t2,
+
+                                    DATE_FORMAT(DATE_ADD(CONCAT(a.tanggal, " ", :jam_akhir), INTERVAL -2 HOUR), "%Y-%m-%d %H:%i:%s") AS tanggaljam_akhir_t1,
+                                    DATE_FORMAT(
+                                        CASE
                                             WHEN (TIME(:jam_akhir) >= "19:00:00" AND TIME(:jam_akhir) <= "23:59:59")
                                                 OR (TIME(:jam_akhir) >= "00:00:00" AND TIME(:jam_akhir) <= "12:00:00" AND b.kode LIKE "malam%"
                                                 OR :jam_awal > :jam_akhir )
-                                            THEN DATE_ADD(CONCAT(DATE_ADD(a.tanggal, INTERVAL 1 DAY), " ", TIME(:jam_akhir)), INTERVAL 1 HOUR)
-                                            ELSE DATE_ADD(CONCAT(a.tanggal, " ", :jam_akhir), INTERVAL 1 HOUR)
+                                            THEN CONCAT(DATE_ADD(a.tanggal, INTERVAL 1 DAY), " ", TIME(:jam_akhir))
+                                            ELSE CONCAT(a.tanggal, " ", :jam_akhir)
+                                        END,
+                                        "%Y-%m-%d %H:%i:%s"
+                                    ) AS tanggaljam_akhir,
+                                    DATE_FORMAT(
+                                        CASE
+                                            WHEN (TIME(:jam_akhir) >= "19:00:00" AND TIME(:jam_akhir) <= "23:59:59")
+                                                OR (TIME(:jam_akhir) >= "00:00:00" AND TIME(:jam_akhir) <= "12:00:00" AND b.kode LIKE "malam%"
+                                                OR :jam_awal > :jam_akhir )
+                                            THEN DATE_ADD(CONCAT(DATE_ADD(a.tanggal, INTERVAL 1 DAY), " ", TIME(:jam_akhir)), INTERVAL 2 HOUR)
+                                            ELSE DATE_ADD(CONCAT(a.tanggal, " ", :jam_akhir), INTERVAL 2 HOUR)
                                         END,
                                         "%Y-%m-%d %H:%i:%s"
                                     ) AS tanggaljam_akhir_t2
@@ -125,6 +157,10 @@
                     $qu_jadwal = $db
                         ->query('update', 'htssctd')
                         ->set('tanggaljam_awal_t1',$rs_hasil_awal_akhir['tanggaljam_awal_t1'])
+                        ->set('tanggaljam_awal',$rs_hasil_awal_akhir['tanggaljam_awal'])
+                        ->set('tanggaljam_awal_t2',$rs_hasil_awal_akhir['tanggaljam_awal_t2'])
+                        ->set('tanggaljam_akhir_t1',$rs_hasil_awal_akhir['tanggaljam_akhir_t1'])
+                        ->set('tanggaljam_akhir',$rs_hasil_awal_akhir['tanggaljam_akhir'])
                         ->set('tanggaljam_akhir_t2',$rs_hasil_awal_akhir['tanggaljam_akhir_t2'])
                         ->where('id_hemxxmh',$row_htoemtd['id_hemxxmh'])
                         ->where('tanggal',$row_htoemtd['tanggal'])

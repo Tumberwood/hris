@@ -108,6 +108,12 @@
         background-color: rgb(41, 56, 70); 
     }
 
+    #searchInput {
+        border-radius: 10px; 
+        width: 200px; 
+        margin-left: 7px;
+    }
+
 </style>
 
 <nav class="navbar-default navbar-static-side" role="navigation">
