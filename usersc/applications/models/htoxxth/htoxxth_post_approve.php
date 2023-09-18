@@ -111,7 +111,7 @@
                                             ELSE DATE_ADD(CONCAT(a.tanggal, " ", :jam_akhir), INTERVAL -2 HOUR)
                                         END,
                                         "%Y-%m-%d %H:%i:%s"
-                                    ) AS tanggaljam_akhir_t1
+                                    ) AS tanggaljam_akhir_t1,
                                     DATE_FORMAT(
                                         CASE
                                             WHEN (TIME(:jam_akhir) >= "23:59:59" AND TIME(:jam_akhir) <= "24:00:00")
