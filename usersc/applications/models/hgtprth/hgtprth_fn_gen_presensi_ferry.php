@@ -653,6 +653,21 @@
 
                         if(!empty($rs_htoxxrd)){    
                             // BEGIN looping lemburnya apa saja
+                            $jam_awal_lembur_awal     = null;
+                            $jam_akhir_lembur_awal    = null;
+                            $durasi_lembur_awal_jam   = null;
+                            $durasi_lembur_awal_menit = null;
+                            
+                            $jam_awal_lembur_akhir     = null;
+                            $jam_akhir_lembur_akhir    = null;
+                            $durasi_lembur_akhir_jam   = null;
+                            $durasi_lembur_akhir_menit = null;
+                            
+                            $jam_awal_lembur_libur     = null;
+                            $jam_akhir_lembur_libur    = null;
+                            $durasi_lembur_libur_jam   = null;
+                            $durasi_lembur_libur_menit = null;
+                            
                             $jam_awal_lembur_istirahat1     = null;
                             $jam_akhir_lembur_istirahat1    = null;
                             $durasi_lembur_istirahat1_jam   = null;
