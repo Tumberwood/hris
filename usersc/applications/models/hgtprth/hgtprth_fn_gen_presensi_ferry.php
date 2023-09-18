@@ -650,6 +650,21 @@
 
                         if(!empty($rs_htoxxrd)){    
                             // BEGIN looping lemburnya apa saja
+                            $jam_awal_lembur_istirahat1     = null;
+                            $jam_akhir_lembur_istirahat1    = null;
+                            $durasi_lembur_istirahat1_jam   = null;
+                            $durasi_lembur_istirahat1_menit = null;
+
+                            $jam_awal_lembur_istirahat2     = null;
+                            $jam_akhir_lembur_istirahat2    = null;
+                            $durasi_lembur_istirahat2_jam   = null;
+                            $durasi_lembur_istirahat2_menit = null;
+
+                            $jam_awal_lembur_istirahat3     = null;
+                            $jam_akhir_lembur_istirahat3    = null;
+                            $durasi_lembur_istirahat3_jam   = null;
+                            $durasi_lembur_istirahat3_menit = null;
+
                             foreach ($rs_htoxxrd as $row_htoxxrd) {
                                 if($row_htoxxrd['id_htotpmh'] == 1){
                                     $jam_awal_lembur_awal 		= $row_htoxxrd['jam_awal'];
@@ -657,37 +672,50 @@
                                     $durasi_lembur_awal_jam         = $row_htoxxrd['durasi_lembur_jam'];
                                     $durasi_lembur_awal_menit   = $row_htoxxrd['durasi_lembur_menit'];
                                     
-                                }elseif($row_htoxxrd['id_htotpmh'] == 2){
+                                }
+                                if($row_htoxxrd['id_htotpmh'] == 2){
                                     $jam_awal_lembur_akhir 		= $row_htoxxrd['jam_awal'];
                                     $jam_akhir_lembur_akhir 	= $row_htoxxrd['jam_akhir'];
                                     $durasi_lembur_akhir_jam    = $row_htoxxrd['durasi_lembur_jam'];
                                     $durasi_lembur_akhir_menit  = $row_htoxxrd['durasi_lembur_menit'];
 
-                                }elseif($row_htoxxrd['id_htotpmh'] == 4){
+                                }
+                                
+                                if($row_htoxxrd['id_htotpmh'] == 4){
                                     $jam_awal_lembur_libur 		= $row_htoxxrd['jam_awal'];
                                     $jam_akhir_lembur_libur 	= $row_htoxxrd['jam_akhir'];
                                     $durasi_lembur_libur_jam    = $row_htoxxrd['durasi_lembur_jam'];
                                     $durasi_lembur_libur_menit  = $row_htoxxrd['durasi_lembur_menit'];
 
-                                }elseif($row_htoxxrd['id_htotpmh'] == 5){
+                                }
+                                
+                                if($row_htoxxrd['id_htotpmh'] == 5){
                                     $jam_awal_lembur_istirahat1     = $row_htoxxrd['jam_awal'];
                                     $jam_akhir_lembur_istirahat1    = $row_htoxxrd['jam_akhir'];
                                     $durasi_lembur_istirahat1_jam   = $row_htoxxrd['durasi_lembur_jam'];
                                     $durasi_lembur_istirahat1_menit = $row_htoxxrd['durasi_lembur_menit'];
                                                 
-                                }elseif($row_htoxxrd['id_htotpmh'] == 6){
+                                }
+                                
+                                if($row_htoxxrd['id_htotpmh'] == 6){
                                     $jam_awal_lembur_istirahat2     = $row_htoxxrd['jam_awal'];
                                     $jam_akhir_lembur_istirahat2    = $row_htoxxrd['jam_akhir'];
                                     $durasi_lembur_istirahat2_jam   = $row_htoxxrd['durasi_lembur_jam'];
                                     $durasi_lembur_istirahat2_menit = $row_htoxxrd['durasi_lembur_menit'];
 
-                                }elseif($row_htoxxrd['id_htotpmh'] == 7){
+                                }
+                                
+                                if($row_htoxxrd['id_htotpmh'] == 7){
                                     $jam_awal_lembur_istirahat3     = $row_htoxxrd['jam_awal'];
                                     $jam_akhir_lembur_istirahat3    = $row_htoxxrd['jam_akhir'];
                                     $durasi_lembur_istirahat3_jam   = $row_htoxxrd['durasi_lembur_jam'];
                                     $durasi_lembur_istirahat3_menit = $row_htoxxrd['durasi_lembur_menit'];
+                                    
                                 }
-
+                                // if ($row_hemxxmh['id_hemxxmh'] == 1183) {
+                                //     print_r($durasi_lembur_istirahat1_jam . '<br>');
+                                //     print_r($durasi_lembur_istirahat3_jam);
+                                // }
                                 if($row_htoxxrd['id_htotpmh'] == 5 > 0 || $row_htoxxrd['id_htotpmh'] == 6 > 0 || $row_htoxxrd['id_htotpmh'] == 7 > 0){
                                     // BEGIN validasi TI
                                     // Ambil data checkclock Istirahat yang ada dalam range tersebut ( $durasi_break_menit )
