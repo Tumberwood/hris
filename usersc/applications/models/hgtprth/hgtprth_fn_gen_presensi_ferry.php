@@ -89,6 +89,8 @@
         $nominal_lembur_final        = 0;
         $is_longshift = 0;
         $cek = 0;
+        $tanggal_jam_izin_awal = 0;
+        $tanggal_jam_izin_akhir = 0;
 
         //CEK JIKA ADA KARYAWAN AKTIF
         if (!empty($rs_hemxxmh)){
@@ -309,6 +311,7 @@
                                 ->get([
                                     'htlxxrh.id_htlxxmh as id_htlxxmh',
                                     'htlxxrh.kode as htlxxrh_kode',
+                                    'htlxxrh.jam_awal as jam_awal',
                                     'htlxxrh.htlxxmh_kode as htlxxmh_kode',
                                     'htpxxmh.is_potong_gaji as is_potong_gaji',
                                     'htlgrmh.kode as htlgrmh_kode',
@@ -352,9 +355,15 @@
                                     }
                                     //FLAG LATE UNTUK YANG TIDAK ADA IZIN, BUKAN DINAS (IZIN DENGAN POTONGAN) & IZIN/DINAS YANG BELUM DI APPROVE
                                     if ($is_late_pot == 1) {
+                                        if ($clock_in == null) {
+                                            $tanggal_jam_izin_awal = $tanggal . " " . $izin_dinas_in['jam_awal']; //kalau no CO maka diambil jam izin
+                                            $carbon_ci = new Carbon($clock_in);
+                                            $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_awal_toleransi);
+                                        } else {
+                                            $carbon_ci = new Carbon($clock_in);
+                                            $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_awal_toleransi);
+                                        }
                                         // hitung potongan jam late
-                                        $clock_in = new Carbon($clock_in);
-                                        $pot_jam_late_cek     = $clock_in->diffInMinutes($tanggaljam_awal_toleransi);
                                         $pot_jam_late   = ceil($pot_jam_late_cek/60);
                                     }
                                 }
@@ -374,6 +383,7 @@
                                 ->get([
                                     'htlxxrh.id_htlxxmh as id_htlxxmh',
                                     'htlxxrh.kode as htlxxrh_kode',
+                                    'htlxxrh.jam_akhir as jam_akhir',
                                     'htpxxmh.is_potong_gaji as is_potong_gaji',
                                     'htlxxrh.htlxxmh_kode as htlxxmh_kode',
                                     'htlgrmh.kode as htlgrmh_kode',
@@ -415,9 +425,16 @@
                                     }
                                     //FLAG EARLY UNTUK YANG TIDAK ADA IZIN, BUKAN DINAS (IZIN DENGAN POTONGAN) & IZIN/DINAS YANG BELUM DI APPROVE
                                     if ($is_early_pot == 1) {
+                                        if ($clock_out == null) {
+                                            $tanggal_jam_izin_akhir = $tanggal . " " . $izin_dinas_out['jam_akhir']; //kalau no CO maka diambil jam izin
+                                            $karbon_co = new Carbon($tanggal_jam_izin_akhir);
+                                            $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
+                                        } else {
+                                            $karbon_co = new Carbon($clock_out);
+                                            $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
+                                        }
+                                        
                                         // hitung potongan jam early
-                                        $clock_out = new Carbon($clock_out);
-                                        $pot_jam_early_cek     = $clock_out->diffInMinutes($tanggaljam_akhir);
                                         $pot_jam_early   = ceil($pot_jam_early_cek/60);
                                     }
                                 }
