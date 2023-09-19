@@ -1124,7 +1124,7 @@
                 }
             }
         }
-        $qu_ = $db
+        $qu_hgtprth = $db
             ->query('update', 'hgtprth')
             ->set('generated_on',$timestamp)
             ->where('id_heyxxmh',$id_heyxxmh)
