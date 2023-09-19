@@ -34,6 +34,14 @@
 				} ),
 			Field::inst( 'hgtprth.keterangan' ),
 			Field::inst( 'hgtprth.is_active' ),
+			Field::inst( 'hgtprth.generated_on' )
+			->getFormatter( function ( $val, $data, $opts ) {
+				if ($val === '0000-00-00 00:00:00' || $val === null){
+					echo '';
+				}else{
+					return date( 'd M Y h:i:s', strtotime( $val ) );
+				}
+			} ),
 			Field::inst( 'hgtprth.created_by' )
 				->set( Field::SET_CREATE )
 				->setValue($_SESSION['user']),

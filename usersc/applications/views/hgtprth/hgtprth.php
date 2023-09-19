@@ -33,6 +33,7 @@
                                 <th>Tanggal</th>
                                 <th>Jenis</th>
                                 <th>Keterangan</th>
+                                <th>Tanggal Jam Generate</th>
                                 <th>Approval</th>
                             </tr>
                         </thead>
@@ -239,6 +240,7 @@
 					{ data: "hgtprth.tanggal" },
 					{ data: "heyxxmh.nama" },
 					{ data: "hgtprth.keterangan" },
+					{ data: "hgtprth.generated_on" },
 					{ 
 						data: "v_hgtprth_htsprrd.is_approve",
 						render: function (data){
@@ -317,6 +319,8 @@
 						titleAttr: '',
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
+							var date = new Date().getTime();
+							var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
 
 							notifyprogress = $.notify({
 								message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
@@ -334,6 +338,7 @@
 								data: {
 									tanggal_select: tanggal_select,
 									id_heyxxmh_select: id_heyxxmh_select,
+									timestamp: timestamp
 								},
 								success: function ( json ) {
 
