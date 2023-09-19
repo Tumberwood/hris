@@ -16,37 +16,23 @@
     try{
         $db->transaction();
         
+        $qs_htssctd_tukarhari = $db
+            ->query('select', 'htssctd_tukarhari' )
+            ->get([
+                'tanggal_terpilih',
+                'keterangan',
+                'tanggal_pengganti'
+            ] )
+            ->where('id', $id_transaksi_h )
+        ->exec();
+
+        $rs_htssctd_tukarhari = $qs_htssctd_tukarhari->fetch();
+        $keterangan = $rs_htssctd_tukarhari['keterangan'];
+        $tanggal_terpilih = $rs_htssctd_tukarhari['tanggal_terpilih'];
+        $tanggal_pengganti = $rs_htssctd_tukarhari['tanggal_pengganti'];
+        
         //add by ferry, tambahkan state, karena sebelum ditambahkan if state == 1 meskipun cancel approve tapi tetap menginsert ke database
         if($state == 1) {
-            $qs_htssctd_tukarhari = $db
-                ->query('select', 'htssctd_tukarhari' )
-                ->get([
-                    'tanggal_terpilih',
-                    'keterangan',
-                    'tanggal_pengganti'
-                ] )
-                ->where('id', $id_transaksi_h )
-                ->exec();
-
-            $rs_htssctd_tukarhari = $qs_htssctd_tukarhari->fetch();
-            $keterangan = $rs_htssctd_tukarhari['keterangan'];
-            $tanggal_terpilih = $rs_htssctd_tukarhari['tanggal_terpilih'];
-            $tanggal_pengganti = $rs_htssctd_tukarhari['tanggal_pengganti'];
-
-            // $qs_htssctd_tukarhari_pegawai = $db
-            //     ->query('select', 'htssctd_tukarhari_pegawai' )
-            //     ->get(['id_hemxxmh'] )
-            //     ->where('id_htssctd_tukarhari', $id_transaksi_h )
-            //     ->exec();
-            // $rs_htssctd_tukarhari_pegawai = $qs_htssctd_tukarhari_pegawai->fetchAll();
-
-            // $pegawai_pengganti = array();
-            // foreach ($rs_htssctd_tukarhari_pegawai as $key => $peg) {
-            //     $pegawai_pengganti[] = $peg['id_hemxxmh'];
-            // }
-            // $w_id_hemxxmh = '(' . implode(',', $pegawai_pengganti) . ')';
-            // $s_id_hemxxmh = 'IN';
-
 
             // BEGIN non aktif
             $qd_terpilih = $db
@@ -151,7 +137,7 @@
                     FROM htssctd
                     WHERE 
                         tanggal = :tanggal_pengganti
-                        AND id_htsxxmh <> 1 AND is_active = 1
+                        AND is_active = 1
                 ');
             // END insert pengaju
 
@@ -245,41 +231,12 @@
                     FROM htssctd
                     WHERE 
                         tanggal = :tanggal_terpilih
-                    AND id_htsxxmh <> 1 AND is_active = 0
+                    AND is_active = 0
                 ');
             // END insert pengaju
 
             
         } else if($state == 2) {
-            $qs_htssctd_tukarhari = $db
-                ->query('select', 'htssctd_tukarhari' )
-                ->get([
-                    'tanggal_terpilih',
-                    'keterangan',
-                    'tanggal_pengganti'
-                ] )
-                ->where('id', $id_transaksi_h )
-                ->exec();
-
-            $rs_htssctd_tukarhari = $qs_htssctd_tukarhari->fetch();
-            $keterangan = $rs_htssctd_tukarhari['keterangan'];
-            $tanggal_terpilih = $rs_htssctd_tukarhari['tanggal_terpilih'];
-            $tanggal_pengganti = $rs_htssctd_tukarhari['tanggal_pengganti'];
-
-            // $qs_htssctd_tukarhari_pegawai = $db
-            //     ->query('select', 'htssctd_tukarhari_pegawai' )
-            //     ->get(['id_hemxxmh'] )
-            //     ->where('id_htssctd_tukarhari', $id_transaksi_h )
-            //     ->exec();
-            // $rs_htssctd_tukarhari_pegawai = $qs_htssctd_tukarhari_pegawai->fetchAll();
-
-            // $pegawai_pengganti = array();
-            // foreach ($rs_htssctd_tukarhari_pegawai as $key => $peg) {
-            //     $pegawai_pengganti[] = $peg['id_hemxxmh'];
-            // }
-            // $w_id_hemxxmh = '(' . implode(',', $pegawai_pengganti) . ')';
-            // $s_id_hemxxmh = 'IN';
-
 
             // BEGIN non aktif
             $qd_terpilih = $db
