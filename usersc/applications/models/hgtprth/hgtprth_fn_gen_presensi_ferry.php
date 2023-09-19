@@ -337,8 +337,8 @@
                             $is_late_pot = 0;
                             if(!empty($rs_htlxxrh_dinas_in) ){
                                 foreach ($rs_htlxxrh_dinas_in as $key => $izin_dinas_in) {
+                                    $kode_izin[] = $izin_dinas_in['htlxxmh_kode'] . " [" . $izin_dinas_in['htlxxrh_kode'] . "]"; //tamnbahkan kode dokumen
                                     if($izin_dinas_in['is_approve'] == 1){
-                                        $kode_izin[] = $izin_dinas_in['htlxxmh_kode'] . " [" . $izin_dinas_in['htlxxrh_kode'] . "]"; //tamnbahkan kode dokumen
 
                                         $status_presensi_in = $izin_dinas_in['htlxxmh_kode']; //KODE IZIN TL / DLW
                                         $cek = 0;
@@ -420,8 +420,8 @@
                             $is_early_pot = 0;
                             if(!empty($rs_htlxxrh_dinas_out) ){
                                 foreach ($rs_htlxxrh_dinas_out as $key => $izin_dinas_out) {
+                                    $kode_izin[] = $izin_dinas_out['htlxxmh_kode'] . " [" . $izin_dinas_out['htlxxrh_kode'] . "]";
                                     if($izin_dinas_out['is_approve'] == 1){
-                                        $kode_izin[] = $izin_dinas_out['htlxxmh_kode'] . " [" . $izin_dinas_out['htlxxrh_kode'] . "]";
                                         
                                         $status_presensi_out = $izin_dinas_out['htlxxmh_kode'];
                                         
@@ -431,7 +431,7 @@
                                             $is_early_pot = 1;
                                         }
                                     }else{
-                                        $status_presensi_out = 'Izin Belum Disetujui';
+                                        $status_presensi_out = 'Izin Belum Disetujui'; //ditampilkan juga di keterangan kode dinasnya
                                         $is_early_pot = 1;
                                         $cek = 1;
                                         
