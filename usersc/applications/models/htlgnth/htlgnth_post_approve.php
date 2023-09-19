@@ -11,7 +11,7 @@
     // END definisi variable untuk fn_ajax_results.php
 
     $state          = $_POST['state'];
-
+    
     try{
         $db->transaction();
 
@@ -79,7 +79,7 @@
             $qu_htssctd = $db
                 ->query('update', 'htssctd')
                 ->set('is_active',0)
-                ->set('keterangan', $rs_htlgnth["nama"])
+                ->set('keterangan', "Cuti Bersama - " . $rs_htlgnth["nama"])
                 ->where('tanggal', $rs_htlgnth["tanggal"])
                 ->where('is_active', 1)
             ->exec();
@@ -115,7 +115,7 @@
                         tanggaljam_akhir_istirahat
                     )
                     SELECT
-                        :nama,
+                        CONCAT("Cuti Bersama - ", :nama),
                         :tanggal,
                         htssctd.id_hemxxmh,
                         1,
@@ -139,7 +139,7 @@
                     FROM htssctd
                     WHERE 
                         tanggal = :tanggal
-                    AND keterangan = :nama
+                    AND keterangan = CONCAT("Cuti Bersama - ", :nama)
                 ');
             // END insert pengaju
 
