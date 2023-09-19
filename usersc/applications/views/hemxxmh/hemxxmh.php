@@ -40,6 +40,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Kode</th>
+                                <th>Kode Finger</th>
                                 <th>No KTP</th>
                                 <th>Nama</th>
                                 <th>Department</th>
@@ -233,6 +234,10 @@
 					{
 						label: "Kode <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.kode"
+					}, 	
+					{
+						label: "Kode Finger<sup class='text-danger'>*<sup>",
+						name: "hemxxmh.kode_finger"
 					}, 	
 					{
 						label: "No KTP <sup class='text-danger'>*<sup>",
@@ -673,7 +678,22 @@
 					if(isNaN(ktp_no) ){
 						edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus berupa Angka!' );
 					}
-					// END of validasi hemdcmh.ktp_no 
+					// END of validasi hemxxmh.kode_finger 
+					// BEGIN of validasi hemxxmh.kode_finger 
+					kode_finger = edthemxxmh.field('hemxxmh.kode_finger').val();
+					if(!kode_finger || kode_finger == ''){
+						edthemxxmh.field('hemxxmh.kode_finger').error( 'Wajib diisi!' );
+					}
+					// validasi min atau max angka
+					if(kode_finger <= 0 ){
+						edthemxxmh.field('hemxxmh.kode_finger').error( 'Inputan harus > 0' );
+					}
+					
+					// validasi angka
+					if(isNaN(kode_finger) ){
+						edthemxxmh.field('hemxxmh.kode_finger').error( 'Inputan harus berupa Angka!' );
+					}
+					// END of validasi hemxxmh.kode_finger 
 
 					// BEGIN of validasi hemjbmh.id_hovxxmh 
 					id_hovxxmh = edthemxxmh.field('hemjbmh.id_hovxxmh').val();
@@ -796,6 +816,7 @@
 				columns: [
 					{ data: "hemxxmh.id",visible:false },
 					{ data: "hemxxmh.kode" },
+					{ data: "hemxxmh.kode_finger" },
 					{ data: "hemdcmh.ktp_no" },
 					{ data: "hemxxmh.nama" },
 					{ data: "hodxxmh.nama" },

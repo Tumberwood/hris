@@ -79,8 +79,8 @@
 								<th rowspan=2>Cek CI</th>
 								<th rowspan=2>Cek CO</th>
 								
-								<th rowspan=2>Cek In</th>
-								<th rowspan=2>Cek Out</th>
+								<th rowspan=2>Status In</th>
+								<th rowspan=2>Status Out</th>
 
 								<th rowspan=2>Keterangan</th>
 								<th rowspan=2>Potongan Jam</th>
