@@ -94,6 +94,8 @@
         $tanggal_jam_izin_awal = 0;
         $tanggal_jam_izin_akhir = 0;
 
+        $tolak_ti = 0;
+
         //CEK JIKA ADA KARYAWAN AKTIF
         if (!empty($rs_hemxxmh)){
             foreach ($rs_hemxxmh as $row_hemxxmh) {
@@ -396,11 +398,11 @@
                                     //FLAG LATE UNTUK YANG TIDAK ADA IZIN, BUKAN DINAS (IZIN DENGAN POTONGAN) & IZIN/DINAS YANG BELUM DI APPROVE
                                     if ($is_late_pot == 1) {
                                         if ($clock_in == null) {
-                                            // $tanggal_jam_izin_awal = $tanggal . " " . $izin_dinas_in['jam_awal']; //kalau no CO maka diambil jam izin
-                                            // $carbon_ci = new Carbon($clock_in);
-                                            // $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_awal_toleransi);
+                                            $tanggal_jam_izin_awal = $tanggal . " " . $izin_dinas_in['jam_awal']; //kalau no CO maka diambil jam izin
+                                            $carbon_ci = new Carbon($clock_in);
+                                            $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_awal_toleransi);
 
-                                            $pot_jam_late_cek     = 0;
+                                            // $pot_jam_late_cek     = 0;
                                         } else {
                                             $carbon_ci = new Carbon($clock_in);
                                             $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_awal_toleransi);
@@ -481,11 +483,11 @@
                                     //FLAG EARLY UNTUK YANG TIDAK ADA IZIN, BUKAN DINAS (IZIN DENGAN POTONGAN) & IZIN/DINAS YANG BELUM DI APPROVE
                                     if ($is_early_pot == 1) {
                                         if ($clock_out == null) {
-                                            // $tanggal_jam_izin_akhir = $tanggal . " " . $izin_dinas_out['jam_akhir']; //kalau no CO maka diambil jam izin
-                                            // $karbon_co = new Carbon($tanggal_jam_izin_akhir);
-                                            // $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
+                                            $tanggal_jam_izin_akhir = $tanggal . " " . $izin_dinas_out['jam_akhir']; //kalau no CO maka diambil jam izin
+                                            $karbon_co = new Carbon($tanggal_jam_izin_akhir);
+                                            $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
 
-                                            $pot_jam_early_cek     = 0;
+                                            // $pot_jam_early_cek     = 0;
                                         } else {
                                             $karbon_co = new Carbon($clock_out);
                                             $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
@@ -736,6 +738,9 @@
                                             if($durasi_break_menit > 20){
                                                 $potongan_ti_menit = 30;
                                                 $potongan_ti_jam = 0.5;
+
+                                                $tolak_ti = 1;
+                                                // $htlxxrh_kode = $htlxxrh_kode . " [Pengajuan TI ditolak]";
                                             }else{
                                                 $potongan_ti_menit = 0;
                                                 $potongan_ti_jam = 0;
@@ -1086,6 +1091,15 @@
                             ->set('is_makan', $is_makan)
                             ->set('cek', $cek)
                         ->exec();
+
+                        if ($tolak_ti == 1) {
+                            $qu_hgtprth = $db
+                                ->query('update', 'htoemtd')
+                                ->set('keterangan', 'Pengajuan TI ditolak')
+                                ->where('id_hemxxmh',$id_hemxxmh)
+                                ->where('tanggal',$tanggal)
+                            ->exec();
+                        }
                     }
                 }else{
                     // jika jadwal belum dibuat
@@ -1116,14 +1130,14 @@
                 }
             }
         }
+        // di commit per karyawan
         $qu_hgtprth = $db
             ->query('update', 'hgtprth')
             ->set('generated_on',$timestamp)
             ->where('id_heyxxmh',$id_heyxxmh)
             ->where('tanggal',$tanggal)
-            ->exec();
+        ->exec();
         
-        // di commit per karyawan
         $db->commit();
         
         $akhir = new Carbon();
