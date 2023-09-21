@@ -91,6 +91,7 @@
 								<th colspan=2>Lembur Akhir</th>
 								<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
 								<th class="text-center" colspan=4>Potongan Jam</th>
+								<th colspan=2>Total Hitungan Jam Akhir</th>
 
 							</tr>
 							<tr>
@@ -113,6 +114,8 @@
 								<th>Pot Overtime</th>
 								<th>Pot Hari Kerja</th>
 								<th>Pot Total</th>
+								<th>Overtime</th>
+								<th>Hari Kerja</th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -149,10 +152,12 @@
 								<th id="s_i3"></th>
 								<th id="s_tl"></th>
 								
-								<th id="s_ti"></th>
+								<th id="s_pot_ti"></th>
+								<th id="s_pot_overtime"></th>
+								<th id="s_pot_hk"></th>
+								<th id="s_pot_jam"></th>
 								<th id="s_overtime"></th>
 								<th id="s_hk"></th>
-								<th id="s_pot_jam"></th>
 
 							</tr>
 						</tfoot>
@@ -251,7 +256,7 @@
 						searchPanes:{
 							show: false
 						},
-						targets: [0,3,5,6,7,8,9,10,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33]
+						targets: [0,3,5,6,7,8,9,10,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35]
 					}
 				],
 				ajax: {
@@ -483,6 +488,27 @@
 							}
 						},
 						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_final",
+						render: function (data){
+							if (data > 0){
+								return incfFormatNumberWithDecimal(data,1);
+							}else {
+								return '';
+							}
+						},
+						class: "text-right"
+					},
+					{ 
+						data: null,
+						render: function (data){
+							if (data > 0){
+								return incfFormatNumberWithDecimal(data,1);
+							}else {
+								return '';
+							}
+						},
 					}
 					
 				],
@@ -637,10 +663,11 @@
 					s_i3 = api.column( 28 ).data().sum();
 					s_tl = api.column( 29 ).data().sum();
 
-					s_ti = api.column( 30 ).data().sum();
-					s_overtime = api.column( 31 ).data().sum();
-					s_hk = api.column( 32 ).data().sum();
+					s_pot_ti = api.column( 30 ).data().sum();
+					s_pot_overtime = api.column( 31 ).data().sum();
+					s_pot_hk = api.column( 32 ).data().sum();
 					s_pot_jam = api.column( 33 ).data().sum();
+					s_overtime = api.column( 34 ).data().sum();
 
 					$( '#s_makan' ).html( numFormat(s_makan) );
 					$( '#s_lb' ).html( numFormat(s_lb) );
@@ -651,10 +678,11 @@
 					$( '#s_i3' ).html( numFormat(s_i3) );
 					$( '#s_tl' ).html( numFormat(s_tl) );
 
-					$( '#s_ti' ).html( numFormat(s_ti) );
-					$( '#s_overtime' ).html( numFormat(s_overtime) );
-					$( '#s_hk' ).html( numFormat(s_hk) );
+					$( '#s_pot_ti' ).html( numFormat(s_pot_ti) );
+					$( '#s_pot_overtime' ).html( numFormat(s_pot_overtime) );
+					$( '#s_pot_hk' ).html( numFormat(s_pot_hk) );
 					$( '#s_pot_jam' ).html( numFormat(s_pot_jam) );
+					$( '#s_overtime' ).html( numFormat(s_overtime) );
 
 				},
 				initComplete: function() {

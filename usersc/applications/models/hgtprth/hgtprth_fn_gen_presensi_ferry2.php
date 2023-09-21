@@ -40,6 +40,7 @@
         ->query('select', 'hemxxmh' )
         ->get([
             'hemxxmh.id as id_hemxxmh',
+            'hemxxmh.is_pot_makan as is_pot_makan',
             'hemxxmh.kode_finger as kode_finger',
             'hemjbmh.id_hesxxmh as id_hesxxmh'
         ] )
@@ -1031,7 +1032,9 @@
                         $rs_htsprtd_makan = $qs_htsprtd_makan->fetch();
 
                         if( !empty($rs_htsprtd_makan) ){
-                            $is_makan = 1;
+                            if ($row_hemxxmh['is_pot_makan'] == 1) {
+                                $is_makan = 1;
+                            }
                         }
 
 
