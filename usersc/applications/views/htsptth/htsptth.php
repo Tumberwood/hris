@@ -28,6 +28,7 @@
                                 <th>Nama</th>
                                 <th>Jumlah Grup</th>
                                 <th>Keterangan</th>
+                                <th>Tukar Jadwal</th>
                             </tr>
                         </thead>
                     </table>
@@ -147,7 +148,16 @@
 						label: "Keterangan",
 						name: "htsptth.keterangan",
 						type: "textarea"
-					}
+					}, {
+						label: "Tukar Jadwal",
+						name: "htsptth.is_tukar",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Yes", "value": 1 },
+							{ "label": "No", "value": 0 }
+						]
+					},
 				]
 			} );
 			
@@ -247,7 +257,17 @@
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right"
 					},
-					{ data: "htsptth.keterangan" }
+					{ data: "htsptth.keterangan" },
+					{ 
+						data: "htsptth.is_tukar",
+						render: function (data){
+							if (data == 0){
+								return 'Tidak';
+							}else if(data == 1){
+								return 'Ya';
+							}
+						} 
+					}
 				],
 				buttons: [
 

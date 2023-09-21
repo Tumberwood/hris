@@ -332,7 +332,8 @@
 							});
 
 							$.ajax( {
-								url: "../../models/hgtprth/hgtprth_fn_gen_presensi_ferry.php",
+								// url: "../../models/hgtprth/hgtprth_fn_gen_presensi_ferry.php",
+								url: "../../models/hgtprth/hgtprth_fn_gen_presensi_ferry2.php",
 								dataType: 'json',
 								type: 'POST',
 								data: {

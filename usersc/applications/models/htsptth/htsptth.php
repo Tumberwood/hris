@@ -32,6 +32,7 @@
 				} ),
 			Field::inst( 'htsptth.keterangan' ),
 			Field::inst( 'htsptth.is_active' ),
+			Field::inst( 'htsptth.is_tukar' ),
 			Field::inst( 'htsptth.created_by' )
 				->set( Field::SET_CREATE )
 				->setValue($_SESSION['user']),
