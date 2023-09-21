@@ -22,16 +22,19 @@
     $offset      = ($page - 1) * $resultCount;
     // END select2 pagination preparation
 
+    $id_hodxxmh = 0;
     if($_GET['id_hodxxmh_old'] > 0){
         $id_hodxxmh_old = $_GET['id_hodxxmh_old'];
     }else{
         $id_hodxxmh_old = 0;
     }
 
-    if($_GET['id_hodxxmh'] > 0){
-        $id_hodxxmh = $_GET['id_hodxxmh'];
-    }else{
-        $id_hodxxmh = 0;
+    if (isset($_GET['id_hodxxmh'])) {
+        if($_GET['id_hodxxmh'] > 0){
+            $id_hodxxmh = $_GET['id_hodxxmh'];
+        }else{
+            $id_hodxxmh = 0;
+        }
     }
 
     // BEGIN query self.
