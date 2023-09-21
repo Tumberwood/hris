@@ -83,16 +83,14 @@
 								<th rowspan=2>Status Out</th>
 
 								<th rowspan=2>Keterangan</th>
-								<th rowspan=2>Potongan Jam</th>
+								 <!-- //pot jam dihapus (16) --> 
 								<th rowspan=2>Potongan Makan</th>
 								
 								<th colspan=2>Lembur Libur</th>
 								<th colspan=2>Lembur Awal</th>
 								<th colspan=2>Lembur Akhir</th>
 								<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
-								<th rowspan=2>Pot TI</th>
-								<th rowspan=2>Pot Overtime</th>
-								<th rowspan=2>Pot Hari Kerja</th>
+								<th class="text-center" colspan=4>Potongan Jam</th>
 
 							</tr>
 							<tr>
@@ -111,6 +109,10 @@
 								<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Malam">I3</th>
 								<th data-toggle="tooltip" data-placement="top" title="Total Lembur">Total</th>
 
+								<th>Pot TI</th>
+								<th>Pot Overtime</th>
+								<th>Pot Hari Kerja</th>
+								<th>Pot Total</th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -131,7 +133,6 @@
 								<th></th>
 								<th></th>
 								<th>Total</th>
-								<th id="s_pot_jam"></th>
 								<th id="s_makan"></th>
 								<th></th>
 								<th></th>
@@ -147,9 +148,11 @@
 								<th id="s_i2"></th>
 								<th id="s_i3"></th>
 								<th id="s_tl"></th>
-								<th></th>
-								<th></th>
-								<th></th>
+								
+								<th id="s_ti"></th>
+								<th id="s_overtime"></th>
+								<th id="s_hk"></th>
+								<th id="s_pot_jam"></th>
 
 							</tr>
 						</tfoot>
@@ -262,7 +265,7 @@
 					}
 				},
 				order: [[ 4, "asc" ],[1, "asc"]],
-				scrollX: true,
+				// scrollX: true,
 				responsive: false,
 				// rowGroup: {
 				// 	dataSrc: function (row) {
@@ -344,17 +347,6 @@
 					{ data: "htsprrd.status_presensi_out" },
 					{ data: "htsprrd.htlxxrh_kode" }, //15
 					{ 
-						data: "htsprrd.pot_jam",
-						render: function (data){
-							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
-							}else {
-								return '';
-							}
-						},
-						class: "text-right"
-					},
-					{ 
 						data: "htsprrd.is_makan",
 						render: function (data){
 							if (data > 0){
@@ -364,7 +356,7 @@
 							}
 						},
 						class: "text-right"
-					}, //17
+					}, //17 jadi 16
 					{ data: "htsprrd.jam_awal_lembur_libur" },//18
 					{ data: "htsprrd.jam_akhir_lembur_libur" },
 					{ data: "htsprrd.jam_awal_lembur_awal" },
@@ -472,6 +464,17 @@
 					},
 					{ 
 						data: "htsprrd.pot_hk" ,
+						render: function (data){
+							if (data > 0){
+								return incfFormatNumberWithDecimal(data,1);
+							}else {
+								return '';
+							}
+						},
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_jam",
 						render: function (data){
 							if (data > 0){
 								return incfFormatNumberWithDecimal(data,1);
@@ -624,17 +627,21 @@
 					var api       = this.api(), data;
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					
-					s_pot_jam = api.column( 16 ).data().sum();
-					s_makan = api.column( 17 ).data().sum();
-					s_lb = api.column( 24 ).data().sum();
-					s_aw = api.column( 25 ).data().sum();
-					s_ak = api.column( 26 ).data().sum();
-					s_i1 = api.column( 27 ).data().sum();
-					s_i2 = api.column( 28 ).data().sum();
-					s_i3 = api.column( 29 ).data().sum();
-					s_tl = api.column( 30 ).data().sum();
+					// s_pot_jam = api.column( 16 ).data().sum();
+					s_makan = api.column( 16 ).data().sum();
+					s_lb = api.column( 23 ).data().sum();
+					s_aw = api.column( 24 ).data().sum();
+					s_ak = api.column( 25 ).data().sum();
+					s_i1 = api.column( 26 ).data().sum();
+					s_i2 = api.column( 27 ).data().sum();
+					s_i3 = api.column( 28 ).data().sum();
+					s_tl = api.column( 29 ).data().sum();
 
-					$( '#s_pot_jam' ).html( numFormat(s_pot_jam) );
+					s_ti = api.column( 30 ).data().sum();
+					s_overtime = api.column( 31 ).data().sum();
+					s_hk = api.column( 32 ).data().sum();
+					s_pot_jam = api.column( 33 ).data().sum();
+
 					$( '#s_makan' ).html( numFormat(s_makan) );
 					$( '#s_lb' ).html( numFormat(s_lb) );
 					$( '#s_aw' ).html( numFormat(s_aw) );
@@ -643,6 +650,11 @@
 					$( '#s_i2' ).html( numFormat(s_i2) );
 					$( '#s_i3' ).html( numFormat(s_i3) );
 					$( '#s_tl' ).html( numFormat(s_tl) );
+
+					$( '#s_ti' ).html( numFormat(s_ti) );
+					$( '#s_overtime' ).html( numFormat(s_overtime) );
+					$( '#s_hk' ).html( numFormat(s_hk) );
+					$( '#s_pot_jam' ).html( numFormat(s_pot_jam) );
 
 				},
 				initComplete: function() {
