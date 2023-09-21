@@ -84,6 +84,9 @@
 			Field::inst( 'htsprrd.htlxxrh_kode' ),
 			Field::inst( 'htsprrd.cek' ),
 			Field::inst( 'htsprrd.pot_jam' ),
+			Field::inst( 'htsprrd.pot_ti' ),
+			Field::inst( 'htsprrd.pot_overtime' ),
+			Field::inst( 'htsprrd.pot_hk' ),
 			Field::inst( 'htsprrd.is_makan' ),
 
 			Field::inst( 'htsprrd.jam_awal_lembur_libur' ),

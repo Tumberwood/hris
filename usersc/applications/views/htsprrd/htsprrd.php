@@ -90,6 +90,9 @@
 								<th colspan=2>Lembur Awal</th>
 								<th colspan=2>Lembur Akhir</th>
 								<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
+								<th rowspan=2>Pot TI</th>
+								<th rowspan=2>Pot Overtime</th>
+								<th rowspan=2>Pot Hari Kerja</th>
 
 							</tr>
 							<tr>
@@ -441,7 +444,40 @@
 							}
 						},
 						class: "text-right"
-					} //30
+					}, //30
+					{ 
+						data: "htsprrd.pot_ti" ,
+						render: function (data){
+							if (data > 0){
+								return incfFormatNumberWithDecimal(data,1);
+							}else {
+								return '';
+							}
+						},
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_overtime" ,
+						render: function (data){
+							if (data > 0){
+								return incfFormatNumberWithDecimal(data,1);
+							}else {
+								return '';
+							}
+						},
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_hk" ,
+						render: function (data){
+							if (data > 0){
+								return incfFormatNumberWithDecimal(data,1);
+							}else {
+								return '';
+							}
+						},
+						class: "text-right"
+					}
 					
 				],
 				buttons: [	
@@ -621,16 +657,25 @@
 				id_htsprrd      = htsprrd_data.id;
 				status_presensi_in      = htsprrd_data.status_presensi_in;
 				status_presensi_out      = htsprrd_data.status_presensi_out;
+				st_clock_in      = htsprrd_data.st_clock_in;
+				st_clock_out      = htsprrd_data.st_clock_out;
 				id_hemxxmh_select      = htsprrd_data.id_hemxxmh;
 				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
 				tanggal      = htsprrd_data.tanggal;
 				cek      = htsprrd_data.cek;
-
+				
 				if (status_presensi_in == "AL" && status_presensi_out == "AL") {
 					tblhtsprrd.button('btncekNol:name').enable();
 				} else {
 					tblhtsprrd.button('btncekNol:name').disable();
 				}
+				// if (status_presensi_in == "" && status_presensi_out == "") {
+				// 	if (st_clock_in == "No CI" && st_clock_out == "No CO") {
+				// 	tblhtsprrd.button('btncekNol:name').enable();
+				// 	} else {
+				// 		tblhtsprrd.button('btncekNol:name').disable();
+				// 	}
+				// }
 
 				cariKMJ();
 				// console.log(htsprrd_data.status_presensi_in);

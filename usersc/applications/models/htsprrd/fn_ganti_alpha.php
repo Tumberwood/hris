@@ -18,6 +18,8 @@ use
         $sql_update = $editor->db()
         ->query('update', 'htsprrd')
         ->set('cek', 0)
+        ->set('status_presensi_in', "AL")
+        ->set('status_presensi_out', "AL")
         ->where('id', $id_htsprrd)
         ->exec();
             
