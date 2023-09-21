@@ -96,6 +96,7 @@
         $tanggal_jam_izin_akhir = 0;
 
         $tolak_ti = 0;
+        $jam_pengali = 0;
 
         //CEK JIKA ADA KARYAWAN AKTIF
         if (!empty($rs_hemxxmh)){
