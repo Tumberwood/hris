@@ -1093,11 +1093,19 @@
                         ->exec();
 
                         if ($tolak_ti == 1) {
-                            $qu_hgtprth = $db
+                            $qs_htoemtd = $db
+                                ->query('select', 'htoemtd' )
+                                ->get(['htoemtd.id as id'] )
+                                ->join('htoxxth','htoxxth.id = htoemtd.id_htoxxth','LEFT' )
+                                ->where('htoemtd.id_hemxxmh',$id_hemxxmh)
+                                ->where('htoxxth.tanggal',$tanggal)
+                                ->exec();
+                            $rs_htoemtd = $qs_htoemtd->fetch();
+
+                            $qu_htoemtd = $db
                                 ->query('update', 'htoemtd')
                                 ->set('keterangan', 'Pengajuan TI ditolak')
-                                ->where('id_hemxxmh',$id_hemxxmh)
-                                ->where('tanggal',$tanggal)
+                                ->where('id',$rs_htoemtd['id'])
                             ->exec();
                         }
                     }
