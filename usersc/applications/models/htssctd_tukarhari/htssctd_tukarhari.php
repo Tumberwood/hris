@@ -22,6 +22,8 @@
 		->debug(true)
 		->fields(
 			Field::inst( 'htssctd_tukarhari.id' ),
+			Field::inst( 'htssctd_tukarhari.id_hodxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'htssctd_tukarhari.kode' ),
 			Field::inst( 'htssctd_tukarhari.nama' ),
 			Field::inst( 'htssctd_tukarhari.keterangan' ),
@@ -32,6 +34,7 @@
 			Field::inst( 'htssctd_tukarhari.created_on' )
 				->set( Field::SET_CREATE ),
 			Field::inst( 'htssctd_tukarhari.is_approve' ),
+			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'htssctd_tukarhari.tanggal_terpilih' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === "0000-00-00" || $val === null){
@@ -57,6 +60,7 @@
 					'to' =>   'Y-m-d'
 				) )
 		)
+		->leftJoin( 'hodxxmh','hodxxmh.id','=','htssctd_tukarhari.id_hodxxmh' )
 		;
 	
 	// do not erase
