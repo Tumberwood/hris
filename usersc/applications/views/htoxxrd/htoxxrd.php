@@ -62,6 +62,7 @@
 								<th>Jenis</th>
 								<th>Tipe</th>
 								<th>Istirahat</th>
+								<th>Keterangan</th>
 								<th>Jam Awal</th>
 								<th>Jam Akhir</th>
 								<th>Durasi</th>
@@ -78,10 +79,11 @@
 								<th></th>
 								<th></th>
 								<th></th>
-								<th>Grand Total</th>
-								<th class="text-right bg-primary" id="s_jam"></th>
+								<th></th>
 								<!-- <th id=""></th> -->
 								<th></th>
+								<th>Grand Total</th>
+								<th class="text-right bg-primary" id="s_jam"></th>
 								<th></th>
 							</tr>
 						</tfoot>
@@ -174,10 +176,10 @@
 							.append( '<td></td>' )
 							.append( '<td></td>' )
 							.append( '<td></td>' )
-							.append( '<td class="text-right bg-warning">'+sumJam+'</td>' )
-							.append( '<td class="text-right"></td>' )
 							.append( '<td></td>' )
-							.append( '<td></td>' );
+							.append( '<td></td>' )
+							.append( '<td class="text-right bg-warning">'+sumJam+'</td>' )
+							.append( '<td class="text-right"></td>' );
 					},
 					dataSrc: 'htoxxrd.kode'
 				},
@@ -218,6 +220,7 @@
 							}
 						}
 					},
+					{ data: "htoxxrd.keterangan" },
 					{ data: "htoxxrd.jam_awal" },
 					{ data: "htoxxrd.jam_akhir" },
 					{ 
@@ -270,11 +273,11 @@
 					var numFormat1 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					var numFormat0 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					// hitung jumlah 
-					s_jam = api.column( 9 ).data().sum();
-					c_makan = api.column( 10 ).data().count();
+					s_jam = api.column( 10 ).data().sum();
+					// c_makan = api.column( 10 ).data().count();
 
 					$( '#s_jam' ).html( numFormat1(s_jam) );
-					$( '#c_makan' ).html( numFormat0(c_makan) );
+					// $( '#c_makan' ).html( numFormat0(c_makan) );
 				}
 			} );
 

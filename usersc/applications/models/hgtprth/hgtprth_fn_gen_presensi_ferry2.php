@@ -741,7 +741,12 @@
                                                 $potongan_ti_menit = 30;
                                                 $potongan_ti_jam = 0.5;
 
-                                                $tolak_ti = 1;
+                                                $qu_htoemtd = $db
+                                                    ->query('update', 'htoxxrd')
+                                                    ->set('keterangan', 'Pengajuan TI ditolak')
+                                                    ->where('id_hemxxmh',$id_hemxxmh)
+                                                    ->where('tanggal',$tanggal)
+                                                ->exec();
                                                 // $htlxxrh_kode = $htlxxrh_kode . " [Pengajuan TI ditolak]";
                                             }else{
                                                 $potongan_ti_menit = 0;
@@ -1095,23 +1100,6 @@
                             ->set('is_makan', $is_makan)
                             ->set('cek', $cek)
                         ->exec();
-
-                        if ($tolak_ti == 1) {
-                            $qs_htoemtd = $db
-                                ->query('select', 'htoemtd' )
-                                ->get(['htoemtd.id as id'] )
-                                ->join('htoxxth','htoxxth.id = htoemtd.id_htoxxth','LEFT' )
-                                ->where('htoemtd.id_hemxxmh',$id_hemxxmh)
-                                ->where('htoxxth.tanggal',$tanggal)
-                                ->exec();
-                            $rs_htoemtd = $qs_htoemtd->fetch();
-
-                            $qu_htoemtd = $db
-                                ->query('update', 'htoemtd')
-                                ->set('keterangan', 'Pengajuan TI ditolak')
-                                ->where('id',$rs_htoemtd['id'])
-                            ->exec();
-                        }
                     }
                 }else{
                     // jika jadwal belum dibuat

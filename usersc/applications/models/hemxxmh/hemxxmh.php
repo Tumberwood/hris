@@ -57,6 +57,7 @@
 				->setValue($_SESSION['user']),
 			Field::inst( 'hemxxmh.is_approve' ),
 			Field::inst( 'hemxxmh.nama_os' ),
+			Field::inst( 'hemxxmh.is_pot_makan' ),
 			Field::inst( 'hemxxmh.is_defaultprogram' ),
 			
 			Field::inst( 'hemjbmh.tanggal_masuk' )
