@@ -247,7 +247,7 @@
 						name: "htsprtd.tanggal",
 						type: "datetime",
 						def: function () { 
-							return new Date(); 
+							return moment($('#end_date').val()).format('DD MMM YYYY'); 
 						},
 						opts:{
 							minDate: new Date('1900-01-01'),
@@ -259,9 +259,6 @@
 						label: "Jam <sup class='text-danger'>*<sup>",
 						name: "htsprtd.jam",
 						type: "datetime",
-						def: function () { 
-							return new Date(); 
-						},
 						format: 'HH:mm'
 					},
 					{
@@ -303,6 +300,7 @@
 					edthtsprtd.field('htsprtd.jam').disable();
 				}else {
             		edthtsprtd.field('htsprtd.jam').enable();
+					edthtsprtd.field('htsprtd.jam').val('');
 				}
 				return {}
 			}, {event: 'keyup change'});
@@ -314,6 +312,7 @@
 					edthtsprtd.field('htsprtd.jam').disable();
 				}else {
             		edthtsprtd.field('htsprtd.jam').enable();
+					edthtsprtd.field('htsprtd.jam').val('');
 				}
 				return {}
 			}, {event: 'keyup change'});
@@ -322,22 +321,20 @@
 				if(action != 'remove'){
 					// BEGIN of validasi htsprtd.nama
 					nama = edthtsprtd.field('htsprtd.nama').val();
-					if ( ! edthtsprtd.field('htsprtd.nama').isMultiValue() ) {
-						if(!nama || nama == ''){
-							edthtsprtd.field('htsprtd.nama').error( 'Wajib diisi!' );
-						}
+					if(!nama || nama == ''){
+						edthtsprtd.field('htsprtd.nama').error( 'Wajib diisi!' );
 					}
 					// END of validasi htsprtd.nama
 
 					// BEGIN of validasi htsprtd.id_hemxxmh
+					id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
 					if ( ! edthtsprtd.field('htsprtd.id_hemxxmh').isMultiValue() ) {
-						id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
 						if(!id_hemxxmh || id_hemxxmh == ''){
 							edthtsprtd.field('htsprtd.id_hemxxmh').error( 'Wajib diisi!' );
 						}
 					}
 					// END of validasi htsprtd.id_hemxxmh
-
+					unikMakan();
 					// BEGIN of validasi htsprtd.tanggal
 					if ( ! edthtsprtd.field('htsprtd.tanggal').isMultiValue() ) {
 						tanggal = edthtsprtd.field('htsprtd.tanggal').val();
@@ -356,6 +353,10 @@
 							}
 						}
 						// END of validasi htsprtd.jam
+					} else {
+						if (!jam || jam == '') {
+							edthtsprtd.field('htsprtd.jam').error( 'Jam Kosong Karena Jadwal Belum Dibuat!' );
+						}
 					}
 
 					// BEGIN of validasi htsprtd.keterangan

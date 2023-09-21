@@ -22,7 +22,7 @@
                 
             }
         } );
-    };
+    }
     function jamMakanManual(){
         nama = edthtsprtd.field('htsprtd.nama').val();
         var originalDate = edthtsprtd.field('htsprtd.tanggal').val();
@@ -40,9 +40,38 @@
             },
             success: function ( json ) {
                 jam = json.data.jam_istirahat.jam;
-                console.log(json.data.jam_istirahat.jam);
-                edthtsprtd.field('htsprtd.jam').val(json.data.jam_istirahat.jam);
+                console.log(jam);
+                edthtsprtd.field('htsprtd.jam').val(jam);
+
             }
         } );
-    };
+    }
+
+    function unikMakan() {
+        tanggal = edthtsprtd.field('htsprtd.tanggal').val();
+        let tanggal_ymd = moment(tanggal).format('YYYY-MM-DD');
+        id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
+        nama = edthtsprtd.field('htsprtd.nama').val();
+
+        $.ajax( {
+            url: "../../models/htsprtd/fn_cek_unik_makan.php",
+            dataType: 'json',
+            async: false,
+            type: 'POST',
+            data: {
+                tanggal_ymd: tanggal_ymd,
+                id_hemxxmh: id_hemxxmh
+            },
+            success: function ( json ) {
+                c_peg = json.data.peg_makan.c_peg;
+
+                if (nama == "makan" || nama == "makan manual") {
+                    // console.log(c_peg);
+                    if(c_peg >= 1){
+                        edthtsprtd.field('htsprtd.id_hemxxmh').error( 'Pegawai Sudah Pernah Diinput pada Mesin Makan/Makan Manual!' );
+                    }
+                }
+            }
+        } );
+    }
 </script>
