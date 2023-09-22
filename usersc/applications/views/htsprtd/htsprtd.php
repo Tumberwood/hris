@@ -286,7 +286,7 @@
 				nama = edthtsprtd.field('htsprtd.nama').val();
 				if (nama ==  "makan manual") {
 					jamMakanManual();
-					edthtsprtd.field('htsprtd.jam').disable();
+					// edthtsprtd.field('htsprtd.jam').disable();
 				}else {
             		edthtsprtd.field('htsprtd.jam').enable();
 				}
@@ -297,7 +297,7 @@
 				nama = edthtsprtd.field('htsprtd.nama').val();
 				if (nama ==  "makan manual") {
 					jamMakanManual();
-					edthtsprtd.field('htsprtd.jam').disable();
+					// edthtsprtd.field('htsprtd.jam').disable();
 				}else {
             		edthtsprtd.field('htsprtd.jam').enable();
 					edthtsprtd.field('htsprtd.jam').val('');
@@ -309,7 +309,7 @@
 				nama = edthtsprtd.field('htsprtd.nama').val();
 				if (nama ==  "makan manual") {
 					jamMakanManual();
-					edthtsprtd.field('htsprtd.jam').disable();
+					// edthtsprtd.field('htsprtd.jam').disable();
 				}else {
             		edthtsprtd.field('htsprtd.jam').enable();
 					edthtsprtd.field('htsprtd.jam').val('');
@@ -344,17 +344,17 @@
 					}
 					// END of validasi htsprtd.tanggal
 
+					jam = edthtsprtd.field('htsprtd.jam').val();
 					if (nama != "makan manual") {
 						// BEGIN of validasi htsprtd.jam
 						if ( ! edthtsprtd.field('htsprtd.jam').isMultiValue() ) {
-							jam = edthtsprtd.field('htsprtd.jam').val();
 							if(!jam || jam == ''){
 								edthtsprtd.field('htsprtd.jam').error( 'Wajib diisi!' );
 							}
 						}
 						// END of validasi htsprtd.jam
 					} else {
-						if (!jam || jam == '') {
+						if (jam == '' || jam == null) {
 							edthtsprtd.field('htsprtd.jam').error( 'Jam Kosong Karena Jadwal Belum Dibuat!' );
 						}
 					}
