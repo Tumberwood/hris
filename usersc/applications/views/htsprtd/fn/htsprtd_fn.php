@@ -51,11 +51,13 @@
         } );
     }
 
-    function unikMakan() {
+    function unikMakan(jam) {
+        htsprtd_get_hemxxmh_kode();
         tanggal = edthtsprtd.field('htsprtd.tanggal').val();
         let tanggal_ymd = moment(tanggal).format('YYYY-MM-DD');
-        id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
+        // id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
         nama = edthtsprtd.field('htsprtd.nama').val();
+        console.log(jam);
 
         $.ajax( {
             url: "../../models/htsprtd/fn_cek_unik_makan.php",
@@ -64,14 +66,20 @@
             type: 'POST',
             data: {
                 tanggal_ymd: tanggal_ymd,
-                id_hemxxmh: id_hemxxmh
+                kode_finger: kode_finger,
+                jam: jam
             },
             success: function ( json ) {
-                c_peg = json.data.peg_makan.c_peg;
+                status = json.data.peg_makan.status;
+                range_awal = json.data.peg_makan.range_awal;
+                range_akhir = json.data.peg_makan.range_akhir;
+                console.log(json.data.peg_makan.range_awal);
+                console.log(range_akhir);
 
                 if (nama == "makan" || nama == "makan manual") {
                     // console.log(c_peg);
-                    if(c_peg >= 1){
+                    if(status == "invalid"){
+                        console.log('AKOAKOAKOKA');
                         edthtsprtd.field('htsprtd.id_hemxxmh').error( 'Pegawai Sudah Pernah Diinput pada Mesin Makan/Makan Manual!' );
                     }
                 }

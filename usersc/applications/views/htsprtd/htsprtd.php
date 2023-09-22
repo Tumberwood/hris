@@ -334,7 +334,7 @@
 						}
 					}
 					// END of validasi htsprtd.id_hemxxmh
-					unikMakan();
+
 					// BEGIN of validasi htsprtd.tanggal
 					if ( ! edthtsprtd.field('htsprtd.tanggal').isMultiValue() ) {
 						tanggal = edthtsprtd.field('htsprtd.tanggal').val();
@@ -345,6 +345,7 @@
 					// END of validasi htsprtd.tanggal
 
 					jam = edthtsprtd.field('htsprtd.jam').val();
+					unikMakan(jam);
 					if (nama != "makan manual") {
 						// BEGIN of validasi htsprtd.jam
 						if ( ! edthtsprtd.field('htsprtd.jam').isMultiValue() ) {
