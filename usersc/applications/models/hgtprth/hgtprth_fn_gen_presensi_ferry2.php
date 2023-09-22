@@ -484,12 +484,12 @@
                                     $cek = 0;
                                 }
                                 
-                            }
-                            //TAMBAHAN CEK 18 SEP
-                            if ($st_clock_in == "No CI" && $status_presensi_in != "HK") {
-                                $cek = 1;
-                            } else {
-                               $cek = 0; 
+                                //TAMBAHAN CEK 18 SEP
+                                if ($st_clock_in == "No CI" && $status_presensi_in != "HK") {
+                                    $cek = 1;
+                                } else {
+                                $cek = 0; 
+                                }
                             }
 
                             $qs_htlxxrh_dinas_out = $db
@@ -566,13 +566,14 @@
                                         $cek = 0;
                                     }
                                 }
+
+                                if ($st_clock_out == "No CO" && $status_presensi_out != "HK") {
+                                    $cek = 1;
+                                } else {
+                                   $cek = 0; 
+                                }
                             }
 
-                            if ($st_clock_out == "No CO" && $status_presensi_out != "HK") {
-                                $cek = 1;
-                            } else {
-                               $cek = 0; 
-                            }
 
                             // BEGIN cek izin ditengah jam kerja DENGAN POTONGAN
                             $qs_htlxxrh_izin = $db
@@ -787,7 +788,7 @@
                                         ->get(['TIMESTAMPDIFF(MINUTE,MIN(CONCAT(htsprtd.tanggal," ",htsprtd.jam)),	MAX(CONCAT(htsprtd.tanggal," ",htsprtd.jam))) as durasi_break_menit'
                                         ] )
                                         ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
-                                        ->where('htsprtd.nama', 'istirahat' )
+                                        ->where('htsprtd.nama', '("os", "out", "staff", "pmi", "istirahat")', 'IN', false )
                                         ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_istirahat, '>=' )
                                         ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_istirahat, '<=' )
                                         ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
