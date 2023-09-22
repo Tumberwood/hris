@@ -79,6 +79,7 @@
         $jam_akhir_lembur_istirahat3 = 0;
         $durasi_lembur_istirahat3_jam = 0;
         $durasi_lembur_total_jam = 0;
+        $durasi_lembur_ti = 0;
         $durasi_lembur_istirahat1_menit   = 0;
         $durasi_lembur_istirahat2_menit   = 0;
         $durasi_lembur_istirahat3_menit   = 0;
@@ -253,6 +254,7 @@
                         $nominal_lembur_final = 0;
                         $is_makan = 0;
                         $pot_overtime = 0;
+                        $pot_hk = 0;
 
 ////////////////////////////// LEVEL 2 - CHECKCLOCK //////////////////////////////
                         //STEP 2 CEK CHECK IN
@@ -841,6 +843,7 @@
                             // hitung total lembur kotor
                             $durasi_lembur_total_menit = $durasi_lembur_awal_menit + $durasi_lembur_akhir_menit + $durasi_lembur_libur_menit + $durasi_lembur_istirahat1_menit + $durasi_lembur_istirahat2_menit + $durasi_lembur_istirahat3_menit;
 
+                            $durasi_lembur_ti = $durasi_lembur_istirahat1_jam + $durasi_lembur_istirahat2_jam + $durasi_lembur_istirahat3_jam;
                             $durasi_lembur_total_jam = $durasi_lembur_awal_jam + $durasi_lembur_akhir_jam + $durasi_lembur_libur_jam + $durasi_lembur_istirahat1_jam + $durasi_lembur_istirahat2_jam + $durasi_lembur_istirahat3_jam;
                         
                         }else{
@@ -870,6 +873,7 @@
                             $durasi_lembur_istirahat2_menit   = 0;
                             $durasi_lembur_istirahat3_menit   = 0;
                             $durasi_lembur_total_jam          = 0;
+                            $durasi_lembur_ti                 = 0;
                         }
 
                         // POTONGAN JAM
@@ -942,15 +946,21 @@
                         //POTONGAN OVERTIME 
                         //Apabila : Total Potongan(pot_jam) < Durasi total overtime(durasi_lembur_total_jam)
                         //add by ferry 
-                        if ($pot_jam < $durasi_lembur_total_jam) {
-                            $pot_overtime = $pot_jam - $potongan_ti_jam;
-                        } else {
-                            $pot_overtime = $durasi_lembur_total_jam - $potongan_ti_jam;
+                        //Jika tidak ada lembur istirahat, maka total lembur akan dipotong (pot_overtime)
+                        if ($durasi_lembur_ti <= 0) {
+                            if ($pot_jam < $durasi_lembur_total_jam) {
+                                $pot_overtime = $pot_jam - $potongan_ti_jam;
+                            } else {
+                                $pot_overtime = $durasi_lembur_total_jam - $potongan_ti_jam;
+                            }
                         }
 
                         //Potongan Hari Kerja = total potongan - (potongan overtime + potongan TI)		
-                        $pot_hk = $pot_jam - $pot_overtime + $potongan_ti_jam;
-
+                        
+                        //Jika tidak ada lembur, maka akan dipotong hari kerja
+                        if ($durasi_lembur_total_jam <= 0) {
+                            $pot_hk = $pot_jam - $pot_overtime;
+                        }
 
                         //Overtime = Total durasi lembur - (potongan TI + potongan overtime)		
                         $jam_pengali = $durasi_lembur_total_jam - $potongan_ti_jam + $pot_overtime;
