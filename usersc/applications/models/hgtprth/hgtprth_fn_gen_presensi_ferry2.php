@@ -319,24 +319,28 @@
                             }
                             $next_step = 5;
                         }else{
+                            $next_step = 5;
                             //JIKA SHIFT OFF MAKA STATUS OFF
                             if($jadwal['id_htsxxmh'] == 1){
                                 $status_presensi_in = $jadwal['htsxxmh_kode'];
                                 $status_presensi_out = $jadwal['htsxxmh_kode'];
                                 $st_clock_in = $jadwal['htsxxmh_kode'];
                                 $st_clock_out = $jadwal['htsxxmh_kode'];
+                            } else {
+                                $next_step = 5;
                             }
                             $cek = 0;
-                            $next_step = 5;
                         }
                     
 
                         //NEXT STEP
                         $next_step = 0;
+                        //JIKA CEKLOK OK OK MAKA END
                         if ($st_clock_in == "OK" && $st_clock_out == "OK") {
                             $status_presensi_in = "HK";
                             $status_presensi_out = "HK";
-                            $next_step = 5;
+                            // $next_step = 5;
+                            $cek = 0;
                         } else if ($st_clock_in == "No CI" && $st_clock_out == "No CO") {
                             $cek = 1;
                         } else if ($st_clock_in == "Late 1" && $st_clock_out == "OK") {
@@ -414,15 +418,19 @@
                                     }
                                 }
                             } else {
-                                if ($st_clock_in != "OK") {
-                                    $status_presensi_in = "Belum ada Izin";
-                                    $cek = 1;
-                                } else {
-                                    if (empty($rs_htlxxrh)) {
-                                        //JIKA ST CLOCK IN OK DAN TIDAK ADA ABSEN MAKA DIBERI HK
-                                        $status_presensi_in = "HK";
+                                //JIKS BUKAN OFF
+                                if ($jadwal['id_htsxxmh'] != 1) {
+                                    //JIKA CEK IN TIDAK OK
+                                    if ($st_clock_in != "OK") {
+                                        $status_presensi_in = "Belum ada Izin";
+                                        $cek = 1;
+                                    } else {
+                                        if (empty($rs_htlxxrh) ) {
+                                            //JIKA ST CLOCK IN OK DAN TIDAK ADA ABSEN MAKA DIBERI HK
+                                            $status_presensi_in = "HK";
+                                        }
+                                        $cek = 0;
                                     }
-                                    $cek = 0;
                                 }
 
                                 if ($st_clock_in == "Late 1") {
@@ -500,15 +508,17 @@
                                     }
                                 }
                             } else {
-                                if ($st_clock_out != "OK") {
-                                    $status_presensi_out = "Belum ada Izin";
-                                    $cek = 1;
-                                } else {
-                                    if (empty($rs_htlxxrh)) {
-                                        //JIKA ST CLOCK IN OK DAN TIDAK ADA ABSEN MAKA DIBERI HK
-                                        $status_presensi_out = "HK";
+                                if ($jadwal['id_htsxxmh'] != 1) {
+                                    if ($st_clock_out != "OK") {
+                                        $status_presensi_out = "Belum ada Izin";
+                                        $cek = 1;
+                                    } else {
+                                        if (empty($rs_htlxxrh)) {
+                                            //JIKA ST CLOCK IN OK DAN TIDAK ADA ABSEN MAKA DIBERI HK
+                                            $status_presensi_out = "HK";
+                                        }
+                                        $cek = 0;
                                     }
-                                    $cek = 0;
                                 }
                             }
 
@@ -597,6 +607,10 @@
                                 $status_presensi_out = 'AL';
                                 $cek = 1;
                             }
+                        }
+                        //JIKA TIDAK ADA ABSEN DAN SALAH SATU STATUS PRESENSI BELUM ADA IZIN MAKA CEK 1
+                        if(empty($rs_htlxxrh) && $status_presensi_in == "Belum ada Izin" || $status_presensi_out == "Belum ada Izin"){
+                            $cek = 1;
                         }
 
                         $htlxxrh_kode = implode(', ', $kode_izin);
