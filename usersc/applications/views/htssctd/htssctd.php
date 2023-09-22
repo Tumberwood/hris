@@ -382,8 +382,10 @@
 			});
 
 			edthtssctd.dependent( 'htssctd.id_htsxxmh', function ( val, data, callback ) {
-				if (val > 0) {
-					shift();
+				if (id_htsxxmh_old == 0) {
+					if (val > 0) {
+						shift();
+					}
 				}
 				return {}
 			}, {event: 'keyup change'});
