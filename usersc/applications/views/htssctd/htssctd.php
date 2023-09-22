@@ -393,15 +393,16 @@
 					edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(tanggal_akhir);
 					edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(tanggal_akhir);
 				} else {
+						
 						akhir = moment(tanggal_akhir).add(5, 'hour').format('DD MMM YYYY HH:mm');
 						awal = moment(tanggal_akhir).subtract(5, 'hour').format('DD MMM YYYY HH:mm');
 
-						if (tanggal_awal > awal) {
-							akhir = moment(tanggal_akhir).add(5, 'hour').add(1, 'day').format('DD MMM YYYY HH:mm');
-							awal = moment(tanggal_akhir).subtract(5, 'hour').add(1, 'day').format('DD MMM YYYY HH:mm');
-							tanggal_akhir = moment(tanggal_akhir).add(1, 'day').format('DD MMM YYYY HH:mm');
-							edthtssctd.field('htssctd.tanggaljam_akhir').val(tanggal_akhir);
-						}
+						// if (tanggal_awal > awal) {
+						// 	akhir = moment(tanggal_akhir).add(5, 'hour').add(1, 'day').format('DD MMM YYYY HH:mm');
+						// 	awal = moment(tanggal_akhir).subtract(5, 'hour').add(1, 'day').format('DD MMM YYYY HH:mm');
+						// 	tanggal_akhir = moment(tanggal_akhir).add(1, 'day').format('DD MMM YYYY HH:mm');
+						// 	edthtssctd.field('htssctd.tanggaljam_akhir').val(tanggal_akhir);
+						// }
 						edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(awal);
 						edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(akhir);
 				}
