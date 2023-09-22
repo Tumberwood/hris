@@ -13,15 +13,30 @@
     $id_hemxxmh = $_POST['id_hemxxmh'];
     $tanggal = $_POST['tanggal'];
 
+    // $qs_jam_istirahat = $db
+    //     ->raw()
+    //     ->bind(':id_hemxxmh', $id_hemxxmh)
+    //     ->bind(':tanggal', $tanggal)
+    //     ->exec(' SELECT
+    //                 TIME_FORMAT(DATE_ADD(a.jam_awal_istirahat, INTERVAL 1 HOUR), "%H:%i") AS jam,
+    //                 a.jam_awal_istirahat,
+    //                 a.jam_akhir_istirahat
+    //             FROM htssctd AS a
+    //             WHERE a.tanggal = :tanggal AND a.id_hemxxmh = :id_hemxxmh;
+    //             '
+    //             );
+    // $rs_jam_istirahat = $qs_jam_istirahat->fetch();
+
     $qs_jam_istirahat = $db
         ->raw()
         ->bind(':id_hemxxmh', $id_hemxxmh)
         ->bind(':tanggal', $tanggal)
         ->exec(' SELECT
-                    TIME_FORMAT(DATE_ADD(a.jam_awal_istirahat, INTERVAL 1 HOUR), "%H:%i") AS jam,
-                    a.jam_awal_istirahat,
-                    a.jam_akhir_istirahat
+                    TIME_FORMAT(DATE_ADD(b.jam_awal_istirahat, INTERVAL 1 HOUR), "%H:%i") AS jam,
+                    b.jam_awal_istirahat,
+                    b.jam_akhir_istirahat
                 FROM htssctd AS a
+                LEFT JOIN htsxxmh as b on b.id = a.id_htsxxmh
                 WHERE a.tanggal = :tanggal AND a.id_hemxxmh = :id_hemxxmh;
                 '
                 );

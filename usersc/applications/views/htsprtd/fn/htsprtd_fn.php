@@ -41,7 +41,11 @@
             success: function ( json ) {
                 jam = json.data.jam_istirahat.jam;
                 console.log(jam);
-                edthtsprtd.field('htsprtd.jam').val(jam);
+                if (jam == undefined) {
+                    edthtsprtd.field('htsprtd.jam').val('');
+                } else {
+                    edthtsprtd.field('htsprtd.jam').val(jam);
+                }
 
             }
         } );
