@@ -370,145 +370,61 @@
 					{ data: "htsprrd.jam_akhir_lembur_akhir" }, //23
 					{ 
 						data: "htsprrd.durasi_lembur_libur",
-						render: function (data){
-							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
-							}else {
-								return '';
-							}
-						},
 						class: "text-right"
 					}, //24
 					{ 
 						data: "htsprrd.durasi_lembur_awal" ,
-						render: function (data){
-							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
-							}else {
-								return '';
-							}
-						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.durasi_lembur_akhir" ,
-						render: function (data){
-							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
-							}else {
-								return '';
-							}
-						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.durasi_lembur_istirahat1" ,
-						render: function (data){
-							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
-							}else {
-								return '';
-							}
-						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.durasi_lembur_istirahat2" ,
-						render: function (data){
-							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
-							}else {
-								return '';
-							}
-						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.durasi_lembur_istirahat3" ,
-						render: function (data){
-							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
-							}else {
-								return '';
-							}
-						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.durasi_lembur_total_jam" ,
-						render: function (data){
-							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
-							}else {
-								return '';
-							}
-						},
 						class: "text-right"
 					}, //30
 					{ 
 						data: "htsprrd.pot_ti" ,
-						render: function (data){
-							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
-							}else {
-								return '';
-							}
-						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.pot_overtime" ,
-						render: function (data){
-							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
-							}else {
-								return '';
-							}
-						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.pot_hk" ,
-						render: function (data){
-							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
-							}else {
-								return '';
-							}
-						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.pot_jam",
-						render: function (data){
-							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
-							}else {
-								return '';
-							}
-						},
 						class: "text-right"
 					},
 					{ 
 						data: "htsprrd.durasi_lembur_final",
-						render: function (data){
-							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
-							}else {
-								return '';
-							}
-						},
 						class: "text-right"
 					},
 					{ 
 						data: null,
 						render: function (data){
 							if (data > 0){
-								return incfFormatNumberWithDecimal(data,1);
-							}else {
 								return '';
+							}else {
+								return incfFormatNumberWithDecimal(data,1);
 							}
-						},
+						}
 					}
 					
 				],
