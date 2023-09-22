@@ -73,6 +73,8 @@
                                 <th>Akhir T1</th>
                                 <th>Akhir</th>
                                 <th>Akhir T2</th>
+                                <th>Awal Istirahat</th>
+                                <th>Akhir Istirahat</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -338,6 +340,26 @@
 						format: 'DD MMM YYYY HH:mm'
 					},
 					{
+						label: "Tanggal Awal Istirahat <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_awal_istirahat",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Tanggal Akhir Istirahat <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_akhir_istirahat",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
 						label: "Keterangan",
 						name: "htssctd.keterangan",
 						type: "textarea"
@@ -429,6 +451,24 @@
 						}
 					}
 					// END of validasi htssctd.tanggal
+
+					// BEGIN of validasi htssctd.tanggaljam_awal_istirahat
+					if ( ! edthtssctd.field('htssctd.tanggaljam_awal_istirahat').isMultiValue() ) {
+						tanggaljam_awal_istirahat = edthtssctd.field('htssctd.tanggaljam_awal_istirahat').val();
+						if(!tanggaljam_awal_istirahat || tanggaljam_awal_istirahat == ''){
+							edthtssctd.field('htssctd.tanggaljam_awal_istirahat').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htssctd.tanggaljam_awal_istirahat
+
+					// BEGIN of validasi htssctd.tanggaljam_akhir_istirahat
+					if ( ! edthtssctd.field('htssctd.tanggaljam_akhir_istirahat').isMultiValue() ) {
+						tanggaljam_akhir_istirahat = edthtssctd.field('htssctd.tanggaljam_akhir_istirahat').val();
+						if(!tanggaljam_akhir_istirahat || tanggaljam_akhir_istirahat == ''){
+							edthtssctd.field('htssctd.tanggaljam_akhir_istirahat').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htssctd.tanggaljam_akhir_istirahat
 					
 				}
 				
@@ -502,6 +542,8 @@
 					{ data: "htssctd.tanggaljam_akhir_t1" },
 					{ data: "htssctd.tanggaljam_akhir" },
 					{ data: "htssctd.tanggaljam_akhir_t2" },
+					{ data: "htssctd.tanggaljam_awal_istirahat" },
+					{ data: "htssctd.tanggaljam_akhir_istirahat" },
 					
 					{ data: "htssctd.keterangan" }
 				],

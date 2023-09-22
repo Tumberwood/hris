@@ -135,6 +135,30 @@
 					'from' => 'd M Y H:i',
 					'to' =>   'Y-m-d H:i:s'
 				) ),
+			Field::inst( 'htssctd.tanggaljam_awal_istirahat' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00 00:00:00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y H:i', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y H:i',
+					'to' =>   'Y-m-d H:i:s'
+				) ),
+			Field::inst( 'htssctd.tanggaljam_akhir_istirahat' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00 00:00:00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y H:i', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y H:i',
+					'to' =>   'Y-m-d H:i:s'
+				) ),
 
 			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' ),
 

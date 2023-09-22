@@ -28,7 +28,21 @@
     ->bind(':tanggal', $tanggal)
     ->exec('SELECT
                 concat(:tanggal, " ", a.jam_awal) AS tanggal_jam_awal,
-                concat(:tanggal, " ", a.jam_akhir) AS tanggal_jam_akhir
+                CASE
+                    WHEN a.kode like "malam%" AND a.jam_akhir <= "12:00:00"
+                    THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", a.jam_akhir)
+                    ELSE CONCAT(:tanggal, " ", a.jam_akhir)
+                END AS tanggal_jam_akhir,
+                CASE
+                    WHEN a.kode like "malam%" AND a.jam_awal_istirahat <= "12:00:00"
+                    THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", a.jam_awal_istirahat)
+                    ELSE CONCAT(:tanggal, " ", a.jam_awal_istirahat)
+                END AS tanggaljam_awal_istirahat,
+                CASE
+                    WHEN a.kode like "malam%" AND a.jam_akhir_istirahat <= "12:00:00"
+                    THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", a.jam_akhir_istirahat)
+                    ELSE CONCAT(:tanggal, " ", a.jam_akhir_istirahat)
+                END AS tanggaljam_akhir_istirahat
             FROM htsxxmh AS a
             WHERE a.id = :id_htsxxmh
             '
