@@ -424,7 +424,8 @@
 							}else {
 								return incfFormatNumberWithDecimal(data,1);
 							}
-						}
+						},
+						visible: false
 					}
 					
 				],
