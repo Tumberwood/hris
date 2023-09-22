@@ -96,6 +96,8 @@
         $tanggal_jam_izin_akhir = 0;
 
         $tolak_ti = 0;
+        // $durasi_break_menit = 0;
+        // $potongan_ti_jam = 0;
         $jam_pengali = 0;
 
         //CEK JIKA ADA KARYAWAN AKTIF
@@ -132,36 +134,78 @@
                 $kode_dinas_multi = array();
 
                 // STEP 1 CEK JADWAL
+                // $qs_htssctd = $db
+                //     ->query('select', 'htssctd' )
+                //     ->get([
+                //         'htssctd.id_htsxxmh as id_htsxxmh',
+                //         'htsxxmh.kode as htsxxmh_kode',
+                //         'htssctd.jam_awal as jam_awal',
+                //         'htssctd.jam_akhir as jam_akhir',
+                //         'htssctd.jam_awal_istirahat as jam_awal_istirahat',
+                //         'htssctd.jam_akhir_istirahat as jam_akhir_istirahat',
+                //         'htssctd.menit_toleransi_awal_in as menit_toleransi_awal_in',
+                //         'htssctd.menit_toleransi_akhir_in as menit_toleransi_akhir_in',
+                //         'htssctd.menit_toleransi_awal_out as menit_toleransi_awal_out',
+                //         'htssctd.menit_toleransi_akhir_out as menit_toleransi_akhir_out',
+
+                //         'htssctd.tanggaljam_awal_t1 as tanggaljam_awal_t1',
+                //         'htssctd.tanggaljam_awal as tanggaljam_awal',
+                //         'htssctd.tanggaljam_awal_t2 as tanggaljam_awal_t2',
+                //         'htssctd.tanggaljam_akhir_t1 as tanggaljam_akhir_t1',
+                //         'htssctd.tanggaljam_akhir as tanggaljam_akhir',
+                //         'htssctd.tanggaljam_akhir_t2 as tanggaljam_akhir_t2',
+
+                //         'htssctd.tanggaljam_awal_istirahat as tanggaljam_awal_istirahat',
+                //         'htssctd.tanggaljam_akhir_istirahat as tanggaljam_akhir_istirahat'
+
+                //     ] )
+                //     ->join('htsxxmh','htsxxmh.id = htssctd.id_htsxxmh','LEFT')
+                //     ->where('htssctd.is_active', 1 )
+                //     ->where('htssctd.id_hemxxmh', $id_hemxxmh )
+                //     ->where('htssctd.tanggal', $tanggal )
+                //     ->exec();
+                // $rs_htssctd = $qs_htssctd->fetchAll();
                 $qs_htssctd = $db
-                    ->query('select', 'htssctd' )
-                    ->get([
-                        'htssctd.id_htsxxmh as id_htsxxmh',
-                        'htsxxmh.kode as htsxxmh_kode',
-                        'htssctd.jam_awal as jam_awal',
-                        'htssctd.jam_akhir as jam_akhir',
-                        'htssctd.jam_awal_istirahat as jam_awal_istirahat',
-                        'htssctd.jam_akhir_istirahat as jam_akhir_istirahat',
-                        'htssctd.menit_toleransi_awal_in as menit_toleransi_awal_in',
-                        'htssctd.menit_toleransi_akhir_in as menit_toleransi_akhir_in',
-                        'htssctd.menit_toleransi_awal_out as menit_toleransi_awal_out',
-                        'htssctd.menit_toleransi_akhir_out as menit_toleransi_akhir_out',
-
-                        'htssctd.tanggaljam_awal_t1 as tanggaljam_awal_t1',
-                        'htssctd.tanggaljam_awal as tanggaljam_awal',
-                        'htssctd.tanggaljam_awal_t2 as tanggaljam_awal_t2',
-                        'htssctd.tanggaljam_akhir_t1 as tanggaljam_akhir_t1',
-                        'htssctd.tanggaljam_akhir as tanggaljam_akhir',
-                        'htssctd.tanggaljam_akhir_t2 as tanggaljam_akhir_t2',
-
-                        'htssctd.tanggaljam_awal_istirahat as tanggaljam_awal_istirahat',
-                        'htssctd.tanggaljam_akhir_istirahat as tanggaljam_akhir_istirahat'
-
-                    ] )
-                    ->join('htsxxmh','htsxxmh.id = htssctd.id_htsxxmh','LEFT')
-                    ->where('htssctd.is_active', 1 )
-                    ->where('htssctd.id_hemxxmh', $id_hemxxmh )
-                    ->where('htssctd.tanggal', $tanggal )
-                    ->exec();
+                    ->raw()
+                    ->bind(':id_hemxxmh', $id_hemxxmh)
+                    ->bind(':tanggal', $tanggal)
+                    ->exec('SELECT
+                                htssctd.id_htsxxmh AS id_htsxxmh,
+                                htsxxmh.kode AS htsxxmh_kode,
+                                htssctd.jam_awal AS jam_awal,
+                                htssctd.jam_akhir AS jam_akhir,
+                                htssctd.jam_awal_istirahat AS jam_awal_istirahat,
+                                htssctd.jam_akhir_istirahat AS jam_akhir_istirahat,
+                                htssctd.menit_toleransi_awal_in AS menit_toleransi_awal_in,
+                                htssctd.menit_toleransi_akhir_in AS menit_toleransi_akhir_in,
+                                htssctd.menit_toleransi_awal_out AS menit_toleransi_awal_out,
+                                htssctd.menit_toleransi_akhir_out AS menit_toleransi_akhir_out,
+                                htssctd.tanggaljam_awal_t1 AS tanggaljam_awal_t1,
+                                htssctd.tanggaljam_awal AS tanggaljam_awal,
+                                htssctd.tanggaljam_awal_t2 AS tanggaljam_awal_t2,
+                                htssctd.tanggaljam_akhir_t1 AS tanggaljam_akhir_t1,
+                                htssctd.tanggaljam_akhir AS tanggaljam_akhir,
+                                htssctd.tanggaljam_akhir_t2 AS tanggaljam_akhir_t2,
+                                CASE
+                                    WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_awal_istirahat <= "02:00:00"
+                                    THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_awal_istirahat)
+                                    ELSE CONCAT(:tanggal, " ", htsxxmh.jam_awal_istirahat)
+                                END AS tanggaljam_awal_istirahat,
+                                CASE
+                                    WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir_istirahat <= "02:00:00"
+                                    THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_akhir_istirahat)
+                                    ELSE CONCAT(:tanggal, " ", htsxxmh.jam_akhir_istirahat)
+                                END AS tanggaljam_akhir_istirahat
+                            FROM
+                                htssctd
+                            LEFT JOIN
+                                htsxxmh ON htsxxmh.id = htssctd.id_htsxxmh
+                            WHERE
+                                htssctd.is_active = 1
+                                AND htssctd.id_hemxxmh = :id_hemxxmh
+                                AND htssctd.tanggal = :tanggal                
+                            '
+                            );
                 $rs_htssctd = $qs_htssctd->fetchAll();
                 $total_shift = count($rs_htssctd);
                 // print_r($total_shift);
@@ -734,6 +778,8 @@
                                     // BEGIN validasi TI
                                     // Ambil data checkclock Istirahat yang ada dalam range tersebut ( $durasi_break_menit )
                                     // untuk menentukan lama waktu istirahat yang diambil oleh karyawan
+                                    // $durasi_break_menit = 0;
+                                    // $potongan_ti_jam = 0;
                                     $qs_htsprtd_break = $db
                                         ->query('select', 'htsprtd' )
                                         ->get(['TIMESTAMPDIFF(MINUTE,MIN(CONCAT(htsprtd.tanggal," ",htsprtd.jam)),	MAX(CONCAT(htsprtd.tanggal," ",htsprtd.jam))) as durasi_break_menit'
@@ -746,8 +792,14 @@
                                         ->exec();
                                     $rs_htsprtd_break = $qs_htsprtd_break->fetch();
                                     $durasi_break_menit = $rs_htsprtd_break['durasi_break_menit'];
-
+                                    // if ($id_hemxxmh == 160) {
+                                        // print_r($id_hemxxmh . ' == id_hemxxmh<br>');
+                                        // print_r($tanggaljam_awal_istirahat . ' == tanggaljam_awal_istirahat<br>');
+                                        // print_r($tanggaljam_akhir_istirahat . ' == tanggaljam_akhir_istirahat<br>');
+                                        // print_r($durasi_break_menit . ' == durasi_break_menit<br>');
+                                    // }
                                     if(!empty($rs_htsprtd_break)){
+                                        // $potongan_ti_jam = 0;
                                         // jika $durasi_break_menit > 20, maka TI tidak berlaku
                                         // jika check clock istirahat gitang, dianggap tidak melewati 20 menit
                                         if($row_htoxxrd['is_istirahat'] == 2){
@@ -777,8 +829,13 @@
                                     }
                                     // END validasi TI
                                 }
-
-                                
+                                //////// Testing potongan TI 25 JUl Organik
+                                // if (in_array($id_hemxxmh, [150, 348, 1319])) {
+                                //     print_r($id_hemxxmh . ' == id_hemxxmh<br>');
+                                //     print_r($durasi_break_menit . ' == durasi_break_menit<br>');
+                                //     print_r($potongan_ti_jam . ' == potongan_ti_jam<br>');
+                                //     print_r($row_htoxxrd['is_istirahat'] . ' == is_istirahat<br>');
+                                // }
                             } // end foreach $rs_htoxxrd
 
                             // hitung total lembur kotor
@@ -884,7 +941,6 @@
 
                         //POTONGAN OVERTIME 
                         //Apabila : Total Potongan(pot_jam) < Durasi total overtime(durasi_lembur_total_jam)
-                        
                         //add by ferry 
                         if ($pot_jam < $durasi_lembur_total_jam) {
                             $pot_overtime = $pot_jam - $potongan_ti_jam;
