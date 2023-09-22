@@ -707,7 +707,7 @@
 				tanggal      = htsprrd_data.tanggal;
 				cek      = htsprrd_data.cek;
 				
-				if (status_presensi_in == "AL" && status_presensi_out == "AL") {
+				if (status_presensi_in == "AL" && status_presensi_out == "AL" || status_presensi_in == "Jadwal Salah" && status_presensi_out == "Jadwal Salah") {
 					tblhtsprrd.button('btncekNol:name').enable();
 				} else {
 					tblhtsprrd.button('btncekNol:name').disable();
