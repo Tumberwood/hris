@@ -382,8 +382,8 @@
 			});
 
 			edthtssctd.dependent( 'htssctd.id_htsxxmh', function ( val, data, callback ) {
-				if (id_htsxxmh_old == 0) {
-					if (val > 0) {
+				if (id_htsxxmh_old != 0) {
+					if (val != id_htsxxmh_old) {
 						shift();
 					}
 				}
