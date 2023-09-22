@@ -62,6 +62,7 @@
 			Field::inst( 'htoxxrd.durasi_jam_final' ),
 			Field::inst( 'htoxxrd.upah_lembur' ),
 			Field::inst( 'htoxxrd.is_istirahat' ),
+			Field::inst( 'htoxxrd.pot_ti' ),
 
 			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' ),
 			Field::inst( 'hodxxmh.nama' ),

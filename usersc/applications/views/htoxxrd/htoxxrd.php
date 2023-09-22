@@ -66,6 +66,7 @@
 								<th>Jam Awal</th>
 								<th>Jam Akhir</th>
 								<th>Durasi</th>
+								<th>Potongan TI</th>
 								<!-- <th>Makan</th> -->
 								<th>Approve</th>
 							</tr>
@@ -84,6 +85,7 @@
 								<th></th>
 								<th>Grand Total</th>
 								<th class="text-right bg-primary" id="s_jam"></th>
+								<th class="text-right bg-primary" id="s_pot_ti"></th>
 								<th></th>
 							</tr>
 						</tfoot>
@@ -170,6 +172,14 @@
 							}, 0);
 						sumJam = $.fn.dataTable.render.number(',', '.', 1, '').display( sumJam );
 
+						var sum_pot_ti = rows
+							.data()
+							.pluck('htoxxrd.pot_ti') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_pot_ti = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_pot_ti );
+
 						return $('<tr/>')
 							.append( '<td colspan="2" class="font-bold">Total</td>' )
 							.append( '<td></td>' )
@@ -179,6 +189,7 @@
 							.append( '<td></td>' )
 							.append( '<td></td>' )
 							.append( '<td class="text-right bg-warning">'+sumJam+'</td>' )
+							.append( '<td class="text-right bg-warning">'+sum_pot_ti+'</td>' )
 							.append( '<td class="text-right"></td>' );
 					},
 					dataSrc: 'htoxxrd.kode'
@@ -228,6 +239,11 @@
 						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
 						class: "text-right"
 					},
+					{ 
+						data: "htoxxrd.pot_ti" ,
+						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						class: "text-right"
+					},
 					// { data: null },
 					{ 
 						data: "htoxxrd.is_approve" ,
@@ -274,10 +290,10 @@
 					var numFormat0 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					// hitung jumlah 
 					s_jam = api.column( 10 ).data().sum();
-					// c_makan = api.column( 10 ).data().count();
+					s_pot_ti = api.column( 11 ).data().sum();
 
 					$( '#s_jam' ).html( numFormat1(s_jam) );
-					// $( '#c_makan' ).html( numFormat0(c_makan) );
+					$( '#s_pot_ti' ).html( numFormat0(s_pot_ti) );
 				}
 			} );
 

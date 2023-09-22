@@ -135,79 +135,79 @@
                 $kode_dinas_multi = array();
 
                 // STEP 1 CEK JADWAL
-                // $qs_htssctd = $db
-                //     ->query('select', 'htssctd' )
-                //     ->get([
-                //         'htssctd.id_htsxxmh as id_htsxxmh',
-                //         'htsxxmh.kode as htsxxmh_kode',
-                //         'htssctd.jam_awal as jam_awal',
-                //         'htssctd.jam_akhir as jam_akhir',
-                //         'htssctd.jam_awal_istirahat as jam_awal_istirahat',
-                //         'htssctd.jam_akhir_istirahat as jam_akhir_istirahat',
-                //         'htssctd.menit_toleransi_awal_in as menit_toleransi_awal_in',
-                //         'htssctd.menit_toleransi_akhir_in as menit_toleransi_akhir_in',
-                //         'htssctd.menit_toleransi_awal_out as menit_toleransi_awal_out',
-                //         'htssctd.menit_toleransi_akhir_out as menit_toleransi_akhir_out',
-
-                //         'htssctd.tanggaljam_awal_t1 as tanggaljam_awal_t1',
-                //         'htssctd.tanggaljam_awal as tanggaljam_awal',
-                //         'htssctd.tanggaljam_awal_t2 as tanggaljam_awal_t2',
-                //         'htssctd.tanggaljam_akhir_t1 as tanggaljam_akhir_t1',
-                //         'htssctd.tanggaljam_akhir as tanggaljam_akhir',
-                //         'htssctd.tanggaljam_akhir_t2 as tanggaljam_akhir_t2',
-
-                //         'htssctd.tanggaljam_awal_istirahat as tanggaljam_awal_istirahat',
-                //         'htssctd.tanggaljam_akhir_istirahat as tanggaljam_akhir_istirahat'
-
-                //     ] )
-                //     ->join('htsxxmh','htsxxmh.id = htssctd.id_htsxxmh','LEFT')
-                //     ->where('htssctd.is_active', 1 )
-                //     ->where('htssctd.id_hemxxmh', $id_hemxxmh )
-                //     ->where('htssctd.tanggal', $tanggal )
-                //     ->exec();
-                // $rs_htssctd = $qs_htssctd->fetchAll();
                 $qs_htssctd = $db
-                    ->raw()
-                    ->bind(':id_hemxxmh', $id_hemxxmh)
-                    ->bind(':tanggal', $tanggal)
-                    ->exec('SELECT
-                                htssctd.id_htsxxmh AS id_htsxxmh,
-                                htsxxmh.kode AS htsxxmh_kode,
-                                htssctd.jam_awal AS jam_awal,
-                                htssctd.jam_akhir AS jam_akhir,
-                                htssctd.jam_awal_istirahat AS jam_awal_istirahat,
-                                htssctd.jam_akhir_istirahat AS jam_akhir_istirahat,
-                                htssctd.menit_toleransi_awal_in AS menit_toleransi_awal_in,
-                                htssctd.menit_toleransi_akhir_in AS menit_toleransi_akhir_in,
-                                htssctd.menit_toleransi_awal_out AS menit_toleransi_awal_out,
-                                htssctd.menit_toleransi_akhir_out AS menit_toleransi_akhir_out,
-                                htssctd.tanggaljam_awal_t1 AS tanggaljam_awal_t1,
-                                htssctd.tanggaljam_awal AS tanggaljam_awal,
-                                htssctd.tanggaljam_awal_t2 AS tanggaljam_awal_t2,
-                                htssctd.tanggaljam_akhir_t1 AS tanggaljam_akhir_t1,
-                                htssctd.tanggaljam_akhir AS tanggaljam_akhir,
-                                htssctd.tanggaljam_akhir_t2 AS tanggaljam_akhir_t2,
-                                CASE
-                                    WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_awal_istirahat <= "02:00:00"
-                                    THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_awal_istirahat)
-                                    ELSE CONCAT(:tanggal, " ", htsxxmh.jam_awal_istirahat)
-                                END AS tanggaljam_awal_istirahat,
-                                CASE
-                                    WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir_istirahat <= "02:00:00"
-                                    THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_akhir_istirahat)
-                                    ELSE CONCAT(:tanggal, " ", htsxxmh.jam_akhir_istirahat)
-                                END AS tanggaljam_akhir_istirahat
-                            FROM
-                                htssctd
-                            LEFT JOIN
-                                htsxxmh ON htsxxmh.id = htssctd.id_htsxxmh
-                            WHERE
-                                htssctd.is_active = 1
-                                AND htssctd.id_hemxxmh = :id_hemxxmh
-                                AND htssctd.tanggal = :tanggal                
-                            '
-                            );
+                    ->query('select', 'htssctd' )
+                    ->get([
+                        'htssctd.id_htsxxmh as id_htsxxmh',
+                        'htsxxmh.kode as htsxxmh_kode',
+                        'htssctd.jam_awal as jam_awal',
+                        'htssctd.jam_akhir as jam_akhir',
+                        'htssctd.jam_awal_istirahat as jam_awal_istirahat',
+                        'htssctd.jam_akhir_istirahat as jam_akhir_istirahat',
+                        'htssctd.menit_toleransi_awal_in as menit_toleransi_awal_in',
+                        'htssctd.menit_toleransi_akhir_in as menit_toleransi_akhir_in',
+                        'htssctd.menit_toleransi_awal_out as menit_toleransi_awal_out',
+                        'htssctd.menit_toleransi_akhir_out as menit_toleransi_akhir_out',
+
+                        'htssctd.tanggaljam_awal_t1 as tanggaljam_awal_t1',
+                        'htssctd.tanggaljam_awal as tanggaljam_awal',
+                        'htssctd.tanggaljam_awal_t2 as tanggaljam_awal_t2',
+                        'htssctd.tanggaljam_akhir_t1 as tanggaljam_akhir_t1',
+                        'htssctd.tanggaljam_akhir as tanggaljam_akhir',
+                        'htssctd.tanggaljam_akhir_t2 as tanggaljam_akhir_t2',
+
+                        'htssctd.tanggaljam_awal_istirahat as tanggaljam_awal_istirahat',
+                        'htssctd.tanggaljam_akhir_istirahat as tanggaljam_akhir_istirahat'
+
+                    ] )
+                    ->join('htsxxmh','htsxxmh.id = htssctd.id_htsxxmh','LEFT')
+                    ->where('htssctd.is_active', 1 )
+                    ->where('htssctd.id_hemxxmh', $id_hemxxmh )
+                    ->where('htssctd.tanggal', $tanggal )
+                    ->exec();
                 $rs_htssctd = $qs_htssctd->fetchAll();
+                // $qs_htssctd = $db
+                //     ->raw()
+                //     ->bind(':id_hemxxmh', $id_hemxxmh)
+                //     ->bind(':tanggal', $tanggal)
+                //     ->exec('SELECT
+                //                 htssctd.id_htsxxmh AS id_htsxxmh,
+                //                 htsxxmh.kode AS htsxxmh_kode,
+                //                 htssctd.jam_awal AS jam_awal,
+                //                 htssctd.jam_akhir AS jam_akhir,
+                //                 htssctd.jam_awal_istirahat AS jam_awal_istirahat,
+                //                 htssctd.jam_akhir_istirahat AS jam_akhir_istirahat,
+                //                 htssctd.menit_toleransi_awal_in AS menit_toleransi_awal_in,
+                //                 htssctd.menit_toleransi_akhir_in AS menit_toleransi_akhir_in,
+                //                 htssctd.menit_toleransi_awal_out AS menit_toleransi_awal_out,
+                //                 htssctd.menit_toleransi_akhir_out AS menit_toleransi_akhir_out,
+                //                 htssctd.tanggaljam_awal_t1 AS tanggaljam_awal_t1,
+                //                 htssctd.tanggaljam_awal AS tanggaljam_awal,
+                //                 htssctd.tanggaljam_awal_t2 AS tanggaljam_awal_t2,
+                //                 htssctd.tanggaljam_akhir_t1 AS tanggaljam_akhir_t1,
+                //                 htssctd.tanggaljam_akhir AS tanggaljam_akhir,
+                //                 htssctd.tanggaljam_akhir_t2 AS tanggaljam_akhir_t2,
+                //                 CASE
+                //                     WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_awal_istirahat <= "02:00:00"
+                //                     THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_awal_istirahat)
+                //                     ELSE CONCAT(:tanggal, " ", htsxxmh.jam_awal_istirahat)
+                //                 END AS tanggaljam_awal_istirahat,
+                //                 CASE
+                //                     WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir_istirahat <= "02:00:00"
+                //                     THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_akhir_istirahat)
+                //                     ELSE CONCAT(:tanggal, " ", htsxxmh.jam_akhir_istirahat)
+                //                 END AS tanggaljam_akhir_istirahat
+                //             FROM
+                //                 htssctd
+                //             LEFT JOIN
+                //                 htsxxmh ON htsxxmh.id = htssctd.id_htsxxmh
+                //             WHERE
+                //                 htssctd.is_active = 1
+                //                 AND htssctd.id_hemxxmh = :id_hemxxmh
+                //                 AND htssctd.tanggal = :tanggal                
+                //             '
+                //             );
+                // $rs_htssctd = $qs_htssctd->fetchAll();
                 $total_shift = count($rs_htssctd);
                 // print_r($total_shift);
 
@@ -812,6 +812,7 @@
                                                 $qu_htoemtd = $db
                                                     ->query('update', 'htoxxrd')
                                                     ->set('keterangan', 'Pengajuan TI ditolak')
+                                                    ->set('pot_ti', $potongan_ti_jam)
                                                     ->where('id_hemxxmh',$id_hemxxmh)
                                                     ->where('tanggal',$tanggal)
                                                 ->exec();
