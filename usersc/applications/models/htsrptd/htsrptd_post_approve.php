@@ -45,13 +45,13 @@
             if ($rs_htsrptd['nama_os_pengaju'] != "KMJ" && $rs_htsrptd['id_htsxxmh_pengganti'] != "KMJ") {
                 // BEGIN non aktif pengaju
                 // harusnya bisa pakai where or, tapi belum berhasil diganti off
-                $qu_htssctd_pengaju = $db
-                    ->query('update', 'htssctd')
-                    ->set('id_htsxxmh', 1)
-                    ->set('keterangan', $keterangan)
-                    ->where('tanggal', $rs_htsrptd['tanggal'])
-                    ->where('id_hemxxmh', $rs_htsrptd['id_hemxxmh_pengaju'])
-                    ->exec();
+                // $qu_htssctd_pengaju = $db
+                //     ->query('update', 'htssctd')
+                //     ->set('id_htsxxmh', 1)
+                //     ->set('keterangan', $keterangan)
+                //     ->where('tanggal', $rs_htsrptd['tanggal'])
+                //     ->where('id_hemxxmh', $rs_htsrptd['id_hemxxmh_pengaju'])
+                //     ->exec();
                 // END non aktif pengaju
 
                 // BEGIN insert pengganti tambahan
