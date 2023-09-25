@@ -26,7 +26,7 @@
 			Field::inst( 'htsprtd.kode' ),
 			Field::inst( 'htsprtd.nama' )
 				->setFormatter( function ( $val ) {
-					return ucwords($val);
+					return strtoupper($val);
 				} ),
 			Field::inst( 'htsprtd.keterangan' ),
 			Field::inst( 'htsprtd.is_active' ),

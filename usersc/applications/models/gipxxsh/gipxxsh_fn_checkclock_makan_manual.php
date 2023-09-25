@@ -62,7 +62,7 @@
              */
 			for($i = 1;$i < count($sheetData);$i++){
 				
-				$nama  = 'Makan Manual';
+				$nama  = 'MAKAN MANUAL';
                 if(strlen($sheetData[$i]['0']) == 1){
                     $kode 		= '000' . $sheetData[$i]['0'] ;
                 }elseif(strlen($sheetData[$i]['0']) == 2){

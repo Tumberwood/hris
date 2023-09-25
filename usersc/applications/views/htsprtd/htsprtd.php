@@ -199,7 +199,7 @@
 						options: [
 							{ "label": "Istirahat", "value": "istirahat" },
 							{ "label": "Makan", "value": "makan" },
-							{ "label": "Makan Manual", "value": "makan manual" },
+							{ "label": "Makan Manual", "value": "MAKAN MANUAL" },
 							{ "label": "Outsourcing", "value": "os" },
 							{ "label": "PMI", "value": "pmi" },
 							{ "label": "Staff", "value": "staff" }
@@ -284,7 +284,7 @@
 
 			edthtsprtd.dependent( 'htsprtd.nama', function ( val, data, callback ) {
 				nama = edthtsprtd.field('htsprtd.nama').val();
-				if (nama ==  "makan manual") {
+				if (nama ==  "MAKAN MANUAL") {
 					jamMakanManual();
 					// edthtsprtd.field('htsprtd.jam').disable();
 				}else {
@@ -295,7 +295,7 @@
 
 			edthtsprtd.dependent( 'htsprtd.id_hemxxmh', function ( val, data, callback ) {
 				nama = edthtsprtd.field('htsprtd.nama').val();
-				if (nama ==  "makan manual") {
+				if (nama ==  "MAKAN MANUAL") {
 					jamMakanManual();
 					// edthtsprtd.field('htsprtd.jam').disable();
 				}else {
@@ -307,7 +307,7 @@
 
 			edthtsprtd.dependent( 'htsprtd.tanggal', function ( val, data, callback ) {
 				nama = edthtsprtd.field('htsprtd.nama').val();
-				if (nama ==  "makan manual") {
+				if (nama ==  "MAKAN MANUAL") {
 					jamMakanManual();
 					// edthtsprtd.field('htsprtd.jam').disable();
 				}else {
@@ -346,7 +346,7 @@
 
 					jam = edthtsprtd.field('htsprtd.jam').val();
 					unikMakan(jam);
-					if (nama != "makan manual") {
+					if (nama != "MAKAN MANUAL") {
 						// BEGIN of validasi htsprtd.jam
 						if ( ! edthtsprtd.field('htsprtd.jam').isMultiValue() ) {
 							if(!jam || jam == ''){
