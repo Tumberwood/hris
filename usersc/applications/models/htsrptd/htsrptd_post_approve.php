@@ -114,12 +114,20 @@
                                     END
                                 )
                             ) AS tanggaljam_awal_t2,
-                            CONCAT(:tanggal_pengganti, " ", TIME(DATE_SUB(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_awal_out MINUTE))) AS tanggaljam_akhir_t1,
-                            CONCAT(:tanggal_pengganti, " ", htsxxmh.jam_akhir) AS tanggaljam_akhir,
-                            
+                            CASE
+                                WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir <= "12:00:00"
+                                THEN CONCAT(DATE_ADD(:tanggal_pengganti, INTERVAL 1 DAY), " ", TIME(DATE_SUB(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE)))
+                                ELSE CONCAT(:tanggal_pengganti, " ", TIME(DATE_SUB(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE)))
+                            END AS tanggaljam_akhir_t1,
+                            CASE
+                                WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir <= "12:00:00"
+                                THEN CONCAT(DATE_ADD(:tanggal_pengganti, INTERVAL 1 DAY), " ", htsxxmh.jam_akhir)
+                                ELSE CONCAT(:tanggal_pengganti, " ", htsxxmh.jam_akhir)
+                            END AS tanggaljam_akhir,
                             CONCAT(
                                 CASE
-                                    WHEN DATE_ADD(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE) >= "24:00:00" THEN DATE_ADD(:tanggal_pengganti, INTERVAL 1 DAY)
+                                    WHEN DATE_ADD(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE) >= "24:00:00" 
+                                        OR htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir <= "12:00:00" THEN DATE_ADD(:tanggal_pengganti, INTERVAL 1 DAY)
                                     ELSE :tanggal_pengganti
                                 END,
                                 " ",
@@ -132,8 +140,16 @@
                                     END
                                 )
                             ) AS tanggaljam_akhir_t2,
-                            CONCAT(:tanggal_pengganti, " ", htsxxmh.jam_awal_istirahat) AS tanggaljam_awal_istirahat,
-                            CONCAT(:tanggal_pengganti, " ", htsxxmh.jam_akhir_istirahat) AS tanggaljam_akhir_istirahat
+                            CASE
+                                WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_awal_istirahat <= "12:00:00"
+                                THEN CONCAT(DATE_ADD(:tanggal_pengganti, INTERVAL 1 DAY), " ", htsxxmh.jam_awal_istirahat)
+                                ELSE CONCAT(:tanggal_pengganti, " ", htsxxmh.jam_awal_istirahat)
+                            END AS tanggaljam_awal_istirahat,
+                            CASE
+                                WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir_istirahat <= "12:00:00"
+                                THEN CONCAT(DATE_ADD(:tanggal_pengganti, INTERVAL 1 DAY), " ", htsxxmh.jam_akhir_istirahat)
+                                ELSE CONCAT(:tanggal_pengganti, " ", htsxxmh.jam_akhir_istirahat)
+                            END AS tanggaljam_akhir_istirahat
                         FROM htsxxmh
                         WHERE 
                             htsxxmh.id = :id_htsxxmh_pengaju
@@ -265,8 +281,16 @@
                                 END
                             )
                         ) AS tanggaljam_akhir_t2,
-                        CONCAT(:tanggal_pengaju, " ", htsxxmh.jam_awal_istirahat) AS tanggaljam_awal_istirahat,
-                        CONCAT(:tanggal_pengaju, " ", htsxxmh.jam_akhir_istirahat) AS tanggaljam_akhir_istirahat
+                        CASE
+                            WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_awal_istirahat <= "12:00:00"
+                            THEN CONCAT(DATE_ADD(:tanggal_pengaju, INTERVAL 1 DAY), " ", htsxxmh.jam_awal_istirahat)
+                            ELSE CONCAT(:tanggal_pengaju, " ", htsxxmh.jam_awal_istirahat)
+                        END AS tanggaljam_awal_istirahat,
+                        CASE
+                            WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir_istirahat <= "12:00:00"
+                            THEN CONCAT(DATE_ADD(:tanggal_pengaju, INTERVAL 1 DAY), " ", htsxxmh.jam_akhir_istirahat)
+                            ELSE CONCAT(:tanggal_pengaju, " ", htsxxmh.jam_akhir_istirahat)
+                        END AS tanggaljam_akhir_istirahat
                     FROM htsxxmh
                     WHERE 
                         id = :id_htsxxmh_pengaju
@@ -334,9 +358,16 @@
                                 END
                             )
                         ) AS tanggaljam_awal_t2,
-                        CONCAT(:tanggal_pengganti, " ", TIME(DATE_SUB(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_awal_out MINUTE))) AS tanggaljam_akhir_t1,
-                        CONCAT(:tanggal_pengganti, " ", htsxxmh.jam_akhir) AS tanggaljam_akhir,
-                        
+                        CASE
+                            WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir <= "12:00:00"
+                            THEN CONCAT(DATE_ADD(:tanggal_pengganti, INTERVAL 1 DAY), " ", TIME(DATE_SUB(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE)))
+                            ELSE CONCAT(:tanggal_pengganti, " ", TIME(DATE_SUB(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE)))
+                        END AS tanggaljam_akhir_t1,
+                        CASE
+                            WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir <= "12:00:00"
+                            THEN CONCAT(DATE_ADD(:tanggal_pengganti, INTERVAL 1 DAY), " ", htsxxmh.jam_akhir)
+                            ELSE CONCAT(:tanggal_pengganti, " ", htsxxmh.jam_akhir)
+                        END AS tanggaljam_akhir,
                         CONCAT(
                             CASE
                                 WHEN DATE_ADD(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE) >= "24:00:00" 
@@ -353,8 +384,16 @@
                                 END
                             )
                         ) AS tanggaljam_akhir_t2,
-                        CONCAT(:tanggal_pengganti, " ", htsxxmh.jam_awal_istirahat) AS tanggaljam_awal_istirahat,
-                        CONCAT(:tanggal_pengganti, " ", htsxxmh.jam_akhir_istirahat) AS tanggaljam_akhir_istirahat
+                        CASE
+                            WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_awal_istirahat <= "12:00:00"
+                            THEN CONCAT(DATE_ADD(:tanggal_pengganti, INTERVAL 1 DAY), " ", htsxxmh.jam_awal_istirahat)
+                            ELSE CONCAT(:tanggal_pengganti, " ", htsxxmh.jam_awal_istirahat)
+                        END AS tanggaljam_awal_istirahat,
+                        CASE
+                            WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir_istirahat <= "12:00:00"
+                            THEN CONCAT(DATE_ADD(:tanggal_pengganti, INTERVAL 1 DAY), " ", htsxxmh.jam_akhir_istirahat)
+                            ELSE CONCAT(:tanggal_pengganti, " ", htsxxmh.jam_akhir_istirahat)
+                        END AS tanggaljam_akhir_istirahat
                     FROM htsxxmh
                     WHERE 
                         id = :id_htsxxmh_pengganti
