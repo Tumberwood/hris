@@ -100,6 +100,8 @@
 		// ------------- end of default variable
 
 		var id_htsxxmh_old = 0, id_hemxxmh_old = 0, id_hemxxmh_filter= 0;
+		var tanggaljam_awal_old = null;
+		var tanggaljam_akhir_old = null;
 
 		// BEGIN datepicker init
 		$('#periode').datepicker({
@@ -395,7 +397,8 @@
 			edthtssctd.dependent( 'htssctd.tanggaljam_awal', function ( val, data, callback ) {
 				var tanggal_awal = edthtssctd.field('htssctd.tanggaljam_awal').val();
       		 	id_htsxxmh = edthtssctd.field('htssctd.id_htsxxmh').val();
-				
+				   
+					
 				if (id_htsxxmh == 1) {
 					edthtssctd.field('htssctd.tanggaljam_awal_t1').val(tanggal_awal);
 					edthtssctd.field('htssctd.tanggaljam_awal_t2').val(tanggal_awal);
@@ -405,6 +408,17 @@
 					
 					edthtssctd.field('htssctd.tanggaljam_awal_t1').val(awal);
 					edthtssctd.field('htssctd.tanggaljam_awal_t2').val(akhir);
+				}
+
+				if (tanggaljam_awal_old != null) {
+					if (tanggaljam_awal_old != val) {
+						akhir = moment(tanggal_awal).add(2, 'hour').format('DD MMM YYYY HH:mm');
+						awal = moment(tanggal_awal).subtract(2, 'hour').format('DD MMM YYYY HH:mm');
+						
+						edthtssctd.field('htssctd.tanggaljam_awal_t1').val(awal);
+						edthtssctd.field('htssctd.tanggaljam_awal_t2').val(akhir);
+					
+					}
 				}
 				return {}
 			}, {event: 'keyup change'});
@@ -431,6 +445,18 @@
 						// }
 						edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(awal);
 						edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(akhir);
+				}
+				
+				// console.log(val);
+				// console.log(tanggaljam_akhir_old);
+				if (tanggaljam_akhir_old != null) {
+					if (tanggaljam_akhir_old != val) {
+						akhir = moment(tanggal_akhir).add(5, 'hour').format('DD MMM YYYY HH:mm');
+						awal = moment(tanggal_akhir).subtract(5, 'hour').format('DD MMM YYYY HH:mm');
+						
+						edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(awal);
+						edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(akhir);
+					}
 				}
 				return {}
 			}, {event: 'keyup change'});
@@ -591,6 +617,8 @@
 				is_jurnal      = htssctd_data.is_jurnal;
 				is_active      = htssctd_data.is_active;
 
+				tanggaljam_akhir_old = htssctd_data.tanggaljam_akhir;
+				tanggaljam_awal_old = htssctd_data.tanggaljam_awal;
 				id_hemxxmh_old = htssctd_data.id_hemxxmh;
 				id_htsxxmh_old = htssctd_data.id_htsxxmh;
 
