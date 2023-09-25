@@ -1113,12 +1113,13 @@
                             ] )
                             ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
                             ->where('htsprtd.nama', '("makan", "makan manual")', 'IN', false ) // tambah makan manual
-                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_t1, '>=' )
-                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t2, '<=' )
+                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_istirahat, '>=' )
+                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_istirahat, '<=' )
                             ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
                             ->exec();
                         $rs_htsprtd_makan = $qs_htsprtd_makan->fetch();
 
+                        $is_makan = 0;
                         if( !empty($rs_htsprtd_makan) ){
                             if ($row_hemxxmh['is_pot_makan'] == 1) {
                                 $is_makan = 1;
