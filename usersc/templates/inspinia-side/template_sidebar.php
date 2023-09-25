@@ -118,7 +118,7 @@
 
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse" id="main_nav">
-        <a class="close-canvas-menu"><i class="fa fa-times"></i></a>
+        <a class="close-canvas-menu" id="close_sidebar"><i class="fa fa-times"></i></a>
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
@@ -186,13 +186,17 @@
 
         //Side Bar Auto close
         var sidebar = $("#main_nav"); //ini area sidebar
-        var timesIcon = $(".close-canvas-menu"); //icon x di sidebar
-        var btn_bar = $(".navbar-minimalize"); //ini icon bar tiga
+        var timesIcon = $("#close_sidebar"); //icon x di sidebar
+        var btn_bar = $(".open_sidebar"); //ini icon bar tiga
         var is_sidebar_open = 0;
 
         //jika btn bar di click maka ada flag sidebar telah dibuka
         btn_bar.on("click", function () {
             is_sidebar_open = 1; //sidebar open
+        });
+
+        timesIcon.on("click", function () {
+            is_sidebar_open = 0; //sidebar close
         });
 
         $(document).on("click", function (e) {
