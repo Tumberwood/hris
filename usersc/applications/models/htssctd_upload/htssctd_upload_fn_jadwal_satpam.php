@@ -192,8 +192,16 @@
 									END
 								)
 							) AS tanggaljam_akhir_t2,
-							CONCAT(:tanggal, " ", htsxxmh.jam_awal_istirahat) AS tanggaljam_awal_istirahat,
-							CONCAT(:tanggal, " ", htsxxmh.jam_akhir_istirahat) AS tanggaljam_akhir_istirahat
+							CASE
+								WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_awal_istirahat <= "12:00:00"
+								THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_awal_istirahat)
+								ELSE CONCAT(:tanggal, " ", htsxxmh.jam_awal_istirahat)
+							END AS tanggaljam_awal_istirahat,
+							CASE
+								WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir_istirahat <= "12:00:00"
+								THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_akhir_istirahat)
+								ELSE CONCAT(:tanggal, " ", htsxxmh.jam_akhir_istirahat)
+							END AS tanggaljam_akhir_istirahat
 						FROM htsxxmh
 						WHERE 
 							id = :id_htsxxmh

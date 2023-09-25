@@ -1109,7 +1109,7 @@
                         $qs_htsprtd_makan = $db
                             ->query('select', 'htsprtd' )
                             ->get([
-                                'id'
+                                'count(id) as c_makan'
                             ] )
                             ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
                             ->where('htsprtd.nama', '("makan", "makan manual")', 'IN', false ) // tambah makan manual
@@ -1119,9 +1119,10 @@
                             ->exec();
                         $rs_htsprtd_makan = $qs_htsprtd_makan->fetch();
 
+                        $is_makan = 0;
                         if( !empty($rs_htsprtd_makan) ){
                             if ($row_hemxxmh['is_pot_makan'] == 1) {
-                                $is_makan = 1;
+                                $is_makan = $rs_htsprtd_makan['c_makan'];
                             }
                         }
 

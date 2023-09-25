@@ -76,7 +76,7 @@
                 console.log(json.data.peg_makan.range_awal);
                 console.log(range_akhir);
 
-                if (nama == "makan" || nama == "makan manual") {
+                if (nama == "MAKAN" || nama == "MAKAN MANUAL") {
                     // console.log(c_peg);
                     if(status == "invalid"){
                         console.log('AKOAKOAKOKA');

@@ -306,7 +306,7 @@
 						d.show_inactive_status_htscctd = show_inactive_status_htscctd;
 					}
 				},
-				order: [[ 1, "asc" ]],
+				order: [[ 1, "desc" ]],
 				columns: [
 					{ data: "htscctd.id",visible:false },
 					{ data: "htscctd.kode" },

@@ -118,7 +118,7 @@
 
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse" id="main_nav">
-        <a class="close-canvas-menu"><i class="fa fa-times"></i></a>
+        <a class="close-canvas-menu" id="close_sidebar"><i class="fa fa-times"></i></a>
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
@@ -154,35 +154,57 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-$(document).ready(function () {
-    var menuData = <?php echo json_encode($menu_data); ?>;
-    
-    function updateSearchResults(query) {
-        if (query.trim() === "") {
-            $(".non-search").show();
-        } else {
-            $(".non-search").hide();
+    $(document).ready(function () {
+        var menuData = <?php echo json_encode($menu_data); ?>;
+
+        function updateSearchResults(query) {
+            if (query.trim() === "") {
+                $(".non-search").show();
+            } else {
+                $(".non-search").hide();
+            }
+
+            $("#results").empty();
+
+            var filteredData = menuData.filter(function (item) {
+                return (
+                    query.trim() !== "" &&
+                    item.label.toLowerCase().includes(query.toLowerCase())
+                );
+            });
+
+            filteredData.forEach(function (item) {
+                var $listItem = $("<a class='menu-item' href='" + item.link + "'>" + item.label + "</a>");
+                $("#results").append($listItem);
+            });
         }
 
-        $("#results").empty();
-
-        var filteredData = menuData.filter(function (item) {
-            return (
-                query.trim() !== "" &&
-                item.label.toLowerCase().includes(query.toLowerCase())
-            );
+        $("#searchInput").on("input", function () {
+            var query = $(this).val();
+            updateSearchResults(query);
         });
 
-        filteredData.forEach(function (item) {
-            var $listItem = $("<a class='menu-item' href='" + item.link + "'>" + item.label + "</a>");
-            $("#results").append($listItem);
-        });
-    }
+        //Side Bar Auto close
+        var sidebar = $("#main_nav"); //ini area sidebar
+        var timesIcon = $("#close_sidebar"); //icon x di sidebar
+        var btn_bar = $(".open_sidebar"); //ini icon bar tiga
+        var is_sidebar_open = 0;
 
-    $("#searchInput").on("input", function () {
-        var query = $(this).val();
-        updateSearchResults(query);
+        //jika btn bar di click maka ada flag sidebar telah dibuka
+        btn_bar.on("click", function () {
+            is_sidebar_open = 1; //sidebar open
+        });
+
+        timesIcon.on("click", function () {
+            is_sidebar_open = 0; //sidebar close
+        });
+
+        $(document).on("click", function (e) {
+            //Jika sidebar open && target bulan btn_bar && tidak dalam sidebar && tidak diarea sidebar maka trigger tutup
+            if (is_sidebar_open == 1 && !btn_bar.is(e.target) && !sidebar.is(e.target) && sidebar.has(e.target).length === 0) {
+                timesIcon.click(); // Trigger click tombol x di sidebar
+                is_sidebar_open = 0;
+            } 
+        });
     });
-
-});
 </script>

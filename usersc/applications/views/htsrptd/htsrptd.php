@@ -306,7 +306,7 @@
 						d.show_inactive_status_htsrptd = show_inactive_status_htsrptd;
 					}
 				},
-				order: [[ 1, "asc" ]],
+				order: [[ 1, "desc" ]],
 				columns: [
 					{ data: "htsrptd.id",visible:false },
 					{ data: "htsrptd.kode" },

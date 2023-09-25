@@ -60,7 +60,7 @@ Make menu tree
 <div class="row border-bottom">
     <nav class="navbar navbar-static-top" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary open_sidebar" href="#"><i class="fa fa-bars open_sidebar"></i> </a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li>
