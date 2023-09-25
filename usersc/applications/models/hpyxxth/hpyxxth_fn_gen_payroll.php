@@ -20,6 +20,42 @@
     $awal = new Carbon();
 
     /**
+     * gaji_pokok
+     * tunj_jabat
+     * terima_lain
+     * var_cost
+     * fix_cost
+     * premiabs
+     * trm_jkkjkm
+     * 
+     * lembur15
+     * rp_lembur15
+     * lembur2
+     * rp_lembur2
+     * lembur3
+     * rp_lembur3
+     * jam_lembur
+     * lemburbersih
+     * 
+     * pot_makan
+     * 
+     * pot_pph21
+     * pph21back
+     * 
+     * pot_jkkjkm
+     * pot_jht
+     * pot_lain2
+     * pot_spsi
+     * pot_upah
+     * pot_bpjs
+     * pot_psiun
+     * 
+     * gaji_bersih
+     * bulat
+     * gaji_terima
+     */
+
+    /**
      * +---------------------------------------------------------------------+
      * | #id    | KOMPONEN                             | sumber table        |
      * +---------------------------------------------------------------------+
