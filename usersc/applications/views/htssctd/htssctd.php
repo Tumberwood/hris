@@ -386,6 +386,8 @@
 					if (val != id_htsxxmh_old) {
 						shift();
 					}
+				} else {
+					shift();
 				}
 				return {}
 			}, {event: 'keyup change'});
