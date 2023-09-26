@@ -1014,7 +1014,10 @@
                         }
 
                         //Sisa pot jam masuk HK
-                        $pot_hk = $pot_jam;
+                        $pot_hk = 0;
+                        if ($pot_jam > 0) {
+                            $pot_hk = $pot_jam;
+                        }
                         
                         //Durasi Lembur
                         $pot_lembur = $pot_ti + $pot_non_ti;
