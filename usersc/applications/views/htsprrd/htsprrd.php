@@ -410,7 +410,8 @@
 					},
 					{ 
 						data: "htsprrd.pot_jam",
-						class: "text-right"
+						class: "text-right",
+						visible: false
 					},
 					{ 
 						data: "htsprrd.durasi_lembur_final",

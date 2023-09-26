@@ -80,6 +80,7 @@
         $durasi_lembur_istirahat3_jam = 0;
         $durasi_lembur_total_jam = 0;
         $durasi_lembur_ti = 0;
+        $durasi_lembur_non_ti = 0;
         $durasi_lembur_istirahat1_menit   = 0;
         $durasi_lembur_istirahat2_menit   = 0;
         $durasi_lembur_istirahat3_menit   = 0;
@@ -342,6 +343,7 @@
                             ->get([
                                 'htlxxrh.kode as htlxxrh_kode',
                                 'htlxxrh.is_approve as is_approve',
+                                'htlxxrh.saldo as saldo',
                                 'htlxxmh_kode as htlxxmh_kode',
                                 'htlgrmh.kode as htlgrmh_kode'
                             ] )
@@ -363,7 +365,12 @@
                                 $status_presensi_in = "Absen Belum Disetujui";
                                 $status_presensi_out = "Absen Belum Disetujui";
                             }
-                            $next_step = 5;
+                            $next_step = 0;
+
+                            //tambahkan pengecekan pada tgl 7 Agustus saldonya berapa ///itung jam kerja awal akhir - 1 
+                            //<= 0
+
+                            
                         }else{
                             $next_step = 5;
                             //JIKA SHIFT OFF MAKA STATUS OFF
@@ -380,7 +387,7 @@
                     
 
                         //NEXT STEP
-                        $next_step = 0;
+                        // $next_step = 0;
                         //JIKA CEKLOK OK OK MAKA END
                         if ($st_clock_in == "OK" && $st_clock_out == "OK") {
                             $status_presensi_in = "HK";
@@ -392,9 +399,9 @@
                         } else if ($st_clock_in == "Late 1" && $st_clock_out == "OK") {
                             $status_presensi_in = "HK";
                             $status_presensi_out = "HK";
-                            $next_step = 5;
+                            // $next_step = 5;
                         } else {
-                            $next_step = 5;
+                            // $next_step = 5;
                         }
 
                         //STEP 5 IZIN
@@ -448,19 +455,22 @@
                                         // }
                                     }
                                     //FLAG LATE UNTUK YANG TIDAK ADA IZIN, BUKAN DINAS (IZIN DENGAN POTONGAN) & IZIN/DINAS YANG BELUM DI APPROVE
-                                    if ($is_late_pot == 1) {
-                                        if ($clock_in == null) {
-                                            $tanggal_jam_izin_awal = $tanggal . " " . $izin_dinas_in['jam_awal']; //kalau no CO maka diambil jam izin
-                                            $carbon_ci = new Carbon($clock_in);
-                                            $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_awal_toleransi);
+                                    $pot_jam_late = 0;
+                                    if ($st_clock_in != "Late 1") {
+                                        if ($is_late_pot == 1) {
+                                            if ($clock_in == null) {
+                                                $tanggal_jam_izin_awal = $tanggal . " " . $izin_dinas_in['jam_awal']; //kalau no CO maka diambil jam izin
+                                                $carbon_ci = new Carbon($clock_in);
+                                                $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_awal_toleransi);
 
-                                            // $pot_jam_late_cek     = 0;
-                                        } else {
-                                            $carbon_ci = new Carbon($clock_in);
-                                            $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_awal_toleransi);
+                                                // $pot_jam_late_cek     = 0;
+                                            } else {
+                                                $carbon_ci = new Carbon($clock_in);
+                                                $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_awal_toleransi);
+                                            }
+                                            // hitung potongan jam late
+                                            $pot_jam_late   = ceil($pot_jam_late_cek/60);
                                         }
-                                        // hitung potongan jam late
-                                        $pot_jam_late   = ceil($pot_jam_late_cek/60);
                                     }
                                 }
                             } else {
@@ -812,12 +822,23 @@
 
                                                 $qu_htoemtd = $db
                                                     ->query('update', 'htoxxrd')
-                                                    ->set('keterangan', 'Pengajuan TI ditolak')
+                                                    ->set('keterangan', 'Pengajuan TI ditolak, Istirahat lebih dari 20 Menit')
                                                     ->set('pot_ti', $potongan_ti_jam)
                                                     ->where('id_hemxxmh',$id_hemxxmh)
                                                     ->where('tanggal',$tanggal)
                                                 ->exec();
                                                 // $htlxxrh_kode = $htlxxrh_kode . " [Pengajuan TI ditolak]";
+                                            }else if($pot_jam > 0){
+                                                $potongan_ti_menit = 30;
+                                                $potongan_ti_jam = 0.5;
+
+                                                $qu_htoemtd = $db
+                                                    ->query('update', 'htoxxrd')
+                                                    ->set('keterangan', $htlxxrh_kode)
+                                                    ->set('pot_ti', $potongan_ti_jam)
+                                                    ->where('id_hemxxmh',$id_hemxxmh)
+                                                    ->where('tanggal',$tanggal)
+                                                ->exec();
                                             }else{
                                                 $potongan_ti_menit = 0;
                                                 $potongan_ti_jam = 0;
@@ -846,6 +867,7 @@
                             $durasi_lembur_total_menit = $durasi_lembur_awal_menit + $durasi_lembur_akhir_menit + $durasi_lembur_libur_menit + $durasi_lembur_istirahat1_menit + $durasi_lembur_istirahat2_menit + $durasi_lembur_istirahat3_menit;
 
                             $durasi_lembur_ti = $durasi_lembur_istirahat1_jam + $durasi_lembur_istirahat2_jam + $durasi_lembur_istirahat3_jam;
+                            $durasi_lembur_non_ti = $durasi_lembur_awal_jam + $durasi_lembur_akhir_jam + $durasi_lembur_libur_jam;
                             $durasi_lembur_total_jam = $durasi_lembur_awal_jam + $durasi_lembur_akhir_jam + $durasi_lembur_libur_jam + $durasi_lembur_istirahat1_jam + $durasi_lembur_istirahat2_jam + $durasi_lembur_istirahat3_jam;
                         
                         }else{
@@ -876,6 +898,7 @@
                             $durasi_lembur_istirahat3_menit   = 0;
                             $durasi_lembur_total_jam          = 0;
                             $durasi_lembur_ti                 = 0;
+                            $durasi_lembur_non_ti                 = 0;
                         }
 
                         // POTONGAN JAM
@@ -949,160 +972,55 @@
                         //Apabila : Total Potongan(pot_jam) < Durasi total overtime(durasi_lembur_total_jam)
                         //add by ferry 
                         //Jika tidak ada lembur istirahat, maka total lembur akan dipotong (pot_overtime)
-                        if ($durasi_lembur_ti <= 0) {
-                            if ($pot_jam < $durasi_lembur_total_jam) {
-                                $pot_overtime = $pot_jam - $potongan_ti_jam;
-                            } else {
-                                $pot_overtime = $durasi_lembur_total_jam - $potongan_ti_jam;
-                            }
-                        }
+
+                        // if ($durasi_lembur_ti <= 0) {
+                        //     if ($pot_jam < $durasi_lembur_total_jam) {
+                        //         $pot_overtime = $pot_jam - $potongan_ti_jam;
+                        //     } else {
+                        //         $pot_overtime = $durasi_lembur_total_jam - $potongan_ti_jam;
+                        //     }
+                        // }
 
                         //Potongan Hari Kerja = total potongan - (potongan overtime + potongan TI)		
                         
                         //Jika tidak ada lembur, maka akan dipotong hari kerja
-                        if ($durasi_lembur_total_jam <= 0) {
-                            $pot_hk = $pot_jam - $pot_overtime;
-                        }
+                        // if ($durasi_lembur_total_jam <= 0) {
+                        //     $pot_hk = $pot_jam - $pot_overtime;
+                        // }
 
-                        //Overtime = Total durasi lembur - (potongan TI + potongan overtime)		
-                        $jam_pengali = $durasi_lembur_total_jam - $potongan_ti_jam + $pot_overtime;
-                        $durasi_lembur_final = $jam_pengali;
+                        //Overtime = Total durasi lembur - (potongan TI + potongan overtime)
+                        // $hitung_pot = $potongan_ti_jam + $pot_overtime;
+                        // $jam_pengali = $durasi_lembur_total_jam - $hitung_pot;
+                        // $durasi_lembur_final = $jam_pengali;
 
                         // jika $jam_pengali > 0, maka ada lembur
                         // jika $jam_pengali < 0, maka ada potongan gaji
             
                         // BEGIN hitung nominal lembur
                         // hanya jika $jam_pengali > 0
-                        if($jam_pengali > 0){
-                            $pot_jam_final = 0;
-                            // cek upah lembur per jam
-                            //      jika hesxxmh = 3 (pelatihan), maka menggunakan lembur jam mati, data dari htpr_hesxxmh.id_hpcxxmh = 36
-                            //      selainnya itu menggunakan lembur jam hidup
-                            if($row_hemxxmh['id_hesxxmh'] == 3){
-                                // jam mati
-                                $lembur1 = $jam_pengali;
-                                $lembur2 = 0;
-                                $jam_perkalian_lembur = $lembur1 + $lembur2;
-                                // ambil upah lembur per jam
-                                $qr_htpr_hesxxmh = $db
-                                    ->raw()
-                                    ->bind(':tanggal_lembur', $tanggal)
-                                    ->bind(':id_hesxxmh', 3)
-                                    ->exec('
-                                        SELECT 
-                                            nominal
-                                        FROM (
-                                            SELECT
-                                                id,
-                                                tanggal_efektif,
-                                                nominal,
-                                                ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                                            FROM htpr_hesxxmh
-                                            WHERE 
-                                                htpr_hesxxmh.id_hpcxxmh = 36 AND
-                                                tanggal_efektif < :tanggal_lembur AND
-                                                id_hesxxmh = :id_hesxxmh
-                                        ) AS subquery
-                                        WHERE row_num = 1
-                                    ');
-                                $rs_htpr_hesxxmh    = $qr_htpr_hesxxmh->fetch();
-                                $nominal_lembur_jam = $rs_htpr_hesxxmh['nominal'];
-                                $nominal_lembur_final = $nominal_lembur_jam;
-                                $tot_komp_lembur = 0;
-                            }else{
-                                // jam hidup
-                                if($jam_pengali > 7){
-                                    $lembur1 = 7 * 2;
-                                    $lembur2 = ($jam_pengali-7) * 3;
-                                }else{
-                                    $lembur1 = $jam_pengali * 2;
-                                    $lembur2 = 0;
-                                }
-                                $jam_perkalian_lembur = $lembur1 + $lembur2;
-                                
-                                // ambil upah lembur per jam
-                                // BEGIN select data hpcxxmh is_komp_lembur = 1
-                                // GP dan Tunjuangan Jabatan
-            
-                                //  GP
-                                $qr_gp = $db
-                                    ->raw()
-                                    ->bind(':is_active', 1)
-                                    ->bind(':id_hemxxmh', $id_hemxxmh)
-                                    ->bind(':tanggal_awal', $tanggal )
-                                    ->exec('
-                                        SELECT 
-                                            subquery.nominal_gp as nominal_gp
-                                        FROM
-                                        (
-                                            SELECT
-                                                id,
-                                                nominal as nominal_gp,
-                                                ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                                            FROM htpr_hemxxmh
-                                            WHERE 
-                                                htpr_hemxxmh.is_active = :is_active AND
-                                                htpr_hemxxmh.id_hpcxxmh = 1 AND
-                                                htpr_hemxxmh.id_hemxxmh = :id_hemxxmh AND
-                                                tanggal_efektif < :tanggal_awal
-                                        ) AS subquery
-                                        WHERE subquery.row_num = 1
-                                    ');
-                                $rs_gp = $qr_gp->fetch();
-                                if(!empty($rs_gp)){
-                                    $nominal_gp = $rs_gp['nominal_gp'];
-                                }else{
-                                    $nominal_gp = 0;
-                                }
-            
-                                //  Tunjangan Jabatan
-                                $qr_tjab = $db
-                                    ->raw()
-                                    ->bind(':is_active', 1)
-                                    ->bind(':id_hemxxmh', $id_hemxxmh)
-                                    ->bind(':tanggal_awal', $tanggal )
-                                    ->exec('
-                                        SELECT 
-                                            nominal as nominal_tjab
-                                        FROM (
-                                            SELECT
-                                                htpr_hevxxmh.nominal,
-                                                ROW_NUMBER() OVER (PARTITION BY htpr_hevxxmh.id_hevxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                                            FROM htpr_hevxxmh
-                                            LEFT JOIN hevxxmh ON hevxxmh.id = htpr_hevxxmh.id_hevxxmh
-                                            LEFT JOIN hemjbmh ON hemjbmh.id_hevxxmh = hevxxmh.id
-                                            WHERE 
-                                                htpr_hevxxmh.is_active = :is_active AND
-                                                htpr_hevxxmh.id_hpcxxmh = 33 AND
-                                                hemjbmh.id_hemxxmh = :id_hemxxmh AND
-                                                htpr_hevxxmh.tanggal_efektif < :tanggal_awal
-                                        ) AS subquery
-                                        WHERE subquery.row_num = 1
-                                    ');
-                                $rs_tjab = $qr_tjab->fetch();
-                                if(!empty($rs_tjab)){
-                                    $nominal_tjab = $rs_tjab['nominal_tjab'];
-                                }else{
-                                    $nominal_tjab = 0;
-                                }
-            
-                                $tot_komp_lembur        = $nominal_gp + $nominal_tjab;
-                                $nominal_lembur_jam     = floor($tot_komp_lembur / 173);
-                                // END select data hpcxxmh is_komp_lembur = 1
 
-                                $nominal_lembur_final = $jam_perkalian_lembur * $nominal_lembur_jam;
-            
-                            }
-                        }elseif($jam_pengali < 0){
-                            // jika disini, nilai $jam_pengali harusnya < 0
-                            // artinya total jam izin > dari total lembur, sehingga harus memotong jam kerja normal ($pot_jam_final)
-                            // ini di absolute-kan
-                            $pot_jam_final = abs($jam_pengali);
-                            $durasi_lembur_final = 0;
-                            $nominal_lembur_jam = 0;
-                            $nominal_lembur_final = 0;
+                        //Cek apakah Ada TI
+                        $pot_ti = 0;
+                        if ($durasi_lembur_ti > 0) {
+                            $pot_ti = $potongan_ti_jam;
+                            $pot_jam = $pot_jam - $potongan_ti_jam;
+                        }
+                        
+                        //Cek apakah Ada NON TI dan pot jam > 0
+                        $pot_non_ti = 0;
+                        if ($durasi_lembur_non_ti > 0 && $pot_jam > 0) {
+                            $pot_non_ti = $pot_jam;
+                            $pot_jam = $pot_jam - $durasi_lembur_non_ti;
                         }
 
+                        //Sisa pot jam masuk HK
+                        $pot_hk = $pot_jam;
+                        
+                        //Durasi Lembur
+                        $pot_lembur = $pot_ti + $pot_non_ti;
+                        $durasi_lembur_final = $durasi_lembur_total_jam - $pot_lembur;
+
+                        $pot_total = $pot_jam_late + $pot_jam_izin + $pot_jam_early;
                         // cek apakah ada makan
                         // ditandai dengan check clock makan
                         // concat(htsprtd.tanggal," ",htsprtd.jam)
@@ -1172,14 +1090,12 @@
                             ->set('jam_akhir_lembur_istirahat3',$jam_akhir_lembur_istirahat3)
                             ->set('durasi_lembur_istirahat3',$durasi_lembur_istirahat3_jam)
                             ->set('durasi_lembur_total_jam', $durasi_lembur_total_jam)
-                            ->set('pot_jam', $pot_jam)
-                            ->set('pot_overtime', $pot_overtime)
+                            ->set('pot_jam', $pot_total) //potongan total
+                            ->set('pot_overtime', $pot_non_ti)
                             ->set('pot_hk', $pot_hk)
-                            ->set('pot_ti', $potongan_ti_jam)
+                            ->set('pot_ti', $pot_ti)
                             ->set('durasi_lembur_final', $durasi_lembur_final)
                             ->set('pot_jam_final', $pot_jam_final)
-                            ->set('nominal_lembur_jam', $nominal_lembur_jam)
-                            ->set('nominal_lembur_final', $nominal_lembur_final)
                             ->set('is_makan', $is_makan)
                             ->set('cek', $cek)
                         ->exec();
