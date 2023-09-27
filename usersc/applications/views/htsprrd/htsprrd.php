@@ -624,6 +624,7 @@
 				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
 				tanggal      = htsprrd_data.tanggal;
 				cek      = htsprrd_data.cek;
+				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
 				
 				if (status_presensi_in == "AL" && status_presensi_out == "AL" || status_presensi_in == "Jadwal Salah" && status_presensi_out == "Jadwal Salah") {
 					tblhtsprrd.button('btncekNol:name').enable();
@@ -639,6 +640,12 @@
 				// }
 
 				cariKMJ();
+				// console.log(htlxxrh_kode);
+				//Cek Apakah mengandung Kode Absen KD
+				if (htlxxrh_kode.includes("KD/") && cek == 1) {
+				    tblhtsprrd.button('btnPresensiOK:name').enable();
+					// console.log("11111");
+                }
 				// console.log(htsprrd_data.status_presensi_in);
 			} );
 			
