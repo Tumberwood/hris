@@ -433,8 +433,8 @@
 				id_heyxxmh_old = 0;
 				id_heyxxmh = 0
 
-				tanggal_awal_select = 0;
-				tanggal_akhir_select = 0;
+				tanggal_awal_select = null;
+				tanggal_akhir_select = null;
 				id_heyxxmh_select = 0;
 
 				// atur hak akses
