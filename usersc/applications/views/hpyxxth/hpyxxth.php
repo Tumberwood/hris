@@ -68,18 +68,21 @@
 								<th>ID</th>
                                 <th>id_hpyxxth</th>
                                 <th>Nama</th>
-								<th>Total</th>
+                                <th>Department</th>
+                                <th>Jabatan</th>
+                                <th>Level</th>
                                 <th>Gaji Pokok</th>
-                                <th>T Masa Kerja</th>
                                 <th>T Jabatan</th>
-                                <th>Lembur</th>
-                                <th>Pot Absen</th>
-                                <th>Pot Makan</th>
-                                <th>JKK & JKM (+)</th>
-                                <th>JKK & JKM (-)</th>
-                                <th>JHT (-)</th>
-                                <th>JP (-)</th>
-                                <th>Kesehatan (-)</th>
+                                <th>Premi Absen</th>
+								<th>Lembur 1,5</th>
+								<th>Rp Lembur 1,5</th>
+								<th>Lembur 2</th>
+								<th>Rp Lembur 2</th>
+								<th>Lembur 3</th>
+								<th>Rp Lembur 3</th>
+								<th>Total Lembur (Jam)</th>
+								<th>Total Lembur (Rp) </th>
+                                <th>Pot Makan</th> <!-- 15 -->
                                 
                             </tr>
                         </thead>
@@ -87,15 +90,16 @@
                             <tr>
 								<th></th>
                                 <th></th>
+								<th></th>
+								<th></th>
                                 <th>Total</th>
-								<th id="total"></th>
+								<th></th>
+								<th id="s_gp"></th>
+								<th id="s_t_jab"></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th></th>
-                                <th></th>
-                                <th id="total_jkk_jkm_p"></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -123,6 +127,7 @@
 		var edthpyxxth, tblhpyxxth, show_inactive_status_hpyxxth = 0, id_hpyxxth;
         var edthpyemtd, tblhpyemtd, show_inactive_status_hpyemtd = 0, id_hpyemtd;
 		// ------------- end of default variable
+		var id_heyxxmh_old = 0;
 		
 		// BEGIN datepicker init
 		$('#periode').datepicker({
@@ -200,7 +205,7 @@
 						format: 'DD MMM YYYY'
 					}, 	
 					{
-						label: "Jenis",
+						label: "Jenis <sup class='text-danger'>*<sup>",
 						name: "hpyxxth.id_heyxxmh",
 						type: "select2",
 						opts: {
@@ -367,7 +372,10 @@
 								dataType: 'json',
 								type: 'POST',
 								data: {
-									id_transaksi_h	: id_transaksi_h
+									id_hpyxxth	: id_hpyxxth,
+									id_heyxxmh	: id_heyxxmh_select,
+									tanggal_awal	: tanggal_awal_select,
+									tanggal_akhir	: tanggal_akhir_select
 								},
 								success: function ( json ) {
 
@@ -407,6 +415,9 @@
 				is_nextprocess   = data_hpyxxth.is_nextprocess;
 				is_jurnal        = data_hpyxxth.is_jurnal;
 				is_active        = data_hpyxxth.is_active;
+				tanggal_awal_select        = data_hpyxxth.tanggal_awal;
+				tanggal_akhir_select        = data_hpyxxth.tanggal_akhir;
+				id_heyxxmh_select        = data_hpyxxth.id_heyxxmh;
 
 				id_heyxxmh_old = data_hpyxxth.id_heyxxmh;
 				
@@ -420,7 +431,11 @@
 				// reload dipanggil di function CekDeselectHeader
 				id_hpyxxth = 0;
 				id_heyxxmh_old = 0;
-				id_heyxxmh = 0;
+				id_heyxxmh = 0
+
+				tanggal_awal_select = 0;
+				tanggal_akhir_select = 0;
+				id_heyxxmh_select = 0;
 
 				// atur hak akses
 				tbl_details = [tblhpyemtd];
@@ -525,69 +540,70 @@
 					}
 				},
 				order: [[ 2, "desc" ]],
+				responsive: false,
+				scrollX: true,
 				columns: [
-					{ data: "id",visible:false },
-					{ data: "id_hpyxxth",visible:false },
+					{ data: "hpyemtd.id",visible:false },
+					{ data: "hpyemtd.id_hpyxxth",visible:false },
 					{ data: "hemxxmh_data" },
+					{ data: "hodxxmh.nama" },
+					{ data: "hetxxmh.nama" },
+					{ data: "hevxxmh.nama",visible:false },
 					{ 
-						data: "total_nominal",
+						data: "hpyemtd.gp",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "gp",
+						data: "hpyemtd.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "t_mk",
+						data: "hpyemtd.premi_abs",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.lembur15",
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.rp_lembur15",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "t_jab",
+						data: "hpyemtd.lembur2",
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.rp_lembur2",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "lembur",
+						data: "hpyemtd.lembur3",
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.rp_lembur3",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "pot_absen",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right text-danger"
+						data: "hpyemtd.jam_lembur",
+						class: "text-right "
 					},
 					{ 
-						data: "pot_makan",
+						data: "hpyemtd.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right text-danger"
+						class: "text-right "
 					},
 					{ 
-						data: "jkk_jkm_perusahaan",
+						data: "hpyemtd.pot_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "pot_jkk_jkm",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right text-danger"
-					},
-					{ 
-						data: "pot_jht",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right text-danger"
-					},
-					{ 
-						data: "pot_jp",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right text-danger"
-					},
-					{ 
-						data: "pot_kesehatan",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right text-danger"
+						class: "text-right "
 					}
 				],
 				buttons: [
@@ -610,8 +626,11 @@
 					var api       = this.api(), data;
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 					// hitung jumlah 
-					total = api.column( 3 ).data().sum();
-					$( '#total' ).html( numFormat(total) );
+					s_gp = api.column( 6 ).data().sum();
+					$( '#s_gp' ).html( numFormat(s_gp) );
+
+					s_t_jab = api.column( 7 ).data().sum();
+					$( '#s_t_jab' ).html( numFormat(s_t_jab) );
 
 					total_jkk_jkm_p = api.column( 10 ).data().sum();
 					$( '#total_jkk_jkm_p' ).html( numFormat(total_jkk_jkm_p) );
