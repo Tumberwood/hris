@@ -331,6 +331,7 @@ use
         
         if ($pot_jam > 0) {
             // $info_shift = ' - Dipotong ' . $pot_jam . ' Jam';
+            $info_shift = " [" . $shift . "] " . $ceklok;
         } else {
             $info_shift = " [" . $shift . "] " . $ceklok;
         }
