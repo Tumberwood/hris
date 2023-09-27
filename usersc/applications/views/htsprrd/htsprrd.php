@@ -646,6 +646,11 @@
 				    tblhtsprrd.button('btnPresensiOK:name').enable();
 					// console.log("11111");
                 }
+
+				if (st_clock_in == "Late" && status_presensi_in == "Belum ada Izin") {
+				    tblhtsprrd.button('btnPresensiOK:name').enable();
+					// console.log("11111");
+                }
 				// console.log(htsprrd_data.status_presensi_in);
 			} );
 			
