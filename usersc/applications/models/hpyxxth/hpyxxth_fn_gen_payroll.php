@@ -183,8 +183,16 @@
                 ' . $id_hpyxxth . ',
                 ' . $id_heyxxmh . ',
                 a.id_hemxxmh,
-                gp,
-                t_jab,
+                if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir,  
+                    if(c.grup_hk = 5,
+                        (hari_kerja / 21) * gp, 
+                        (hari_kerja / 25) * gp),
+                gp) AS gp,
+                if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir,  
+                    if(c.grup_hk = 5,
+                        (hari_kerja / 21) * t_jab, 
+                        (hari_kerja / 25) * t_jab),
+                t_jab) AS t_jab,
                 IFNULL(premi_abs.nominal, 0) AS premi_abs,
                 lembur15,
                 lembur2,
@@ -354,6 +362,32 @@
                     GROUP BY id_hemxxmh
                 ) lembur_sum_table
             ) lembur_calc ON lembur_calc.id_hemxxmh = a.id_hemxxmh
+            
+            -- hari kerja karyawan baru
+            LEFT JOIN (
+                SELECT
+                    (hk_report + IFNULL(jadwal.jadwal, 0)) AS hari_kerja,
+                    report.id_hemxxmh
+                FROM (
+                    SELECT 
+                        COUNT(a.id) AS hk_report,
+                        a.id_hemxxmh
+                    FROM htsprrd AS a
+                    LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
+                    WHERE a.tanggal BETWEEN job.tanggal_masuk AND :tanggal_akhir
+                        AND a.st_clock_in <> "OFF"
+                    GROUP BY a.id_hemxxmh
+                ) AS report
+                LEFT JOIN (
+                    SELECT
+                        id_hemxxmh,
+                        COUNT(id) AS jadwal
+                    FROM htssctd
+                    WHERE tanggal BETWEEN :tanggal_akhir AND LAST_DAY(:tanggal_akhir)
+                        AND id_htsxxmh <> 1
+                    GROUP BY id_hemxxmh
+                ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh
+            ) AS hk ON hk.id_hemxxmh = a.id_hemxxmh
             WHERE
                 a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                 AND c.id_heyxxmh = :id_heyxxmh;
