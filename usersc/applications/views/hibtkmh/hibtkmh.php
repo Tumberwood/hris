@@ -318,7 +318,7 @@
 					},
 					{ 
 						data: "hibtkmh.persen_jkk" ,
-						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
