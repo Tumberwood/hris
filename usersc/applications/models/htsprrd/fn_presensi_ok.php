@@ -330,7 +330,7 @@ use
         }
         
         if ($pot_jam > 0) {
-            $info_shift = ' - Dipotong ' . $pot_jam . ' Jam';
+            // $info_shift = ' - Dipotong ' . $pot_jam . ' Jam';
         } else {
             $info_shift = " [" . $shift . "] " . $ceklok;
         }
@@ -349,7 +349,7 @@ use
                 ->query('update', 'htsprrd')
                 ->set('htlxxrh_kode', $katerangan)
                 ->set('cek', 0)
-                ->set('pot_jam', $pot_jam)
+                // ->set('pot_jam', $pot_jam)
                 ->set('status_presensi_in', "HK")
                 ->set('status_presensi_out', "HK")
                 ->where('id', $id_htsprrd)
