@@ -185,35 +185,43 @@
                 ' . $id_hpyxxth . ',
                 ' . $id_heyxxmh . ',
                 a.id_hemxxmh,
-                ------------------------------ gaji pokok
+
+                -- gaji pokok
                 if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir,  
                      if(c.grup_hk = 5,
                           (hari_kerja / 21) * gp, 
                          (hari_kerja / 25) * gp),
                  gp) AS gp,
-                 ------------------------------ tunjangan jabatan
+
+                 -- tunjangan jabatan
                  if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir,  
                      if(c.grup_hk = 5,
                           (hari_kerja / 21) * t_jab, 
                          (hari_kerja / 25) * t_jab),
                  t_jab) AS t_jab,
                  nominal_var_cost AS var_cost,
-                ------------------------------ fix cost
+
+                -- fix cost
                  if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir,  
                      if(c.grup_hk = 5,
                           (hari_kerja / 21) * nominal_mk, 
                          (hari_kerja / 25) * nominal_mk),
                  nominal_mk) AS fix_cost,
-                IFNULL(premi_abs.nominal, 0) AS premi_abs,
+
+                 -- premi absen dengan validasi jika ada izin/absen yang memotong premi maka premi absen == 0 atau hangus
+                if(report_pot_premi >= 1, 0, premiabs) AS premi_abs,
+
                 lembur15,
                 lembur2,
                 lembur3,
                 (lembur15 + lembur2 + lembur3) AS jam_lembur,
-                ------------------------------ kondisi jika id hes == 3 atau pelatihan maka ambil nominal_lembur_mati di htpr_hesxxmh jika tidak maka pakai rumus == if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173))
+
+                -- kondisi jika id hes == 3 atau pelatihan maka ambil nominal_lembur_mati di htpr_hesxxmh jika tidak maka pakai rumus == if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173))
                 if(lembur15 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 1.5, 0) AS rp_lembur15,
                 if(lembur2 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 2, 0) AS rp_lembur2,
                 if(lembur3 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 3, 0) AS rp_lembur3,
-                ------------------------------ total rp lembur
+
+                -- total rp lembur
                 if(lembur15 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 1.5, 0) + 
                 if(lembur2 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 2, 0) + 
                 if(lembur3 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 3, 0) AS lemburbersih,
@@ -325,7 +333,7 @@
                 WHERE row_num = 1
             ) pot_uang_makan ON pot_uang_makan.id_hesxxmh = c.id_hesxxmh
             
-            -- potongan lembur htpr_hesxxmh untuk pelatihan
+            -- Ambil lembur mati dari htpr_hesxxmh untuk pelatihan
             LEFT JOIN (
                 SELECT
                     id_hesxxmh,
@@ -372,7 +380,7 @@
                 SELECT
                     id_hevxxmh,
                     tanggal_efektif,
-                    nominal
+                    IFNULL(nominal, 0) AS premiabs
                 FROM (
                     SELECT
                         id,
@@ -458,6 +466,22 @@
                     GROUP BY id_hemxxmh
                 ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh
             ) AS hk ON hk.id_hemxxmh = a.id_hemxxmh
+            
+            -- validasi cari izin/absen yang memotong premi dari report presensi
+            LEFT JOIN (
+                SELECT
+                    id_hemxxmh,
+                    report_pot_premi
+                FROM (
+                    SELECT
+                        id_hemxxmh,
+                        COUNT(id) AS report_pot_premi
+                    FROM htsprrd
+                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                        AND is_pot_premi = 1
+                    GROUP BY id_hemxxmh
+                ) c_report_pot_premi
+            ) presensi_pot_premi ON presensi_pot_premi.id_hemxxmh = a.id_hemxxmh
             WHERE
                 a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                 AND c.id_heyxxmh = :id_heyxxmh;
