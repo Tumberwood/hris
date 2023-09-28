@@ -254,6 +254,7 @@
                         $nominal_lembur_jam = 0;
                         $nominal_lembur_final = 0;
                         $is_makan = 0;
+                        $is_pot_premi = 0;
                         $pot_overtime = 0;
                         $pot_hk = 0;
 
@@ -344,6 +345,7 @@
                                 'htlxxrh.kode as htlxxrh_kode',
                                 'htlxxrh.is_approve as is_approve',
                                 'htlxxrh.saldo as saldo',
+                                'htlxxmh.is_potongupah as is_potongupah',
                                 'htlxxmh_kode as htlxxmh_kode',
                                 'htlgrmh.kode as htlgrmh_kode'
                             ] )
@@ -355,9 +357,14 @@
                             ->where('htlxxrh.jenis', 1 )    // absensi
                             ->exec();
                         $rs_htlxxrh = $qs_htlxxrh->fetch();
+                        $is_pot_premi = 0;
                         if(!empty($rs_htlxxrh)){
                             // jika ada absen
                             $kode_izin[] = $rs_htlxxrh['htlxxmh_kode'] . " [" . $rs_htlxxrh['htlxxrh_kode'] . "]";
+                            if ($rs_htlxxrh['is_potongupah'] == 1) {
+                                $is_pot_premi = 1;
+                            } 
+                            
                             if ($rs_htlxxrh['is_approve'] == 1) {
                                 $status_presensi_in = $rs_htlxxrh['htlgrmh_kode'];
                                 $status_presensi_out = $rs_htlxxrh['htlgrmh_kode'];
@@ -416,6 +423,7 @@
                                     'htlxxrh.jam_awal as jam_awal',
                                     'htlxxrh.htlxxmh_kode as htlxxmh_kode',
                                     'htpxxmh.is_potong_gaji as is_potong_gaji',
+                                    'htpxxmh.is_potong_premi as is_potong_premi',
                                     'htlgrmh.kode as htlgrmh_kode',
                                     'htlxxrh.is_approve as is_approve'
                                 ] )
@@ -438,6 +446,11 @@
                             if(!empty($rs_htlxxrh_dinas_in) ){
                                 foreach ($rs_htlxxrh_dinas_in as $key => $izin_dinas_in) {
                                     $kode_izin[] = $izin_dinas_in['htlxxmh_kode'] . " [" . $izin_dinas_in['htlxxrh_kode'] . "]"; //tamnbahkan kode dokumen
+
+                                    if ($izin_dinas_in['is_potong_premi'] == 1) {
+                                        $is_pot_premi = 1;
+                                    } 
+
                                     if($izin_dinas_in['is_approve'] == 1){
 
                                         $status_presensi_in = $izin_dinas_in['htlxxmh_kode']; //KODE IZIN TL / DLW
@@ -509,6 +522,7 @@
                                     'htlxxrh.kode as htlxxrh_kode',
                                     'htlxxrh.jam_akhir as jam_akhir',
                                     'htpxxmh.is_potong_gaji as is_potong_gaji',
+                                    'htpxxmh.is_potong_premi as is_potong_premi',
                                     'htlxxrh.htlxxmh_kode as htlxxmh_kode',
                                     'htlgrmh.kode as htlgrmh_kode',
                                     'htlxxrh.is_approve as is_approve'
@@ -531,6 +545,11 @@
                             if(!empty($rs_htlxxrh_dinas_out) ){
                                 foreach ($rs_htlxxrh_dinas_out as $key => $izin_dinas_out) {
                                     $kode_izin[] = $izin_dinas_out['htlxxmh_kode'] . " [" . $izin_dinas_out['htlxxrh_kode'] . "]";
+                                    
+                                    if ($izin_dinas_out['is_potong_premi'] == 1) {
+                                        $is_pot_premi = 1;
+                                    } 
+
                                     if($izin_dinas_out['is_approve'] == 1){
                                         
                                         $status_presensi_out = $izin_dinas_out['htlxxmh_kode'];
@@ -593,6 +612,7 @@
                                     'htlxxmh_kode as htlxxmh_kode',
                                     'htlgrmh.kode as htlgrmh_kode',
                                     'htpxxmh.is_potong_gaji as is_potong_gaji',
+                                    'htpxxmh.is_potong_premi as is_potong_premi',
                                     'htlxxrh.is_approve as is_approve',
                                     'htlxxrh.jam_awal as jam_awal',
                                     'htlxxrh.jam_akhir as jam_akhir'
@@ -613,6 +633,10 @@
                             foreach ($rs_htlxxrh_izin as $row_htlxxrh_izin) {
                                 $kode_izin[] = $row_htlxxrh_izin['htlxxmh_kode'] . " [" . $row_htlxxrh_izin['htlxxrh_kode'] . "]";
                                 
+                                if ($row_htlxxrh_izin['is_potong_premi'] == 1) {
+                                    $is_pot_premi = 1;
+                                } 
+
                                 if ($row_htlxxrh_izin['is_potong_gaji']) {
                                     $tanggaljam_izin_awal    = new Carbon( $tanggal . ' ' . $row_htlxxrh_izin['jam_awal'] );
                                     if( $row_htlxxrh_izin['jam_awal'] < $row_htlxxrh_izin['jam_akhir']){
@@ -1100,6 +1124,7 @@
                             ->set('durasi_lembur_final', $durasi_lembur_final)
                             ->set('pot_jam_final', $pot_jam_final)
                             ->set('is_makan', $is_makan)
+                            ->set('is_pot_premi', $is_pot_premi)
                             ->set('cek', $cek)
                         ->exec();
                     }
