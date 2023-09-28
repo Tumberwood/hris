@@ -26,7 +26,7 @@
      * var_cost (OK)
      * fix_cost (OK)
      * premiabs (OK)
-     * trm_jkkjkm
+     * trm_jkkjkm (OK)
      * 
      * lembur15 (OK)
      * rp_lembur15 -- 1.5 dikali berapa (OK)
@@ -42,7 +42,7 @@
      * pot_pph21
      * pph21back
      * 
-     * pot_jkkjkm
+     * pot_jkkjkm (OK)
      * pot_jht
      * pot_lain2
      * pot_spsi
@@ -171,6 +171,9 @@
                 var_cost,
                 fix_cost,
                 premi_abs,
+                jkk,
+                jkm,
+                trm_jkkjkm,
                 lembur15,
                 lembur2,
                 lembur3,
@@ -179,315 +182,448 @@
                 rp_lembur2,
                 rp_lembur3,
                 lemburbersih,
-                pot_makan
+                pot_makan,
+                pot_jkkjkm,
+                pot_jht,
+                pot_upah,
+                pot_bpjs,
+                pot_psiun,
+                gaji_bersih,
+                bulat,
+                gaji_terima
             )
-            SELECT DISTINCT
+            WITH qs_payroll AS (
+                SELECT DISTINCT
+                    a.id_hemxxmh,
+                    c.grup_hk,
+                    IFNULL(hari_kerja, 0) AS hari_kerja,
+                    
+                    -- gaji pokok
+                    IFNULL( 
+                         if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
+                             hari_kerja / if(c.grup_hk = 1, 21, 25) * gp,
+                         gp),
+                     0) AS gp,
+                     
+                     -- tunjangan jabatan
+                    IFNULL( 
+                         if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
+                             hari_kerja / if(c.grup_hk = 1, 21, 25) * t_jab,
+                         t_jab),
+                     0) AS t_jab,
+                     
+                     -- var_cost
+                     IFNULL(nominal_var_cost, 0) AS var_cost,
+                     
+                     -- fix cost atau masa kerja
+                    IFNULL( 
+                         if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
+                             hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_mk,
+                         nominal_mk),
+                     0) AS fix_cost,
+                     
+                     -- premi absen dengan validasi jika ada izin/absen yang memotong premi maka premi absen == 0 atau hangus
+                    IFNULL(if(report_pot_premi >= 1, 0, premiabs), 0) AS premi_abs,
+                    
+                    -- hitung jkk
+                    IFNULL((persen_jkk / 100) * gaji_bpjs,0) AS jkk,
+                    
+                    -- hitung jkm
+                    IFNULL((persen_jkm / 100) * gaji_bpjs,0) AS jkm,
+                    
+                    -- trm_jkkjkm == jkk + jkm
+                    IFNULL(((persen_jkk / 100) * gaji_bpjs) + ((persen_jkm / 100) * gaji_bpjs), 0) AS trm_jkkjkm,
+                    
+                    -- mulai lembur
+                    lembur15,
+                    lembur2,
+                    lembur3,
+                    IFNULL(if(lembur15 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 1.5, 0),0) AS rp_lembur15,
+                    IFNULL(if(lembur2 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 2, 0),0) AS rp_lembur2,
+                    IFNULL(if(lembur3 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 3, 0),0) AS rp_lembur3,
+                    
+                    -- hitung pot makan
+                    IFNULL(pot_makan * pot_uang_makan, 0) AS pot_makan,
+                    
+                    -- pot_jkkjkm == jkk + jkm (sama dengan pot_jkkjkm)
+                    IFNULL(((persen_jkk / 100) * gaji_bpjs) + ((persen_jkm / 100) * gaji_bpjs), 0) AS pot_jkkjkm,
+                    
+                    -- hitung pot_jht
+                    IFNULL((persen_jht_karyawan / 100) * gaji_bpjs, 0) AS pot_jht,
+                    
+                    -- hitung pot_bpjs
+                    IFNULL((persen_karyawan / 100) * gaji_bpjs, 0) AS pot_bpjs,
+                    
+                    -- hitung pot_psiun
+                    IFNULL((persen_jp_karyawan / 100) * gaji_bpjs, 0) AS pot_psiun
+                    
+                FROM htsprrd AS a
+                LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = a.id_hemxxmh
+                
+                    -- Masa Kerja
+                    LEFT JOIN (
+                        SELECT
+                            job.id_hemxxmh,
+                            nominal AS nominal_mk,
+                            job.id_hevgrmh,
+                            masa_kerja_year
+                        FROM (
+                            SELECT
+                                a.id_hemxxmh,
+                                hev.id_hevgrmh AS id_hevgrmh,
+                                IF(
+                                    a.tanggal_keluar IS NULL,
+                                    TIMESTAMPDIFF(YEAR, a.tanggal_masuk, CURDATE()),
+                                    TIMESTAMPDIFF(YEAR, a.tanggal_masuk, a.tanggal_keluar)
+                                ) AS masa_kerja_year
+                            FROM hemjbmh AS a
+                            LEFT JOIN hevxxmh AS hev ON hev.id = a.id_hevxxmh
+                            WHERE is_active = 1
+                            GROUP BY a.id_hemxxmh
+                        ) AS job
+                        LEFT JOIN (
+                            SELECT
+                                id_hevgrmh,
+                                tanggal_efektif,
+                                nominal,
+                                tahun_min,
+                                tahun_max,
+                                ROW_NUMBER() OVER (PARTITION BY id_hevgrmh ORDER BY tanggal_efektif DESC) AS row_num
+                            FROM htpr_hevgrmh_mk
+                            WHERE
+                                id_hpcxxmh = 31
+                                AND tanggal_efektif < :tanggal_awal
+                        ) AS masakerja ON masakerja.id_hevgrmh = job.id_hevgrmh
+                        WHERE if(masakerja.tahun_max > 0, job.masa_kerja_year BETWEEN tahun_min AND tahun_max, job.masa_kerja_year > masakerja.tahun_min)
+                        GROUP BY job.id_hemxxmh
+                    ) AS mk ON mk.id_hemxxmh = a.id_hemxxmh
+                        
+                    -- gaji pokok
+                    LEFT JOIN (
+                        SELECT
+                            id_hemxxmh,
+                            tanggal_efektif,
+                            IFNULL(nominal, 0) AS gp
+                        FROM (
+                            SELECT
+                                id,
+                                id_hemxxmh,
+                                tanggal_efektif,
+                                nominal,
+                                ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                            FROM htpr_hemxxmh
+                            WHERE
+                                htpr_hemxxmh.id_hpcxxmh = 1
+                                AND tanggal_efektif < :tanggal_awal
+                        ) AS subquery
+                        WHERE row_num = 1
+                    ) tbl_htpr_hemxxmh ON tbl_htpr_hemxxmh.id_hemxxmh = a.id_hemxxmh
+                    
+                    -- var_cost htpr_hemxxmh.id_hpcxxmh = 102
+                    LEFT JOIN (
+                        SELECT
+                            id_hemxxmh,
+                            tanggal_efektif,
+                            IFNULL(nominal, 0) AS nominal_var_cost
+                        FROM (
+                            SELECT
+                                id,
+                                id_hemxxmh,
+                                tanggal_efektif,
+                                nominal,
+                                ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                            FROM htpr_hemxxmh
+                            WHERE
+                                htpr_hemxxmh.id_hpcxxmh = 102
+                                AND tanggal_efektif < :tanggal_awal
+                        ) AS subquery
+                        WHERE row_num = 1
+                    ) tbl_var_cost ON tbl_var_cost.id_hemxxmh = a.id_hemxxmh
+                    
+                    -- potongan makan htpr_hesxxmh
+                    LEFT JOIN (
+                        SELECT
+                            id_hesxxmh,
+                            tanggal_efektif,
+                            IFNULL(nominal, 0) AS pot_uang_makan
+                        FROM (
+                            SELECT
+                                id,
+                                id_hesxxmh,
+                                tanggal_efektif,
+                                nominal,
+                                ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                            FROM htpr_hesxxmh
+                            WHERE
+                                htpr_hesxxmh.id_hpcxxmh = 34
+                                AND tanggal_efektif < :tanggal_awal
+                        ) AS subquery
+                        WHERE row_num = 1
+                    ) pot_uang_makan ON pot_uang_makan.id_hesxxmh = c.id_hesxxmh
+                    
+                    -- Ambil lembur mati dari htpr_hesxxmh untuk pelatihan
+                    LEFT JOIN (
+                        SELECT
+                            id_hesxxmh,
+                            tanggal_efektif,
+                            IFNULL(nominal, 0) AS nominal_lembur_mati
+                        FROM (
+                            SELECT
+                                id,
+                                id_hesxxmh,
+                                tanggal_efektif,
+                                nominal,
+                                ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                            FROM htpr_hesxxmh
+                            WHERE
+                                htpr_hesxxmh.id_hpcxxmh = 36
+                                AND tanggal_efektif < :tanggal_awal
+                        ) AS subquery
+                        WHERE row_num = 1
+                    ) lembur_mati ON lembur_mati.id_hesxxmh = c.id_hesxxmh
+                    
+                    -- t jabatan
+                    LEFT JOIN (
+                        SELECT
+                            id_hevxxmh,
+                            tanggal_efektif,
+                            IFNULL(nominal, 0) AS t_jab
+                        FROM (
+                            SELECT
+                                id,
+                                id_hevxxmh,
+                                tanggal_efektif,
+                                nominal,
+                                ROW_NUMBER() OVER (PARTITION BY id_hevxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                            FROM htpr_hevxxmh
+                            WHERE
+                                htpr_hevxxmh.id_hpcxxmh = 32
+                                AND tanggal_efektif < :tanggal_awal
+                        ) AS subquery
+                        WHERE row_num = 1
+                    ) t_jabatan ON t_jabatan.id_hevxxmh = c.id_hevxxmh
+                    
+                    -- premi absen
+                    LEFT JOIN (
+                        SELECT
+                            id_hevxxmh,
+                            tanggal_efektif,
+                            IFNULL(nominal, 0) AS premiabs 
+                        FROM (
+                            SELECT
+                                id,
+                                id_hevxxmh,
+                                tanggal_efektif,
+                                nominal,
+                                ROW_NUMBER() OVER (PARTITION BY id_hevxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                            FROM htpr_hevxxmh
+                            WHERE
+                                htpr_hevxxmh.id_hpcxxmh = 33
+                                AND tanggal_efektif < :tanggal_awal
+                        ) AS subquery
+                        WHERE row_num = 1
+                    ) premi_abs ON premi_abs.id_hevxxmh = c.id_hevxxmh
+                    
+                    -- sum durasi lembur dan makan
+                    LEFT JOIN (
+                        SELECT
+                            id_hemxxmh,
+                            SUM(durasi_lembur_final) AS lembur_sum,
+                            SUM(is_makan) AS pot_makan
+                        FROM htsprrd
+                        WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                        GROUP BY id_hemxxmh
+                    ) lembur_sum_table ON lembur_sum_table.id_hemxxmh = a.id_hemxxmh
+                    
+                    -- cari lembur 1.5, lembur 2, lembur 3
+                    LEFT JOIN (
+                        SELECT
+                            id_hemxxmh,
+                            lembur15,
+                            lembur2,
+                            lembur3
+                        FROM (
+                            SELECT
+                                id_hemxxmh,
+                                durasi_lembur_final AS lembur_sum,
+                                SUM((CASE
+                                    WHEN IFNULL(durasi_lembur_final, 0) > 0 -- dicari apakah ada lembur
+                                     -- jika ada lembur maka diisikan, namun ada kondisi jika lebih dari 1 maka akan di return 1, else, nilai lembur sebenarnya
+                                    THEN if(durasi_lembur_final > 1, 1, durasi_lembur_final) * 1.5
+                                    ELSE 0 -- kalau tidak ada lembur maka return 0
+                                END)) AS lembur15,
+                                SUM((CASE
+                                        -- cari lembur diatas 1 jam dan kurang atau sama dengan 8 jam
+                                    WHEN IFNULL(durasi_lembur_final, 0) > 1 AND IFNULL(durasi_lembur_final, 0) <= 8
+                                    THEN (durasi_lembur_final - 1) * 2 -- ini diminus 1 karena sebelumnya sudah dihitung di lembur 1,5
+                                    ELSE 0 -- jika tidak ada maka return 0 untuk lembur 2 nya
+                                END)) AS lembur2,
+                                SUM((CASE
+                                    WHEN IFNULL(durasi_lembur_final, 0) > 8 -- cari jam lembur diatas 8
+                                    THEN (durasi_lembur_final - 8) * 3 -- jika ada maka diminus 8, karena yang 1-8 sudah dihitung di lembur 1,5 dan 2
+                                    ELSE 0 -- jika tidak ada maka return 0 di lembur 3 nya
+                                END)) AS lembur3
+                            FROM htsprrd
+                            WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                            GROUP BY id_hemxxmh
+                        ) lembur_sum_table
+                    ) lembur_calc ON lembur_calc.id_hemxxmh = a.id_hemxxmh
+                    
+                    -- validasi cari izin/absen yang memotong premi dari report presensi
+                    LEFT JOIN (
+                        SELECT
+                          id_hemxxmh,
+                            report_pot_premi
+                        FROM (
+                            SELECT
+                                id_hemxxmh,
+                                COUNT(id) AS report_pot_premi
+                            FROM htsprrd
+                            WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                  AND is_pot_premi = 1
+                            GROUP BY id_hemxxmh
+                        ) c_report_pot_premi
+                    ) presensi_pot_premi ON presensi_pot_premi.id_hemxxmh = a.id_hemxxmh
+                    
+                    -- hari kerja karyawan baru
+                    LEFT JOIN (
+                        SELECT
+                            (hk_report + IFNULL(jadwal.jadwal, 0)) AS hari_kerja,
+                            report.id_hemxxmh
+                        FROM (
+                            SELECT 
+                                COUNT(a.id) AS hk_report,
+                                a.id_hemxxmh
+                            FROM htsprrd AS a
+                            LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
+                            WHERE a.tanggal BETWEEN job.tanggal_masuk AND :tanggal_akhir
+                                AND a.st_clock_in <> "OFF"
+                            GROUP BY a.id_hemxxmh
+                        ) AS report
+                        LEFT JOIN (
+                            SELECT
+                                id_hemxxmh,
+                                COUNT(id) AS jadwal
+                            FROM htssctd
+                            WHERE tanggal BETWEEN :tanggal_akhir AND LAST_DAY(:tanggal_akhir)
+                                AND id_htsxxmh <> 1
+                            GROUP BY id_hemxxmh
+                        ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh
+                    ) AS hk ON hk.id_hemxxmh = a.id_hemxxmh
+                    
+                    -- select data dari hibtkmh untuk hitung bpjs
+                    LEFT JOIN (
+                        SELECT
+                          persen_jkk,
+                          persen_jkm,
+                          persen_jht_karyawan,
+                          persen_jp_karyawan,
+                          is_active
+                        FROM (
+                            SELECT
+                                persen_jkk,
+                                persen_jkm,
+                                persen_jht_karyawan,
+                                persen_jp_karyawan,
+                                is_active
+                            FROM hibtkmh
+                        ) sel_bpjs
+                    ) bpjs ON bpjs.is_active = 1
+                    
+                    -- select gaji bpjs
+                    LEFT JOIN (
+                        SELECT
+                            id_hemxxmh,
+                            tanggal_efektif,
+                            IFNULL(nominal, 0) AS gaji_bpjs
+                        FROM (
+                            SELECT
+                                id,
+                                id_hemxxmh,
+                                tanggal_efektif,
+                                nominal,
+                                ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                            FROM htpr_hemxxmh
+                            WHERE
+                                htpr_hemxxmh.id_hpcxxmh = 2
+                                AND tanggal_efektif < :tanggal_awal
+                        ) AS subquery
+                        WHERE row_num = 1
+                    ) tbl_gaji_bpjs ON tbl_gaji_bpjs.id_hemxxmh = a.id_hemxxmh
+                    
+                    -- select data dari hibksmh untuk hitung bpjs kesehatan
+                    LEFT JOIN (
+                        SELECT
+                          persen_karyawan,
+                          is_active
+                        FROM (
+                            SELECT
+                                persen_karyawan,
+                                is_active
+                            FROM hibksmh
+                        ) sel_bpjs
+                    ) bpjs_kesehatan ON bpjs_kesehatan.is_active = 1
+                
+                WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                    AND c.id_heyxxmh = :id_heyxxmh
+            )
+            SELECT
                 ' . $id_hpyxxth . ',
-                ' . $id_heyxxmh . ',
-                a.id_hemxxmh,
-
-                -- gaji pokok
-                if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir,  
-                     if(c.grup_hk = 5,
-                          (hari_kerja / 21) * gp, 
-                         (hari_kerja / 25) * gp),
-                 gp) AS gp,
-
-                 -- tunjangan jabatan
-                 if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir,  
-                     if(c.grup_hk = 5,
-                          (hari_kerja / 21) * t_jab, 
-                         (hari_kerja / 25) * t_jab),
-                 t_jab) AS t_jab,
-                 nominal_var_cost AS var_cost,
-
-                -- fix cost
-                 if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir,  
-                     if(c.grup_hk = 5,
-                          (hari_kerja / 21) * nominal_mk, 
-                         (hari_kerja / 25) * nominal_mk),
-                 nominal_mk) AS fix_cost,
-
-                 -- premi absen dengan validasi jika ada izin/absen yang memotong premi maka premi absen == 0 atau hangus
-                if(report_pot_premi >= 1, 0, premiabs) AS premi_abs,
-
+                 ' . $id_heyxxmh . ',
+                qs_payroll.id_hemxxmh,
+                gp,
+                t_jab,
+                var_cost,
+                fix_cost,
+                premi_abs,
+                jkk,
+                jkm,
+                trm_jkkjkm,
                 lembur15,
                 lembur2,
                 lembur3,
                 (lembur15 + lembur2 + lembur3) AS jam_lembur,
-
-                -- kondisi jika id hes == 3 atau pelatihan maka ambil nominal_lembur_mati di htpr_hesxxmh jika tidak maka pakai rumus == if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173))
-                if(lembur15 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 1.5, 0) AS rp_lembur15,
-                if(lembur2 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 2, 0) AS rp_lembur2,
-                if(lembur3 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 3, 0) AS rp_lembur3,
-
-                -- total rp lembur
-                if(lembur15 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 1.5, 0) + 
-                if(lembur2 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 2, 0) + 
-                if(lembur3 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 3, 0) AS lemburbersih,
-                pot_makan * pot_uang_makan AS pot_makan
-                
-            FROM htsprrd AS a
-            
-            -- hemjbmh
-            LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = a.id_hemxxmh
-            
-            -- Masa Kerja
-            LEFT JOIN (
-                SELECT
-                    job.id_hemxxmh,
-                    nominal AS nominal_mk,
-                    job.id_hevgrmh,
-                    masa_kerja_year
-                FROM (
-                    SELECT
-                        a.id_hemxxmh,
-                        hev.id_hevgrmh AS id_hevgrmh,
-                        IF(
-                            a.tanggal_keluar IS NULL,
-                            TIMESTAMPDIFF(YEAR, a.tanggal_masuk, CURDATE()),
-                            TIMESTAMPDIFF(YEAR, a.tanggal_masuk, a.tanggal_keluar)
-                        ) AS masa_kerja_year
-                    FROM hemjbmh AS a
-                    LEFT JOIN hevxxmh AS hev ON hev.id = a.id_hevxxmh
-                    WHERE is_active = 1
-                    GROUP BY a.id_hemxxmh
-                ) AS job
-                LEFT JOIN (
-                    SELECT
-                        id_hevgrmh,
-                        tanggal_efektif,
-                        nominal,
-                        tahun_min,
-                        tahun_max,
-                        ROW_NUMBER() OVER (PARTITION BY id_hevgrmh ORDER BY tanggal_efektif DESC) AS row_num
-                    FROM htpr_hevgrmh_mk
-                    WHERE
-                        id_hpcxxmh = 31
-                        AND tanggal_efektif < :tanggal_awal
-                ) AS masakerja ON masakerja.id_hevgrmh = job.id_hevgrmh
-                WHERE if(masakerja.tahun_max > 0, job.masa_kerja_year BETWEEN tahun_min AND tahun_max, job.masa_kerja_year > masakerja.tahun_min)
-                GROUP BY job.id_hemxxmh
-            ) AS mk ON mk.id_hemxxmh = a.id_hemxxmh
-                
-            -- gaji pokok
-            LEFT JOIN (
-                SELECT
-                    id_hemxxmh,
-                    tanggal_efektif,
-                    IFNULL(nominal, 0) AS gp
-                FROM (
-                    SELECT
-                        id,
-                        id_hemxxmh,
-                        tanggal_efektif,
-                        nominal,
-                        ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                    FROM htpr_hemxxmh
-                    WHERE
-                        htpr_hemxxmh.id_hpcxxmh = 1
-                        AND tanggal_efektif < :tanggal_awal
-                ) AS subquery
-                WHERE row_num = 1
-            ) tbl_htpr_hemxxmh ON tbl_htpr_hemxxmh.id_hemxxmh = a.id_hemxxmh
-            
-            -- var_cost htpr_hemxxmh.id_hpcxxmh = 102
-            LEFT JOIN (
-                SELECT
-                    id_hemxxmh,
-                    tanggal_efektif,
-                    IFNULL(nominal, 0) AS nominal_var_cost
-                FROM (
-                    SELECT
-                        id,
-                        id_hemxxmh,
-                        tanggal_efektif,
-                        nominal,
-                        ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                    FROM htpr_hemxxmh
-                    WHERE
-                        htpr_hemxxmh.id_hpcxxmh = 102
-                        AND tanggal_efektif < :tanggal_awal
-                ) AS subquery
-                WHERE row_num = 1
-            ) tbl_var_cost ON tbl_var_cost.id_hemxxmh = a.id_hemxxmh
-            
-            -- potongan makan htpr_hesxxmh
-            LEFT JOIN (
-                SELECT
-                    id_hesxxmh,
-                    tanggal_efektif,
-                    IFNULL(nominal, 0) AS pot_uang_makan
-                FROM (
-                    SELECT
-                        id,
-                        id_hesxxmh,
-                        tanggal_efektif,
-                        nominal,
-                        ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                    FROM htpr_hesxxmh
-                    WHERE
-                        htpr_hesxxmh.id_hpcxxmh = 34
-                        AND tanggal_efektif < :tanggal_awal
-                ) AS subquery
-                WHERE row_num = 1
-            ) pot_uang_makan ON pot_uang_makan.id_hesxxmh = c.id_hesxxmh
-            
-            -- Ambil lembur mati dari htpr_hesxxmh untuk pelatihan
-            LEFT JOIN (
-                SELECT
-                    id_hesxxmh,
-                    tanggal_efektif,
-                    IFNULL(nominal, 0) AS nominal_lembur_mati
-                FROM (
-                    SELECT
-                        id,
-                        id_hesxxmh,
-                        tanggal_efektif,
-                        nominal,
-                        ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                    FROM htpr_hesxxmh
-                    WHERE
-                        htpr_hesxxmh.id_hpcxxmh = 36
-                        AND tanggal_efektif < :tanggal_awal
-                ) AS subquery
-                WHERE row_num = 1
-            ) lembur_mati ON lembur_mati.id_hesxxmh = c.id_hesxxmh
-            
-            -- t jabatan
-            LEFT JOIN (
-                SELECT
-                    id_hevxxmh,
-                    tanggal_efektif,
-                    IFNULL(nominal, 0) AS t_jab
-                FROM (
-                    SELECT
-                        id,
-                        id_hevxxmh,
-                        tanggal_efektif,
-                        nominal,
-                        ROW_NUMBER() OVER (PARTITION BY id_hevxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                    FROM htpr_hevxxmh
-                    WHERE
-                        htpr_hevxxmh.id_hpcxxmh = 32
-                        AND tanggal_efektif < :tanggal_awal
-                ) AS subquery
-                WHERE row_num = 1
-            ) t_jabatan ON t_jabatan.id_hevxxmh = c.id_hevxxmh
-            
-            -- premi absen
-            LEFT JOIN (
-                SELECT
-                    id_hevxxmh,
-                    tanggal_efektif,
-                    IFNULL(nominal, 0) AS premiabs
-                FROM (
-                    SELECT
-                        id,
-                        id_hevxxmh,
-                        tanggal_efektif,
-                        nominal,
-                        ROW_NUMBER() OVER (PARTITION BY id_hevxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                    FROM htpr_hevxxmh
-                    WHERE
-                        htpr_hevxxmh.id_hpcxxmh = 33
-                        AND tanggal_efektif < :tanggal_awal
-                ) AS subquery
-                WHERE row_num = 1
-            ) premi_abs ON premi_abs.id_hevxxmh = c.id_hevxxmh
-            
-            -- sum durasi lembur dan makan
-            LEFT JOIN (
-                SELECT
-                    id_hemxxmh,
-                    SUM(durasi_lembur_final) AS lembur_sum,
-                    SUM(is_makan) AS pot_makan
-                FROM htsprrd
-                WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                GROUP BY id_hemxxmh
-            ) lembur_sum_table ON lembur_sum_table.id_hemxxmh = a.id_hemxxmh
-            
-            -- cari lembur 1.5, lembur 2, lembur 3
-            LEFT JOIN (
-                SELECT
-                    id_hemxxmh,
-                    lembur15,
-                    lembur2,
-                    lembur3
-                FROM (
-                    SELECT
-                        id_hemxxmh,
-                        durasi_lembur_final AS lembur_sum,
-                        SUM((CASE
-                            WHEN IFNULL(durasi_lembur_final, 0) > 0 -- dicari apakah ada lembur
-                             -- jika ada lembur maka diisikan, namun ada kondisi jika lebih dari 1 maka akan di return 1, else, nilai lembur sebenarnya
-                            THEN if(durasi_lembur_final > 1, 1, durasi_lembur_final) * 1.5
-                            ELSE 0 -- kalau tidak ada lembur maka return 0
-                        END)) AS lembur15,
-                        SUM((CASE
-                                -- cari lembur diatas 1 jam dan kurang atau sama dengan 8 jam
-                            WHEN IFNULL(durasi_lembur_final, 0) > 1 AND IFNULL(durasi_lembur_final, 0) <= 8
-                            THEN (durasi_lembur_final - 1) * 2 -- ini diminus 1 karena sebelumnya sudah dihitung di lembur 1,5
-                            ELSE 0 -- jika tidak ada maka return 0 untuk lembur 2 nya
-                        END)) AS lembur2,
-                        SUM((CASE
-                            WHEN IFNULL(durasi_lembur_final, 0) > 8 -- cari jam lembur diatas 8
-                            THEN (durasi_lembur_final - 8) * 3 -- jika ada maka diminus 8, karena yang 1-8 sudah dihitung di lembur 1,5 dan 2
-                            ELSE 0 -- jika tidak ada maka return 0 di lembur 3 nya
-                        END)) AS lembur3
-                    FROM htsprrd
-                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                    GROUP BY id_hemxxmh
-                ) lembur_sum_table
-            ) lembur_calc ON lembur_calc.id_hemxxmh = a.id_hemxxmh
-            
-            -- hari kerja karyawan baru
-            LEFT JOIN (
-                SELECT
-                    (hk_report + IFNULL(jadwal.jadwal, 0)) AS hari_kerja,
-                    report.id_hemxxmh
-                FROM (
-                    SELECT 
-                        COUNT(a.id) AS hk_report,
-                        a.id_hemxxmh
-                    FROM htsprrd AS a
-                    LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
-                    WHERE a.tanggal BETWEEN job.tanggal_masuk AND :tanggal_akhir
-                        AND a.st_clock_in <> "OFF"
-                    GROUP BY a.id_hemxxmh
-                ) AS report
-                LEFT JOIN (
-                    SELECT
-                        id_hemxxmh,
-                        COUNT(id) AS jadwal
-                    FROM htssctd
-                    WHERE tanggal BETWEEN :tanggal_akhir AND LAST_DAY(:tanggal_akhir)
-                        AND id_htsxxmh <> 1
-                    GROUP BY id_hemxxmh
-                ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh
-            ) AS hk ON hk.id_hemxxmh = a.id_hemxxmh
-            
-            -- validasi cari izin/absen yang memotong premi dari report presensi
-            LEFT JOIN (
-                SELECT
-                    id_hemxxmh,
-                    report_pot_premi
-                FROM (
-                    SELECT
-                        id_hemxxmh,
-                        COUNT(id) AS report_pot_premi
-                    FROM htsprrd
-                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                        AND is_pot_premi = 1
-                    GROUP BY id_hemxxmh
-                ) c_report_pot_premi
-            ) presensi_pot_premi ON presensi_pot_premi.id_hemxxmh = a.id_hemxxmh
-            WHERE
-                a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                AND c.id_heyxxmh = :id_heyxxmh;
+                rp_lembur15,
+                rp_lembur2,
+                rp_lembur3,
+                IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0) AS lemburbersih,
+                pot_makan,
+                pot_jkkjkm,
+                pot_jht,
+                (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) AS pot_upah,
+                pot_bpjs,
+                pot_psiun,
+                -- hitung gaji bersih
+                (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
+                  - 
+                 (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun) -- ini merah
+                 AS gaji_bersih,
+                 
+                 -- pembulatan per 100 dari gaji bersih
+                 (
+                     (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
+                      - 
+                     (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun) -- ini merah
+                 ) % 100 AS bulat,
+                 
+                 -- gaji_bersih - hasil pembulatan
+                 (
+                     (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
+                      - 
+                     (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun) -- ini merah
+                 )
+                 -
+                (
+                     (
+                         (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
+                          - 
+                         (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun) -- ini merah
+                     ) % 100
+                 ) AS gaji_terima
+            FROM qs_payroll
         ');
         // END GAJI POKOK
-
+        
         // $qr_gp = $db
         //     ->raw()
         //     ->bind(':id_heyxxmh', $id_heyxxmh)
@@ -496,26 +632,131 @@
         //     ->exec('
         //     INSERT INTO hpyemtd (
         //         id_hpyxxth, 
+        //         id_heyxxmh, 
         //         id_hemxxmh, 
         //         gp,
         //         t_jab,
-        //         premi_abs
+        //         var_cost,
+        //         fix_cost,
+        //         premi_abs,
+        //         jkk,
+        //         jkm,
+        //         trm_jkkjkm,
+        //         lembur15,
+        //         lembur2,
+        //         lembur3,
+        //         jam_lembur,
+        //         rp_lembur15,
+        //         rp_lembur2,
+        //         rp_lembur3,
+        //         lemburbersih,
+        //         pot_makan
         //     )
         //     SELECT DISTINCT
         //         ' . $id_hpyxxth . ',
+        //         ' . $id_heyxxmh . ',
         //         a.id_hemxxmh,
-        //         IFNULL(tbl_htpr_hemxxmh.nominal,0) as gp,
-        //         IFNULL(t_jabatan.nominal,0) as t_jab,
-        //         IFNULL(premi_abs.nominal,0) as premi_abs
 
+        //         -- gaji pokok
+        //         if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir,  
+        //              if(c.grup_hk = 1,
+        //                   (hari_kerja / 21) * gp, 
+        //                  (hari_kerja / 25) * gp),
+        //          gp) AS gp,
+
+        //          -- tunjangan jabatan
+        //          if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir,  
+        //              if(c.grup_hk = 1,
+        //                   (hari_kerja / 21) * t_jab, 
+        //                  (hari_kerja / 25) * t_jab),
+        //          t_jab) AS t_jab,
+        //          nominal_var_cost AS var_cost,
+
+        //         -- fix cost
+        //          if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir,  
+        //              if(c.grup_hk = 1,
+        //                   (hari_kerja / 21) * nominal_mk, 
+        //                  (hari_kerja / 25) * nominal_mk),
+        //          nominal_mk) AS fix_cost,
+
+        //          -- premi absen dengan validasi jika ada izin/absen yang memotong premi maka premi absen == 0 atau hangus
+        //         if(report_pot_premi >= 1, 0, premiabs) AS premi_abs,
+
+        //         -- hitung jkk
+        //         (persen_jkk / 100) * gaji_bpjs AS jkk,
+                
+        //         -- hitung jkm
+        //         (persen_jkm / 100) * gaji_bpjs AS jkm,
+                
+        //         -- trm_jkkjkm == jkk + jkm
+        //         ((persen_jkk / 100) * gaji_bpjs) + ((persen_jkm / 100) * gaji_bpjs) AS trm_jkkjkm,
+                
+        //         -- mulai hitung lembur
+        //         lembur15,
+        //         lembur2,
+        //         lembur3,
+        //         (lembur15 + lembur2 + lembur3) AS jam_lembur,
+
+        //         -- kondisi jika id hes == 3 atau pelatihan maka ambil nominal_lembur_mati di htpr_hesxxmh jika tidak maka pakai rumus == if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173))
+        //         if(lembur15 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 1.5, 0) AS rp_lembur15,
+        //         if(lembur2 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 2, 0) AS rp_lembur2,
+        //         if(lembur3 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 3, 0) AS rp_lembur3,
+
+        //         -- total rp lembur
+        //         if(lembur15 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 1.5, 0) + 
+        //         if(lembur2 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 2, 0) + 
+        //         if(lembur3 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 3, 0) AS lemburbersih,
+        //         pot_makan * pot_uang_makan AS pot_makan
+                
         //     FROM htsprrd AS a
+            
+        //     -- hemjbmh
         //     LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = a.id_hemxxmh
-        //     LEFT JOIN 
-        //     (
-        //         SELECT 
-        //             id_hemxxmh, 
-        //             tanggal_efektif, 
-        //             nominal
+            
+        //     -- Masa Kerja
+        //     LEFT JOIN (
+        //         SELECT
+        //             job.id_hemxxmh,
+        //             nominal AS nominal_mk,
+        //             job.id_hevgrmh,
+        //             masa_kerja_year
+        //         FROM (
+        //             SELECT
+        //                 a.id_hemxxmh,
+        //                 hev.id_hevgrmh AS id_hevgrmh,
+        //                 IF(
+        //                     a.tanggal_keluar IS NULL,
+        //                     TIMESTAMPDIFF(YEAR, a.tanggal_masuk, CURDATE()),
+        //                     TIMESTAMPDIFF(YEAR, a.tanggal_masuk, a.tanggal_keluar)
+        //                 ) AS masa_kerja_year
+        //             FROM hemjbmh AS a
+        //             LEFT JOIN hevxxmh AS hev ON hev.id = a.id_hevxxmh
+        //             WHERE is_active = 1
+        //             GROUP BY a.id_hemxxmh
+        //         ) AS job
+        //         LEFT JOIN (
+        //             SELECT
+        //                 id_hevgrmh,
+        //                 tanggal_efektif,
+        //                 nominal,
+        //                 tahun_min,
+        //                 tahun_max,
+        //                 ROW_NUMBER() OVER (PARTITION BY id_hevgrmh ORDER BY tanggal_efektif DESC) AS row_num
+        //             FROM htpr_hevgrmh_mk
+        //             WHERE
+        //                 id_hpcxxmh = 31
+        //                 AND tanggal_efektif < :tanggal_awal
+        //         ) AS masakerja ON masakerja.id_hevgrmh = job.id_hevgrmh
+        //         WHERE if(masakerja.tahun_max > 0, job.masa_kerja_year BETWEEN tahun_min AND tahun_max, job.masa_kerja_year > masakerja.tahun_min)
+        //         GROUP BY job.id_hemxxmh
+        //     ) AS mk ON mk.id_hemxxmh = a.id_hemxxmh
+                
+        //     -- gaji pokok
+        //     LEFT JOIN (
+        //         SELECT
+        //             id_hemxxmh,
+        //             tanggal_efektif,
+        //             IFNULL(nominal, 0) AS gp
         //         FROM (
         //             SELECT
         //                 id,
@@ -524,18 +765,82 @@
         //                 nominal,
         //                 ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
         //             FROM htpr_hemxxmh
-        //             WHERE 
-        //                 htpr_hemxxmh.id_hpcxxmh = 1 AND
-        //                 tanggal_efektif < :tanggal_awal
+        //             WHERE
+        //                 htpr_hemxxmh.id_hpcxxmh = 1
+        //                 AND tanggal_efektif < :tanggal_awal
         //         ) AS subquery
         //         WHERE row_num = 1
         //     ) tbl_htpr_hemxxmh ON tbl_htpr_hemxxmh.id_hemxxmh = a.id_hemxxmh
-        //     LEFT JOIN 
-        //     (
-        //         SELECT 
-        //             id_hevxxmh, 
-        //             tanggal_efektif, 
-        //             nominal
+            
+        //     -- var_cost htpr_hemxxmh.id_hpcxxmh = 102
+        //     LEFT JOIN (
+        //         SELECT
+        //             id_hemxxmh,
+        //             tanggal_efektif,
+        //             IFNULL(nominal, 0) AS nominal_var_cost
+        //         FROM (
+        //             SELECT
+        //                 id,
+        //                 id_hemxxmh,
+        //                 tanggal_efektif,
+        //                 nominal,
+        //                 ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+        //             FROM htpr_hemxxmh
+        //             WHERE
+        //                 htpr_hemxxmh.id_hpcxxmh = 102
+        //                 AND tanggal_efektif < :tanggal_awal
+        //         ) AS subquery
+        //         WHERE row_num = 1
+        //     ) tbl_var_cost ON tbl_var_cost.id_hemxxmh = a.id_hemxxmh
+            
+        //     -- potongan makan htpr_hesxxmh
+        //     LEFT JOIN (
+        //         SELECT
+        //             id_hesxxmh,
+        //             tanggal_efektif,
+        //             IFNULL(nominal, 0) AS pot_uang_makan
+        //         FROM (
+        //             SELECT
+        //                 id,
+        //                 id_hesxxmh,
+        //                 tanggal_efektif,
+        //                 nominal,
+        //                 ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
+        //             FROM htpr_hesxxmh
+        //             WHERE
+        //                 htpr_hesxxmh.id_hpcxxmh = 34
+        //                 AND tanggal_efektif < :tanggal_awal
+        //         ) AS subquery
+        //         WHERE row_num = 1
+        //     ) pot_uang_makan ON pot_uang_makan.id_hesxxmh = c.id_hesxxmh
+            
+        //     -- Ambil lembur mati dari htpr_hesxxmh untuk pelatihan
+        //     LEFT JOIN (
+        //         SELECT
+        //             id_hesxxmh,
+        //             tanggal_efektif,
+        //             IFNULL(nominal, 0) AS nominal_lembur_mati
+        //         FROM (
+        //             SELECT
+        //                 id,
+        //                 id_hesxxmh,
+        //                 tanggal_efektif,
+        //                 nominal,
+        //                 ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
+        //             FROM htpr_hesxxmh
+        //             WHERE
+        //                 htpr_hesxxmh.id_hpcxxmh = 36
+        //                 AND tanggal_efektif < :tanggal_awal
+        //         ) AS subquery
+        //         WHERE row_num = 1
+        //     ) lembur_mati ON lembur_mati.id_hesxxmh = c.id_hesxxmh
+            
+        //     -- t jabatan
+        //     LEFT JOIN (
+        //         SELECT
+        //             id_hevxxmh,
+        //             tanggal_efektif,
+        //             IFNULL(nominal, 0) AS t_jab
         //         FROM (
         //             SELECT
         //                 id,
@@ -544,18 +849,19 @@
         //                 nominal,
         //                 ROW_NUMBER() OVER (PARTITION BY id_hevxxmh ORDER BY tanggal_efektif DESC) AS row_num
         //             FROM htpr_hevxxmh
-        //             WHERE 
-        //                 htpr_hevxxmh.id_hpcxxmh = 32 AND
-        //                 tanggal_efektif < :tanggal_awal
+        //             WHERE
+        //                 htpr_hevxxmh.id_hpcxxmh = 32
+        //                 AND tanggal_efektif < :tanggal_awal
         //         ) AS subquery
         //         WHERE row_num = 1
         //     ) t_jabatan ON t_jabatan.id_hevxxmh = c.id_hevxxmh
-        //     LEFT JOIN 
-        //     (
-        //         SELECT 
-        //             id_hevxxmh, 
-        //             tanggal_efektif, 
-        //             nominal
+            
+        //     -- premi absen
+        //     LEFT JOIN (
+        //         SELECT
+        //             id_hevxxmh,
+        //             tanggal_efektif,
+        //             IFNULL(nominal, 0) AS premiabs
         //         FROM (
         //             SELECT
         //                 id,
@@ -564,18 +870,145 @@
         //                 nominal,
         //                 ROW_NUMBER() OVER (PARTITION BY id_hevxxmh ORDER BY tanggal_efektif DESC) AS row_num
         //             FROM htpr_hevxxmh
-        //             WHERE 
-        //                 htpr_hevxxmh.id_hpcxxmh = 33 AND
-        //                 tanggal_efektif < :tanggal_awal
+        //             WHERE
+        //                 htpr_hevxxmh.id_hpcxxmh = 33
+        //                 AND tanggal_efektif < :tanggal_awal
         //         ) AS subquery
         //         WHERE row_num = 1
         //     ) premi_abs ON premi_abs.id_hevxxmh = c.id_hevxxmh
-        //     WHERE 
-        //         a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir 
-        //         AND c.id_heyxxmh = :id_heyxxmh;
+            
+        //     -- sum durasi lembur dan makan
+        //     LEFT JOIN (
+        //         SELECT
+        //             id_hemxxmh,
+        //             SUM(durasi_lembur_final) AS lembur_sum,
+        //             SUM(is_makan) AS pot_makan
+        //         FROM htsprrd
+        //         WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+        //         GROUP BY id_hemxxmh
+        //     ) lembur_sum_table ON lembur_sum_table.id_hemxxmh = a.id_hemxxmh
+            
+        //     -- cari lembur 1.5, lembur 2, lembur 3
+        //     LEFT JOIN (
+        //         SELECT
+        //             id_hemxxmh,
+        //             lembur15,
+        //             lembur2,
+        //             lembur3
+        //         FROM (
+        //             SELECT
+        //                 id_hemxxmh,
+        //                 durasi_lembur_final AS lembur_sum,
+        //                 SUM((CASE
+        //                     WHEN IFNULL(durasi_lembur_final, 0) > 0 -- dicari apakah ada lembur
+        //                      -- jika ada lembur maka diisikan, namun ada kondisi jika lebih dari 1 maka akan di return 1, else, nilai lembur sebenarnya
+        //                     THEN if(durasi_lembur_final > 1, 1, durasi_lembur_final) * 1.5
+        //                     ELSE 0 -- kalau tidak ada lembur maka return 0
+        //                 END)) AS lembur15,
+        //                 SUM((CASE
+        //                         -- cari lembur diatas 1 jam dan kurang atau sama dengan 8 jam
+        //                     WHEN IFNULL(durasi_lembur_final, 0) > 1 AND IFNULL(durasi_lembur_final, 0) <= 8
+        //                     THEN (durasi_lembur_final - 1) * 2 -- ini diminus 1 karena sebelumnya sudah dihitung di lembur 1,5
+        //                     ELSE 0 -- jika tidak ada maka return 0 untuk lembur 2 nya
+        //                 END)) AS lembur2,
+        //                 SUM((CASE
+        //                     WHEN IFNULL(durasi_lembur_final, 0) > 8 -- cari jam lembur diatas 8
+        //                     THEN (durasi_lembur_final - 8) * 3 -- jika ada maka diminus 8, karena yang 1-8 sudah dihitung di lembur 1,5 dan 2
+        //                     ELSE 0 -- jika tidak ada maka return 0 di lembur 3 nya
+        //                 END)) AS lembur3
+        //             FROM htsprrd
+        //             WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+        //             GROUP BY id_hemxxmh
+        //         ) lembur_sum_table
+        //     ) lembur_calc ON lembur_calc.id_hemxxmh = a.id_hemxxmh
+            
+        //     -- hari kerja karyawan baru
+        //     LEFT JOIN (
+        //         SELECT
+        //             (hk_report + IFNULL(jadwal.jadwal, 0)) AS hari_kerja,
+        //             report.id_hemxxmh
+        //         FROM (
+        //             SELECT 
+        //                 COUNT(a.id) AS hk_report,
+        //                 a.id_hemxxmh
+        //             FROM htsprrd AS a
+        //             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
+        //             WHERE a.tanggal BETWEEN job.tanggal_masuk AND :tanggal_akhir
+        //                 AND a.st_clock_in <> "OFF"
+        //             GROUP BY a.id_hemxxmh
+        //         ) AS report
+        //         LEFT JOIN (
+        //             SELECT
+        //                 id_hemxxmh,
+        //                 COUNT(id) AS jadwal
+        //             FROM htssctd
+        //             WHERE tanggal BETWEEN :tanggal_akhir AND LAST_DAY(:tanggal_akhir)
+        //                 AND id_htsxxmh <> 1
+        //             GROUP BY id_hemxxmh
+        //         ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh
+        //     ) AS hk ON hk.id_hemxxmh = a.id_hemxxmh
+            
+        //     -- validasi cari izin/absen yang memotong premi dari report presensi
+        //     LEFT JOIN (
+        //         SELECT
+        //             id_hemxxmh,
+        //             report_pot_premi
+        //         FROM (
+        //             SELECT
+        //                 id_hemxxmh,
+        //                 COUNT(id) AS report_pot_premi
+        //             FROM htsprrd
+        //             WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+        //                 AND is_pot_premi = 1
+        //             GROUP BY id_hemxxmh
+        //         ) c_report_pot_premi
+        //     ) presensi_pot_premi ON presensi_pot_premi.id_hemxxmh = a.id_hemxxmh
+            
+        //     -- select data dari hibtkmh untuk hitung bpjs
+        //     LEFT JOIN (
+        //         SELECT
+        //         persen_jkk,
+        //         persen_jkm,
+        //         persen_jht_karyawan,
+        //         persen_jp_karyawan,
+        //         is_active
+        //         FROM (
+        //             SELECT
+        //                 persen_jkk,
+        //                 persen_jkm,
+        //                 persen_jht_karyawan,
+        //                 persen_jp_karyawan,
+        //                 is_active
+        //             FROM hibtkmh
+        //         ) sel_bpjs
+        //     ) bpjs ON bpjs.is_active = 1
 
+        //     -- select gaji bpjs
+        //     LEFT JOIN (
+        //         SELECT
+        //             id_hemxxmh,
+        //             tanggal_efektif,
+        //             IFNULL(nominal, 0) AS gaji_bpjs
+        //         FROM (
+        //             SELECT
+        //                 id,
+        //                 id_hemxxmh,
+        //                 tanggal_efektif,
+        //                 nominal,
+        //                 ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+        //             FROM htpr_hemxxmh
+        //             WHERE
+        //                 htpr_hemxxmh.id_hpcxxmh = 2
+        //                 AND tanggal_efektif < :tanggal_awal
+        //         ) AS subquery
+        //         WHERE row_num = 1
+        //     ) tbl_gaji_bpjs ON tbl_gaji_bpjs.id_hemxxmh = a.id_hemxxmh
+
+        //     WHERE
+        //         a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+        //         AND c.id_heyxxmh = :id_heyxxmh;
         // ');
-        // END GAJI POKOK
+        // // END GAJI POKOK
 
         // $qs_hpyxxth = $db
         //     ->query('select', 'hpyxxth' )

@@ -76,6 +76,9 @@
                                 <th>Var Cost</th>
                                 <th>TJ. Masa Kerja</th>
                                 <th>Premi Absen</th>
+                                <th>JKK</th>
+                                <th>JKM</th>
+                                <th>Trm JKK JKM</th>
 								<th>Lembur 1,5</th>
 								<th>Rp Lembur 1,5</th>
 								<th>Lembur 2</th>
@@ -84,7 +87,15 @@
 								<th>Rp Lembur 3</th>
 								<th>Total Lembur (Jam)</th>
 								<th>Total Lembur (Rp) </th>
-                                <th>Pot Makan</th> <!-- 15 -->
+                                <th>Pot Makan</th>
+                                <th>Pot JKK JKM</th>
+                                <th>Pot JHT</th>
+                                <th>Pot Upah</th>
+                                <th>Pot BPJS</th>
+                                <th>Pot Pensiun</th>
+                                <th>Gaji Bersih</th>
+                                <th>Bulat</th>
+                                <th>Gaji Diterima</th>
                                 
                             </tr>
                         </thead>
@@ -553,27 +564,42 @@
 					{ data: "hevxxmh.nama",visible:false },
 					{ 
 						data: "hpyemtd.gp",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
 						data: "hpyemtd.t_jab",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
 						data: "hpyemtd.var_cost",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
 						data: "hpyemtd.fix_cost",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
 						data: "hpyemtd.premi_abs",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.jkk",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.jkm",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.trm_jkkjkm",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
@@ -582,7 +608,7 @@
 					},
 					{ 
 						data: "hpyemtd.rp_lembur15",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
@@ -591,7 +617,7 @@
 					},
 					{ 
 						data: "hpyemtd.rp_lembur2",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
@@ -600,7 +626,7 @@
 					},
 					{ 
 						data: "hpyemtd.rp_lembur3",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
@@ -609,12 +635,52 @@
 					},
 					{ 
 						data: "hpyemtd.lemburbersih",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
 						data: "hpyemtd.pot_makan",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_jkkjkm",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_jht",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_upah",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_bpjs",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_psiun",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.gaji_bersih",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.bulat",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.gaji_terima",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					}
 				],
