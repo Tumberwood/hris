@@ -53,6 +53,8 @@
 				Field::inst( 'hpyemtd.jam_lembur' ),
 				Field::inst( 'hpyemtd.lemburbersih' ),
 				Field::inst( 'hpyemtd.pot_makan' ),
+				Field::inst( 'hpyemtd.var_cost' ), 
+				Field::inst( 'hpyemtd.fix_cost' ), //masa kerja
 				// Field::inst( 'hpyemtd.t_mk' ),
 				// Field::inst( 'hpyemtd.lembur' ),
 				// Field::inst( 'hpyemtd.jkk_jkm_perusahaan' ),

@@ -72,7 +72,9 @@
                                 <th>Jabatan</th>
                                 <th>Level</th>
                                 <th>Gaji Pokok</th>
-                                <th>T Jabatan</th>
+                                <th>TJ. Jabatan</th>
+                                <th>Var Cost</th>
+                                <th>TJ. Masa Kerja</th>
                                 <th>Premi Absen</th>
 								<th>Lembur 1,5</th>
 								<th>Rp Lembur 1,5</th>
@@ -556,6 +558,16 @@
 					},
 					{ 
 						data: "hpyemtd.t_jab",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.var_cost",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.fix_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right"
 					},
