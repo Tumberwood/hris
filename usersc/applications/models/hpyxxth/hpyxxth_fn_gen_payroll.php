@@ -564,7 +564,7 @@
                     ) bpjs_kesehatan ON bpjs_kesehatan.is_active = 1
                 
                 WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                    AND c.id_heyxxmh = 1
+                    AND c.id_heyxxmh = :id_heyxxmh
             ),
             hitung_rp_lembur AS (
                 SELECT
