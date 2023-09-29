@@ -195,21 +195,23 @@
             WITH qs_payroll AS (
                 SELECT DISTINCT
                     a.id_hemxxmh,
+                    c.id_hesxxmh,
+                    nominal_lembur_mati,
                     c.grup_hk,
                     IFNULL(hari_kerja, 0) AS hari_kerja,
                     
                     -- gaji pokok
                     IFNULL( 
                          if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
-                             hari_kerja / if(c.grup_hk = 1, 21, 25) * gp,
-                         gp),
+                             hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_gp,
+                         nominal_gp),
                      0) AS gp,
                      
                      -- tunjangan jabatan
                     IFNULL( 
                          if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
-                             hari_kerja / if(c.grup_hk = 1, 21, 25) * t_jab,
-                         t_jab),
+                             hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_t_jab,
+                         nominal_t_jab),
                      0) AS t_jab,
                      
                      -- var_cost
@@ -238,9 +240,6 @@
                     lembur15,
                     lembur2,
                     lembur3,
-                    IFNULL(if(lembur15 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 1.5, 0),0) AS rp_lembur15,
-                    IFNULL(if(lembur2 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 2, 0),0) AS rp_lembur2,
-                    IFNULL(if(lembur3 > 0, if(c.id_hesxxmh = 3, nominal_lembur_mati, (gp + t_jab) / 173) * 3, 0),0) AS rp_lembur3,
                     
                     -- hitung pot makan
                     IFNULL(pot_makan * pot_uang_makan, 0) AS pot_makan,
@@ -303,7 +302,7 @@
                         SELECT
                             id_hemxxmh,
                             tanggal_efektif,
-                            IFNULL(nominal, 0) AS gp
+                            IFNULL(nominal, 0) AS nominal_gp
                         FROM (
                             SELECT
                                 id,
@@ -387,7 +386,7 @@
                         SELECT
                             id_hevxxmh,
                             tanggal_efektif,
-                            IFNULL(nominal, 0) AS t_jab
+                            IFNULL(nominal, 0) AS nominal_t_jab
                         FROM (
                             SELECT
                                 id,
@@ -565,11 +564,24 @@
                     ) bpjs_kesehatan ON bpjs_kesehatan.is_active = 1
                 
                 WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                    AND c.id_heyxxmh = :id_heyxxmh
+                    AND c.id_heyxxmh = 1
+            ),
+            hitung_rp_lembur AS (
+                SELECT
+                     id_hemxxmh,
+                     
+                     -- revisi dari sebelumnya yang mengambil dari nominal, sekarang diubah mejadi hasil final gp dan t_jab
+                     (gp + t_jab) / 173 AS rp_lembur_perjam,
+                     
+                     -- revisi perhitungan rp_lembur, untuk yang pelatihan tidak perlu dikalikan hasil jam 1.5 (lembur15) ...dsb
+                    IFNULL(if(lembur15 > 0, if(id_hesxxmh = 3, nominal_lembur_mati, ((gp + t_jab) / 173) * lembur15) , 0),0) AS rp_lembur15,
+                    IFNULL(if(lembur2 > 0, if(id_hesxxmh = 3, nominal_lembur_mati, ((gp + t_jab) / 173) * lembur2) , 0),0) AS rp_lembur2,
+                    IFNULL(if(lembur3 > 0, if(id_hesxxmh = 3, nominal_lembur_mati, ((gp + t_jab) / 173) * lembur3) , 0),0) AS rp_lembur3
+                FROM qs_payroll
             )
             SELECT
                 ' . $id_hpyxxth . ',
-                 ' . $id_heyxxmh . ',
+                ' . $id_heyxxmh . ',
                 qs_payroll.id_hemxxmh,
                 gp,
                 t_jab,
@@ -621,6 +633,7 @@
                      ) % 100
                  ) AS gaji_terima
             FROM qs_payroll
+            LEFT JOIN hitung_rp_lembur ON hitung_rp_lembur.id_hemxxmh = qs_payroll.id_hemxxmh
         ');
         // END GAJI POKOK
         
