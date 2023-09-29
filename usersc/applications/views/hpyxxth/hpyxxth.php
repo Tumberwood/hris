@@ -100,25 +100,41 @@
                             </tr>
                         </thead>
 						<tfoot>
-                            <tr>
-								<th></th>
-                                <th></th>
+							<tr>
 								<th></th>
 								<th></th>
-                                <th>Total</th>
 								<th></th>
-								<th id="s_gp"></th>
-								<th id="s_t_jab"></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </tfoot>
+								<th></th>
+								<th>Total</th>
+								<th></th>
+								<th id="s_6"></th>
+								<th id="s_7"></th>
+								<th id="s_8"></th>
+								<th id="s_9"></th>
+								<th id="s_10"></th>
+								<th id="s_11"></th>
+								<th id="s_12"></th>
+								<th id="s_13"></th>
+								<th id="s_14"></th>
+								<th id="s_15"></th>
+								<th id="s_16"></th>
+								<th id="s_17"></th>
+								<th id="s_18"></th>
+								<th id="s_19"></th>
+								<th id="s_20"></th>
+								<th id="s_21"></th>
+								<th id="s_22"></th>
+								<th id="s_23"></th>
+								<th id="s_24"></th>
+								<th id="s_25"></th>
+								<th id="s_26"></th>
+								<th id="s_27"></th>
+								<th id="s_28"></th>
+								<th id="s_29"></th>
+								<th id="s_30"></th>
+							</tr>
+						</tfoot>
+
                     </table>
 				</div>
 			</div>
@@ -217,42 +233,42 @@
 						},
 						format: 'DD MMM YYYY'
 					}, 	
-					{
-						label: "Jenis <sup class='text-danger'>*<sup>",
-						name: "hpyxxth.id_heyxxmh",
-						type: "select2",
-						opts: {
-							placeholder : "Select",
-							allowClear: true,
-							multiple: false,
-							ajax: {
-								url: "../../models/heyxxmh/heyxxmh_fn_opt.php",
-								dataType: 'json',
-								data: function (params) {
-									var query = {
-										id_heyxxmh_old: id_heyxxmh_old,
-										search: params.term || '',
-										page: params.page || 1
-									}
-										return query;
-								},
-								processResults: function (data, params) {
-									return {
-										results: data.results,
-										pagination: {
-											more: true
-										}
-									};
-								},
-								cache: true,
-								minimumInputLength: 1,
-								maximum: 10,
-								delay: 500,
-								maximumSelectionLength: 5,
-								minimumResultsForSearch: -1,
-							},
-						}
-					},	
+					// {
+					// 	label: "Jenis <sup class='text-danger'>*<sup>",
+					// 	name: "hpyxxth.id_heyxxmh",
+					// 	type: "select2",
+					// 	opts: {
+					// 		placeholder : "Select",
+					// 		allowClear: true,
+					// 		multiple: false,
+					// 		ajax: {
+					// 			url: "../../models/heyxxmh/heyxxmh_fn_opt.php",
+					// 			dataType: 'json',
+					// 			data: function (params) {
+					// 				var query = {
+					// 					id_heyxxmh_old: id_heyxxmh_old,
+					// 					search: params.term || '',
+					// 					page: params.page || 1
+					// 				}
+					// 					return query;
+					// 			},
+					// 			processResults: function (data, params) {
+					// 				return {
+					// 					results: data.results,
+					// 					pagination: {
+					// 						more: true
+					// 					}
+					// 				};
+					// 			},
+					// 			cache: true,
+					// 			minimumInputLength: 1,
+					// 			maximum: 10,
+					// 			delay: 500,
+					// 			maximumSelectionLength: 5,
+					// 			minimumResultsForSearch: -1,
+					// 		},
+					// 	}
+					// },	
 					{
 						label: "Keterangan",
 						name: "hpyxxth.keterangan",
@@ -299,12 +315,12 @@
 					// END of validasi hpyxxth.tanggal_akhir
 
 					// BEGIN of validasi hpyxxth.id_heyxxmh
-					if ( ! edthpyxxth.field('hpyxxth.id_heyxxmh').isMultiValue() ) {
-						id_heyxxmh = edthpyxxth.field('hpyxxth.id_heyxxmh').val();
-						if(!id_heyxxmh || id_heyxxmh == ''){
-							edthpyxxth.field('hpyxxth.id_heyxxmh').error( 'Wajib diisi!' );
-						}
-					}
+					// if ( ! edthpyxxth.field('hpyxxth.id_heyxxmh').isMultiValue() ) {
+					// 	id_heyxxmh = edthpyxxth.field('hpyxxth.id_heyxxmh').val();
+					// 	if(!id_heyxxmh || id_heyxxmh == ''){
+					// 		edthpyxxth.field('hpyxxth.id_heyxxmh').error( 'Wajib diisi!' );
+					// 	}
+					// }
 					// END of validasi hpyxxth.id_heyxxmh
 				}
 				
@@ -344,7 +360,7 @@
 							return row.hpyxxth.tanggal_awal + " - " + row.hpyxxth.tanggal_akhir;
 					   	}
 					},
-					{ data: "heyxxmh.nama" },
+					{ data: "heyxxmh.nama",visible:false },
 					{ data: "hpyxxth.keterangan" }
 				],
 				buttons: [
@@ -363,6 +379,49 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					// {
+					// 	text: '<i class="fa fa-google"></i>',
+					// 	name: 'btnGeneratePresensi',
+					// 	className: 'btn btn-xs btn-outline',
+					// 	titleAttr: '',
+					// 	action: function ( e, dt, node, config ) {
+					// 		e.preventDefault(); 
+
+					// 		notifyprogress = $.notify({
+					// 			message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
+					// 		},{
+					// 			z_index: 9999,
+					// 			allow_dismiss: false,
+					// 			type: 'info',
+					// 			delay: 0
+					// 		});
+
+					// 		$.ajax( {
+					// 			url: "../../models/hpyxxth/hpyxxth_fn_gen_payroll.php",
+					// 			dataType: 'json',
+					// 			type: 'POST',
+					// 			data: {
+					// 				id_hpyxxth	: id_hpyxxth,
+					// 				id_heyxxmh	: id_heyxxmh_select,
+					// 				tanggal_awal	: tanggal_awal_select,
+					// 				tanggal_akhir	: tanggal_akhir_select
+					// 			},
+					// 			success: function ( json ) {
+
+					// 				$.notify({
+					// 					message: json.data.message
+					// 				},{
+					// 					type: json.data.type_message
+					// 				});
+
+					// 				tblhpyxxth.ajax.reload(function ( json ) {
+					// 					notifyprogress.close();
+					// 				}, false);
+					// 			}
+					// 		} );
+					// 	}
+					// }
+
 					{
 						text: '<i class="fa fa-google"></i>',
 						name: 'btnGeneratePresensi',
@@ -381,12 +440,11 @@
 							});
 
 							$.ajax( {
-								url: "../../models/hpyxxth/hpyxxth_fn_gen_payroll.php",
+								url: "../../models/hpyxxth/hpyxxth_fn_gen_payroll_ferry.php",
 								dataType: 'json',
 								type: 'POST',
 								data: {
 									id_hpyxxth	: id_hpyxxth,
-									id_heyxxmh	: id_heyxxmh_select,
 									tanggal_awal	: tanggal_awal_select,
 									tanggal_akhir	: tanggal_akhir_select
 								},
@@ -554,7 +612,7 @@
 				},
 				order: [[ 2, "desc" ]],
 				responsive: false,
-				scrollX: true,
+				// scrollX: true,
 				columns: [
 					{ data: "hpyemtd.id",visible:false },
 					{ data: "hpyemtd.id_hpyxxth",visible:false },
@@ -701,18 +759,38 @@
 					// END breaking generate button
 				],
 				footerCallback: function ( row, data, start, end, display ) {
-					var api       = this.api(), data;
+					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
-					// hitung jumlah 
-					s_gp = api.column( 6 ).data().sum();
-					$( '#s_gp' ).html( numFormat(s_gp) );
 
-					s_t_jab = api.column( 7 ).data().sum();
-					$( '#s_t_jab' ).html( numFormat(s_t_jab) );
+					// Dimulai dari index 6 karena gaji pokok itu index ke 6
+					var columnsToSum = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 
-					total_jkk_jkm_p = api.column( 10 ).data().sum();
-					$( '#total_jkk_jkm_p' ).html( numFormat(total_jkk_jkm_p) );
+					for (var i = 0; i < columnsToSum.length; i++) {
+						var columnIndex = columnsToSum[i];
+						var sum = api.column(columnIndex).data().sum();
+						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
+						// var sum = api.column(columnIndex, { page: 'current' }).data().sum();
+						$('#s_' + columnIndex).html(numFormat(sum));
+					}
 				}
+				
+				// footerCallback: function ( row, data, start, end, display ) {
+				// 	var api       = this.api(), data;
+				// 	var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
+				// 	// hitung jumlah 
+				// 	s_gp = api.column( 6 ).data().sum();
+				// 	$( '#s_gp' ).html( numFormat(s_gp) );
+
+				// 	s_t_jab = api.column( 7 ).data().sum();
+				// 	$( '#s_t_jab' ).html( numFormat(s_t_jab) );
+
+				// 	s_gp = api.column( 8 ).data().sum();
+				// 	$( '#s_gp' ).html( numFormat(s_gp) );
+
+				// 	s_t_jab = api.column( 9 ).data().sum();
+				// 	$( '#s_t_jab' ).html( numFormat(s_t_jab) );
+				// }
+				
 			} );
 
 			tblhpyemtd.on( 'draw', function( e, settings ) { 
