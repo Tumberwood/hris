@@ -584,38 +584,38 @@
                 var_cost,
                 fix_cost,
                 premi_abs,
-                jkk,
-                jkm,
-                trm_jkkjkm,
+                ROUND(jkk, 0 ) AS jkk,
+                ROUND(jkm, 0 ) AS jkm,
+                ROUND(trm_jkkjkm, 0 ) AS trm_jkkjkm,
                 lembur15,
                 lembur2,
                 lembur3,
                 (lembur15 + lembur2 + lembur3) AS jam_lembur,
-                rp_lembur15,
-                rp_lembur2,
-                rp_lembur3,
-                IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0) AS lemburbersih,
-                pot_makan,
-                pot_jkkjkm,
-                pot_jht,
-                (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) AS pot_upah,
-                pot_bpjs,
-                pot_psiun,
+                ROUND(rp_lembur15, 0 ) AS rp_lembur15,
+                ROUND(rp_lembur2, 0 ) AS rp_lembur2,
+                ROUND(rp_lembur3, 0 ) AS rp_lembur3,
+                ROUND(IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0),0) AS lemburbersih,
+                ROUND(pot_makan, 0) AS  pot_makan,
+                ROUND(pot_jkkjkm, 0) AS pot_jkkjkm,
+                ROUND(pot_jht, 0) AS pot_jht,
+                ROUND((gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25), 0) AS pot_upah,
+                ROUND(pot_bpjs, 0) AS pot_bpjs,
+                ROUND(pot_psiun, 0) AS pot_psiun,
                 -- hitung gaji bersih
-                (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
+                ROUND((gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
                   - 
-                 (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun) -- ini merah
+                 (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun), 0) -- ini merah
                  AS gaji_bersih,
                  
                  -- pembulatan per 100 dari gaji bersih
-                 (
+                 ROUND((
                      (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
                       - 
                      (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun) -- ini merah
-                 ) % 100 AS bulat,
+                 ) % 100, 0) AS bulat,
                  
                  -- gaji_bersih - hasil pembulatan
-                 (
+                 ROUND((
                      (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
                       - 
                      (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun) -- ini merah
@@ -627,9 +627,10 @@
                           - 
                          (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun) -- ini merah
                      ) % 100
-                 ) AS gaji_terima
+                 ),0) AS gaji_terima
             FROM qs_payroll
             LEFT JOIN hitung_rp_lembur ON hitung_rp_lembur.id_hemxxmh = qs_payroll.id_hemxxmh
+            WHERE id_hesxxmh <> 5
         ');
         // END GAJI POKOK
         
