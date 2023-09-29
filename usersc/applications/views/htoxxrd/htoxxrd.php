@@ -35,6 +35,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group row">												
+                        <label class="col-sm-2 col-form-label">Employee</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="select_hemxxmh" name="select_hemxxmh"></select>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-lg-4">
                             <button class="btn btn-primary" type="submit" id="go">Submit</button>
@@ -106,6 +112,8 @@
 <script type="text/javascript">
 		// ------------- default variable, do not erase
 		var tblhtoxxrd, show_inactive_status_htoxxrd = 0;
+		var id_hemxxmh = 0;
+		var id_hemxxmh_old = 0;
 		// ------------- end of default variable
 
 		// BEGIN datepicker init
@@ -120,6 +128,40 @@
 		$('#start_date').datepicker('setDate', awal_bulan_dmy);
 		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
         // END datepicker init
+
+		//Select2 init
+        $("#select_hemxxmh").select2({
+			placeholder: 'Ketik atau TekanTanda Panah Kanan',
+			allowClear: true,
+			ajax: {
+				url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+				dataType: 'json',
+				data: function (params) {
+					var query = {
+						id_hemxxmh_old: id_hemxxmh_old,
+						search: params.term || '',
+						page: params.page || 1
+					}
+						return query;
+				},
+				processResults: function (data, params) {
+					return {
+						results: data.results,
+						pagination: {
+							more: true
+						}
+					};
+				},
+				cache: true,
+				minimumInputLength: 1,
+				maximum: 10,
+				delay: 500,
+				maximumSelectionLength: 5,
+				minimumResultsForSearch: -1,
+			}
+			
+		});
+        // END select2 init
 		
 		$(document).ready(function() {
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
@@ -201,9 +243,11 @@
 						d.show_inactive_status_htoxxrd = show_inactive_status_htoxxrd;
 						d.start_date = start_date;
 						d.end_date = end_date;
+						d.id_hemxxmh = id_hemxxmh;
 					}
 				},
 				order: [[ 1, "asc" ]],
+				responsive: false,
 				columns: [
 					{ 
 						data: "htoxxrd.id",
@@ -308,7 +352,7 @@
 				submitHandler: function(frmhtoxxrd) {
 					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
 					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
-					var_selectField = $('#selectField').val();
+					id_hemxxmh		= $('#select_hemxxmh').val();
 					
 					notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'

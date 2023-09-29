@@ -87,6 +87,10 @@
 			->where( 'htoxxrd.is_active', 1);
 	}
 	
+	if($_POST['id_hemxxmh'] > 0){
+		$editor->where( 'htoxxrd.id_hemxxmh', $_POST['id_hemxxmh'] );
+	}
+	
 	include( "htoxxrd_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
