@@ -240,6 +240,11 @@
                         $tanggaljam_akhir           = $jadwal['tanggaljam_akhir'];
                         $tanggaljam_akhir_t2        = $jadwal['tanggaljam_akhir_t2'];
 
+                        // add by Ferry untuk is_makan akhir t2 - 1 jam
+                        $akhir_t2_min_1jam          = new DateTime($tanggaljam_akhir_t2);
+                        $akhir_t2_min_1jam->modify('-1 hour');
+                        $tanggaljam_akhir_t2_min_hour = $akhir_t2_min_1jam->format('Y-m-d H:i:s');
+
                         $tanggaljam_awal_istirahat  = $jadwal['tanggaljam_awal_istirahat'];
                         $tanggaljam_akhir_istirahat = $jadwal['tanggaljam_akhir_istirahat'];
 
@@ -513,6 +518,22 @@
                                 } else {
                                 $cek = 0; 
                                 }
+                                
+                                if ($st_clock_in == "Late") {
+                                    $is_late_pot = 1;
+                                }
+                                
+                                //potongan early untuk late yang belum ada izin
+                                if ($is_late_pot == 1) {
+                                    if ($clock_in == null) {
+                                        $pot_jam_late_cek     = 0;
+                                    } else {
+                                        $carbon_ci = new Carbon($clock_in);
+                                        $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_awal_toleransi);
+                                    }
+                                    // hitung potongan jam late
+                                    $pot_jam_late   = ceil($pot_jam_late_cek/60);
+                                }
                             }
 
                             $qs_htlxxrh_dinas_out = $db
@@ -600,6 +621,23 @@
                                     $cek = 1;
                                 } else {
                                    $cek = 0; 
+                                }
+
+                                if ($st_clock_out == "EARLY") {
+                                    $is_early_pot = 1;
+                                }
+                                
+                                //potongan untuk early yang belum ada izin
+                                if ($is_early_pot == 1) {
+                                    if ($clock_out == null) {
+                                        $pot_jam_early_cek     = 0;
+                                    } else {
+                                        $karbon_co = new Carbon($clock_out);
+                                        $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
+                                    }
+                                    
+                                    // hitung potongan jam early
+                                    $pot_jam_early   = ceil($pot_jam_early_cek/60);
                                 }
                             }
 
@@ -1059,7 +1097,7 @@
                             ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
                             ->where('htsprtd.nama', '("makan", "makan manual")', 'IN', false ) // tambah makan manual
                             ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_t1, '>=' )
-                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t2, '<=' )
+                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t2_min_hour, '<=' ) //diganti menjadi akhir t2 - 1 jam
                             ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
                             ->exec();
                         $rs_htsprtd_makan = $qs_htsprtd_makan->fetch();
