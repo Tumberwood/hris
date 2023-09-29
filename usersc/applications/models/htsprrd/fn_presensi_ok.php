@@ -235,7 +235,7 @@ use
                         END AS hasil_ceklok
 
                     FROM  htsprtd AS ceklok
-                    WHERE ceklok.kode = :kode_finger AND ceklok.tanggal = :tanggal
+                    WHERE ceklok.kode = :kode_finger AND ceklok.tanggal = :tanggal AND ceklok.nama IN  ("os", "out", "staff", "pmi")
                     GROUP BY ceklok.id
                     ORDER BY ceklok.id DESC
                     '
@@ -257,7 +257,7 @@ use
                         END AS hasil_ceklok
 
                     FROM  htsprtd AS ceklok
-                    WHERE ceklok.kode = :kode_finger AND ceklok.tanggal = :tanggal
+                    WHERE ceklok.kode = :kode_finger AND ceklok.tanggal = :tanggal AND ceklok.nama IN  ("os", "out", "staff", "pmi")
                     GROUP BY ceklok.id
                     ORDER BY ceklok.id DESC
                     '
@@ -332,6 +332,7 @@ use
         if ($pot_jam > 0) {
             // $info_shift = ' - Dipotong ' . $pot_jam . ' Jam';
             $info_shift = " [" . $shift . "] " . $ceklok;
+
         } else {
             $info_shift = " [" . $shift . "] " . $ceklok;
         }
