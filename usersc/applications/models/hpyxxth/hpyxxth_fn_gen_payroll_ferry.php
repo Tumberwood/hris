@@ -441,26 +441,41 @@
                             lembur3
                         FROM (
                             SELECT
-                                id_hemxxmh,
-                                durasi_lembur_final AS lembur_sum,
-                                SUM((CASE
-                                    WHEN IFNULL(durasi_lembur_final, 0) > 0 -- dicari apakah ada lembur
-                                     -- jika ada lembur maka diisikan, namun ada kondisi jika lebih dari 1 maka akan di return 1, else, nilai lembur sebenarnya
-                                    THEN if(durasi_lembur_final > 1, 1, durasi_lembur_final) * 1.5
-                                    ELSE 0 -- kalau tidak ada lembur maka return 0
-                                END)) AS lembur15,
-                                SUM((CASE
-                                        -- cari lembur diatas 1 jam dan kurang atau sama dengan 8 jam
-                                    WHEN IFNULL(durasi_lembur_final, 0) > 1 AND IFNULL(durasi_lembur_final, 0) <= 8
-                                    THEN (durasi_lembur_final - 1) * 2 -- ini diminus 1 karena sebelumnya sudah dihitung di lembur 1,5
-                                    ELSE 0 -- jika tidak ada maka return 0 untuk lembur 2 nya
-                                END)) AS lembur2,
-                                SUM((CASE
-                                    WHEN IFNULL(durasi_lembur_final, 0) > 8 -- cari jam lembur diatas 8
-                                    THEN (durasi_lembur_final - 8) * 3 -- jika ada maka diminus 8, karena yang 1-8 sudah dihitung di lembur 1,5 dan 2
-                                    ELSE 0 -- jika tidak ada maka return 0 di lembur 3 nya
-                                END)) AS lembur3
-                            FROM htsprrd
+                                prr.id_hemxxmh,
+                                prr.durasi_lembur_final AS lembur_sum,
+                                SUM(
+                                        if(prr.durasi_lembur_libur > 0, 0,
+                                    (CASE 
+                                        WHEN IFNULL(prr.durasi_lembur_final, 0) > 0 -- dicari apakah ada lembur
+                                        -- jika ada lembur maka diisikan, namun ada kondisi jika lebih dari 1 maka akan di return 1, else, nilai lembur sebenarnya
+                                        THEN if(prr.durasi_lembur_final > 1, 1, prr.durasi_lembur_final) * 1.5
+                                        ELSE 0 -- kalau tidak ada lembur maka return 0
+                                    END))
+                                ) AS lembur15,
+                                SUM(
+                                        if(prr.durasi_lembur_libur > 0, -- dicari yang lembur libur
+                                        if(job.grup_hk = 1 , -- jika grup hk == 5
+                                            if(prr.durasi_lembur_final > 0 AND prr.durasi_lembur_final <= 8, prr.durasi_lembur_final * 2, 8 * 2), -- maka dicari yang lebur final <= 8 lalu * 2
+                                            if(prr.durasi_lembur_final > 0 AND prr.durasi_lembur_final <= 7, prr.durasi_lembur_final * 2, 7 * 2)
+                                                ),
+                                        if(IFNULL(prr.durasi_lembur_final, 0) > 1 AND IFNULL(prr.durasi_lembur_final, 0) <= 8, -- ini yang bukan lembur libur <= 8 jam
+                                            (prr.durasi_lembur_final - 1) * 2, -- durasi lembur final * 2
+                                            0) -- else 0
+                                        )
+                                    ) AS lembur2,
+                                SUM(
+                                        if(prr.durasi_lembur_libur > 0, -- dicari yang lembur libur
+                                        if(job.grup_hk = 1 , -- jika grup hk == 5
+                                            if(prr.durasi_lembur_final >= 9, prr.durasi_lembur_final * 3, 0), -- jika hk = 5, dicari yang >= 9, lalu dikali 3
+                                            if(prr.durasi_lembur_final >= 8, prr.durasi_lembur_final * 3, 0) -- jika hk = 6, dicari yang >= 8, lalu dikali 3
+                                                ),
+                                        if(IFNULL(prr.durasi_lembur_final, 0) > 8, -- ini yang bukan lembur libur dan lebih dari 8 jam
+                                            (prr.durasi_lembur_final - 8) * 3, -- durasi lembur final * 3
+                                            0) -- else 0
+                                        )
+                                ) AS lembur3
+                            FROM htsprrd AS prr
+                            LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = prr.id_hemxxmh
                             WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                             GROUP BY id_hemxxmh
                         ) lembur_sum_table
