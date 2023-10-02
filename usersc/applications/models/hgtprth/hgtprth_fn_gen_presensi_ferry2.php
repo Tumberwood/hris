@@ -1225,9 +1225,24 @@
                             //Jika Pelatihan
                             if($row_hemxxmh['id_hesxxmh'] == 3){
                                 // jam mati
-                                // $lembur1 = $jam_pengali;
-                                // $lembur2 = 0;
-                                // $jam_perkalian_lembur = $lembur1 + $lembur2;
+                                $lembur15 = $durasi_lembur_final;
+                                $lembur15_final = $durasi_lembur_final;
+
+                                //lembur 2
+                                $lembur2 = 0;
+                                $lembur2_final = 0;
+                                $rp_lembur2 = 0;
+
+                                //lembur 3
+                                $lembur3 = 0;
+                                $lembur3_final = 0;
+                                $rp_lembur3 = 0;
+
+                                //lembur 4
+                                $lembur4 = 0;
+                                $lembur4_final = 0;
+                                $rp_lembur4 = 0;
+
                                 // ambil upah lembur per jam
                                 $qr_htpr_hesxxmh = $db
                                     ->raw()
