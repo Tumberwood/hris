@@ -371,8 +371,8 @@
                             } 
                             
                             if ($rs_htlxxrh['is_approve'] == 1) {
-                                $status_presensi_in = $rs_htlxxrh['htlgrmh_kode'];
-                                $status_presensi_out = $rs_htlxxrh['htlgrmh_kode'];
+                                $status_presensi_in = $rs_htlxxrh['htlxxmh_kode']; //revisi disini sebelumnya salah karena menggunakan (htlgrmh_kode)
+                                $status_presensi_out = $rs_htlxxrh['htlxxmh_kode'];
                             } else {
                                 $status_presensi_in = "Absen Belum Disetujui";
                                 $status_presensi_out = "Absen Belum Disetujui";
