@@ -77,8 +77,6 @@
 								<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
 								<th class="text-center" colspan=3>Potongan Jam Overtime</th>
 								<th class="text-center" colspan=4>Jam Lembur</th>
-								<th class="text-center" colspan=4>Jam Lembur (Final)</th>
-								<th class="text-center" colspan=5>Rp. Lembur</th>
 
 							</tr>
 							<tr>
@@ -100,17 +98,6 @@
 								<th>Pot TI</th>
 								<th>Pot Overtime</th>
 								<th>Overtime Final</th>
-								<th>Lembur 1.5</th>
-								<th>Lembur 2</th>
-								<th>Lembur 3</th>
-								<th>Lembur 4</th>
-
-								<th>Lembur 1.5</th>
-								<th>Lembur 2</th>
-								<th>Lembur 3</th>
-								<th>Lembur 4</th>
-
-								<th>Lembur per Jam</th>
 								<th>Lembur 1.5</th>
 								<th>Lembur 2</th>
 								<th>Lembur 3</th>
@@ -147,15 +134,6 @@
 								<th id="s_23"></th>
 								<th id="s_24"></th>
 								<th id="s_25"></th>
-								<th id="s_26"></th>
-								<th id="s_27"></th>
-								<th id="s_28"></th>
-								<th id="s_29"></th>
-								<th id="s_30"></th>
-								<th id="s_31"></th>
-								<th id="s_32"></th>
-								<th id="s_33"></th>
-								<th id="s_34"></th>
 
 							</tr>
 						</tfoot>
@@ -254,7 +232,7 @@
 						searchPanes:{
 							show: false
 						},
-						targets: [4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]
+						targets: [4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21, 22, 23, 24,25]
 					}
 				],
 				ajax: {
@@ -306,7 +284,7 @@
 					{ 
 						data: "htsprrd.durasi_lembur_libur",
 						class: "text-right"
-					}, //24
+					}, //12
 					{ 
 						data: "htsprrd.durasi_lembur_awal" ,
 						class: "text-right"
@@ -358,47 +336,6 @@
 					{ 
 						data: "htsprrd.lembur4",
 						class: "text-right"
-					},
-					{ 
-						data: "htsprrd.lembur15_final",
-						class: "text-right"
-					},
-					{ 
-						data: "htsprrd.lembur2_final",
-						class: "text-right"
-					},
-					{ 
-						data: "htsprrd.lembur3_final",
-						class: "text-right"
-					},
-					{ 
-						data: "htsprrd.lembur4_final",
-						class: "text-right"
-					},
-					{ 
-						data: "htsprrd.nominal_lembur_jam",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "htsprrd.rp_lembur15",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "htsprrd.rp_lembur2",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "htsprrd.rp_lembur3",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "htsprrd.rp_lembur4",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right"
 					}
 					
 				],
@@ -427,7 +364,7 @@
 					var api       = this.api(), data;
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					
-					for (var i = 12; i <= 34; i++) {
+					for (var i = 12; i <= 25; i++) {
 						var columnIndex = i;
 						var sum = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
