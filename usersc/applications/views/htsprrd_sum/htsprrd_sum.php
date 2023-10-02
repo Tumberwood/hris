@@ -110,62 +110,42 @@
 							$.each(json.columns, function (k, colObj) {
 								// BEGIN render column name
 								if( colObj.name == 'kode_finger' ){
-									str = str + '<th rowspan="2">Kode Finger</th>';
+									str = str + '<th>Kode Finger</th>';
 								}else if( colObj.name == 'hemxxmh_data' ){
-									str = str + '<th rowspan="2">Karyawan</th>';
+									str = str + '<th>Karyawan</th>';
 								}else if( colObj.name == 'hodxxmh_nama' ){
-									str = str + '<th rowspan="2">Department</th>';
+									str = str + '<th>Department</th>';
 								}else if( colObj.name == 'hetxxmh_nama' ){
-									str = str + '<th rowspan="2">Jabatan</th>';
-								}else if( colObj.name == 'HR' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Periode Terpilih" rowspan="2">HR</th>';
-								}else if( colObj.name == 'Cek' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Periode Terpilih" rowspan="2">Cek</th>';
-								}else if( colObj.name == 'NJ' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari yang belum dibuatkan Jadwal" rowspan="2">NJ</th>';
-								}else if( colObj.name == 'HK' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Kerja dimana Karyawan Masuk dan Valid" rowspan="2">HK</th>';
-								}else if( colObj.name == 'OFF' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Jadwal Off" rowspan="2">OFF</th>';
-								}else if( colObj.name == 'HL' ){
-									str = str + '<th rowspan="2" data-toggle="tooltip" data-placement="top" title="Jumlah Libur Nasional">HL</th>';
-								}else if( colObj.name == 'CB' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Cuti Bersama" rowspan="2">CB</th>';
-								}else if( colObj.name == 'CT' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Cuti Tahunan" rowspan="2">CT</th>';
-								}else if( colObj.name == 'IK' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Izin Khusus" rowspan="2">IK</th>';
-								}else if( colObj.name == 'SD' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Sakit Dengan Surat Dokter Resmi" rowspan="2">SD</th>';
-								}else if( colObj.name == 'SK' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Sakit" rowspan="2">SK</th>';
-								}else if( colObj.name == 'IP' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Izin Pribadi" rowspan="2">IP</th>';
-								}else if( colObj.name == 'AL' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Alpa" rowspan="2" class="text-danger">AL</th>';
-								}else if( colObj.name.substr(0, 3) == 'i__' ){
-									hari = moment(colObj.name.substr(3,11), 'DD MMM YYYY').locale("id").format("dddd");
-									str = str + '<th colspan="2">' + colObj.name.substr(3,11) + '<br>' + hari + '</th>';
+									str = str + '<th>Jabatan</th>';
+								}else if( colObj.name == 'hr' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Periode Terpilih">HR</th>';
+								}else if( colObj.name == 'hk' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Kerja dimana Karyawan Masuk dan Valid">HK</th>';
+								}else if( colObj.name == 'st_off' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Jadwal Off">OFF</th>';
+								}else if( colObj.name == 'st_nj' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari yang belum dibuatkan Jadwal">NJ</th>';
+								}else if( colObj.name == 'hl' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Libur Nasional">HL</th>';
+								}else if( colObj.name == 'ct' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Cuti Tahunan">CT</th>';
+								}else if( colObj.name == 'cb' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Cuti Bersama">CB</th>';
+								}else if( colObj.name == 'sd' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Sakit Dengan Surat Dokter Resmi">SD</th>';
+								}else if( colObj.name == 'sk' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Sakit">SK</th>';
+								}else if( colObj.name == 'al' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Alpa" class="text-danger">AL</th>';
+								}else if( colObj.name == 'ip' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Izin Pribadi">IP</th>';
+								}else if( colObj.name == 'absen_khusus' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Izin Khusus">Absen Khusus</th>';
 								}
 							});
 							str = str + '</tr>';
 							// END header baris 1
-
-							// BEGIN baris 2
-							str = str + '<tr>';
-							$.each(json.columns, function (k, colObj) {
-								// BEGIN render column name
-								if( colObj.name.substr(0, 3) == 'i__' ){
-									str = str + '<th>IN</th>';
-								}else if( colObj.name.substr(0, 3) == 'o__' ){
-									str = str + '<th>OUT</th>';
-								}
-								// END render column name
-
-							});
-							str = str + '</tr>';
-							// END baris 2
-						str = str + '</thead>'
+						str = str + '</thead>';
 
 						$('#tblhtsprrd').html(str);
 						
@@ -199,74 +179,9 @@
 									className: 'btn btn-white',
 									titleAttr: 'Show / Hide Column'
 								},
-
-								// {
-								// 	extend: 'collection',
-								// 	text: '<i class="fa fa-check-square-o"></i>',
-								// 	name: 'btnSetApprove',
-								// 	className: 'btn btn-outline',
-								// 	autoClose: true,
-								// 	buttons: [
-								// 		{ 
-								// 			text: '<i class="fa fa-check text-navy">&nbsp &nbsp Approve</i>', 
-								// 			name: 'btnApprove',
-								// 			className: 'btn btn-outline',
-								// 			titleAttr: 'Approve',
-								// 			action: function ( e, dt, node, config ) {
-								// 				$.ajax( {
-								// 					url: "../../models/htsprrd_sum/htsprrd_sum_fn_approve.php",
-								// 					dataType: 'json',
-								// 					type: 'POST',
-								// 					data: {
-								// 						start_date: start_date,
-								// 						end_date: end_date,
-								// 						state: 1
-								// 					},
-								// 					success: function ( json ) {
-								// 						console.log(json);
-								// 						$.notify({
-								// 							message: json.data.message
-								// 						},{
-								// 							type: json.data.type_message
-								// 						});
-								// 					}
-								// 				} );
-								// 			}
-								// 		},
-								// 		{ 
-								// 			text: '<i class="fa fa-undo">&nbsp &nbsp Cancel Approve</i>', 
-								// 			name: 'btnCancelApprove',
-								// 			className: 'btn btn-outline',
-								// 			titleAttr: 'Cancel Approve',
-								// 			action: function ( e, dt, node, config ) {
-								// 				$.ajax( {
-								// 					url: "../../models/htsprrd_sum/htsprrd_sum_fn_approve.php",
-								// 					dataType: 'json',
-								// 					type: 'POST',
-								// 					data: {
-								// 						start_date: start_date,
-								// 						end_date: end_date,
-								// 						state: 2
-								// 					},
-								// 					success: function ( json ) {
-								// 						console.log(json);
-								// 						$.notify({
-								// 							message: json.message
-								// 						},{
-								// 							type: json.type_message
-								// 						});
-								// 					}
-								// 				} );
-								// 			}
-								// 		}
-								// 	]
-								// }
-								
 							],
 							rowCallback: function( row, data, index ) {
-								if ( data.Cek > 0 ) {
-									$('td:eq(5)', row).addClass('bg-danger');
-								}
+								
 							}
 						});
 
