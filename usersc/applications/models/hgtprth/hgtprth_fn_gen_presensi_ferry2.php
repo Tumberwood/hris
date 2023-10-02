@@ -1071,8 +1071,14 @@
                         //Cek apakah Ada NON TI dan pot jam > 0
                         $pot_non_ti = 0;
                         if ($durasi_lembur_non_ti > 0 && $pot_jam > 0) {
-                            $pot_non_ti = $pot_jam;
-                            $pot_jam = $pot_jam - $durasi_lembur_non_ti;
+                            // diberi kondiasi jika potongan jam > dari durasi lembur non TI,
+                            //maka return durasi non TI nya.
+                            if ($pot_jam > $durasi_lembur_non_ti) {
+                                $pot_non_ti = $durasi_lembur_non_ti;
+                            } else {
+                                $pot_non_ti = $pot_jam;
+                            }
+                            $pot_jam =  $pot_jam - $pot_non_ti;
                         }
 
                         //Sisa pot jam masuk HK
@@ -1084,6 +1090,11 @@
                         //Durasi Lembur
                         $pot_lembur = $pot_ti + $pot_non_ti;
                         $durasi_lembur_final = $durasi_lembur_total_jam - $pot_lembur;
+
+                        //ditambahkan jika perhitungan overtime kurang / sama dengan 0 maka return 0, agar tidak minus;
+                        if ($durasi_lembur_final <= 0) {
+                            $durasi_lembur_final = 0;
+                        }
 
                         $pot_total = $pot_jam_late + $pot_jam_izin + $pot_jam_early;
                         // cek apakah ada makan
