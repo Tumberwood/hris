@@ -43,6 +43,7 @@
 			Field::inst( 'htlxxmh.is_approve' ),
 			Field::inst( 'htlxxmh.is_defaultprogram' ),
 			Field::inst( 'htlxxmh.is_self' ),
+			Field::inst( 'htlxxmh.is_cuti_khusus' ),
 			Field::inst( 'htlxxmh.is_potongupah' ),
 			Field::inst( 'htlxxmh.is_potongcuti' )
 		);
