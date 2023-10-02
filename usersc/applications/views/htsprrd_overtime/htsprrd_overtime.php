@@ -227,7 +227,7 @@
 					}
 				],
 				ajax: {
-					url: "../../models/htsprrd/htsprrd.php",
+					url: "../../models/htsprrd_overtime/htsprrd.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_htsprrd = show_inactive_status_htsprrd;
