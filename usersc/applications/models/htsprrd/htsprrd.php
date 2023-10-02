@@ -112,12 +112,14 @@
 			
 			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'hetxxmh.nama' ),
+			Field::inst( 'heyxxmh.nama' ),
 
 			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' )
 		)
 		->leftJoin( 'hemxxmh','hemxxmh.id','=','htsprrd.id_hemxxmh' )
 		->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
 		->leftJoin( 'hodxxmh','hodxxmh.id','=','hemjbmh.id_hodxxmh' )
+		->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
 		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' );
 	
 	// do not erase
