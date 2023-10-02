@@ -58,6 +58,7 @@
                                 <th>Periode</th>
                                 <th>Jenis</th>
                                 <th>Keterangan</th>
+                                <th>Generated On</th>
                             </tr>
                         </thead>
                     </table>
@@ -361,7 +362,8 @@
 					   	}
 					},
 					{ data: "heyxxmh.nama",visible:false },
-					{ data: "hpyxxth.keterangan" }
+					{ data: "hpyxxth.keterangan" },
+					{ data: "hpyxxth.generated_on" }
 				],
 				buttons: [
 
@@ -429,6 +431,7 @@
 						titleAttr: '',
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
+							var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
 
 							notifyprogress = $.notify({
 								message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
@@ -444,9 +447,10 @@
 								dataType: 'json',
 								type: 'POST',
 								data: {
-									id_hpyxxth	: id_hpyxxth,
+									id_hpyxxth		: id_hpyxxth,
 									tanggal_awal	: tanggal_awal_select,
-									tanggal_akhir	: tanggal_akhir_select
+									tanggal_akhir	: tanggal_akhir_select,
+									timestamp		: timestamp
 								},
 								success: function ( json ) {
 

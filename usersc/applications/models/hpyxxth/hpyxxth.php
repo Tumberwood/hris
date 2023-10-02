@@ -56,6 +56,15 @@
 					'from' => 'd M Y',
 					'to' =>   'Y-m-d'
 				) ),
+			
+			Field::inst( 'hpyxxth.generated_on' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00 00:00:00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y H:i:s', strtotime( $val ) );
+					}
+				} ),
 			Field::inst( 'hpyxxth.tanggal_akhir' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === '0000-00-00' || $val === null){
