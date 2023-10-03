@@ -386,18 +386,19 @@
                             
                         }else{
                             $next_step = 5;
-                            //JIKA SHIFT OFF MAKA STATUS OFF
-                            if($jadwal['id_htsxxmh'] == 1){
-                                $status_presensi_in = $jadwal['htsxxmh_kode'];
-                                $status_presensi_out = $jadwal['htsxxmh_kode'];
-                                $st_clock_in = $jadwal['htsxxmh_kode'];
-                                $st_clock_out = $jadwal['htsxxmh_kode'];
-                            } else {
-                                $next_step = 5;
-                            }
+                            
                             $cek = 0;
                         }
                     
+                        //JIKA SHIFT OFF MAKA STATUS OFF
+                        if($jadwal['id_htsxxmh'] == 1){
+                            $status_presensi_in = $jadwal['htsxxmh_kode'];
+                            $status_presensi_out = $jadwal['htsxxmh_kode'];
+                            $st_clock_in = $jadwal['htsxxmh_kode'];
+                            $st_clock_out = $jadwal['htsxxmh_kode'];
+                            $next_step = 0;
+                            $cek = 0;
+                        }
 
                         //NEXT STEP
                         // $next_step = 0;
