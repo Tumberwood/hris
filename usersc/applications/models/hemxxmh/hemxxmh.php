@@ -36,6 +36,8 @@
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemjbmh.id_hesxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_heyxxmd' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemxxmh.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);
@@ -56,7 +58,6 @@
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
 			Field::inst( 'hemxxmh.is_approve' ),
-			Field::inst( 'hemxxmh.nama_os' ),
 			Field::inst( 'hemxxmh.is_pot_makan' ),
 			Field::inst( 'hemxxmh.is_defaultprogram' ),
 			
@@ -92,6 +93,7 @@
 			Field::inst( 'hevxxmh.nama' ),
 			Field::inst( 'hetxxmh.nama' ),
 			Field::inst( 'heyxxmh.nama' ),
+			Field::inst( 'heyxxmd.nama' ),
 			Field::inst( 'hesxxmh.nama' ),
 			Field::inst( 'v_hemxxmh_htsptth.pola_shift' ),
 			Field::inst( 'v_hemxxmh_htsptth.grup_ke' )
@@ -104,6 +106,7 @@
 		->leftJoin( 'hevxxmh','hevxxmh.id','=','hemjbmh.id_hevxxmh' )
 		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
 		->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
+		->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
 		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 		->leftJoin( 'v_hemxxmh_htsptth','v_hemxxmh_htsptth.id_hemxxmh','=','hemxxmh.id' )
 		;

@@ -47,6 +47,7 @@
                                 <th>Section</th>
                                 <th>Jabatan</th>
                                 <th>Tipe</th>
+                                <th>Sub Tipe</th>
                                 <th>Status</th>
                                 <th>Tanggal Join</th>
                                 <th>Tanggal Keluar</th>
@@ -198,6 +199,7 @@
 
 		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0, id_hevxxmh_old = 0, id_heyxxmh_old = 0, id_hesxxmh_old = 0;
 		var id_hedlvmh_old = 0;
+		var id_heyxxmd_old = 0;
 
 		$(document).ready(function() {
 
@@ -433,6 +435,43 @@
 						}
 					},
 					{
+						label: "Sub Tipe <sup class='text-danger'>*<sup>",
+						name: "hemjbmh.id_heyxxmd",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/heyxxmd/heyxxmd_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_heyxxmd: 0,
+										id_heyxxmd_old: id_heyxxmd_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
 						label: "Tipe <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_heyxxmh",
 						type: "select2",
@@ -468,26 +507,6 @@
 								minimumResultsForSearch: -1,
 							},
 						}
-					},
-					{
-						label: "Nama Outsourcing <sup class='text-danger'>*<sup>",
-						name: "hemxxmh.nama_os",
-						type: "select",
-						placeholder : "Select",
-						options: [
-							{ "label": "KBM", "value": "KBM" },
-							{ "label": "KMJ", "value": "KMJ" }
-						]
-					},
-					{
-						label: "Potong Makan <sup class='text-danger'>*<sup>",
-						name: "hemxxmh.is_pot_makan",
-						type: "select",
-						placeholder : "Select",
-						options: [
-							{ "label": "Catering", "value": 1 },
-							{ "label": "Potong Makan", "value": 0 }
-						]
 					},
 					{
 						label: "Status <sup class='text-danger'>*<sup>",
@@ -576,6 +595,16 @@
 						]
 					},
 					{
+						label: "Potong Makan <sup class='text-danger'>*<sup>",
+						name: "hemxxmh.is_pot_makan",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Catering", "value": 1 },
+							{ "label": "Potong Makan", "value": 0 }
+						]
+					},
+					{
 						label: "Keterangan",
 						name: "hemxxmh.keterangan",
 						type: "textarea"
@@ -596,7 +625,7 @@
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthemxxmh.field('start_on').val(start_on);
 				edthemxxmh.field('status_aktif').hide();
-				edthemxxmh.field('hemxxmh.nama_os').hide();
+				edthemxxmh.field('hemjbmh.id_heyxxmh').disable();
 				
 				if(action == 'create'){
 					tblhemxxmh.rows().deselect();
@@ -617,20 +646,16 @@
 				$(".modal-dialog").addClass("modal-lg");
 			});
 			
-			edthemxxmh.dependent( 'hemjbmh.id_heyxxmh', function ( val, data, callback ) {
-				if (val == 2) {
-					edthemxxmh.field('hemxxmh.nama_os').val();
-					edthemxxmh.field('hemxxmh.nama_os').show();
-				} else {
-					edthemxxmh.field('hemxxmh.nama_os').val('');
-					edthemxxmh.field('hemxxmh.nama_os').hide();
-				}
-				return {}
-			}, {event: 'keyup change'});
-			
 			edthemxxmh.dependent( 'hemjbmh.tanggal_masuk', function ( val, data, callback ) {
 				tanggal_akhir = moment(val).add('month', 6).subtract(1, 'day').format('DD MMM YYYY');
 				edthemxxmh.field('tanggal_akhir').val(tanggal_akhir);
+				return {}
+			}, {event: 'keyup change'});
+			
+			edthemxxmh.dependent( 'hemjbmh.id_heyxxmd', function ( val, data, callback ) {
+				if (val > 0) {
+					get_heyxxmh();
+				}
 				return {}
 			}, {event: 'keyup change'});
 			
@@ -747,20 +772,12 @@
 					}
 					// END of validasi hemjbmh.id_hetxxmh 
 
-					// BEGIN of validasi hemjbmh.id_heyxxmh 
-					id_heyxxmh = edthemxxmh.field('hemjbmh.id_heyxxmh').val();
-					if(!id_heyxxmh || id_heyxxmh == ''){
-						edthemxxmh.field('hemjbmh.id_heyxxmh').error( 'Wajib diisi!' );
+					// BEGIN of validasi hemjbmh.id_heyxxmd 
+					id_heyxxmd = edthemxxmh.field('hemjbmh.id_heyxxmd').val();
+					if(!id_heyxxmd || id_heyxxmd == ''){
+						edthemxxmh.field('hemjbmh.id_heyxxmd').error( 'Wajib diisi!' );
 					}
-					// END of validasi hemjbmh.id_heyxxmh 
-
-					if (id_heyxxmh == 2) {
-						nama_os = edthemxxmh.field('hemxxmh.nama_os').val();
-						if(!nama_os || nama_os == ''){
-							edthemxxmh.field('hemxxmh.nama_os').error( 'Wajib diisi!' );
-						}
-						// END of validasi hemxxmh.nama_os 
-					}
+					// END of validasi hemjbmh.id_heyxxmd 
 
 					// BEGIN of validasi hemjbmh.id_hesxxmh 
 					id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
@@ -800,6 +817,9 @@
 			
 			//start datatables
 			tblhemxxmh = $('#tblhemxxmh').DataTable( {
+				searchPanes:{
+					layout: 'columns-4'
+				},
 				dom: 
 					"<P>"+
 					"<lf>"+
@@ -811,13 +831,13 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [4,5,6,7,8,13]
+						targets: [4,5,6,7,8,9,10,13]
 					},
 					{
 						searchPanes:{
 							show: false,
 						},
-						targets: [0,1,2,6,7,9,10]
+						targets: [0,1,2,3,11,12,14,15,16]
 					}
 				],
 				ajax: {
@@ -835,12 +855,13 @@
 					{ data: "hemxxmh.kode" },
 					{ data: "hemxxmh.kode_finger" },
 					{ data: "hemdcmh.ktp_no" },
-					{ data: "hemxxmh.nama" },
+					{ data: "hemxxmh.nama" }, //4
 					{ data: "hodxxmh.nama" },
 					{ data: "hosxxmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "heyxxmh.nama" },
-					{ data: "hesxxmh.nama" },
+					{ data: "heyxxmd.nama" },
+					{ data: "hesxxmh.nama" },//10
 					{ data: "hemjbmh.tanggal_masuk" },
 					{ data: "hemjbmh.tanggal_keluar" },
 					{ 
@@ -923,6 +944,7 @@
 				id_hevxxmh_old   = data_hemjbmh.id_hevxxmh;
 				id_hetxxmh_old   = data_hemjbmh.id_hetxxmh;
 				id_heyxxmh_old   = data_hemjbmh.id_heyxxmh;
+				id_heyxxmd_old   = data_hemjbmh.id_heyxxmd;
 				id_hesxxmh_old   = data_hemjbmh.id_hesxxmh;
 				
 				// atur hak akses
@@ -934,6 +956,7 @@
 			tblhemxxmh.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
 				id_hemxxmh = 0;
+				id_heyxxmd_old = 0;
 				id_hovxxmh_old   = 0, id_hodxxmh_old   = 0, id_hosxxmh_old   = 0, id_hevxxmh_old   = 0, id_hetxxmh_old   = 0, id_heyxxmh_old   = 0, id_hesxxmh_old   = 0;
 
 				// atur hak akses
