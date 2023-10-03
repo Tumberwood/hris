@@ -1128,16 +1128,20 @@
                                 if ($row_hemxxmh['grup_hk'] == 1) { //jika 5 hk
 
                                     //5 hk lembur2
-                                    if ($durasi_lembur_final <= 8) {
-                                        $lembur2 = $durasi_lembur_final;
+                                    if ($durasi_lembur_final > 1) {
+                                        if ($durasi_lembur_final > 8) {
+                                            $lembur2 = 8;
+                                        } else {
+                                            $lembur2 = $durasi_lembur_final;
+                                        }
                                     } else {
                                         $lembur2 = 0;
                                     }
                                     $lembur2_final = $lembur2 * 2;
 
                                     //5 hk lembur3
-                                    if ($durasi_lembur_final >= 9) {
-                                        if ($durasi_lembur_final == 9) {
+                                    if ($durasi_lembur_final > 8) {
+                                        if ($durasi_lembur_final > 9) {
                                             $lembur3 = 1;
                                         } else {
                                             $lembur3 = $durasi_lembur_final - 8;
@@ -1161,16 +1165,20 @@
                                     
                                 } else { 
                                     //jika 6 hk lembur2
-                                    if ($durasi_lembur_final <= 7) {
-                                        $lembur2 = $durasi_lembur_final;
+                                    if ($durasi_lembur_final > 1) {
+                                        if ($durasi_lembur_final > 7) {
+                                            $lembur2 = 7;
+                                        } else {
+                                            $lembur2 = $durasi_lembur_final;
+                                        }
                                     } else {
                                         $lembur2 = 0;
                                     }
                                     $lembur2_final = $lembur2 * 2;
 
                                     //6 hk lembur3
-                                    if ($durasi_lembur_final >= 8) {
-                                        if ($durasi_lembur_final == 8) {
+                                    if ($durasi_lembur_final > 7) {
+                                        if ($durasi_lembur_final > 8) {
                                             $lembur3 = 1;
                                         } else {
                                             $lembur3 = $durasi_lembur_final - 7;
@@ -1242,6 +1250,8 @@
                                 $lembur4 = 0;
                                 $lembur4_final = 0;
                                 $rp_lembur4 = 0;
+                                
+                                $nominal_lembur_jam = 0;
 
                                 // ambil upah lembur per jam
                                 $qr_htpr_hesxxmh = $db
@@ -1267,7 +1277,7 @@
                                     ');
                                 $rs_htpr_hesxxmh    = $qr_htpr_hesxxmh->fetch();
                                 $nominal_lembur_jam = $rs_htpr_hesxxmh['nominal'];
-                                $rp_lembur15 = $nominal_lembur_jam;
+                                $rp_lembur15 = round($nominal_lembur_jam);
                             }else{
                                 //  GP
                                 $qr_gp = $db
@@ -1318,7 +1328,7 @@
                                             LEFT JOIN hemjbmh ON hemjbmh.id_hevxxmh = hevxxmh.id
                                             WHERE 
                                                 htpr_hevxxmh.is_active = :is_active AND
-                                                htpr_hevxxmh.id_hpcxxmh = 33 AND
+                                                htpr_hevxxmh.id_hpcxxmh = 32 AND
                                                 hemjbmh.id_hemxxmh = :id_hemxxmh AND
                                                 htpr_hevxxmh.tanggal_efektif < :tanggal_awal
                                         ) AS subquery
@@ -1332,13 +1342,13 @@
                                 }
             
                                 $tot_komp_lembur        = $nominal_gp + $nominal_tjab;
-                                $nominal_lembur_jam     = floor($tot_komp_lembur / 173);
+                                $nominal_lembur_jam     = round($tot_komp_lembur / 173);
                                 // END select data hpcxxmh is_komp_lembur = 1
 
-                                $rp_lembur15 = $lembur15_final * $nominal_lembur_jam;
-                                $rp_lembur2 = $lembur2_final * $nominal_lembur_jam;
-                                $rp_lembur3 = $lembur3_final * $nominal_lembur_jam;
-                                $rp_lembur4 = $lembur4_final * $nominal_lembur_jam;
+                                $rp_lembur15 = round($lembur15_final * $nominal_lembur_jam);
+                                $rp_lembur2 = round($lembur2_final * $nominal_lembur_jam);
+                                $rp_lembur3 = round($lembur3_final * $nominal_lembur_jam);
+                                $rp_lembur4 = round($lembur4_final * $nominal_lembur_jam);
             
                             }
                         }
