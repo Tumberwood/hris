@@ -91,6 +91,7 @@
 				LEFT JOIN hesxxmh AS c ON c.id = a.id_hesxxmh
 				LEFT JOIN hetxxmh AS d ON d.id = a.id_hetxxmh_awal
 				LEFT JOIN hodxxmh AS e ON e.id = a.id_hodxxmh_awal
+				LEFT JOIN hemjbmh AS f on f.id_hemxxmh = a.id_hemxxmh
 				WHERE (
 					COALESCE(
 						a.tanggal_akhir,
@@ -106,7 +107,8 @@
 					)
 				) <= 30
 				AND a.id_harxxmh <> 3
-				AND a.id_hesxxmh NOT IN (1,5)
+				AND a.id_hesxxmh <> 1
+				-- AND f.id_heyxxmd <> 2 -- Staff
 				AND b.is_active = 1
 				AND a.is_email_status = 1
 				AND b.nama NOT IN (' . $sudah_perpanjang . ')
@@ -169,7 +171,7 @@
 				$body = $body .  '</tbody>';
 			$body = $body .  '</table>';
 			$body = $body .  '<br> <p>Terkirim otomatis dari HRIS </p>';
-			// echo $body;
+			echo $body;
 			
 			include( "../../../../usersc/helpers/fn_mailserver.php" );		
 			// generate email
