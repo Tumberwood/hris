@@ -151,6 +151,7 @@
                 SELECT DISTINCT
                     a.id_hemxxmh,
                     c.id_hesxxmh,
+                    c.id_heyxxmd,
                     c.grup_hk,
                     IFNULL(hari_kerja, 0) AS hari_kerja,
                     
@@ -392,29 +393,25 @@
                             sum_lembur2_final,
                             sum_lembur3_final,
                             sum_lembur4_final,
-                            sum_rp_lembur15,
-                            sum_rp_lembur2,
-                            sum_rp_lembur3,
-                            sum_rp_lembur4
+                           nominal_lembur_jam * sum_lembur15_final AS sum_rp_lembur15,
+                           nominal_lembur_jam * sum_lembur2_final  AS sum_rp_lembur2,
+                           nominal_lembur_jam * sum_lembur3_final  AS sum_rp_lembur3,
+                           nominal_lembur_jam * sum_lembur4_final  AS sum_rp_lembur4
                         FROM (
                             SELECT
                                 prr.id_hemxxmh,
-                                SUM(ROUND(IFNULL(prr.lembur15, 0),0)) AS sum_lembur15,		            
-                                SUM(ROUND(IFNULL(prr.lembur2, 0),0)) AS sum_lembur2,
-                                SUM(ROUND(IFNULL(prr.lembur3, 0),0)) AS sum_lembur3,
-                                SUM(ROUND(IFNULL(prr.lembur4, 0),0)) AS sum_lembur4,
+                                SUM(IFNULL(prr.lembur15, 0)) AS sum_lembur15,		            
+                                SUM(IFNULL(prr.lembur2, 0)) AS sum_lembur2,
+                                SUM(IFNULL(prr.lembur3, 0)) AS sum_lembur3,
+                                SUM(IFNULL(prr.lembur4, 0)) AS sum_lembur4,
                                 
                                 -- setelah dikali
-                                SUM(ROUND(IFNULL(prr.lembur15_final, 0),0)) AS sum_lembur15_final,		            
-                                SUM(ROUND(IFNULL(prr.lembur2_final, 0),0)) AS sum_lembur2_final,
-                                SUM(ROUND(IFNULL(prr.lembur3_final, 0),0)) AS sum_lembur3_final,
-                                SUM(ROUND(IFNULL(prr.lembur4_final, 0),0)) AS sum_lembur4_final,
-            
-                                -- rp
-                                SUM(ROUND(IFNULL(prr.rp_lembur15, 0),0)) AS sum_rp_lembur15,		            
-                                SUM(ROUND(IFNULL(prr.rp_lembur2, 0),0)) AS sum_rp_lembur2,
-                                SUM(ROUND(IFNULL(prr.rp_lembur3, 0),0)) AS sum_rp_lembur3,
-                                SUM(ROUND(IFNULL(prr.rp_lembur4, 0),0)) AS sum_rp_lembur4
+                                SUM(IFNULL(prr.lembur15_final, 0)) AS sum_lembur15_final,		            
+                                SUM(IFNULL(prr.lembur2_final, 0)) AS sum_lembur2_final,
+                                SUM(IFNULL(prr.lembur3_final, 0)) AS sum_lembur3_final,
+                                SUM(IFNULL(prr.lembur4_final, 0)) AS sum_lembur4_final,
+                                
+                                prr.nominal_lembur_jam
                             FROM htsprrd AS prr
                             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = prr.id_hemxxmh
                             WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
@@ -540,13 +537,13 @@
                 lembur3_final,
                 lembur4_final,
                 
-                (lembur15 + lembur2 + lembur3 + lembur4) AS jam_lembur,
                 rp_lembur15,
                 rp_lembur2,
                 rp_lembur3,
                 rp_lembur4,
             
-                ROUND(IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0),0) AS lemburbersih,
+                (lembur15 + lembur2 + lembur3 + lembur4) AS jam_lembur,
+                ROUND(IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0),0) AS lemburbersih,
                 ROUND(pot_makan, 0) AS  pot_makan,
                 ROUND(pot_jkkjkm, 0) AS pot_jkkjkm,
                 ROUND(pot_jht, 0) AS pot_jht,
@@ -581,7 +578,7 @@
                      ) % 100
                  ),0) AS gaji_terima
             FROM qs_payroll
-            WHERE id_hesxxmh <> 5
+            WHERE id_heyxxmd <> 2
         ');
 
         // $qr_gp = $db
@@ -1073,7 +1070,7 @@
         //          ),0) AS gaji_terima
         //     FROM qs_payroll
         //     LEFT JOIN hitung_rp_lembur ON hitung_rp_lembur.id_hemxxmh = qs_payroll.id_hemxxmh
-        //     WHERE id_hesxxmh <> 5
+        //     WHERE c.id_heyxxmd <> 2
         // ');
         // END GAJI POKOK
         
