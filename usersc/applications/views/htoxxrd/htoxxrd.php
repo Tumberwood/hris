@@ -229,7 +229,6 @@
 							.append( '<td></td>' )
 							.append( '<td></td>' )
 							.append( '<td class="text-right bg-warning">'+sumJam+'</td>' )
-							.append( '<td class="text-right bg-warning">'+sum_pot_ti+'</td>' )
 							.append( '<td class="text-right"></td>' );
 					},
 					dataSrc: 'htoxxrd.kode'
