@@ -30,19 +30,19 @@
                     'htsrptd.id_htsxxmh_pengganti as id_htsxxmh_pengganti',
                     'htsrptd.kode as kode',
                     'htsrptd.tanggal as tanggal',
-                    'pengaju.nama_os as nama_os_pengaju',
-                    'pengganti.nama_os as nama_os_pengganti',
+                    'pengaju.id_heyxxmd as id_heyxxmd_pengaju',
+                    'pengganti.id_heyxxmd as id_heyxxmd_pengganti',
                     'htsrptd.keterangan as keterangan'
                 ] )
-                ->join('hemxxmh as pengaju','pengaju.id = htsrptd.id_hemxxmh_pengaju','LEFT' )
-                ->join('hemxxmh as pengganti','pengganti.id = htsrptd.id_hemxxmh_pengganti','LEFT' )
+                ->join('hemjbmh as pengaju','pengaju.id = htsrptd.id_hemxxmh_pengaju','LEFT' )
+                ->join('hemjbmh as pengganti','pengganti.id = htsrptd.id_hemxxmh_pengganti','LEFT' )
                 ->where('htsrptd.id', $id_transaksi_h )
                 ->exec();
 
             $rs_htsrptd = $qs_htsrptd->fetch();
             $keterangan = $rs_htsrptd['keterangan'];
 
-            if ($rs_htsrptd['nama_os_pengaju'] != "KMJ" && $rs_htsrptd['id_htsxxmh_pengganti'] != "KMJ") {
+            if ($rs_htsrptd['id_heyxxmd_pengaju'] != 4 && $rs_htsrptd['id_htsxxmh_pengganti'] != 4) {
                 // BEGIN non aktif pengaju
                 // harusnya bisa pakai where or, tapi belum berhasil diganti off
                 // $qu_htssctd_pengaju = $db

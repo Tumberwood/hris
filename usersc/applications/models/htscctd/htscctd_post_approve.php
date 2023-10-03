@@ -27,19 +27,19 @@
                     'htscctd.id_htsxxmh_pengganti as id_htsxxmh_pengganti',
                     'htscctd.kode as kode',
                     'htscctd.tanggal as tanggal',
-                    'pengaju.nama_os as nama_os_pengaju',
-                    'pengganti.nama_os as nama_os_pengganti',
+                    'pengaju.id_heyxxmd as id_heyxxmd_pengaju',
+                    'pengganti.id_heyxxmd as id_heyxxmd_pengganti',
                     'htscctd.keterangan as keterangan'
                 ] )
-                ->join('hemxxmh as pengaju','pengaju.id = htscctd.id_hemxxmh_pengaju','LEFT' )
-                ->join('hemxxmh as pengganti','pengganti.id = htscctd.id_hemxxmh_pengganti','LEFT' )
+                ->join('hemjbmh as pengaju','pengaju.id = htscctd.id_hemxxmh_pengaju','LEFT' )
+                ->join('hemjbmh as pengganti','pengganti.id = htscctd.id_hemxxmh_pengganti','LEFT' )
                 ->where('htscctd.id', $id_transaksi_h )
                 ->exec();
 
             $rs_htscctd = $qs_htscctd->fetch();
             
             $keterangan = $rs_htscctd['keterangan'];
-            if ($rs_htscctd['nama_os_pengaju'] != "KMJ" && $rs_htscctd['id_htsxxmh_pengganti'] != "KMJ") {
+            if ($rs_htscctd['id_heyxxmd_pengaju'] != 4 && $rs_htscctd['id_htsxxmh_pengganti'] != 4) {
                // BEGIN non aktif
                     // harusnya bisa pakai where or, tapi belum berhasil
                     $qu_htssctd_pengaju = $db

@@ -14,11 +14,11 @@
     // END definisi variable untuk fn_ajax_results.php
 
     $qs_kmj = $db
-        ->query('select', 'hemxxmh')
+        ->query('select', 'hemjbmh')
         ->get([
-            'nama_os'
+            'id_heyxxmd'
         ])
-        ->where('id', $_POST['id_hemxxmh_select'] )
+        ->where('id_hemxxmh', $_POST['id_hemxxmh_select'] )
         ->exec();
     $rs_kmj = $qs_kmj->fetch();
     
