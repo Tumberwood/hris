@@ -130,12 +130,12 @@
                 lembur3_final,
                 lembur4_final,
 
-                jam_lembur,
                 rp_lembur15,
                 rp_lembur2,
                 rp_lembur3,
                 rp_lembur4,
 
+                jam_lembur,
                 lemburbersih,
                 pot_makan,
                 pot_jkkjkm,
