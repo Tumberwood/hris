@@ -1203,27 +1203,46 @@
 
                             } else {
                                 // lembur 1.5 bukan libur
-                                if ($durasi_lembur_final > 1) {
-                                    $lembur15 = 1;
-                                } else {
-                                    $lembur15 = $durasi_lembur_final;
+                                if ($id_hemxxmh = 67) { //jika Tri Wandono
+                                    if ($durasi_lembur_final > 2) {
+                                        $lembur15 = 2;
+                                    } else {
+                                        $lembur15 = $durasi_lembur_final;
+                                    }
+                                    
+                                    // lembur 2 bukan libur
+                                    if ($durasi_lembur_final > 2 && $durasi_lembur_final <= 8) {
+                                        $lembur2 = $durasi_lembur_final - 2;
+                                    } else {
+                                        $lembur2 = 0;
+                                    }
+
+                                } else { //jika bukan Tri Wandono
+                                    if ($durasi_lembur_final > 1) {
+                                        $lembur15 = 1;
+                                    } else {
+                                        $lembur15 = $durasi_lembur_final;
+                                    }
+                                    
+                                    // lembur 2 bukan libur
+                                    if ($durasi_lembur_final > 1 && $durasi_lembur_final <= 8) {
+                                        $lembur2 = $durasi_lembur_final - 1;
+                                    } else {
+                                        $lembur2 = 0;
+                                    }
                                 }
-                                $lembur15_final = $lembur15 * 1.5;
-                                
-                                // lembur 2 bukan libur
-                                if ($durasi_lembur_final > 1 && $durasi_lembur_final <= 8) {
-                                    $lembur2 = $durasi_lembur_final - 1;
-                                } else {
-                                    $lembur2 = 0;
-                                }
-                                $lembur2_final = $lembur2 * 2;
-                                
+
                                 // lembur3
                                 if ($durasi_lembur_final > 8) {
                                     $lembur3 = $durasi_lembur_final - 8;
                                 } else {
                                     $lembur3 = 0;
                                 }
+
+                                $lembur15_final = $lembur15 * 1.5;
+                                
+                                $lembur2_final = $lembur2 * 2;
+                                
                                 $lembur3_final = $lembur3 * 3;
                                 
                             }
@@ -1345,10 +1364,10 @@
                                 $nominal_lembur_jam     = round($tot_komp_lembur / 173);
                                 // END select data hpcxxmh is_komp_lembur = 1
 
-                                $rp_lembur15 = round($lembur15_final * $nominal_lembur_jam);
-                                $rp_lembur2 = round($lembur2_final * $nominal_lembur_jam);
-                                $rp_lembur3 = round($lembur3_final * $nominal_lembur_jam);
-                                $rp_lembur4 = round($lembur4_final * $nominal_lembur_jam);
+                                $rp_lembur15 = $lembur15_final * $nominal_lembur_jam;
+                                $rp_lembur2 = $lembur2_final * $nominal_lembur_jam;
+                                $rp_lembur3 = $lembur3_final * $nominal_lembur_jam;
+                                $rp_lembur4 = $lembur4_final * $nominal_lembur_jam;
             
                             }
                         }
