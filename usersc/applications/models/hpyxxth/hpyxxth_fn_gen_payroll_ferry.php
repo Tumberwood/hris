@@ -537,10 +537,10 @@
                 lembur3_final,
                 lembur4_final,
                 
-                rp_lembur15,
-                rp_lembur2,
-                rp_lembur3,
-                rp_lembur4,
+                ROUND(rp_lembur15,0),
+                ROUND(rp_lembur2,0),
+                ROUND(rp_lembur3,0),
+                ROUND(rp_lembur4,0),
             
                 (lembur15 + lembur2 + lembur3 + lembur4) AS jam_lembur,
                 ROUND(IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0),0) AS lemburbersih,
