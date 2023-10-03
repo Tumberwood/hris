@@ -72,7 +72,6 @@
 								<th>Jam Awal</th>
 								<th>Jam Akhir</th>
 								<th>Durasi</th>
-								<th>Potongan TI</th>
 								<!-- <th>Makan</th> -->
 								<th>Approve</th>
 							</tr>
@@ -91,7 +90,6 @@
 								<th></th>
 								<th>Grand Total</th>
 								<th class="text-right bg-primary" id="s_jam"></th>
-								<th class="text-right bg-primary" id="s_pot_ti"></th>
 								<th></th>
 							</tr>
 						</tfoot>
@@ -283,11 +281,6 @@
 						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "htoxxrd.pot_ti" ,
-						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
-						class: "text-right"
-					},
 					// { data: null },
 					{ 
 						data: "htoxxrd.is_approve" ,
@@ -334,10 +327,9 @@
 					var numFormat0 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					// hitung jumlah 
 					s_jam = api.column( 10 ).data().sum();
-					s_pot_ti = api.column( 11 ).data().sum();
+					
 
 					$( '#s_jam' ).html( numFormat1(s_jam) );
-					$( '#s_pot_ti' ).html( numFormat0(s_pot_ti) );
 				}
 			} );
 
