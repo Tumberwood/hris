@@ -643,7 +643,7 @@
 				    tblhtsprrd.button('btnPresensiOK:name').enable();
                 }
 
-				if (st_clock_out == "Jadwal Salah") {
+				if (status_presensi_in == "Jadwal Salah") {
 				    tblhtsprrd.button('btnPresensiOK:name').enable();
                 }
 				// console.log(htsprrd_data.status_presensi_in);
