@@ -261,6 +261,7 @@
                         $nominal_lembur_final = 0;
                         $is_makan = 0;
                         $is_pot_premi = 0;
+                        $is_pot_upah = 0;
                         $pot_overtime = 0;
                         $pot_hk = 0;
 
@@ -364,11 +365,13 @@
                             ->exec();
                         $rs_htlxxrh = $qs_htlxxrh->fetch();
                         $is_pot_premi = 0;
+                        $is_pot_upah = 0;
                         if(!empty($rs_htlxxrh)){
                             // jika ada absen
                             $kode_izin[] = $rs_htlxxrh['htlxxmh_kode'] . " [" . $rs_htlxxrh['htlxxrh_kode'] . "]";
                             if ($rs_htlxxrh['is_potongupah'] == 1) {
                                 $is_pot_premi = 1;
+                                $is_pot_upah = 1;
                             } 
                             
                             if ($rs_htlxxrh['is_approve'] == 1) {
@@ -1463,6 +1466,7 @@
                             ->set('pot_jam_final', $pot_jam_final)
                             ->set('is_makan', $is_makan)
                             ->set('is_pot_premi', $is_pot_premi)
+                            ->set('is_pot_upah', $is_pot_upah)
                             ->set('cek', $cek)
 
                             //lembur
