@@ -13,39 +13,6 @@
 ?>
 
 <!-- begin content here -->
-<div class="row">
-    <div class="col">
-        <div class="ibox collapsed" id="iboxfilter">
-            <div class="ibox-title">
-                <h5 class="text-navy">Filter</h5>&nbsp
-                <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
-            </div>
-            <div class="ibox-content">
-                <form class="form-horizontal" id="frmFilter">
-                    <div class="form-group row">
-						<label class="col-lg-2 col-form-label">Periode</label>
-                        <div class="col-lg-5">
-                            <div class="input-group input-daterange" id="periode">
-                                <input type="text" id="start_date" class="form-control">
-                                <span class="input-group-addon">to</span>
-                                <input type="text" id="end_date" class="form-control">
-                                <div class="input-group-addon">
-                                    <span class="fa fa-calendar"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-lg-4">
-                            <button class="btn btn-primary" type="submit" id="go">Submit</button>
-                        </div>
-                    </div>
-                </form>
-                <div id="searchPanes1"></div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="row">
 	<div class="col">
@@ -64,6 +31,20 @@
                         </thead>
                     </table>
                     <legend>Detail</legend>
+					
+					<div class="row">
+						<div class="col">
+							<div class="ibox collapsed" id="iboxfilter">
+								<div class="ibox-title">
+									<h5 class="text-navy">Filter</h5>&nbsp
+									<button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+								</div>
+								<div class="ibox-content">
+									<div id="searchPanes1"></div>
+								</div>
+							</div>
+						</div>
+					</div>
                     <table id="tblhpyemtd" class="table table-striped table-bordered table-hover nowrap" width="100%">
                         <thead>
                             <tr>
@@ -166,22 +147,8 @@
 		// ------------- end of default variable
 		var id_heyxxmh_old = 0;
 		
-		// BEGIN datepicker init
-		$('#periode').datepicker({
-			setDate: new Date(),
-			autoclose: true,
-			todayHighlight: true,
-			clearBtn: true,
-			format: "dd M yyyy",
-			minViewMode: 'month' 
-		});
-		$('#start_date').datepicker('setDate', awal_bulan_dmy);
-		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
-        // END datepicker init
 
 		$(document).ready(function() {
-			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
-			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 			
 			//start datatables editor
 			edthpyxxth = new $.fn.dataTable.Editor( {
@@ -189,8 +156,6 @@
 					url: "../../models/hpyxxth/hpyxxth.php",
 					type: 'POST',
 					data: function (d){
-						d.start_date = start_date;
-						d.end_date = end_date;
 						d.show_inactive_status_hpyxxth = show_inactive_status_hpyxxth;
 					}
 				},
@@ -354,8 +319,6 @@
 					url: "../../models/hpyxxth/hpyxxth.php",
 					type: 'POST',
 					data: function (d){
-						d.start_date = start_date;
-						d.end_date = end_date;
 						d.show_inactive_status_hpyxxth = show_inactive_status_hpyxxth;
 					}
 				},
@@ -853,33 +816,6 @@
 
 // --------- end _detail --------------- //		
 			
-			$("#frmFilter").submit(function(e) {
-				e.preventDefault();
-			}).validate({
-				rules: {
-					
-				},
-				submitHandler: function(frmFilter) {
-					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
-					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
-					
-					notifyprogress = $.notify({
-						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
-					},{
-						z_index: 9999,
-						allow_dismiss: false,
-						type: 'info',
-						delay: 0
-					});
-
-					tblhpyxxth.rows().deselect();
-					tblhpyemtd.rows().deselect();
-					tblhpyxxth.ajax.reload(function ( json ) {
-						notifyprogress.close();
-					}, false);
-					return false; 
-				}
-			});
 
 		} );// end of document.ready
 	
