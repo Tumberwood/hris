@@ -396,8 +396,8 @@
                             $status_presensi_out = $jadwal['htsxxmh_kode'];
                             $st_clock_in = $jadwal['htsxxmh_kode'];
                             $st_clock_out = $jadwal['htsxxmh_kode'];
-                            $next_step = 0;
                             $cek = 0;
+                            $next_step = 9;
                         }
 
                         //NEXT STEP
@@ -696,13 +696,19 @@
                         }
 
                         // print_r($htlxxrh_kode);
+
                         //JIKA ADA ABSEN DAN CEK
                         if (!empty($rs_htlxxrh) && $st_clock_in == 'No CI' && $st_clock_out == 'No CO') {
                             $cek = 0;
                         }
 
-                        //JIKA CO DAN CI MAKA LANJUT CEK RANGE D JAM 5 DAN D+1 12
+                        // jika absen kosong, dan no_ci no co
                         if(empty($rs_htlxxrh) && $st_clock_in == 'No CI' && $st_clock_out == 'No CO'){
+                            $next_step = 9;
+                        }
+
+                        //JIKA CO DAN CI MAKA LANJUT CEK RANGE D JAM 5 DAN D+1 12
+                        if ($next_step == 9) {
                             //Cek apakah ada check clock antara Tgl 05:00:00 s/d Tgl + 1 12:00:00
                             $besok = date('Y-m-d', strtotime($tanggal . ' +1 day'));
                             // print_r($besok);
@@ -714,7 +720,7 @@
                                 ->where('htsprtd.kode', $row_hemxxmh['kode_finger'])
                                 ->where('htsprtd.nama', '("os", "out", "staff", "pmi")', 'IN', false )
                                 ->where('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)', $tanggal . ' 05:00:00', '>=')
-                                ->where('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)', $besok . ' 12:00:00', '<=')                                    
+                                ->where('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)', $tanggal . ' 23:59:59', '<=')                                    
                                 ->order('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)')
                                 ->exec();
                             $rs_ceklok_D5_B12 = $qs_ceklok_D5_B12->fetch();
@@ -723,10 +729,14 @@
                                 $status_presensi_in = 'Jadwal Salah';
                                 $status_presensi_out = 'Jadwal Salah';
                                 $cek = 1;
-                            } else {
-                                $status_presensi_in = 'AL';
-                                $status_presensi_out = 'AL';
-                                $cek = 1;
+                            } else { // jika tidak ada ceklok diantara range
+                                if ($jadwal['id_htsxxmh'] != 1) { // jika bukan off maka AL dan cek 1
+                                    $status_presensi_in = 'AL';
+                                    $status_presensi_out = 'AL';
+                                    $cek = 1;
+                                } else {
+                                    $cek = 0; // jika OFF maka cek 0
+                                }
                             }
                         }
                         //JIKA TIDAK ADA ABSEN DAN SALAH SATU STATUS PRESENSI BELUM ADA IZIN MAKA CEK 1
@@ -1211,14 +1221,15 @@
                                         $lembur15 = $durasi_lembur_final;
                                     }
                                     
-                                    // lembur 2 bukan libur
-                                    if ($durasi_lembur_final > 2 && $durasi_lembur_final <= 8) {
+                                    // lembur 2 bukan libur untuk Tri Wandono
+                                    if ($durasi_lembur_final > 2) {
                                         $lembur2 = $durasi_lembur_final - 2;
                                     } else {
                                         $lembur2 = 0;
                                     }
 
-                                } else { //jika bukan Tri Wandono
+                                } else { 
+                                    //jika bukan Tri Wandono
                                     if ($durasi_lembur_final > 1) {
                                         $lembur15 = 1;
                                     } else {
@@ -1231,17 +1242,19 @@
                                     } else {
                                         $lembur2 = 0;
                                     }
+                                    
+                                    // lembur3
+                                    if ($durasi_lembur_final > 8) {
+                                        $lembur3 = $durasi_lembur_final - 8;
+                                    } else {
+                                        $lembur3 = 0;
+                                    }
                                 }
 
-                                // lembur3
-                                if ($durasi_lembur_final > 8) {
-                                    $lembur3 = $durasi_lembur_final - 8;
-                                } else {
-                                    $lembur3 = 0;
-                                }
 
                                 $lembur15_final = $lembur15 * 1.5;
                                 
+                                // tri wandono cuma sampai lembur2
                                 $lembur2_final = $lembur2 * 2;
                                 
                                 $lembur3_final = $lembur3 * 3;

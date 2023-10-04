@@ -642,6 +642,10 @@
 				if (st_clock_out == "EARLY" && status_presensi_out == "Belum ada Izin") {
 				    tblhtsprrd.button('btnPresensiOK:name').enable();
                 }
+
+				if (st_clock_out == "Jadwal Salah") {
+				    tblhtsprrd.button('btnPresensiOK:name').enable();
+                }
 				// console.log(htsprrd_data.status_presensi_in);
 			} );
 			
