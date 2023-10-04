@@ -70,6 +70,9 @@
 				Field::inst( 'hetxxmh.nama' ),
 				Field::inst( 'hodxxmh.nama' ),
 				Field::inst( 'hevxxmh.nama' ),
+				Field::inst( 'heyxxmh.nama' ),
+				Field::inst( 'heyxxmd.nama' ),
+				Field::inst( 'hesxxmh.nama' ),
 				
 				Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' )
 			)
@@ -78,6 +81,9 @@
 			->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
 			->leftJoin( 'hevxxmh','hevxxmh.id','=','hemjbmh.id_hevxxmh' )
 			->leftJoin( 'hodxxmh','hodxxmh.id','=','hemjbmh.id_hodxxmh' )
+			->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
+			->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
+			->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 			->where('hpyemtd.id_hpyxxth',$_POST['id_hpyxxth']);
 		
 		// do not erase

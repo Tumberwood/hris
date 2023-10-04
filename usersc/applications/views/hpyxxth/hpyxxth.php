@@ -41,6 +41,7 @@
                         </div>
                     </div>
                 </form>
+                <div id="searchPanes1"></div>
             </div>
         </div>
     </div>
@@ -71,6 +72,9 @@
                                 <th>Nama</th>
                                 <th>Department</th>
                                 <th>Jabatan</th>
+                                <th>Tipe</th>
+                                <th>Sub Tipe</th>
+                                <th>Status</th>
                                 <th>Level</th>
                                 <th>Gaji Pokok</th>
                                 <th>TJ. Jabatan</th>
@@ -106,11 +110,11 @@
 								<th></th>
 								<th></th>
 								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
 								<th>Total</th>
 								<th></th>
-								<th id="s_6"></th>
-								<th id="s_7"></th>
-								<th id="s_8"></th>
 								<th id="s_9"></th>
 								<th id="s_10"></th>
 								<th id="s_11"></th>
@@ -133,6 +137,9 @@
 								<th id="s_28"></th>
 								<th id="s_29"></th>
 								<th id="s_30"></th>
+								<th id="s_31"></th>
+								<th id="s_32"></th>
+								<th id="s_33"></th>
 							</tr>
 						</tfoot>
 
@@ -606,6 +613,24 @@
 			
 			//start datatables
 			tblhpyemtd = $('#tblhpyemtd').DataTable( {
+				
+				searchPanes:{
+					layout: 'columns-3'
+				},
+				columnDefs:[
+					{
+						searchPanes:{
+							show: true
+						},
+						targets: [5,6,7]
+					},
+					{
+						searchPanes:{
+							show: false
+						},
+						targets: [0,1,2,3,4,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33]
+					}
+				],
 				ajax: {
 					url: "../../models/hpyxxth/hpyemtd.php",
 					type: 'POST',
@@ -623,6 +648,9 @@
 					{ data: "hemxxmh_data" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hetxxmh.nama" },
+					{ data: "heyxxmh.nama" },
+					{ data: "heyxxmd.nama" },
+					{ data: "hesxxmh.nama" },
 					{ data: "hevxxmh.nama",visible:false },
 					{ 
 						data: "hpyemtd.gp",
@@ -766,16 +794,16 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					// Dimulai dari index 6 karena gaji pokok itu index ke 6
-					var columnsToSum = [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
-
-					for (var i = 0; i < columnsToSum.length; i++) {
-						var columnIndex = columnsToSum[i];
+					for (var i = 9; i < 33; i++) {
+						var columnIndex = i;
 						var sum = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
 						// var sum = api.column(columnIndex, { page: 'current' }).data().sum();
 						$('#s_' + columnIndex).html(numFormat(sum));
 					}
+				},
+				initComplete: function() {
+					this.api().searchPanes.rebuildPane();
 				}
 				
 				// footerCallback: function ( row, data, start, end, display ) {
@@ -797,6 +825,7 @@
 				
 			} );
 
+			tblhpyemtd.searchPanes.container().appendTo( '#searchPanes1' );
 			tblhpyemtd.on( 'draw', function( e, settings ) { 
 				// atur hak akses
 				cek_c_detail= 1;
