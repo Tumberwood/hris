@@ -580,28 +580,28 @@
                 ROUND(pot_bpjs, 0) AS pot_bpjs,
                 ROUND(pot_psiun, 0) AS pot_psiun,
                 -- hitung gaji bersih
-                ROUND((gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
+                ROUND((gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0))) -- ini hijau
                   - 
                  (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun), 0) -- ini merah
                  AS gaji_bersih,
                  
                  -- pembulatan per 100 dari gaji bersih
                  ROUND((
-                     (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
+                     (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0))) -- ini hijau
                       - 
                      (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun) -- ini merah
                  ) % 100, 0) AS bulat,
                  
                  -- gaji_bersih - hasil pembulatan
                  ROUND((
-                     (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
+                     (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0))) -- ini hijau
                       - 
                      (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun) -- ini merah
                  )
                  -
                 (
                      (
-                         (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
+                         (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0))) -- ini hijau
                           - 
                          (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun) -- ini merah
                      ) % 100
