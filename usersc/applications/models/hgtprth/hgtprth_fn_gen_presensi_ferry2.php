@@ -210,7 +210,7 @@
                 //             '
                 //             );
                 // $rs_htssctd = $qs_htssctd->fetchAll();
-                $total_shift = count($rs_htssctd);
+                // $total_shift = count($rs_htssctd);
                 // print_r($total_shift);
 
 ////////////////////////////// LEVEL 1 JADWAL //////////////////////////////
@@ -1204,7 +1204,7 @@
 
                             } else {
                                 // lembur 1.5 bukan libur
-                                if ($id_hemxxmh = 67) { //jika Tri Wandono
+                                if ($id_hemxxmh == 67) { //jika Tri Wandono
                                     if ($durasi_lembur_final > 2) {
                                         $lembur15 = 2;
                                     } else {
