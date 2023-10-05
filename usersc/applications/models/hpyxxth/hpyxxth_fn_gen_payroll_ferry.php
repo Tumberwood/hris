@@ -596,10 +596,10 @@
                 FLOOR(IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0)) AS lemburbersih,
                 FLOOR(pot_makan) AS pot_makan,
                 FLOOR(pot_jkkjkm) AS pot_jkkjkm,
-                FLOOR(pot_jht) AS pot_jht,
+                CEIL(pot_jht) AS pot_jht,
                 FLOOR(IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) AS pot_upah,
                 FLOOR(pot_bpjs) AS pot_bpjs,
-                FLOOR(pot_psiun) AS pot_psiun,
+                CEIL(pot_psiun) AS pot_psiun,
                 FLOOR(
                     (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
                         -
