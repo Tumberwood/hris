@@ -103,6 +103,8 @@
             // ->where('id_heyxxmh',$id_heyxxmh)
         ->exec();
 
+        //Pembulatan FLOOR
+
         $qr_gp = $db
             ->raw()
             ->bind(':tanggal_awal', $tanggal_awal)
@@ -151,23 +153,24 @@
                 SELECT DISTINCT
                     a.id_hemxxmh,
                     report_pot_upah,
-                    (round(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173),0)) AS nominal_lembur_jam,
-                    ROUND(
-                          (round(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173),0)) *
+                    (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173))) AS nominal_lembur_jam,
+                    FLOOR(
+                          (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173))) *
                             sum_lembur15_final
-                        ,0) AS rp_lembur15,
-                    ROUND(
-                          (round(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173),0)) *
+                        ) AS rp_lembur15,
+                    FLOOR(
+                          (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173))) *
                             sum_lembur2_final
-                        ,0) AS rp_lembur2,
-                    ROUND(
-                          (round(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173),0)) *
+                        ) AS rp_lembur2,
+                    FLOOR(
+                          (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173))) *
                             sum_lembur3_final
-                        ,0) AS rp_lembur3,
-                    ROUND(
-                          (round(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173),0)) *
+                        ) AS rp_lembur3,
+                    FLOOR(
+                          (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173))) *
                             sum_lembur4_final
-                        ,0) AS rp_lembur4,
+                        ) AS rp_lembur4,
+            
                     c.id_hesxxmh,
                     c.id_heyxxmd,
                     c.grup_hk,
@@ -571,62 +574,64 @@
                 var_cost,
                 fix_cost,
                 premi_abs,
-                ROUND(jkk, 0 ) AS jkk,
-                ROUND(jkm, 0 ) AS jkm,
-                ROUND(trm_jkkjkm, 0 ) AS trm_jkkjkm,
+                FLOOR(jkk) AS jkk,
+                FLOOR(jkm) AS jkm,
+                FLOOR(trm_jkkjkm) AS trm_jkkjkm,
                 lembur15,
                 lembur2,
                 lembur3,
                 lembur4,
-                
+            
                 lembur15_final,
                 lembur2_final,
                 lembur3_final,
                 lembur4_final,
-                
-                rp_lembur15,
-                rp_lembur2,
-                rp_lembur3,
-                rp_lembur4,
+            
+                FLOOR(rp_lembur15) AS rp_lembur15,
+                FLOOR(rp_lembur2) AS rp_lembur2,
+                FLOOR(rp_lembur3) AS rp_lembur3,
+                FLOOR(rp_lembur4) AS rp_lembur4,
             
                 (lembur15 + lembur2 + lembur3 + lembur4) AS jam_lembur,
-                ROUND(IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0),0) AS lemburbersih,
-                ROUND(pot_makan, 0) AS  pot_makan,
-                ROUND(pot_jkkjkm, 0) AS pot_jkkjkm,
-                ROUND(pot_jht, 0) AS pot_jht,
-                if(report_pot_upah >= 1, ROUND((gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25), 0),0) AS pot_upah,
-                ROUND(pot_bpjs, 0) AS pot_bpjs,
-                ROUND(pot_psiun, 0) AS pot_psiun,
-                -- hitung gaji bersih
-                ROUND((gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0))) -- ini hijau
-                  - 
-                 (pot_makan + pot_jkkjkm + pot_jht + if(report_pot_upah >= 1, ROUND((gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25), 0),0) + pot_bpjs + pot_psiun), 0) -- ini merah
-                 AS gaji_bersih,
-                 
-                 -- pembulatan per 100 dari gaji bersih
-                 ROUND((
-                     (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0))) -- ini hijau
-                      - 
-                     (pot_makan + pot_jkkjkm + pot_jht + if(report_pot_upah >= 1, ROUND((gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25), 0),0) + pot_bpjs + pot_psiun) -- ini merah
-                 ) % 100, 0) AS bulat,
-                 
-                 -- gaji_bersih - hasil pembulatan
-                 ROUND((
-                     (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0))) -- ini hijau
-                      - 
-                     (pot_makan + pot_jkkjkm + pot_jht + if(report_pot_upah >= 1, ROUND((gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25), 0),0) + pot_bpjs + pot_psiun) -- ini merah
-                 )
-                 -
-                (
+                FLOOR(IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0)) AS lemburbersih,
+                FLOOR(pot_makan) AS pot_makan,
+                FLOOR(pot_jkkjkm) AS pot_jkkjkm,
+                FLOOR(pot_jht) AS pot_jht,
+                FLOOR(IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) AS pot_upah,
+                FLOOR(pot_bpjs) AS pot_bpjs,
+                FLOOR(pot_psiun) AS pot_psiun,
+                FLOOR(
+                    (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
+                        -
+                   (pot_makan + pot_jkkjkm + pot_jht + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
+                 ) AS gaji_bersih,
+                 FLOOR(
                      (
-                         (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0))) -- ini hijau
-                          - 
-                         (pot_makan + pot_jkkjkm + pot_jht + if(report_pot_upah >= 1, ROUND((gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25), 0),0) + pot_bpjs + pot_psiun) -- ini merah
+                         (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
+                            -
+                       (pot_makan + pot_jkkjkm + pot_jht + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
                      ) % 100
-                 ),0) AS gaji_terima
+                 ) AS bulat,
+                 FLOOR(
+                     (
+                        (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
+                            -
+                       (pot_makan + pot_jkkjkm + pot_jht + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
+                     )
+                         -
+                    (
+                        (
+                             (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
+                                -
+                           (pot_makan + pot_jkkjkm + pot_jht + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
+                         ) % 100
+                     )
+                 ) AS gaji_terima
             FROM qs_payroll
             WHERE id_heyxxmd <> 2
         ');
+
+        //Pembulatan ROUND
 
         // $qr_gp = $db
         //     ->raw()
@@ -644,13 +649,23 @@
         //         jkk,
         //         jkm,
         //         trm_jkkjkm,
+                
         //         lembur15,
         //         lembur2,
         //         lembur3,
-        //         jam_lembur,
+        //         lembur4,
+
+        //         lembur15_final,
+        //         lembur2_final,
+        //         lembur3_final,
+        //         lembur4_final,
+
         //         rp_lembur15,
         //         rp_lembur2,
         //         rp_lembur3,
+        //         rp_lembur4,
+
+        //         jam_lembur,
         //         lemburbersih,
         //         pot_makan,
         //         pot_jkkjkm,
@@ -665,8 +680,26 @@
         //     WITH qs_payroll AS (
         //         SELECT DISTINCT
         //             a.id_hemxxmh,
+        //             report_pot_upah,
+        //             (round(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173),0)) AS nominal_lembur_jam,
+        //             ROUND(
+        //                   (round(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173),0)) *
+        //                     sum_lembur15_final
+        //                 ,0) AS rp_lembur15,
+        //             ROUND(
+        //                   (round(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173),0)) *
+        //                     sum_lembur2_final
+        //                 ,0) AS rp_lembur2,
+        //             ROUND(
+        //                   (round(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173),0)) *
+        //                     sum_lembur3_final
+        //                 ,0) AS rp_lembur3,
+        //             ROUND(
+        //                   (round(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173),0)) *
+        //                     sum_lembur4_final
+        //                 ,0) AS rp_lembur4,
         //             c.id_hesxxmh,
-        //             nominal_lembur_mati,
+        //             c.id_heyxxmd,
         //             c.grup_hk,
         //             IFNULL(hari_kerja, 0) AS hari_kerja,
                     
@@ -695,36 +728,46 @@
         //              0) AS fix_cost,
                      
         //              -- premi absen dengan validasi jika ada izin/absen yang memotong premi maka premi absen == 0 atau hangus
-        //             IFNULL(if(report_pot_premi >= 1, 0, premiabs), 0) AS premi_abs,
+        //              -- revisi 2 Oct, premi absen hanya untuk organik, os tidak ada
+        //             if(c.id_heyxxmh = 1, IFNULL(if(report_pot_premi >= 1, 0, premiabs), 0), 0) AS premi_abs,
                     
         //             -- hitung jkk
-        //             IFNULL((persen_jkk / 100) * gaji_bpjs,0) AS jkk,
+        //             if(id_heyxxmd = 3,IFNULL((persen_jkk / 100) * gaji_bpjs,0),0) AS jkk,
                     
         //             -- hitung jkm
-        //             IFNULL((persen_jkm / 100) * gaji_bpjs,0) AS jkm,
+        //             if(id_heyxxmd = 3,IFNULL((persen_jkm / 100) * gaji_bpjs,0),0) AS jkm,
                     
         //             -- trm_jkkjkm == jkk + jkm
-        //             IFNULL(((persen_jkk / 100) * gaji_bpjs) + ((persen_jkm / 100) * gaji_bpjs), 0) AS trm_jkkjkm,
+        //             if(id_heyxxmd = 3,IFNULL(((persen_jkk / 100) * gaji_bpjs) + ((persen_jkm / 100) * gaji_bpjs), 0),0) AS trm_jkkjkm,
                     
         //             -- mulai lembur
-        //             lembur15,
-        //             lembur2,
-        //             lembur3,
+        //             sum_lembur15 AS lembur15,
+        //             sum_lembur2 AS lembur2,
+        //             sum_lembur3 AS lembur3,
+        //             sum_lembur4 AS lembur4,
+                    
+        //             sum_lembur15_final AS lembur15_final,
+        //             sum_lembur2_final AS lembur2_final,
+        //             sum_lembur3_final AS lembur3_final,
+        //             sum_lembur4_final AS lembur4_final,
+                    
                     
         //             -- hitung pot makan
         //             IFNULL(pot_makan * pot_uang_makan, 0) AS pot_makan,
                     
         //             -- pot_jkkjkm == jkk + jkm (sama dengan pot_jkkjkm)
-        //             IFNULL(((persen_jkk / 100) * gaji_bpjs) + ((persen_jkm / 100) * gaji_bpjs), 0) AS pot_jkkjkm,
+        //             if(id_heyxxmd = 3,IFNULL(((persen_jkk / 100) * gaji_bpjs) + ((persen_jkm / 100) * gaji_bpjs), 0),0) AS pot_jkkjkm,
                     
         //             -- hitung pot_jht
-        //             IFNULL((persen_jht_karyawan / 100) * gaji_bpjs, 0) AS pot_jht,
+        //             if(id_heyxxmd = 3,IFNULL((persen_jht_karyawan / 100) * gaji_bpjs, 0),0) AS pot_jht,
                     
         //             -- hitung pot_bpjs
-        //             IFNULL((persen_karyawan / 100) * gaji_bpjs, 0) AS pot_bpjs,
+        //             if(id_heyxxmd = 3, IFNULL((persen_karyawan / 100) * gaji_bpjs, 0),0) AS pot_bpjs,
                     
         //             -- hitung pot_psiun
-        //             IFNULL((persen_jp_karyawan / 100) * gaji_bpjs, 0) AS pot_psiun
+                    
+        //             -- revisi khusus yang sub tipe == karyawan
+        //             if(id_heyxxmd = 3,IFNULL((persen_jp_karyawan / 100) * gaji_bpjs, 0),0) AS pot_psiun
                     
         //         FROM htsprrd AS a
         //         LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = a.id_hemxxmh
@@ -809,26 +852,6 @@
         //                 WHERE row_num = 1
         //             ) tbl_var_cost ON tbl_var_cost.id_hemxxmh = a.id_hemxxmh
                     
-        //             -- potongan makan htpr_hesxxmh
-        //             LEFT JOIN (
-        //                 SELECT
-        //                     id_hesxxmh,
-        //                     tanggal_efektif,
-        //                     IFNULL(nominal, 0) AS pot_uang_makan
-        //                 FROM (
-        //                     SELECT
-        //                         id,
-        //                         id_hesxxmh,
-        //                         tanggal_efektif,
-        //                         nominal,
-        //                         ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
-        //                     FROM htpr_hesxxmh
-        //                     WHERE
-        //                         htpr_hesxxmh.id_hpcxxmh = 34
-        //                         AND tanggal_efektif < :tanggal_awal
-        //                 ) AS subquery
-        //                 WHERE row_num = 1
-        //             ) pot_uang_makan ON pot_uang_makan.id_hesxxmh = c.id_hesxxmh
                     
         //             -- Ambil lembur mati dari htpr_hesxxmh untuk pelatihan
         //             LEFT JOIN (
@@ -850,6 +873,27 @@
         //                 ) AS subquery
         //                 WHERE row_num = 1
         //             ) lembur_mati ON lembur_mati.id_hesxxmh = c.id_hesxxmh
+            
+        //             -- potongan makan htpr_hesxxmh
+        //             LEFT JOIN (
+        //                 SELECT
+        //                     id_hesxxmh,
+        //                     tanggal_efektif,
+        //                     IFNULL(nominal, 0) AS pot_uang_makan
+        //                 FROM (
+        //                     SELECT
+        //                         id,
+        //                         id_hesxxmh,
+        //                         tanggal_efektif,
+        //                         nominal,
+        //                         ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
+        //                     FROM htpr_hesxxmh
+        //                     WHERE
+        //                         htpr_hesxxmh.id_hpcxxmh = 34
+        //                         AND tanggal_efektif < :tanggal_awal
+        //                 ) AS subquery
+        //                 WHERE row_num = 1
+        //             ) pot_uang_makan ON pot_uang_makan.id_hesxxmh = c.id_hesxxmh
                     
         //             -- t jabatan
         //             LEFT JOIN (
@@ -908,44 +952,27 @@
         //             LEFT JOIN (
         //                 SELECT
         //                     id_hemxxmh,
-        //                     lembur15,
-        //                     lembur2,
-        //                     lembur3
+        //                     sum_lembur15,
+        //                     sum_lembur2,
+        //                     sum_lembur3,
+        //                     sum_lembur4,
+        //                     sum_lembur15_final,
+        //                     sum_lembur2_final,
+        //                     sum_lembur3_final,
+        //                     sum_lembur4_final
         //                 FROM (
         //                     SELECT
         //                         prr.id_hemxxmh,
-        //                         prr.durasi_lembur_final AS lembur_sum,
-        //                         SUM(
-        //                                 if(prr.durasi_lembur_libur > 0, 0,
-        //                             (CASE 
-        //                                 WHEN IFNULL(prr.durasi_lembur_final, 0) > 0 -- dicari apakah ada lembur
-        //                                 -- jika ada lembur maka diisikan, namun ada kondisi jika lebih dari 1 maka akan di return 1, else, nilai lembur sebenarnya
-        //                                 THEN if(prr.durasi_lembur_final > 1, 1, prr.durasi_lembur_final) * 1.5
-        //                                 ELSE 0 -- kalau tidak ada lembur maka return 0
-        //                             END))
-        //                         ) AS lembur15,
-        //                         SUM(
-        //                                 if(prr.durasi_lembur_libur > 0, -- dicari yang lembur libur
-        //                                 if(job.grup_hk = 1 , -- jika grup hk == 5
-        //                                     if(prr.durasi_lembur_final > 0 AND prr.durasi_lembur_final <= 8, prr.durasi_lembur_final * 2, 8 * 2), -- maka dicari yang lebur final <= 8 lalu * 2
-        //                                     if(prr.durasi_lembur_final > 0 AND prr.durasi_lembur_final <= 7, prr.durasi_lembur_final * 2, 7 * 2)
-        //                                         ),
-        //                                 if(IFNULL(prr.durasi_lembur_final, 0) > 1 AND IFNULL(prr.durasi_lembur_final, 0) <= 8, -- ini yang bukan lembur libur <= 8 jam
-        //                                     (prr.durasi_lembur_final - 1) * 2, -- durasi lembur final * 2
-        //                                     0) -- else 0
-        //                                 )
-        //                             ) AS lembur2,
-        //                         SUM(
-        //                                 if(prr.durasi_lembur_libur > 0, -- dicari yang lembur libur
-        //                                 if(job.grup_hk = 1 , -- jika grup hk == 5
-        //                                     if(prr.durasi_lembur_final >= 9, prr.durasi_lembur_final * 3, 0), -- jika hk = 5, dicari yang >= 9, lalu dikali 3
-        //                                     if(prr.durasi_lembur_final >= 8, prr.durasi_lembur_final * 3, 0) -- jika hk = 6, dicari yang >= 8, lalu dikali 3
-        //                                         ),
-        //                                 if(IFNULL(prr.durasi_lembur_final, 0) > 8, -- ini yang bukan lembur libur dan lebih dari 8 jam
-        //                                     (prr.durasi_lembur_final - 8) * 3, -- durasi lembur final * 3
-        //                                     0) -- else 0
-        //                                 )
-        //                         ) AS lembur3
+        //                         SUM(IFNULL(prr.lembur15, 0)) AS sum_lembur15,		            
+        //                         SUM(IFNULL(prr.lembur2, 0)) AS sum_lembur2,
+        //                         SUM(IFNULL(prr.lembur3, 0)) AS sum_lembur3,
+        //                         SUM(IFNULL(prr.lembur4, 0)) AS sum_lembur4,
+                                
+        //                         -- setelah dikali
+        //                         SUM(IFNULL(prr.lembur15_final, 0)) AS sum_lembur15_final,		            
+        //                         SUM(IFNULL(prr.lembur2_final, 0)) AS sum_lembur2_final,
+        //                         SUM(IFNULL(prr.lembur3_final, 0)) AS sum_lembur3_final,
+        //                         SUM(IFNULL(prr.lembur4_final, 0)) AS sum_lembur4_final
         //                     FROM htsprrd AS prr
         //                     LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = prr.id_hemxxmh
         //                     WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
@@ -968,6 +995,22 @@
         //                     GROUP BY id_hemxxmh
         //                 ) c_report_pot_premi
         //             ) presensi_pot_premi ON presensi_pot_premi.id_hemxxmh = a.id_hemxxmh
+                    
+        //             -- validasi cari izin/absen yang memotong upah dari report presensi
+        //             LEFT JOIN (
+        //                 SELECT
+        //                   id_hemxxmh,
+        //                     report_pot_upah
+        //                 FROM (
+        //                     SELECT
+        //                         id_hemxxmh,
+        //                         COUNT(id) AS report_pot_upah
+        //                     FROM htsprrd
+        //                     WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+        //                           AND is_pot_upah = 1
+        //                     GROUP BY id_hemxxmh
+        //                 ) c_report_pot_upah
+        //             ) presensi_pot_upah ON presensi_pot_upah.id_hemxxmh = a.id_hemxxmh
                     
         //             -- hari kerja karyawan baru
         //             LEFT JOIN (
@@ -1049,19 +1092,6 @@
         //             ) bpjs_kesehatan ON bpjs_kesehatan.is_active = 1
                 
         //         WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-        //     ),
-        //     hitung_rp_lembur AS (
-        //         SELECT
-        //              id_hemxxmh,
-                     
-        //              -- revisi dari sebelumnya yang mengambil dari nominal, sekarang diubah mejadi hasil final gp dan t_jab
-        //              (gp + t_jab) / 173 AS rp_lembur_perjam,
-                     
-        //              -- revisi perhitungan rp_lembur, untuk yang pelatihan tidak perlu dikalikan hasil jam 1.5 (lembur15) ...dsb
-        //             IFNULL(if(lembur15 > 0, if(id_hesxxmh = 3, nominal_lembur_mati, ((gp + t_jab) / 173) * lembur15) , 0),0) AS rp_lembur15,
-        //             IFNULL(if(lembur2 > 0, if(id_hesxxmh = 3, nominal_lembur_mati, ((gp + t_jab) / 173) * lembur2) , 0),0) AS rp_lembur2,
-        //             IFNULL(if(lembur3 > 0, if(id_hesxxmh = 3, nominal_lembur_mati, ((gp + t_jab) / 173) * lembur3) , 0),0) AS rp_lembur3
-        //         FROM qs_payroll
         //     )
         //     SELECT
         //         ' . $id_hpyxxth . ',
@@ -1077,47 +1107,55 @@
         //         lembur15,
         //         lembur2,
         //         lembur3,
-        //         (lembur15 + lembur2 + lembur3) AS jam_lembur,
-        //         ROUND(rp_lembur15, 0 ) AS rp_lembur15,
-        //         ROUND(rp_lembur2, 0 ) AS rp_lembur2,
-        //         ROUND(rp_lembur3, 0 ) AS rp_lembur3,
-        //         ROUND(IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0),0) AS lemburbersih,
+        //         lembur4,
+                
+        //         lembur15_final,
+        //         lembur2_final,
+        //         lembur3_final,
+        //         lembur4_final,
+                
+        //         rp_lembur15,
+        //         rp_lembur2,
+        //         rp_lembur3,
+        //         rp_lembur4,
+            
+        //         (lembur15 + lembur2 + lembur3 + lembur4) AS jam_lembur,
+        //         ROUND(IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0),0) AS lemburbersih,
         //         ROUND(pot_makan, 0) AS  pot_makan,
         //         ROUND(pot_jkkjkm, 0) AS pot_jkkjkm,
         //         ROUND(pot_jht, 0) AS pot_jht,
-        //         ROUND((gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25), 0) AS pot_upah,
+        //         if(report_pot_upah >= 1, ROUND((gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25), 0),0) AS pot_upah,
         //         ROUND(pot_bpjs, 0) AS pot_bpjs,
         //         ROUND(pot_psiun, 0) AS pot_psiun,
         //         -- hitung gaji bersih
-        //         ROUND((gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
+        //         ROUND((gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0))) -- ini hijau
         //           - 
-        //          (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun), 0) -- ini merah
+        //          (pot_makan + pot_jkkjkm + pot_jht + if(report_pot_upah >= 1, ROUND((gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25), 0),0) + pot_bpjs + pot_psiun), 0) -- ini merah
         //          AS gaji_bersih,
                  
         //          -- pembulatan per 100 dari gaji bersih
         //          ROUND((
-        //              (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
+        //              (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0))) -- ini hijau
         //               - 
-        //              (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun) -- ini merah
+        //              (pot_makan + pot_jkkjkm + pot_jht + if(report_pot_upah >= 1, ROUND((gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25), 0),0) + pot_bpjs + pot_psiun) -- ini merah
         //          ) % 100, 0) AS bulat,
                  
         //          -- gaji_bersih - hasil pembulatan
         //          ROUND((
-        //              (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
+        //              (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0))) -- ini hijau
         //               - 
-        //              (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun) -- ini merah
+        //              (pot_makan + pot_jkkjkm + pot_jht + if(report_pot_upah >= 1, ROUND((gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25), 0),0) + pot_bpjs + pot_psiun) -- ini merah
         //          )
         //          -
         //         (
         //              (
-        //                  (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3),0))) -- ini hijau
+        //                  (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + (IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4),0))) -- ini hijau
         //                   - 
-        //                  (pot_makan + pot_jkkjkm + pot_jht + (gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25) + pot_bpjs + pot_psiun) -- ini merah
+        //                  (pot_makan + pot_jkkjkm + pot_jht + if(report_pot_upah >= 1, ROUND((gp + t_jab + var_cost + fix_cost) / if(grup_hk = 1, 21, 25), 0),0) + pot_bpjs + pot_psiun) -- ini merah
         //              ) % 100
         //          ),0) AS gaji_terima
         //     FROM qs_payroll
-        //     LEFT JOIN hitung_rp_lembur ON hitung_rp_lembur.id_hemxxmh = qs_payroll.id_hemxxmh
-        //     WHERE c.id_heyxxmd <> 2
+        //     WHERE id_heyxxmd <> 2
         // ');
         // END GAJI POKOK
         
