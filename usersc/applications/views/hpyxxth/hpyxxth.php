@@ -79,6 +79,7 @@
                                 <th>Pot Upah</th>
                                 <th>Pot BPJS</th>
                                 <th>Pot Pensiun</th>
+                                <th>Pot Hutang</th>
                                 <th>Gaji Bersih</th>
                                 <th>Bulat</th>
                                 <th>Gaji Diterima</th>
@@ -121,6 +122,7 @@
 								<th id="s_31"></th>
 								<th id="s_32"></th>
 								<th id="s_33"></th>
+								<th id="s_34"></th>
 							</tr>
 						</tfoot>
 
@@ -721,6 +723,11 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
+					{
+						data: "hpyemtd.pot_utang",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
 					{ 
 						data: "hpyemtd.gaji_bersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
@@ -757,7 +764,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 33; i++) {
+					for (var i = 9; i <= 34; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }

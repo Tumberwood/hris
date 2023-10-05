@@ -63,6 +63,7 @@
 				Field::inst( 'hpyemtd.pot_upah' ), 
 				Field::inst( 'hpyemtd.pot_bpjs' ), 
 				Field::inst( 'hpyemtd.pot_psiun' ), 
+				Field::inst( 'hpyemtd.pot_utang' ), 
 				Field::inst( 'hpyemtd.gaji_bersih' ), 
 				Field::inst( 'hpyemtd.bulat' ), 
 				Field::inst( 'hpyemtd.gaji_terima' ), 

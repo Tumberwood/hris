@@ -145,6 +145,7 @@
                 pot_upah,
                 pot_bpjs,
                 pot_psiun,
+                pot_utang,
                 gaji_bersih,
                 bulat,
                 gaji_terima
@@ -224,7 +225,6 @@
                     sum_lembur3_final AS lembur3_final,
                     sum_lembur4_final AS lembur4_final,
                     
-                    
                     -- hitung pot makan
                     IFNULL(pot_makan * pot_uang_makan, 0) AS pot_makan,
                     
@@ -240,7 +240,10 @@
                     -- hitung pot_psiun
                     
                     -- revisi khusus yang sub tipe == karyawan
-                    if(id_heyxxmd = 3,IFNULL((persen_jp_karyawan / 100) * gaji_bpjs, 0),0) AS pot_psiun
+                    if(id_heyxxmd = 3,IFNULL((persen_jp_karyawan / 100) * gaji_bpjs, 0),0) AS pot_psiun,
+                    
+                    -- potongan utang
+                    IFNULL(nominal_utang,0) AS pot_utang
                     
                 FROM htsprrd AS a
                 LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = a.id_hemxxmh
@@ -303,6 +306,7 @@
                         ) AS subquery
                         WHERE row_num = 1
                     ) tbl_htpr_hemxxmh ON tbl_htpr_hemxxmh.id_hemxxmh = a.id_hemxxmh
+                    
                     
                     -- var_cost htpr_hemxxmh.id_hpcxxmh = 102
                     LEFT JOIN (
@@ -463,7 +467,7 @@
                                 id_hemxxmh,
                                 COUNT(id) AS report_pot_premi
                             FROM htsprrd
-                            WHERE tanggal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND LAST_DAY(:tanggal_awal) 
+                            WHERE tanggal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND LAST_DAY(:tanggal_awal)
                                   AND is_pot_premi = 1
                             GROUP BY id_hemxxmh
                         ) c_report_pot_premi
@@ -563,6 +567,23 @@
                             FROM hibksmh
                         ) sel_bpjs
                     ) bpjs_kesehatan ON bpjs_kesehatan.is_active = 1
+                    
+                    
+                    -- Cari Hutang
+                    LEFT JOIN (
+                        SELECT
+                            id_hemxxmh,
+                            IFNULL(nominal, 0) AS nominal_utang
+                        FROM (
+                            SELECT
+                                id_hemxxmh,
+                                SUM(nominal) as nominal
+                            FROM hpy_piutang_d
+                            WHERE
+                                hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                            GROUP BY id_hemxxmh
+                        ) AS subquery
+                    ) piutang ON piutang.id_hemxxmh = a.id_hemxxmh
                 
                 WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
             )
@@ -596,34 +617,35 @@
                 FLOOR(IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0)) AS lemburbersih,
                 FLOOR(pot_makan) AS pot_makan,
                 FLOOR(pot_jkkjkm) AS pot_jkkjkm,
-                CEIL(pot_jht) AS pot_jht,
+                FLOOR(pot_jht) AS pot_jht,
                 FLOOR(IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) AS pot_upah,
                 FLOOR(pot_bpjs) AS pot_bpjs,
-                CEIL(pot_psiun) AS pot_psiun,
+                FLOOR(pot_psiun) AS pot_psiun,
+                pot_utang,
                 FLOOR(
                     (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
                         -
-                   (pot_makan + pot_jkkjkm + pot_jht + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
+                   (pot_makan + pot_jkkjkm + pot_jht + pot_utang + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
                  ) AS gaji_bersih,
                  FLOOR(
                      (
                          (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
                             -
-                       (pot_makan + pot_jkkjkm + pot_jht + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
+                       (pot_makan + pot_jkkjkm + pot_jht +  pot_utang + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
                      ) % 100
                  ) AS bulat,
                  FLOOR(
                      (
                         (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
                             -
-                       (pot_makan + pot_jkkjkm + pot_jht + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
+                       (pot_makan + pot_jkkjkm + pot_jht +  pot_utang + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
                      )
                          -
                     (
                         (
                              (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
                                 -
-                           (pot_makan + pot_jkkjkm + pot_jht + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
+                           (pot_makan + pot_jkkjkm + pot_jht +  pot_utang + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
                          ) % 100
                      )
                  ) AS gaji_terima
