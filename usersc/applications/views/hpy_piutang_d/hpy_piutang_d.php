@@ -25,7 +25,6 @@
                                 <th>Nama</th>
                                 <th>Jenis</th>
                                 <th>Nominal</th>
-                                <th>Tenor</th>
                                 <th>Tanggal</th>
                             </tr>
                         </thead>
@@ -131,9 +130,6 @@
 						label: "Nominal<sup class='text-danger'>*<sup>",
 						name: "hpy_piutang_d.nominal"
 					}, 	{
-						label: "Tenor<sup class='text-danger'>*<sup>",
-						name: "hpy_piutang_d.tenor"
-					}, 	{
 						label: "Mulai Tanggal<sup class='text-danger'>*<sup>",
 						name: "hpy_piutang_d.tanggal",
 						type: "datetime",
@@ -148,7 +144,6 @@
 					}
 				]
 			} );
-			edthpy_piutang_d.field('hpy_piutang_d.tenor').input().addClass('text-right');
 			edthpy_piutang_d.field('hpy_piutang_d.nominal').input().addClass('text-right');
 
 			edthpy_piutang_d.on( 'preOpen', function( e, mode, action ) {
@@ -187,20 +182,6 @@
 						edthpy_piutang_d.field('hpy_piutang_d.tanggal').error( 'Wajib diisi!' );
 					}
 					// END of validasi hpy_piutang_d.tanggal 
-					
-					// BEGIN of validasi hpy_piutang_d.tenor 
-					tenor = edthpy_piutang_d.field('hpy_piutang_d.tenor').val();
-					
-					// validasi min atau max angka
-					if(tenor <= 0 ){
-						edthpy_piutang_d.field('hpy_piutang_d.tenor').error( 'Inputan harus > 0' );
-					}
-					
-					// validasi angka
-					if(isNaN(tenor) ){
-						edthpy_piutang_d.field('hpy_piutang_d.tenor').error( 'Inputan harus berupa Angka!' );
-					}
-					// END of validasi hpy_piutang_d.tenor 
 					
 					// BEGIN of validasi hpy_piutang_d.nominal 
 					nominal = edthpy_piutang_d.field('hpy_piutang_d.nominal').val();
@@ -245,11 +226,6 @@
 					{ data: "hpy_piutang_d.jenis" },
 					{ 
 						data: "hpy_piutang_d.nominal",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right" 
-					},
-					{ 
-						data: "hpy_piutang_d.tenor",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right" 
 					},

@@ -46,7 +46,6 @@
 			Field::inst( 'hpy_piutang_d.is_defaultprogram' ),
 			Field::inst( 'hpy_piutang_d.jenis' ),
 			Field::inst( 'hpy_piutang_d.nominal' ),
-			Field::inst( 'hpy_piutang_d.tenor' ),
 			Field::inst( 'hpy_piutang_d.tanggal' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === '0000-00-00' || $val === null){

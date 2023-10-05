@@ -47,7 +47,7 @@
 				->set('id_hemxxmh',$rs_piutang['id_hemxxmh'])
 				->set('jenis',$rs_piutang['jenis'])
 				->set('nominal',$rs_piutang['cicilan_per_bulan'])
-				->set('tenor',$rs_piutang['tenor'])
+				
 				->set('tanggal',$tanggal)
 				->exec();
 		}
@@ -57,7 +57,7 @@
 				->set('id_hemxxmh',$rs_piutang['id_hemxxmh'])
 				->set('jenis',$rs_piutang['jenis'])
 				->set('nominal',$rs_piutang['cicilan_terakhir'])
-				->set('tenor',$rs_piutang['tenor'])
+				
 				->set('tanggal',$rs_piutang['tanggal_akhir'])
 				->exec();
 		} else {
@@ -66,7 +66,7 @@
 				->set('id_hemxxmh',$rs_piutang['id_hemxxmh'])
 				->set('jenis',$rs_piutang['jenis'])
 				->set('nominal',$rs_piutang['cicilan_per_bulan'])
-				->set('tenor',$rs_piutang['tenor'])
+				
 				->set('tanggal',$rs_piutang['tanggal_akhir'])
 				->exec();}
 	}
