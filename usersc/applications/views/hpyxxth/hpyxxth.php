@@ -94,7 +94,7 @@
 								<th></th>
 								<th></th>
 								<th></th>
-								<th>Total</th>
+								<th>Total <br><br> Grand Total</th>
 								<th></th>
 								<th id="s_9"></th>
 								<th id="s_10"></th>
@@ -757,35 +757,19 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i < 33; i++) {
+					for (var i = 9; i <= 33; i++) {
 						var columnIndex = i;
-						var sum = api.column(columnIndex).data().sum();
+						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
-						// var sum = api.column(columnIndex, { page: 'current' }).data().sum();
-						$('#s_' + columnIndex).html(numFormat(sum));
+						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
+						$('#s_' + columnIndex).html(numFormat(sum) + "<br><br> <span style='color: blue;'>" + numFormat(sum_all) + " </span>");
+
+						// console.log('Number of Pages: ' + api.page.info().pages);
 					}
 				},
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
 				}
-				
-				// footerCallback: function ( row, data, start, end, display ) {
-				// 	var api       = this.api(), data;
-				// 	var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
-				// 	// hitung jumlah 
-				// 	s_gp = api.column( 6 ).data().sum();
-				// 	$( '#s_gp' ).html( numFormat(s_gp) );
-
-				// 	s_t_jab = api.column( 7 ).data().sum();
-				// 	$( '#s_t_jab' ).html( numFormat(s_t_jab) );
-
-				// 	s_gp = api.column( 8 ).data().sum();
-				// 	$( '#s_gp' ).html( numFormat(s_gp) );
-
-				// 	s_t_jab = api.column( 9 ).data().sum();
-				// 	$( '#s_t_jab' ).html( numFormat(s_t_jab) );
-				// }
-				
 			} );
 
 			tblhpyemtd.searchPanes.container().appendTo( '#searchPanes1' );
