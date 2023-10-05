@@ -1313,7 +1313,10 @@
                                     ');
                                 $rs_htpr_hesxxmh    = $qr_htpr_hesxxmh->fetch();
                                 $nominal_lembur_jam = $rs_htpr_hesxxmh['nominal'];
-                                $rp_lembur15 = round($nominal_lembur_jam);
+                                // $rp_lembur15 = round($nominal_lembur_jam);
+
+                                //floor
+                                $rp_lembur15 = floor($nominal_lembur_jam);
                             }else{
                                 //  GP
                                 $qr_gp = $db
@@ -1378,8 +1381,10 @@
                                 }
             
                                 $tot_komp_lembur        = $nominal_gp + $nominal_tjab;
-                                $nominal_lembur_jam     = round($tot_komp_lembur / 173);
-                                // END select data hpcxxmh is_komp_lembur = 1
+                                // $nominal_lembur_jam     = round($tot_komp_lembur / 173);
+
+                                // Jika Floor
+                                $nominal_lembur_jam     = floor($tot_komp_lembur / 173);
 
                                 $rp_lembur15 = $lembur15_final * $nominal_lembur_jam;
                                 $rp_lembur2 = $lembur2_final * $nominal_lembur_jam;
