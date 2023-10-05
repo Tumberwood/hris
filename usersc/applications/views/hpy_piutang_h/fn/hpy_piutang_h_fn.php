@@ -13,11 +13,17 @@
 
         if (tenor > 0) {
             per_bulan = Math.ceil(nominal / tenor / 1000) * 1000;
-            cicilan_akhir = nominal - (per_bulan * (tenor - 1));
+            if (tenor == 1) {
+                cicilan_akhir = 0;
+            } else{
+                cicilan_akhir = nominal - (per_bulan * (tenor - 1));
+            }
         } else {
             per_bulan = 0;
             cicilan_akhir = 0;
         }
+
+
         edthpy_piutang_h.field('hpy_piutang_h.cicilan_per_bulan').val(per_bulan);
         edthpy_piutang_h.field('hpy_piutang_h.cicilan_terakhir').val(cicilan_akhir);
     }

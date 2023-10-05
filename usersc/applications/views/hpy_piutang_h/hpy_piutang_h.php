@@ -52,6 +52,7 @@
 		// ------------- default variable, do not erase
 		var edthpy_piutang_h, tblhpy_piutang_h, show_inactive_status_hpy_piutang_h = 0, id_hpy_piutang_h;
 		var id_hemxxmh_old = 0;
+		is_need_approval = 1;
 		// ------------- end of default variable
 		
 		$(document).ready(function() {
@@ -325,7 +326,7 @@
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
 						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_h'];
-						$arr_buttons_approve 	= [];
+						$arr_buttons_approve 	= ['approve'];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
