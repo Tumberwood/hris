@@ -125,7 +125,7 @@
 						type: "select",
 						placeholder : "Select",
 						options: [
-							{ "label": "Tambahan", "value": "Tambahan" },
+							{ "label": "Tambahan/Bonus", "value": "Tambahan" },
 							{ "label": "Potongan", "value": "Potongan" }
 						]
 					},	{
