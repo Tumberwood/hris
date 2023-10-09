@@ -38,7 +38,7 @@
 
             $rs_htscctd = $qs_htscctd->fetch();
             
-            $keterangan = $rs_htscctd['keterangan'];
+            $keterangan = $rs_htscctd['kode'] ." - ". $rs_htscctd['keterangan'];
             if ($rs_htscctd['id_heyxxmd_pengaju'] != 4 && $rs_htscctd['id_htsxxmh_pengganti'] != 4) {
                // BEGIN non aktif
                     // harusnya bisa pakai where or, tapi belum berhasil
@@ -284,7 +284,7 @@
                 ->exec();
 
             $rs_htscctd = $qs_htscctd->fetch();
-            $keterangan = $rs_htscctd['keterangan'];
+            $keterangan = $rs_htscctd['kode'] ." - ". $rs_htscctd['keterangan'];
             // BEGIN non aktif
             // harusnya bisa pakai where or, tapi belum berhasil
             $qu_htssctd_pengaju = $db

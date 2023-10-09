@@ -9,6 +9,7 @@
     $c_rs_opt  = 0;
     $morePages = 0;
     // END definisi variable untuk fn_ajax_results.php
+	use Carbon\Carbon;
 
     $state          = $_POST['state'];
     $id_transaksi_h = $_POST['id_transaksi_h'];
@@ -28,8 +29,12 @@
 
         $rs_htssctd_tukarhari = $qs_htssctd_tukarhari->fetch();
         
-        $keterangan = $rs_htssctd_tukarhari['keterangan'];
         $tanggal_terpilih = $rs_htssctd_tukarhari['tanggal_terpilih'];
+
+        $tanggal_awal_select = new Carbon($tanggal_terpilih); //gunakan carbon untuk ambil data tanggal
+        $tanggal_terpilih_dmy = $tanggal_awal_select->format('d-M-Y'); //format jadi 2023-09-12
+
+        $keterangan = "Tukar Hari - " . $tanggal_terpilih_dmy;
         $tanggal_pengganti = $rs_htssctd_tukarhari['tanggal_pengganti'];
         
         

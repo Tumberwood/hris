@@ -40,7 +40,7 @@
                 ->exec();
 
             $rs_htsrptd = $qs_htsrptd->fetch();
-            $keterangan = $rs_htsrptd['keterangan'];
+            $keterangan = $rs_htsrptd['kode'] . " - " . $rs_htsrptd['keterangan'];
 
             if ($rs_htsrptd['id_heyxxmd_pengaju'] != 4 && $rs_htsrptd['id_htsxxmh_pengganti'] != 4) {
                 // BEGIN non aktif pengaju
@@ -174,7 +174,7 @@
                 ->exec();
 
             $rs_htsrptd = $qs_htsrptd->fetch();
-            $keterangan = $rs_htsrptd['keterangan'];
+            $keterangan = $rs_htsrptd['kode'] . " - " . $rs_htsrptd['keterangan'];
             // BEGIN non aktif
             // harusnya bisa pakai where or, tapi belum berhasil
             $qu_htssctd_pengaju = $db
