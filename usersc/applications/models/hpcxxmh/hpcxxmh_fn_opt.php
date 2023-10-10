@@ -22,6 +22,12 @@
         $id_hpcxxmh_old = 0;
     }
 
+    if(isset($_GET['is_denda'])){
+        $is_denda = $_GET['is_denda'];
+    } else {
+        $is_denda = 0;
+    }
+
     // BEGIN query options self.
     // Hanya dipanggil jika field ada nilai id nya
     if($id_hpcxxmh_old > 0){
@@ -50,6 +56,7 @@
         ])
         ->where('hpcxxmh.is_active',1)
         ->where('hpcxxmh.id', $id_hpcxxmh_old, '<>' )
+        ->where('hpcxxmh.is_denda', $is_denda)
         ->where( function ( $r ) {
             $q = $_GET['search'];
             $r

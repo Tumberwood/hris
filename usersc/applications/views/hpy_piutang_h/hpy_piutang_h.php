@@ -30,6 +30,8 @@
                                 <th>Cicilan Terakhir</th>
                                 <th>Mulai Tanggal</th>
                                 <th>Berakhir Tanggal</th>
+                                <th>Keterangan</th>
+                                <th>Approval</th>
                             </tr>
                         </thead>
                     </table>
@@ -52,6 +54,7 @@
 		// ------------- default variable, do not erase
 		var edthpy_piutang_h, tblhpy_piutang_h, show_inactive_status_hpy_piutang_h = 0, id_hpy_piutang_h;
 		var id_hemxxmh_old = 0;
+		var id_hpcxxmh_old = 0;
 		is_need_approval = 1;
 		// ------------- end of default variable
 		
@@ -123,15 +126,53 @@
 						}
 					},
 					{
-						label: "Jenis<sup class='text-danger'>*<sup>",
-						name: "hpy_piutang_h.jenis",
-						type: "select",
-						placeholder : "Select",
-						options: [
-							{ "label": "Klaim", "value": "Klaim" },
-							{ "label": "Pinjaman", "value": "Pinjaman" }
-						]
-					},	{
+						label: "jenis <sup class='text-danger'>*<sup>",
+						name: "hpy_piutang_h.id_hpcxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hpcxxmh/hpcxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hpcxxmh_old: id_hpcxxmh_old,
+										is_denda: 1,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					// {
+					// 	label: "Jenis<sup class='text-danger'>*<sup>",
+					// 	name: "hpy_piutang_h.id_hpcxxmh",
+					// 	type: "select",
+					// 	placeholder : "Select",
+					// 	options: [
+					// 		{ "label": "Klaim", "value": "Klaim" },
+					// 		{ "label": "Pinjaman", "value": "Pinjaman" }
+					// 	]
+					// },	
+					{
 						label: "Nominal<sup class='text-danger'>*<sup>",
 						name: "hpy_piutang_h.nominal"
 					}, 	{
@@ -169,7 +210,11 @@
 							firstDay: 0
 						},
 						format: 'DD MMM YYYY'
-					},	
+					},	{
+						label: "Keterangan<sup class='text-danger'>*<sup>",
+						name: "hpy_piutang_h.keterangan",
+						type: "textarea"
+					}
 				]
 			} );
 			edthpy_piutang_h.field('hpy_piutang_h.tenor').input().addClass('text-right');
@@ -223,12 +268,19 @@
 					}
 					// END of validasi hpy_piutang_h.id_hemxxmh 
 					
-					// BEGIN of validasi hpy_piutang_h.jenis 
-					jenis = edthpy_piutang_h.field('hpy_piutang_h.jenis').val();
+					// BEGIN of validasi hpy_piutang_h.id_hpcxxmh 
+					jenis = edthpy_piutang_h.field('hpy_piutang_h.id_hpcxxmh').val();
 					if(!jenis || jenis == ''){
-						edthpy_piutang_h.field('hpy_piutang_h.jenis').error( 'Wajib diisi!' );
+						edthpy_piutang_h.field('hpy_piutang_h.id_hpcxxmh').error( 'Wajib diisi!' );
 					}
-					// END of validasi hpy_piutang_h.jenis 
+					// END of validasi hpy_piutang_h.id_hpcxxmh 
+					
+					// BEGIN of validasi hpy_piutang_h.keterangan 
+					keterangan = edthpy_piutang_h.field('hpy_piutang_h.keterangan').val();
+					if(!keterangan || keterangan == ''){
+						edthpy_piutang_h.field('hpy_piutang_h.keterangan').error( 'Wajib diisi!' );
+					}
+					// END of validasi hpy_piutang_h.keterangan 
 					
 					// BEGIN of validasi hpy_piutang_h.tanggal_mulai 
 					tanggal_mulai = edthpy_piutang_h.field('hpy_piutang_h.tanggal_mulai').val();
@@ -291,7 +343,7 @@
 				columns: [
 					{ data: "hpy_piutang_h.id",visible:false },
 					{ data: "hemxxmh_data" },
-					{ data: "hpy_piutang_h.jenis" },
+					{ data: "hpcxxmh.nama" },
 					{ 
 						data: "hpy_piutang_h.nominal",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
@@ -313,7 +365,24 @@
 						class: "text-right" 
 					},
 					{ data: "hpy_piutang_h.tanggal_mulai" },
-					{ data: "hpy_piutang_h.tanggal_akhir" }
+					{ data: "hpy_piutang_h.tanggal_akhir" },
+					{ data: "hpy_piutang_h.keterangan" },
+					{ 
+						data: "hpy_piutang_h.is_approve" ,
+						render: function (data){
+							if (data == 0){
+								return '';
+							}else if(data == 1){
+								return '<i class="fa fa-check text-navy"></i>';
+							}else if(data == 2){
+								return '<i class="fa fa-undo text-muted"></i>';
+							}else if(data == -9){
+								return '<i class="fa fa-remove text-danger"></i>';
+							} else {
+								return '';
+							}
+						} 
+					} 
 				],
 				buttons: [
 					// BEGIN breaking generate button
@@ -352,6 +421,7 @@
 				is_jurnal      = hpy_piutang_h_data.is_jurnal;
 				is_active      = hpy_piutang_h_data.is_active;
 				id_hemxxmh_old      = hpy_piutang_h_data.id_hemxxmh;
+				id_hpcxxmh_old      = hpy_piutang_h_data.id_hpcxxmh;
 
 				// atur hak akses
 				CekSelectHeaderH(tblhpy_piutang_h);
@@ -361,6 +431,7 @@
 				// reload dipanggil di function CekDeselectHeader
 				id_hpy_piutang_h = '';
 				id_hemxxmh_old = 0;
+				id_hpcxxmh_old = 0;
 
 				// atur hak akses
 				CekDeselectHeaderH(tblhpy_piutang_h);

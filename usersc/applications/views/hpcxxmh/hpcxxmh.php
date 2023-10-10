@@ -27,6 +27,7 @@
                                 <th>Jenis</th>
                                 <th>Periode</th>
                                 <th>Komp Tetap</th>
+                                <th>Denda</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -118,7 +119,22 @@
 							{ "label": "Variable", "value": 0 },
 							{ "label": "Fix", "value": 1 }
 						]
-					},	{
+					},
+					{
+						label: "Denda",
+						name: "hpcxxmh.is_denda",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Ya", "value": 1 },
+							{ "label": "Tidak", "value": 0 }
+						]
+					},	
+					{
+						label: "Nominal",
+						name: "hpcxxmh.nominal"
+					},
+					{
 						label: "Keterangan",
 						name: "hpcxxmh.keterangan",
 						type: "textarea"
@@ -224,6 +240,27 @@
 						}
 					}
 					// END of validasi hpcxxmh.periode
+
+					// BEGIN of validasi hpcxxmh.is_denda
+					// is_denda = edthpcxxmh.field('hpcxxmh.is_denda').val();
+					// if(is_denda == ''){
+					// 	edthpcxxmh.field('hpcxxmh.is_denda').error( 'Wajib diisi!' );
+					// }
+					// END of validasi hpcxxmh.is_denda
+					
+					//  validasi blank
+					nominal = edthpcxxmh.field('hpcxxmh.nominal').val();
+					if(nominal != ''){
+						// validasi min atau max angka
+						if(nominal <= 0 ){
+							edthpcxxmh.field('hpcxxmh.nominal').error( 'Inputan harus > 0' );
+						}
+						
+						// validasi angka
+						if(isNaN(nominal) ){
+							edthpcxxmh.field('hpcxxmh.nominal').error( 'Inputan harus berupa Angka!' );
+						}
+					}
 				}
 				
 				if ( edthpcxxmh.inError() ) {
@@ -256,7 +293,7 @@
 							if (data == 1){
 								return 'Penambah';
 							}else if(data == 2){
-								return 'Penguran';
+								return 'Pengurang';
 							}else{
 								return '<span class="text-danger">Invalid Data</span>';
 							}
@@ -265,6 +302,18 @@
 					{ data: "hpcxxmh.periode" },
 					{ 
 						data: "hpcxxmh.is_fix" ,
+						render: function (data){
+							if (data == 0){
+								return 'Tidak';
+							}else if(data == 1){
+								return 'Ya';
+							}else{
+								return '<span class="text-danger">Invalid Data</span>';
+							}
+						}
+					},
+					{ 
+						data: "hpcxxmh.is_denda" ,
 						render: function (data){
 							if (data == 0){
 								return 'Tidak';

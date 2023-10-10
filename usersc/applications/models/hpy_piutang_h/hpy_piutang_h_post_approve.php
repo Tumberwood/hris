@@ -26,7 +26,8 @@
 			->query('select', 'hpy_piutang_h' )
 			->get([
 					'id_hemxxmh',
-					'jenis',
+					'id_hpcxxmh',
+					'keterangan',
 					'cicilan_per_bulan',
 					'cicilan_terakhir',
 					'tanggal_mulai',
@@ -45,7 +46,8 @@
 			$qi_hpy_piutang_d = $db
 				->query('insert', 'hpy_piutang_d')
 				->set('id_hemxxmh',$rs_piutang['id_hemxxmh'])
-				->set('jenis',$rs_piutang['jenis'])
+				->set('id_hpcxxmh',$rs_piutang['id_hpcxxmh'])
+				->set('keterangan',$rs_piutang['keterangan'])
 				->set('nominal',$rs_piutang['cicilan_per_bulan'])
 				->set('is_approve', 1)
 				->set('tanggal',$tanggal)
@@ -55,7 +57,8 @@
 			$qi_hpy_piutang_d = $db
 				->query('insert', 'hpy_piutang_d')
 				->set('id_hemxxmh',$rs_piutang['id_hemxxmh'])
-				->set('jenis',$rs_piutang['jenis'])
+				->set('id_hpcxxmh',$rs_piutang['id_hpcxxmh'])
+				->set('keterangan',$rs_piutang['keterangan'])
 				->set('nominal',$rs_piutang['cicilan_terakhir'])
 				->set('is_approve', 1)
 				->set('tanggal',$rs_piutang['tanggal_akhir'])
@@ -64,7 +67,8 @@
 			$qi_hpy_piutang_d = $db
 				->query('insert', 'hpy_piutang_d')
 				->set('id_hemxxmh',$rs_piutang['id_hemxxmh'])
-				->set('jenis',$rs_piutang['jenis'])
+				->set('id_hpcxxmh',$rs_piutang['id_hpcxxmh'])
+				->set('keterangan',$rs_piutang['keterangan'])
 				->set('nominal',$rs_piutang['cicilan_per_bulan'])
 				->set('is_approve', 1)
 				->set('tanggal',$rs_piutang['tanggal_akhir'])

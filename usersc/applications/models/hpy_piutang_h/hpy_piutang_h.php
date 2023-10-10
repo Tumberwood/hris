@@ -24,6 +24,8 @@
 			Field::inst( 'hpy_piutang_h.id' ),
 			Field::inst( 'hpy_piutang_h.id_hemxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hpy_piutang_h.id_hpcxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hpy_piutang_h.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);
@@ -44,7 +46,6 @@
 				->setValue($_SESSION['user']),
 			Field::inst( 'hpy_piutang_h.is_approve' ),
 			Field::inst( 'hpy_piutang_h.is_defaultprogram' ),
-			Field::inst( 'hpy_piutang_h.jenis' ),
 			Field::inst( 'hpy_piutang_h.nominal' ),
 			Field::inst( 'hpy_piutang_h.tenor' ),
 			Field::inst( 'hpy_piutang_h.cicilan_per_bulan' ),
@@ -61,6 +62,7 @@
 					'from' => 'd M Y',
 					'to' =>   'Y-m-d'
 				) ),
+			Field::inst( 'hpcxxmh.nama' ),
 			Field::inst( 'hpy_piutang_h.tanggal_akhir' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === '0000-00-00' || $val === null){
@@ -77,6 +79,7 @@
 			Field::inst( 'concat(hemxxmh.kode, " - ", hemxxmh.nama, " - ", hetxxmh.nama) as hemxxmh_data' )
 		)
 		->leftJoin( 'hemxxmh','hemxxmh.id','=','hpy_piutang_h.id_hemxxmh' )
+		->leftJoin( 'hpcxxmh','hpcxxmh.id','=','hpy_piutang_h.id_hpcxxmh' )
 		->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
 		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
 		;
