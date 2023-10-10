@@ -243,6 +243,12 @@
                         $tanggaljam_akhir           = $jadwal['tanggaljam_akhir'];
                         $tanggaljam_akhir_t2        = $jadwal['tanggaljam_akhir_t2'];
 
+                        // BEGIN untuk keperluan toleransi terlambat
+                        $tanggaljam_akhir_min1  = $jadwal['tanggaljam_akhir'];
+                        $tanggaljam_akhir_min1  = new Carbon($tanggaljam_akhir_min1);
+                        $tanggaljam_akhir_min1  = $tanggaljam_akhir_min1->subMinutes(60);
+                        // END untuk keperluan toleransi terlambat
+
                         // add by Ferry untuk is_makan akhir t2 - 1 jam
                         $akhir_t2_min_1jam          = new DateTime($tanggaljam_akhir_t2);
                         $akhir_t2_min_1jam->modify('-1 hour');
@@ -570,6 +576,22 @@
                             // print_r($rs_htlxxrh_dinas_out);
                             
                             $is_early_pot = 0;
+
+                            //Select Grup Shift
+                            $qs_grup = $db
+                            ->raw()
+                            ->bind(':id_hemxxmh', $id_hemxxmh)
+                            ->exec('SELECT 
+                                        a.id_hemxxmh AS id_hemxxmh,
+                                        c.jumlah_grup
+                                    from htsemtd as a 
+                                    left join htsptth c ON c.id = a.id_htsptth 
+                                    WHERE a.is_active = 1 AND c.is_active = 1 AND a.id_hemxxmh = :id_hemxxmh
+                                    group by a.id 
+                                    '
+                                    );
+                            $rs_grup = $qs_grup->fetch();
+
                             if(!empty($rs_htlxxrh_dinas_out) ){
                                 foreach ($rs_htlxxrh_dinas_out as $key => $izin_dinas_out) {
                                     $kode_izin[] = $izin_dinas_out['htlxxmh_kode'] . " [" . $izin_dinas_out['htlxxrh_kode'] . "]";
@@ -602,8 +624,19 @@
 
                                             // $pot_jam_early_cek     = 0;
                                         } else {
-                                            $karbon_co = new Carbon($clock_out);
-                                            $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
+                                            if ($rs_grup['jumlah_grup'] != 4) { // valid ini saat != 4 maka ada potongan
+                                                //jika CO < akhir istirahat maka, jam akhir - 1
+                                                if ($clock_out < $tanggaljam_akhir_istirahat) {
+                                                    $karbon_co = new Carbon($clock_out);
+                                                    $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir_min1);
+                                                } else {
+                                                    $karbon_co = new Carbon($clock_out);
+                                                    $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
+                                                }
+                                            } else {
+                                                $karbon_co = new Carbon($clock_out);
+                                                $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
+                                            }
                                         }
                                         
                                         // hitung potongan jam early
@@ -633,60 +666,32 @@
                                 if ($st_clock_out == "EARLY") {
                                     $is_early_pot = 1;
                                 }
-                                
-                                $tanggaljam_akhir_min_hour = null;
-                                $tanggaljam_akhir_hitung = null;
+
+                                // if ($id_hemxxmh == 224) {
+                                    // print_r( $id_hemxxmh.' dengan Grup = ' .$rs_grup['jumlah_grup'] . ' ;<br>');
+                                // }
+
                                 //potongan untuk early yang belum ada izin
                                 if ($is_early_pot == 1) {
                                     //cari grupnya, jika grup 4 maka valid dan tidak perlu -1
-                                    $qs_grup = $db
-			                        ->raw()
-                                        ->bind(':id_hemxxmh', $id_hemxxmh)
-                                        ->exec('SELECT 
-                                                    a.id_hemxxmh AS id_hemxxmh,
-	                                                c.jumlah_grup
-                                                from htsemtd as a 
-                                                left join htsptth c ON c.id = a.id_htsptth 
-                                                WHERE a.is_active = 1 AND c.is_active = 1 AND a.id_hemxxmh = :id_hemxxmh
-                                                group by a.id 
-                                                '
-                                                );
-                                    $rs_grup = $qs_grup->fetch();
-
-                                    if (!empty($rs_grup)) {
-                                        if ($rs_grup['jumlah_grup'] != 4) { // valid ini saat != 4 maka ada potongan
-                                            //jika CO < akhir istirahat maka, jam akhir - 1
-                                            if ($clock_out < $tanggaljam_akhir_istirahat) {
-                                                
-                                                $akhir_min_1jam          = new DateTime($tanggaljam_akhir);
-                                                $akhir_min_1jam->modify('-1 hour');
-                                                $tanggaljam_akhir_min_hour = $akhir_min_1jam->format('Y-m-d H:i:s');
-                                                
-                                                $tanggaljam_akhir_hitung = $tanggaljam_akhir_min_hour;
-                                                // if ($id_hemxxmh = 224) {
-                                                //     print_r($tanggaljam_akhir_hitung);
-                                                // }
-                                                
-                                            } else { 
-                                                // jika CO > akhir istirahat, maka diff dengan jam akhir tanpa - 1
-                                                $tanggaljam_akhir_hitung = $tanggaljam_akhir;
-                                            }
-                                        // jika gumlah_
-                                        } else {
-                                            $tanggaljam_akhir_hitung = $tanggaljam_akhir;
-                                        }
-                                    }
-
                                     if ($clock_out == null) {
                                         $pot_jam_early_cek     = 0;
                                     } else {
-                                        $karbon_co = new Carbon($clock_out);
-                                        $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir_hitung);
+                                        if ($rs_grup['jumlah_grup'] != 4) { // valid ini saat != 4 maka ada potongan
+                                            //jika CO < akhir istirahat maka, jam akhir - 1
+                                            if ($clock_out < $tanggaljam_akhir_istirahat) {
+                                                $karbon_co = new Carbon($clock_out);
+                                                $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir_min1);
+                                            } else {
+                                                $karbon_co = new Carbon($clock_out);
+                                                $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
+                                            }
+                                        } else {
+                                            $karbon_co = new Carbon($clock_out);
+                                            $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
+                                        }
                                     }
                                     
-                                    // if ($id_hemxxmh = 224) {
-                                    //     print_r('Potongan diff = ' . $pot_jam_early_cek);
-                                    // }
                                     // hitung potongan jam early
                                     $pot_jam_early   = ceil($pot_jam_early_cek/60);
                                 }
