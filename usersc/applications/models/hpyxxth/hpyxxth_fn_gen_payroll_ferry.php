@@ -206,7 +206,8 @@
                      
                      -- premi absen dengan validasi jika ada izin/absen yang memotong premi maka premi absen == 0 atau hangus
                      -- revisi 2 Oct, premi absen hanya untuk organik, os tidak ada
-                    if(c.id_heyxxmh = 1, IFNULL(if(report_pot_premi >= 1, 0, premiabs), 0), 0) AS premi_abs,
+                     -- revisi 11 Oct, tri wandono tidak dapat premi absen
+                    if(a.id_hemxxmh = 67, 0, if(c.id_heyxxmh = 1, IFNULL(if(report_pot_premi >= 1, 0, premiabs), 0), 0)) AS premi_abs,
                     
                     -- hitung jkk
                     if(id_heyxxmd = 3,IFNULL((persen_jkk / 100) * gaji_bpjs,0),0) AS jkk,
