@@ -1480,6 +1480,9 @@
                             }
                         }
 
+                        if ($id_hemxxmh == 67) {
+                            $is_pot_premi = 1;
+                        }
 
                         //INSERT KE REPORT PRESENSI
                         $qi_htsprrd = $db
