@@ -1189,82 +1189,94 @@
                                 $lembur15 = 0;
                                 $lembur15_final = 0;
 
-                                // cari lembur libur, lembur2
-                                if ($row_hemxxmh['grup_hk'] == 1) { //jika 5 hk
+                                // update 11 oktober , lembur libur * 2 semua
+                                $lembur2 = $durasi_lembur_final;
+                                $lembur3 = 0;
+                                $lembur4 = 0;
 
-                                    //5 hk lembur2
-                                    if ($durasi_lembur_final > 1) {
-                                        if ($durasi_lembur_final > 8) {
-                                            $lembur2 = 8;
-                                        } else {
-                                            $lembur2 = $durasi_lembur_final;
-                                        }
-                                    } else {
-                                        $lembur2 = 0;
-                                    }
-                                    $lembur2_final = $lembur2 * 2;
+                                $lembur2_final = $lembur2 * 2;
+                                $lembur3_final = 0;
+                                $lembur4_final = 0;
 
-                                    //5 hk lembur3
-                                    if ($durasi_lembur_final > 8) {
-                                        if ($durasi_lembur_final > 9) {
-                                            $lembur3 = 1;
-                                        } else {
-                                            $lembur3 = $durasi_lembur_final - 8;
-                                        }
-                                    } else {
-                                        $lembur3 = 0;
-                                    }
-                                    $lembur3_final = $lembur3 * 3;
-
-                                    //5 hk lembur4
-                                    if ($durasi_lembur_final >= 10) {
-                                        if ($durasi_lembur_final >= 11) {
-                                            $lembur4 = 2;
-                                        } else {
-                                            $lembur4 = $durasi_lembur_final - 9;
-                                        }
-                                    } else {
-                                        $lembur4 = 0;
-                                    }
-                                    $lembur4_final = $lembur4 * 4;
-                                    
-                                } else { 
-                                    //jika 6 hk lembur2
-                                    if ($durasi_lembur_final > 1) {
-                                        if ($durasi_lembur_final > 7) {
-                                            $lembur2 = 7;
-                                        } else {
-                                            $lembur2 = $durasi_lembur_final;
-                                        }
-                                    } else {
-                                        $lembur2 = 0;
-                                    }
-                                    $lembur2_final = $lembur2 * 2;
-
-                                    //6 hk lembur3
-                                    if ($durasi_lembur_final > 7) {
-                                        if ($durasi_lembur_final > 8) {
-                                            $lembur3 = 1;
-                                        } else {
-                                            $lembur3 = $durasi_lembur_final - 7;
-                                        }
-                                    } else {
-                                        $lembur3 = 0;
-                                    }
-                                    $lembur3_final = $lembur3 * 3;
-
-                                    //6 hk lembur4
-                                    if ($durasi_lembur_final >= 9) {
-                                        if ($durasi_lembur_final >= 10) {
-                                            $lembur4 = 2;
-                                        } else {
-                                            $lembur4 = $durasi_lembur_final - 8;
-                                        }
-                                    } else {
-                                        $lembur4 = 0;
-                                    }
-                                    $lembur4_final = $lembur4 * 4;
-                                }
+                                // if ($id_hemxxmh == 67) {
+                                // } else {
+                                //     // cari lembur libur, lembur2
+                                //     if ($row_hemxxmh['grup_hk'] == 1) { //jika 5 hk
+    
+                                //         //5 hk lembur2
+                                //         if ($durasi_lembur_final > 1) {
+                                //             if ($durasi_lembur_final > 8) {
+                                //                 $lembur2 = 8;
+                                //             } else {
+                                //                 $lembur2 = $durasi_lembur_final;
+                                //             }
+                                //         } else {
+                                //             $lembur2 = 0;
+                                //         }
+                                //         $lembur2_final = $lembur2 * 2;
+    
+                                //         //5 hk lembur3
+                                //         if ($durasi_lembur_final > 8) {
+                                //             if ($durasi_lembur_final > 9) {
+                                //                 $lembur3 = 1;
+                                //             } else {
+                                //                 $lembur3 = $durasi_lembur_final - 8;
+                                //             }
+                                //         } else {
+                                //             $lembur3 = 0;
+                                //         }
+                                //         $lembur3_final = $lembur3 * 3;
+    
+                                //         //5 hk lembur4
+                                //         if ($durasi_lembur_final >= 10) {
+                                //             if ($durasi_lembur_final >= 11) {
+                                //                 $lembur4 = 2;
+                                //             } else {
+                                //                 $lembur4 = $durasi_lembur_final - 9;
+                                //             }
+                                //         } else {
+                                //             $lembur4 = 0;
+                                //         }
+                                //         $lembur4_final = $lembur4 * 4;
+                                        
+                                //     } else { 
+                                //         //jika 6 hk lembur2
+                                //         if ($durasi_lembur_final > 1) {
+                                //             if ($durasi_lembur_final > 7) {
+                                //                 $lembur2 = 7;
+                                //             } else {
+                                //                 $lembur2 = $durasi_lembur_final;
+                                //             }
+                                //         } else {
+                                //             $lembur2 = 0;
+                                //         }
+                                //         $lembur2_final = $lembur2 * 2;
+    
+                                //         //6 hk lembur3
+                                //         if ($durasi_lembur_final > 7) {
+                                //             if ($durasi_lembur_final > 8) {
+                                //                 $lembur3 = 1;
+                                //             } else {
+                                //                 $lembur3 = $durasi_lembur_final - 7;
+                                //             }
+                                //         } else {
+                                //             $lembur3 = 0;
+                                //         }
+                                //         $lembur3_final = $lembur3 * 3;
+    
+                                //         //6 hk lembur4
+                                //         if ($durasi_lembur_final >= 9) {
+                                //             if ($durasi_lembur_final >= 10) {
+                                //                 $lembur4 = 2;
+                                //             } else {
+                                //                 $lembur4 = $durasi_lembur_final - 8;
+                                //             }
+                                //         } else {
+                                //             $lembur4 = 0;
+                                //         }
+                                //         $lembur4_final = $lembur4 * 4;
+                                //     }
+                                // }
 
                             } else {
                                 // lembur 1.5 bukan libur
