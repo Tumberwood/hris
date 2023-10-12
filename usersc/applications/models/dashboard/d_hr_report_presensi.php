@@ -17,6 +17,28 @@
 	
 	$start_date = $awal->format('Y-m-d');
 
+	$qs_cek_satu = $db
+	->raw()
+	->bind(':start_date', $start_date)
+	->exec('SELECT
+				a.id_hemxxmh
+			FROM htsprrd AS a
+			WHERE a.cek = 1 AND tanggal = :start_date
+			;
+			'
+			);
+	$rs_cek_satu = $qs_cek_satu->fetch();
+
+	if ($id_hemxxmh == null) {
+		if (!empty($rs_cek_satu)) {
+			$id_hemxxmh = $rs_cek_satu['id_hemxxmh'];
+		} else {
+			$id_hemxxmh = 0;
+		}
+		
+	}
+	// print_r($id_hemxxmh);
+
 	$qs_report_presensi = $db
 		->raw()
 		->bind(':start_date', $start_date)
@@ -68,13 +90,15 @@
 		->bind(':start_date', $start_date)
 		->bind(':id_hemxxmh', $id_hemxxmh)
 		->exec('SELECT
-					concat(b.kode, " - ", b.nama) as nama,
+					concat(b.kode, " - ", b.nama, " - ", d.nama) as nama,
 					a.id_hemxxmh,
 					a.jam,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") as tanggal,
 					a.nama as mesin
 				FROM htsprtd AS a
 				LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
+				LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
+				LEFT JOIN hetxxmh AS d ON d.id = c.id_hetxxmh
 				WHERE a.tanggal BETWEEN DATE_SUB(:start_date, INTERVAL 1 DAY) AND DATE_ADD(:start_date, INTERVAL 2 DAY) AND b.id = :id_hemxxmh AND a.nama NOT IN ("makan", "istirahat", "makan manual")
 				LIMIT 5;
 				'
@@ -104,7 +128,7 @@
 		->bind(':start_date', $start_date)
 		->bind(':id_hemxxmh', $id_hemxxmh)
 		->exec('SELECT
-					concat(b.kode, " - ", b.nama) as nama,
+				concat(b.kode, " - ", b.nama) as nama,
 					a.id_hemxxmh,
 					a.jam,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") as tanggal,

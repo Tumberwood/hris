@@ -55,6 +55,8 @@
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-content">
+				<h3 class="text-center" id="nama_peg"></h3>
+				<br>
                 <div class="row">
                     <div class="col-md-6">
                         <h3 id="jadwal"></h3>
@@ -156,9 +158,10 @@
 					id_hemxxmh: id_hemxxmh
 				},
 				success: function ( json ) {
-					if(json.data.length > 0){
+					if(json.data.length > 0 && json.data[0].id_hemxxmh != null){
 						
 						$('#jadwal').text("Jadwal: " + json.data[0].st_jadwal);
+						$('#nama_peg').text(json.data2[0].nama);
 						$('#keterangan').text("Keterangan: " + json.data[0].keterangan);
 						$('#h3_riwayat').text("Riwayat Checkclock");
 
@@ -213,6 +216,10 @@
 							info: false,            // Disable "Showing X of Y entries" information
 							lengthChange: false,    // Disable "Show X entries" dropdown
 							responsive: false,
+							fixedHeader: {
+								header: false,
+								// footer: true
+							},
 							data: json.data,
 							columns: json.columns,
 							buttons: [
@@ -490,10 +497,30 @@
 			} );
 		}
 
+		function cek_satu() {
+			$.ajax( {
+				url: "../../models/dashboard/fn_cek_satu.php",
+				dataType: 'json',
+				type: 'POST',
+				data: {
+					start_date: start_date
+				},
+				success: function ( json ) {
+					if(json.data.rs_cek_satu.length > 0){
+						console.log(json.data.rs_cek_satu.id_hemxxmh);
+					}
+				}
+			} );
+		}
+
 		$(document).ready(function() {
             $('#report').hide();
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
-			
+			id_hemxxmh = $('#select_hemxxmh').val();
+			if (id_hemxxmh == null) {
+				cek_satu();
+			}
+			cek_satu();
 			// generateTable();
 
 			$("#frmhtsprrd").submit(function(e) {
