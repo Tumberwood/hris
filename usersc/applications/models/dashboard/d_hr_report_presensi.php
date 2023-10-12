@@ -22,18 +22,6 @@
 
 	$start_date = $awal->format('Y-m-d');
 
-	$qs_cek_satu = $db
-	->raw()
-	->bind(':start_date', $start_date)
-	->exec('SELECT
-				a.id_hemxxmh
-			FROM htsprrd AS a
-			WHERE a.cek = 1 AND tanggal = :start_date
-			;
-			'
-			);
-	$rs_cek_satu = $qs_cek_satu->fetch();
-
 	$qs_cek_satu_all = $db
 	->raw()
 	->bind(':start_date', $start_date)
@@ -53,7 +41,7 @@
 	}
 
 	if ($id_hemxxmh == null) {
-		if (!empty($rs_cek_satu)) {
+		if (!empty($rs_cek_satu_all)) {
 			$id_hemxxmh = $peg_cek[$counter];
 		} else {
 			$id_hemxxmh = 0;

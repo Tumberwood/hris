@@ -166,17 +166,22 @@
 				success: function ( json ) {
 					if(json.data.length > 0 && json.data[0].id_hemxxmh != null){
 						
-						// hitung counter
-						if (counter == 0) {
+						// hitung counter	
+						if (id_hemxxmh != null) {
 							$('#prevButton').hide();
-						} else {
-							$('#prevButton').show();
-						}
-						// console.log(json.data5);
-						if (counter == json.data5) {
 							$('#nextButton').hide();
 						} else {
-							$('#nextButton').show();
+							if (counter == 0) {
+								$('#prevButton').hide();
+							} else {
+								$('#prevButton').show();
+							}
+							// console.log(json.data5);
+							if (counter == json.data5) {
+								$('#nextButton').hide();
+							} else {
+								$('#nextButton').show();
+							}
 						}
 
 						$('#jadwal').text("Jadwal: " + json.data[0].st_jadwal);
@@ -526,11 +531,6 @@
 			
 			let counter = 0;
 			
-			if (counter == 0) {
-				$('#prevButton').hide();
-			} else {
-				$('#prevButton').show();
-			}
 
 			nextButton.addEventListener("click", function() {
 				counter++;
