@@ -197,36 +197,36 @@
 													<th></th>
 													<th>Total</th>
 													<th></th>
-													<th id="all_9"></th>
-													<th id="all_10"></th>
-													<th id="all_11"></th>
-													<th id="all_12"></th>
-													<th id="all_13"></th>
-													<th id="all_14"></th>
-													<th id="all_15"></th>
-													<th id="all_16"></th>
-													<th id="all_17"></th>
-													<th id="all_18"></th>
-													<th id="all_19"></th>
-													<th id="all_20"></th>
-													<th id="all_21"></th>
-													<th id="all_22"></th>
-													<th id="all_23"></th>
-													<th id="all_24"></th>
-													<th id="all_25"></th>
-													<th id="all_26"></th>
-													<th id="all_27"></th>
-													<th id="all_28"></th>
-													<th id="all_29"></th>
-													<th id="all_30"></th>
-													<th id="all_31"></th>
-													<th id="all_32"></th>
-													<th id="all_33"></th>
-													<th id="all_34"></th>
-													<th id="all_35"></th>
-													<th id="all_36"></th>
-													<th id="all_37"></th>
-													<th id="all_38"></th>
+													<th id="kbm_9"></th>
+													<th id="kbm_10"></th>
+													<th id="kbm_11"></th>
+													<th id="kbm_12"></th>
+													<th id="kbm_13"></th>
+													<th id="kbm_14"></th>
+													<th id="kbm_15"></th>
+													<th id="kbm_16"></th>
+													<th id="kbm_17"></th>
+													<th id="kbm_18"></th>
+													<th id="kbm_19"></th>
+													<th id="kbm_20"></th>
+													<th id="kbm_21"></th>
+													<th id="kbm_22"></th>
+													<th id="kbm_23"></th>
+													<th id="kbm_24"></th>
+													<th id="kbm_25"></th>
+													<th id="kbm_26"></th>
+													<th id="kbm_27"></th>
+													<th id="kbm_28"></th>
+													<th id="kbm_29"></th>
+													<th id="kbm_30"></th>
+													<th id="kbm_31"></th>
+													<th id="kbm_32"></th>
+													<th id="kbm_33"></th>
+													<th id="kbm_34"></th>
+													<th id="kbm_35"></th>
+													<th id="kbm_36"></th>
+													<th id="kbm_37"></th>
+													<th id="kbm_38"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -292,36 +292,36 @@
 													<th></th>
 													<th>Total</th>
 													<th></th>
-													<th id="all_9"></th>
-													<th id="all_10"></th>
-													<th id="all_11"></th>
-													<th id="all_12"></th>
-													<th id="all_13"></th>
-													<th id="all_14"></th>
-													<th id="all_15"></th>
-													<th id="all_16"></th>
-													<th id="all_17"></th>
-													<th id="all_18"></th>
-													<th id="all_19"></th>
-													<th id="all_20"></th>
-													<th id="all_21"></th>
-													<th id="all_22"></th>
-													<th id="all_23"></th>
-													<th id="all_24"></th>
-													<th id="all_25"></th>
-													<th id="all_26"></th>
-													<th id="all_27"></th>
-													<th id="all_28"></th>
-													<th id="all_29"></th>
-													<th id="all_30"></th>
-													<th id="all_31"></th>
-													<th id="all_32"></th>
-													<th id="all_33"></th>
-													<th id="all_34"></th>
-													<th id="all_35"></th>
-													<th id="all_36"></th>
-													<th id="all_37"></th>
-													<th id="all_38"></th>
+													<th id="karyawan_9"></th>
+													<th id="karyawan_10"></th>
+													<th id="karyawan_11"></th>
+													<th id="karyawan_12"></th>
+													<th id="karyawan_13"></th>
+													<th id="karyawan_14"></th>
+													<th id="karyawan_15"></th>
+													<th id="karyawan_16"></th>
+													<th id="karyawan_17"></th>
+													<th id="karyawan_18"></th>
+													<th id="karyawan_19"></th>
+													<th id="karyawan_20"></th>
+													<th id="karyawan_21"></th>
+													<th id="karyawan_22"></th>
+													<th id="karyawan_23"></th>
+													<th id="karyawan_24"></th>
+													<th id="karyawan_25"></th>
+													<th id="karyawan_26"></th>
+													<th id="karyawan_27"></th>
+													<th id="karyawan_28"></th>
+													<th id="karyawan_29"></th>
+													<th id="karyawan_30"></th>
+													<th id="karyawan_31"></th>
+													<th id="karyawan_32"></th>
+													<th id="karyawan_33"></th>
+													<th id="karyawan_34"></th>
+													<th id="karyawan_35"></th>
+													<th id="karyawan_36"></th>
+													<th id="karyawan_37"></th>
+													<th id="karyawan_38"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -387,36 +387,36 @@
 													<th></th>
 													<th>Total</th>
 													<th></th>
-													<th id="all_9"></th>
-													<th id="all_10"></th>
-													<th id="all_11"></th>
-													<th id="all_12"></th>
-													<th id="all_13"></th>
-													<th id="all_14"></th>
-													<th id="all_15"></th>
-													<th id="all_16"></th>
-													<th id="all_17"></th>
-													<th id="all_18"></th>
-													<th id="all_19"></th>
-													<th id="all_20"></th>
-													<th id="all_21"></th>
-													<th id="all_22"></th>
-													<th id="all_23"></th>
-													<th id="all_24"></th>
-													<th id="all_25"></th>
-													<th id="all_26"></th>
-													<th id="all_27"></th>
-													<th id="all_28"></th>
-													<th id="all_29"></th>
-													<th id="all_30"></th>
-													<th id="all_31"></th>
-													<th id="all_32"></th>
-													<th id="all_33"></th>
-													<th id="all_34"></th>
-													<th id="all_35"></th>
-													<th id="all_36"></th>
-													<th id="all_37"></th>
-													<th id="all_38"></th>
+													<th id="kmj_9"></th>
+													<th id="kmj_10"></th>
+													<th id="kmj_11"></th>
+													<th id="kmj_12"></th>
+													<th id="kmj_13"></th>
+													<th id="kmj_14"></th>
+													<th id="kmj_15"></th>
+													<th id="kmj_16"></th>
+													<th id="kmj_17"></th>
+													<th id="kmj_18"></th>
+													<th id="kmj_19"></th>
+													<th id="kmj_20"></th>
+													<th id="kmj_21"></th>
+													<th id="kmj_22"></th>
+													<th id="kmj_23"></th>
+													<th id="kmj_24"></th>
+													<th id="kmj_25"></th>
+													<th id="kmj_26"></th>
+													<th id="kmj_27"></th>
+													<th id="kmj_28"></th>
+													<th id="kmj_29"></th>
+													<th id="kmj_30"></th>
+													<th id="kmj_31"></th>
+													<th id="kmj_32"></th>
+													<th id="kmj_33"></th>
+													<th id="kmj_34"></th>
+													<th id="kmj_35"></th>
+													<th id="kmj_36"></th>
+													<th id="kmj_37"></th>
+													<th id="kmj_38"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -482,36 +482,36 @@
 													<th></th>
 													<th>Total</th>
 													<th></th>
-													<th id="all_9"></th>
-													<th id="all_10"></th>
-													<th id="all_11"></th>
-													<th id="all_12"></th>
-													<th id="all_13"></th>
-													<th id="all_14"></th>
-													<th id="all_15"></th>
-													<th id="all_16"></th>
-													<th id="all_17"></th>
-													<th id="all_18"></th>
-													<th id="all_19"></th>
-													<th id="all_20"></th>
-													<th id="all_21"></th>
-													<th id="all_22"></th>
-													<th id="all_23"></th>
-													<th id="all_24"></th>
-													<th id="all_25"></th>
-													<th id="all_26"></th>
-													<th id="all_27"></th>
-													<th id="all_28"></th>
-													<th id="all_29"></th>
-													<th id="all_30"></th>
-													<th id="all_31"></th>
-													<th id="all_32"></th>
-													<th id="all_33"></th>
-													<th id="all_34"></th>
-													<th id="all_35"></th>
-													<th id="all_36"></th>
-													<th id="all_37"></th>
-													<th id="all_38"></th>
+													<th id="freelance_9"></th>
+													<th id="freelance_10"></th>
+													<th id="freelance_11"></th>
+													<th id="freelance_12"></th>
+													<th id="freelance_13"></th>
+													<th id="freelance_14"></th>
+													<th id="freelance_15"></th>
+													<th id="freelance_16"></th>
+													<th id="freelance_17"></th>
+													<th id="freelance_18"></th>
+													<th id="freelance_19"></th>
+													<th id="freelance_20"></th>
+													<th id="freelance_21"></th>
+													<th id="freelance_22"></th>
+													<th id="freelance_23"></th>
+													<th id="freelance_24"></th>
+													<th id="freelance_25"></th>
+													<th id="freelance_26"></th>
+													<th id="freelance_27"></th>
+													<th id="freelance_28"></th>
+													<th id="freelance_29"></th>
+													<th id="freelance_30"></th>
+													<th id="freelance_31"></th>
+													<th id="freelance_32"></th>
+													<th id="freelance_33"></th>
+													<th id="freelance_34"></th>
+													<th id="freelance_35"></th>
+													<th id="freelance_36"></th>
+													<th id="freelance_37"></th>
+													<th id="freelance_38"></th>
 												</tr>
 											</tfoot>
 										</table>
