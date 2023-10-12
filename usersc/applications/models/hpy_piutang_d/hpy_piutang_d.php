@@ -47,6 +47,7 @@
 			Field::inst( 'hpy_piutang_d.is_approve' ),
 			Field::inst( 'hpy_piutang_d.is_defaultprogram' ),
 			Field::inst( 'hpy_piutang_d.nominal' ),
+			Field::inst( 'hpy_piutang_d.plus_min' ),
 			Field::inst( 'hpy_piutang_d.tanggal' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === '0000-00-00' || $val === null){

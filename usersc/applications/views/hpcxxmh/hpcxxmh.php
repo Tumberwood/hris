@@ -27,7 +27,7 @@
                                 <th>Jenis</th>
                                 <th>Periode</th>
                                 <th>Komp Tetap</th>
-                                <th>Denda</th>
+                                <th>Lain-lain</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -121,8 +121,8 @@
 						]
 					},
 					{
-						label: "Denda",
-						name: "hpcxxmh.is_denda",
+						label: "Lain-lain",
+						name: "hpcxxmh.is_lain",
 						type: "select",
 						placeholder : "Select",
 						options: [
@@ -241,12 +241,12 @@
 					}
 					// END of validasi hpcxxmh.periode
 
-					// BEGIN of validasi hpcxxmh.is_denda
-					// is_denda = edthpcxxmh.field('hpcxxmh.is_denda').val();
-					// if(is_denda == ''){
-					// 	edthpcxxmh.field('hpcxxmh.is_denda').error( 'Wajib diisi!' );
+					// BEGIN of validasi hpcxxmh.is_lain
+					// is_lain = edthpcxxmh.field('hpcxxmh.is_lain').val();
+					// if(is_lain == ''){
+					// 	edthpcxxmh.field('hpcxxmh.is_lain').error( 'Wajib diisi!' );
 					// }
-					// END of validasi hpcxxmh.is_denda
+					// END of validasi hpcxxmh.is_lain
 					
 					//  validasi blank
 					nominal = edthpcxxmh.field('hpcxxmh.nominal').val();
@@ -313,7 +313,7 @@
 						}
 					},
 					{ 
-						data: "hpcxxmh.is_denda" ,
+						data: "hpcxxmh.is_lain" ,
 						render: function (data){
 							if (data == 0){
 								return 'Tidak';

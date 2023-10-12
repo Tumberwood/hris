@@ -46,7 +46,7 @@
 			Field::inst( 'hpcxxmh.jenis' ),
 			Field::inst( 'hpcxxmh.periode' ),
 			Field::inst( 'hpcxxmh.nominal' ),
-			Field::inst( 'hpcxxmh.is_denda' ),
+			Field::inst( 'hpcxxmh.is_lain' ),
 			Field::inst( 'hpcxxmh.is_fix' )
 		);
 	

@@ -22,10 +22,20 @@
         $id_hpcxxmh_old = 0;
     }
 
-    if(isset($_GET['is_denda'])){
-        $is_denda = $_GET['is_denda'];
+    if(isset($_GET['is_lain'])){
+        $is_lain = $_GET['is_lain'];
+        $op_lain ='=';
     } else {
-        $is_denda = 0;
+        $is_lain = -9;
+        $op_lain = '<>';
+    }
+    
+    if(isset($_GET['is_jenis'])){
+        $is_jenis = $_GET['is_jenis'];
+        $op_jenis ='=';
+    } else {
+        $is_jenis = -9;
+        $op_jenis = '<>';
     }
 
     // BEGIN query options self.
@@ -56,7 +66,8 @@
         ])
         ->where('hpcxxmh.is_active',1)
         ->where('hpcxxmh.id', $id_hpcxxmh_old, '<>' )
-        ->where('hpcxxmh.is_denda', $is_denda)
+        ->where('hpcxxmh.is_lain', $is_lain, $op_lain)
+        ->where('hpcxxmh.jenis', $is_jenis, $op_jenis)
         ->where( function ( $r ) {
             $q = $_GET['search'];
             $r
@@ -84,7 +95,8 @@
     $morePages = $endCount > $c_rs_opt;
     // END finalisasi paginasi select2
     $data = array(
-        'id_hpcxxmh_old'=> $id_hpcxxmh_old
+        'id_hpcxxmh_old'=> $id_hpcxxmh_old,
+        'jenis'=> $_GET['is_jenis'],
     );
     // tampilkan results
     require_once( "../../../../usersc/helpers/fn_ajax_results.php" );

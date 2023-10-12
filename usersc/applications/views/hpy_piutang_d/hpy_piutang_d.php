@@ -25,6 +25,7 @@
                                 <th>Nama</th>
                                 <th>Jenis</th>
                                 <th>Nominal</th>
+                                <th>Perhitungan</th>
                                 <th>Tanggal</th>
                                 <th>Keterangan</th>
                                 <th>Approval</th>
@@ -51,6 +52,8 @@
 		var edthpy_piutang_d, tblhpy_piutang_d, show_inactive_status_hpy_piutang_d = 0, id_hpy_piutang_d;
 		var id_hemxxmh_old = 0;
 		var id_hpcxxmh_old = 0;
+		var is_jenis = 0;
+		var plus_min = 0;
 		is_need_approval = 1;
 		// ------------- end of default variable
 		
@@ -121,9 +124,18 @@
 							},
 						}
 					},
-					
 					{
-						label: "jenis <sup class='text-danger'>*<sup>",
+						label: "Perhitungan <sup class='text-danger'>*<sup>",
+						name: "hpy_piutang_d.plus_min",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Penambah", "value": "Penambah" },
+							{ "label": "Pengurang", "value": "Pengurang" }
+						]
+					},
+					{
+						label: "Jenis <sup class='text-danger'>*<sup>",
 						name: "hpy_piutang_d.id_hpcxxmh",
 						type: "select2",
 						opts: {
@@ -136,7 +148,8 @@
 								data: function (params) {
 									var query = {
 										id_hpcxxmh_old: id_hpcxxmh_old,
-										is_denda: 1,
+										is_lain: 1,
+										is_jenis: is_jenis,
 										search: params.term || '',
 										page: params.page || 1
 									}
@@ -160,7 +173,8 @@
 						}
 					},	{
 						label: "Nominal<sup class='text-danger'>*<sup>",
-						name: "hpy_piutang_d.nominal"
+						name: "hpy_piutang_d.nominal",
+						fieldInfo: "Jika Pengurang, Maka Tidak Perlu menuliskan Minus (-)"
 					}, 	{
 						label: "Mulai Tanggal<sup class='text-danger'>*<sup>",
 						name: "hpy_piutang_d.tanggal",
@@ -195,6 +209,21 @@
 				$(".modal-dialog").addClass("modal-lg");
 			});
 
+			edthpy_piutang_d.dependent( 'hpy_piutang_d.plus_min', function ( val, data, callback ) {
+				if (val == "Penambah") {
+					if (val != plus_min) {
+						edthpy_piutang_d.field('hpy_piutang_d.id_hpcxxmh').val('');
+					}
+					is_jenis = 1;
+				} else {
+					if (val != plus_min) {
+						edthpy_piutang_d.field('hpy_piutang_d.id_hpcxxmh').val('');
+					}
+					is_jenis = 2;
+				}
+				return {}
+			}, {event: 'keyup change'});
+
             edthpy_piutang_d.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					
@@ -225,6 +254,13 @@
 						edthpy_piutang_d.field('hpy_piutang_d.tanggal').error( 'Wajib diisi!' );
 					}
 					// END of validasi hpy_piutang_d.tanggal 
+					
+					// BEGIN of validasi hpy_piutang_d.plus_min 
+					plus_min = edthpy_piutang_d.field('hpy_piutang_d.plus_min').val();
+					if(!plus_min || plus_min == ''){
+						edthpy_piutang_d.field('hpy_piutang_d.plus_min').error( 'Wajib diisi!' );
+					}
+					// END of validasi hpy_piutang_d.plus_min 
 					
 					// BEGIN of validasi hpy_piutang_d.nominal 
 					nominal = edthpy_piutang_d.field('hpy_piutang_d.nominal').val();
@@ -271,6 +307,7 @@
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right" 
 					},
+					{ data: "hpy_piutang_d.plus_min" },
 					{ data: "hpy_piutang_d.tanggal" },
 					{ data: "hpy_piutang_d.keterangan" },
 					{ 
@@ -326,6 +363,7 @@
 				is_nextprocess = hpy_piutang_d_data.is_nextprocess;
 				is_jurnal      = hpy_piutang_d_data.is_jurnal;
 				is_active      = hpy_piutang_d_data.is_active;
+				plus_min      = hpy_piutang_d_data.plus_min;
 				id_hemxxmh_old      = hpy_piutang_d_data.id_hemxxmh;
 				id_hpcxxmh_old      = hpy_piutang_d_data.id_hpcxxmh;
 
@@ -337,6 +375,7 @@
 				// reload dipanggil di function CekDeselectHeader
 				id_hpy_piutang_d = '';
 				id_hemxxmh_old = 0;
+				plus_min = 0;
 				id_hpcxxmh_old = 0;
 
 				// atur hak akses
