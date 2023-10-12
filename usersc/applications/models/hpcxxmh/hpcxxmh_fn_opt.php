@@ -95,8 +95,7 @@
     $morePages = $endCount > $c_rs_opt;
     // END finalisasi paginasi select2
     $data = array(
-        'id_hpcxxmh_old'=> $id_hpcxxmh_old,
-        'jenis'=> $_GET['is_jenis'],
+        'id_hpcxxmh_old'=> $id_hpcxxmh_old
     );
     // tampilkan results
     require_once( "../../../../usersc/helpers/fn_ajax_results.php" );
