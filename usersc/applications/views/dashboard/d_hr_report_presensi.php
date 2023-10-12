@@ -82,8 +82,13 @@
 						<div id="tabel_makan"></div>
 					</div>
 				</div>
+				<div class="d-flex justify-content-between">
+					<button id="prevButton" class="btn btn-primary">Previous</button>
+					<button id="nextButton" class="btn btn-primary">Next</button>
+				</div>
 			</div>
 		</div>
+    </div>
 	</div>
 </div>
 
@@ -147,7 +152,7 @@
 		});
         // END select2 init
 
-		function generateTable() {
+		function generateTable(counter) {
             $('#report').show();
 			$.ajax( {
 				url: "../../models/dashboard/d_hr_report_presensi.php",
@@ -155,11 +160,25 @@
 				type: 'POST',
 				data: {
 					start_date: start_date,
+					counter: counter,
 					id_hemxxmh: id_hemxxmh
 				},
 				success: function ( json ) {
 					if(json.data.length > 0 && json.data[0].id_hemxxmh != null){
 						
+						// hitung counter
+						if (counter == 0) {
+							$('#prevButton').hide();
+						} else {
+							$('#prevButton').show();
+						}
+						// console.log(json.data5);
+						if (counter == json.data5) {
+							$('#nextButton').hide();
+						} else {
+							$('#nextButton').show();
+						}
+
 						$('#jadwal').text("Jadwal: " + json.data[0].st_jadwal);
 						$('#nama_peg').text(json.data2[0].nama);
 						$('#keterangan').text("Keterangan: " + json.data[0].keterangan);
@@ -497,55 +516,56 @@
 			} );
 		}
 
-		function cek_satu() {
-			$.ajax( {
-				url: "../../models/dashboard/fn_cek_satu.php",
-				dataType: 'json',
-				type: 'POST',
-				data: {
-					start_date: start_date
-				},
-				success: function ( json ) {
-					if(json.data.rs_cek_satu.length > 0){
-						console.log(json.data.rs_cek_satu.id_hemxxmh);
-					}
-				}
-			} );
-		}
-
 		$(document).ready(function() {
+			const prevButton = document.getElementById("prevButton");
+        	const nextButton = document.getElementById("nextButton");
+
             $('#report').hide();
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			id_hemxxmh = $('#select_hemxxmh').val();
-			if (id_hemxxmh == null) {
-				cek_satu();
+			
+			let counter = 0;
+			
+			if (counter == 0) {
+				$('#prevButton').hide();
+			} else {
+				$('#prevButton').show();
 			}
-			cek_satu();
-			// generateTable();
+
+			nextButton.addEventListener("click", function() {
+				counter++;
+				$("#frmhtsprrd").submit();
+			});
+
+			prevButton.addEventListener("click", function() {
+				counter--;
+				$("#frmhtsprrd").submit();
+			});
 
 			$("#frmhtsprrd").submit(function(e) {
 				e.preventDefault();
 			}).validate({
 				rules: {
-					
+	
 				},
 				submitHandler: function(frmhtsprrd) {
-					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
+					start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 					id_hemxxmh = $('#select_hemxxmh').val();
-                    
+
 					notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
-					},{
+					}, {
 						z_index: 9999,
 						allow_dismiss: false,
 						type: 'info',
 						delay: 0
 					});
-					// tblhtsprrd.destroy();
-					generateTable();
-					return false; 
+
+					generateTable(counter);
+					return false;
 				}
 			});
+
 			
 			
 		} );// end of document.ready

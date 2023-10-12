@@ -13,8 +13,13 @@
 
 		
 	$awal 			= new Carbon($_POST['start_date']);
-	$id_hemxxmh			= $_POST['id_hemxxmh'];
-	
+	$id_hemxxmh		= $_POST['id_hemxxmh'];
+	$counter		= $_POST['counter'];
+
+	if ($counter == null) {
+		$counter = 0;
+	}
+
 	$start_date = $awal->format('Y-m-d');
 
 	$qs_cek_satu = $db
@@ -29,9 +34,27 @@
 			);
 	$rs_cek_satu = $qs_cek_satu->fetch();
 
+	$qs_cek_satu_all = $db
+	->raw()
+	->bind(':start_date', $start_date)
+	->exec('SELECT
+				a.id_hemxxmh
+			FROM htsprrd AS a
+			WHERE a.cek = 1 AND tanggal = :start_date
+			;
+			'
+			);
+	$rs_cek_satu_all = $qs_cek_satu_all->fetchAll();
+	$c_cek_satu = count($rs_cek_satu_all) - 1;
+
+	$peg_cek = array();
+	foreach ($rs_cek_satu_all as $key => $cek_satu) {
+		$peg_cek[] = $cek_satu['id_hemxxmh'];
+	}
+
 	if ($id_hemxxmh == null) {
 		if (!empty($rs_cek_satu)) {
-			$id_hemxxmh = $rs_cek_satu['id_hemxxmh'];
+			$id_hemxxmh = $peg_cek[$counter];
 		} else {
 			$id_hemxxmh = 0;
 		}
@@ -148,6 +171,7 @@
 		$results['data2'] = $rs_riwayat_ceklok;
 		$results['data3'] = $rs_makan;
 		$results['data4'] = $rs_istirahat;
+		$results['data5'] = $c_cek_satu;
 		
 		// harus urut sama tablenya
 		$results['columns'] = [
