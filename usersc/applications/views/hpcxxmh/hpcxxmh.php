@@ -252,7 +252,7 @@
 					nominal = edthpcxxmh.field('hpcxxmh.nominal').val();
 					if(nominal != ''){
 						// validasi min atau max angka
-						if(nominal <= 0 ){
+						if(nominal < 0 ){
 							edthpcxxmh.field('hpcxxmh.nominal').error( 'Inputan harus > 0' );
 						}
 						
