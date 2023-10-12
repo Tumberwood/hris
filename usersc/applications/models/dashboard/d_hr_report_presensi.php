@@ -68,7 +68,7 @@
 					a.st_jadwal,
 					jumlah_grup,
 					a.pot_jam AS potong,
-					ifnull(a.durasi_lembur_istirahat1 + a.durasi_lembur_istirahat2 + a.durasi_lembur_istirahat3,0) AS ti,
+					ifnull(a.pot_ti,0) AS ti,
 					a.is_makan AS makan,
 					a.durasi_lembur_total_jam as lembur,
 					a.lembur15,
