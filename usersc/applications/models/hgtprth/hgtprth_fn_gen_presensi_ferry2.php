@@ -1183,20 +1183,105 @@
                         $lembur4_final = 0;
                         $rp_lembur4 = 0;
 
+                        //flag libur
+                        $is_tgl_merah = 0;
+
                         if ($durasi_lembur_final > 0) {
                             //Cari Lembur 1.5 
                             if ($durasi_lembur_libur_jam > 0) { //jika ada lembur libur
-                                $lembur15 = 0;
-                                $lembur15_final = 0;
 
-                                // update 11 oktober , lembur libur * 2 semua
-                                $lembur2 = $durasi_lembur_final;
-                                $lembur3 = 0;
-                                $lembur4 = 0;
+                                //flag libur
+                                $is_tgl_merah = 0;
 
-                                $lembur2_final = $lembur2 * 2;
-                                $lembur3_final = 0;
-                                $lembur4_final = 0;
+                                // cari apakah today is hari libur atau tanggal merah
+                                $qs_holiday = $db
+                                    ->query('select', 'hthhdth' )
+                                    ->get(['id'] )
+                                    ->where('tanggal', $tanggal )
+                                    ->exec();
+                                $rs_holiday = $qs_holiday->fetch();
+
+                                // cari minggu
+                                $qs_minggu = $db
+                                    ->raw()
+                                    ->bind(':tanggal', $tanggal)
+                                    ->exec('SELECT
+                                            if(DAYNAME(:tanggal) = "Sunday", 1, 0) AS is_minggu;
+                                            '
+                                            );
+                                $rs_minggu = $qs_minggu->fetch();
+
+                                if (!empty($rs_holiday)) {
+                                    $is_tgl_merah = 1;
+                                }
+                                
+                                if ($rs_minggu['is_minggu'] == 1) {
+                                    $is_tgl_merah = 1;
+                                }
+                                
+                                if ($id_shift == 1) {
+                                    if ($is_tgl_merah == 1) {
+                                        $lembur15 = 0;
+                                        $lembur15_final = 0;
+
+                                        // update 12 oktober
+
+                                        // lembur 2 libur
+                                        if ($durasi_lembur_final > 1 && $durasi_lembur_final <= 7 || $durasi_lembur_final >= 7) {
+                                            if ($durasi_lembur_final > 7) {
+                                                $lembur2 = 7;
+                                            } else {
+                                                $lembur2 = $durasi_lembur_final;
+                                            }
+                                        } else {
+                                            $lembur2 = 0;
+                                        }
+
+                                        // lembur3
+                                        if ($durasi_lembur_final >= 8) {
+                                            $lembur3 = $durasi_lembur_final - 7;
+                                        } else {
+                                            $lembur3 = 0;
+                                        }
+                                        $lembur4 = 0;
+
+                                        $lembur2_final = $lembur2 * 2;
+                                        $lembur3_final = 0;
+                                        $lembur4_final = 0;
+                                    } else {
+                                        if ($durasi_lembur_final > 1) {
+                                            $lembur15 = 1;
+                                        } else {
+                                            $lembur15 = $durasi_lembur_final;
+                                        }
+
+                                        if ($durasi_lembur_final > 1 && $durasi_lembur_final <= 7 || $durasi_lembur_final >= 7) {
+                                            if ($durasi_lembur_final > 7) {
+                                                $lembur2 = 7;
+                                            } else {
+                                                $lembur2 = $durasi_lembur_final - 1;
+                                            }
+                                        } else {
+                                            $lembur2 = 0;
+                                        }
+                                        
+                                        // lembur3
+                                        if ($durasi_lembur_final >= 8) {
+                                            $lembur3 = $durasi_lembur_final - 8;
+                                        } else {
+                                            $lembur3 = 0;
+                                        }
+                                        
+                                        $lembur1_final = $lembur15 * 1.5;
+                                        $lembur2_final = $lembur2 * 2;
+                                        $lembur3_final = $lembur3 * 3;
+                                    }
+                                    
+                                } else {
+                                    // untuk yang lembur libur dan dia tidak off maka di 0 kan dan diberi cek = 1
+                                    $cek = 1;
+                                    $durasi_lembur_libur_jam = 0;
+                                }
 
                                 // if ($id_hemxxmh == 67) {
                                 // } else {
