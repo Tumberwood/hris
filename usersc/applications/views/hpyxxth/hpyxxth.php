@@ -884,6 +884,9 @@
 				},
 				order: [[ 2, "desc" ]],
 				responsive: false,
+				fixedColumns:   {
+					left: 1
+				},
 				// scrollX: true,
 				columns: [
 					{ data: "hpyemtd.id",visible:false },
@@ -1195,6 +1198,9 @@
 				order: [[ 2, "desc" ]],
 				responsive: false,
 				// scrollX: true,
+				fixedColumns:   {
+					left: 1
+				},
 				columns: [
 					{ data: "hpyemtd.id",visible:false },
 					{ data: "hpyemtd.id_hpyxxth",visible:false },
@@ -1505,6 +1511,9 @@
 				order: [[ 2, "desc" ]],
 				responsive: false,
 				// scrollX: true,
+				fixedColumns:   {
+					left: 1
+				},
 				columns: [
 					{ data: "hpyemtd.id",visible:false },
 					{ data: "hpyemtd.id_hpyxxth",visible:false },
@@ -1815,6 +1824,9 @@
 				order: [[ 2, "desc" ]],
 				responsive: false,
 				// scrollX: true,
+				fixedColumns:   {
+					left: 1
+				},
 				columns: [
 					{ data: "hpyemtd.id",visible:false },
 					{ data: "hpyemtd.id_hpyxxth",visible:false },
@@ -2125,6 +2137,9 @@
 				order: [[ 2, "desc" ]],
 				responsive: false,
 				// scrollX: true,
+				fixedColumns:   {
+					left: 1
+				},
 				columns: [
 					{ data: "hpyemtd.id",visible:false },
 					{ data: "hpyemtd.id_hpyxxth",visible:false },
