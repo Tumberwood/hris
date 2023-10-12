@@ -148,10 +148,11 @@
                 pot_pinjaman,
                 pot_klaim,
                 pot_denda_apd,
+                pot_pph21,
                 gaji_bersih,
                 bulat,
                 gaji_terima,
-                bonus_lain
+                pendapatan_lain
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
@@ -207,7 +208,7 @@
                      -- premi absen dengan validasi jika ada izin/absen yang memotong premi maka premi absen == 0 atau hangus
                      -- revisi 2 Oct, premi absen hanya untuk organik, os tidak ada
                      -- revisi 11 Oct, tri wandono tidak dapat premi absen
-                    if(a.id_hemxxmh = 67, 0, if(c.id_heyxxmh = 1, IFNULL(if(report_pot_premi >= 1, 0, premiabs), 0), 0)) AS premi_abs,
+                   if(a.id_hemxxmh = 67, 0, if(c.id_heyxxmh = 1, IFNULL(if(report_pot_premi >= 1, 0, premiabs), 0), 0)) AS premi_abs,
                     
                     -- hitung jkk
                     if(id_heyxxmd = 3,IFNULL((persen_jkk / 100) * gaji_bpjs,0),0) AS jkk,
@@ -250,9 +251,9 @@
                     IFNULL(nominal_pinjaman,0) AS pot_pinjaman,
                     IFNULL(nominal_klaim,0) AS pot_klaim,
                     IFNULL(nominal_denda_apd,0) AS pot_denda_apd,
+                    IFNULL(nominal_pph21,0) AS pot_pph21,
+                    IFNULL(nominal_pendapatan_lain,0) AS pendapatan_lain
                     
-                    -- bonus lain
-                    ifnull(nominal_bonus_lain,0) AS bonus_lain
                     
                 FROM htsprrd AS a
                 LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = a.id_hemxxmh
@@ -628,27 +629,44 @@
                         ) AS subquery
                     ) denda_apd ON denda_apd.id_hemxxmh = a.id_hemxxmh
                     
-                    -- Cari Tambahan/Bonus Lain-lain
+                    -- Cari Pendapatan_lain
                     LEFT JOIN (
                         SELECT
                             id_hemxxmh,
-                            IFNULL(nominal, 0) AS nominal_bonus_lain
+                            IFNULL(nominal, 0) AS nominal_pendapatan_lain
                         FROM (
                             SELECT
                                 id_hemxxmh,
                                 SUM(nominal) as nominal
-                            FROM hpy_lain
+                            FROM hpy_piutang_d
                             WHERE
-                                tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND
-                                jenis = "Tambahan"
+                                hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                AND id_hpcxxmh = 106
                             GROUP BY id_hemxxmh
                         ) AS subquery
-                    ) bonus_lain ON bonus_lain.id_hemxxmh = a.id_hemxxmh
+                    ) pendapatan_lain ON pendapatan_lain.id_hemxxmh = a.id_hemxxmh
+                    
+                    -- Cari pot_pph21
+                    LEFT JOIN (
+                        SELECT
+                            id_hemxxmh,
+                            IFNULL(nominal, 0) AS nominal_pph21
+                        FROM (
+                            SELECT
+                                id_hemxxmh,
+                                SUM(nominal) as nominal
+                            FROM hpy_piutang_d
+                            WHERE
+                                hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                AND id_hpcxxmh = 11
+                            GROUP BY id_hemxxmh
+                        ) AS subquery
+                    ) pph21 ON pph21.id_hemxxmh = a.id_hemxxmh
                     
                 WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
             )
             SELECT
-                ' . $id_hpyxxth . ',
+               ' . $id_hpyxxth . ',
                 qs_payroll.id_hemxxmh,
                 gp,
                 t_jab,
@@ -684,34 +702,35 @@
                 pot_pinjaman,
                 pot_klaim,
                 pot_denda_apd,
+                pot_pph21,
                 FLOOR(
-                    (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + bonus_lain + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
+                    (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
                         -
-                       (pot_makan + pot_jkkjkm + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
+                       (pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
                  ) AS gaji_bersih,
                  FLOOR(
                      (
-                         (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + bonus_lain + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
+                         (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
                             -
-                       (pot_makan + pot_jkkjkm + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
+                       (pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
                      ) % 100
                  ) AS bulat,
                  FLOOR(
                      (
-                        (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + bonus_lain + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
+                        (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
                             -
-                       (pot_makan + pot_jkkjkm + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
+                       (pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
                      )
                          -
                     (
                         (
-                             (gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + bonus_lain + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
+                             (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0))
                                 -
-                           (pot_makan + pot_jkkjkm + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
+                           (pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (IF(report_pot_upah >= 1, (gp + t_jab + var_cost + fix_cost) / IF(grup_hk = 1, 21, 25), 0)) + pot_bpjs + pot_psiun)
                          ) % 100
                      )
                  ) AS gaji_terima,
-                 bonus_lain
+                 pendapatan_lain
             FROM qs_payroll
             WHERE id_heyxxmd <> 2
         ');
