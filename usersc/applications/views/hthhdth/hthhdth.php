@@ -22,7 +22,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Kode</th>
+                                <th>Tanggal</th>
                                 <th>Nama</th>
                                 <th>Approval</th>
                             </tr>
