@@ -158,7 +158,7 @@
 					// 	}
 					// }, 	
 					{
-						label: "Mulai Tanggal<sup class='text-danger'>*<sup>",
+						label: "Tanggal<sup class='text-danger'>*<sup>",
 						name: "potongan_apd.tanggal",
 						type: "datetime",
 						def: function () { 

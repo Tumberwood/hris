@@ -176,7 +176,7 @@
 						name: "hpy_piutang_d.nominal",
 						fieldInfo: "Jika Pengurang, Maka Tidak Perlu menuliskan Minus (-)"
 					}, 	{
-						label: "Mulai Tanggal<sup class='text-danger'>*<sup>",
+						label: "Tanggal<sup class='text-danger'>*<sup>",
 						name: "hpy_piutang_d.tanggal",
 						type: "datetime",
 						def: function () { 
