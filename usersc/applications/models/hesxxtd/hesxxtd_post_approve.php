@@ -123,7 +123,7 @@
 		// 	->where('id', $id_hemxxmh )
 		// 	->exec();
 
-		if ($keputusan != 'Terminasi' && $keputusan != 'Rekontrak') {
+		if ($keputusan != 'Terminasi') {
 			$is_htpr_no_hemxxmh = 0;
 			if ($keputusan == 'Rekontrak') {
 				$id_hesxxmh = 2;

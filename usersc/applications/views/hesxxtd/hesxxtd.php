@@ -24,6 +24,7 @@
                                 <th>ID</th>
                                 <th>Kode</th>
                                 <th>Nama</th>
+                                <th>NIK Baru</th>
                                 <th>Department</th>
                                 <th>Jabatan</th>
                                 <th>Jenis</th>
@@ -458,6 +459,7 @@
 					{ data: "hesxxtd.id",visible:false },
 					{ data: "hesxxtd.kode" },
 					{ data: "hemxxmh.nama" },
+					{ data: "hesxxtd.nik_baru" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "hesxxmh.nama" },
