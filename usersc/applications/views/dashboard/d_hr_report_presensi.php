@@ -67,7 +67,7 @@
                 </div>
 				<br>
 				<div id="tabel_atas"></div>
-				<div id="tabel_bawah"></div>
+				<div style="margin-top: -40px" id="tabel_bawah"></div>
 				<div class="row">
 					<div class="col-md-4">
                         <h3 id="h3_riwayat"></h3>
@@ -486,16 +486,6 @@
 								{ targets: '_all', className: 'text-right' } // Apply text-right class to all columns
 							],
 							buttons: [
-								{
-									extend: 'collection',
-									text: '<i class="fa  fa-wrench">',
-									className: 'btn btn-white',
-									autoClose: true,
-									buttons: [
-										{ extend: "copy", text: '<i class="fa fa-copy">&nbsp &nbsp Copy</i>', className: '', titleAttr: 'Copy' },
-										{ extend: "excel", text: '<i class="fa fa-file-excel-o">&nbsp &nbsp Excel</i>', className: '', titleAttr: 'Export to Excel' }
-									]
-								}
 							],
 							rowCallback: function (row, data, index) {
 
