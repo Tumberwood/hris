@@ -15,6 +15,20 @@
 <!-- begin content here -->
 
 <div class="row">
+    <div class="col">
+        <div class="ibox collapsed" id="iboxfilter">
+            <div class="ibox-title">
+                <h5 class="text-navy">Filter</h5>&nbsp
+                <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+            </div>
+            <div class="ibox-content">
+                <div id="searchPanes1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-content">
@@ -306,6 +320,29 @@
 			
 			//start datatables
 			tblhgsptth_new = $('#tblhgsptth_new').DataTable( {
+				searchPanes:{
+					layout: 'columns-2'
+				},
+				dom: 
+					"<P>"+
+					"<lf>"+
+					"<B>"+
+					"<rt>"+
+					"<'row'<'col-sm-4'i><'col-sm-8'p>>",
+				columnDefs:[
+					{
+						searchPanes:{
+							show: true,
+						},
+						targets: [1,2]
+					},
+					{
+						searchPanes:{
+							show: false,
+						},
+						targets: [3,4,5,6]
+					}
+				],
 				ajax: {
 					url: "../../models/hgsptth_new/hgsptth_new.php",
 					type: 'POST',
@@ -433,8 +470,13 @@
 					if ( data.hgsptth_new.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
+				},
+				initComplete: function() {
+					this.api().searchPanes.rebuildPane();
 				}
 			} );
+			
+			tblhgsptth_new.searchPanes.container().appendTo( '#searchPanes1' );
 			
 			tblhgsptth_new.on( 'init', function () {
 				// atur hak akses
