@@ -209,6 +209,7 @@
 							{ "label": "Kontrak", "value": "Kontrak" },
 							{ "label": "Perpanjangan Latihan", "value": "Perpanjangan Latihan" },
 							{ "label": "Tetap", "value": "Tetap" },
+							{ "label": "Reguler", "value": "Reguler" },
 							{ "label": "Terminasi", "value": "Terminasi" }
 						]
 					},	

@@ -130,6 +130,9 @@
 			} else if ($keputusan == 'Kontrak') {
 				$id_hesxxmh = 2;
 				$is_htpr_no_hemxxmh = 1;
+			} else if ($keputusan == 'Reguler') {
+				$id_hesxxmh = 4;
+				$is_htpr_no_hemxxmh = 1;
 
 			} else if ($keputusan == 'Perpanjangan Pelatihan') {
 				$id_hesxxmh = 3;
@@ -176,7 +179,6 @@
 			$qi_hemdcmh = $db
 			->query('insert', 'hemdcmh')
 			->set('id_hemxxmh',$id_insert_hemx)
-			->set('ktp_no',$ktp_no)
 			->exec();
 		
 			$qi_hemjbrd = $db
