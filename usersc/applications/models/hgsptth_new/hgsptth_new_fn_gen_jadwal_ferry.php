@@ -583,7 +583,7 @@
         
         $qu_hpyxxth = $db
             ->query('update', 'htsptth_new')
-            ->set('generated_on',$timestamp)
+            ->set('generated_on',$tanggal_awal)
             ->where('id',$id_htsptth_new)
         ->exec();
         

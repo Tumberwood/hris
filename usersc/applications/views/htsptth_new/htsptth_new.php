@@ -28,7 +28,7 @@
                                 <th>ID</th>
                                 <th>Nama</th>
                                 <th>Jumlah Grup</th>
-                                <th>Last Generate</th>
+                                <th>Jadwal Terakhir</th>
                                 <th>Keterangan</th>
                                 <th>Tukar Jadwal</th>
                             </tr>

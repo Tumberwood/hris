@@ -47,7 +47,7 @@
 					if ($val === '0000-00-00 00:00:00' || $val === null){
 						echo '';
 					}else{
-						return date( 'd M Y H:i:s', strtotime( $val ) );
+						return date( 'd M Y', strtotime( $val ) );
 					}
 				} ),
 			Field::inst( 'htsptth_new.is_defaultprogram' ),
