@@ -41,12 +41,29 @@
     try{
         $db->transaction();
         
-        $qd = $db
+        $qs_peg = $db
         ->raw()
-        ->bind(':tanggal_awal', $tanggal_awal)
-        ->bind(':tanggal_akhir', $tanggal_akhir)
-        ->exec('DELETE FROM htssctd WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+        ->bind(':id_htsptth_new', $id_htsptth_new)
+        ->exec('SELECT
+                    a.id_hemxxmh
+                FROM htsemtd_new AS a
+                WHERE a.id_htsptth_new = :id_htsptth_new
         ');
+        $rs_peg = $qs_peg->fetchAll();
+
+        foreach ($rs_peg as $row) {
+            $id_hemxxmh_list = $row['id_hemxxmh'];
+            
+            $qd = $db
+            ->raw()
+            ->bind(':tanggal_awal', $tanggal_awal)
+            ->bind(':tanggal_akhir', $tanggal_akhir)
+            ->bind(':id_hemxxmh_list', $id_hemxxmh_list)
+            ->exec('DELETE FROM htssctd 
+                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir 
+                        AND id_hemxxmh = :id_hemxxmh_list
+            ');
+        }
 
         $qd_detail = $db
         ->raw()
@@ -445,141 +462,49 @@
             
         }
         
-        
-        // Begin Insert Jadwal Detail
-        $qr_jadwal = $db
-            ->raw()
-            ->bind(':id_hgsptth_new', $id_hgsptth_new)
-            ->bind(':tanggal_awal', $tanggal_awal)
-            ->bind(':tanggal_akhir', $tanggal_akhir)
-            ->exec('INSERT INTO hgsemtd_new
-                (
-                    id_hgsptth_new,
-                    id_hemxxmh,
-                    minggu,
-                    senin,
-                    selasa,
-                    rabu,
-                    kamis,
-                    jumat,
-                    sabtu
-                )
-                SELECT 
-                    :id_hgsptth_new,
-                    a.id_hemxxmh,
-                    minggu,
-                    senin,
-                    selasa,
-                    rabu,
-                    kamis,
-                    jumat,
-                    sabtu
-                FROM htssctd AS a 
-                LEFT JOIN htsxxmh AS b ON b.id = a.id_htsxxmh
-                -- minggu
-                LEFT JOIN(
+        foreach ($rs_peg as $row) {
+            $id_hemxxmh_list = $row['id_hemxxmh'];
+            // Begin Insert Jadwal Detail
+            $qr_jadwal = $db
+                ->raw()
+                ->bind(':id_hgsptth_new', $id_hgsptth_new)
+                ->bind(':tanggal_awal', $tanggal_awal)
+                ->bind(':tanggal_akhir', $tanggal_akhir)
+                ->bind(':id_hemxxmh_list', $id_hemxxmh_list)
+                ->exec('INSERT INTO hgsemtd_new
+                    (
+                        id_hgsptth_new,
+                        id_hemxxmh,
+                        minggu,
+                        senin,
+                        selasa,
+                        rabu,
+                        kamis,
+                        jumat,
+                        sabtu
+                    )
                     SELECT 
+                        :id_hgsptth_new,
                         a.id_hemxxmh,
-                        a.id_htsxxmh,
-                        b.kode AS minggu,
-                        CASE
-                            WHEN DAYNAME(a.tanggal) = "Sunday" THEN "Minggu"
-                        END AS formatted_tanggal
-                    FROM htssctd AS a 
-                    LEFT JOIN htsxxmh AS b ON b.id = a.id_htsxxmh
-                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND DAYNAME(a.tanggal) = "Sunday"
-                ) AS minggu ON minggu.id_hemxxmh = a.id_hemxxmh
-
-                -- senin
-                LEFT JOIN(
-                    SELECT 
-                        a.id_hemxxmh,
-                        a.id_htsxxmh,
-                        b.kode AS senin,
-                        CASE
-                            WHEN DAYNAME(a.tanggal) = "Monday" THEN "Senin"
-                        END AS formatted_tanggal
-                    FROM htssctd AS a 
-                    LEFT JOIN htsxxmh AS b ON b.id = a.id_htsxxmh
-                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND DAYNAME(a.tanggal) = "Monday"
-                ) AS senin ON senin.id_hemxxmh = a.id_hemxxmh
-
-                -- selasa
-                LEFT JOIN(
-                    SELECT 
-                        a.id_hemxxmh,
-                        a.id_htsxxmh,
-                        b.kode AS selasa,
-                        CASE
-                            WHEN DAYNAME(a.tanggal) = "Tuesday" THEN "Selasa"
-                        END AS formatted_tanggal
-                    FROM htssctd AS a 
-                    LEFT JOIN htsxxmh AS b ON b.id = a.id_htsxxmh
-                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND DAYNAME(a.tanggal) = "Tuesday"
-                ) AS selasa ON selasa.id_hemxxmh = a.id_hemxxmh
-
-                -- rabu
-                LEFT JOIN(
-                    SELECT 
-                        a.id_hemxxmh,
-                        a.id_htsxxmh,
-                        b.kode AS rabu,
-                        CASE
-                            WHEN DAYNAME(a.tanggal) = "Wednesday" THEN "Rabu"
-                        END AS formatted_tanggal
-                    FROM htssctd AS a 
-                    LEFT JOIN htsxxmh AS b ON b.id = a.id_htsxxmh
-                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND DAYNAME(a.tanggal) = "Wednesday"
-                ) AS rabu ON rabu.id_hemxxmh = a.id_hemxxmh
-
-                -- kamis
-                LEFT JOIN(
-                    SELECT 
-                        a.id_hemxxmh,
-                        a.id_htsxxmh,
-                        b.kode AS kamis,
-                        CASE
-                            WHEN DAYNAME(a.tanggal) = "Thursday" THEN "Kamis"
-                        END AS formatted_tanggal
-                    FROM htssctd AS a 
-                    LEFT JOIN htsxxmh AS b ON b.id = a.id_htsxxmh
-                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND DAYNAME(a.tanggal) = "Thursday"
-                ) AS kamis ON kamis.id_hemxxmh = a.id_hemxxmh
-
-                -- jumat
-                LEFT JOIN(
-                    SELECT 
-                        a.id_hemxxmh,
-                        a.id_htsxxmh,
-                        b.kode AS jumat,
-                        CASE
-                            WHEN DAYNAME(a.tanggal) = "Friday" THEN "Jumat"
-                        END AS formatted_tanggal
-                    FROM htssctd AS a 
-                    LEFT JOIN htsxxmh AS b ON b.id = a.id_htsxxmh
-                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND DAYNAME(a.tanggal) = "Friday"
-                ) AS jumat ON jumat.id_hemxxmh = a.id_hemxxmh
-
-                -- sabtu
-                LEFT JOIN(
-                    SELECT 
-                        a.id_hemxxmh,
-                        a.id_htsxxmh,
-                        b.kode AS sabtu,
-                        CASE
-                            WHEN DAYNAME(a.tanggal) = "Saturday" THEN "Sabtu"
-                        END AS formatted_tanggal
-                    FROM htssctd AS a 
-                    LEFT JOIN htsxxmh AS b ON b.id = a.id_htsxxmh
-                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND DAYNAME(a.tanggal) = "Saturday"
-                ) AS sabtu ON sabtu.id_hemxxmh = a.id_hemxxmh
-
-                WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                GROUP BY a.id_hemxxmh
-                ;
-
-            ');
-        // END insert
+                        MAX(CASE WHEN DAYNAME(a.tanggal) = "Sunday" THEN b.kode END) AS minggu,
+                        MAX(CASE WHEN DAYNAME(a.tanggal) = "Monday" THEN b.kode END) AS senin,
+                        MAX(CASE WHEN DAYNAME(a.tanggal) = "Tuesday" THEN b.kode END) AS selasa,
+                        MAX(CASE WHEN DAYNAME(a.tanggal) = "Wednesday" THEN b.kode END) AS rabu,
+                        MAX(CASE WHEN DAYNAME(a.tanggal) = "Thursday" THEN b.kode END) AS kamis,
+                        MAX(CASE WHEN DAYNAME(a.tanggal) = "Friday" THEN b.kode END) AS jumat,
+                        MAX(CASE WHEN DAYNAME(a.tanggal) = "Saturday" THEN b.kode END) AS sabtu
+                    FROM htssctd AS a
+                    LEFT JOIN htsxxmh AS b ON a.id_htsxxmh = b.id
+                    LEFT JOIN hemxxmh AS c ON c.id = a.id_hemxxmh
+                    WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                    AND a.id_hemxxmh = :id_hemxxmh_list
+                    GROUP BY a.id_hemxxmh;
+    
+                    ;
+    
+                ');
+            // END insert
+        }
         
         $qu_hpyxxth = $db
             ->query('update', 'htsptth_new')
