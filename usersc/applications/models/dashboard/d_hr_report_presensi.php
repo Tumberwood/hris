@@ -29,6 +29,7 @@
 				a.id_hemxxmh
 			FROM htsprrd AS a
 			WHERE a.cek = 1 AND tanggal = :start_date
+			ORDER BY a.status_presensi_in
 			;
 			'
 			);
@@ -110,8 +111,7 @@
 				LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
 				LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
 				LEFT JOIN hetxxmh AS d ON d.id = c.id_hetxxmh
-				WHERE a.tanggal BETWEEN DATE_SUB(:start_date, INTERVAL 1 DAY) AND DATE_ADD(:start_date, INTERVAL 2 DAY) AND b.id = :id_hemxxmh AND a.nama NOT IN ("makan", "istirahat", "makan manual")
-				LIMIT 5;
+				WHERE a.tanggal BETWEEN DATE_SUB(:start_date, INTERVAL 1 DAY) AND DATE_ADD(:start_date, INTERVAL 2 DAY) AND b.id = :id_hemxxmh AND a.nama NOT IN ("makan", "istirahat", "makan manual");
 				'
 				);
 	$rs_riwayat_ceklok = $qs_riwayat_ceklok->fetchAll();

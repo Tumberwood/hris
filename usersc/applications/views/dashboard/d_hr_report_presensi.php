@@ -82,9 +82,16 @@
 						<div id="tabel_makan"></div>
 					</div>
 				</div>
-				<div class="d-flex justify-content-between">
-					<button id="prevButton" class="btn btn-primary">Previous</button>
-					<button id="nextButton" class="btn btn-primary">Next</button>
+				<div class="row">
+					<div class="col-md-6">
+						<button id="prevButton" class="btn btn-primary">Previous</button>
+					</div>
+					<div class="col-md-5">
+						<h5 id="paging"></h5>
+					</div>
+					<div class="col-md-1">
+						<button id="nextButton" class="btn btn-primary">Next</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -184,9 +191,14 @@
 							}
 						}
 
+						var page_now = parseInt(counter) + 1; 
+						var page_total = parseInt(json.data5) + 1; 
+
+
 						$('#jadwal').text("Jadwal: " + json.data[0].st_jadwal);
 						$('#nama_peg').text(json.data2[0].nama);
 						$('#keterangan').text("Keterangan: " + json.data[0].keterangan);
+						$('#paging').text( page_now + " / " + page_total);
 						$('#h3_riwayat').text("Riwayat Checkclock");
 
 						var str1 = '<table id="tblhtsprrd1" class="table table-striped table-bordered">';
@@ -301,15 +313,16 @@
 						$('#h3_riwayat').text("Riwayat Checkclock");
 
 						$('#tblhtsprrd2').DataTable({
-							paging: false,          // Disable pagination
-							searching: false,       // Disable search
-							info: false,            // Disable "Showing X of Y entries" information
-							lengthChange: false,    // Disable "Show X entries" dropdown
-							responsive: false,
-							scrollCollapse: true,
-							data: json.data2,
-							columns: json.columns2,
-							buttons: [
+								paging: false,          // Disable pagination
+								searching: false,       // Disable search
+								info: false,            // Disable "Showing X of Y entries" information
+								lengthChange: false,    // Disable "Show X entries" dropdown
+								responsive: false,
+								scrollY: '125px',       // Set the scrollY option
+								scrollCollapse: true,
+								data: json.data2,
+								columns: json.columns2,
+								buttons: [
 								{
 									extend: 'collection',
 									text: '<i class="fa  fa-wrench">',
