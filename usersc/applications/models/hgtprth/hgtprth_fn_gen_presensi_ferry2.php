@@ -763,7 +763,8 @@
 
                         //JIKA CO DAN CI MAKA LANJUT CEK RANGE D JAM 5 DAN D+1 12
                         if ($next_step == 9) {
-                            //Cek apakah ada check clock antara Tgl 05:00:00 s/d Tgl + 1 12:00:00
+                            //Cek apakah ada check clock antara today 09:00:00 s/d besok  05:00:00
+                            // revisi 18 oct
                             $besok = date('Y-m-d', strtotime($tanggal . ' +1 day'));
                             // print_r($besok);
                             $qs_ceklok_D5_B12 = $db
@@ -773,8 +774,8 @@
                                 ])
                                 ->where('htsprtd.kode', $row_hemxxmh['kode_finger'])
                                 ->where('htsprtd.nama', '("os", "out", "staff", "pmi")', 'IN', false )
-                                ->where('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)', $tanggal . ' 05:00:00', '>=')
-                                ->where('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)', $tanggal . ' 23:59:59', '<=')                                    
+                                ->where('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)', $tanggal . ' 09:00:00', '>=')
+                                ->where('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)', $besok . ' 05:00:00', '<=')                                    
                                 ->order('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)')
                                 ->exec();
                             $rs_ceklok_D5_B12 = $qs_ceklok_D5_B12->fetch();
