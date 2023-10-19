@@ -758,6 +758,10 @@
 				tbl_details = [tblhpyemtd, tblhpyemtd_kbm, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance];
 				CekInitHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
+				tblhpyemtd_kbm.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_karyawan.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_kmj.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_freelance.button( 'btnPrint:name' ).disable();
 			} );
 			
 			tblhpyxxth.on( 'select', function( e, dt, type, indexes ) {
@@ -778,6 +782,10 @@
 				tbl_details = [tblhpyemtd, tblhpyemtd_kbm, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance];
 				CekSelectHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).enable();
+				tblhpyemtd_kbm.button( 'btnPrint:name' ).enable();
+				tblhpyemtd_karyawan.button( 'btnPrint:name' ).enable();
+				tblhpyemtd_kmj.button( 'btnPrint:name' ).enable();
+				tblhpyemtd_freelance.button( 'btnPrint:name' ).enable();
 			} );
 			
 			tblhpyxxth.on( 'deselect', function () {
@@ -794,6 +802,10 @@
 				tbl_details = [tblhpyemtd, tblhpyemtd_kbm, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance];
 				CekDeselectHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
+				tblhpyemtd_kbm.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_karyawan.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_kmj.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_freelance.button( 'btnPrint:name' ).disable();
 			} );
 			
 // --------- start _detail --------------- //
@@ -892,7 +904,7 @@
 						d.id_hpyxxth = id_hpyxxth;
 					}
 				},
-				order: [[ 2, "desc" ]],
+				order: [[ 2, "asc" ]],
 				responsive: false,
 				fixedColumns:   {
 					left: 1
@@ -1210,7 +1222,7 @@
 						d.id_hpyxxth = id_hpyxxth;
 					}
 				},
-				order: [[ 2, "desc" ]],
+				order: [[ 2, "asc" ]],
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
@@ -1388,6 +1400,17 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					,{
+						text: '<i class="fa fa-print"></i>',
+						name: 'btnPrint',
+						className: 'btn btn-outline',
+						titleAttr: 'Print Slip Gaji',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							var url = $(this).attr('href'); 
+							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=1', 'hpyxxth');
+						}
+					}
 				],
 				footerCallback: function ( row, data, start, end, display ) {
 					var api = this.api();
@@ -1528,7 +1551,7 @@
 						d.id_hpyxxth = id_hpyxxth;
 					}
 				},
-				order: [[ 2, "desc" ]],
+				order: [[ 2, "asc" ]],
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
@@ -1706,6 +1729,17 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					,{
+						text: '<i class="fa fa-print"></i>',
+						name: 'btnPrint',
+						className: 'btn btn-outline',
+						titleAttr: 'Print Slip Gaji',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							var url = $(this).attr('href'); 
+							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=3', 'hpyxxth');
+						}
+					}
 				],
 				footerCallback: function ( row, data, start, end, display ) {
 					var api = this.api();
@@ -1846,7 +1880,7 @@
 						d.id_hpyxxth = id_hpyxxth;
 					}
 				},
-				order: [[ 2, "desc" ]],
+				order: [[ 2, "asc" ]],
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
@@ -2024,6 +2058,17 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					,{
+						text: '<i class="fa fa-print"></i>',
+						name: 'btnPrint',
+						className: 'btn btn-outline',
+						titleAttr: 'Print Slip Gaji',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							var url = $(this).attr('href'); 
+							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=4', 'hpyxxth');
+						}
+					}
 				],
 				footerCallback: function ( row, data, start, end, display ) {
 					var api = this.api();
@@ -2164,7 +2209,7 @@
 						d.id_hpyxxth = id_hpyxxth;
 					}
 				},
-				order: [[ 2, "desc" ]],
+				order: [[ 2, "asc" ]],
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
@@ -2342,6 +2387,17 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					,{
+						text: '<i class="fa fa-print"></i>',
+						name: 'btnPrint',
+						className: 'btn btn-outline',
+						titleAttr: 'Print Slip Gaji',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							var url = $(this).attr('href'); 
+							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=5', 'hpyxxth');
+						}
+					}
 				],
 				footerCallback: function ( row, data, start, end, display ) {
 					var api = this.api();
