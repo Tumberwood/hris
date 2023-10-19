@@ -600,8 +600,8 @@
 						type: "select",
 						placeholder : "Select",
 						options: [
-							{ "label": "Catering", "value": 1 },
-							{ "label": "Potong Makan", "value": 0 }
+							{ "label": "Catering", "value": 0 },
+							{ "label": "Potong Makan", "value": 1 }
 						]
 					},
 					{
