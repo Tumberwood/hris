@@ -67,6 +67,7 @@
 							<tr>
 								<th rowspan=2>ID</th>
 								<th rowspan=2>Nama</th>
+								<th rowspan=2>Link</th>
 								<th rowspan=2>Department</th>
 								<th rowspan=2>Jabatan</th>
 								<th rowspan=2>Tanggal</th>
@@ -119,6 +120,7 @@
 						</thead>
 						<tfoot>
 							<tr>
+								<th></th>
 								<th></th>
 								<th></th>
 								<th></th>
@@ -268,7 +270,7 @@
 						d.id_hemxxmh = id_hemxxmh;
 					}
 				},
-				order: [[ 4, "asc" ],[1, "asc"]],
+				order: [[1, "asc"]],
 				// scrollX: true,
 				responsive: false,
 				// rowGroup: {
@@ -281,6 +283,16 @@
 					{ 
 						data: "hemxxmh_data"
 						// ,visible:false 
+					},
+					{ 
+						data: null ,
+						render: function (data, type, row) {
+							var id_hemxxmh = row.htsprrd.id_hemxxmh;
+							var tanggal = row.htsprrd.tanggal;
+							var url = "../dashboard/d_hr_report_presensi.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+							var link = '<a href="' + url + '" target="_blank">Link Text</a>';
+							return link;
+						}
 					},
 					{ 
 						data: "hodxxmh.nama"
@@ -559,20 +571,20 @@
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					
 					// s_pot_jam = api.column( 16 ).data().sum();
-					s_makan = api.column( 16 ).data().sum();
-					s_lb = api.column( 23 ).data().sum();
-					s_aw = api.column( 24 ).data().sum();
-					s_ak = api.column( 25 ).data().sum();
-					s_i1 = api.column( 26 ).data().sum();
-					s_i2 = api.column( 27 ).data().sum();
-					s_i3 = api.column( 28 ).data().sum();
-					s_tl = api.column( 29 ).data().sum();
+					s_makan = api.column( 17 ).data().sum();
+					s_lb = api.column( 24 ).data().sum();
+					s_aw = api.column( 25 ).data().sum();
+					s_ak = api.column( 26 ).data().sum();
+					s_i1 = api.column( 27 ).data().sum();
+					s_i2 = api.column( 28 ).data().sum();
+					s_i3 = api.column( 29 ).data().sum();
+					s_tl = api.column( 30 ).data().sum();
 
-					s_pot_ti = api.column( 30 ).data().sum();
-					s_pot_overtime = api.column( 31 ).data().sum();
-					s_overtime = api.column( 32 ).data().sum();
-					s_pot_hk = api.column( 33 ).data().sum();
-					s_pot_jam = api.column( 34 ).data().sum();
+					s_pot_ti = api.column( 31 ).data().sum();
+					s_pot_overtime = api.column( 32 ).data().sum();
+					s_overtime = api.column( 33 ).data().sum();
+					s_pot_hk = api.column( 34 ).data().sum();
+					s_pot_jam = api.column( 35 ).data().sum();
 
 					$( '#s_makan' ).html( numFormat(s_makan) );
 					$( '#s_lb' ).html( numFormat(s_lb) );

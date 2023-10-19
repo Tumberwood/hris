@@ -10,6 +10,17 @@
 <?php
 	$nama_tabel    = 'htsprrd';
 	$nama_tabels_d = [];
+
+	if (isset($_GET['id_hemxxmh'])){
+		$id_hemxxmh		= $_GET['id_hemxxmh'];
+	} else {
+		$id_hemxxmh		= 0;
+	}
+	if (isset($_GET['start_date'])){
+		$awal		= ($_GET['start_date']);
+	} else {
+		$awal = null;
+	}
 ?>
 
 <!-- begin content here -->
@@ -58,11 +69,31 @@
 				<h3 class="text-center" id="nama_peg"></h3>
 				<br>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
+                        <h3 id="tanggal"></h3>
                         <h3 id="jadwal"></h3>
-                    </div>
-                    <div class="col-md-6">
                         <h3 id="keterangan"></h3>
+                    </div>
+					<div class="col-md-1"></div>
+                    <div class="col-md-1.5">
+                       <h4>Department</h4> 
+                       <h4>Sub Tipe</h4> 
+                       <h4>Kelompok</h4> 
+                    </div>
+                    <div class="col-md-2">
+                        <h4 id="dep"></h4>
+                        <h4 id="kmj"></h4>
+                        <h4 id="kelompok"></h4>
+                    </div>
+                    <div class="col-md-1.5">
+                       <h4>Status</h4> 
+                       <h4>Divisi</h4> 
+                       <h4>Level</h4> 
+                    </div>
+                    <div class="col-md-2">
+                        <h4 id="stat"></h4>
+                        <h4 id="STATUS"></h4>
+                        <h4 id="lev"></h4>
                     </div>
                 </div>
 				<br>
@@ -112,7 +143,8 @@
 		// ------------- end of default variable
 		var notifyprogress = '';
 		var id_hemxxmh_old = 0;
-
+		var id_hem_get = <?php echo $id_hemxxmh ?>;
+		var tanggal_get = "<?php echo $awal ?>";
 		// BEGIN datepicker init
 		$('#periode').datepicker({
 			setDate: new Date(),
@@ -122,7 +154,11 @@
 			format: "dd M yyyy",
 			minViewMode: 'month' 
 		});
-		$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
+		if (tanggal_get === '') {
+			$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
+		} else {
+			$('#start_date').datepicker('setDate', new Date(tanggal_get));
+		}
         // END datepicker init
         
         // BEGIN select2 init
@@ -197,9 +233,20 @@
 						var page_total = parseInt(json.data5) + 1; 
 
 
-						$('#jadwal').text("Jadwal: " + json.data[0].st_jadwal);
-						$('#nama_peg').text(json.data2[0].nama);
-						$('#keterangan').text("Keterangan: " + json.data[0].keterangan);
+						$('#tanggal').html("Tanggal &nbsp; &nbsp; &nbsp; &nbsp;: " + json.data[0].tanggal);
+						$('#jadwal').html("Jadwal &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: " + json.data[0].st_jadwal);
+						$('#keterangan').html("Keterangan : " + json.data[0].keterangan);
+
+						$('#dep').html(" : " + json.data7.dep);
+						$('#kmj').html(" : " + json.data7.kmj);
+						$('#kelompok').html(" : " + json.data7.kelompok);
+						$('#stat').html(" : " + json.data7.stat);
+						$('#STATUS').html(" : " + json.data7.STATUS);
+						$('#lev').html(" : " + json.data7.lev);
+						// $('#jadwal').html("Jadwal &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: " + json.data7[0].st_jadwal);
+						// $('#keterangan').html("Keterangan : " + json.data7[0].keterangan);
+
+						$('#nama_peg').text(json.data7.nama);
 						$('#paging').text( page_now + " / " + page_total);
 						$('#h3_riwayat').text("Riwayat Checkclock");
 
@@ -531,11 +578,8 @@
         	const nextButton = document.getElementById("nextButton");
 
             $('#report').hide();
-			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
-			id_hemxxmh = $('#select_hemxxmh').val();
 			
 			let counter = 0;
-			
 
 			nextButton.addEventListener("click", function() {
 				counter++;
@@ -554,9 +598,16 @@
 	
 				},
 				submitHandler: function(frmhtsprrd) {
-					start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
-					id_hemxxmh = $('#select_hemxxmh').val();
+					if ($('#select_hemxxmh').val() > 0) {
+						id_hemxxmh = $('#select_hemxxmh').val();
+					} else {
+						if (id_hem_get != 0) {
+							id_hemxxmh = id_hem_get;
+						}
+					}
 
+					start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
+					
 					notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
 					}, {
@@ -571,6 +622,9 @@
 				}
 			});
 
+			if (tanggal_get != '' && id_hem_get != 0) {
+				$("#frmhtsprrd").submit();
+			}
 			
 			
 		} );// end of document.ready

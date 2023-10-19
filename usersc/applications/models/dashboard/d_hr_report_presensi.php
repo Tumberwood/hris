@@ -11,9 +11,13 @@
 		DataTables\Editor\Query,
 		DataTables\Editor\Result;
 
-		
-	$awal 			= new Carbon($_POST['start_date']);
-	$id_hemxxmh		= $_POST['id_hemxxmh'];
+	if (isset($_POST['id_hemxxmh'])){
+		$id_hemxxmh		= $_POST['id_hemxxmh'];
+	}
+	
+	if (isset($_POST['start_date'])){
+		$awal		= new Carbon($_POST['start_date']);
+	}
 	$counter		= $_POST['counter'];
 
 	if ($counter == null) {
@@ -77,8 +81,11 @@
 					a.lembur3,
 					a.lembur4,
 					if(a.st_jadwal = "OFF", 0,(IF(jumlah_grup = 4, TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)), TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)) - 1))) AS jam_wajib,
-					if(a.st_jadwal = "OFF", 0,(IF(jumlah_grup = 4, TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)), TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)) - 1)) - a.pot_hk) AS jam_kerja,
-					IFNULL(b.keterangan, "") AS keterangan,
+					if(a.st_jadwal = "OFF" OR a.status_presensi_in = "AL", 0,(IF(jumlah_grup = 4, TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)), TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)) - 1)) - a.pot_hk) AS jam_kerja,
+					CASE
+						WHEN a.htlxxrh_kode = "" THEN IFNULL(b.keterangan, "")
+						ELSE CONCAT(a.htlxxrh_kode, " , ", IFNULL(b.keterangan, ""))
+					END AS keterangan,
 					a.cek,
 					DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i:%s") as clock_in,
 					DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i:%s") as clock_out,
@@ -87,6 +94,7 @@
 					IFNULL(a.htlxxrh_kode, "-") as kondite,
 					IFNULL(c.kode, "-") AS kode_spkl,
 					c.jam_awal,
+					DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
 					c.jam_akhir
 				FROM htsprrd AS a
 				LEFT JOIN htssctd AS b ON b.id_hemxxmh = a.id_hemxxmh AND b.tanggal = a.tanggal
@@ -96,6 +104,33 @@
 				'
 				);
 	$rs_report_presensi = $qs_report_presensi->fetchAll();
+
+	$qs_orang = $db
+		->raw()
+		->bind(':id_hemxxmh', $id_hemxxmh)
+		->exec('SELECT
+					concat(b.kode, " - ", b.nama, " - ", d.nama) as nama,
+					e.nama AS dep,
+					f.nama AS os,
+					g.nama AS kmj,
+					h.nama AS stat,
+					i.nama AS lev,
+					j.nama AS STATUS,
+					k.nama AS kelompok
+				FROM hemxxmh AS b
+				LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
+				LEFT JOIN hetxxmh AS d ON d.id = c.id_hetxxmh
+				LEFT JOIN hodxxmh AS e ON e.id = c.id_hodxxmh
+				LEFT JOIN heyxxmh AS f ON f.id = c.id_heyxxmh
+				LEFT JOIN heyxxmd AS g ON g.id = c.id_heyxxmd
+				LEFT JOIN hesxxmh AS h ON h.id = c.id_hesxxmh
+				LEFT JOIN hevxxmh AS i ON i.id = c.id_hevxxmh
+				LEFT JOIN hosxxmh AS j ON j.id = c.id_hosxxmh
+				LEFT JOIN hevgrmh AS k ON k.id = i.id_hevgrmh
+				WHERE b.id = :id_hemxxmh
+				'
+				);
+	$rs_orang = $qs_orang->fetch();
 
 	$qs_riwayat_ceklok = $db
 		->raw()
@@ -160,6 +195,7 @@
 		$results['data3'] = $rs_makan;
 		$results['data4'] = $rs_istirahat;
 		$results['data5'] = $c_cek_satu;
+		$results['data7'] = $rs_orang;
 		
 		// harus urut sama tablenya
 		$results['columns'] = [
