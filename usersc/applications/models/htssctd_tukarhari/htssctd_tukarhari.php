@@ -16,6 +16,8 @@
 	
 	// ----------- do not erase
 	$show_inactive_status = $_POST['show_inactive_status_htssctd_tukarhari'];
+	$start_date = $_POST['start_date'];
+	$end_date = $_POST['end_date'];
 	// -----------
 	
 	$editor = Editor::inst( $db, 'htssctd_tukarhari' )
@@ -61,6 +63,8 @@
 				) )
 		)
 		->leftJoin( 'hodxxmh','hodxxmh.id','=','htssctd_tukarhari.id_hodxxmh' )
+		->where( 'htssctd_tukarhari.tanggal_terpilih', $_POST['start_date'], '>=')
+		->where( 'htssctd_tukarhari.tanggal_terpilih', $_POST['end_date'], '<=')
 		;
 	
 	// do not erase
