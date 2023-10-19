@@ -230,7 +230,7 @@
 						name: "htlxxth.tanggal_awal",
 						type: "datetime",
 						def: function () { 
-							return new Date(); 
+							return moment($('#end_date').val()).format('DD MMM YYYY'); 
 						},
 						opts:{
 							minDate: new Date('1900-01-01'),
@@ -242,7 +242,7 @@
 						name: "htlxxth.tanggal_akhir",
 						type: "datetime",
 						def: function () { 
-							return new Date(); 
+							return moment($('#end_date').val()).format('DD MMM YYYY'); 
 						},
 						opts:{
 							minDate: new Date('1900-01-01'),

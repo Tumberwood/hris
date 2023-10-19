@@ -16,6 +16,8 @@
 	
 	// ----------- do not erase
 	$show_inactive_status = $_POST['show_inactive_status_htscctd'];
+	$start_date = $_POST['start_date'];
+	$end_date = $_POST['end_date'];
 	// -----------
 	
 	$editor = Editor::inst( $db, 'htscctd' )
@@ -71,7 +73,10 @@
 		->leftJoin( 'hemjbmh as hemjbmh_pengaju','hemjbmh_pengaju.id_hemxxmh','=','hemxxmh_pengaju.id' )
 		
 		->leftJoin( 'hemxxmh as hemxxmh_pengganti','hemxxmh_pengganti.id','=','htscctd.id_hemxxmh_pengganti' )
-		->leftJoin( 'hemjbmh as hemjbmh_pengganti','hemjbmh_pengganti.id_hemxxmh','=','hemxxmh_pengganti.id' );
+		->leftJoin( 'hemjbmh as hemjbmh_pengganti','hemjbmh_pengganti.id_hemxxmh','=','hemxxmh_pengganti.id' )
+		->where( 'htscctd.tanggal', $_POST['start_date'], '>=')
+		->where( 'htscctd.tanggal', $_POST['end_date'], '<=')
+		;
 	
 	// do not erase
 	// function show / hide inactive document
