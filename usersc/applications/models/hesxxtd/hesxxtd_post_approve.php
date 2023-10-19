@@ -237,7 +237,7 @@
 			if ($flag_1hari == 1) {
 				$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(1);
 			} else {
-				$tanggal_hitung = Carbon::parse($tanggal_mulai)->subDays(2);
+				$tanggal_hitung = Carbon::parse($tanggal_mulai)->subDays(3);
 
 				// cek apakah hari libur
 				$qs_holiday = $db
@@ -251,7 +251,7 @@
 				if (!empty($rs_holiday)) {
 					$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(4);
 				} else {
-					$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(2);
+					$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(3);
 				}
 			}
 
