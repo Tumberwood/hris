@@ -197,9 +197,9 @@
 						type: "select",
 						placeholder : "Select",
 						options: [
-							{ "label": "Istirahat", "value": "istirahat" },
-							{ "label": "Makan", "value": "makan" },
-							{ "label": "Makan Manual", "value": "MAKAN MANUAL" },
+							// { "label": "Istirahat", "value": "istirahat" },
+							// { "label": "Makan", "value": "makan" },
+							{ "label": "Makan Manual", "value": "makan manual" },
 							{ "label": "Outsourcing", "value": "os" },
 							{ "label": "PMI", "value": "pmi" },
 							{ "label": "Staff", "value": "staff" }
