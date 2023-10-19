@@ -177,7 +177,9 @@
 						if (id_hemxxmh != null) {
 							$('#prevButton').hide();
 							$('#nextButton').hide();
+							$('#paging').hide();
 						} else {
+							$('#paging').show();
 							if (counter == 0) {
 								$('#prevButton').hide();
 							} else {
