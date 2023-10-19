@@ -758,10 +758,13 @@
 				tbl_details = [tblhpyemtd, tblhpyemtd_kbm, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance];
 				CekInitHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
+				
 				tblhpyemtd_kbm.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_karyawan.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_kmj.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_freelance.button( 'btnPrint:name' ).disable();
+
+				tblhpyemtd.button( 'btnPrintSingle:name' ).disable();
 			} );
 			
 			tblhpyxxth.on( 'select', function( e, dt, type, indexes ) {
@@ -806,6 +809,8 @@
 				tblhpyemtd_karyawan.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_kmj.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_freelance.button( 'btnPrint:name' ).disable();
+
+				tblhpyemtd.button( 'btnPrintSingle:name' ).disable();
 			} );
 			
 // --------- start _detail --------------- //
@@ -1081,7 +1086,18 @@
 						$arr_buttons_approve 	= [];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
-					// END breaking generate button
+					// END breaking generate 
+					,{
+						text: '<i class="fa fa-print"></i>',
+						name: 'btnPrintSingle',
+						className: 'btn btn-outline',
+						titleAttr: 'Print Slip Gaji Per Pegawai',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							var url = $(this).attr('href'); 
+							window.open('hpyxxth_print_single.php?id_hemxxmh=' + id_hemxxmh, 'hpyxxth');
+						}
+					}
 				],
 				footerCallback: function ( row, data, start, end, display ) {
 					var api = this.api();
@@ -1111,17 +1127,21 @@
 				id_hpyemtd   = data_hpyemtd.id;
 				id_transaksi_d    = id_hpyemtd; // dipakai untuk general
 				is_active_d       = data_hpyemtd.is_active;
+				id_hemxxmh       = data_hpyemtd.id_hemxxmh;
 				
 				// atur hak akses
 				CekSelectDetailHD(tblhpyxxth, tblhpyemtd );
+				tblhpyemtd.button( 'btnPrintSingle:name' ).enable();
 			} );
 
 			tblhpyemtd.on( 'deselect', function() {
 				id_hpyemtd = '';
 				is_active_d = 0;
+				id_hemxxmh = 0;
 				
 				// atur hak akses
 				CekDeselectDetailHD(tblhpyxxth, tblhpyemtd );
+				tblhpyemtd.button( 'btnPrintSingle:name' ).disable();
 			} );
 
 // --------- end _detail --------------- //		
