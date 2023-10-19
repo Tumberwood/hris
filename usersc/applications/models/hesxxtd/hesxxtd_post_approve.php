@@ -53,6 +53,20 @@
 		$nik_baru = $rs_hesxxtd['nik_baru'];
 		$kode_lama = $rs_hesxxtd['kode'];
 
+		// ini untuk flag
+		$qs_flag_status = $db
+			->raw()
+			->bind(':id_hemxxmh', $id_hemxxmh)
+			->exec(' SELECT
+						a.id_heyxxmd,
+						a.id_hesxxmh
+					FROM hemjbmh AS a
+					WHERE a.id_hemxxmh = :id_hemxxmh
+					'
+					);
+		$rs_flag_status = $qs_flag_status->fetch();
+
+		// ini untuk insert
 		$qs_hemxxmh = $db
 			->query('select', 'hemxxmh' )
 			->get([
@@ -72,16 +86,7 @@
 			->exec();
 		$rs_hemxxmh = $qs_hemxxmh->fetch();
 
-		$qs_hemdcmh = $db
-			->query('select', 'hemxxmh' )
-			->get([
-				'hemdcmh.ktp_no as ktp_no',
-			] )
-			->join('hemdcmh','hemdcmh.id_hemxxmh = hemxxmh.id','LEFT' )
-			->where('hemxxmh.id', $id_hemxxmh )
-			->exec();
-		$rs_hemdcmh = $qs_hemdcmh->fetch();
-
+		// ini untuk insert
 		$qs_hemjbmh = $db
 			->query('select', 'hemxxmh' )
 			->get([
@@ -111,23 +116,16 @@
 			->exec();
 		$rs_hemjbmh = $qs_hemjbmh->fetch();
 		
-		// $tanggal_masuk = $rs_hemjbmh['tanggal_masuk'];
-		// $tanggal_keluar = date('Y-m-d', strtotime($tanggal_masuk . ' +6 months'));
-		// print_r($tanggal_masuk);
-		// print_r($tanggal_keluar);
-
-		//update non aktif hemxxmh
-		// $qu_hemxxmh = $db
-		// 	->query('update', 'hemxxmh')
-		// 	->set('is_active', 0)
-		// 	->where('id', $id_hemxxmh )
-		// 	->exec();
+		$flag_1hari = 0;
 
 		if ($keputusan != 'Terminasi') {
 			$is_htpr_no_hemxxmh = 0;
 			if ($keputusan == 'Rekontrak') {
 				$id_hesxxmh = 2;
 			} else if ($keputusan == 'Kontrak') {
+				if ($rs_flag_status['id_hesxxmh'] == 3) {
+					$flag_1hari = 1;
+				}
 				$id_hesxxmh = 2;
 				$is_htpr_no_hemxxmh = 1;
 			} else if ($keputusan == 'Reguler') {
@@ -138,6 +136,14 @@
 				$id_hesxxmh = 3;
 			} else if ($keputusan == 'Tetap') {
 				$id_hesxxmh = $id_hesxxmh_tetap;
+				if ($rs_flag_status['id_hesxxmh'] == 2) {
+					$flag_1hari = 1;
+				}
+			}
+
+			// jika kbm maka di min 1 hari
+			if ($rs_flag_status['id_heyxxmd'] == 1) {
+				$flag_1hari = 1;
 			}
 			
 			$qi_hemxxmh = $db
@@ -219,10 +225,40 @@
 				->exec();
 			$rs_pola_shift = $qs_pola_shift->fetch();
 
-			$qi_pola_shift = $db
-				->query('insert', 'htsemtd')
-				->set('id_hemxxmh',$id_insert_hemx)
-				->set($rs_pola_shift)
+			if (!empty($rs_pola_shift)) {
+				$qi_pola_shift = $db
+					->query('insert', 'htsemtd')
+					->set('id_hemxxmh',$id_insert_hemx)
+					->set($rs_pola_shift)
+					->exec();
+			}
+
+			//update hemjbmh tanggal keluar
+			if ($flag_1hari == 1) {
+				$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(1);
+			} else {
+				$tanggal_hitung = Carbon::parse($tanggal_mulai)->subDays(2);
+
+				// cek apakah hari libur
+				$qs_holiday = $db
+					->query('select', 'hthhdth' )
+					->get(['id'] )
+					->where('tanggal', $tanggal_hitung )
+					->exec();
+				$rs_holiday = $qs_holiday->fetch();
+
+				// jika hari libur maka mundur 4 hari
+				if (!empty($rs_holiday)) {
+					$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(4);
+				} else {
+					$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(2);
+				}
+			}
+
+			$qu_hemxxmh = $db
+				->query('update', 'hemjbmh')
+				->set('tanggal_keluar', $hemjbmh_tgl_akhir)
+				->where('id_hemxxmh', $id_hemxxmh )
 				->exec();
 			
 		} else {
