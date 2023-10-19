@@ -385,13 +385,30 @@
 
 				// atur hak akses
 				CekSelectHeaderH(tblhgtprth);
+
 				cariApprove();
+				ApproveLembur();
+				console.log(approve_lain);
 				// console.log(total_approve);
 				if (total_approve > 0) {
 					tblhgtprth.button( 'btnGeneratePresensi:name' ).disable();
 				} else {
-					tblhgtprth.button( 'btnGeneratePresensi:name' ).enable();
+					if (approve_lain > 0) {
+						notifyprogress = $.notify({
+							message: 'Tidak Bisa Generate!!! <br> Mohon Approve Overtime, Tukar Jadwal, Tukar Hari, Izin, dan Absen pada tanggal yang dipilih',
+							showProgress: true
+						}, {
+							z_index: 9999,
+							allow_dismiss: true, // Allow manual dismissal
+							type: 'danger',
+							delay: 0
+						});
+						tblhgtprth.button( 'btnGeneratePresensi:name' ).disable();
+					} else {
+						tblhgtprth.button( 'btnGeneratePresensi:name' ).enable();
+					}
 				}
+
 			} );
 
 			tblhgtprth.on( 'deselect', function () {
