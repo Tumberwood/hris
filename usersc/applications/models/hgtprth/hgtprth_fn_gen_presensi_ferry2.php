@@ -403,12 +403,18 @@
                     
                         //JIKA SHIFT OFF MAKA STATUS OFF
                         if($jadwal['id_htsxxmh'] == 1){
-                            $status_presensi_in = $jadwal['htsxxmh_kode'];
-                            $status_presensi_out = $jadwal['htsxxmh_kode'];
-                            $st_clock_in = $jadwal['htsxxmh_kode'];
-                            $st_clock_out = $jadwal['htsxxmh_kode'];
-                            $cek = 0;
-                            $next_step = 9;
+                            if ($st_clock_in == "OK" && $st_clock_out == "OK") { 
+                                $status_presensi_in = $jadwal['htsxxmh_kode'];
+                                $status_presensi_out = $jadwal['htsxxmh_kode']; 
+                                $cek = 0;
+                            } else {
+                                $status_presensi_in = $jadwal['htsxxmh_kode'];
+                                $status_presensi_out = $jadwal['htsxxmh_kode'];
+                                $st_clock_in = $jadwal['htsxxmh_kode'];
+                                $st_clock_out = $jadwal['htsxxmh_kode'];
+                                $cek = 0;
+                                $next_step = 9;
+                            }
                         }
 
                         //NEXT STEP
