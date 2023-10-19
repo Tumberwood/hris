@@ -76,10 +76,9 @@
                 console.log(json.data.peg_makan.range_awal);
                 console.log(range_akhir);
 
-                if (nama == "MAKAN" || nama == "MAKAN MANUAL") {
+                if (nama == "makan" || nama == "makan manual") {
                     // console.log(c_peg);
                     if(status == "invalid"){
-                        console.log('AKOAKOAKOKA');
                         edthtsprtd.field('htsprtd.id_hemxxmh').error( 'Pegawai Sudah Pernah Diinput pada Mesin Makan/Makan Manual!' );
                     }
                 }
