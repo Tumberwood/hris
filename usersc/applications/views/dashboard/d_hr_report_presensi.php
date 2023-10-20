@@ -162,6 +162,12 @@
 		if (tanggal_get === '') {
 			$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
 		} else {
+			id_hemxxmh_old = id_hem_get;
+			
+            // var $newOption = $("<option selected='selected'></option>").val(id_hemxxmh_old).text("The text");
+			
+			// $("#select_hemxxmh").append($newOption).trigger('change');
+
 			$('#start_date').datepicker('setDate', new Date(tanggal_get));
 		}
         // END datepicker init
@@ -182,8 +188,22 @@
 						return query;
 				},
 				processResults: function (data, params) {
+					var options = data.results.map(function (result) {
+						return {
+							id: result.id,
+							text: result.text
+						};
+					});
+
+					//add by ferry agar auto select 07 sep 23
+					if (params.page && params.page === 1) {
+						$('#select_hemxxmh').empty().select2({ data: options });
+					} else {
+						$('#select_hemxxmh').append(new Option(options[0].text, options[0].id, false, false)).trigger('change');
+					}
+
 					return {
-						results: data.results,
+						results: options,
 						pagination: {
 							more: true
 						}
@@ -581,9 +601,13 @@
 		$(document).ready(function() {
 			const prevButton = document.getElementById("prevButton");
         	const nextButton = document.getElementById("nextButton");
-
+			id_hemxxmh_old = id_hem_get;
             $('#report').hide();
-			
+			$('#select_hemxxmh').select2('open');
+
+			setTimeout(function() {
+				$('#select_hemxxmh').select2('close');
+			}, 5);
 			let counter = 0;
 
 			nextButton.addEventListener("click", function() {
@@ -630,7 +654,9 @@
 			});
 
 			if (tanggal_get != '' && id_hem_get != 0) {
-				$("#frmhtsprrd").submit();
+				id_hemxxmh = id_hem_get;
+				start_date = tanggal_get;
+				generateTable(counter);
 			}
 			
 			
