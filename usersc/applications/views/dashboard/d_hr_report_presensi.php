@@ -603,6 +603,8 @@
 					} else {
 						if (id_hem_get != 0) {
 							id_hemxxmh = id_hem_get;
+						} else {
+							id_hemxxmh = $('#select_hemxxmh').val();
 						}
 					}
 
