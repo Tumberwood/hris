@@ -69,7 +69,12 @@
 				<h3 class="text-center" id="nama_peg"></h3>
 				<br>
                 <div class="row">
-                    <div class="col-md-5">
+					<div class="col-md-1">
+                       <h4>Tanggal</h4> 
+                       <h4>Jadwal</h4> 
+                       <h4>Keterangan</h4> 
+                    </div>
+                    <div class="col-md-4" >
                         <h3 id="tanggal"></h3>
                         <h3 id="jadwal"></h3>
                         <h3 id="keterangan"></h3>
@@ -233,9 +238,9 @@
 						var page_total = parseInt(json.data5) + 1; 
 
 
-						$('#tanggal').html("Tanggal &nbsp; &nbsp; &nbsp; &nbsp;: " + json.data[0].tanggal);
-						$('#jadwal').html("Jadwal &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: " + json.data[0].st_jadwal);
-						$('#keterangan').html("Keterangan : " + json.data[0].keterangan);
+						$('#tanggal').html(" : " + json.data[0].tanggal);
+						$('#jadwal').html(" : " + json.data[0].st_jadwal);
+						$('#keterangan').html(" : " + json.data[0].keterangan);
 
 						$('#dep').html(" : " + json.data7.dep);
 						$('#kmj').html(" : " + json.data7.kmj);
