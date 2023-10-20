@@ -45,12 +45,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">												
-                        <label class="col-sm-2 col-form-label">Employee</label>
-                        <div class="col-sm-4">
-                            <select class="form-control" id="select_hemxxmh" name="select_hemxxmh"></select>
-                        </div>
-                    </div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Employee</label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<div class="row">
+									<div class="col-md-10">
+										<select class="form-control" id="select_hemxxmh" name="select_hemxxmh"></select>
+									</div>
+									<div class="col-md-2">
+										<button class="btn btn-danger" id="clearSelect"><i class="fa fa-times"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
                     <div class="form-group row">
                         <div class="col-lg-4">
                             <button class="btn btn-primary" type="submit" id="go">Submit</button>
@@ -162,12 +172,6 @@
 		if (tanggal_get === '') {
 			$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
 		} else {
-			id_hemxxmh_old = id_hem_get;
-			
-            // var $newOption = $("<option selected='selected'></option>").val(id_hemxxmh_old).text("The text");
-			
-			// $("#select_hemxxmh").append($newOption).trigger('change');
-
 			$('#start_date').datepicker('setDate', new Date(tanggal_get));
 		}
         // END datepicker init
@@ -175,7 +179,6 @@
         // BEGIN select2 init
         $("#select_hemxxmh").select2({
 			placeholder: 'Ketik atau TekanTanda Panah Kanan',
-			allowClear: true,
 			ajax: {
 				url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
 				dataType: 'json',
@@ -268,8 +271,6 @@
 						$('#stat').html(" : " + json.data7.stat);
 						$('#STATUS').html(" : " + json.data7.STATUS);
 						$('#lev').html(" : " + json.data7.lev);
-						// $('#jadwal').html("Jadwal &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: " + json.data7[0].st_jadwal);
-						// $('#keterangan').html("Keterangan : " + json.data7[0].keterangan);
 
 						$('#nama_peg').text(json.data7.nama);
 						$('#paging').text( page_now + " / " + page_total);
@@ -602,12 +603,20 @@
 			const prevButton = document.getElementById("prevButton");
         	const nextButton = document.getElementById("nextButton");
 			id_hemxxmh_old = id_hem_get;
+			
             $('#report').hide();
+
 			$('#select_hemxxmh').select2('open');
 
 			setTimeout(function() {
 				$('#select_hemxxmh').select2('close');
 			}, 5);
+
+			$("#clearSelect").click(function () {
+				$("#select_hemxxmh").val(null).trigger('change');
+				id_hem_get = 0;
+			});
+
 			let counter = 0;
 
 			nextButton.addEventListener("click", function() {
