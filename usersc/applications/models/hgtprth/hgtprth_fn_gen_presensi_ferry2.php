@@ -1154,7 +1154,7 @@
 
                         //Cek apakah Ada TI
                         $pot_ti = 0;
-                        if ($durasi_lembur_ti > 0) {
+                        if ($durasi_lembur_total_jam > 0) { //revisi 23 oct, non istirahat pun dipotong TI
                             $pot_ti = $potongan_ti_jam;
                             $pot_jam = $pot_jam - $potongan_ti_jam;
                         }
