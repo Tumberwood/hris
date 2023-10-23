@@ -498,12 +498,12 @@
                                             if ($clock_in == null) {
                                                 $tanggal_jam_izin_awal = $tanggal . " " . $izin_dinas_in['jam_awal']; //kalau no CO maka diambil jam izin
                                                 $carbon_ci = new Carbon($clock_in);
-                                                $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_awal_toleransi);
+                                                $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
 
                                                 // $pot_jam_late_cek     = 0;
                                             } else {
                                                 $carbon_ci = new Carbon($clock_in);
-                                                $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_awal_toleransi);
+                                                $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
                                             }
                                             // hitung potongan jam late
                                             $pot_jam_late   = ceil($pot_jam_late_cek/60);
@@ -548,7 +548,7 @@
                                         $pot_jam_late_cek     = 0;
                                     } else {
                                         $carbon_ci = new Carbon($clock_in);
-                                        $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_awal_toleransi);
+                                        $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
                                     }
                                     // hitung potongan jam late
                                     $pot_jam_late   = ceil($pot_jam_late_cek/60);
@@ -598,6 +598,15 @@
                                     );
                             $rs_grup = $qs_grup->fetch();
 
+                            // if ($id_hemxxmh == 1294) {
+                            //     $karbon_co = new Carbon($clock_out);
+                            //     $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir_min1);
+                            //     $pot_jam_early   = ceil($pot_jam_early_cek/60);
+                            //     print_r($rs_grup['jumlah_grup']);
+                            //     print_r(' pot_jam_early_cek '.$pot_jam_early_cek);
+                            //     print_r(' pot_jam_early = '.$pot_jam_early);
+                            // }
+
                             if(!empty($rs_htlxxrh_dinas_out) ){
                                 foreach ($rs_htlxxrh_dinas_out as $key => $izin_dinas_out) {
                                     $kode_izin[] = $izin_dinas_out['htlxxmh_kode'] . " [" . $izin_dinas_out['htlxxrh_kode'] . "]";
@@ -626,9 +635,18 @@
                                         if ($clock_out == null) {
                                             $tanggal_jam_izin_akhir = $tanggal . " " . $izin_dinas_out['jam_akhir']; //kalau no CO maka diambil jam izin
                                             $karbon_co = new Carbon($tanggal_jam_izin_akhir);
-                                            $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
 
-                                            // $pot_jam_early_cek     = 0;
+                                            if ($rs_grup['jumlah_grup'] != 4) { // valid ini saat != 4 maka ada potongan
+                                                //jika CO < akhir istirahat maka, jam akhir - 1
+                                                if ($clock_out < $tanggaljam_akhir_istirahat) {
+                                                    $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir_min1);
+                                                } else {
+                                                    $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
+                                                }
+                                            } else {
+                                                $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
+                                            }
+                                            
                                         } else {
                                             if ($rs_grup['jumlah_grup'] != 4) { // valid ini saat != 4 maka ada potongan
                                                 //jika CO < akhir istirahat maka, jam akhir - 1
