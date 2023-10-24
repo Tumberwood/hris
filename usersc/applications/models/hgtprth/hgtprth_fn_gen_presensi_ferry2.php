@@ -583,8 +583,26 @@
                             
                             $is_early_pot = 0;
 
-                            //Select Grup Shift
+                            //Select Grup Shift BARU 24 Oct
                             $qs_grup = $db
+                            ->raw()
+                            ->bind(':id_hemxxmh', $id_hemxxmh)
+                            ->exec('SELECT 
+                                        a.id_hemxxmh AS id_hemxxmh,
+                                        c.jumlah_grup
+                                    from htsemtd_new as a 
+                                    left join htsptth_new c ON c.id = a.id_htsptth_new
+                                    WHERE a.is_active = 1 AND c.is_active = 1 AND a.id_hemxxmh = :id_hemxxmh
+                                    group by a.id 
+                                    '
+                                    );
+                            $rs_grup = $qs_grup->fetch();
+                            if (!empty($rs_grup)) {
+                               $jumlah_grup = $rs_grup['jumlah_grup'];
+                            }
+                            
+                            // SELECT GRUP SHIFT LAMA
+                            $qs_grup2 = $db
                             ->raw()
                             ->bind(':id_hemxxmh', $id_hemxxmh)
                             ->exec('SELECT 
@@ -596,13 +614,16 @@
                                     group by a.id 
                                     '
                                     );
-                            $rs_grup = $qs_grup->fetch();
+                            $rs_grup2 = $qs_grup2->fetch();
+                            if (!empty($rs_grup2)) {
+                                $jumlah_grup = $rs_grup2['jumlah_grup'];
+                            }
 
                             // if ($id_hemxxmh == 1294) {
                             //     $karbon_co = new Carbon($clock_out);
                             //     $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir_min1);
                             //     $pot_jam_early   = ceil($pot_jam_early_cek/60);
-                            //     print_r($rs_grup['jumlah_grup']);
+                            //     print_r($jumlah_grup);
                             //     print_r(' pot_jam_early_cek '.$pot_jam_early_cek);
                             //     print_r(' pot_jam_early = '.$pot_jam_early);
                             // }
@@ -636,7 +657,7 @@
                                             $tanggal_jam_izin_akhir = $tanggal . " " . $izin_dinas_out['jam_akhir']; //kalau no CO maka diambil jam izin
                                             $karbon_co = new Carbon($tanggal_jam_izin_akhir);
 
-                                            if ($rs_grup['jumlah_grup'] != 4) { // valid ini saat != 4 maka ada potongan
+                                            if ($jumlah_grup != 4) { // valid ini saat != 4 maka ada potongan
                                                 //jika CO < akhir istirahat maka, jam akhir - 1
                                                 if ($clock_out < $tanggaljam_akhir_istirahat) {
                                                     $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir_min1);
@@ -648,7 +669,7 @@
                                             }
                                             
                                         } else {
-                                            if ($rs_grup['jumlah_grup'] != 4) { // valid ini saat != 4 maka ada potongan
+                                            if ($jumlah_grup != 4) { // valid ini saat != 4 maka ada potongan
                                                 //jika CO < akhir istirahat maka, jam akhir - 1
                                                 if ($clock_out < $tanggaljam_akhir_istirahat) {
                                                     $karbon_co = new Carbon($clock_out);
@@ -692,7 +713,7 @@
                                 }
 
                                 // if ($id_hemxxmh == 224) {
-                                    // print_r( $id_hemxxmh.' dengan Grup = ' .$rs_grup['jumlah_grup'] . ' ;<br>');
+                                    // print_r( $id_hemxxmh.' dengan Grup = ' .$jumlah_grup . ' ;<br>');
                                 // }
 
                                 //potongan untuk early yang belum ada izin
@@ -701,7 +722,7 @@
                                     if ($clock_out == null) {
                                         $pot_jam_early_cek     = 0;
                                     } else {
-                                        if ($rs_grup['jumlah_grup'] != 4) { // valid ini saat != 4 maka ada potongan
+                                        if ($jumlah_grup != 4) { // valid ini saat != 4 maka ada potongan
                                             //jika CO < akhir istirahat maka, jam akhir - 1
                                             if ($clock_out < $tanggaljam_akhir_istirahat) {
                                                 $karbon_co = new Carbon($clock_out);
