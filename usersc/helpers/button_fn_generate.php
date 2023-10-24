@@ -745,52 +745,54 @@
                                     className: 'btn btn-xs btn-danger',
                                     titleAttr: 'Void',
                                     action: function ( e, dt, node, config ) {
-                                        $.ajax( {
-                                            url: '../../../helpers/tr_fn_void.php',
-                                            dataType: 'json',
-                                            type: 'POST',
-                                            data: {
-                                                state : -9,
-                                                table_name: '<?php echo $table_name;?>',
-                                                id_transaksi: id_transaksi_h,
-                                            },
-                                            success: function ( json ) {
-                                                
-                                                if(is_need_inventory == 1){
-                                                    $.ajax( {
-                                                        url: '../../../helpers/fn_inventory_r.php',
-                                                        dataType: 'json',
-                                                        type: 'POST',
-                                                        data: {
-                                                            state          : -9,
-                                                            id_transaksi_h : id_transaksi_h,
-                                                            imtxxmh_kode   : imtxxmh_kode
-                                                        },
-                                                        success: function ( json ) {
-                                                            console.log('Inventory');
-                                                        }
-                                                    } );
-                                                }
+                                        if (confirm("Apakah anda yakin ingin melakukan Void pada data ini?")) {
+                                            $.ajax( {
+                                                url: '../../../helpers/tr_fn_void.php',
+                                                dataType: 'json',
+                                                type: 'POST',
+                                                data: {
+                                                    state : -9,
+                                                    table_name: '<?php echo $table_name;?>',
+                                                    id_transaksi: id_transaksi_h,
+                                                },
+                                                success: function ( json ) {
+                                                    
+                                                    if(is_need_inventory == 1){
+                                                        $.ajax( {
+                                                            url: '../../../helpers/fn_inventory_r.php',
+                                                            dataType: 'json',
+                                                            type: 'POST',
+                                                            data: {
+                                                                state          : -9,
+                                                                id_transaksi_h : id_transaksi_h,
+                                                                imtxxmh_kode   : imtxxmh_kode
+                                                            },
+                                                            success: function ( json ) {
+                                                                console.log('Inventory');
+                                                            }
+                                                        } );
+                                                    }
 
-                                                if(is_need_jurnal == 1){
-                                                    $.ajax( {
-                                                        url: '../../models/'+ "<?php echo $table_name . '/' . $table_name;?>" +'_jv.php',
-                                                        dataType: 'json',
-                                                        type: 'POST',
-                                                        data: {
-                                                            state           : -9,
-                                                            id_transaksi_h  : id_transaksi_h,
-                                                            imtxxmh_kode    : imtxxmh_kode
-                                                        },
-                                                        success: function ( json ) {
-                                                            console.log('Jurnal');
-                                                        }
-                                                    } );
+                                                    if(is_need_jurnal == 1){
+                                                        $.ajax( {
+                                                            url: '../../models/'+ "<?php echo $table_name . '/' . $table_name;?>" +'_jv.php',
+                                                            dataType: 'json',
+                                                            type: 'POST',
+                                                            data: {
+                                                                state           : -9,
+                                                                id_transaksi_h  : id_transaksi_h,
+                                                                imtxxmh_kode    : imtxxmh_kode
+                                                            },
+                                                            success: function ( json ) {
+                                                                console.log('Jurnal');
+                                                            }
+                                                        } );
+                                                    }
+                                                    
+                                                    <?php echo $table;?>.ajax.reload(null, false);
                                                 }
-                                                
-                                                <?php echo $table;?>.ajax.reload(null, false);
-                                            }
-                                        } );
+                                            } );
+                                        }
                                     }
                                 }
 
