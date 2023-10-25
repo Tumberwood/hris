@@ -1309,7 +1309,7 @@
                                         $lembur4 = 0;
 
                                         $lembur2_final = $lembur2 * 2;
-                                        $lembur3_final = 0;
+                                        $lembur3_final = $lembur3 * 3;
                                         $lembur4_final = 0;
                                     } else {
                                         if ($durasi_lembur_final > 1) {
