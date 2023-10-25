@@ -24,7 +24,7 @@
                                 <th>ID</th>
                                 <th>Kode</th>
                                 <th>Keterangan</th>
-                                <th>Amount</th>
+                                <th>Nominal</th>
                             </tr>
                         </thead>
                     </table>
