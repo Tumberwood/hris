@@ -186,7 +186,7 @@
 						d.show_inactive_status_gtxpkmh = show_inactive_status_gtxpkmh;
 					}
 				},
-				order: [[ 1, "asc" ]],
+				order: [[ 0, "asc" ]],
 				columns: [
 					{ data: "gtxpkmh.id",visible:false },
 					{ data: "gtxpkmh.kode" },
