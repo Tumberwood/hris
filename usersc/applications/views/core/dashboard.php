@@ -99,6 +99,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		console.log('tes webhook');
 		loadProfile();
 	} );// end of document.ready
 </script>
