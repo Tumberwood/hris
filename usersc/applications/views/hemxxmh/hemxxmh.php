@@ -620,21 +620,13 @@
 					},
 				]
 			} );
+			edthemxxmh.field('hemjbmh.tanggal_keluar').disable();
 			
 			edthemxxmh.on( 'preOpen', function( e, mode, action ) {
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthemxxmh.field('start_on').val(start_on);
 				edthemxxmh.field('status_aktif').hide();
 				edthemxxmh.field('hemjbmh.id_heyxxmh').disable();
-				
-				if(action == 'create'){
-					tblhemxxmh.rows().deselect();
-					edthemxxmh.field('hemjbmh.tanggal_keluar').val('');
-					edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
-				} else {
-					edthemxxmh.field('hemjbmh.tanggal_keluar').show();
-					edthemxxmh.field('hemjbmh.tanggal_keluar').val();
-				}
 
 				if (action == 'edit') {
 					edthemxxmh.field('status_aktif').show();
