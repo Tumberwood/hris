@@ -138,6 +138,7 @@
                 rp_lembur4,
 
                 jam_lembur,
+                jam_lembur_final,
                 lemburbersih,
                 pot_makan,
                 pot_jkkjkm,
@@ -692,6 +693,7 @@
                 FLOOR(rp_lembur4) AS rp_lembur4,
             
                 (lembur15 + lembur2 + lembur3 + lembur4) AS jam_lembur,
+                (lembur15_final + lembur2_final + lembur3_final + lembur4_final) AS jam_lembur_final,
                 FLOOR(IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0)) AS lemburbersih,
                 FLOOR(pot_makan) AS pot_makan,
                 FLOOR(pot_jkkjkm) AS pot_jkkjkm,
