@@ -51,6 +51,7 @@
 				Field::inst( 'hpyemtd.rp_lembur2' ),
 				Field::inst( 'hpyemtd.rp_lembur3' ),
 				Field::inst( 'hpyemtd.jam_lembur' ),
+				Field::inst( 'hpyemtd.jam_lembur_final' ),
 				Field::inst( 'hpyemtd.lemburbersih' ),
 				Field::inst( 'hpyemtd.pot_makan' ),
 				Field::inst( 'hpyemtd.var_cost' ), 

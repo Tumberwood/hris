@@ -25,6 +25,7 @@
 			->debug(true)
 			->fields(
 				Field::inst( 'hpyemtd.id' ),
+				Field::inst( 'hpyemtd.jam_lembur_final' ),
 				Field::inst( 'hpyemtd.id_hpyxxth' ),
 				Field::inst( 'hpyemtd.id_hemxxmh' ),
 				Field::inst( 'hpyemtd.id_heyxxmh' ),

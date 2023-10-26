@@ -74,6 +74,7 @@
 													<th>Lembur 3</th>
 													<th>Rp Lembur 3</th>
 													<th>Total Lembur (Jam)</th>
+													<th>Total Lembur (Jam Final)</th>
 													<th>Total Lembur (Rp) </th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
@@ -132,6 +133,7 @@
 													<th id="all_36"></th>
 													<th id="all_37"></th>
 													<th id="all_38"></th>
+													<th id="all_39"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -169,6 +171,7 @@
 													<th>Lembur 3</th>
 													<th>Rp Lembur 3</th>
 													<th>Total Lembur (Jam)</th>
+													<th>Total Lembur (Jam Final)</th>
 													<th>Total Lembur (Rp) </th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
@@ -227,6 +230,7 @@
 													<th id="kbm_36"></th>
 													<th id="kbm_37"></th>
 													<th id="kbm_38"></th>
+													<th id="kbm_39"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -264,6 +268,7 @@
 													<th>Lembur 3</th>
 													<th>Rp Lembur 3</th>
 													<th>Total Lembur (Jam)</th>
+													<th>Total Lembur (Jam Final)</th>
 													<th>Total Lembur (Rp) </th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
@@ -322,6 +327,7 @@
 													<th id="karyawan_36"></th>
 													<th id="karyawan_37"></th>
 													<th id="karyawan_38"></th>
+													<th id="karyawan_39"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -359,6 +365,7 @@
 													<th>Lembur 3</th>
 													<th>Rp Lembur 3</th>
 													<th>Total Lembur (Jam)</th>
+													<th>Total Lembur (Jam Final)</th>
 													<th>Total Lembur (Rp) </th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
@@ -417,6 +424,7 @@
 													<th id="kmj_36"></th>
 													<th id="kmj_37"></th>
 													<th id="kmj_38"></th>
+													<th id="kmj_39"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -454,6 +462,7 @@
 													<th>Lembur 3</th>
 													<th>Rp Lembur 3</th>
 													<th>Total Lembur (Jam)</th>
+													<th>Total Lembur (Jam Final)</th>
 													<th>Total Lembur (Rp) </th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
@@ -512,6 +521,7 @@
 													<th id="freelance_36"></th>
 													<th id="freelance_37"></th>
 													<th id="freelance_38"></th>
+													<th id="freelance_39"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -1002,6 +1012,10 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.jam_lembur_final",
+						class: "text-right "
+					},
+					{ 
 						data: "hpyemtd.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
@@ -1103,7 +1117,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 38; i++) {
+					for (var i = 9; i <= 39; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1335,6 +1349,10 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.jam_lembur_final",
+						class: "text-right "
+					},
+					{ 
 						data: "hpyemtd.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
@@ -1436,7 +1454,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 38; i++) {
+					for (var i = 9; i <= 39; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1664,6 +1682,10 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.jam_lembur_final",
+						class: "text-right "
+					},
+					{ 
 						data: "hpyemtd.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
@@ -1765,7 +1787,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 38; i++) {
+					for (var i = 9; i <= 39; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1993,6 +2015,10 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.jam_lembur_final",
+						class: "text-right "
+					},
+					{ 
 						data: "hpyemtd.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
@@ -2094,7 +2120,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 38; i++) {
+					for (var i = 9; i <= 39; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -2322,6 +2348,10 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.jam_lembur_final",
+						class: "text-right "
+					},
+					{ 
 						data: "hpyemtd.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
@@ -2423,7 +2453,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 38; i++) {
+					for (var i = 9; i <= 39; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
