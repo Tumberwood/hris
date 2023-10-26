@@ -9,16 +9,14 @@
 <?php
 	$nama_tabel    = 'materi_m';
 	$nama_tabels_d = [];
-	
-	// include('../../models/training_m/fn_materi_m.php'); // Include the PHP file with your data
-
-	// if (isset($data['rs_training_m']) && !empty($data['rs_training_m'])) {
-	// } else {
-	// 	echo 'No data available.';
-	// }
 ?>
 <style>
-
+	.trainingh3 {
+		color: black;
+	}
+	.trainingh3:hover {
+		color: blue;
+	}
 </style>
 <!-- begin content here -->
 
@@ -67,6 +65,7 @@
 				</div>
 				<div class="row">
 					<div class="col-lg-4" id="materi-kiri">
+						<button id="btnCreatesub_materi_m" class="btn btn-primary" title="New"><i class="fa fa-plus"></i> sub_materi</button>
 						<div id="ibox-container"></div>
 					</div>
 					<div class="col-lg-8" id="materi-kanan">
@@ -158,7 +157,7 @@
 									<a class="konten-tr" title="Fullscreen Materi"><i class="fa fa-chevron-up"></i></a>
 									<small class="float-right">${timeAgoText} ago</small>
 									<strong>
-										<h3 style="cursor: pointer; color: black;" 
+										<h3 class="trainingh3" style="cursor: pointer;" 
 											data-training-id="${train.training_m.id}">
 											${train.training_m.nama}
 										</h3>
@@ -209,8 +208,9 @@
 									keterangan_traning.innerHTML = `<br>Keterangan: <br> ${train.training_m.keterangan}<br>`; 
 									$("#tr-kanan").show();
 									id_training_m = train.training_m.id;
+									console.log(id_training_m);
 									$.ajax({
-										url: "../../models/sub_materi_m/sub_materi_m.php",
+										url: "../../models/sub_materi_m/sub_materi_m_data.php",
 										data: { id_training_m: id_training_m },
 										dataType: 'json',
 										success: function(data) {
@@ -600,6 +600,162 @@
 			} );
 
 			
+			//start datatables editor
+			edtsub_materi_m = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/sub_materi_m/sub_materi_m.php",
+					type: 'POST',
+					data: function (d){
+					}
+				},
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "sub_materi_m",
+						type: "hidden"
+					},	{
+						label: "id_training_m",
+						name: "sub_materi_m.id_training_m",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "sub_materi_m.is_active",
+                        type: "hidden",
+						def: 1
+					},	
+					{
+						label: "Nama <sup class='text-danger'>*<sup>",
+						name: "sub_materi_m.nama"
+					},	
+					{
+						label: "Keterangan",
+						name: "sub_materi_m.keterangan",
+						type: "textarea"
+					}
+				]
+			} );
+
+			edtsub_materi_m.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+				edtsub_materi_m.field('sub_materi_m.id_training_m').val(id_training_m);
+			});
+
+            edtsub_materi_m.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+					
+					// BEGIN of validasi sub_materi_m.nama
+					if ( ! edtsub_materi_m.field('sub_materi_m.nama').isMultiValue() ) {
+						nama = edtsub_materi_m.field('sub_materi_m.nama').val();
+						if(!nama || nama == ''){
+							edtsub_materi_m.field('sub_materi_m.nama').error( 'Wajib diisi!' );
+						}
+						
+						// BEGIN of cek unik sub_materi_m.nama
+						if(action == 'create'){
+							id_sub_materi_m = 0;
+						}
+						
+						$.ajax( {
+							url: '../../../helpers/validate_fn_unique.php',
+							dataType: 'json',
+							type: 'POST',
+							async: false,
+							data: {
+								table_name: 'sub_materi_m',
+								nama_field: 'nama',
+								nama_field_value: '"'+nama+'"',
+								id_transaksi: id_sub_materi_m
+							},
+							success: function ( json ) {
+								if(json.data.count == 1){
+									edtsub_materi_m.field('sub_materi_m.nama').error( 'Data tidak boleh kembar!' );
+								}
+							}
+						} );
+						// END of cek unik sub_materi_m.nama
+					}
+					// END of validasi sub_materi_m.nama
+					
+				}
+				
+				if ( edtsub_materi_m.inError() ) {
+					return false;
+				}
+			});
+			
+			edtsub_materi_m.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edtsub_materi_m.field('finish_on').val(finish_on);
+			});
+			
+			// Edit
+			$('.sub_materi').on('click', 'a.edit', function () {
+				
+				var id = $(this).data('id'); // ambil id yang di klik sekarang
+				var match = id.match(/\d+/); // karena hasil id yang didapat adalah row_1 string
+				var number = match ? parseInt(match[0]) : null; // jadinya kita ambil angkanya saja dan parse jadi integer
+
+				// ini adalah function untuk autofill data lama
+				val_edit('sub_materi_m', number, 0); // nama tabel dan id yang parse int agar dinamis bisa digunakan banyak tabel dan is_delete
+
+				// preopen saya pindah kesini karena biar data old ditampilkan dulu sebelum dibuka formnya
+				edtsub_materi_m.on( 'preOpen', function( e, mode, action ) {
+					edtsub_materi_m.field('sub_materi_m.nama').val(edit_val.nama);
+				});
+				edtsub_materi_m.title('Edit materi').buttons(
+					{
+						label: 'Submit',
+						className: 'btn btn-primary', // Add the Bootstrap primary color
+						action: function () {
+							this.submit(); // This will submit the form
+						}
+					}
+				).edit(id);
+			});
+
+			edtsub_materi_m.on('postSubmit', function (e, json) {
+				reloadtraining();
+			});
+
+			// Remove
+			$('.sub_materi').on('click', 'a.remove', function () {
+				var id = $(this).data('id'); // ambil id yang di klik sekarang
+				var match = id.match(/\d+/); // karena hasil id yang didapat adalah row_1 string
+				var number = match ? parseInt(match[0]) : null; // jadinya kita ambil angkanya saja dan parse jadi integer
+
+				edtsub_materi_m.title('Delete materi').buttons(
+					{
+						label: 'Delete',
+						className: 'btn btn-danger', // Add the Bootstrap primary color
+						action: function () {
+							val_edit('sub_materi_m', number, 1);
+							// location.reload();
+							reloadtraining();
+						}
+					}
+				).message('Anda yakin ingin menghapus data ini?').remove(id);
+			});
+			
+			document.getElementById("btnCreatesub_materi_m").addEventListener("click", function() {
+				edtsub_materi_m.title('Create sub_materi').buttons(
+					{
+						label: 'Submit',
+						className: 'btn btn-primary', // Add the Bootstrap primary color
+						action: function () {
+							this.submit(); // This will submit the form
+						}
+					}
+				).create();
+			});
 			//start datatables editor
 			edtmateri_m = new $.fn.dataTable.Editor( {
 				ajax: {
