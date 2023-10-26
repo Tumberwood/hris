@@ -40,13 +40,29 @@
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
 			Field::inst( 'training_m.is_approve' ),
-			Field::inst( 'training_m.is_defaultprogram' )
-		);
+			Field::inst( 'training_m.is_defaultprogram' ),
+			
+			Field::inst( 'files.web_path' ),
+			Field::inst( 'training_m.id_files_foto' )
+				->upload( Upload::inst(  $abs_us_root.$us_url_root.'usersc/files/training/__ID__.__EXTN__' )
+				->db( 'files', 'id', array(
+						'filename'    => Upload::DB_FILE_NAME,
+						'filesize'    => Upload::DB_FILE_SIZE,
+						'web_path'    => Upload::DB_WEB_PATH,
+						'system_path' => Upload::DB_SYSTEM_PATH,
+						'extn' 		  => Upload::DB_EXTN
+					) )
+					->validator( Validate::fileSize( 500000, 'Ukuran lampiran maksimal 500Kb' ) )
+					->validator( Validate::fileExtensions( array( 'png', 'jpg', 'jpeg'), "Hanya boleh format png, jpg atau jpeg" ) )
+				)
+		)
+		->leftJoin( 'files','files.id','=','training_m.id_files_foto' )
+		;
 	
 	// do not erase
 	// function show / hide inactive document
 	
-	// include( "training_m_extra.php" );
+	include( "training_m_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
 	$editor
