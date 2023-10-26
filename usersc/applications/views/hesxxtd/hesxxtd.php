@@ -227,7 +227,6 @@
 						format: 'DD MMM YYYY'
 					},
 					{
-						label: "Tanggal Selesai",
 						name: "hesxxtd.tanggal_selesai",
 						type: "datetime",
 						format: 'DD MMM YYYY',
@@ -337,15 +336,19 @@
 				}
 
 				if (val == 'Terminasi') {
+					edthesxxtd.field('hesxxtd.tanggal_selesai').label("Tanggal Selesai <sup class='text-danger'>*<sup>")
 					edthesxxtd.field('hesxxtd.tanggal_mulai').val('');
-					edthesxxtd.field('hesxxtd.tanggal_selesai').val('');
 					edthesxxtd.field('hesxxtd.tanggal_mulai').hide();
-					edthesxxtd.field('hesxxtd.tanggal_selesai').hide();
+					edthesxxtd.field('hesxxtd.nik_baru').val('');
+					edthesxxtd.field('hesxxtd.nik_baru').hide();
+					
 				} else {
+					edthesxxtd.field('hesxxtd.tanggal_selesai').label("Tanggal Selesai")
 					edthesxxtd.field('hesxxtd.tanggal_mulai').show();
 					edthesxxtd.field('hesxxtd.tanggal_selesai').show();
 					edthesxxtd.field('hesxxtd.tanggal_mulai').val();
 					edthesxxtd.field('hesxxtd.tanggal_selesai').val();
+					
 				}
 
 				//Jika Kontrak maka tanggal_awal baru == tanggal_akhir lama + 2;
@@ -381,54 +384,68 @@
 							edthesxxtd.field('hesxxtd.keputusan').error( 'Wajib diisi!' );
 						}
 					}
+					
 					if (keputusan == 'Tetap') {
 						if ( ! edthesxxtd.field('hesxxtd.id_hesxxmh_tetap').isMultiValue() ) {
 							id_hesxxmh_tetap = edthesxxtd.field('hesxxtd.id_hesxxmh_tetap').val();
-						if(!id_hesxxmh_tetap || id_hesxxmh_tetap == ''){
-							edthesxxtd.field('hesxxtd.id_hesxxmh_tetap').error( 'Wajib diisi!' );
+							if(!id_hesxxmh_tetap || id_hesxxmh_tetap == ''){
+								edthesxxtd.field('hesxxtd.id_hesxxmh_tetap').error( 'Wajib diisi!' );
+							}
 						}
 					}
-					}
+					
 					
 					// END of validasi hesxxtd.keputusan
 
 					// BEGIN of validasi hesxxtd.nik_baru 
-					nik_baru = edthesxxtd.field('hesxxtd.nik_baru').val();
-					if(!nik_baru || nik_baru == ''){
-						edthesxxtd.field('hesxxtd.nik_baru').error( 'Wajib diisi!' );
-					}
-					if(nik_baru <= 0 ){
-						edthesxxtd.field('hesxxtd.nik_baru').error( 'Inputan harus > 0' );
-					}
-					if(isNaN(nik_baru) ){
-						edthesxxtd.field('hesxxtd.nik_baru').error( 'Inputan harus berupa Angka!' );
-					}
-					if(nik_baru.length != 8 ){
-						edthesxxtd.field('hesxxtd.nik_baru').error( 'Inputan harus 8 Digit Angka!' );
-					}
-					//BEGIN of cek unik hesxxtd.kode
-						if(action == 'create'){
-							id_hemxxmh = 0;
-						}
+					if (keputusan != 'Terminasi') {
 						
-						$.ajax( {
-							url: '../../../helpers/validate_fn_unique.php',
-							dataType: 'json',
-							type: 'POST',
-							async: false,
-							data: {
-								table_name: 'hemxxmh',
-								nama_field: 'kode',
-								nama_field_value: '"' + nik_baru + '"',
-								id_transaksi: id_hemxxmh
-							},
-							success: function ( json ) {
-								if (json.data.count >= 1) {
-									edthesxxtd.field('hesxxtd.nik_baru').error( 'Data NIK tidak boleh kembar!' );		
-								}
+						nik_baru = edthesxxtd.field('hesxxtd.nik_baru').val();
+						if(!nik_baru || nik_baru == ''){
+							edthesxxtd.field('hesxxtd.nik_baru').error( 'Wajib diisi!' );
+						}
+						if(nik_baru <= 0 ){
+							edthesxxtd.field('hesxxtd.nik_baru').error( 'Inputan harus > 0' );
+						}
+						if(isNaN(nik_baru) ){
+							edthesxxtd.field('hesxxtd.nik_baru').error( 'Inputan harus berupa Angka!' );
+						}
+						if(nik_baru.length != 8 ){
+							edthesxxtd.field('hesxxtd.nik_baru').error( 'Inputan harus 8 Digit Angka!' );
+						}
+
+						//BEGIN of cek unik hesxxtd.kode
+							if(action == 'create'){
+								id_hemxxmh = 0;
 							}
-						} );
-					// END of validasi hesxxtd.nik_baru 
+							
+							$.ajax( {
+								url: '../../../helpers/validate_fn_unique.php',
+								dataType: 'json',
+								type: 'POST',
+								async: false,
+								data: {
+									table_name: 'hemxxmh',
+									nama_field: 'kode',
+									nama_field_value: '"' + nik_baru + '"',
+									id_transaksi: id_hemxxmh
+								},
+								success: function ( json ) {
+									if (json.data.count >= 1) {
+										edthesxxtd.field('hesxxtd.nik_baru').error( 'Data NIK tidak boleh kembar!' );		
+									}
+								}
+							} );
+						// END of validasi hesxxtd.nik_baru 
+					} 
+
+					if (keputusan == 'Terminasi') {
+						tanggal_selesai = edthesxxtd.field('hesxxtd.tanggal_selesai').val();
+						// console.log(tanggal_selesai);
+						if(tanggal_selesai == null || tanggal_selesai == "Invalid date"){
+							edthesxxtd.field('hesxxtd.tanggal_selesai').error( 'Wajib diisi!' );
+						}
+					}
 				}
 				
 				if ( edthesxxtd.inError() ) {

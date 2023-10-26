@@ -179,7 +179,6 @@
 			->set('id_hesxxmh',$id_hesxxmh)
 			->set($rs_hemjbmh)
 			->set('tanggal_masuk',$tanggal_mulai)
-			->set('tanggal_keluar',$tanggal_selesai)
 			->exec();
 
 			$qi_hemdcmh = $db
@@ -262,12 +261,7 @@
 				->exec();
 			
 		} else {
-			if ($keputusan == 'Terminasi') {
-				$id_har = 3;
-			}  else if ($keputusan == 'Rekontrak') {
-				$id_hesxxmh = 2;
-				$id_har = 2;
-			}
+			$id_har = 3;
 			
 			$qi_hemjbrd = $db
 			->query('insert', 'hemjbrd')
@@ -297,6 +291,12 @@
 			->set('tanggal_awal',$tanggal_mulai)
 			->set('tanggal_akhir',$tanggal_selesai)
 			->exec();
+
+			$qu_hemxxmh = $db
+				->query('update', 'hemjbmh')
+				->set('tanggal_keluar', $tanggal_selesai)
+				->where('id_hemxxmh', $id_hemxxmh )
+				->exec();
 		}
 
 	}elseif($state == 2){
