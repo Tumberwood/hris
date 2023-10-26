@@ -114,6 +114,8 @@
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_htscctd = show_inactive_status_htscctd;
+						d.start_date = start_date;
+						d.end_date = end_date;
 					}
 				},
 				table: "#tblhtscctd",
