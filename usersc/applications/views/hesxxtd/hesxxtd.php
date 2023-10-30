@@ -348,6 +348,8 @@
 					edthesxxtd.field('hesxxtd.tanggal_selesai').show();
 					edthesxxtd.field('hesxxtd.tanggal_mulai').val();
 					edthesxxtd.field('hesxxtd.tanggal_selesai').val();
+					edthesxxtd.field('hesxxtd.nik_baru').val();
+					edthesxxtd.field('hesxxtd.nik_baru').show();
 					
 				}
 

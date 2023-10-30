@@ -120,11 +120,13 @@
 
 		if ($keputusan != 'Terminasi') {
 			$is_htpr_no_hemxxmh = 0;
+			$is_per_karyawan = 1;
 			if ($keputusan == 'Rekontrak') {
 				$id_hesxxmh = 2;
 			} else if ($keputusan == 'Kontrak') {
 				if ($rs_flag_status['id_hesxxmh'] == 3) {
 					$flag_1hari = 1;
+					$is_per_karyawan = 0;
 				}
 				$id_hesxxmh = 2;
 				$is_htpr_no_hemxxmh = 1;
@@ -172,6 +174,28 @@
 				}
 			}
 
+			if ($is_per_karyawan == 1) {
+				$qi_htpr = $db
+					->raw()
+					->bind(':id_insert_hemx', $id_insert_hemx)
+					->bind(':id_hemxxmh', $id_hemxxmh)
+					->exec(' INSERT INTO htpr_hemxxmh
+							(
+								id_hemxxmh,
+								id_hpcxxmh,
+								tanggal_efektif,
+								nominal
+							)
+							SELECT
+								:id_insert_hemx,
+								a.id_hpcxxmh,
+								a.tanggal_efektif,
+								a.nominal
+							FROM htpr_hemxxmh AS a
+							WHERE a.id_hemxxmh = :id_hemxxmh
+							'
+							);
+			}
 			
 			$qi_hemjbmh = $db
 			->query('insert', 'hemjbmh')
