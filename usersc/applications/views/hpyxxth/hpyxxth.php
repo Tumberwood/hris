@@ -1026,12 +1026,12 @@
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pph21_back",
+						data: "hpyemtd.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lemburbersih",
+						data: "hpyemtd.pph21_back",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -1372,12 +1372,12 @@ var pot_jam = parseFloat(row.hpyemtd.pot_jam);
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pph21_back",
+						data: "hpyemtd.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lemburbersih",
+						data: "hpyemtd.pph21_back",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -1714,12 +1714,12 @@ var pot_jam = parseFloat(row.hpyemtd.pot_jam);
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pph21_back",
+						data: "hpyemtd.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lemburbersih",
+						data: "hpyemtd.pph21_back",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -2056,12 +2056,12 @@ var pot_jam = parseFloat(row.hpyemtd.pot_jam);
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pph21_back",
+						data: "hpyemtd.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lemburbersih",
+						data: "hpyemtd.pph21_back",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -2398,12 +2398,12 @@ var pot_jam = parseFloat(row.hpyemtd.pot_jam);
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pph21_back",
+						data: "hpyemtd.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lemburbersih",
+						data: "hpyemtd.pph21_back",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
