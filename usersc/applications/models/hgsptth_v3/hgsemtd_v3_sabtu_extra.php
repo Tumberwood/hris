@@ -129,7 +129,7 @@
 						LEFT JOIN htsxxmh AS d ON d.id = a.id_htsxxmh
 						WHERE a.nama = "sabtu" AND DAYOFWEEK(c.sabtu) = 7 AND a.id_hemxxmh = :id_hemxxmh;
 						'
-					);
+				);
 		})
 		->on('preEdit',function( $editor, $id, $values ) {
 			$qs_jadwal = $editor->db()

@@ -460,6 +460,7 @@
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
+				tblhgsptth_v3.ajax.reload(null,false);
 			} );
 			
 			//start datatables
@@ -497,7 +498,7 @@
 					?>
 					{
 						text: '<i class="fa fa-google"></i>',
-						name: 'btnGeneratePresensi',
+						name: 'btnGenJadwal',
 						className: 'btn btn-xs btn-outline',
 						titleAttr: '',
 						action: function ( e, dt, node, config ) {
@@ -522,8 +523,6 @@
 									tanggal_awal		: tanggal_awal_select,
 									tanggal_akhir		: tanggal_akhir_select,
 									dari_tanggal		: dari_tanggal_select,
-									id_htsptth_v3			: id_htsptth_v3,
-									tipe			: tipe,
 									timestamp			: timestamp
 								},
 								success: function ( json ) {
@@ -563,7 +562,7 @@
 								tblhgsemtd_v3_minggu_s3
 								];
 				CekInitHeaderHD(tblhgsptth_v3, tbl_details);
-				tblhgsptth_v3.button( 'btnGeneratePresensi:name' ).disable();
+				tblhgsptth_v3.button( 'btnGenJadwal:name' ).disable();
 			} );
 			
 			tblhgsptth_v3.on( 'select', function( e, dt, type, indexes ) {
@@ -592,7 +591,11 @@
 								tblhgsemtd_v3_minggu_s3
 								];
 				CekSelectHeaderHD(tblhgsptth_v3, tbl_details);
-				tblhgsptth_v3.button( 'btnGeneratePresensi:name' ).enable();
+				if (dari_tanggal_select != null) {
+					tblhgsptth_v3.button( 'btnGenJadwal:name' ).enable();
+				} else {
+					tblhgsptth_v3.button( 'btnGenJadwal:name' ).disable();
+				}
 			} );
 			
 			tblhgsptth_v3.on( 'deselect', function () {
@@ -622,7 +625,7 @@
 								tblhgsemtd_v3_minggu_s3
 								];
 				CekDeselectHeaderHD(tblhgsptth_v3, tbl_details);
-				tblhgsptth_v3.button( 'btnGeneratePresensi:name' ).disable();
+				tblhgsptth_v3.button( 'btnGenJadwal:name' ).disable();
 			} );
 
 			$("#frmhgsptth_v3").submit(function(e) {

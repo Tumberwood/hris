@@ -50,13 +50,7 @@
 					->setValue($_SESSION['user']),
 				Field::inst( 'hgsemtd_v3.created_on' )
 				->set( Field::SET_CREATE ),
-				Field::inst( 'hgsemtd_v3.senin' ),
-				Field::inst( 'hgsemtd_v3.selasa' ),
-				Field::inst( 'hgsemtd_v3.rabu' ),
-				Field::inst( 'hgsemtd_v3.kamis' ),
-				Field::inst( 'hgsemtd_v3.jumat' ),
-				Field::inst( 'hgsemtd_v3.sabtu' ),
-				Field::inst( 'hgsemtd_v3.minggu' ),
+				
 				Field::inst( 'hgsemtd_v3.jam' ),
 				
 				
