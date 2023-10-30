@@ -474,6 +474,7 @@
 						// 	// }
 						// },
 						display: function ( fileId, counter ) {
+							console.log(fileId);
 							if (fileId > 0){
 								return '<img src="'+edttraining_m.file( 'files', fileId ).web_path+'"/>';
 							}
