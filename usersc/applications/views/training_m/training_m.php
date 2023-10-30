@@ -571,7 +571,7 @@
 				edttraining_m.on( 'preOpen', function( e, mode, action ) {
 					edttraining_m.field('training_m.nama').val(edit_val.nama);
 					edttraining_m.field('training_m.keterangan').val(edit_val.keterangan);
-					// edttraining_m.field('training_m.id_files_foto').val(edit_val.id_files_foto);
+					edttraining_m.field('training_m.id_files_foto').val(edit_val.id_files_foto);
 				});
 
 				edttraining_m.title('Edit materi').buttons(
