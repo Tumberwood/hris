@@ -72,6 +72,8 @@
 				Field::inst( 'hpyemtd.gaji_bersih' ), 
 				Field::inst( 'hpyemtd.bulat' ), 
 				Field::inst( 'hpyemtd.gaji_terima' ), 
+				Field::inst( 'hpyemtd.pot_jam' ), 
+				Field::inst( 'hpyemtd.pph21_back' ), 
 
 				Field::inst( 'hetxxmh.nama' ),
 				Field::inst( 'hodxxmh.nama' ),
