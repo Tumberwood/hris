@@ -464,14 +464,19 @@
 						label: "Thumbnail <sup class='text-danger'>*<sup>",
 						name: "training_m.id_files_foto",
 						type: "upload",
-						display: function ( fileId, counter, action ) {
-							console.log(fileId);
-							if(fileId > 0){
+						// display: function ( fileId, counter, action ) {
+						// 	console.log(fileId);
+						// 	if(fileId > 0){
+						// 		return '<img src="'+edttraining_m.file( 'files', fileId ).web_path+'"/>';
+						// 	} 
+						// 	// else {
+						// 	// 	return '<img src="'+fileId+'"/>';
+						// 	// }
+						// },
+						display: function ( fileId, counter ) {
+							if (fileId > 0){
 								return '<img src="'+edttraining_m.file( 'files', fileId ).web_path+'"/>';
-							} 
-							// else {
-							// 	return '<img src="'+fileId+'"/>';
-							// }
+							}
 						},
 						noFileText: 'Belum ada lampiran'
 					}, 	{
