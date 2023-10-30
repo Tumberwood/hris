@@ -1292,7 +1292,7 @@
                                         // lembur 2 libur
                                         if ($durasi_lembur_final > 1 && $durasi_lembur_final <= 7 || $durasi_lembur_final >= 7) {
                                             if ($durasi_lembur_final > 7) {
-                                                $lembur2 = 7.5;
+                                                $lembur2 = 7.5; //sesuai dengan excel Bu Eva
                                             } else {
                                                 $lembur2 = $durasi_lembur_final;
                                             }
@@ -1302,7 +1302,7 @@
 
                                         // lembur3
                                         if ($durasi_lembur_final >= 8) {
-                                            $lembur3 = $durasi_lembur_final - 7.5;
+                                            $lembur3 = $durasi_lembur_final - 7.5; //sesuai dengan excel Bu Eva
                                         } else {
                                             $lembur3 = 0;
                                         }
