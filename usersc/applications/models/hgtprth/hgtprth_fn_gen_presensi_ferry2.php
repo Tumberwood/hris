@@ -1292,7 +1292,7 @@
                                         // lembur 2 libur
                                         if ($durasi_lembur_final > 1 && $durasi_lembur_final <= 7 || $durasi_lembur_final >= 7) {
                                             if ($durasi_lembur_final > 7) {
-                                                $lembur2 = 7;
+                                                $lembur2 = 7.5;
                                             } else {
                                                 $lembur2 = $durasi_lembur_final;
                                             }
@@ -1302,7 +1302,7 @@
 
                                         // lembur3
                                         if ($durasi_lembur_final >= 8) {
-                                            $lembur3 = $durasi_lembur_final - 7;
+                                            $lembur3 = $durasi_lembur_final - 7.5;
                                         } else {
                                             $lembur3 = 0;
                                         }
@@ -1632,6 +1632,10 @@
                             $is_pot_premi = 1;
                         }
 
+                        // revisi payroll, Late1/Late akan dipotong premi abs
+                        if ($st_clock_in == 'Late 1' || $st_clock_in = 'Late') {
+                            $is_pot_premi = 1;
+                        }
                         //INSERT KE REPORT PRESENSI
                         $qi_htsprrd = $db
                             ->query('insert', 'htsprrd')
