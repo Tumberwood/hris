@@ -224,13 +224,13 @@
                    if(a.id_hemxxmh = 67, 0, if(c.id_heyxxmh = 1, IFNULL(if(report_pot_premi >= 1, 0, premiabs), 0), 0)) AS premi_abs,
                     
                     -- hitung jkk
-                    if(id_heyxxmd = 3,IFNULL((persen_jkk / 100) * IFNULL(gaji_bpjs, 0),0),0) AS jkk,
+                    if(skip_c_bpjs_tk > 0, 0, if(id_heyxxmd = 3,IFNULL((persen_jkk / 100) * gaji_bpjs,0),0)) AS jkk, -- bro
                     
                     -- hitung jkm
-                    if(id_heyxxmd = 3,IFNULL((persen_jkm / 100) * IFNULL(gaji_bpjs, 0),0),0) AS jkm,
+                    if(skip_c_bpjs_tk > 0, 0, if(id_heyxxmd = 3,IFNULL((persen_jkm / 100) * gaji_bpjs,0),0)) AS jkm, -- bro
                     
                     -- trm_jkkjkm == jkk + jkm
-                    if(id_heyxxmd = 3,IFNULL(((persen_jkk / 100) * IFNULL(gaji_bpjs, 0)) + ((persen_jkm / 100) * IFNULL(gaji_bpjs, 0)), 0),0) AS trm_jkkjkm,
+                    if(skip_c_bpjs_tk > 0, 0, if(id_heyxxmd = 3,IFNULL(((persen_jkk / 100) * gaji_bpjs) + ((persen_jkm / 100) * gaji_bpjs), 0),0)) AS trm_jkkjkm, -- bro
                     
                     -- mulai lembur
                     sum_lembur15 AS lembur15,
@@ -247,18 +247,18 @@
                     IFNULL(pot_makan * pot_uang_makan, 0) AS pot_makan,
                     
                     -- pot_jkkjkm == jkk + jkm (sama dengan pot_jkkjkm)
-                    if(id_heyxxmd = 3,IFNULL(((persen_jkk / 100) * IFNULL(gaji_bpjs, 0)) + ((persen_jkm / 100) * IFNULL(gaji_bpjs, 0)), 0),0) AS pot_jkkjkm,
+                    if(skip_c_bpjs_tk > 0, 0, if(id_heyxxmd = 3,IFNULL(((persen_jkk / 100) * gaji_bpjs) + ((persen_jkm / 100) * gaji_bpjs), 0),0)) AS pot_jkkjkm, -- bro
                     
                     -- hitung pot_jht
-                    if(id_heyxxmd = 3,IFNULL((persen_jht_karyawan / 100) * IFNULL(gaji_bpjs, 0), 0),0) AS pot_jht,
+                    if(skip_c_bpjs_tk > 0, 0, if(id_heyxxmd = 3,IFNULL((persen_jht_karyawan / 100) * gaji_bpjs, 0),0)) AS pot_jht, -- bro
                     
                     -- hitung pot_bpjs
-                    if(id_heyxxmd = 3, IFNULL((persen_karyawan / 100) * IFNULL(gaji_bpjs, 0), 0),0) AS pot_bpjs,
+                    if(skip_c_bpjs_kes > 0, 0, if(id_heyxxmd = 3, IFNULL((persen_karyawan / 100) * gaji_bpjs, 0),0)) AS pot_bpjs, -- bro
                     
                     -- hitung pot_psiun
                     
                     -- revisi khusus yang sub tipe == karyawan
-                    if(id_heyxxmd = 3,IFNULL((persen_jp_karyawan / 100) * IFNULL(gaji_bpjs, 0), 0),0) AS pot_psiun,
+                    if(skip_c_bpjs_tk > 0, 0, if(id_heyxxmd = 3,IFNULL((persen_jp_karyawan / 100) * gaji_bpjs, 0),0)) AS pot_psiun, -- bro
                     
                     -- pph21 back
                     IFNULL(nominal_pph21_back,0) AS pph21_back,
@@ -743,6 +743,36 @@
                             GROUP BY id_hemxxmh
                         ) c_report_pot_jam
                     ) presensi_pot_jam ON presensi_pot_jam.id_hemxxmh = a.id_hemxxmh
+                    
+                    -- Cari bpjs_kes_exclude
+                    LEFT JOIN (
+                        SELECT
+                            id_hemxxmh,
+                            IFNULL(c_bpjs_kes, 0) AS skip_c_bpjs_kes
+                        FROM (
+                            SELECT
+                                COUNT(id) AS c_bpjs_kes,
+                                bpjs_kes.id_hemxxmh
+                            FROM bpjs_kes_exclude AS bpjs_kes
+                            WHERE bpjs_kes.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                            GROUP BY id_hemxxmh
+                        ) AS subquery
+                    ) bpjs_kes_exclude ON bpjs_kes_exclude.id_hemxxmh = a.id_hemxxmh
+                    
+                    -- Cari bpjs_tk_exclude
+                    LEFT JOIN (
+                        SELECT
+                            id_hemxxmh,
+                            IFNULL(c_bpjs_tk, 0) AS skip_c_bpjs_tk
+                        FROM (
+                            SELECT
+                                COUNT(id) AS c_bpjs_tk,
+                                bpjs_tk.id_hemxxmh
+                            FROM bpjs_tk_exclude AS bpjs_tk
+                            WHERE bpjs_tk.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                            GROUP BY id_hemxxmh
+                        ) AS subquery
+                    ) bpjs_tk_exclude ON bpjs_tk_exclude.id_hemxxmh = a.id_hemxxmh
                     
                 WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
             )
