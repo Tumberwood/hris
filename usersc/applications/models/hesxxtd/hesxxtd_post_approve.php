@@ -300,6 +300,37 @@
 				->where('id_hemxxmh', $id_hemxxmh )
 				->exec();
 			
+			// INSERT BULAN INI KE BPJS AGAR TIDAK KENA POTONGAN
+			$qi_bpjs_tk_first = $db
+				->raw()
+				->bind(':hemjbmh_tgl_akhir', $hemjbmh_tgl_akhir)
+				->exec('INSERT INTO bpjs_tk_exclude
+						(
+							id_hemxxmh,
+							tanggal
+						)
+						SELECT
+						' . $id_insert_hemx . ',
+						DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 0 MONTH), "%Y-%m-01")
+						;
+						'
+						);
+
+			$qi_bpjs_kes_first = $db
+				->raw()
+				->bind(':hemjbmh_tgl_akhir', $hemjbmh_tgl_akhir)
+				->exec('INSERT INTO bpjs_kes_exclude
+						(
+							id_hemxxmh,
+							tanggal
+						)
+						SELECT
+						' . $id_insert_hemx . ',
+						DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 0 MONTH), "%Y-%m-01")
+						;
+						'
+						);
+
 			// insert ke BPJS Kesehatan
 			$qi_bpjs_kes = $db
 			->raw()
@@ -331,10 +362,29 @@
 					' . $id_insert_hemx . ',
 						CASE
 							WHEN DAY(:hemjbmh_tgl_akhir) > 20 THEN DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 1 MONTH), "%Y-%m-01")
-							ELSE DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 0 MONTH), "%Y-%m-01")
+							ELSE NULL
 						END AS Result;
 					'
 					);
+
+			// insert ke BPJS TK Old id_hemxxmh (NIK LAMA)
+			$qi_bpjs_tk_old = $db
+			->raw()
+			->bind(':hemjbmh_tgl_akhir', $hemjbmh_tgl_akhir)
+			->exec('INSERT INTO bpjs_tk_exclude
+					(
+						id_hemxxmh,
+						tanggal
+					)
+					SELECT
+					' . $id_hemxxmh . ',
+						CASE
+							WHEN DAY(:hemjbmh_tgl_akhir) <= 20 THEN DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 0 MONTH), "%Y-%m-01")
+							ELSE NULL
+						END AS Result;
+					'
+					);
+
 
 		} else {
 			$id_har = 3;
