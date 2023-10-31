@@ -66,11 +66,12 @@
         }
     }
 
-    function createButton(className, iconClass, dataId) {
+    function createButton(className, iconClass, dataId, dataFoto) {
         const button = document.createElement("a");
         button.href = "#";
         button.className = className;
         button.setAttribute("data-id", dataId);
+        button.setAttribute("data-foto", dataFoto);
         button.innerHTML = `<i class="${iconClass}"></i>`;
         return button;
     }

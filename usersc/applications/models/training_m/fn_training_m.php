@@ -26,26 +26,27 @@
                 '
                 );
     $r_val_edit = $q_val_edit->fetch();
+    
+    if (!empty($r_val_edit)) {
+        if (isset($r_val_edit['id_files_foto'])) {
+            $id_files = $r_val_edit['id_files_foto'];
 
-    // if (!empty($r_val_edit)) {
-    //     if (isset($r_val_edit['id_files_foto'])) {
-    //         $id_files = $r_val_edit['id_files_foto'];
-
-    //         $q_val_files = $db
-    //             ->raw()
-    //             ->bind(':id_files', $id_files)
-    //             ->exec('SELECT
-    //                         *
-    //                     FROM files
-    //                     WHERE id = :id_files
-    //                     '
-    //                     );
-    //         $r_val_files = $q_val_files->fetch();
-
-    //         $link_foto = $r_val_files['web_path'];
-    //         $r_val_edit['link_foto'] = $link_foto;
-    //     }
-    // }
+            $q_val_files = $db
+                ->raw()
+                ->bind(':id_files', $id_files)
+                ->exec('SELECT
+                            *
+                        FROM files
+                        WHERE id = :id_files
+                        '
+                        );
+            $r_val_files = $q_val_files->fetch();
+            if (!empty($r_val_files)) {
+                $link_foto = $r_val_files['web_path'];
+                $r_val_edit['link_foto'] = $link_foto;
+            }
+        }
+    }
 
     if ($is_delete == 1) {
         $q_delete = $db

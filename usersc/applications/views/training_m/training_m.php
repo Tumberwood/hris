@@ -145,8 +145,8 @@
 								ibox.className = "feed-element";
 								let id = train.DT_RowId;
 
-								const editTraining = createButton("edit btn btn-primary btn-sm", "fa fa-pencil", train.training_m.id);
-								const removeTraining = createButton("remove btn btn-danger btn-sm", "fa fa-trash", train.training_m.id);
+								const editTraining = createButton("edit btn btn-primary btn-sm", "fa fa-pencil", train.training_m.id, train.training_m.id_files_foto);
+								const removeTraining = createButton("remove btn btn-danger btn-sm", "fa fa-trash", train.training_m.id, 0);
 								const createdOn = new Date(train.training_m.created_on);
 
 								trainingDibuat(createdOn);
@@ -464,21 +464,20 @@
 						label: "Thumbnail <sup class='text-danger'>*<sup>",
 						name: "training_m.id_files_foto",
 						type: "upload",
-						// display: function ( fileId, counter, action ) {
-						// 	console.log(fileId);
-						// 	if(fileId > 0){
-						// 		return '<img src="'+edttraining_m.file( 'files', fileId ).web_path+'"/>';
-						// 	} 
-						// 	// else {
-						// 	// 	return '<img src="'+fileId+'"/>';
-						// 	// }
-						// },
-						display: function ( fileId, counter ) {
+						display: function ( fileId, counter, action ) {
 							console.log(fileId);
-							if (fileId > 0){
+							if(fileId.length > 5){
+								return '<img src="'+fileId+'"/>';
+							} else {
 								return '<img src="'+edttraining_m.file( 'files', fileId ).web_path+'"/>';
 							}
 						},
+						// display: function ( fileId, counter ) {
+						// 	console.log(fileId);
+						// 	if (fileId > 0){
+						// 		return '<img src="'+edttraining_m.file( 'files', fileId ).web_path+'"/>';
+						// 	}
+						// },
 						noFileText: 'Belum ada lampiran'
 					}, 	{
 						label: "Keterangan<sup class='text-danger'>*<sup>",
@@ -544,7 +543,7 @@
 					return false;
 				}
 			});
-			
+
 			edttraining_m.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edttraining_m.field('finish_on').val(finish_on);
@@ -564,6 +563,8 @@
 
 			$(document).on('click', '.tr_panel a.edit', function () {
 				var id = $(this).data('id');
+				var foto = $(this).data('foto');
+				console.log(foto);
 
 				// ini adalah function untuk autofill data lama
 				val_edit('training_m', id, 0); // nama tabel dan id yang parse int agar dinamis bisa digunakan banyak tabel dan is_delete
@@ -572,9 +573,9 @@
 				edttraining_m.on( 'preOpen', function( e, mode, action ) {
 					edttraining_m.field('training_m.nama').val(edit_val.nama);
 					edttraining_m.field('training_m.keterangan').val(edit_val.keterangan);
-					edttraining_m.field('training_m.id_files_foto').val(edit_val.id_files_foto);
+					edttraining_m.field('training_m.id_files_foto').val(edit_val.link_foto);
 				});
-
+				
 				edttraining_m.title('Edit materi').buttons(
 					{
 						label: 'Submit',
