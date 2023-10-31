@@ -534,7 +534,7 @@
                                 a.id_hemxxmh
                             FROM htsprrd AS a
                             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
-                            WHERE a.tanggal BETWEEN job.tanggal_masuk AND :tanggal_akhir
+                            WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND :tanggal_akhir
                                 AND a.st_clock_in <> "OFF"
                             GROUP BY a.id_hemxxmh
                         ) AS report
