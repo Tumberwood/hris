@@ -9,6 +9,7 @@
 			$tanggal_join = new Carbon($values['hemjbmh']['tanggal_masuk']);
 			$tanggal_masuk = $tanggal_join->format('Y-m-d');
 			
+			// insert ke BPJS Kesehatan
 			$qi_bpjs_kes = $editor->db()
 			->raw()
 			->bind(':tanggal_masuk', $tanggal_masuk)
@@ -22,6 +23,24 @@
 						CASE
 							WHEN DAY(:tanggal_masuk) > 20 THEN DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 2 MONTH), "%Y-%m-01")
 							ELSE DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 1 MONTH), "%Y-%m-01")
+						END AS Result;
+					'
+					);
+					
+			// insert ke BPJS TK
+			$qi_bpjs_tk = $editor->db()
+			->raw()
+			->bind(':tanggal_masuk', $tanggal_masuk)
+			->exec('INSERT INTO bpjs_tk_exclude
+					(
+						id_hemxxmh,
+						tanggal
+					)
+					SELECT
+					' . $id . ',
+						CASE
+							WHEN DAY(:tanggal_masuk) > 20 THEN DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 1 MONTH), "%Y-%m-01")
+							ELSE DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 0 MONTH), "%Y-%m-01")
 						END AS Result;
 					'
 					);

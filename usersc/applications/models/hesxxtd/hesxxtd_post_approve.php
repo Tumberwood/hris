@@ -284,6 +284,42 @@
 				->where('id_hemxxmh', $id_hemxxmh )
 				->exec();
 			
+			// insert ke BPJS Kesehatan
+			$qi_bpjs_kes = $editor->db()
+			->raw()
+			->bind(':hemjbmh_tgl_akhir', $hemjbmh_tgl_akhir)
+			->exec('INSERT INTO bpjs_kes_exclude
+					(
+						id_hemxxmh,
+						tanggal
+					)
+					SELECT
+					' . $id . ',
+						CASE
+							WHEN DAY(:hemjbmh_tgl_akhir) > 20 THEN DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 2 MONTH), "%Y-%m-01")
+							ELSE DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 1 MONTH), "%Y-%m-01")
+						END AS Result;
+					'
+					);
+					
+			// insert ke BPJS TK
+			$qi_bpjs_tk = $editor->db()
+			->raw()
+			->bind(':hemjbmh_tgl_akhir', $hemjbmh_tgl_akhir)
+			->exec('INSERT INTO bpjs_tk_exclude
+					(
+						id_hemxxmh,
+						tanggal
+					)
+					SELECT
+					' . $id . ',
+						CASE
+							WHEN DAY(:hemjbmh_tgl_akhir) > 20 THEN DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 1 MONTH), "%Y-%m-01")
+							ELSE DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 0 MONTH), "%Y-%m-01")
+						END AS Result;
+					'
+					);
+
 		} else {
 			$id_har = 3;
 			
