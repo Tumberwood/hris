@@ -606,7 +606,7 @@
                             WHERE
                                 hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                 AND id_hpcxxmh = 105
-                                AND is_active = 1
+                                AND is_approve = 1
                             GROUP BY id_hemxxmh
                         ) AS subquery
                     ) pinjaman ON pinjaman.id_hemxxmh = a.id_hemxxmh
@@ -624,7 +624,7 @@
                             WHERE
                                 hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                 AND id_hpcxxmh = 104
-                                AND is_active = 1
+                                AND is_approve = 1
                             GROUP BY id_hemxxmh
                         ) AS subquery
                     ) klaim ON klaim.id_hemxxmh = a.id_hemxxmh
@@ -642,7 +642,7 @@
                             WHERE
                                 hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                 AND id_hpcxxmh = 103
-                                AND is_active = 1
+                                AND is_approve = 1
                             GROUP BY id_hemxxmh
                         ) AS subquery
                     ) denda_apd ON denda_apd.id_hemxxmh = a.id_hemxxmh
@@ -660,7 +660,7 @@
                             WHERE
                                 hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                 AND id_hpcxxmh = 106
-                                AND is_active = 1
+                                AND is_approve = 1
                             GROUP BY id_hemxxmh
                         ) AS subquery
                     ) pendapatan_lain ON pendapatan_lain.id_hemxxmh = a.id_hemxxmh
@@ -679,7 +679,7 @@
                                 hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                 AND id_hpcxxmh = 11
                                 AND plus_min = "Pengurang"
-                                AND is_active = 1
+                                AND is_approve = 1
                             GROUP BY id_hemxxmh
                         ) AS subquery
                     ) pph21 ON pph21.id_hemxxmh = a.id_hemxxmh
@@ -698,7 +698,7 @@
                                 hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                 AND id_hpcxxmh = 11
                                 AND plus_min = "Penambah"
-                                AND is_active = 1
+                                AND is_approve = 1
                             GROUP BY id_hemxxmh
                         ) AS subquery
                     ) pph21_back ON pph21_back.id_hemxxmh = a.id_hemxxmh
