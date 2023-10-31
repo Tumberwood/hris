@@ -184,30 +184,39 @@
                     c.id_heyxxmd,
                     c.grup_hk,
                     IFNULL(hari_kerja, 0) AS hari_kerja,
-                    
+                
                     -- gaji pokok
                     IFNULL( 
-                         if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
-                             hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_gp,
-                         nominal_gp),
-                     0) AS gp,
-                     
-                     -- tunjangan jabatan
+                        if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
+                            hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_gp,
+                            if(c.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir, 
+                                keluar_report / if(c.grup_hk = 1, 21, 25) * nominal_gp,
+                            nominal_gp)
+                        ),
+                    0) AS gp,
+                    
+                    -- tunjangan jabatan
                     IFNULL( 
-                         if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
-                             hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_t_jab,
-                         nominal_t_jab),
-                     0) AS t_jab,
+                        if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
+                            hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_t_jab,
+                            if(c.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir, 
+                                keluar_report / if(c.grup_hk = 1, 21, 25) * nominal_t_jab,
+                            nominal_t_jab)
+                        ),
+                    0) AS t_jab,
                      
                      -- var_cost
                      IFNULL(nominal_var_cost, 0) AS var_cost,
                      
-                     -- fix cost atau masa kerja
+                    -- fix cost atau masa kerja
                     IFNULL( 
-                         if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
-                             hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_mk,
-                         nominal_mk),
-                     0) AS fix_cost,
+                        if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
+                            hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_mk,
+                            if(c.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir, 
+                                keluar_report / if(c.grup_hk = 1, 21, 25) * nominal_mk,
+                            nominal_mk)
+                        ),
+                    0) AS fix_cost,
                      
                      -- premi absen dengan validasi jika ada izin/absen yang memotong premi maka premi absen == 0 atau hangus
                      -- revisi 2 Oct, premi absen hanya untuk organik, os tidak ada
@@ -539,6 +548,23 @@
                         ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh
                     ) AS hk ON hk.id_hemxxmh = a.id_hemxxmh
                     
+                    -- tanggal keluar
+                    LEFT JOIN (
+                        SELECT
+                            keluar_report,
+                            report.id_hemxxmh
+                        FROM (
+                            SELECT 
+                                COUNT(a.id) AS keluar_report,
+                                a.id_hemxxmh
+                            FROM htsprrd AS a
+                            LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
+                            WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND job.tanggal_keluar
+                                AND a.st_clock_in <> "OFF"
+                            GROUP BY a.id_hemxxmh
+                        ) AS report
+                    ) AS keluar ON keluar.id_hemxxmh = a.id_hemxxmh
+
                     -- select data dari hibtkmh untuk hitung bpjs
                     LEFT JOIN (
                         SELECT
