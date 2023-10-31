@@ -208,14 +208,16 @@
                      IFNULL(nominal_var_cost, 0) AS var_cost,
                      
                     -- fix cost atau masa kerja
-                    IFNULL( 
-                        if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
-                            hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_mk,
-                            if(c.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir, 
-                                keluar_report / if(c.grup_hk = 1, 21, 25) * nominal_mk,
-                            nominal_mk)
-                        ),
-                    0) AS fix_cost,
+                    if(c.id_heyxxmh = 1, 
+                        IFNULL( 
+                            if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
+                                hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_mk,
+                                if(c.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir, 
+                                    keluar_report / if(c.grup_hk = 1, 21, 25) * nominal_mk,
+                                nominal_mk)
+                            ),
+                        0) ,
+                     0) AS fix_cost,
                      
                      -- premi absen dengan validasi jika ada izin/absen yang memotong premi maka premi absen == 0 atau hangus
                      -- revisi 2 Oct, premi absen hanya untuk organik, os tidak ada
