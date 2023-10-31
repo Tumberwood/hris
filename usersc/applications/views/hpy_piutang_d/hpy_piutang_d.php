@@ -149,7 +149,6 @@
 									var query = {
 										id_hpcxxmh_old: id_hpcxxmh_old,
 										is_lain: 1,
-										is_jenis: is_jenis,
 										search: params.term || '',
 										page: params.page || 1
 									}
