@@ -6,6 +6,26 @@
 		})
 		->on('postCreate',function( $editor, $id, $values, $row ) {
 			// script diletakkan disini
+			$tanggal_join = new Carbon($values['hemjbmh']['tanggal_masuk']);
+			$tanggal_masuk = $tanggal_join->format('Y-m-d');
+			
+			$qi_bpjs_kes = $editor->db()
+			->raw()
+			->bind(':tanggal_masuk', $tanggal_masuk)
+			->exec('INSERT INTO bpjs_kes_exclude
+					(
+						id_hemxxmh,
+						tanggal
+					)
+					SELECT
+					' . $id . ',
+						CASE
+							WHEN DAY(:tanggal_masuk) > 20 THEN DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 2 MONTH), "%Y-%m-01")
+							ELSE DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 1 MONTH), "%Y-%m-01")
+						END AS Result;
+					'
+					);
+
 			$tanggal_akhir = $values['tanggal_akhir'];
 			$tanggal_akhir_kontrak = date("Y-m-d", strtotime($tanggal_akhir));
 			// print_r($tanggal_akhir_kontrak);

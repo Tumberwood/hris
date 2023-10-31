@@ -89,6 +89,8 @@
 			Field::inst( 'hovxxmh.nama' ),
 			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'hemdcmh.ktp_no' ),
+			Field::inst( 'hemdcmh.no_bpjs_tk' ),
+			Field::inst( 'hemdcmh.no_bpjs_kes' ),
 			Field::inst( 'hosxxmh.nama' ),
 			Field::inst( 'hevxxmh.nama' ),
 			Field::inst( 'hetxxmh.nama' ),

@@ -232,7 +232,11 @@
 						name: "hemxxmh.is_active",
                         type: "hidden",
 						def: 1
-					},	
+					},		
+					{
+						label: "Nama <sup class='text-danger'>*<sup>",
+						name: "hemxxmh.nama"
+					}, 	
 					{
 						label: "Kode <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.kode"
@@ -246,9 +250,13 @@
 						name: "hemdcmh.ktp_no"
 					}, 	
 					{
-						label: "Nama <sup class='text-danger'>*<sup>",
-						name: "hemxxmh.nama"
+						label: "No BPJS TK <sup class='text-danger'>*<sup>",
+						name: "hemdcmh.no_bpjs_tk"
 					}, 	
+					{
+						label: "No BPJS Kesehatan <sup class='text-danger'>*<sup>",
+						name: "hemdcmh.no_bpjs_kes"
+					}, 
 					{
 						label: "Divisi <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_hovxxmh",
@@ -713,6 +721,39 @@
 						edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus berupa Angka!' );
 					}
 					// END of validasi hemxxmh.kode_finger 
+
+					// BEGIN of validasi hemdcmh.no_bpjs_kes 
+					no_bpjs_kes = edthemxxmh.field('hemdcmh.no_bpjs_kes').val();
+					if(!no_bpjs_kes || no_bpjs_kes == ''){
+						edthemxxmh.field('hemdcmh.no_bpjs_kes').error( 'Wajib diisi!' );
+					}
+					// validasi min atau max angka
+					if(no_bpjs_kes <= 0 ){
+						edthemxxmh.field('hemdcmh.no_bpjs_kes').error( 'Inputan harus > 0' );
+					}
+					
+					// validasi angka
+					if(isNaN(no_bpjs_kes) ){
+						edthemxxmh.field('hemdcmh.no_bpjs_kes').error( 'Inputan harus berupa Angka!' );
+					}
+					// END of validasi hemxxmh.no_bpjs_kes 
+
+					// BEGIN of validasi hemdcmh.no_bpjs_tk 
+					no_bpjs_tk = edthemxxmh.field('hemdcmh.no_bpjs_tk').val();
+					if(!no_bpjs_tk || no_bpjs_tk == ''){
+						edthemxxmh.field('hemdcmh.no_bpjs_tk').error( 'Wajib diisi!' );
+					}
+					// validasi min atau max angka
+					if(no_bpjs_tk <= 0 ){
+						edthemxxmh.field('hemdcmh.no_bpjs_tk').error( 'Inputan harus > 0' );
+					}
+					
+					// validasi angka
+					if(isNaN(no_bpjs_tk) ){
+						edthemxxmh.field('hemdcmh.no_bpjs_tk').error( 'Inputan harus berupa Angka!' );
+					}
+					// END of validasi hemxxmh.no_bpjs_tk 
+
 					// BEGIN of validasi hemxxmh.kode_finger 
 					kode_finger = edthemxxmh.field('hemxxmh.kode_finger').val();
 					if(!kode_finger || kode_finger == ''){
