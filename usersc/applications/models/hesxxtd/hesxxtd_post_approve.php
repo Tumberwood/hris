@@ -205,10 +205,26 @@
 			->set('tanggal_masuk',$tanggal_mulai)
 			->exec();
 
+			// insert ke hemdcmh
 			$qi_hemdcmh = $db
-			->query('insert', 'hemdcmh')
-			->set('id_hemxxmh',$id_insert_hemx)
-			->exec();
+			->raw()
+			->bind(':id_hemxxmh', $id_hemxxmh)
+			->exec('INSERT INTO hemdcmh
+					(
+						id_hemxxmh,
+						ktp_no,
+						no_bpjs_tk,
+						no_bpjs_kes
+					)
+					SELECT
+					' . $id_insert_hemx . ',
+						a.ktp_no,
+						a.no_bpjs_tk,
+						a.no_bpjs_kes
+					FROM hemdcmh AS a
+					WHERE a.id_hemxxmh = :id_hemxxmh;
+					'
+					);
 		
 			$qi_hemjbrd = $db
 			->query('insert', 'hemjbrd')
@@ -285,7 +301,7 @@
 				->exec();
 			
 			// insert ke BPJS Kesehatan
-			$qi_bpjs_kes = $editor->db()
+			$qi_bpjs_kes = $db
 			->raw()
 			->bind(':hemjbmh_tgl_akhir', $hemjbmh_tgl_akhir)
 			->exec('INSERT INTO bpjs_kes_exclude
@@ -294,7 +310,7 @@
 						tanggal
 					)
 					SELECT
-					' . $id . ',
+					' . $id_insert_hemx . ',
 						CASE
 							WHEN DAY(:hemjbmh_tgl_akhir) > 20 THEN DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 2 MONTH), "%Y-%m-01")
 							ELSE DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 1 MONTH), "%Y-%m-01")
@@ -303,7 +319,7 @@
 					);
 					
 			// insert ke BPJS TK
-			$qi_bpjs_tk = $editor->db()
+			$qi_bpjs_tk = $db
 			->raw()
 			->bind(':hemjbmh_tgl_akhir', $hemjbmh_tgl_akhir)
 			->exec('INSERT INTO bpjs_tk_exclude
@@ -312,7 +328,7 @@
 						tanggal
 					)
 					SELECT
-					' . $id . ',
+					' . $id_insert_hemx . ',
 						CASE
 							WHEN DAY(:hemjbmh_tgl_akhir) > 20 THEN DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 1 MONTH), "%Y-%m-01")
 							ELSE DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 0 MONTH), "%Y-%m-01")
