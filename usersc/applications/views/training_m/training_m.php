@@ -464,14 +464,20 @@
 						label: "Thumbnail <sup class='text-danger'>*<sup>",
 						name: "training_m.id_files_foto",
 						type: "upload",
-						display: function ( fileId, counter, action ) {
+						// display: function ( fileId, counter, action ) {
+						// 	console.log(fileId);
+						// 	if(fileId > 0){
+						// 		return '<img src="'+edttraining_m.file( 'files', fileId ).web_path+'"/>';
+						// 	} 
+						// 	// else {
+						// 	// 	return '<img src="'+fileId+'"/>';
+						// 	// }
+						// },
+						display: function ( fileId, counter ) {
 							console.log(fileId);
-							if(fileId > 0){
+							if (fileId > 0){
 								return '<img src="'+edttraining_m.file( 'files', fileId ).web_path+'"/>';
-							} 
-							// else {
-							// 	return '<img src="'+fileId+'"/>';
-							// }
+							}
 						},
 						noFileText: 'Belum ada lampiran'
 					}, 	{
@@ -566,7 +572,7 @@
 				edttraining_m.on( 'preOpen', function( e, mode, action ) {
 					edttraining_m.field('training_m.nama').val(edit_val.nama);
 					edttraining_m.field('training_m.keterangan').val(edit_val.keterangan);
-					// edttraining_m.field('training_m.id_files_foto').val(edit_val.id_files_foto);
+					edttraining_m.field('training_m.id_files_foto').val(edit_val.id_files_foto);
 				});
 
 				edttraining_m.title('Edit materi').buttons(
