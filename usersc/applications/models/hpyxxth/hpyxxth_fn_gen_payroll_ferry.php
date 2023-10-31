@@ -568,6 +568,7 @@
                             WHERE
                                 htpr_hemxxmh.id_hpcxxmh = 2
                                 AND tanggal_efektif < :tanggal_awal
+                                AND is_active = 1
                         ) AS subquery
                         WHERE row_num = 1
                     ) tbl_gaji_bpjs ON tbl_gaji_bpjs.id_hemxxmh = a.id_hemxxmh
