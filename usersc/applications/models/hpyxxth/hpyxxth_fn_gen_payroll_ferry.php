@@ -298,6 +298,7 @@
                             WHERE
                                 id_hpcxxmh = 31
                                 AND tanggal_efektif < :tanggal_awal
+                                AND is_active = 1
                         ) AS masakerja ON masakerja.id_hevgrmh = job.id_hevgrmh
                         WHERE if(masakerja.tahun_max > 0, job.masa_kerja_year BETWEEN tahun_min AND tahun_max, job.masa_kerja_year > masakerja.tahun_min)
                         GROUP BY job.id_hemxxmh
@@ -320,6 +321,7 @@
                             WHERE
                                 htpr_hemxxmh.id_hpcxxmh = 1
                                 AND tanggal_efektif < :tanggal_awal
+                                AND is_active = 1
                         ) AS subquery
                         WHERE row_num = 1
                     ) tbl_htpr_hemxxmh ON tbl_htpr_hemxxmh.id_hemxxmh = a.id_hemxxmh
@@ -342,6 +344,7 @@
                             WHERE
                                 htpr_hemxxmh.id_hpcxxmh = 102
                                 AND tanggal_efektif < :tanggal_awal
+                                AND is_active = 1
                         ) AS subquery
                         WHERE row_num = 1
                     ) tbl_var_cost ON tbl_var_cost.id_hemxxmh = a.id_hemxxmh
@@ -364,6 +367,7 @@
                             WHERE
                                 htpr_hesxxmh.id_hpcxxmh = 36
                                 AND tanggal_efektif < :tanggal_awal
+                                AND is_active = 1
                         ) AS subquery
                         WHERE row_num = 1
                     ) lembur_mati ON lembur_mati.id_hesxxmh = c.id_hesxxmh
@@ -385,6 +389,7 @@
                             WHERE
                                 htpr_hesxxmh.id_hpcxxmh = 34
                                 AND tanggal_efektif < :tanggal_awal
+                                AND is_active = 1
                         ) AS subquery
                         WHERE row_num = 1
                     ) pot_uang_makan ON pot_uang_makan.id_hesxxmh = c.id_hesxxmh
@@ -406,6 +411,7 @@
                             WHERE
                                 htpr_hevxxmh.id_hpcxxmh = 32
                                 AND tanggal_efektif < :tanggal_awal
+                                AND is_active = 1
                         ) AS subquery
                         WHERE row_num = 1
                     ) t_jabatan ON t_jabatan.id_hevxxmh = c.id_hevxxmh
@@ -427,6 +433,7 @@
                             WHERE
                                 htpr_hevxxmh.id_hpcxxmh = 33
                                 AND tanggal_efektif < :tanggal_awal
+                                AND is_active = 1
                         ) AS subquery
                         WHERE row_num = 1
                     ) premi_abs ON premi_abs.id_hevxxmh = c.id_hevxxmh
@@ -599,6 +606,7 @@
                             WHERE
                                 hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                 AND id_hpcxxmh = 105
+                                AND is_active = 1
                             GROUP BY id_hemxxmh
                         ) AS subquery
                     ) pinjaman ON pinjaman.id_hemxxmh = a.id_hemxxmh
@@ -616,6 +624,7 @@
                             WHERE
                                 hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                 AND id_hpcxxmh = 104
+                                AND is_active = 1
                             GROUP BY id_hemxxmh
                         ) AS subquery
                     ) klaim ON klaim.id_hemxxmh = a.id_hemxxmh
@@ -633,6 +642,7 @@
                             WHERE
                                 hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                 AND id_hpcxxmh = 103
+                                AND is_active = 1
                             GROUP BY id_hemxxmh
                         ) AS subquery
                     ) denda_apd ON denda_apd.id_hemxxmh = a.id_hemxxmh
@@ -650,6 +660,7 @@
                             WHERE
                                 hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                 AND id_hpcxxmh = 106
+                                AND is_active = 1
                             GROUP BY id_hemxxmh
                         ) AS subquery
                     ) pendapatan_lain ON pendapatan_lain.id_hemxxmh = a.id_hemxxmh
@@ -668,6 +679,7 @@
                                 hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                 AND id_hpcxxmh = 11
                                 AND plus_min = "Pengurang"
+                                AND is_active = 1
                             GROUP BY id_hemxxmh
                         ) AS subquery
                     ) pph21 ON pph21.id_hemxxmh = a.id_hemxxmh
@@ -686,6 +698,7 @@
                                 hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                 AND id_hpcxxmh = 11
                                 AND plus_min = "Penambah"
+                                AND is_active = 1
                             GROUP BY id_hemxxmh
                         ) AS subquery
                     ) pph21_back ON pph21_back.id_hemxxmh = a.id_hemxxmh
