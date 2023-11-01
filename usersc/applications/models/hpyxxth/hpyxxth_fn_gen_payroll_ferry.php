@@ -141,6 +141,7 @@
                 jam_lembur_final,
                 lemburbersih,
                 pph21_back,
+                kompensasi_ak,
                 pot_makan,
                 pot_jkkjkm,
                 pot_jht,
@@ -269,7 +270,8 @@
                     IFNULL(nominal_klaim,0) AS pot_klaim,
                     IFNULL(nominal_denda_apd,0) AS pot_denda_apd,
                     IFNULL(nominal_pph21,0) AS pot_pph21,
-                    IFNULL(nominal_pendapatan_lain,0) AS pendapatan_lain
+                    IFNULL(nominal_pendapatan_lain,0) AS pendapatan_lain,
+                    IFNULL(nominal_kompensasi_ak,0) AS kompensasi_ak
                     
                     
                 FROM htsprrd AS a
@@ -797,6 +799,24 @@
                         ) AS subquery
                     ) bpjs_tk_exclude ON bpjs_tk_exclude.id_hemxxmh = a.id_hemxxmh
                     
+                    -- Cari kompensasi_ak rekontrak KAK id_hpc = 108
+                    LEFT JOIN (
+                        SELECT
+                            id_hemxxmh,
+                            IFNULL(nominal, 0) AS nominal_kompensasi_ak
+                        FROM (
+                            SELECT
+                                id_hemxxmh,
+                                SUM(nominal) as nominal
+                            FROM hpy_piutang_d
+                            WHERE
+                                hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                AND id_hpcxxmh = 108
+                                AND is_approve = 1
+                            GROUP BY id_hemxxmh
+                        ) AS subquery
+                    ) kompensasi_ak ON kompensasi_ak.id_hemxxmh = a.id_hemxxmh
+
                 WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
             )
             SELECT
@@ -829,6 +849,7 @@
                 (lembur15_final + lembur2_final + lembur3_final + lembur4_final) AS jam_lembur_final,
                 FLOOR(IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0)) AS lemburbersih,
                 pph21_back,
+                kompensasi_ak,
                 FLOOR(pot_makan) AS pot_makan,
                 FLOOR(pot_jkkjkm) AS pot_jkkjkm,
                 FLOOR(pot_jht) AS pot_jht,
@@ -841,27 +862,27 @@
                 pot_denda_apd,
                 pot_pph21,
                 FLOOR(
-                    (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back)
+                    (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak)
                         -
                        (IF(report_pot_jam >= 1, report_pot_jam * pengali / 173, 0) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + ((IF(report_pot_upah >= 1, report_pot_upah * pengali / IF(grup_hk = 1, 21, 25), 0)) ) + pot_bpjs + pot_psiun)
                  ) AS gaji_bersih,
                  FLOOR(
                      (
-                         (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back)
+                         (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak)
                             -
                        (IF(report_pot_jam >= 1, report_pot_jam * pengali / 173, 0) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + ((IF(report_pot_upah >= 1, report_pot_upah * pengali / IF(grup_hk = 1, 21, 25), 0)) ) + pot_bpjs + pot_psiun)
                      ) % 100
                  ) AS bulat,
                  FLOOR(
                      (
-                        (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back)
+                        (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak)
                             -
                        (IF(report_pot_jam >= 1, report_pot_jam * pengali / 173, 0) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + ((IF(report_pot_upah >= 1, report_pot_upah * pengali / IF(grup_hk = 1, 21, 25), 0)) ) + pot_bpjs + pot_psiun)
                      )
                          -
                     (
                         (
-                             (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back)
+                             (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak)
                                 -
                            (IF(report_pot_jam >= 1, report_pot_jam * pengali / 173, 0) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + ((IF(report_pot_upah >= 1, report_pot_upah * pengali / IF(grup_hk = 1, 21, 25), 0)) ) + pot_bpjs + pot_psiun)
                          ) % 100
