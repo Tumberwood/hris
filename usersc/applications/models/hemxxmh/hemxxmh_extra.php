@@ -6,75 +6,112 @@
 		})
 		->on('postCreate',function( $editor, $id, $values, $row ) {
 			// script diletakkan disini
+			$id_hesxxmh = $values['hemjbmh']['id_hesxxmh'];
+
 			$tanggal_join = new Carbon($values['hemjbmh']['tanggal_masuk']);
 			$tanggal_masuk = $tanggal_join->format('Y-m-d');
+
+			// Hanya Kontrak, Staff dan Tetap yang dipotong bpjs 3 bulan 
+			// Join Juni dipotong October (untuk estimasi program == 4 bulan)
+
+			if ($id_hesxxmh == 1 || $id_hesxxmh == 2 || $id_hesxxmh == 5) {
+				$qi_bpjs_tk_first = $editor->db()
+					->raw()
+					->bind(':tanggal_masuk', $tanggal_masuk)
+					->exec('INSERT INTO bpjs_tk_exclude
+							(
+								id_hemxxmh,
+								tanggal
+							)
+							SELECT
+							' . $id . ',
+							DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 4 MONTH), "%Y-%m-01")
+							;
+							'
+							);
+
+				$qi_bpjs_kes_first = $editor->db()
+					->raw()
+					->bind(':tanggal_masuk', $tanggal_masuk)
+					->exec('INSERT INTO bpjs_kes_exclude
+							(
+								id_hemxxmh,
+								tanggal
+							)
+							SELECT
+							' . $id . ',
+							DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 4 MONTH), "%Y-%m-01")
+							;
+							'
+							);
+			}
 			
-			// INSERT BULAN INI KE BPJS AGAR TIDAK KENA POTONGAN
-			$qi_bpjs_tk_first = $editor->db()
-				->raw()
-				->bind(':tanggal_masuk', $tanggal_masuk)
-				->exec('INSERT INTO bpjs_tk_exclude
-						(
-							id_hemxxmh,
-							tanggal
-						)
-						SELECT
-						' . $id . ',
-						DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 0 MONTH), "%Y-%m-01")
-						;
-						'
-						);
 
-			$qi_bpjs_kes_first = $editor->db()
-				->raw()
-				->bind(':tanggal_masuk', $tanggal_masuk)
-				->exec('INSERT INTO bpjs_kes_exclude
-						(
-							id_hemxxmh,
-							tanggal
-						)
-						SELECT
-						' . $id . ',
-						DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 0 MONTH), "%Y-%m-01")
-						;
-						'
-						);
+			// $qi_bpjs_tk_first = $editor->db()
+			// 	->raw()
+			// 	->bind(':tanggal_masuk', $tanggal_masuk)
+			// 	->exec('INSERT INTO bpjs_tk_exclude
+			// 			(
+			// 				id_hemxxmh,
+			// 				tanggal
+			// 			)
+			// 			SELECT
+			// 			' . $id . ',
+			// 			DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 0 MONTH), "%Y-%m-01")
+			// 			;
+			// 			'
+			// 			);
 
-			// insert ke BPJS Kesehatan
-			$qi_bpjs_kes = $editor->db()
-			->raw()
-			->bind(':tanggal_masuk', $tanggal_masuk)
-			->exec('INSERT INTO bpjs_kes_exclude
-					(
-						id_hemxxmh,
-						tanggal
-					)
-					SELECT
-					' . $id . ',
-						CASE
-							WHEN DAY(:tanggal_masuk) > 20 THEN DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 2 MONTH), "%Y-%m-01")
-							ELSE DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 1 MONTH), "%Y-%m-01")
-						END AS Result;
-					'
-					);
+			// $qi_bpjs_kes_first = $editor->db()
+			// 	->raw()
+			// 	->bind(':tanggal_masuk', $tanggal_masuk)
+			// 	->exec('INSERT INTO bpjs_kes_exclude
+			// 			(
+			// 				id_hemxxmh,
+			// 				tanggal
+			// 			)
+			// 			SELECT
+			// 			' . $id . ',
+			// 			DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 0 MONTH), "%Y-%m-01")
+			// 			;
+			// 			'
+			// 			);
+
+			// // insert ke BPJS Kesehatan
+			// $qi_bpjs_kes = $editor->db()
+			// ->raw()
+			// ->bind(':tanggal_masuk', $tanggal_masuk)
+			// ->exec('INSERT INTO bpjs_kes_exclude
+			// 		(
+			// 			id_hemxxmh,
+			// 			tanggal
+			// 		)
+			// 		SELECT
+			// 		' . $id . ',
+			// 			CASE
+			// 				WHEN DAY(:tanggal_masuk) > 20 THEN DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 2 MONTH), "%Y-%m-01")
+			// 				ELSE DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 1 MONTH), "%Y-%m-01")
+			// 			END AS Result;
+			// 		'
+			// 		);
 					
-			// insert ke BPJS TK
-			$qi_bpjs_tk = $editor->db()
-			->raw()
-			->bind(':tanggal_masuk', $tanggal_masuk)
-			->exec('INSERT INTO bpjs_tk_exclude
-					(
-						id_hemxxmh,
-						tanggal
-					)
-					SELECT
-					' . $id . ',
-						CASE
-							WHEN DAY(:tanggal_masuk) > 20 THEN DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 1 MONTH), "%Y-%m-01")
-							ELSE NULL
-						END AS Result;
-					'
-					);
+			// // insert ke BPJS TK
+			// $qi_bpjs_tk = $editor->db()
+			// ->raw()
+			// ->bind(':tanggal_masuk', $tanggal_masuk)
+			// ->exec('INSERT INTO bpjs_tk_exclude
+			// 		(
+			// 			id_hemxxmh,
+			// 			tanggal
+			// 		)
+			// 		SELECT
+			// 		' . $id . ',
+			// 			CASE
+			// 				WHEN DAY(:tanggal_masuk) > 20 THEN DATE_FORMAT(DATE_ADD(:tanggal_masuk, INTERVAL 1 MONTH), "%Y-%m-01")
+			// 				ELSE NULL
+			// 			END AS Result;
+			// 		'
+			// 		);
 
 			$tanggal_akhir = $values['tanggal_akhir'];
 			$tanggal_akhir_kontrak = date("Y-m-d", strtotime($tanggal_akhir));
