@@ -56,13 +56,15 @@
             ->bind(':id_hgsptth_v3', $id_hgsptth_v3)
             ->bind(':tanggal_awal', $tanggal_awal)
             ->bind(':tanggal_akhir', $tanggal_akhir)
-            ->exec('DELETE FROM hgsemtd_v3 AS a
-                    LEFT JOIN htssctd AS b ON b.id_hemxxmh = a.id_hemxxmh
+            ->exec('UPDATE htssctd AS b
+                    LEFT JOIN hgsemtd_v3 AS a ON a.id_hemxxmh = b.id_hemxxmh
+                    SET 
+                        b.is_active = 0
                     WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND a.id_hgsptth_v3 = :id_hgsptth_v3
-                        AND CASE
-                        WHEN a.nama = "sabtu" THEN DAYOFWEEK(tanggal) = 7
-                        WHEN a.nama = "minggu" THEN DAYOFWEEK(tanggal) = 1
-                        ELSE DAYOFWEEK(tanggal) BETWEEN 2 AND 6
+                    AND CASE
+                    WHEN a.nama = "sabtu" THEN DAYOFWEEK(tanggal) = 7
+                    WHEN a.nama = "minggu" THEN DAYOFWEEK(tanggal) = 1
+                    ELSE DAYOFWEEK(tanggal) BETWEEN 2 AND 6
                     END;
                     '
             );
