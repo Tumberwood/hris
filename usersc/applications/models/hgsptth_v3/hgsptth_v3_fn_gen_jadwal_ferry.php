@@ -132,7 +132,7 @@
                         FROM date_range
                         WHERE sabtu < :tanggal_akhir
                     )
-                    SELECT
+                    SELECT DISTINCT
                         c.sabtu,
                         a.id_hemxxmh,
                         a.id_htsxxmh,
