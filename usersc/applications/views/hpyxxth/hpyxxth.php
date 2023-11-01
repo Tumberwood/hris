@@ -80,7 +80,8 @@
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
 													<th class="text-danger">Pot JHT</th>
-													<th class="text-danger">Pot Upah</th>
+													<th class="text-danger">Pot Upah Harian</th>
+													<th class="text-danger">Pot Upah Jam</th>
 													<th class="text-danger">Pot BPJS</th>
 													<th class="text-danger">Pot Pensiun</th>
 													<th class="text-danger">Pot Pinjaman</th>
@@ -136,6 +137,7 @@
 													<th id="all_38"></th>
 													<th id="all_39"></th>
 													<th id="all_40"></th>
+													<th id="all_41"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -179,7 +181,8 @@
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
 													<th class="text-danger">Pot JHT</th>
-													<th class="text-danger">Pot Upah</th>
+													<th class="text-danger">Pot Upah Harian</th>
+													<th class="text-danger">Pot Upah Jam</th>
 													<th class="text-danger">Pot BPJS</th>
 													<th class="text-danger">Pot Pensiun</th>
 													<th class="text-danger">Pot Pinjaman</th>
@@ -235,6 +238,7 @@
 													<th id="kbm_38"></th>
 													<th id="kbm_39"></th>
 													<th id="kbm_40"></th>
+													<th id="kbm_41"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -278,7 +282,8 @@
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
 													<th class="text-danger">Pot JHT</th>
-													<th class="text-danger">Pot Upah</th>
+													<th class="text-danger">Pot Upah Harian</th>
+													<th class="text-danger">Pot Upah Jam</th>
 													<th class="text-danger">Pot BPJS</th>
 													<th class="text-danger">Pot Pensiun</th>
 													<th class="text-danger">Pot Pinjaman</th>
@@ -334,6 +339,7 @@
 													<th id="karyawan_38"></th>
 													<th id="karyawan_39"></th>
 													<th id="karyawan_40"></th>
+													<th id="karyawan_41"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -377,7 +383,8 @@
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
 													<th class="text-danger">Pot JHT</th>
-													<th class="text-danger">Pot Upah</th>
+													<th class="text-danger">Pot Upah Harian</th>
+													<th class="text-danger">Pot Upah Jam</th>
 													<th class="text-danger">Pot BPJS</th>
 													<th class="text-danger">Pot Pensiun</th>
 													<th class="text-danger">Pot Pinjaman</th>
@@ -433,6 +440,7 @@
 													<th id="kmj_38"></th>
 													<th id="kmj_39"></th>
 													<th id="kmj_40"></th>
+													<th id="kmj_41"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -476,7 +484,8 @@
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
 													<th class="text-danger">Pot JHT</th>
-													<th class="text-danger">Pot Upah</th>
+													<th class="text-danger">Pot Upah Harian</th>
+													<th class="text-danger">Pot Upah Jam</th>
 													<th class="text-danger">Pot BPJS</th>
 													<th class="text-danger">Pot Pensiun</th>
 													<th class="text-danger">Pot Pinjaman</th>
@@ -532,6 +541,7 @@
 													<th id="freelance_38"></th>
 													<th id="freelance_39"></th>
 													<th id="freelance_40"></th>
+													<th id="freelance_41"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -1052,11 +1062,12 @@
 					},
 					{ 
 						data: "hpyemtd.pot_upah",
-						render: function (data, type, row) {
-							var pot_upah = parseFloat(row.hpyemtd.pot_upah);
-var pot_jam = parseFloat(row.hpyemtd.pot_jam);
- return (pot_upah + pot_jam).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-						},
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_jam",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
@@ -1136,7 +1147,7 @@ var pot_jam = parseFloat(row.hpyemtd.pot_jam);
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 40; i++) {
+					for (var i = 9; i <= 41; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1398,11 +1409,12 @@ var pot_jam = parseFloat(row.hpyemtd.pot_jam);
 					},
 					{ 
 						data: "hpyemtd.pot_upah",
-						render: function (data, type, row) {
-							var pot_upah = parseFloat(row.hpyemtd.pot_upah);
-							var pot_jam = parseFloat(row.hpyemtd.pot_jam);
-							return (pot_upah + pot_jam).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-						},
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_jam",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
@@ -1482,7 +1494,7 @@ var pot_jam = parseFloat(row.hpyemtd.pot_jam);
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 40; i++) {
+					for (var i = 9; i <= 41; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1740,11 +1752,12 @@ var pot_jam = parseFloat(row.hpyemtd.pot_jam);
 					},
 					{ 
 						data: "hpyemtd.pot_upah",
-						render: function (data, type, row) {
-							var pot_upah = parseFloat(row.hpyemtd.pot_upah);
-var pot_jam = parseFloat(row.hpyemtd.pot_jam);
- return (pot_upah + pot_jam).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-						},
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_jam",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
@@ -1824,7 +1837,7 @@ var pot_jam = parseFloat(row.hpyemtd.pot_jam);
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 40; i++) {
+					for (var i = 9; i <= 41; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -2082,11 +2095,12 @@ var pot_jam = parseFloat(row.hpyemtd.pot_jam);
 					},
 					{ 
 						data: "hpyemtd.pot_upah",
-						render: function (data, type, row) {
-							var pot_upah = parseFloat(row.hpyemtd.pot_upah);
-var pot_jam = parseFloat(row.hpyemtd.pot_jam);
- return (pot_upah + pot_jam).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-						},
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_jam",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
@@ -2166,7 +2180,7 @@ var pot_jam = parseFloat(row.hpyemtd.pot_jam);
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 40; i++) {
+					for (var i = 9; i <= 41; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -2424,11 +2438,12 @@ var pot_jam = parseFloat(row.hpyemtd.pot_jam);
 					},
 					{ 
 						data: "hpyemtd.pot_upah",
-						render: function (data, type, row) {
-							var pot_upah = parseFloat(row.hpyemtd.pot_upah);
-var pot_jam = parseFloat(row.hpyemtd.pot_jam);
- return (pot_upah + pot_jam).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-						},
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_jam",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
@@ -2508,7 +2523,7 @@ var pot_jam = parseFloat(row.hpyemtd.pot_jam);
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 40; i++) {
+					for (var i = 9; i <= 41; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
