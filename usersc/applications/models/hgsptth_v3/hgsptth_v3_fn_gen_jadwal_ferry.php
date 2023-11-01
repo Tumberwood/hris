@@ -50,6 +50,23 @@
         $rs_find_old_gen = $qs_find_old_gen->fetch();
 
         if (!empty($rs_find_old_gen)) {
+            
+            $qd_jadwal = $db
+            ->raw()
+            ->bind(':id_hgsptth_v3', $id_hgsptth_v3)
+            ->bind(':tanggal_awal', $tanggal_awal)
+            ->bind(':tanggal_akhir', $tanggal_akhir)
+            ->exec('DELETE FROM hgsemtd_v3 AS a
+                    LEFT JOIN htssctd AS b ON b.id_hemxxmh = a.id_hemxxmh
+                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND a.id_hgsptth_v3 = :id_hgsptth_v3
+                        AND CASE
+                        WHEN a.nama = "sabtu" THEN DAYOFWEEK(tanggal) = 7
+                        WHEN a.nama = "minggu" THEN DAYOFWEEK(tanggal) = 1
+                        ELSE DAYOFWEEK(tanggal) BETWEEN 2 AND 6
+                    END;
+                    '
+            );
+
             $qs_peg = $db
             ->raw()
             ->bind(':dari_tanggal', $dari_tanggal)
@@ -78,7 +95,7 @@
                 
             ');
     
-            $qi_jadwal_sabtu = $db
+            $qi_jadwal = $db
             ->raw()
             ->bind(':id_hgsptth_v3', $id_hgsptth_v3)
             ->bind(':tanggal_awal', $tanggal_awal)
@@ -214,7 +231,7 @@
             ); 
         } else if ($berhasil == 2){
             $data = array(
-                'message' => 'Gagal Generate Jadwal, Hasil Pencarian untuk Inputan Dari Tanggal Yang Dipilih, dan Pola Shift yang Sama Tidak Ditemukan' , 
+                'message' => 'Gagal Generate Jadwal, Hasil Pencarian untuk Inputan "Dari Tanggal" Yang Dipilih Tidak Ditemukan' , 
                 'type_message' => 'danger',
                 'waktu'=> $awal . ' - ' . $akhir . ' /  ' . $awal->diffInSeconds($akhir)
             ); 

@@ -4,6 +4,21 @@
 			// script diletakkan disini
 		})
 		->on('postCreate',function( $editor, $id, $values, $row ) {
+
+			//DELETE SCHEDULE LAMA
+			$qd_schedule = $editor->db()
+				->raw()
+				->bind(':tanggal_awal', $tanggal_awal)
+				->bind(':tanggal_akhir', $tanggal_akhir)
+				->bind(':id_hemxxmh', $id_hemxxmh)
+				->exec('DELETE FROM htssctd
+						WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir 
+							AND DAYOFWEEK(tanggal) = 1 
+							AND id_hemxxmh = :id_hemxxmh 
+							;
+							'
+				);
+
 			$qs_jadwal = $editor->db()
 				->raw()
 				->bind(':id', $id)
@@ -156,7 +171,7 @@
 
 			if ($id_hemxxmh_new != $id_hemxxmh || $id_htsxxmh_new != $id_htsxxmh) {
 				
-				$qu_schedule = $editor->db()
+				$qd_schedule = $editor->db()
 					->raw()
 					->bind(':tanggal_awal', $tanggal_awal)
 					->bind(':tanggal_akhir', $tanggal_akhir)
@@ -303,14 +318,14 @@
 			$id_hemxxmh = $rs_jadwal['id_hemxxmh'];
 			$id_htsxxmh = $rs_jadwal['id_htsxxmh'];
 			
-			$qu_schedule = $editor->db()
+			$qd_schedule = $editor->db()
 				->raw()
 				->bind(':tanggal_awal', $tanggal_awal)
 				->bind(':tanggal_akhir', $tanggal_akhir)
 				->bind(':id_hemxxmh', $id_hemxxmh)
 				->exec('DELETE FROM htssctd
 						WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir 
-							AND DAYOFWEEK(tanggal) BETWEEN 2 AND 6 
+							AND DAYOFWEEK(tanggal) = 1
 							AND id_hemxxmh = :id_hemxxmh 
 							;
 							'
