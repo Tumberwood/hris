@@ -16,7 +16,7 @@
 	
 	// ----------- do not erase
 	$select_bagian = 0;
-	$show_inactive_status = 0;
+	$show_inactive_status = $_POST['show_inactive_status_hgsemtd_v3'];
 	if (isset($_POST['select_bagian'])) {
 		$select_bagian = $_POST['select_bagian'];
 	}

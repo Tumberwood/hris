@@ -91,7 +91,7 @@
                         b.shift
                     FROM hgsptth_v3 AS a
                     LEFT JOIN hgsemtd_v3 AS b ON b.id_hgsptth_v3 = a.id
-                    WHERE a.tanggal_awal = :dari_tanggal
+                    WHERE a.tanggal_awal = :dari_tanggal AND a.is_active = 1
                 
             ');
     
