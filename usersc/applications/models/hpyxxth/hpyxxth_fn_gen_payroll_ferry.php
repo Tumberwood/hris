@@ -197,10 +197,10 @@
                     -- tunjangan jabatan
                     IFNULL( 
                         if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
-                            hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_t_jab,
+                            hari_kerja / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 1, nominal_t_jab, ifnull(nominal_jabatan, 0)) ,
                             if(c.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir, 
-                                keluar_report / if(c.grup_hk = 1, 21, 25) * nominal_t_jab,
-                            nominal_t_jab)
+                                keluar_report / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 1, nominal_t_jab, ifnull(nominal_jabatan, 0)) ,
+                            if(c.id_hesxxmh = 1, nominal_t_jab, ifnull(nominal_jabatan, 0)) )
                         ),
                     0) AS t_jab,
                      
@@ -404,7 +404,7 @@
                         WHERE row_num = 1
                     ) pot_uang_makan ON pot_uang_makan.id_hesxxmh = c.id_hesxxmh
                     
-                    -- t jabatan
+                    -- t jabatan untuk Tetap
                     LEFT JOIN (
                         SELECT
                             id_hevxxmh,
@@ -426,6 +426,28 @@
                         WHERE row_num = 1
                     ) t_jabatan ON t_jabatan.id_hevxxmh = c.id_hevxxmh
                     
+                    -- nominal tunjangan jabatan di menu per karyawan
+                    LEFT JOIN (
+                        SELECT
+                            id_hemxxmh,
+                            tanggal_efektif,
+                            IFNULL(nominal, 0) AS nominal_jabatan
+                        FROM (
+                            SELECT
+                                id,
+                                id_hemxxmh,
+                                tanggal_efektif,
+                                nominal,
+                                ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                            FROM htpr_hemxxmh
+                            WHERE
+                                htpr_hemxxmh.id_hpcxxmh = 32
+                                AND tanggal_efektif < :tanggal_awal
+                                AND is_active = 1
+                        ) AS subquery
+                        WHERE row_num = 1
+                    ) tbl_jabatan ON tbl_jabatan.id_hemxxmh = a.id_hemxxmh
+
                     -- premi absen
                     LEFT JOIN (
                         SELECT
