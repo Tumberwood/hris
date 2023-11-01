@@ -883,6 +883,8 @@
 				
 				if(action == 'create'){
 					tblhgsemtd_v3_sabtu_s1.rows().deselect();
+					id_holxxmd_old = select_bagian;
+					edthgsemtd_v3_sabtu_s1.field('hgsemtd_v3.id_holxxmd').val(select_bagian);
 				}
 			});
 
@@ -1232,6 +1234,8 @@
 				
 				if(action == 'create'){
 					tblhgsemtd_v3_sabtu_s2.rows().deselect();
+					id_holxxmd_old = select_bagian;
+					edthgsemtd_v3_sabtu_s2.field('hgsemtd_v3.id_holxxmd').val(select_bagian);
 				}
 			});
 
@@ -1581,6 +1585,8 @@
 				
 				if(action == 'create'){
 					tblhgsemtd_v3_sabtu_s3.rows().deselect();
+					id_holxxmd_old = select_bagian;
+					edthgsemtd_v3_sabtu_s3.field('hgsemtd_v3.id_holxxmd').val(select_bagian);
 				}
 			});
 
@@ -1931,6 +1937,8 @@
 				
 				if(action == 'create'){
 					tblhgsemtd_v3_minggu_s1.rows().deselect();
+					id_holxxmd_old = select_bagian;
+					edthgsemtd_v3_minggu_s1.field('hgsemtd_v3.id_holxxmd').val(select_bagian);
 				}
 			});
 
@@ -2280,6 +2288,8 @@
 				
 				if(action == 'create'){
 					tblhgsemtd_v3_minggu_s2.rows().deselect();
+					id_holxxmd_old = select_bagian;
+					edthgsemtd_v3_minggu_s2.field('hgsemtd_v3.id_holxxmd').val(select_bagian);
 				}
 			});
 
@@ -2629,6 +2639,8 @@
 				
 				if(action == 'create'){
 					tblhgsemtd_v3_minggu_s3.rows().deselect();
+					id_holxxmd_old = select_bagian;
+					edthgsemtd_v3_minggu_s3.field('hgsemtd_v3.id_holxxmd').val(select_bagian);
 				}
 			});
 
@@ -2979,6 +2991,8 @@
 				
 				if(action == 'create'){
 					tblhgsemtd_v3_senjum_s1.rows().deselect();
+					id_holxxmd_old = select_bagian;
+					edthgsemtd_v3_senjum_s1.field('hgsemtd_v3.id_holxxmd').val(select_bagian);
 				}
 			});
 
@@ -3328,6 +3342,8 @@
 				
 				if(action == 'create'){
 					tblhgsemtd_v3_senjum_s2.rows().deselect();
+					id_holxxmd_old = select_bagian;
+					edthgsemtd_v3_senjum_s2.field('hgsemtd_v3.id_holxxmd').val(select_bagian);
 				}
 			});
 
@@ -3677,6 +3693,8 @@
 				
 				if(action == 'create'){
 					tblhgsemtd_v3_senjum_s3.rows().deselect();
+					id_holxxmd_old = select_bagian;
+					edthgsemtd_v3_senjum_s3.field('hgsemtd_v3.id_holxxmd').val(select_bagian);
 				}
 			});
 

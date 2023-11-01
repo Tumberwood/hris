@@ -15,7 +15,6 @@
                 },
                 success: function ( json ) {
                     id_htsxxmh = json.data.rs_jam.id;
-                    console.log(id_htsxxmh);
                     id_htsxxmh_old = id_htsxxmh
                     edt.field('hgsemtd_v3.id_htsxxmh').val(id_htsxxmh);
                 }
