@@ -183,7 +183,7 @@
                     c.id_hesxxmh,
                     c.id_heyxxmd,
                     c.grup_hk,
-                    (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0) + ifnull(nominal_var_cost,0) + ifnull(nominal_mk,0)) AS pengali,
+                    (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) AS pengali,
                     -- gaji pokok
                     IFNULL( 
                         if(c.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir, 
