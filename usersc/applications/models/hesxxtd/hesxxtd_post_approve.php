@@ -117,12 +117,14 @@
 		$rs_hemjbmh = $qs_hemjbmh->fetch();
 		
 		$flag_1hari = 0;
+		$is_kompensasi = 0;
 
 		if ($keputusan != 'Terminasi') {
 			$is_htpr_no_hemxxmh = 0;
 			$is_per_karyawan = 1;
 			if ($keputusan == 'Rekontrak') {
 				$id_hesxxmh = 2;
+				$is_kompensasi = 1;
 			} else if ($keputusan == 'Kontrak') {
 				if ($rs_flag_status['id_hesxxmh'] == 3) {
 					$flag_1hari = 1;
@@ -300,6 +302,83 @@
 				->where('id_hemxxmh', $id_hemxxmh )
 				->exec();
 			
+			// Untuk rekontrak dapat tambahan kompensasi
+			if ($is_kompensasi == 1) {
+				$qi_htpr = $db
+					->raw()
+					->bind(':tanggal_keluar', $hemjbmh_tgl_akhir)
+					->bind(':id_hemxxmh', $id_hemxxmh)
+					->exec(' INSERT INTO hpy_piutang_d
+							(
+								id_hemxxmh,
+								id_hpcxxmh,
+								is_approve,
+								plus_min,
+								tanggal,
+								nominal
+							)
+							SELECT
+								' . $id_insert_hemx . ',
+								108,
+								1,
+								"Penambah",
+								a.tanggal_keluar,
+								ROUND(
+									( 
+									TIMESTAMPDIFF(MONTH, a.tanggal_masuk, a.tanggal_keluar) / 12
+									) *
+									(ifnull(nominal_gp, 0) + ifnull(nominal_t_jab, 0))
+								, 0
+								) AS nominal
+							FROM hemjbmh AS a
+							LEFT JOIN hemxxmh AS hem ON hem.id = a.id_hemxxmh
+							-- gaji pokok
+							LEFT JOIN (
+							SELECT
+								id_hemxxmh,
+								tanggal_efektif,
+								IFNULL(nominal, 0) AS nominal_gp
+							FROM (
+								SELECT
+									id,
+									id_hemxxmh,
+									tanggal_efektif,
+									nominal,
+									ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+								FROM htpr_hemxxmh
+								WHERE
+									htpr_hemxxmh.id_hpcxxmh = 1
+									AND tanggal_efektif < :tanggal_keluar
+									AND is_active = 1
+							) AS subquery
+							WHERE row_num = 1
+							) tbl_htpr_hemxxmh ON tbl_htpr_hemxxmh.id_hemxxmh = a.id_hemxxmh
+
+							-- t jabatan
+							LEFT JOIN (
+							SELECT
+								id_hevxxmh,
+								tanggal_efektif,
+								IFNULL(nominal, 0) AS nominal_t_jab
+							FROM (
+								SELECT
+									id,
+									id_hevxxmh,
+									tanggal_efektif,
+									nominal,
+									ROW_NUMBER() OVER (PARTITION BY id_hevxxmh ORDER BY tanggal_efektif DESC) AS row_num
+								FROM htpr_hevxxmh
+								WHERE
+									htpr_hevxxmh.id_hpcxxmh = 32
+									AND tanggal_efektif < :tanggal_keluar
+									AND is_active = 1
+							) AS subquery
+							WHERE row_num = 1
+							) t_jabatan ON t_jabatan.id_hevxxmh = a.id_hevxxmh
+							WHERE a.id_hemxxmh = :id_hemxxmh
+							'
+							);
+			}
 			// INSERT BULAN INI KE BPJS AGAR TIDAK KENA POTONGAN
 			$qi_bpjs_tk_first = $db
 				->raw()
