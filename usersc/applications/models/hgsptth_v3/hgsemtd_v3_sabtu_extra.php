@@ -289,7 +289,6 @@
 								END AS tanggaljam_akhir_istirahat
 							FROM htsxxmh AS d 
 							LEFT JOIN date_range AS c ON c.sabtu BETWEEN :tanggal_awal AND :tanggal_akhir
-							LEFT JOIN htsxxmh AS d ON d.id = :id_htsxxmh_new
 							WHERE DAYOFWEEK(c.sabtu) = 7 and d.id = :id_htsxxmh_new;
 							'
 					);
