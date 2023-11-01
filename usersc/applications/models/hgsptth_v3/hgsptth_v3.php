@@ -95,6 +95,8 @@
 			Field::inst( 'htsptth.nama' )
 		)
 		->leftJoin( 'htsptth_v3 as htsptth','htsptth.id','=','hgsptth_v3.id_htsptth_v3' )
+		
+		->where( 'hgsptth_v3.is_active', 1)
 		->where( function ( $r ) {
 			$start_date = $_POST['start_date'];
             $r
