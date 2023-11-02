@@ -191,10 +191,10 @@
                     -- gaji pokok
                     IFNULL( 
                         if(c.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
-                            hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_gp,
+                            hari_kerja / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) ,
                             if(c.tanggal_keluar BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
-                                keluar_report / if(c.grup_hk = 1, 21, 25) * nominal_gp,
-                            nominal_gp)
+                                keluar_report / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) ,
+                            if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) )
                         ),
                     0) AS gp,
                     
@@ -852,6 +852,28 @@
                             GROUP BY id_hemxxmh
                         ) AS subquery
                     ) koreksi_lembur ON koreksi_lembur.id_hemxxmh = a.id_hemxxmh
+                    
+                    -- gaji pokok pelatihan
+                    LEFT JOIN (
+                        SELECT
+                            id_hesxxmh,
+                            tanggal_efektif,
+                            IFNULL(nominal, 0) AS pot_gp_pelatihan
+                        FROM (
+                            SELECT
+                                id,
+                                id_hesxxmh,
+                                tanggal_efektif,
+                                nominal,
+                                ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                            FROM htpr_hesxxmh
+                            WHERE
+                                htpr_hesxxmh.id_hpcxxmh = 1
+                                AND tanggal_efektif < :tanggal_awal
+                                AND is_active = 1
+                        ) AS subquery
+                        WHERE row_num = 1
+                    ) pot_gp_pelatihan ON pot_gp_pelatihan.id_hesxxmh = c.id_hesxxmh
 
                 WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
             )
