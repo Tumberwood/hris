@@ -167,19 +167,19 @@
                     report_pot_jam,
                     (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173))) AS nominal_lembur_jam,
                     FLOOR(
-                          (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173))) *
+                          (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
                             sum_lembur15_final
                         ) AS rp_lembur15,
                     FLOOR(
-                          (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173))) *
+                          (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
                             sum_lembur2_final
                         ) AS rp_lembur2,
                     FLOOR(
-                          (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173))) *
+                          (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
                             sum_lembur3_final
                         ) AS rp_lembur3,
                     FLOOR(
-                          (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173))) *
+                          (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
                             sum_lembur4_final
                         ) AS rp_lembur4,
             
@@ -201,10 +201,10 @@
                     -- tunjangan jabatan
                     IFNULL( 
                         if(c.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
-                            hari_kerja / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 1, nominal_t_jab, ifnull(nominal_jabatan, 0)),
+                            hari_kerja / if(c.grup_hk = 1, 21, 25) * ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0),
                             if(c.tanggal_keluar BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
-                                keluar_report / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 1, nominal_t_jab, ifnull(nominal_jabatan, 0)),
-                            if(c.id_hesxxmh = 1, nominal_t_jab, ifnull(nominal_jabatan, 0)))
+                                keluar_report / if(c.grup_hk = 1, 21, 25) * ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0),
+                            ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0))
                         ),
                     0) AS t_jab,
                      
