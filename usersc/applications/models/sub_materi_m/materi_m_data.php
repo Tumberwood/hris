@@ -24,6 +24,7 @@
 				Field::inst( 'materi_m.id_sub_materi_m' ),
 				Field::inst( 'materi_m.kode' ),
 				Field::inst( 'materi_m.nama' ),
+				Field::inst( 'materi_m.jenis' ),
 				Field::inst( 'materi_m.link_yt' ),
 				Field::inst( 'materi_m.keterangan' ),
 				Field::inst( 'materi_m.is_active' ),

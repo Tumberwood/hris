@@ -47,7 +47,7 @@
 			<div class="ibox-title" id="judul-tr">
 				<h3 class="judul_training"></h3>
 				<div class="ibox-tools">
-					<a id="tr-sidebar" title="Back to Training"><i class="fa fa-reply text-danger"></i></a>
+					<a id="tr-sidebar" title="Close Training"><i class="fa fa-times text-danger"></i></a>
 					<a class="collapse-link">
 						<i class="fa fa-chevron-up"></i>
 					</a>
@@ -357,13 +357,16 @@
 																						let materi = item.materi_m;
 																						if (materi.id == subsub_materiId) {
 																							var link_yt = materi.link_yt;
+																							var jenis_materi = materi.jenis;
 																							var video_yt = '';
-
-																							if (link_yt !== null && link_yt !== undefined) {
-																								var match = link_yt.match(/[?&]v=([^&]+)/);
-																								if (match) {
-																									link = match[1];
-																									video_yt = '<iframe id="videoFrame" width="100%" height="480px" src="https://www.youtube.com/embed/'+link+'" frameborder="0" allowfullscreen></iframe>';
+																							console.log(jenis_materi);
+																							if (jenis_materi == 1) {
+																								if (link_yt !== null && link_yt !== undefined) {
+																									var match = link_yt.match(/[?&]v=([^&]+)/);
+																									if (match) {
+																										link = match[1];
+																										video_yt = '<iframe id="videoFrame" width="100%" height="480px" src="https://www.youtube.com/embed/'+link+'" frameborder="0" allowfullscreen></iframe>';
+																									}
 																								}
 																							}
 																							// Set the video title
@@ -796,13 +799,21 @@
 						type: "hidden",
 						def: 1
 					},	{
-						label: "Kode <sup class='text-danger'>*<sup>",
-						name: "materi_m.kode"
-					}, 	{
 						label: "Nama <sup class='text-danger'>*<sup>",
 						name: "materi_m.nama"
-					}, 	{
-						label: "Link Youtube Video",
+					}, 	
+					{
+						label: "Jenis <sup class='text-danger'>*<sup>",
+						name: "materi_m.jenis",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Video", "value": 1 },
+							{ "label": "Quiz", "value": 2 }
+						]
+					},
+					{
+						label: "Link Youtube Video <sup class='text-danger'>*<sup>",
 						name: "materi_m.link_yt"
 					}, 	{
 						label: "Keterangan",
@@ -819,42 +830,20 @@
 				$(".modal-dialog").addClass("modal-lg");
 			});
 
+			edtmateri_m.dependent( 'materi_m.jenis', function ( val, data, callback ) {
+				if (val == 1) {
+					edtmateri_m.field('materi_m.link_yt').val();
+					edtmateri_m.field('materi_m.link_yt').show();
+				} else {
+					edtmateri_m.field('materi_m.link_yt').val('');
+					edtmateri_m.field('materi_m.link_yt').hide();
+				}
+				return {}
+			}, {event: 'keyup change'});
+
 			edtmateri_m.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					if(action == 'create'){
-						// BEGIN of validasi materi_m.kode
-						if ( ! edtmateri_m.field('materi_m.kode').isMultiValue() ) {
-							kode = edtmateri_m.field('materi_m.kode').val();
-							if(!kode || kode == ''){
-								edtmateri_m.field('materi_m.kode').error( 'Wajib diisi!' );
-							}
-							
-							// BEGIN of cek unik materi_m.kode
-							if(action == 'create'){
-								id_materi_m = 0;
-							}
-							
-							$.ajax( {
-								url: '../../../helpers/validate_fn_unique.php',
-								dataType: 'json',
-								type: 'POST',
-								async: false,
-								data: {
-									table_name: 'materi_m',
-									nama_field: 'kode',
-									nama_field_value: '"'+kode+'"',
-									id_transaksi: id_materi_m
-								},
-								success: function ( json ) {
-									if(json.data.count == 1){
-										edtmateri_m.field('materi_m.kode').error( 'Data tidak boleh kembar!' );
-									}
-								}
-							} );
-							// END of cek unik materi_m.kode
-						}
-						// END of validasi materi_m.kode
-						
 						// BEGIN of validasi materi_m.nama
 						if ( ! edtmateri_m.field('materi_m.nama').isMultiValue() ) {
 							nama = edtmateri_m.field('materi_m.nama').val();
@@ -914,7 +903,7 @@
 				// preopen saya pindah kesini karena biar data old ditampilkan dulu sebelum dibuka formnya
 				edtmateri_m.on( 'preOpen', function( e, mode, action ) {
 					edtmateri_m.field('materi_m.nama').val(edit_val.nama);
-					edtmateri_m.field('materi_m.kode').val(edit_val.kode);
+					edtmateri_m.field('materi_m.jenis').val(edit_val.jenis);
 					edtmateri_m.field('materi_m.link_yt').val(edit_val.link_yt);
 				});
 				edtmateri_m.title('Edit materi').buttons(
