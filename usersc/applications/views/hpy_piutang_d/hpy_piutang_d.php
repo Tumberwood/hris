@@ -14,6 +14,40 @@
 <!-- begin content here -->
 
 <div class="row">
+    <div class="col">
+        <div class="ibox collapsed" id="iboxfilter">
+            <div class="ibox-title">
+                <h5 class="text-navy">Filter</h5>&nbsp
+                <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+            </div>
+            <div class="ibox-content">
+                <form class="form-horizontal" id="frmhpy_piutang_d">
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Periode</label>
+                        <div class="col-lg-5">
+                            <div class="input-group input-daterange" id="periode">
+                                <input type="text" id="start_date" class="form-control">
+                                <span class="input-group-addon">to</span>
+                                <input type="text" id="end_date" class="form-control">
+                                <div class="input-group-addon">
+                                    <span class="fa fa-calendar"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-4">
+                            <button class="btn btn-primary" type="submit" id="go">Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <div id="searchPanes1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-content">
@@ -57,6 +91,19 @@
 		is_need_approval = 1;
 		// ------------- end of default variable
 		
+		// BEGIN datepicker init
+		$('#periode').datepicker({
+			setDate: new Date(),
+			autoclose: true,
+			todayHighlight: true,
+			clearBtn: true,
+			format: "dd M yyyy",
+			minViewMode: 'month' 
+		});
+		$('#start_date').datepicker('setDate', awal_bulan_dmy);
+		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+        // END datepicker init
+		
 		$(document).ready(function() {
 			//start datatables editor
 			edthpy_piutang_d = new $.fn.dataTable.Editor( {
@@ -65,6 +112,8 @@
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_hpy_piutang_d = show_inactive_status_hpy_piutang_d;
+						d.start_date = start_date;
+						d.end_date = end_date;
 					}
 				},
 				table: "#tblhpy_piutang_d",
@@ -287,12 +336,39 @@
 			});
 
 			//start datatables
+			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
+			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 			tblhpy_piutang_d = $('#tblhpy_piutang_d').DataTable( {
+				
+				searchPanes:{
+					layout: 'columns-2'
+				},
+				dom:
+					"<'row'<'col-lg-4 col-md-4 col-sm-12 col-xs-12'l><'col-lg-8 col-md-8 col-sm-12 col-xs-12'f>>" +
+					"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'B>>" +
+					"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'tr>>" +
+					"<'row'<'col-lg-5 col-md-5 col-sm-12 col-xs-12'i><'col-lg-7 col-md-7 col-sm-12 col-xs-12'p>>",
+				columnDefs:[
+					{
+						searchPanes:{
+							show: true
+						},
+						targets: [1,2]
+					},
+					{
+						searchPanes:{
+							show: false
+						},
+						targets: [0,3,4,5,6,7]
+					}
+				],
 				ajax: {
 					url: "../../models/hpy_piutang_d/hpy_piutang_d.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_hpy_piutang_d = show_inactive_status_hpy_piutang_d;
+						d.start_date = start_date;
+						d.end_date = end_date;
 					}
 				},
 				responsive: false,
@@ -346,8 +422,12 @@
 					if ( data.hpy_piutang_d.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
+				},
+				initComplete: function() {
+					this.api().searchPanes.rebuildPane();
 				}
 			} );
+			tblhpy_piutang_d.searchPanes.container().appendTo( '#searchPanes1' );
 			
 			tblhpy_piutang_d.on( 'init', function () {
 				// atur hak akses
@@ -380,6 +460,32 @@
 				// atur hak akses
 				CekDeselectHeaderH(tblhpy_piutang_d);
 			} );
+			
+			$("#frmhpy_piutang_d").submit(function(e) {
+				e.preventDefault();
+			}).validate({
+				rules: {
+					
+				},
+				submitHandler: function(frmhpy_piutang_d) {
+					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
+					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
+
+					notifyprogress = $.notify({
+						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
+					},{
+						z_index: 9999,
+						allow_dismiss: false,
+						type: 'info',
+						delay: 0
+					});
+
+					tblhpy_piutang_d.ajax.reload(function ( json ) {
+						notifyprogress.close();
+					}, false);
+					return false; 
+				}
+			});
 			
 		} );// end of document.ready
 	

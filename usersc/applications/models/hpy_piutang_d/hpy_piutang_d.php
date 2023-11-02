@@ -77,6 +77,11 @@
 			->where( 'hpy_piutang_d.is_active', 1);
 	}
 	
+	if($_POST['start_date'] != '' && $_POST['end_date'] != ''){
+		$editor
+			->where( 'hpy_piutang_d.tanggal', $_POST['start_date'], '>=' )
+			->where( 'hpy_piutang_d.tanggal', $_POST['end_date'], '<=' );
+	}
 	include( "hpy_piutang_d_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
