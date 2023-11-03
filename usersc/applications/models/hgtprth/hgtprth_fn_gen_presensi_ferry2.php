@@ -1291,7 +1291,7 @@
 
                                         // lembur 2 libur
                                         if ($durasi_lembur_final > 1 && $durasi_lembur_final <= 7 || $durasi_lembur_final >= 7) {
-                                            if ($durasi_lembur_final >= 8) {
+                                            if ($durasi_lembur_final > 7) {
                                                 $lembur2 = 7; 
                                             } else if ($durasi_lembur_final < 8) {
                                                 $lembur2 = 7.5; 
