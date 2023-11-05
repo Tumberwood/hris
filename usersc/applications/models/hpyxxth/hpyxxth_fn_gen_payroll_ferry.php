@@ -831,7 +831,7 @@
                                 id_hemxxmh,
                                 COUNT(id) AS is_terminasi
                             FROM hemjbrd
-                            WHERE id_harxxmh = 3
+                            WHERE id_harxxmh IN (3, 4)
                         ) AS subquery
                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
 

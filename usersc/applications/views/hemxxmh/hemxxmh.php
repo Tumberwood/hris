@@ -65,7 +65,7 @@
 							<li><a class="nav-link" data-toggle="tab" href="#tabhadxxtd "> Pelanggaran</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhtlxxth"> Absensi</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhtpxxth"> Izin</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhemjbrd"> Job</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhemjbrd"> Job History</a></li>
 						</ul>
 						<div class="tab-content">
 							<div role="tabpanel" id="tabhemfmmd" class="tab-pane active">
