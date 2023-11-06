@@ -53,7 +53,6 @@
                                 <th>Tanggal Keluar</th>
                                 <th>Grup HK</th>
                                 <th>Pola Shift</th>
-                                <th>Grup Ke</th>
                                 <th>Aktif</th>
                             </tr>
                         </thead>
@@ -163,6 +162,8 @@
                                 					<th>Jenis Rotasi</th>
 													<th>Tanggal Awal</th>
 													<th>Tanggal Akhir</th>
+													<th>Grup HK</th>
+													<th>Keterangan</th>
 												</tr>
 											</thead>
 										</table>
@@ -639,6 +640,9 @@
 				if (action == 'edit') {
 					edthemxxmh.field('status_aktif').show();
 					edthemxxmh.field('status_aktif').val(is_active);
+					edthemxxmh.field('hemjbmh.grup_hk').hide();
+				} else {
+					edthemxxmh.field('hemjbmh.grup_hk').show();
 				}
 			});
 
@@ -819,12 +823,14 @@
 					}
 					// END of validasi hemjbmh.id_hesxxmh 
 
-					// BEGIN of validasi hemjbmh.grup_hk 
-					grup_hk = edthemxxmh.field('hemjbmh.grup_hk').val();
-					if(!grup_hk || grup_hk == ''){
-						edthemxxmh.field('hemjbmh.grup_hk').error( 'Wajib diisi!' );
+					if (action == 'create') {
+						// BEGIN of validasi hemjbmh.grup_hk 
+						grup_hk = edthemxxmh.field('hemjbmh.grup_hk').val();
+						if(!grup_hk || grup_hk == ''){
+							edthemxxmh.field('hemjbmh.grup_hk').error( 'Wajib diisi!' );
+						}
+						// END of validasi hemjbmh.grup_hk 
 					}
-					// END of validasi hemjbmh.grup_hk 
 				}
 				
 				if ( edthemxxmh.inError() ) {
@@ -2193,7 +2199,7 @@
 						d.id_hemxxmh = id_hemxxmh;
 					}
 				},
-				order: [[ 3, "desc" ]],
+				order: [[ 0, "desc" ]],
 				// order: [[ 2, "desc" ]], sementara disable karena kode kosong
 				columns: [
 					{ data: "hemjbrd.id",visible:false },
@@ -2203,6 +2209,7 @@
 					{ data: "harxxmh.nama" },
 					{ data: "hemjbrd.tanggal_awal" },
 					{ data: "hemjbrd.tanggal_akhir" },
+					{ data: "hemjbrd.keterangan" }
 				],
 				buttons: [
 					// BEGIN breaking generate button
