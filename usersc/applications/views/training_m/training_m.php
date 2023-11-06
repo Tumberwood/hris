@@ -153,7 +153,7 @@
 								formatTime(createdOn);
 
 								ibox.innerHTML = `
-									<div class="tr_panel" data-editor-id="${id}">
+								<div class="tr_panel" data-editor-id="${id}">
 									<a class="konten-tr" title="Fullscreen Materi"><i class="fa fa-chevron-up"></i></a>
 									<small class="float-right">${timeAgoText} ago</small>
 									<strong>
@@ -225,10 +225,11 @@
 													title.style.justifyContent = "space-between"; // Align items to both ends of the title
 
 													// Create the button and add it to the title
-													const button = document.createElement("button");
-													button.className = "btn btn btnCreatemateri btn-sm";
-													button.title = "New";
-													button.innerHTML = '<i class="fa fa-plus"></i>';
+													const button = createButton("btnCreatemateri btn btn-primary btn-sm", "fa fa-plus");
+													// const button = document.createElement("button");
+													// button.className = "btn btn btnCreatemateri btn-sm";
+													// button.title = "New";
+													// button.innerHTML = '<i class="fa fa-plus"></i>';
 
 													button.addEventListener("click", function() {
 														edtmateri_m.title('Create Sub sub_materi').buttons(
@@ -305,24 +306,55 @@
 																		data.data.forEach(function(item) {
 																			let materi = item.materi_m;
 																			let id = item.DT_RowId;
+
 																			materiList += 
-																			`<div class="materi_panel" data-editor-id="${id}">
-																				<li>
+																			`
+																			<div class="materi_panel" data-editor-id="${id}">
+																				<a class="konten-materi" title="Fullscreen Materi"><i class="fa fa-chevron-up"></i></a>
+																				<small class="float-right">${timeAgoText} ago</small>
+																				<strong>
+																				<h3 for="sub-sub_materi-checkbox-${materi.id}">
+																					${materi.jenis == 1
+																						? `<i class="fa fa-film"></i>`
+																						: `<i class="fa fa-pencil-square-o"></i>`
+																					}
+																					${materi.nama}
+																					<input id="sub-sub_materi-checkbox-${materi.id}" type="checkbox" class="sub-sub_materi-checkbox" value="${materi.id}">
+																				</h3>
+																				</strong>
+																				<div class="tr-up">
+																					<div>${materi.keterangan}</div>
+																					<small class="text-muted">${formatTime(createdOn)} - ${createdOn.toLocaleDateString()}</small>		
+																					<br>					
+																					<br>					
 																					<div class="row">
-																					<div class="col-md-7">
-																						<label for="sub-sub_materi-checkbox-${materi.id}">
-																							${materi.nama}
-																							<input id="sub-sub_materi-checkbox-${materi.id}" type="checkbox" class="sub-sub_materi-checkbox" value="${materi.id}">
-																						</label>
+																						<div class="col-md-6">
+																							<a href="#" class="edit btn btn-primary btn-sm" data-id="${materi.id}"><i class="fa fa-pencil"></i></a>
+																							<a href="#" class="remove btn btn-danger btn-sm" data-id="${materi.id}"><i class="fa fa-trash"></i></a>
+																						</div>
 																					</div>
-																					<div class="col-md-5">
-																						<a href="#" class="edit btn btn-primary btn-sm" data-id="${materi.id}"><i class="fa fa-pencil"></i></a>
-																						<a href="#" class="remove btn btn-danger btn-sm" data-id="${materi.id}"><i class="fa fa-trash"></i></a>
-																					</div>
-																				</div>
-																				</li>
+																				</div>	
 																			</div>
-																			`;
+																			<hr>
+																			`
+																			// `<div class="materi_panel" data-editor-id="${id}">
+																			// 	${tipe}
+																			// 		<div class="row">
+																			// 		<div class="col-md-7">
+																			// 			<label for="sub-sub_materi-checkbox-${materi.id}">
+																			// 				${materi.nama}
+																			// 				<input id="sub-sub_materi-checkbox-${materi.id}" type="checkbox" class="sub-sub_materi-checkbox" value="${materi.id}">
+																			// 			</label>
+																			// 		</div>
+																			// 		<div class="col-md-5">
+																			// 			<a href="#" class="edit btn btn-primary btn-sm" data-id="${materi.id}"><i class="fa fa-pencil"></i></a>
+																			// 			<a href="#" class="remove btn btn-danger btn-sm" data-id="${materi.id}"><i class="fa fa-trash"></i></a>
+																			// 		</div>
+																			// 	</div>
+																				
+																			// </div>
+																			// `
+																			;
 																		});
 
 																		materiList += "</ul>";
