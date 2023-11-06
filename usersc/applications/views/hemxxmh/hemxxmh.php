@@ -53,6 +53,7 @@
                                 <th>Tanggal Keluar</th>
                                 <th>Grup HK</th>
                                 <th>Pola Shift</th>
+                                <th>Grup Ke</th>
                                 <th>Aktif</th>
                             </tr>
                         </thead>
@@ -162,7 +163,6 @@
                                 					<th>Jenis Rotasi</th>
 													<th>Tanggal Awal</th>
 													<th>Tanggal Akhir</th>
-													<th>Grup HK</th>
 													<th>Keterangan</th>
 												</tr>
 											</thead>
