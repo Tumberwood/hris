@@ -79,6 +79,7 @@
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
+													<th>Koreksi Perubahan Status</th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
 													<th class="text-danger">Pot JHT</th>
@@ -142,6 +143,7 @@
 													<th id="all_41"></th>
 													<th id="all_42"></th>
 													<th id="all_43"></th>
+													<th id="all_44"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -184,6 +186,7 @@
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
+													<th>Koreksi Perubahan Status</th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
 													<th class="text-danger">Pot JHT</th>
@@ -246,7 +249,8 @@
 													<th id="kbm_40"></th>
 													<th id="kbm_41"></th>
 													<th id="kbm_42"></th>
-													<th id="kbm_42"></th>
+													<th id="kbm_43"></th>
+													<th id="kbm_44"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -289,6 +293,7 @@
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
+													<th>Koreksi Perubahan Status</th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
 													<th class="text-danger">Pot JHT</th>
@@ -351,7 +356,8 @@
 													<th id="karyawan_40"></th>
 													<th id="karyawan_41"></th>
 													<th id="karyawan_42"></th>
-													<th id="karyawan_42"></th>
+													<th id="karyawan_43"></th>
+													<th id="karyawan_44"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -394,6 +400,7 @@
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
+													<th>Koreksi Perubahan Status</th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
 													<th class="text-danger">Pot JHT</th>
@@ -456,7 +463,8 @@
 													<th id="kmj_40"></th>
 													<th id="kmj_41"></th>
 													<th id="kmj_42"></th>
-													<th id="kmj_42"></th>
+													<th id="kmj_43"></th>
+													<th id="kmj_44"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -499,6 +507,7 @@
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
+													<th>Koreksi Perubahan Status</th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot JKK JKM</th>
 													<th class="text-danger">Pot JHT</th>
@@ -561,7 +570,8 @@
 													<th id="freelance_40"></th>
 													<th id="freelance_41"></th>
 													<th id="freelance_42"></th>
-													<th id="freelance_42"></th>
+													<th id="freelance_43"></th>
+													<th id="freelance_44"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -1076,6 +1086,11 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.koreksi_status",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
 						data: "hpyemtd.pot_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
@@ -1177,7 +1192,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 43; i++) {
+					for (var i = 9; i <= 44; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1433,6 +1448,11 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.koreksi_status",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
 						data: "hpyemtd.pot_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
@@ -1534,7 +1554,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 43; i++) {
+					for (var i = 9; i <= 44; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1786,6 +1806,11 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.koreksi_status",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
 						data: "hpyemtd.pot_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
@@ -1887,7 +1912,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 43; i++) {
+					for (var i = 9; i <= 44; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -2139,6 +2164,11 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.koreksi_status",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
 						data: "hpyemtd.pot_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
@@ -2240,7 +2270,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 43; i++) {
+					for (var i = 9; i <= 44; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -2492,6 +2522,11 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.koreksi_status",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
 						data: "hpyemtd.pot_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
@@ -2593,7 +2628,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 43; i++) {
+					for (var i = 9; i <= 44; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }

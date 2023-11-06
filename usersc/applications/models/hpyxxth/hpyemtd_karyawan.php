@@ -76,6 +76,7 @@
 				Field::inst( 'hpyemtd.pph21_back' ), 
 				Field::inst( 'hpyemtd.kompensasi_ak' ),  
 				Field::inst( 'hpyemtd.koreksi_lembur' ),
+				Field::inst( 'hpyemtd.koreksi_status' ),
 
 				Field::inst( 'hetxxmh.nama' ),
 				Field::inst( 'hodxxmh.nama' ),

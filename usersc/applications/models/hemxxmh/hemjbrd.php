@@ -25,6 +25,8 @@
 			->debug(true)
 			->fields(
 				Field::inst( 'hemjbrd.id' ),
+				Field::inst( 'hemjbrd.grup_hk' ),
+				Field::inst( 'hemjbrd.keterangan' ),
 				Field::inst( 'hemjbrd.id_hemxxmh' )
 					->setFormatter( Format::ifEmpty( 0 ) ),
 				Field::inst( 'hemjbrd.id_hesxxmh' )

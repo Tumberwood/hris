@@ -143,6 +143,7 @@
                 pph21_back,
                 kompensasi_ak,
                 koreksi_lembur,
+                koreksi_status,
                 pot_makan,
                 pot_jkkjkm,
                 pot_jht,
@@ -187,16 +188,23 @@
                     c.id_heyxxmd as id_heyxxmd,
                     c.grup_hk,
                     (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) AS pengali,
-                    (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0) + ifnull(nominal_var_cost,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) AS pengali_jam,
+                    (ifnull(if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp),0) + ifnull(nominal_t_jab,0) + ifnull(nominal_var_cost,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) AS pengali_jam,
                     -- gaji pokok
                     IFNULL( 
-                        if(c.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
-                            hari_kerja / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) ,
-                            if(c.tanggal_keluar BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
-                                keluar_report / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) ,
-                            if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) )
-                        ),
-                    0) AS gp,
+                        if( c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_akhir), 0,
+                            if(is_perubahan_hk > 0, 
+                                ((hk_report / if(grup_hk_lama = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp))
+                                +
+                                ((hk_jadwal / if(grup_hk_baru = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
+                                if(c.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
+                                    hari_kerja / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) ,
+                                    if(c.tanggal_keluar BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
+                                        keluar_report / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) ,
+                                    if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) )
+                                )
+                            )
+	                     )
+                    ,0) AS gp,
                     
                     -- tunjangan jabatan
                     IFNULL( 
@@ -275,7 +283,18 @@
                     IFNULL(nominal_pph21,0) AS pot_pph21,
                     IFNULL(nominal_pendapatan_lain,0) AS pendapatan_lain,
                     IFNULL(nominal_koreksi_lembur,0) AS koreksi_lembur,
-                    IFNULL(nominal_kompensasi_ak,0) AS kompensasi_ak
+                    IFNULL(nominal_kompensasi_ak,0) AS kompensasi_ak,
+                    hk_baru,
+                    c.tanggal_keluar,
+                    hk_nik_lama,
+                    
+                    -- Koreksi Perubahan Status
+                    IFNULL( 
+                        if( c.tanggal_masuk BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_akhir), 
+                            ((hk_baru / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
+                            0
+	                     )
+                    ,0) AS koreksi_status
                     
                     
                 FROM htsprrd AS a
@@ -563,7 +582,7 @@
                             FROM htsprrd AS a
                             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
                             WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND :tanggal_akhir
-                                AND a.st_clock_in <> "OFF"
+                                AND a.st_jadwal <> "OFF"
                             GROUP BY a.id_hemxxmh
                         ) AS report
                         LEFT JOIN (
@@ -589,7 +608,7 @@
                             FROM htsprrd AS a
                             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
                             WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND DATE_SUB(job.tanggal_keluar, INTERVAL 1 DAY)
-                                AND a.st_clock_in <> "OFF"
+                                AND a.st_jadwal <> "OFF"
                             GROUP BY a.id_hemxxmh
                         ) AS report
                     ) AS keluar ON keluar.id_hemxxmh = a.id_hemxxmh
@@ -875,6 +894,116 @@
                         WHERE row_num = 1
                     ) pot_gp_pelatihan ON pot_gp_pelatihan.id_hesxxmh = c.id_hesxxmh
 
+                    -- case HK 5 HK 6
+                    LEFT JOIN (
+                        SELECT
+                            grup_hk_lama,
+                            grup_hk_baru,
+                            hk_report,
+                            IFNULL(jadwal.jadwal, 0) AS hk_jadwal,
+                            akhir_grup_hk_lama,
+                            awal_grup_hk_baru,
+                            report.id_hemxxmh,
+                            IFNULL(is_perubahan_hk, 0) AS is_perubahan_hk
+                        FROM (
+                            SELECT 
+                                COUNT(a.id) AS hk_report,
+                                is_perubahan_hk,
+                                a.id_hemxxmh,
+                                akhir_grup_hk_lama,
+                                awal_grup_hk_baru,
+                                grup_hk_lama,
+                                grup_hk_baru,
+                                job.tanggal_masuk
+                            FROM htsprrd AS a
+                            LEFT JOIN (
+                                SELECT
+                                    id_hemxxmh,
+                                    IFNULL(is_perubahan_hk, 0) AS is_perubahan_hk,
+                                    grup_hk_lama,
+                                    grup_hk_baru,
+                                    akhir_grup_hk_lama,
+                                    awal_grup_hk_baru
+                                FROM (
+                                    SELECT
+                                        id_hemxxmh,
+                                        COUNT(id) AS is_perubahan_hk,
+                                        jb.grup_hk AS grup_hk_baru,
+                                        if(grup_hk = 1, 2, 1) AS grup_hk_lama,
+                                        jb.tanggal_awal AS awal_grup_hk_baru,
+                                        DATE_SUB(jb.tanggal_awal, INTERVAL 1 DAY) AS akhir_grup_hk_lama
+                                    FROM hemjbrd AS jb
+                                    WHERE is_from_hk = 1 AND tanggal_awal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir)
+                                ) AS subquery
+                            ) AS history ON history.id_hemxxmh = a.id_hemxxmh
+                            LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
+                            WHERE a.tanggal BETWEEN job.tanggal_masuk AND akhir_grup_hk_lama
+                            AND a.st_jadwal <> "OFF"
+                            GROUP BY a.id_hemxxmh
+                        ) AS report
+                        LEFT JOIN (
+                            SELECT
+                                    tanggal,
+                                htssctd.id_hemxxmh,
+                                COUNT(id) AS jadwal
+                            FROM htssctd
+                            LEFT JOIN (
+                                SELECT
+                                id_hemxxmh,
+                                COUNT(id) AS is_perubahan_hk,
+                                if(grup_hk = 1, 2, 1) AS grup_hk_baru,
+                                jb.tanggal_awal AS awal_grup_hk_baru
+                            FROM hemjbrd AS jb
+                            WHERE is_from_hk = 1 AND tanggal_awal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir)
+                            ) AS jbrd ON jbrd.id_hemxxmh = htssctd.id_hemxxmh
+                            WHERE id_htsxxmh <> 1 AND tanggal BETWEEN awal_grup_hk_baru AND LAST_DAY(:tanggal_akhir)
+                            GROUP BY id_hemxxmh
+                        ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh 
+                    ) AS hk5hk6 ON hk5hk6.id_hemxxmh = a.id_hemxxmh
+                    
+                    -- HK NIK LAMA
+                    LEFT JOIN (
+                        SELECT
+                            hem.nama AS nama,
+                            hk_nik_lama,
+                            hem.id AS id_hemxxmh,
+                            b.id AS id_hemxxmh_new
+                        FROM hemxxmh AS hem
+                        LEFT JOIN hemxxmh AS b ON b.nama = hem.nama
+                        LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
+                        LEFT JOIN (
+                            SELECT
+                                COUNT(rd.id) AS hk_nik_lama,
+                                job.tanggal_masuk,
+                                rd.id_hemxxmh
+                            FROM htsprrd AS rd
+                            LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = rd.id_hemxxmh
+                            WHERE rd.tanggal BETWEEN job.tanggal_masuk AND LAST_DAY(:tanggal_awal)
+                        AND rd.st_jadwal <> "OFF"
+                            GROUP BY rd.id_hemxxmh
+                        ) AS prd ON prd.id_hemxxmh = b.id
+                        GROUP BY nama
+                        ORDER BY b.id DESC
+                    ) AS hk_nik_lama ON hk_nik_lama.id_hemxxmh = a.id_hemxxmh
+
+                    -- hari kerja NIK baru
+                    LEFT JOIN (
+                        SELECT
+                            (hk_report) AS hk_baru,
+                            report.id_hemxxmh
+                        FROM (
+                            SELECT 
+                                COUNT(a.id) AS hk_report,
+                                job.tanggal_masuk,
+                                a.id_hemxxmh
+                            FROM htsprrd AS a
+                            LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
+                            WHERE a.tanggal BETWEEN job.tanggal_masuk AND LAST_DAY(:tanggal_awal)
+                                AND a.st_jadwal <> "OFF"
+                            GROUP BY a.id_hemxxmh
+                        ) AS report
+                    ) AS hk_baru ON hk_baru.id_hemxxmh = a.id_hemxxmh
+
                 WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
             )
             SELECT
@@ -909,10 +1038,11 @@
                 pph21_back,
                 kompensasi_ak,
                 koreksi_lembur,
+                floor(koreksi_status) as koreksi_status,
                 FLOOR(pot_makan) AS pot_makan,
                 FLOOR(pot_jkkjkm) AS pot_jkkjkm,
                 FLOOR(pot_jht) AS pot_jht,
-                FLOOR((IF(report_pot_upah > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_upah * IF(grup_hk = 1, 83509, 70148), report_pot_upah * pengali_jam / IF(grup_hk = 1, 21, 25)) , 0)) ) AS pot_upah,
+                FLOOR(if( tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_akhir), hk_nik_lama * (pengali_jam / IF(grup_hk = 1, 21, 25)), (IF(report_pot_upah > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_upah * IF(grup_hk = 1, 83509, 70148), report_pot_upah * pengali_jam / IF(grup_hk = 1, 21, 25)) , 0)) )) AS pot_upah,
                 FLOOR(IF(report_pot_jam > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_jam * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, report_pot_jam * pengali_jam / 173), 0)) AS pot_jam,
                 FLOOR(if(is_terminasi > 0, pot_bpjs * 2, pot_bpjs)) AS pot_bpjs,
                 FLOOR(pot_psiun) AS pot_psiun,
@@ -921,29 +1051,29 @@
                 pot_denda_apd,
                 pot_pph21,
                 FLOOR(
-                    (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak + koreksi_lembur)
+                    (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak + koreksi_lembur + koreksi_status)
                         -
-                       (IF(report_pot_jam > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_jam * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, report_pot_jam * pengali_jam / 173), 0) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + ((IF(report_pot_upah > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_upah * IF(grup_hk = 1, 83509, 70148), report_pot_upah * pengali_jam / IF(grup_hk = 1, 21, 25)) , 0)) ) + if(is_terminasi > 0, pot_bpjs * 2, pot_bpjs) + pot_psiun)
+                       (IF(report_pot_jam > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_jam * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, report_pot_jam * pengali_jam / 173), 0) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (if( tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_akhir), hk_nik_lama * (pengali_jam / IF(grup_hk = 1, 21, 25)), (IF(report_pot_upah > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_upah * IF(grup_hk = 1, 83509, 70148), report_pot_upah * pengali_jam / IF(grup_hk = 1, 21, 25)) , 0)) ) ) + if(is_terminasi > 0, pot_bpjs * 2, pot_bpjs) + pot_psiun)
                  ) AS gaji_bersih,
                  FLOOR(
                      (
-                         (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak + koreksi_lembur)
+                         (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak + koreksi_lembur + koreksi_status)
                             -
-                       (IF(report_pot_jam > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_jam * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, report_pot_jam * pengali_jam / 173), 0) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + ((IF(report_pot_upah > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_upah * IF(grup_hk = 1, 83509, 70148), report_pot_upah * pengali_jam / IF(grup_hk = 1, 21, 25)) , 0)) ) + if(is_terminasi > 0, pot_bpjs * 2, pot_bpjs) + pot_psiun)
+                       (IF(report_pot_jam > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_jam * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, report_pot_jam * pengali_jam / 173), 0) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (if( tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_akhir), hk_nik_lama * (pengali_jam / IF(grup_hk = 1, 21, 25)), (IF(report_pot_upah > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_upah * IF(grup_hk = 1, 83509, 70148), report_pot_upah * pengali_jam / IF(grup_hk = 1, 21, 25)) , 0)) ) ) + if(is_terminasi > 0, pot_bpjs * 2, pot_bpjs) + pot_psiun)
                      ) % 100
                  ) AS bulat,
                  FLOOR(
                      (
-                        (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak + koreksi_lembur)
+                        (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak + koreksi_lembur + koreksi_status)
                             -
-                       (IF(report_pot_jam > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_jam * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, report_pot_jam * pengali_jam / 173), 0) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + ((IF(report_pot_upah > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_upah * IF(grup_hk = 1, 83509, 70148), report_pot_upah * pengali_jam / IF(grup_hk = 1, 21, 25)) , 0)) ) + if(is_terminasi > 0, pot_bpjs * 2, pot_bpjs) + pot_psiun)
+                       (IF(report_pot_jam > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_jam * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, report_pot_jam * pengali_jam / 173), 0) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (if( tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_akhir), hk_nik_lama * (pengali_jam / IF(grup_hk = 1, 21, 25)), (IF(report_pot_upah > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_upah * IF(grup_hk = 1, 83509, 70148), report_pot_upah * pengali_jam / IF(grup_hk = 1, 21, 25)) , 0)) ) ) + if(is_terminasi > 0, pot_bpjs * 2, pot_bpjs) + pot_psiun)
                      )
                          -
                     (
                         (
-                             (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak + koreksi_lembur)
+                             (gp + + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak + koreksi_lembur + koreksi_status)
                                 -
-                           (IF(report_pot_jam > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_jam * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, report_pot_jam * pengali_jam / 173), 0) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + ((IF(report_pot_upah > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_upah * IF(grup_hk = 1, 83509, 70148), report_pot_upah * pengali_jam / IF(grup_hk = 1, 21, 25)) , 0)) ) + if(is_terminasi > 0, pot_bpjs * 2, pot_bpjs) + pot_psiun)
+                           (IF(report_pot_jam > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_jam * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, report_pot_jam * pengali_jam / 173), 0) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (if( tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_akhir), hk_nik_lama * (pengali_jam / IF(grup_hk = 1, 21, 25)), (IF(report_pot_upah > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_upah * IF(grup_hk = 1, 83509, 70148), report_pot_upah * pengali_jam / IF(grup_hk = 1, 21, 25)) , 0)) ) ) + if(is_terminasi > 0, pot_bpjs * 2, pot_bpjs) + pot_psiun)
                          ) % 100
                      )
                  ) AS gaji_terima,
@@ -1345,7 +1475,7 @@
         //                     FROM htsprrd AS a
         //                     LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
         //                     WHERE a.tanggal BETWEEN job.tanggal_masuk AND :tanggal_akhir
-        //                         AND a.st_clock_in <> "OFF"
+        //                         AND a.st_jadwal <> "OFF"
         //                     GROUP BY a.id_hemxxmh
         //                 ) AS report
         //                 LEFT JOIN (
