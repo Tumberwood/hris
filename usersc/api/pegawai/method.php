@@ -18,40 +18,30 @@
 			global $secret_key;
 		
 			$headers = getallheaders();
-			// if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-				// $token = $_SERVER['HTTP_AUTHORIZATION'];
-			// } else {
-				// }
-				// $secret_key = 'ferry123';
-				// $pass = 'Bearer '.$secret_key;
-				$ch = curl_init('https://hrispmi.solusiprogram.top/usersc/api/pegawai/employee.php');
-				$headers = array(
-					'Authorization: Bearer ferry123',
-				);
-				
-				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-				$token = $headers['Authorization'];
+			$token = $headers['Authorization'] ?? null;
+			// $secret_key = 'ferry123';
+			// $pass = 'Bearer '.$secret_key;
 			
 			$username = 'solusiindonesia';
 			$password = 'ayoterbang';
 			$credentials = base64_encode("$username:$password");
 			$pass = 'Basic '.$credentials;
 		
-			// if (!$token) {
-			// 	http_response_code(401);
-			// 	echo json_encode(array("message" => "Unauthorized"));
-			// 	exit();
-			// }
+			if (!$token) {
+				http_response_code(401);
+				echo json_encode(array("message" => "Unauthorized"));
+				exit();
+			}
 		
 			try {
-				// if ($token == $pass) {
-				// 	$decoded = array('HS256');
-				// 	return $decoded;
-				// } else {
-				// 	http_response_code(401);
-				// 	echo json_encode(array("message" => "Invalid token"));
-				// 	exit();
-				// }
+				if ($token == $pass) {
+					$decoded = array('HS256');
+					return $decoded;
+				} else {
+					http_response_code(401);
+					echo json_encode(array("message" => "Invalid token"));
+					exit();
+				}
 				
 				echo $token . '<br>';
 				echo $credentials;
