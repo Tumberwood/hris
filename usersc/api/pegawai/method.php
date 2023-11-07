@@ -19,12 +19,18 @@
 		
 			$headers = getallheaders();
 			// if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-				$token = $_SERVER['HTTP_AUTHORIZATION'];
+				// $token = $_SERVER['HTTP_AUTHORIZATION'];
 			// } else {
 			// 	$token = $headers['Authorization'];
 			// }
 			// $secret_key = 'ferry123';
 			// $pass = 'Bearer '.$secret_key;
+			$ch = curl_init('https://hrispmi.solusiprogram.top/usersc/api/pegawai/employee.php');
+			$headers = array(
+				'Authorization: Bearer ferry123',
+			);
+
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 			
 			$username = 'solusiindonesia';
 			$password = 'ayoterbang';
