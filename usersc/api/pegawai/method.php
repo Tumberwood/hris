@@ -7,8 +7,7 @@
 	use
 		DataTables\Editor,
 		DataTables\Editor\Query,
-		DataTables\Editor\Result,
-		Firebase\JWT\JWT;
+		DataTables\Editor\Result;
 
 		// Your secret key for JWT encoding and decoding
 		$secret_key = 'ferry123';
