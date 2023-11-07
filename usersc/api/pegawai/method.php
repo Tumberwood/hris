@@ -18,7 +18,11 @@
 			global $secret_key;
 		
 			$headers = getallheaders();
-			$token = $headers['Authorization'];
+			if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+				$token = $_SERVER['HTTP_AUTHORIZATION'];
+			} else {
+				$token = $headers['Authorization'];
+			}
 			// $secret_key = 'ferry123';
 			// $pass = 'Bearer '.$secret_key;
 			
