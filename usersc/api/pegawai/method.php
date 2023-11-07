@@ -28,9 +28,9 @@
 				$headers = array(
 					'Authorization: Bearer ferry123',
 				);
+				
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 				$token = $headers['Authorization'];
-
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 			
 			$username = 'solusiindonesia';
 			$password = 'ayoterbang';
