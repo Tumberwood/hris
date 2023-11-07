@@ -4,23 +4,58 @@
 	include( "../../../usersc/helpers/datatables_fn_debug.php" );
     require '../../../usersc/vendor/autoload.php';
 	
-	// Ambil konfigurasi dari init.php
-	// $mysqlConfig = $GLOBALS['config']['mysql'];
-
-	// // deklarasikan variable seperti host, username, password, dan database
-	// $host = $mysqlConfig['host'];
-	// $username = $mysqlConfig['username'];
-	// $password = $mysqlConfig['password'];
-	// $database = $mysqlConfig['db'];
-
-	// // deklarasi mysqli dengan variable tadi
-	// $mysqli = new mysqli($host, $username, $password, $database);
-
-
 	use
 		DataTables\Editor,
 		DataTables\Editor\Query,
-		DataTables\Editor\Result;
+		DataTables\Editor\Result,
+		Firebase\JWT\JWT;
+
+		// Your secret key for JWT encoding and decoding
+		$secret_key = 'ferry123';
+		$pass = 'Bearer '.$secret_key;
+		
+		// Function to validate the JWT token from the request
+		function validateToken() {
+			global $secret_key;
+		
+			$headers = getallheaders();
+			$token = $headers['Authorization'] ?? null;
+			// $secret_key = 'ferry123';
+			// $pass = 'Bearer '.$secret_key;
+			
+			$username = 'solusiindonesia';
+			$password = 'ayoterbang';
+			$credentials = base64_encode("$username:$password");
+			$pass = 'Basic '.$credentials;
+		
+			if (!$token) {
+				http_response_code(401);
+				echo json_encode(array("message" => "Unauthorized"));
+				exit();
+			}
+		
+			try {
+				if ($token == $pass) {
+					$decoded = array('HS256');
+					return $decoded;
+				} else {
+					http_response_code(401);
+					echo json_encode(array("message" => "Invalid token"));
+					exit();
+				}
+				
+				echo $token . '<br>';
+				echo $credentials;
+			} catch (Exception $e) {
+				http_response_code(401);
+				echo json_encode(array("message" => "Invalid token"));
+				exit();
+			}
+		}
+		
+		// Validate the token before accessing any API endpoints
+		validateToken();
+
 class Employee 
 {
 
