@@ -18,7 +18,7 @@
 			global $secret_key;
 		
 			$headers = getallheaders();
-			$token = $headers['Authorization'] ?? null;
+			$token = $headers['Authorization'];
 			// $secret_key = 'ferry123';
 			// $pass = 'Bearer '.$secret_key;
 			
