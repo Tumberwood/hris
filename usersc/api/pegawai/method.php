@@ -85,8 +85,7 @@ class Employee
 		$count = count($result);
 	
 		if ($count > 0){
-			$results = $result;
-			$data = $results;
+			$data = $result;
 		}
 		
 		$response=array(
@@ -105,7 +104,7 @@ class Employee
 
 		if($id != 0)
 		{
-			$query=" WHERE a.id=".$id;
+			$query.=" WHERE a.id=".$id;
 		}
 
 		$qs_emp = $db
@@ -167,8 +166,7 @@ class Employee
 		$count = count($result);
 	
 		if ($count > 0){
-			$results = $result;
-			$data = $results;
+			$data = $result;
 		}
 		
 		$response=array(
