@@ -35,7 +35,6 @@
 			$token = getAuthorizationHeader();
 			// $secret_key = 'ferry123';
 			// $pass = 'Bearer '.$secret_key;
-			
 			$username = 'pmierp';
 			$password = 'G:}*DA1]U1';
 			$credentials = base64_encode("$username:$password");
@@ -48,17 +47,18 @@
 			}
 		
 			try {
-				if ($token == $pass) {
-					$decoded = array('HS256');
-					return $decoded;
-				} else {
-					http_response_code(401);
-					echo json_encode(array("message" => "Invalid token"));
-					exit();
-				}
+				// if ($token == $pass) {
+				// 	$decoded = array('HS256');
+				// 	return $decoded;
+				// } else {
+				// 	http_response_code(401);
+				// 	echo json_encode(array("message" => "Invalid token"));
+				// 	exit();
+				// }
 				
-				echo $token . '<br>';
-				echo $credentials;
+				var_dump($_SERVER);
+				// echo $token . '<br>';
+				// echo $credentials;
 			} catch (Exception $e) {
 				http_response_code(401);
 				echo json_encode(array("message" => "Invalid token"));
