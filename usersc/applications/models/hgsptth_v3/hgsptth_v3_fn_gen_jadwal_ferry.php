@@ -144,7 +144,9 @@
                         b.nama,
                         if(b.nama = "minggu", b.shift, 
                             if(jam.kode LIKE "malam%", 3, 
-                                if(jam.kode LIKE "pagi%", 1, 2)
+                                if(jam.kode LIKE "pagi%", 1, 
+                                    if(jam.id = 19, 3, 2)
+                                )
                             ) 
                         ) AS shift
                     FROM hgsptth_v3 AS a
