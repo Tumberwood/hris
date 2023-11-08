@@ -31,26 +31,32 @@
 				
 				return null;
 			}
+			$user = '';
+			$pass = '';
+			if (!empty($_GET["user"])) {
+				$user = $_GET["user"];
+			}
+
+			if (!empty($_GET["pass"])) {
+				$pass = $_GET["pass"];
+			}
 
 			$token = getAuthorizationHeader();
 			// $secret_key = 'ferry123';
 			// $pass = 'Bearer '.$secret_key;
 			$username = 'pmierp';
 			$password = 'G:}*DA1]U1';
-			$credentials = base64_encode("$username:$password");
-			$pass = 'Basic '.$credentials;
+			// $credentials = base64_encode("$username:$password");
+			// $pass = 'Basic '.$credentials;
 		
-			if (!$token) {
+			if ($user == '' || $pass == '') {
 				http_response_code(401);
 				echo json_encode(array("message" => "Unauthorized"));
 				exit();
 			}
 		
 			try {
-				if ($token == $pass) {
-					$decoded = array('HS256');
-					return $decoded;
-				} else {
+				if ($username != $user || $password != $pass) {
 					http_response_code(401);
 					echo json_encode(array("message" => "Invalid token"));
 					exit();
