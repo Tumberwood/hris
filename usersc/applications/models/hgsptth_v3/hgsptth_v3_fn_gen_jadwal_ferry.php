@@ -69,6 +69,14 @@
                     '
             );
 
+            $qd_detail = $db
+            ->raw()
+            ->bind(':id_hgsptth_v3', $id_hgsptth_v3)
+            ->exec('DELETE FROM hgsemtd_v3 WHERE id_hgsptth_v3 = :id_hgsptth_v3;
+                    '
+            );
+
+            // insert detail SHIFT ==> NS dan OFF
             $qs_peg = $db
             ->raw()
             ->bind(':dari_tanggal', $dari_tanggal)
@@ -93,7 +101,60 @@
                         b.shift
                     FROM hgsptth_v3 AS a
                     LEFT JOIN hgsemtd_v3 AS b ON b.id_hgsptth_v3 = a.id
-                    WHERE a.tanggal_awal = :dari_tanggal AND a.is_active = 1
+                    WHERE a.tanggal_awal = :dari_tanggal AND a.is_active = 1 AND (b.id_htsxxmh = 1 OR b.shift = 5)
+                
+            ');
+
+            // insert detail SHIFT ==> !NS dan !OFF
+            $qs_peg = $db
+            ->raw()
+            ->bind(':dari_tanggal', $dari_tanggal)
+            ->bind(':id_hgsptth_v3', $id_hgsptth_v3)
+            ->exec('INSERT INTO hgsemtd_v3
+                    (
+                        id_hgsptth_v3,
+                        id_htsptth_v3,
+                        id_hemxxmh,
+                        id_holxxmd,
+                        id_htsxxmh,
+                        nama,
+                        shift
+                    )
+                    WITH jadwal AS (
+                        SELECT
+                            gs.id,
+	                        max(ps.shift) AS shift_max,
+                            (
+                                SELECT id_htsxxmh
+                                FROM htspttd_v3
+                                WHERE id_htsptth_v3 = gs.id
+                                ORDER BY shift DESC
+                                LIMIT 1
+                            ) AS jadwal_max
+                        FROM htspttd_v3 AS ps
+                        LEFT JOIN htsptth_v3 AS gs ON gs.id = ps.id_htsptth_v3
+                        GROUP BY gs.id
+                    )
+                    SELECT
+                        :id_hgsptth_v3,
+                        b.id_htsptth_v3,
+                        b.id_hemxxmh,
+                        b.id_holxxmd,
+                        if(b.nama = "minggu", b.id_htsxxmh, ifnull(c.id_htsxxmh, jadwal_max) ) AS id_htsxxmh,
+                        b.nama,
+                        if(b.nama = "minggu", b.shift, if(b.shift - 1 = 0, shift_max, b.shift - 1) ) AS shift
+                    FROM hgsptth_v3 AS a
+                    LEFT JOIN hgsemtd_v3 AS b ON b.id_hgsptth_v3 = a.id
+                    LEFT JOIN (
+                        SELECT 
+                            grup.id,
+                            det.id_htsxxmh,
+                            det.shift
+                        FROM htsptth_v3 AS grup
+                        LEFT JOIN htspttd_v3 AS det ON det.id_htsptth_v3 = grup.id
+                    ) AS c ON c.id = b.id_htsptth_v3 AND c.shift = b.shift - 1
+                    LEFT JOIN jadwal ON jadwal.id = b.id_htsptth_v3
+                    WHERE a.tanggal_awal = :dari_tanggal AND a.is_active = 1 AND (b.id_htsxxmh <> 1 AND b.shift <> 5)
                 
             ');
     
