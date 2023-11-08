@@ -40,23 +40,23 @@
 			$credentials = base64_encode("$username:$password");
 			$pass = 'Basic '.$credentials;
 		
-			// if (!$token) {
-			// 	http_response_code(401);
-			// 	echo json_encode(array("message" => "Unauthorized"));
-			// 	exit();
-			// }
+			if (!$token) {
+				http_response_code(401);
+				echo json_encode(array("message" => "Unauthorized"));
+				exit();
+			}
 		
 			try {
-				// if ($token == $pass) {
-				// 	$decoded = array('HS256');
-				// 	return $decoded;
-				// } else {
-				// 	http_response_code(401);
-				// 	echo json_encode(array("message" => "Invalid token"));
-				// 	exit();
-				// }
+				if ($token == $pass) {
+					$decoded = array('HS256');
+					return $decoded;
+				} else {
+					http_response_code(401);
+					echo json_encode(array("message" => "Invalid token"));
+					exit();
+				}
 				
-				var_dump($_SERVER);
+				// var_dump($_SERVER);
 				// echo $token . '<br>';
 				// echo $credentials;
 			} catch (Exception $e) {
