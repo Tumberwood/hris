@@ -10,8 +10,8 @@
 		DataTables\Editor\Result;
 
 		// Your secret key for JWT encoding and decoding
-		$secret_key = 'ferry123';
-		$pass = 'Bearer '.$secret_key;
+		// $secret_key = 'ferry123';
+		// $pass = 'Bearer '.$secret_key;
 		
 		// Function to validate the JWT token from the request
 		function validateToken() {
@@ -36,8 +36,8 @@
 			// $secret_key = 'ferry123';
 			// $pass = 'Bearer '.$secret_key;
 			
-			$username = 'solusiindonesia';
-			$password = 'ayoterbang';
+			$username = 'pmierp';
+			$password = 'G:}*DA1]U1';
 			$credentials = base64_encode("$username:$password");
 			$pass = 'Basic '.$credentials;
 		
