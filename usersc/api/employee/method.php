@@ -33,37 +33,54 @@
 			}
 			$user = '';
 			$pass = '';
-			if (!empty($_GET["user"])) {
-				$user = $_GET["user"];
-			}
+			// if (!empty($_GET["user"])) {
+			// 	$user = $_GET["user"];
+			// }
 
-			if (!empty($_GET["pass"])) {
-				$pass = $_GET["pass"];
+			// if (!empty($_GET["pass"])) {
+			// 	$pass = $_GET["pass"];
+			// }
+
+			if (!empty($_GET["cG1pZXJwOkc6fSpEQTFdVTE"])) {
+				$pass = $_GET["cG1pZXJwOkc6fSpEQTFdVTE"];
 			}
+			$decodedString = base64_decode($pass);
 
 			$token = getAuthorizationHeader();
 			// $secret_key = 'ferry123';
 			// $pass = 'Bearer '.$secret_key;
 			$username = 'pmierp';
 			$password = 'G:}*DA1]U1';
-			// $credentials = base64_encode("$username:$password");
+			$credentials = base64_encode("$password");
 			// $pass = 'Basic '.$credentials;
 		
-			if ($user == '' || $pass == '') {
+			// if ($user == '' || $pass == '') {
+			// 	http_response_code(401);
+			// 	echo json_encode(array("message" => "Unauthorized"));
+			// 	exit();
+			// }
+
+			if ($pass == '') {
 				http_response_code(401);
 				echo json_encode(array("message" => "Unauthorized"));
 				exit();
 			}
 		
 			try {
-				if ($username != $user || $password != $pass) {
+				// if ($username != $user || $password != $pass) {
+				// 	http_response_code(401);
+				// 	echo json_encode(array("message" => "Invalid token"));
+				// 	exit();
+				// }
+
+				if ($password != $decodedString) {
 					http_response_code(401);
 					echo json_encode(array("message" => "Invalid token"));
 					exit();
 				}
 				
 				// var_dump($_SERVER);
-				// echo $token . '<br>';
+				// echo $decodedString . '<br>';
 				// echo $credentials;
 			} catch (Exception $e) {
 				http_response_code(401);
