@@ -142,7 +142,11 @@
                         b.id_holxxmd,
                         if(b.nama = "minggu", b.id_htsxxmh, ifnull(c.id_htsxxmh, jadwal_max) ) AS id_htsxxmh,
                         b.nama,
-                        if(b.nama = "minggu", b.shift, if(b.shift - 1 = 0, shift_max, b.shift - 1) ) AS shift
+                        if(b.nama = "minggu", b.shift, 
+                            if(jam.kode LIKE "malam%", 3, 
+                                if(jam.kode LIKE "pagi%", 1, 2)
+                            ) 
+                        ) AS shift
                     FROM hgsptth_v3 AS a
                     LEFT JOIN hgsemtd_v3 AS b ON b.id_hgsptth_v3 = a.id
                     LEFT JOIN (
@@ -154,6 +158,7 @@
                         LEFT JOIN htspttd_v3 AS det ON det.id_htsptth_v3 = grup.id
                     ) AS c ON c.id = b.id_htsptth_v3 AND c.shift = b.shift - 1
                     LEFT JOIN jadwal ON jadwal.id = b.id_htsptth_v3
+                    LEFT JOIN htsxxmh AS jam ON jam.id = if(b.nama = "minggu", b.id_htsxxmh, ifnull(c.id_htsxxmh, jadwal_max) )
                     WHERE a.tanggal_awal = :dari_tanggal AND a.is_active = 1 AND (b.id_htsxxmh <> 1 AND b.shift <> 5)
                 
             ');
