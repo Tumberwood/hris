@@ -590,7 +590,7 @@
                                 id_hemxxmh,
                                 COUNT(id) AS jadwal
                             FROM htssctd
-                            WHERE tanggal BETWEEN DATE_ADD(:tanggal_akhir, INTERVAL 1 DAY) AND LAST_DAY(:tanggal_akhir)
+                            WHERE tanggal BETWEEN DATE_ADD(:tanggal_akhir, INTERVAL 1 DAY) AND LAST_DAY(:tanggal_akhir) AND is_active = 1
                                 AND id_htsxxmh <> 1
                             GROUP BY id_hemxxmh
                         ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh
@@ -851,6 +851,7 @@
                                 COUNT(id) AS is_terminasi
                             FROM hemjbrd
                             WHERE id_harxxmh IN (3, 4)
+                            GROUP BY id_hemxxmh
                         ) AS subquery
                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
 
@@ -934,6 +935,7 @@
                                         DATE_SUB(jb.tanggal_awal, INTERVAL 1 DAY) AS akhir_grup_hk_lama
                                     FROM hemjbrd AS jb
                                     WHERE is_from_hk = 1 AND tanggal_awal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir)
+                                    GROUP BY id_hemxxmh
                                 ) AS subquery
                             ) AS history ON history.id_hemxxmh = a.id_hemxxmh
                             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
@@ -943,7 +945,7 @@
                         ) AS report
                         LEFT JOIN (
                             SELECT
-                                    tanggal,
+                                tanggal,
                                 htssctd.id_hemxxmh,
                                 COUNT(id) AS jadwal
                             FROM htssctd
@@ -955,8 +957,9 @@
                                 jb.tanggal_awal AS awal_grup_hk_baru
                             FROM hemjbrd AS jb
                             WHERE is_from_hk = 1 AND tanggal_awal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir)
+                            GROUP BY id_hemxxmh
                             ) AS jbrd ON jbrd.id_hemxxmh = htssctd.id_hemxxmh
-                            WHERE id_htsxxmh <> 1 AND tanggal BETWEEN awal_grup_hk_baru AND LAST_DAY(:tanggal_akhir)
+                            WHERE id_htsxxmh <> 1 AND tanggal BETWEEN awal_grup_hk_baru AND LAST_DAY(:tanggal_akhir) AND is_active = 1
                             GROUP BY id_hemxxmh
                         ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh 
                     ) AS hk5hk6 ON hk5hk6.id_hemxxmh = a.id_hemxxmh
