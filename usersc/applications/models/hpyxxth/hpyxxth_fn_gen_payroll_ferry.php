@@ -191,7 +191,7 @@
                     (ifnull(if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp),0) + ifnull(nominal_t_jab,0) + ifnull(nominal_var_cost,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) AS pengali_jam,
                     -- gaji pokok
                     IFNULL( 
-                        if( c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_akhir), 0,
+                        if( c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal), 0,
                             if(is_perubahan_hk > 0, 
                                 ((hk_report / if(grup_hk_lama = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp))
                                 +
