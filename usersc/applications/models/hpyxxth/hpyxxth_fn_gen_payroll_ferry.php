@@ -940,7 +940,7 @@
                             ) AS history ON history.id_hemxxmh = a.id_hemxxmh
                             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
                             WHERE a.tanggal BETWEEN job.tanggal_masuk AND akhir_grup_hk_lama
-                            AND a.st_jadwal <> "OFF"
+                            AND a.st_clock_in <> "OFF"
                             GROUP BY a.id_hemxxmh
                         ) AS report
                         LEFT JOIN (
