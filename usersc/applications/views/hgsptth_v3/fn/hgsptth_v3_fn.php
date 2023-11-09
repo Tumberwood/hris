@@ -26,6 +26,33 @@
             edt.field('hgsemtd_v3.id_htsxxmh').val(1);
         }
     }
+    function cekJadwal(edt){
+        shift = edt.field('hgsemtd_v3.shift').val();
+        id_htsptth_v3 = edt.field('hgsemtd_v3.id_htsptth_v3').val();
+        
+        if (shift <= 3) {
+            $.ajax( {
+                url: "../../models/hgsptth_v3/fn_cek_pola.php",
+                dataType: 'json',
+                type: 'POST',
+                async: false,
+                data: {
+                    shift: shift,
+                    id_htsptth_v3: id_htsptth_v3
+                },
+                success: function ( json ) {
+                    id_htsxxmh = json.data.rs_jam.id;
+                    id_htsxxmh_old = id_htsxxmh
+                    edt.field('hgsemtd_v3.id_htsxxmh').val(id_htsxxmh);
+                }
+            } ); 
+        }
+        
+        if (shift == 4) {
+            id_htsxxmh_old = 1;
+            edt.field('hgsemtd_v3.id_htsxxmh').val(1);
+        }
+    }
 
     function validasiSubmit(edt) {
         id_hemxxmh = edt.field('hgsemtd_v3.id_hemxxmh').val();

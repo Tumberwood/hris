@@ -32,13 +32,13 @@
 					'htlxxth.id as id_transaksi',
 					'htlxxth.id_hemxxmh as id_hemxxmh',
 					'htlxxth.id_htlxxmh as id_htlxxmh',
-					'htlgrmh.id as id_htlgrmh',
+					'ifnull(htlgrmh.id, 0) as id_htlgrmh',
 					'htlxxth.kode as kode',
 					'htlxxth.tanggal_awal as tanggal_awal',
 					'htlxxth.tanggal_akhir as tanggal_akhir',
 					'htlxxth.keterangan as keterangan',
 					'htlxxmh.kode as htlxxmh_kode',
-					'htlgrmh.kode as htlgrmh_kode'
+					'ifnull(htlgrmh.kode, "") as htlgrmh_kode'
 				] )
 				->join('hemxxmh','hemxxmh.id = htlxxth.id_hemxxmh','LEFT' )
 				->join('htlxxmh','htlxxmh.id = htlxxth.id_htlxxmh','LEFT' )

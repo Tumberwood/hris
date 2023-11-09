@@ -298,37 +298,37 @@
 			
 		})
 		->on('preRemove',function( $editor, $id, $values ) {
-			$qs_jadwal = $editor->db()
-				->raw()
-				->bind(':id', $id)
-				->exec(' SELECT
-							b.tanggal_awal,
-							b.tanggal_akhir,
-							a.id_hemxxmh,
-							a.id_htsxxmh
-						FROM hgsemtd_v3 AS a
-						LEFT JOIN hgsptth_v3 AS b ON b.id = a.id_hgsptth_v3
-						WHERE a.id = :id
-						'
-						);
-			$rs_jadwal = $qs_jadwal->fetch();
-			$tanggal_awal = $rs_jadwal['tanggal_awal'];
-			$tanggal_akhir = $rs_jadwal['tanggal_akhir'];
-			$id_hemxxmh = $rs_jadwal['id_hemxxmh'];
-			$id_htsxxmh = $rs_jadwal['id_htsxxmh'];
+			// $qs_jadwal = $editor->db()
+			// 	->raw()
+			// 	->bind(':id', $id)
+			// 	->exec(' SELECT
+			// 				b.tanggal_awal,
+			// 				b.tanggal_akhir,
+			// 				a.id_hemxxmh,
+			// 				a.id_htsxxmh
+			// 			FROM hgsemtd_v3 AS a
+			// 			LEFT JOIN hgsptth_v3 AS b ON b.id = a.id_hgsptth_v3
+			// 			WHERE a.id = :id
+			// 			'
+			// 			);
+			// $rs_jadwal = $qs_jadwal->fetch();
+			// $tanggal_awal = $rs_jadwal['tanggal_awal'];
+			// $tanggal_akhir = $rs_jadwal['tanggal_akhir'];
+			// $id_hemxxmh = $rs_jadwal['id_hemxxmh'];
+			// $id_htsxxmh = $rs_jadwal['id_htsxxmh'];
 
-			$qd_schedule = $editor->db()
-				->raw()
-				->bind(':tanggal_awal', $tanggal_awal)
-				->bind(':tanggal_akhir', $tanggal_akhir)
-				->bind(':id_hemxxmh', $id_hemxxmh)
-				->exec('DELETE FROM htssctd
-						WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir 
-							AND DAYOFWEEK(tanggal) = 7
-							AND id_hemxxmh = :id_hemxxmh 
-							;
-							'
-				);
+			// $qd_schedule = $editor->db()
+			// 	->raw()
+			// 	->bind(':tanggal_awal', $tanggal_awal)
+			// 	->bind(':tanggal_akhir', $tanggal_akhir)
+			// 	->bind(':id_hemxxmh', $id_hemxxmh)
+			// 	->exec('DELETE FROM htssctd
+			// 			WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir 
+			// 				AND DAYOFWEEK(tanggal) = 7
+			// 				AND id_hemxxmh = :id_hemxxmh 
+			// 				;
+			// 				'
+			// 	);
 		})
 		->on('postRemove',function( $editor, $id, $values ) {
 			// script diletakkan disini
