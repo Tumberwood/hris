@@ -83,6 +83,7 @@
                                 <th>Nama</th>
                                 <th>Tanggal Efektif</th>
                                 <th>Keterangan</th>
+                                <th>Approval</th>
                             </tr>
                         </thead>
                     </table>
@@ -108,6 +109,8 @@
 
 		var id_hemxxmh_old = 0, id_hovxxmh_awal_old = 0, id_hovxxmh_akhir_old = 0, id_hodxxmh_awal_old = 0, id_hodxxmh_akhir_old = 0, id_hosxxmh_awal_old = 0, id_hosxxmh_akhir_old = 0, id_hevxxmh_awal_old = 0, id_hevxxmh_akhir_old = 0, id_hetxxmh_awal_old = 0, id_hetxxmh_akhir_old = 0;
 		
+		var is_need_approval = 1;
+
 		$(document).ready(function() {
 			//start datatables editor
 			edtharxxth = new $.fn.dataTable.Editor( {
@@ -126,6 +129,22 @@
 				table: "#tblharxxth",
 				template: "#frmharxxth",
 				fields: [ 
+					{
+						// untuk generate_kode
+						label: "kategori_dokumen",
+						name: "kategori_dokumen",
+						type: "hidden"
+					},	{
+						// untuk generate_kode
+						label: "kategori_dokumen_value",
+						name: "kategori_dokumen_value",
+						type: "hidden"
+					},	{
+						// untuk generate_kode
+						label: "field_tanggal",
+						name: "field_tanggal",
+						type: "hidden"
+					},
 					{
 						label: "start_on",
 						name: "start_on",
@@ -444,6 +463,9 @@
 				
 				if(action == 'create'){
 					tblharxxth.rows().deselect();
+					edtharxxth.field('kategori_dokumen').val('');
+					edtharxxth.field('kategori_dokumen_value').val('');
+					edtharxxth.field('field_tanggal').val('created_on');
 				}
 			});
 
@@ -489,6 +511,10 @@
 				edtharxxth.field('finish_on').val(finish_on);
 			});
 
+			edtharxxth.on( 'postSubmit', function (e, json, data, action, xhr) {
+				tblharxxth.ajax.reload(null,false);
+			} );
+
 			//start datatables
 			tblharxxth = $('#tblharxxth').DataTable( {
 				ajax: {
@@ -504,7 +530,23 @@
 					{ data: "harxxth.kode" },
 					{ data: "hemxxmh_data" },
 					{ data: "harxxth.tanggal_efektif" },
-					{ data: "harxxth.keterangan" }
+					{ data: "harxxth.keterangan" },
+					{ 
+						data: "harxxth.is_approve",
+						render: function (data){
+							if (data == 0){
+								return '';
+							}else if(data == 1){
+								return '<i class="fa fa-check text-navy"></i>';
+							}else if(data == 2){
+								return '<i class="fa fa-undo text-muted"></i>';
+							}else if(data == -9){
+								return '<i class="fa fa-remove text-danger"></i>';
+							} else {
+								return '';
+							}
+						} 
+					}
 				],
 				buttons: [
 					// BEGIN breaking generate button
@@ -517,7 +559,7 @@
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
 						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_h'];
-						$arr_buttons_approve 	= [];
+						$arr_buttons_approve 	= ['approve','cancel_approve'];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button

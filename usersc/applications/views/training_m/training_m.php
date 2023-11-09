@@ -66,7 +66,7 @@
 				<div class="row">
 					<div class="col-lg-4" id="materi-kiri">
 						<button id="btnCreatesub_materi_m" class="btn btn-primary" title="New"><i class="fa fa-plus"></i> sub_materi</button>
-						<div id="ibox-container"></div>
+						<div id="sub_materi_content"></div>
 					</div>
 					<div class="col-lg-8" id="materi-kanan">
 						<div class="ibox">
@@ -87,6 +87,11 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-10"></div>
+	<div class="col-md-2"></div>
 </div>
 
 
@@ -215,8 +220,8 @@
 										dataType: 'json',
 										success: function(data) {
 											if (Array.isArray(data.data)) {
-												$('#ibox-container').empty();
-												const iboxContainer = document.getElementById("ibox-container");
+												$('#sub_materi_content').empty();
+												const iboxContainer = document.getElementById("sub_materi_content");
 												data.data.forEach(function(item) {
 													// Create an iBox for each header (nama)
 													const title = document.createElement("div");
@@ -225,13 +230,13 @@
 													title.style.justifyContent = "space-between"; // Align items to both ends of the title
 
 													// Create the button and add it to the title
-													const button = createButton("btnCreatemateri btn btn-primary btn-sm", "fa fa-plus");
+													const btn_materi = createButton("btnCreatemateri btn btn-primary btn-sm", "fa fa-plus");
 													// const button = document.createElement("button");
 													// button.className = "btn btn btnCreatemateri btn-sm";
 													// button.title = "New";
 													// button.innerHTML = '<i class="fa fa-plus"></i>';
 
-													button.addEventListener("click", function() {
+													btn_materi.addEventListener("click", function() {
 														edtmateri_m.title('Create Sub sub_materi').buttons(
 															{
 																label: 'Submit',
@@ -252,7 +257,7 @@
 													toggleButton.className = "fa fa-chevron-up toggle-chevron";
 
 													// Append elements to the title
-													title.appendChild(button);
+													title.appendChild(btn_materi);
 													title.appendChild(sub_materiTitle);
 													title.appendChild(toggleButton);
 
@@ -306,25 +311,34 @@
 																		data.data.forEach(function(item) {
 																			let materi = item.materi_m;
 																			let id = item.DT_RowId;
+																			const createdOn_materi = new Date(materi.created_on);
+
+																			trainingDibuat(createdOn_materi);
+																			formatTime(createdOn_materi);
 
 																			materiList += 
 																			`
 																			<div class="materi_panel" data-editor-id="${id}">
-																				<a class="konten-materi" title="Fullscreen Materi"><i class="fa fa-chevron-up"></i></a>
 																				<small class="float-right">${timeAgoText} ago</small>
 																				<strong>
 																				<h3 for="sub-sub_materi-checkbox-${materi.id}">
-																					${materi.jenis == 1
-																						? `<i class="fa fa-film"></i>`
-																						: `<i class="fa fa-pencil-square-o"></i>`
-																					}
-																					${materi.nama}
+																					<div class="row">
+																						<div class="col-md-2">
+																							${materi.jenis == 1
+																								? `<i class="fa fa-film"></i>`
+																								: `<i class="fa fa-pencil-square-o"></i>`
+																							}
+																						</div>
+																						<div class="col-md-10">
+																							${materi.nama}
 																					<input id="sub-sub_materi-checkbox-${materi.id}" type="checkbox" class="sub-sub_materi-checkbox" value="${materi.id}">
+																						</div>
+																					</div>
 																				</h3>
 																				</strong>
 																				<div class="tr-up">
 																					<div>${materi.keterangan}</div>
-																					<small class="text-muted">${formatTime(createdOn)} - ${createdOn.toLocaleDateString()}</small>		
+																					<small class="text-muted">${formatTime(createdOn_materi)} - ${createdOn_materi.toLocaleDateString()}</small>		
 																					<br>					
 																					<br>					
 																					<div class="row">
@@ -391,7 +405,8 @@
 																							var link_yt = materi.link_yt;
 																							var jenis_materi = materi.jenis;
 																							var video_yt = '';
-																							console.log(jenis_materi);
+																							var button_quiz = '';
+																							
 																							if (jenis_materi == 1) {
 																								if (link_yt !== null && link_yt !== undefined) {
 																									var match = link_yt.match(/[?&]v=([^&]+)/);
@@ -400,13 +415,68 @@
 																										video_yt = '<iframe id="videoFrame" width="100%" height="480px" src="https://www.youtube.com/embed/'+link+'" frameborder="0" allowfullscreen></iframe>';
 																									}
 																								}
+																								materiVideo.innerHTML = video_yt;
+																							} else {
+																								$('#materi').empty();
+																								const button_quiz = createButton("btnCreatemateri btn btn-primary btn-sm", "fa fa-plus");
+																								const button_start_quiz = createButton("btnStart_quiz btn btn-primary btn-sm", "fa fa-fx");
+																								
+        																						button_start_quiz.innerHTML = `Start`;
+																								materiVideo.appendChild(button_quiz);
+																								materiVideo.appendChild(button_start_quiz);
+
+																								let isCountdownStarted = false;
+
+																								button_start_quiz.addEventListener("click", function() {
+																									const materiKanan = $("#materi-kanan");
+																									materiKanan.removeClass("col-lg-8").addClass("col-lg-12");
+																									$("#materi-kiri").hide();
+																									$("#judul-tr").hide() 
+																									$("#hide-tr").hide() 
+																									$("#materi-sidebar").hide() 
+																									countdownMinutes = 1; // Reset countdown minutes
+																									countdownSeconds = 0; // Reset countdown seconds
+																									console.log('kawoawkokawokawo');
+																									
+																									materiVideo.innerHTML = `
+																										<div class="row">
+																											<div class="col-lg-8">
+																											</div>
+																											<div class="col-lg-4">
+																												<div class="widget navy-bg p-sm text-center">
+																													<div class="m-b-sm">
+																														<i class="fa fa-clock-o fa-4x"></i>
+																														<h3 class="m-xs" id="countdown-timer"></h3>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																									`
+																									;
+																									updateCountdown(); // Start the countdown
+																									countdownInterval = setInterval(updateCountdown, 1000);
+																									window.addEventListener("beforeunload", function (e) {
+																										e.returnValue = "Leaving this page will stop the countdown. Are you sure?";
+																									});
+																								});
+
+																								button_quiz.addEventListener("click", function() {
+																									edtmateri_m.title('Create Sub sub_materi').buttons(
+																										{
+																											label: 'Submit',
+																											className: 'btn btn-primary',
+																											action: function() {
+																												this.submit();
+																											}
+																										}
+																									).create();
+																								});
 																							}
 																							// Set the video title
 																							var h3Title = document.getElementById('judul');
 																							h3Title.textContent = materi.nama;
 
 																							// Append the h3 title to materiVideo
-																							materiVideo.innerHTML = video_yt;
 																						}
 																					});
 																				} else {
@@ -845,6 +915,16 @@
 						]
 					},
 					{
+						label: "Tipe Quiz <sup class='text-danger'>*<sup>",
+						name: "materi_m.tipe_quiz",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Essay", "value": "Essay" },
+							{ "label": "Multiple Choice", "value": "Multiple Choice" }
+						]
+					},
+					{
 						label: "Link Youtube Video <sup class='text-danger'>*<sup>",
 						name: "materi_m.link_yt"
 					}, 	{
@@ -866,9 +946,13 @@
 				if (val == 1) {
 					edtmateri_m.field('materi_m.link_yt').val();
 					edtmateri_m.field('materi_m.link_yt').show();
+					edtmateri_m.field('materi_m.tipe_quiz').val('');
+					edtmateri_m.field('materi_m.tipe_quiz').hide();
 				} else {
 					edtmateri_m.field('materi_m.link_yt').val('');
 					edtmateri_m.field('materi_m.link_yt').hide();
+					edtmateri_m.field('materi_m.tipe_quiz').val();
+					edtmateri_m.field('materi_m.tipe_quiz').show();
 				}
 				return {}
 			}, {event: 'keyup change'});
@@ -908,6 +992,23 @@
 							// END of cek unik materi_m.nama
 						}
 						// END of validasi materi_m.nama
+
+						jenis = edtmateri_m.field('materi_m.jenis').val();
+						if(jenis == ''){
+							edtmateri_m.field('materi_m.jenis').error( 'Wajib diisi!' );
+						}
+
+						if (jenis == 1) {
+							link_yt = edtmateri_m.field('materi_m.link_yt').val();
+							if(!link_yt || link_yt == ''){
+								edtmateri_m.field('materi_m.link_yt').error( 'Wajib diisi!' );
+							}
+						} else {
+							tipe_quiz = edtmateri_m.field('materi_m.tipe_quiz').val();
+							if(!tipe_quiz || tipe_quiz == ''){
+								edtmateri_m.field('materi_m.tipe_quiz').error( 'Wajib diisi!' );
+							}
+						}
 					}
 				}
 				

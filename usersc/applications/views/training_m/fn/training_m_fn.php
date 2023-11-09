@@ -22,7 +22,7 @@
         yesterday.setDate(yesterday.getDate() - 1);
 
         if (createdOn >= yesterday) {
-            // Display in H:MM AM/PM format
+            
             const hours = createdOn.getHours();
             const minutes = createdOn.getMinutes();
             const amOrPm = hours >= 12 ? 'PM' : 'AM';
@@ -31,7 +31,7 @@
 
             return `Today ${formattedHours}:${formattedMinutes} ${amOrPm}`;
         } else {
-            // Display in DD.MM.YYYY format
+            
             const year = createdOn.getFullYear();
             const month = (createdOn.getMonth() + 1).toString().padStart(2, '0');
             const day = createdOn.getDate().toString().padStart(2, '0');
@@ -75,4 +75,39 @@
         button.innerHTML = `<i class="${iconClass}"></i>`;
         return button;
     }
+
+    function updateCountdown() {
+        const timerElement = document.getElementById('countdown-timer');
+        const widget = document.querySelector('.widget');
+
+        if (countdownMinutes >= 0) {
+            timerElement.innerHTML = `${countdownMinutes} minutes ${countdownSeconds} seconds`;
+
+            if (countdownMinutes === 1) {
+            widget.classList.remove('navy-bg', 'yellow-bg');
+            widget.classList.add('red-bg');
+            } else if (countdownMinutes === 3) {
+            widget.classList.remove('navy-bg', 'red-bg');
+            widget.classList.add('yellow-bg');
+            }
+
+            if (countdownSeconds === 0) {
+            countdownMinutes--;
+            countdownSeconds = 59;
+            } else {
+            countdownSeconds--;
+            }
+        } else {
+            timerElement.innerHTML = "Time's up!";
+            clearInterval(countdownInterval);
+            
+            $("#materi-kiri").show();
+            $("#judul-tr").show(); 
+            $("#hide-tr").show();  
+            $("#materi-sidebar").show(); 
+            const materiKanan = $("#materi-kanan");
+            materiKanan.removeClass("col-lg-12").addClass("col-lg-8");
+        }
+    }
+
 </script>
