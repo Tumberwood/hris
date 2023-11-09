@@ -608,7 +608,7 @@
                             FROM htsprrd AS a
                             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
                             WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND DATE_SUB(job.tanggal_keluar, INTERVAL 1 DAY)
-                                AND a.status_presensi_in = "HK"
+                                AND a.st_clock_in <> "OFF"
                             GROUP BY a.id_hemxxmh
                         ) AS report
                     ) AS keluar ON keluar.id_hemxxmh = a.id_hemxxmh
@@ -982,7 +982,7 @@
                             FROM htsprrd AS rd
                             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = rd.id_hemxxmh
                             WHERE rd.tanggal BETWEEN date_add(job.tanggal_masuk, INTERVAL 1 DAY) AND LAST_DAY(:tanggal_awal)
-                        AND rd.status_presensi_in = "HK"
+                        AND rd.st_clock_in <> "OFF"
                             GROUP BY rd.id_hemxxmh
                         ) AS prd ON prd.id_hemxxmh = b.id
                         GROUP BY nama
@@ -1002,7 +1002,7 @@
                             FROM htsprrd AS a
                             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
                             WHERE a.tanggal BETWEEN job.tanggal_masuk AND LAST_DAY(:tanggal_awal)
-                                AND a.status_presensi_in = "HK"
+                                AND a.st_clock_in <> "OFF"
                             GROUP BY a.id_hemxxmh
                         ) AS report
                     ) AS hk_baru ON hk_baru.id_hemxxmh = a.id_hemxxmh
