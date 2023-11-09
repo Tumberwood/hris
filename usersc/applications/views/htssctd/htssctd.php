@@ -387,9 +387,25 @@
 				if (id_htsxxmh_old != 0) {
 					if (val != id_htsxxmh_old) {
 						shift();
+						if (val == 1) {
+							var tanggal = edthtssctd.field('htssctd.tanggal').val();
+							edthtssctd.field('htssctd.tanggaljam_awal_t1').val(tanggal+' 00:00');
+							edthtssctd.field('htssctd.tanggaljam_awal_t2').val(tanggal+' 00:00');
+							edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(tanggal+' 00:00');
+							edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(tanggal+' 00:00');
+							console.log(tanggal);
+						}
 					}
 				} else {
 					shift();
+					
+					if (val == 1) {
+							var tanggal = edthtssctd.field('htssctd.tanggal').val();
+							edthtssctd.field('htssctd.tanggaljam_awal_t1').val(tanggal+' 00:00');
+							edthtssctd.field('htssctd.tanggaljam_awal_t2').val(tanggal+' 00:00');
+							edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(tanggal+' 00:00');
+							edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(tanggal+' 00:00');
+						}
 				}
 				return {}
 			}, {event: 'keyup change'});
@@ -399,10 +415,7 @@
       		 	id_htsxxmh = edthtssctd.field('htssctd.id_htsxxmh').val();
 				   
 					
-				if (id_htsxxmh == 1) {
-					edthtssctd.field('htssctd.tanggaljam_awal_t1').val(tanggal_awal);
-					edthtssctd.field('htssctd.tanggaljam_awal_t2').val(tanggal_awal);
-				} else {
+				if (id_htsxxmh != 1) {
 					akhir = moment(tanggal_awal).add(2, 'hour').format('DD MMM YYYY HH:mm');
 					awal = moment(tanggal_awal).subtract(2, 'hour').format('DD MMM YYYY HH:mm');
 					
@@ -412,11 +425,13 @@
 
 				if (tanggaljam_awal_old != null) {
 					if (tanggaljam_awal_old != val) {
-						akhir = moment(tanggal_awal).add(2, 'hour').format('DD MMM YYYY HH:mm');
-						awal = moment(tanggal_awal).subtract(2, 'hour').format('DD MMM YYYY HH:mm');
-						
-						edthtssctd.field('htssctd.tanggaljam_awal_t1').val(awal);
-						edthtssctd.field('htssctd.tanggaljam_awal_t2').val(akhir);
+						if (id_htsxxmh != 1) {
+							akhir = moment(tanggal_awal).add(2, 'hour').format('DD MMM YYYY HH:mm');
+							awal = moment(tanggal_awal).subtract(2, 'hour').format('DD MMM YYYY HH:mm');
+							
+							edthtssctd.field('htssctd.tanggaljam_awal_t1').val(awal);
+							edthtssctd.field('htssctd.tanggaljam_awal_t2').val(akhir);
+						}
 					
 					}
 				}
@@ -429,20 +444,10 @@
 				id_htsxxmh = edthtssctd.field('htssctd.id_htsxxmh').val();
 				// tanggaljam_akhir_t2 = edthtssctd.field('htssctd.tanggaljam_akhir_t2').val();
 				
-				if (id_htsxxmh == 1) {
-					edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(tanggal_akhir);
-					edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(tanggal_akhir);
-				} else {
+				if (id_htsxxmh != 1) {
 						
 						akhir = moment(tanggal_akhir).add(5, 'hour').format('DD MMM YYYY HH:mm');
 						awal = moment(tanggal_akhir).subtract(5, 'hour').format('DD MMM YYYY HH:mm');
-
-						// if (tanggal_awal > awal) {
-						// 	akhir = moment(tanggal_akhir).add(5, 'hour').add(1, 'day').format('DD MMM YYYY HH:mm');
-						// 	awal = moment(tanggal_akhir).subtract(5, 'hour').add(1, 'day').format('DD MMM YYYY HH:mm');
-						// 	tanggal_akhir = moment(tanggal_akhir).add(1, 'day').format('DD MMM YYYY HH:mm');
-						// 	edthtssctd.field('htssctd.tanggaljam_akhir').val(tanggal_akhir);
-						// }
 						edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(awal);
 						edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(akhir);
 				}
@@ -451,11 +456,13 @@
 				// console.log(tanggaljam_akhir_old);
 				if (tanggaljam_akhir_old != null) {
 					if (tanggaljam_akhir_old != val) {
-						akhir = moment(tanggal_akhir).add(5, 'hour').format('DD MMM YYYY HH:mm');
-						awal = moment(tanggal_akhir).subtract(5, 'hour').format('DD MMM YYYY HH:mm');
-						
-						edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(awal);
-						edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(akhir);
+						if (id_htsxxmh != 1) {
+							akhir = moment(tanggal_akhir).add(5, 'hour').format('DD MMM YYYY HH:mm');
+							awal = moment(tanggal_akhir).subtract(5, 'hour').format('DD MMM YYYY HH:mm');
+							
+							edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(awal);
+							edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(akhir);
+						}
 					}
 				}
 				return {}
