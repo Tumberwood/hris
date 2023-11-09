@@ -49,7 +49,6 @@
 		var edthesxxtd_hk, tblhesxxtd_hk, show_inactive_status_hesxxtd_hk = 0, id_hesxxtd_hk;
 		// ------------- end of default variable
 		var is_need_approval = 1;
-		var is_need_generate_kode = 1;
 		var id_hemxxmh_old = 0;
 		
 		$(document).ready(function() {
@@ -206,6 +205,10 @@
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthesxxtd_hk.field('finish_on').val(finish_on);
 			});
+
+			edthesxxtd_hk.on( 'postSubmit', function (e, json, data, action, xhr) {
+				tblhesxxtd_hk.ajax.reload(null,false);
+			} );
 
 			//start datatables
 			tblhesxxtd_hk = $('#tblhesxxtd_hk').DataTable( {

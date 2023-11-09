@@ -70,6 +70,7 @@
 	}
 	
 	include( "hesxxtd_hk_extra.php" );
+	include( "../../../helpers/kode_fn_generate_c.php" );
 	include( "../../../helpers/edt_log.php" );
 	
 	$editor
