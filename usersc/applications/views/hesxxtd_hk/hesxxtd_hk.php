@@ -26,6 +26,7 @@
                                 <th>Nama</th>
                                 <th>Grup HK</th>
                                 <th>Tanggal Awal</th>
+                                <th>Approval</th>
                             </tr>
                         </thead>
                     </table>
@@ -236,7 +237,23 @@
 							}
 						} 
 					},
-					{ data: "hesxxtd_hk.tanggal_awal" }
+					{ data: "hesxxtd_hk.tanggal_awal" },
+					{ 
+						data: "hesxxtd_hk.is_approve",
+						render: function (data){
+							if (data == 0){
+								return '';
+							}else if(data == 1){
+								return '<i class="fa fa-check text-navy"></i>';
+							}else if(data == 2){
+								return '<i class="fa fa-undo text-muted"></i>';
+							}else if(data == -9){
+								return '<i class="fa fa-remove text-danger"></i>';
+							} else {
+								return '';
+							}
+						} 
+					}
 				],
 				buttons: [
 					// BEGIN breaking generate button
