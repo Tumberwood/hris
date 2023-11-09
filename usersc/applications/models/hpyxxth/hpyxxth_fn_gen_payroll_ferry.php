@@ -582,7 +582,7 @@
                             FROM htsprrd AS a
                             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
                             WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND :tanggal_akhir
-                                AND a.status_presensi_in = "HK"
+                                AND a.st_clock_in <> "OFF" -- sebelumnya st-clock in
                             GROUP BY a.id_hemxxmh
                         ) AS report
                         LEFT JOIN (
