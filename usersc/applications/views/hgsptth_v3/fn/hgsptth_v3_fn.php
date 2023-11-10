@@ -27,7 +27,7 @@
         }
     }
 
-    function validasiSubmit(edt, hari) {
+    function validasiSubmit(action, edt, hari) {
         var id_hemxxmh = edt.field('hgsemtd_v3.id_hemxxmh').val();
         // console.log(id_hemxxmh);
         // console.log(edt);
@@ -45,8 +45,10 @@
             },
             success: function (json) {
                 var c_jadwal = json.data.rs_jadwal.c_jadwal;
-                if (c_jadwal > 0) {
-                    edt.field('hgsemtd_v3.id_hemxxmh').error('Jadwal Pegawai Ini Sudah Pernah Dibuat!');
+                if(action == 'create'){
+                    if (c_jadwal > 0) {
+                        edt.field('hgsemtd_v3.id_hemxxmh').error('Jadwal Pegawai Ini Sudah Pernah Dibuat!');
+                    }
                 }
             }
         });
