@@ -908,7 +908,7 @@
 
 			edthgsemtd_v3_sabtu_s1.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					validasiSubmit(edthgsemtd_v3_sabtu_s1);
+					validasiSubmit(edthgsemtd_v3_sabtu_s1, 'sabtu');
 				}
 				
 				if ( edthgsemtd_v3_sabtu_s1.inError() ) {
@@ -1259,7 +1259,7 @@
 
 			edthgsemtd_v3_sabtu_s2.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					validasiSubmit(edthgsemtd_v3_sabtu_s2);
+					validasiSubmit(edthgsemtd_v3_sabtu_s2, 'sabtu');
 				}
 				
 				if ( edthgsemtd_v3_sabtu_s2.inError() ) {
@@ -1610,7 +1610,7 @@
 
 			edthgsemtd_v3_sabtu_s3.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					validasiSubmit(edthgsemtd_v3_sabtu_s3);
+					validasiSubmit(edthgsemtd_v3_sabtu_s3, 'sabtu');
 				}
 				
 				if ( edthgsemtd_v3_sabtu_s3.inError() ) {
@@ -1962,7 +1962,7 @@
 
 			edthgsemtd_v3_minggu_s1.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					validasiSubmit(edthgsemtd_v3_minggu_s1);
+					validasiSubmit(edthgsemtd_v3_minggu_s1, 'minggu');
 				}
 				
 				if ( edthgsemtd_v3_minggu_s1.inError() ) {
@@ -2313,7 +2313,7 @@
 
 			edthgsemtd_v3_minggu_s2.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					validasiSubmit(edthgsemtd_v3_minggu_s2);
+					validasiSubmit(edthgsemtd_v3_minggu_s2, 'minggu');
 				}
 				
 				if ( edthgsemtd_v3_minggu_s2.inError() ) {
@@ -2664,7 +2664,7 @@
 
 			edthgsemtd_v3_minggu_s3.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					validasiSubmit(edthgsemtd_v3_minggu_s3);
+					validasiSubmit(edthgsemtd_v3_minggu_s3, 'minggu');
 				}
 				
 				if ( edthgsemtd_v3_minggu_s3.inError() ) {
@@ -3016,7 +3016,7 @@
 
 			edthgsemtd_v3_senjum_s1.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					validasiSubmit(edthgsemtd_v3_senjum_s1);
+					validasiSubmit(edthgsemtd_v3_senjum_s1, 'senjum');
 				}
 				
 				if ( edthgsemtd_v3_senjum_s1.inError() ) {
@@ -3367,7 +3367,7 @@
 
 			edthgsemtd_v3_senjum_s2.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					validasiSubmit(edthgsemtd_v3_senjum_s2);
+					validasiSubmit(edthgsemtd_v3_senjum_s2, 'senjum');
 				}
 				
 				if ( edthgsemtd_v3_senjum_s2.inError() ) {
@@ -3718,7 +3718,7 @@
 
 			edthgsemtd_v3_senjum_s3.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					validasiSubmit(edthgsemtd_v3_senjum_s3);
+					validasiSubmit(edthgsemtd_v3_senjum_s3, 'senjum');
 				}
 				
 				if ( edthgsemtd_v3_senjum_s3.inError() ) {
