@@ -37,7 +37,7 @@
             break;
     }
 
-    $dimana .= ' AND a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND a.id_hemxxmh = :id_hemxxmh';
+    $dimana .= ' AND a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND a.id_hemxxmh = :id_hemxxmh AND a.is_active = 1';
 
     $qs_jadwal = $db
         ->raw()
