@@ -26,7 +26,8 @@
                         if (/^2\w+/.test(colObj.data)) {
                             str1 += ' class="text-danger"';
                         }
-                        str1 += '>' + colObj.data.slice(1) + '</th>';
+                        // str1 += '>' + colObj.data.substr(1) + '</th>';
+                        str1 += '>' + colObj.data + '</th>';
                     });
 
 
