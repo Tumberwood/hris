@@ -10,7 +10,7 @@ use
 // Establish a database connection here (replace with your actual database connection code)
 
 // Your SQL query to retrieve the data
-$id_hpyxxth_2 = 3;
+$id_hpyxxth_2 = 0;
 if (isset($_POST['id_hpyxxth_2']) && $_POST['id_hpyxxth_2'] > 0) {
 	$id_hpyxxth_2 = $_POST['id_hpyxxth_2'];
 }
