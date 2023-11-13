@@ -33,7 +33,7 @@
             $dimana = 'WHERE DAYOFWEEK(tanggal) = 1';
             break;
         case "sabtu":
-            $dimana = 'WHERE DAYOFWEEK(tanggal) = 7';
+            $dimana = 'WHERE DAYOFWEEK(tanggal) = 7'; 
             break;
     }
 
