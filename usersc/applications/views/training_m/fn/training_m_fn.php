@@ -110,4 +110,296 @@
         }
     }
 
+    function genSubMateri(id_training_m) {
+        $.ajax({
+            url: "../../models/sub_materi_m/sub_materi_m_data.php",
+            data: { id_training_m: id_training_m },
+            dataType: 'json',
+            success: function(data) {
+                if (Array.isArray(data.data)) {
+                    $('#sub_materi_content').empty();
+                    const iboxContainer = document.getElementById("sub_materi_content");
+                    data.data.forEach(function(item) {
+                        // Create an iBox for each header (nama)
+                        const title = document.createElement("div");
+                        title.className = "ibox-title";
+                        title.style.display = "flex";
+                        title.style.justifyContent = "space-between"; // Align items to both ends of the title
+
+                        // Create the button and add it to the title
+                        const btn_materi = createButton("btnCreatemateri btn btn-primary btn-sm", "fa fa-plus");
+                        // const button = document.createElement("button");
+                        // button.className = "btn btn btnCreatemateri btn-sm";
+                        // button.title = "New";
+                        // button.innerHTML = '<i class="fa fa-plus"></i>';
+
+                        btn_materi.addEventListener("click", function() {
+                            edtmateri_m.title('Create Sub sub_materi').buttons(
+                                {
+                                    label: 'Submit',
+                                    className: 'btn btn-primary',
+                                    action: function() {
+                                        this.submit();
+                                    }
+                                }
+                            ).create();
+                        });
+
+                        // Create the sub_materiTitle
+                        const sub_materiTitle = document.createElement("h5");
+                        sub_materiTitle.innerHTML = item.sub_materi_m.nama;
+
+                        // Create the "toggle" button (chevron icon)
+                        const toggleButton = document.createElement("i");
+                        toggleButton.className = "fa fa-chevron-up toggle-chevron";
+
+                        // Append elements to the title
+                        title.appendChild(btn_materi);
+                        title.appendChild(sub_materiTitle);
+                        title.appendChild(toggleButton);
+
+                        // Create the iBox and add the title to it
+                        const ibox = document.createElement("div");
+                        ibox.className = "ibox";
+                        ibox.appendChild(title);
+                        title.setAttribute("data-id-sub_materi-m", item.sub_materi_m.id);
+                        ibox.appendChild(title);
+
+                        // Create the iBox content
+                        const content = document.createElement("div");
+                        content.className = "ibox-content";
+                        ibox.appendChild(content);
+
+                        // Add the iBox to the container
+                        iboxContainer.appendChild(ibox);
+
+                        // Add event listeners to change the color on hover
+                        ibox.addEventListener('mouseenter', function() {
+                            sub_materiTitle.style.color = 'blue';
+                        });
+
+                        ibox.addEventListener('mouseleave', function() {
+                            sub_materiTitle.style.color = ''; // Reset the color to its default
+                        });
+
+                        // Add click event handler to load details via AJAX
+                        const chevronIcon = ibox.querySelector('.toggle-chevron');
+                        title.addEventListener("click", function() {
+                            const id_sub_materi_m = this.getAttribute("data-id-sub_materi-m");
+                            edtmateri_m.field('materi_m.id_sub_materi_m').val(id_sub_materi_m)
+
+                            const contentElement = this.nextElementSibling;
+                            if (contentElement.style.display === "none") {
+                                sub_materiTitle.style.color = 'red'; 
+                                
+                                chevronIcon.classList.remove('fa-chevron-up');
+                                chevronIcon.classList.add('fa-chevron-down');
+                                // Load details via AJAX when the header (nama) is clicked
+                                
+                                edtmateri_m.on('postSubmit', function (e, json) {
+                                    genMateri(id_sub_materi_m, contentElement);
+                                });
+                                genMateri(id_sub_materi_m, contentElement);
+                            } else {
+                                contentElement.style.display = "none";
+                                chevronIcon.classList.remove('fa-chevron-down');
+                                chevronIcon.classList.add('fa-chevron-up');
+                            }
+                        });
+                    });
+                } else {
+                    console.log("No data available.");
+                }
+            },
+            error: function() {
+                console.log("Error fetching data.");
+            }
+        });
+    }
+
+    function genMateri(id_sub_materi_m, contentElement) {
+        $.ajax({
+            url: "../../models/sub_materi_m/materi_m_data.php",
+            data: { id_sub_materi_m: id_sub_materi_m },
+            dataType: 'json',
+            success: function(data) {
+                var isi = data.data.length;
+                
+                if (Array.isArray(data.data)) {
+                    let materiList = "<ul>";
+
+                    data.data.forEach(function(item) {
+                        let materi = item.materi_m;
+                        let id = item.DT_RowId;
+                        const createdOn_materi = new Date(materi.created_on);
+
+                        trainingDibuat(createdOn_materi);
+                        formatTime(createdOn_materi);
+
+                        materiList += 
+                        `
+                        <div class="materi_panel" data-editor-id="${id}">
+                            <small class="float-right">${timeAgoText} ago</small>
+                            <strong>
+                            <h3 for="sub-sub_materi-checkbox-${materi.id}">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        ${materi.jenis == 1
+                                            ? `<i class="fa fa-film"></i>`
+                                            : `<i class="fa fa-pencil-square-o"></i>`
+                                        }
+                                    </div>
+                                    <div class="col-md-10">
+                                        ${materi.nama}
+                                <input id="sub-sub_materi-checkbox-${materi.id}" type="checkbox" class="sub-sub_materi-checkbox" value="${materi.id}">
+                                    </div>
+                                </div>
+                            </h3>
+                            </strong>
+                            <div class="tr-up">
+                                <div>${materi.keterangan}</div>
+                                <small class="text-muted">${formatTime(createdOn_materi)} - ${createdOn_materi.toLocaleDateString()}</small>		
+                                <br>					
+                                <br>					
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a href="#" class="edit btn btn-primary btn-sm" data-id="${materi.id}"><i class="fa fa-pencil"></i></a>
+                                        <a href="#" class="remove btn btn-danger btn-sm" data-id="${materi.id}"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </div>
+                            </div>	
+                        </div>
+                        <hr>
+                        `
+                        ;
+                    });
+
+                    materiList += "</ul>";
+
+                    contentElement.innerHTML = materiList;
+                    contentElement.style.display = "block";
+
+                    // Add a click event listener to capture the selected materi.id values
+                    const checkboxes = document.querySelectorAll('.sub-sub_materi-checkbox');
+                    let lastClickedCheckbox = null;
+
+                    checkboxes.forEach(function(checkbox) {
+                        checkbox.addEventListener('click', function() {
+                            $("#materi-kanan").show();
+                            const materiVideo = document.getElementById('materi');
+
+                            if (this !== lastClickedCheckbox) {
+                                // Uncheck previously selected checkbox
+                                if (lastClickedCheckbox) {
+                                    lastClickedCheckbox.checked = false;
+                                }
+
+                                // Check the current checkbox
+                                this.checked = true;
+                                lastClickedCheckbox = this;
+
+                                const subsub_materiId = this.value;
+                                console.log(`Selected materi.id: ${subsub_materiId}`);
+
+                                // Update the <h3> text inside the #materi div
+                                data.data.forEach(function(item) {
+                                    let materi = item.materi_m;
+                                    if (materi.id == subsub_materiId) {
+                                        var link_yt = materi.link_yt;
+                                        var jenis_materi = materi.jenis;
+                                        var video_yt = '';
+                                        var button_quiz = '';
+                                        
+                                        if (jenis_materi == 1) {
+                                            if (link_yt !== null && link_yt !== undefined) {
+                                                var match = link_yt.match(/[?&]v=([^&]+)/);
+                                                if (match) {
+                                                    link = match[1];
+                                                    video_yt = '<iframe id="videoFrame" width="100%" height="480px" src="https://www.youtube.com/embed/'+link+'" frameborder="0" allowfullscreen></iframe>';
+                                                }
+                                            }
+                                            materiVideo.innerHTML = video_yt;
+                                        } else {
+                                            $('#materi').empty();
+                                            const button_quiz = createButton("btnCreatemateri btn btn-primary btn-sm", "fa fa-plus");
+                                            const button_start_quiz = createButton("btnStart_quiz btn btn-primary btn-sm", "fa fa-fx");
+                                            
+                                            button_start_quiz.innerHTML = `Start`;
+                                            materiVideo.appendChild(button_quiz);
+                                            materiVideo.appendChild(button_start_quiz);
+
+                                            let isCountdownStarted = false;
+
+                                            button_start_quiz.addEventListener("click", function() {
+                                                const materiKanan = $("#materi-kanan");
+                                                materiKanan.removeClass("col-lg-8").addClass("col-lg-12");
+                                                $("#materi-kiri").hide();
+                                                $("#judul-tr").hide() 
+                                                $("#hide-tr").hide() 
+                                                $("#materi-sidebar").hide() 
+                                                countdownMinutes = 1; // Reset countdown minutes
+                                                countdownSeconds = 0; // Reset countdown seconds
+                                                console.log('kawoawkokawokawo');
+                                                
+                                                materiVideo.innerHTML = `
+                                                    <div class="row">
+                                                        <div class="col-lg-8">
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="widget navy-bg p-sm text-center">
+                                                                <div class="m-b-sm">
+                                                                    <i class="fa fa-clock-o fa-4x"></i>
+                                                                    <h3 class="m-xs" id="countdown-timer"></h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                `
+                                                ;
+                                                updateCountdown(); // Start the countdown
+                                                countdownInterval = setInterval(updateCountdown, 1000);
+                                                window.addEventListener("beforeunload", function (e) {
+                                                    e.returnValue = "Leaving this page will stop the countdown. Are you sure?";
+                                                });
+                                            });
+
+                                            button_quiz.addEventListener("click", function() {
+                                                edtmateri_m.title('Create Sub sub_materi').buttons(
+                                                    {
+                                                        label: 'Submit',
+                                                        className: 'btn btn-primary',
+                                                        action: function() {
+                                                            this.submit();
+                                                        }
+                                                    }
+                                                ).create();
+                                            });
+                                        }
+                                        // Set the video title
+                                        var h3Title = document.getElementById('judul');
+                                        h3Title.textContent = materi.nama;
+
+                                        // Append the h3 title to materiVideo
+                                    }
+                                });
+                            } else {
+                                // Deselect the currently selected checkbox
+                                this.checked = false;
+                                lastClickedCheckbox = null;
+                                $("#materi-kanan").hide();
+                                $('#materi').empty();
+                            }
+                        });
+                    });
+                } else {
+                    contentElement.innerHTML = "<p>Data structure is invalid.</p>";
+                    contentElement.style.display = "block";
+                }
+            },
+            error: function() {
+                contentElement.innerHTML = "<p>Failed to load details.</p>";
+                contentElement.style.display = "block";
+            }
+        });
+    }
 </script>
