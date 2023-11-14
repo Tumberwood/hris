@@ -23,13 +23,11 @@
 
                     // Loop through columns and add them to the table header
                     $.each(json.columns, function (k, colObj) {
-                        console.log(colObj.data);
-                        subNama =  colObj.data;
                         str1 += '<th';
                         if (/^2\w+/.test(colObj.data)) {
                             str1 += ' class="text-danger"';
                         }
-                        str1 += '>' + subNama + '</th>';
+                        str1 += '>' + colObj.data.substr(1) + '</th>';
                     });
 
 
