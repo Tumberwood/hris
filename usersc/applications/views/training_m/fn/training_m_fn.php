@@ -190,7 +190,7 @@
 
                             const contentElement = this.nextElementSibling;
                             if (contentElement.style.display === "none") {
-                                sub_materiTitle.style.color = 'red'; 
+                                sub_materiTitle.classList.add('ditekan'); 
                                 
                                 chevronIcon.classList.remove('fa-chevron-up');
                                 chevronIcon.classList.add('fa-chevron-down');
@@ -199,8 +199,10 @@
                                 edtmateri_m.on('postSubmit', function (e, json) {
                                     genMateri(id_sub_materi_m, contentElement);
                                 });
+                                
                                 genMateri(id_sub_materi_m, contentElement);
                             } else {
+                                sub_materiTitle.classList.remove('ditekan'); 
                                 contentElement.style.display = "none";
                                 chevronIcon.classList.remove('fa-chevron-down');
                                 chevronIcon.classList.add('fa-chevron-up');
@@ -235,26 +237,30 @@
 
                         trainingDibuat(createdOn_materi);
                         formatTime(createdOn_materi);
-
+                        const h3silabus = document.createElement("h3");
+                        h3silabus.setAttribute("for", `sub-sub_materi-checkbox-${materi.id}`);
+                        cekJudul = `
+                            <div class="row">
+                                <div class="col-md-2">
+                                    ${materi.jenis == 1
+                                        ? `<i class="fa fa-film"></i>`
+                                        : `<i class="fa fa-pencil-square-o"></i>`
+                                    }
+                                </div>
+                                <div class="col-md-10">
+                                    ${materi.nama}
+                                    <input id="sub-sub_materi-checkbox-${materi.id}" type="checkbox" class="sub-sub_materi-checkbox" value="${materi.id}">
+                                </div>
+                            </div>
+                        `;
+                        h3silabus.innerHTML = cekJudul;
+                       
                         materiList += 
                         `
                         <div class="materi_panel" data-editor-id="${id}">
                             <small class="float-right">${timeAgoText} ago</small>
                             <strong>
-                            <h3 for="sub-sub_materi-checkbox-${materi.id}">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        ${materi.jenis == 1
-                                            ? `<i class="fa fa-film"></i>`
-                                            : `<i class="fa fa-pencil-square-o"></i>`
-                                        }
-                                    </div>
-                                    <div class="col-md-10">
-                                        ${materi.nama}
-                                <input id="sub-sub_materi-checkbox-${materi.id}" type="checkbox" class="sub-sub_materi-checkbox" value="${materi.id}">
-                                    </div>
-                                </div>
-                            </h3>
+                                    ${h3silabus.outerHTML}
                             </strong>
                             <div class="tr-up">
                                 <div>${materi.keterangan}</div>
@@ -287,11 +293,16 @@
                         checkbox.addEventListener('click', function() {
                             $("#materi-kanan").show();
                             const materiVideo = document.getElementById('materi');
+                            const previousH3 = lastClickedCheckbox ? lastClickedCheckbox.closest('h3') : null;
 
                             if (this !== lastClickedCheckbox) {
-                                // Uncheck previously selected checkbox
+                                const h3silabus = this.closest('h3');
+                                // Uncheck previously selected checkbox and remove class
                                 if (lastClickedCheckbox) {
                                     lastClickedCheckbox.checked = false;
+                                    if (previousH3) {
+                                        previousH3.classList.remove('ditekan');
+                                    }
                                 }
 
                                 // Check the current checkbox
@@ -379,7 +390,7 @@
                                         var h3Title = document.getElementById('judul');
                                         h3Title.textContent = materi.nama;
 
-                                        // Append the h3 title to materiVideo
+                                        h3silabus.classList.add('ditekan');
                                     }
                                 });
                             } else {
@@ -388,6 +399,10 @@
                                 lastClickedCheckbox = null;
                                 $("#materi-kanan").hide();
                                 $('#materi').empty();
+                                
+                                const previousH3 = this.closest('h3');
+                                previousH3.classList.remove('ditekan');
+                                
                             }
                         });
                     });

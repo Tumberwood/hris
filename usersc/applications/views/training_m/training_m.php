@@ -14,6 +14,9 @@
 	.trainingh3 {
 		color: black;
 	}
+	.ditekan {
+		color: blue;
+	}
 	.trainingh3:hover {
 		color: blue;
 	}
