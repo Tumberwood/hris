@@ -779,7 +779,7 @@
                 qs_payroll.id_hemxxmh,
                 7,
                 floor(nominal) as jkk,
-                1
+                0
             FROM qs_payroll
             WHERE id_heyxxmd <> 2
         ');
@@ -870,7 +870,7 @@
                 qs_payroll.id_hemxxmh,
                 10,
                 floor(nominal) as jkmc,
-                1
+                0
             FROM qs_payroll
             WHERE id_heyxxmd <> 2
         ');

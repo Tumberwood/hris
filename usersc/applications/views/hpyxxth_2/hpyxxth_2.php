@@ -254,6 +254,8 @@
 									tblhpyxxth_2.ajax.reload(function ( json ) {
 										notifyprogress.close();
 									}, false);
+
+									generateTable(id_hpyxxth_2);
 								}
 							} );
 						}
@@ -302,6 +304,7 @@
 				// atur hak akses
 				CekDeselectHeaderH(tblhpyxxth_2);
 				tblhpyxxth_2.button( 'btnGeneratePresensi:name' ).disable();
+        		$('#tabel_atas').empty();	
 			} );
 			
 		} );// end of document.ready

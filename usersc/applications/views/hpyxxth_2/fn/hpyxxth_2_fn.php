@@ -4,6 +4,7 @@
     }
 
     function generateTable(id_hpyxxth_2) {
+        $('#tabel_atas').empty();
         $.ajax({
             url: "../../models/hpyxxth_2/hpyemtd_2.php",
             dataType: 'json',
