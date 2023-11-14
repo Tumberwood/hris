@@ -15,7 +15,7 @@
             success: function (json) {
                 if (json.data.length > 0) {
                     // Create an empty table
-                    var str1 = '<table id="tblhtsprrd1" class="table table-striped table-bordered">';
+                    var str1 = '<table id="tblhtsprrd1" class="table table-striped table-bordered table-hover nowrap">';
                     str1 += '<thead>';
                     str1 += '<tr>';
                     var sum1 = 0; // Sum of columns starting with "1"
