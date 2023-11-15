@@ -729,6 +729,7 @@
 					edtmateri_m.field('materi_m.jenis').val(edit_val.jenis);
 					edtmateri_m.field('materi_m.link_yt').val(edit_val.link_yt);
 					edtmateri_m.field('materi_m.tipe_quiz').val(edit_val.tipe_quiz);
+					edtmateri_m.field('materi_m.keterangan').val(edit_val.keterangan);
 				});
 				edtmateri_m.title('Edit Materi').buttons(
 					{

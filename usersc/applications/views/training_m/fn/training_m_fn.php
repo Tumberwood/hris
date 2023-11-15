@@ -287,6 +287,7 @@
                                 // Load details via AJAX when the header (nama) is clicked
                                 
                                 edtmateri_m.on('postSubmit', function (e, json) {
+                                    $("#materi-kanan").hide();
                                     genMateri(id_sub_materi_m, contentElement);
                                 });
                                 
@@ -310,7 +311,7 @@
     }
 
     function genMateri(id_sub_materi_m, contentElement) {
-        $("#materi").empty();
+        // $("#materi").empty();
         $.ajax({
             url: "../../models/sub_materi_m/materi_m_data.php",
             data: { id_sub_materi_m: id_sub_materi_m },
