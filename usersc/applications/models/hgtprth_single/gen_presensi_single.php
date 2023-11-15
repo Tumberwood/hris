@@ -725,8 +725,6 @@
                             }
                         }
 
-
-                        print_r($st_clock_in);
                         // BEGIN cek izin ditengah jam kerja DENGAN POTONGAN
                         $qs_htlxxrh_izin = $db
                             ->query('select', 'htlxxrh' )
