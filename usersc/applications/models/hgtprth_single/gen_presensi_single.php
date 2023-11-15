@@ -1487,11 +1487,14 @@
                         $is_pot_premi = 1;
                     }
 
+                    print_r($st_clock_in);
                     // revisi payroll, Late1/Late akan dipotong premi abs
                     if ($st_clock_in == 'Late 1' || $st_clock_in = 'Late') {
                         $is_pot_premi = 1;
                     }
-                    print_r($st_clock_in);
+
+                    // sudah menjadi late
+                    
                     //INSERT KE REPORT PRESENSI
                     $qi_htsprrd = $db
                         ->query('insert', 'htsprrd')
