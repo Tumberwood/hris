@@ -243,7 +243,7 @@
                     // print_r($rs_htsprtd_clock_in);
                     
                     if (!empty($rs_htsprtd_clock_in)) {
-                        
+                        $st_clock_in = "";
                         $ceklok_in = new Carbon($rs_htsprtd_clock_in['dt_checkclock']);
                         // print_r($ceklok_in);
                         // print_r($tanggaljam_akhir_toleransi);
@@ -252,14 +252,14 @@
                             $clock_in           = $ceklok_in;
                             $st_clock_in        = 'OK';
                             // print_r('OK');
-                            echo "OK";
+                            // echo "OK";
                             // $status_presensi_in = 'OK';
                         }
                         
                         if($ceklok_in >= $tanggaljam_awal_toleransi && $ceklok_in <= $tanggaljam_akhir_toleransi){
                             $clock_in           = $ceklok_in;
                             $st_clock_in        = 'Late 1';
-                            echo "Late1";
+                            // echo "Late1";
                             // print_r('Late 1');
                             // $status_presensi_in = 'Late 1';
                         }
@@ -267,7 +267,7 @@
                         if($ceklok_in >= $tanggaljam_akhir_toleransi && $ceklok_in <= $tanggaljam_awal_t2){
                             $clock_in           = $ceklok_in;
                             $st_clock_in        = 'Late';
-                            echo "Late";
+                            // echo "Late";
                             // print_r('Late');
                             // $status_presensi_in = 'Late';
                             
