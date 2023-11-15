@@ -464,11 +464,6 @@
 					{
 						label: "Nama <sup class='text-danger'>*<sup>",
 						name: "sub_materi_m.nama"
-					},	
-					{
-						label: "Keterangan",
-						name: "sub_materi_m.keterangan",
-						type: "textarea"
 					}
 				]
 			} );
@@ -490,7 +485,7 @@
 						
 						// BEGIN of cek unik sub_materi_m.nama
 						if(action == 'create'){
-							id_sub_materi_m = 0;
+							id_training_m = 0;
 						}
 						
 						$.ajax( {
@@ -502,7 +497,7 @@
 								table_name: 'sub_materi_m',
 								nama_field: 'nama',
 								nama_field_value: '"'+nama+'"',
-								id_transaksi: id_sub_materi_m
+								id_transaksi: id_training_m
 							},
 							success: function ( json ) {
 								if(json.data.count == 1){

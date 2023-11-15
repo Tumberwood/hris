@@ -171,7 +171,7 @@
 
                     // Example usage:
                     buttonsSub.push(createButtonInDropdown("btnCreatemateri btn btn-primary btn-sm", "fa fa-plus", "Create"));
-                    buttonsSub.push(createButtonInDropdown("editSub btn btn-primary btn-sm", "fa fa-pencil", "Edit", item.sub_materi_m.id));
+                    buttonsSub.push(createButtonInDropdown("editSub btn btn-warning btn-sm", "fa fa-pencil", "Edit", item.sub_materi_m.id));
                     buttonsSub.push(createButtonInDropdown("removeSub btn btn-danger btn-sm", "fa fa-trash", "Remove", item.sub_materi_m.id));
 
                         // Add event listener to the first button in the array (assuming it's the create button)
@@ -187,6 +187,30 @@
                             ).create();
                         });
 
+                        // Action Edit Sub Materi
+                        buttonsSub[1].addEventListener("click", function () {
+                            var id = id_sub;
+                            var match = id.match(/\d+/);
+                            var number = match ? parseInt(match[0]) : null;
+
+                            val_edit('sub_materi_m', number, 0); // nama tabel dan id yang parse int agar dinamis bisa digunakan banyak tabel dan is_delete
+
+                            // preopen saya pindah kesini karena biar data old ditampilkan dulu sebelum dibuka formnya
+                            edtsub_materi_m.on( 'preOpen', function( e, mode, action ) {
+                                edtsub_materi_m.field('sub_materi_m.nama').val(edit_val.nama);
+                            });
+                            edtsub_materi_m.title('Edit Sub Materi').buttons(
+                                {
+                                    label: 'Submit',
+                                    className: 'btn btn-primary', // Add the Bootstrap primary color
+                                    action: function () {
+                                        this.submit(); // This will submit the form
+                                    }
+                                }
+                            ).edit(id);
+                        });
+
+                        // Action Delete Sub Materi
                         buttonsSub[2].addEventListener("click", function () {
                             var id = id_sub;
                             var match = id.match(/\d+/);
