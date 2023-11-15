@@ -280,7 +280,7 @@
                         $st_clock_in        = 'No CI';
                         // $status_presensi_in = 'No CI';
                     }
-
+                    print_r($st_clock_in);
                     // print_r($pot_jam_late . '<br>');
 
                     //STEP 3 clock_out
