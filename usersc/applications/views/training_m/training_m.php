@@ -739,6 +739,125 @@
 					}
 				).edit(id);
 			});
+
+			//start datatables editor
+			edtquiz_m = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/quiz_m/quiz_m.php",
+					type: 'POST',
+					data: function (d){
+						// d.id_materi_m = id_materi_m;
+					}
+				},
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "quiz_m",
+						type: "hidden"
+					},	{
+						label: "id_materi_m",
+						name: "quiz_m.id_materi_m",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "quiz_m.is_active",
+						type: "hidden",
+						def: 1
+					},	{
+						label: "Nama <sup class='text-danger'>*<sup>",
+						name: "quiz_m.nama"
+					}
+				]
+			} );
+
+			edtquiz_m.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+			});
+
+			edtquiz_m.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+					if(action == 'create'){
+						// BEGIN of validasi quiz_m.nama
+						if ( ! edtquiz_m.field('quiz_m.nama').isMultiValue() ) {
+							nama = edtquiz_m.field('quiz_m.nama').val();
+							if(!nama || nama == ''){
+								edtquiz_m.field('quiz_m.nama').error( 'Wajib diisi!' );
+							}
+							
+							// BEGIN of cek unik quiz_m.nama
+							if(action == 'create'){
+								id_quiz_m = 0;
+							}
+							
+							$.ajax( {
+								url: '../../../helpers/validate_fn_unique.php',
+								dataType: 'json',
+								type: 'POST',
+								async: false,
+								data: {
+									table_name: 'quiz_m',
+									nama_field: 'nama',
+									nama_field_value: '"'+nama+'"',
+									id_transaksi: id_quiz_m
+								},
+								success: function ( json ) {
+									if(json.data.count == 1){
+										edtquiz_m.field('quiz_m.nama').error( 'Data tidak boleh kembar!' );
+									}
+								}
+							} );
+							// END of cek unik quiz_m.nama
+						}
+						// END of validasi quiz_m.nama
+					}
+				}
+				
+				if ( edtquiz_m.inError() ) {
+					return false;
+				}
+			});
+			
+			edtquiz_m.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edtquiz_m.field('finish_on').val(finish_on);
+			});
+
+			edtquiz_m.on( 'close', function () {
+				edtquiz_m.enable();
+			} );
+
+			$(document).on('click', '.materi_panel a.edit', function () {
+				
+				var id = $(this).data('id');
+
+				// ini adalah function untuk autofill data lama
+				val_edit('quiz_m', id, 0); // nama tabel dan id yang parse int agar dinamis bisa digunakan banyak tabel dan is_delete
+
+				// preopen saya pindah kesini karena biar data old ditampilkan dulu sebelum dibuka formnya
+				edtquiz_m.on( 'preOpen', function( e, mode, action ) {
+					edtquiz_m.field('quiz_m.nama').val(edit_val.nama);
+					edtquiz_m.field('quiz_m.jenis').val(edit_val.jenis);
+					edtquiz_m.field('quiz_m.link_yt').val(edit_val.link_yt);
+				});
+				edtquiz_m.title('Edit materi').buttons(
+					{
+						label: 'Submit',
+						className: 'btn btn-primary',
+						action: function () {
+							this.submit();
+						}
+					}
+				).edit(id);
+			});
 			
 
 		} );// end of document.ready

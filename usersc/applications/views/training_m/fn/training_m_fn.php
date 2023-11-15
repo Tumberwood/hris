@@ -176,7 +176,7 @@
 
                         // Add event listener to the first button in the array (assuming it's the create button)
                         buttonsSub[0].addEventListener("click", function() {
-                            edtmateri_m.title('Create Sub sub_materi').buttons(
+                            edtmateri_m.title('Create Materi').buttons(
                                 {
                                     label: 'Submit',
                                     className: 'btn btn-primary',
@@ -405,11 +405,16 @@
                                 // Update the <h3> text inside the #materi div
                                 data.data.forEach(function(item) {
                                     let materi = item.materi_m;
+                                    
                                     if (materi.id == subsub_materiId) {
                                         var link_yt = materi.link_yt;
                                         var jenis_materi = materi.jenis;
                                         var video_yt = '';
                                         var button_quiz = '';
+                                        edtquiz_m.on( 'preOpen', function( e, mode, action ) {
+                                            console.log(materi.id);
+                                            edtquiz_m.field('quiz_m.id_materi_m').val(materi.id)
+                                        });
                                         
                                         if (jenis_materi == 1) {
                                             if (link_yt !== null && link_yt !== undefined) {
@@ -465,7 +470,7 @@
                                             });
 
                                             button_quiz.addEventListener("click", function() {
-                                                edtmateri_m.title('Create Sub sub_materi').buttons(
+                                                edtquiz_m.title('Create Quiz').buttons(
                                                     {
                                                         label: 'Submit',
                                                         className: 'btn btn-primary',
