@@ -11,6 +11,13 @@
 	$nama_tabels_d = [];
 ?>
 <style>
+	/* Add this to your CSS */
+	.hovered {
+		color: transparent;
+		background-color: inherit;
+		border-color: currentColor;
+	}
+
 	.trainingh3 {
 		color: black;
 	}
@@ -216,7 +223,7 @@
 									keterangan_traning.innerHTML = `<br>Keterangan: <br> ${train.training_m.keterangan}<br>`; 
 									$("#tr-kanan").show();
 									id_training_m = train.training_m.id;
-									console.log(id_training_m);
+									// console.log(id_training_m);
 
 									genSubMateri(id_training_m);
 									
@@ -233,11 +240,11 @@
 							});
 
 						} else {
-							console.log("No data available.");
+							// console.log("No data available.");
 						}
 					},
 					error: function() {
-						console.log("Error fetching data.");
+						// console.log("Error fetching data.");
 					}
 				});
 			}
@@ -280,7 +287,7 @@
 						name: "training_m.id_files_foto",
 						type: "upload",
 						display: function ( fileId, counter, action ) {
-							console.log(fileId);
+							// console.log(fileId);
 							if(fileId.length > 5){
 								return '<img src="'+fileId+'"/>';
 							} else {
@@ -379,7 +386,7 @@
 			$(document).on('click', '.tr_panel a.edit', function () {
 				var id = $(this).data('id');
 				var foto = $(this).data('foto');
-				console.log(foto);
+				// console.log(foto);
 
 				// ini adalah function untuk autofill data lama
 				val_edit('training_m', id, 0); // nama tabel dan id yang parse int agar dinamis bisa digunakan banyak tabel dan is_delete
@@ -544,24 +551,6 @@
 				).edit(id);
 			});
 
-			// Remove
-			$('.sub_materi').on('click', 'a.remove', function () {
-				var id = $(this).data('id'); // ambil id yang di klik sekarang
-				var match = id.match(/\d+/); // karena hasil id yang didapat adalah row_1 string
-				var number = match ? parseInt(match[0]) : null; // jadinya kita ambil angkanya saja dan parse jadi integer
-
-				edtsub_materi_m.title('Delete materi').buttons(
-					{
-						label: 'Delete',
-						className: 'btn btn-danger', // Add the Bootstrap primary color
-						action: function () {
-							val_edit('sub_materi_m', number, 1);
-							// location.reload();
-							reloadtraining();
-						}
-					}
-				).message('Anda yakin ingin menghapus data ini?').remove(id);
-			});
 			
 			document.getElementById("btnCreatesub_materi_m").addEventListener("click", function() {
 				edtsub_materi_m.title('Create sub_materi').buttons(
@@ -754,16 +743,6 @@
 						}
 					}
 				).edit(id);
-			});
-
-			// Remove
-			$(document).on('click', '.materi_panel a.remove', function () {
-				var id = $(this).data('id');
-
-				if (confirm('Anda yakin ingin menghapus data ini?')) {
-					val_edit('materi_m', id, 1);
-					reloadtraining();
-				}
 			});
 			
 

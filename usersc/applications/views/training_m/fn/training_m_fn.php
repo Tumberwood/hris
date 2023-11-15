@@ -120,20 +120,62 @@
                     $('#sub_materi_content').empty();
                     const iboxContainer = document.getElementById("sub_materi_content");
                     data.data.forEach(function(item) {
+                        let id_sub = item.DT_RowId;
                         // Create an iBox for each header (nama)
                         const title = document.createElement("div");
+                        title.setAttribute("data-editor-id", id_sub); 
                         title.className = "ibox-title";
                         title.style.display = "flex";
                         title.style.justifyContent = "space-between"; // Align items to both ends of the title
+                        const buttonsSub = [];
 
-                        // Create the button and add it to the title
-                        const btn_materi = createButton("btnCreatemateri btn btn-primary btn-sm", "fa fa-plus");
-                        // const button = document.createElement("button");
-                        // button.className = "btn btn btnCreatemateri btn-sm";
-                        // button.title = "New";
-                        // button.innerHTML = '<i class="fa fa-plus"></i>';
+                        // Create the dropdown button and add it to the array
+                        const dropdownButton = document.createElement("div");
+                        dropdownButton.classList.add("dropdown");
 
-                        btn_materi.addEventListener("click", function() {
+                        const dropdownToggle = document.createElement("button");
+                        dropdownToggle.classList.add("btn", "btn-primary", "btn-sm", "dropdown-toggle");
+                        dropdownToggle.setAttribute("type", "button");
+                        dropdownToggle.setAttribute("data-toggle", "dropdown");
+                        dropdownToggle.innerHTML = '<i class="fa fa-cogs">';
+
+                        const dropdownMenu = document.createElement("div");
+                        dropdownMenu.classList.add("dropdown-menu");
+
+                        // Create and add individual buttons to the dropdown menu
+                        const createButtonInDropdown = (className, icon, label, id = null) => {
+                        const button = createButton(className, "", id); // No need to pass icon here
+                        const listItem = document.createElement("li");
+
+                        // Create a span for the label
+                        const labelSpan = document.createElement("span");
+                        labelSpan.textContent = label;
+
+                        // Create an i element for the icon
+                        const iconElement = document.createElement("i");
+                        iconElement.className = icon;
+
+                        // Set text color to white
+                        button.style.color = 'white';
+
+                        // Append the icon and label to the button
+                        button.appendChild(iconElement);
+                        button.appendChild(document.createTextNode(' ')); // Add a space between icon and label
+                        button.appendChild(labelSpan);
+
+                        listItem.appendChild(button);
+                        dropdownMenu.appendChild(listItem);
+
+                        return button;
+                    };
+
+                    // Example usage:
+                    buttonsSub.push(createButtonInDropdown("btnCreatemateri btn btn-primary btn-sm", "fa fa-plus", "Create"));
+                    buttonsSub.push(createButtonInDropdown("editSub btn btn-primary btn-sm", "fa fa-pencil", "Edit", item.sub_materi_m.id));
+                    buttonsSub.push(createButtonInDropdown("removeSub btn btn-danger btn-sm", "fa fa-trash", "Remove", item.sub_materi_m.id));
+
+                        // Add event listener to the first button in the array (assuming it's the create button)
+                        buttonsSub[0].addEventListener("click", function() {
                             edtmateri_m.title('Create Sub sub_materi').buttons(
                                 {
                                     label: 'Submit',
@@ -145,17 +187,41 @@
                             ).create();
                         });
 
+                        buttonsSub[2].addEventListener("click", function () {
+                            var id = id_sub;
+                            var match = id.match(/\d+/);
+                            var number = match ? parseInt(match[0]) : null;
+
+                            edtsub_materi_m.title('Delete Sub materi').buttons(
+                                {
+                                    label: 'Delete',
+                                    className: 'btn btn-danger',
+                                    action: function () {
+                                        val_edit('sub_materi_m', number, 1);
+                                        // location.reload();
+                                        genSubMateri(id_training_m);
+                                        edtsub_materi_m.close();
+                                    }
+                                }
+                            ).message('Are you sure you want to delete this data?').remove(id);
+                        });
+
+                        // Append the dropdown elements to the title
+                        dropdownButton.appendChild(dropdownToggle);
+                        dropdownButton.appendChild(dropdownMenu);
+                        title.appendChild(dropdownButton);
+
                         // Create the sub_materiTitle
                         const sub_materiTitle = document.createElement("h5");
                         sub_materiTitle.innerHTML = item.sub_materi_m.nama;
+
+                        // Append the sub_materiTitle to the title
+                        title.appendChild(sub_materiTitle);
 
                         // Create the "toggle" button (chevron icon)
                         const toggleButton = document.createElement("i");
                         toggleButton.className = "fa fa-chevron-up toggle-chevron";
 
-                        // Append elements to the title
-                        title.appendChild(btn_materi);
-                        title.appendChild(sub_materiTitle);
                         title.appendChild(toggleButton);
 
                         // Create the iBox and add the title to it
@@ -210,11 +276,11 @@
                         });
                     });
                 } else {
-                    console.log("No data available.");
+                    // console.log("No data available.");
                 }
             },
             error: function() {
-                console.log("Error fetching data.");
+                // console.log("Error fetching data.");
             }
         });
     }
@@ -310,7 +376,7 @@
                                 lastClickedCheckbox = this;
 
                                 const subsub_materiId = this.value;
-                                console.log(`Selected materi.id: ${subsub_materiId}`);
+                                // console.log(`Selected materi.id: ${subsub_materiId}`);
 
                                 // Update the <h3> text inside the #materi div
                                 data.data.forEach(function(item) {
@@ -350,7 +416,7 @@
                                                 $("#materi-sidebar").hide() 
                                                 countdownMinutes = 1; // Reset countdown minutes
                                                 countdownSeconds = 0; // Reset countdown seconds
-                                                console.log('kawoawkokawokawo');
+                                                // console.log('kawoawkokawokawo');
                                                 
                                                 materiVideo.innerHTML = `
                                                     <div class="row">
@@ -414,6 +480,16 @@
             error: function() {
                 contentElement.innerHTML = "<p>Failed to load details.</p>";
                 contentElement.style.display = "block";
+            }
+        });
+        
+        // Remove
+        $(document).on('click', '.materi_panel a.remove', function () {
+            var id = $(this).data('id');
+
+            if (confirm('Anda yakin ingin menghapus data ini?')) {
+                val_edit('materi_m', id, 1);
+                genMateri(id_sub_materi_m, contentElement);
             }
         });
     }
