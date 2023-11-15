@@ -251,17 +251,17 @@
                         if($ceklok_in >= $tanggaljam_awal_t1 && $ceklok_in <= $tanggaljam_awal_toleransi){
                             $clock_in           = $ceklok_in;
                             $st_clock_in        = 'OK';
-                            print_r('OK');
+                            // print_r('OK');
                             // $status_presensi_in = 'OK';
                         } else if($ceklok_in >= $tanggaljam_awal_toleransi && $ceklok_in <= $tanggaljam_akhir_toleransi){
                             $clock_in           = $ceklok_in;
                             $st_clock_in        = 'Late 1';
-                            print_r('Late 1');
+                            // print_r('Late 1');
                             // $status_presensi_in = 'Late 1';
                         } else if($ceklok_in >= $tanggaljam_akhir_toleransi && $ceklok_in <= $tanggaljam_awal_t2){
                             $clock_in           = $ceklok_in;
                             $st_clock_in        = 'Late';
-                            print_r('Late');
+                            // print_r('Late');
                             // $status_presensi_in = 'Late';
                             
                             // hitung potongan jam late (DIPINDAH DI STEP 5 IZIN)
