@@ -245,9 +245,9 @@
                     if (!empty($rs_htsprtd_clock_in)) {
                         
                         $ceklok_in = new Carbon($rs_htsprtd_clock_in['dt_checkclock']);
-                        print_r($ceklok_in);
-                        print_r($tanggaljam_akhir_toleransi);
-                        print_r($tanggaljam_awal_t2);
+                        // print_r($ceklok_in);
+                        // print_r($tanggaljam_akhir_toleransi);
+                        // print_r($tanggaljam_awal_t2);
                         if($ceklok_in >= $tanggaljam_awal_t1 && $ceklok_in <= $tanggaljam_awal_toleransi){
                             $clock_in           = $ceklok_in;
                             $st_clock_in        = 'OK';
