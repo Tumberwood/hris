@@ -310,6 +310,7 @@
     }
 
     function genMateri(id_sub_materi_m, contentElement) {
+        $("#materi").empty();
         $.ajax({
             url: "../../models/sub_materi_m/materi_m_data.php",
             data: { id_sub_materi_m: id_sub_materi_m },
@@ -411,9 +412,108 @@
                                         var jenis_materi = materi.jenis;
                                         var video_yt = '';
                                         var button_quiz = '';
+                                        // preOpen Quiz
                                         edtquiz_m.on( 'preOpen', function( e, mode, action ) {
-                                            console.log(materi.id);
+                                            // console.log(materi.id);
                                             edtquiz_m.field('quiz_m.id_materi_m').val(materi.id)
+                                            if (materi.tipe_quiz == "Essay") {
+                                                edtquiz_m.field('quiz_m.nama').label("Soal Essay <sup class='text-danger'>*<sup>")
+                                                edtquiz_m.field('quiz_m.jawaban_a').hide()
+                                                edtquiz_m.field('quiz_m.jawaban_b').hide()
+                                                edtquiz_m.field('quiz_m.jawaban_c').hide()
+                                                edtquiz_m.field('quiz_m.jawaban_d').hide()
+                                                edtquiz_m.field('quiz_m.jawaban_benar').hide()
+
+                                                edtquiz_m.field('quiz_m.jawaban_a').val('')
+                                                edtquiz_m.field('quiz_m.jawaban_b').val('')
+                                                edtquiz_m.field('quiz_m.jawaban_c').val('')
+                                                edtquiz_m.field('quiz_m.jawaban_d').val('')
+                                                edtquiz_m.field('quiz_m.jawaban_benar').val('')
+                                            } else {
+                                                edtquiz_m.field('quiz_m.nama').label("Soal Multiple Choice <sup class='text-danger'>*<sup>")
+                                                edtquiz_m.field('quiz_m.jawaban_a').show()
+                                                edtquiz_m.field('quiz_m.jawaban_b').show()
+                                                edtquiz_m.field('quiz_m.jawaban_c').show()
+                                                edtquiz_m.field('quiz_m.jawaban_d').show()
+                                                edtquiz_m.field('quiz_m.jawaban_benar').show()
+
+                                                edtquiz_m.field('quiz_m.jawaban_a').val()
+                                                edtquiz_m.field('quiz_m.jawaban_b').val()
+                                                edtquiz_m.field('quiz_m.jawaban_c').val()
+                                                edtquiz_m.field('quiz_m.jawaban_d').val()
+                                                edtquiz_m.field('quiz_m.jawaban_benar').val()                                                
+                                            }
+                                        });
+                                        
+                                        // preSubmit quiz
+                                        edtquiz_m.on( 'preSubmit', function (e, data, action) {
+                                            if(action != 'remove'){
+                                                if(action == 'create'){
+                                                    // BEGIN of validasi quiz_m.nama
+                                                    if ( ! edtquiz_m.field('quiz_m.nama').isMultiValue() ) {
+                                                        nama = edtquiz_m.field('quiz_m.nama').val();
+                                                        if(!nama || nama == ''){
+                                                            edtquiz_m.field('quiz_m.nama').error( 'Wajib diisi!' );
+                                                        }
+                                                        
+                                                        // BEGIN of cek unik quiz_m.nama
+                                                        if(action == 'create'){
+                                                            id_quiz_m = 0;
+                                                        }
+                                                        
+                                                        $.ajax( {
+                                                            url: '../../../helpers/validate_fn_unique.php',
+                                                            dataType: 'json',
+                                                            type: 'POST',
+                                                            async: false,
+                                                            data: {
+                                                                table_name: 'quiz_m',
+                                                                nama_field: 'nama',
+                                                                nama_field_value: '"'+nama+'"',
+                                                                id_transaksi: id_quiz_m
+                                                            },
+                                                            success: function ( json ) {
+                                                                if(json.data.count == 1){
+                                                                    edtquiz_m.field('quiz_m.nama').error( 'Data tidak boleh kembar!' );
+                                                                }
+                                                            }
+                                                        } );
+                                                        // END of cek unik quiz_m.nama
+                                                    }
+                                                    // END of validasi quiz_m.nama
+
+                                                    if (materi.tipe_quiz == "Multiple Choice") {
+                                                        jawaban_a = edtquiz_m.field('quiz_m.jawaban_a').val();
+                                                        if(!jawaban_a || jawaban_a == ''){
+                                                            edtquiz_m.field('quiz_m.jawaban_a').error( 'Wajib diisi!' );
+                                                        }
+
+                                                        jawaban_b = edtquiz_m.field('quiz_m.jawaban_b').val();
+                                                        if(!jawaban_b || jawaban_b == ''){
+                                                            edtquiz_m.field('quiz_m.jawaban_b').error( 'Wajib diisi!' );
+                                                        }
+
+                                                        jawaban_c = edtquiz_m.field('quiz_m.jawaban_c').val();
+                                                        if(!jawaban_c || jawaban_c == ''){
+                                                            edtquiz_m.field('quiz_m.jawaban_c').error( 'Wajib diisi!' );
+                                                        }
+
+                                                        jawaban_d = edtquiz_m.field('quiz_m.jawaban_d').val();
+                                                        if(!jawaban_d || jawaban_d == ''){
+                                                            edtquiz_m.field('quiz_m.jawaban_d').error( 'Wajib diisi!' );
+                                                        }
+
+                                                        jawaban_benar = edtquiz_m.field('quiz_m.jawaban_benar').val();
+                                                        if(!jawaban_benar || jawaban_benar == ''){
+                                                            edtquiz_m.field('quiz_m.jawaban_benar').error( 'Wajib diisi!' );
+                                                        } 
+                                                    }
+                                                }
+                                            }
+                                            
+                                            if ( edtquiz_m.inError() ) {
+                                                return false;
+                                            }
                                         });
                                         
                                         if (jenis_materi == 1) {

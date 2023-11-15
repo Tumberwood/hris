@@ -398,7 +398,7 @@
 					edttraining_m.field('training_m.id_files_foto').val(edit_val.link_foto);
 				});
 				
-				edttraining_m.title('Edit materi').buttons(
+				edttraining_m.title('Edit Training').buttons(
 					{
 						label: 'Submit',
 						className: 'btn btn-primary',
@@ -535,7 +535,7 @@
 				edtsub_materi_m.on( 'preOpen', function( e, mode, action ) {
 					edtsub_materi_m.field('sub_materi_m.nama').val(edit_val.nama);
 				});
-				edtsub_materi_m.title('Edit materi').buttons(
+				edtsub_materi_m.title('Edit Sub Materi').buttons(
 					{
 						label: 'Submit',
 						className: 'btn btn-primary', // Add the Bootstrap primary color
@@ -728,8 +728,9 @@
 					edtmateri_m.field('materi_m.nama').val(edit_val.nama);
 					edtmateri_m.field('materi_m.jenis').val(edit_val.jenis);
 					edtmateri_m.field('materi_m.link_yt').val(edit_val.link_yt);
+					edtmateri_m.field('materi_m.tipe_quiz').val(edit_val.tipe_quiz);
 				});
-				edtmateri_m.title('Edit materi').buttons(
+				edtmateri_m.title('Edit Materi').buttons(
 					{
 						label: 'Submit',
 						className: 'btn btn-primary',
@@ -772,58 +773,44 @@
 						name: "quiz_m.is_active",
 						type: "hidden",
 						def: 1
-					},	{
-						label: "Nama <sup class='text-danger'>*<sup>",
-						name: "quiz_m.nama"
+					}
+					,{
+						name: "quiz_m.nama",
+						type: "textarea"
+					}
+					,{
+						label: "Jawaban A <sup class='text-danger'>*<sup>",
+						name: "quiz_m.jawaban_a"
+					}
+					,{
+						label: "Jawaban B <sup class='text-danger'>*<sup>",
+						name: "quiz_m.jawaban_b"
+					}
+					,{
+						label: "Jawaban C <sup class='text-danger'>*<sup>",
+						name: "quiz_m.jawaban_c"
+					}
+					,{
+						label: "Jawaban D <sup class='text-danger'>*<sup>",
+						name: "quiz_m.jawaban_d"
+					}
+					,{
+						label: "Jawaban Benar <sup class='text-danger'>*<sup>",
+						name: "quiz_m.jawaban_benar",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "A", "value": 1 },
+							{ "label": "B", "value": 2 },
+							{ "label": "C", "value": 3 },
+							{ "label": "D", "value": 4 }
+						]
 					}
 				]
 			} );
 
 			edtquiz_m.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
-			});
-
-			edtquiz_m.on( 'preSubmit', function (e, data, action) {
-				if(action != 'remove'){
-					if(action == 'create'){
-						// BEGIN of validasi quiz_m.nama
-						if ( ! edtquiz_m.field('quiz_m.nama').isMultiValue() ) {
-							nama = edtquiz_m.field('quiz_m.nama').val();
-							if(!nama || nama == ''){
-								edtquiz_m.field('quiz_m.nama').error( 'Wajib diisi!' );
-							}
-							
-							// BEGIN of cek unik quiz_m.nama
-							if(action == 'create'){
-								id_quiz_m = 0;
-							}
-							
-							$.ajax( {
-								url: '../../../helpers/validate_fn_unique.php',
-								dataType: 'json',
-								type: 'POST',
-								async: false,
-								data: {
-									table_name: 'quiz_m',
-									nama_field: 'nama',
-									nama_field_value: '"'+nama+'"',
-									id_transaksi: id_quiz_m
-								},
-								success: function ( json ) {
-									if(json.data.count == 1){
-										edtquiz_m.field('quiz_m.nama').error( 'Data tidak boleh kembar!' );
-									}
-								}
-							} );
-							// END of cek unik quiz_m.nama
-						}
-						// END of validasi quiz_m.nama
-					}
-				}
-				
-				if ( edtquiz_m.inError() ) {
-					return false;
-				}
 			});
 			
 			edtquiz_m.on('initSubmit', function(e, action) {
@@ -835,29 +822,27 @@
 				edtquiz_m.enable();
 			} );
 
-			$(document).on('click', '.materi_panel a.edit', function () {
+			// $(document).on('click', '.materi_panel a.edit', function () {
 				
-				var id = $(this).data('id');
+			// 	var id = $(this).data('id');
 
-				// ini adalah function untuk autofill data lama
-				val_edit('quiz_m', id, 0); // nama tabel dan id yang parse int agar dinamis bisa digunakan banyak tabel dan is_delete
+			// 	// ini adalah function untuk autofill data lama
+			// 	val_edit('quiz_m', id, 0); // nama tabel dan id yang parse int agar dinamis bisa digunakan banyak tabel dan is_delete
 
-				// preopen saya pindah kesini karena biar data old ditampilkan dulu sebelum dibuka formnya
-				edtquiz_m.on( 'preOpen', function( e, mode, action ) {
-					edtquiz_m.field('quiz_m.nama').val(edit_val.nama);
-					edtquiz_m.field('quiz_m.jenis').val(edit_val.jenis);
-					edtquiz_m.field('quiz_m.link_yt').val(edit_val.link_yt);
-				});
-				edtquiz_m.title('Edit materi').buttons(
-					{
-						label: 'Submit',
-						className: 'btn btn-primary',
-						action: function () {
-							this.submit();
-						}
-					}
-				).edit(id);
-			});
+			// 	// preopen saya pindah kesini karena biar data old ditampilkan dulu sebelum dibuka formnya
+			// 	edtquiz_m.on( 'preOpen', function( e, mode, action ) {
+			// 		edtquiz_m.field('quiz_m.nama').val(edit_val.nama);
+			// 	});
+			// 	edtquiz_m.title('Edit Quiz').buttons(
+			// 		{
+			// 			label: 'Submit',
+			// 			className: 'btn btn-primary',
+			// 			action: function () {
+			// 				this.submit();
+			// 			}
+			// 		}
+			// 	).edit(id);
+			// });
 			
 
 		} );// end of document.ready
