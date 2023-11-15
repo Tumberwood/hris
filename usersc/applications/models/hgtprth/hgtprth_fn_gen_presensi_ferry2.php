@@ -298,10 +298,12 @@
                             } else if($ceklok_in >= $tanggaljam_awal_toleransi && $ceklok_in <= $tanggaljam_akhir_toleransi){
                                 $clock_in           = $ceklok_in;
                                 $st_clock_in        = 'Late 1';
+                                $is_pot_premi = 1;
                                 // $status_presensi_in = 'Late 1';
                             } else if($ceklok_in >= $tanggaljam_akhir_toleransi && $ceklok_in <= $tanggaljam_awal_t2){
                                 $clock_in           = $ceklok_in;
                                 $st_clock_in        = 'Late';
+                                $is_pot_premi = 1;
                                 // $status_presensi_in = 'Late';
                                 
                                 // hitung potongan jam late (DIPINDAH DI STEP 5 IZIN)
@@ -1634,10 +1636,6 @@
                             $is_pot_premi = 1;
                         }
 
-                        // revisi payroll, Late1/Late akan dipotong premi abs
-                        if ($st_clock_in == 'Late 1' || $st_clock_in = 'Late') {
-                            $is_pot_premi = 1;
-                        }
                         //INSERT KE REPORT PRESENSI
                         $qi_htsprrd = $db
                             ->query('insert', 'htsprrd')
