@@ -259,6 +259,7 @@
                         if($ceklok_in >= $tanggaljam_awal_toleransi && $ceklok_in <= $tanggaljam_akhir_toleransi){
                             $clock_in           = $ceklok_in;
                             $st_clock_in        = 'Late 1';
+                            $is_pot_premi = 1;
                             // echo "Late1";
                             // print_r('Late 1');
                             // $status_presensi_in = 'Late 1';
@@ -267,6 +268,7 @@
                         if($ceklok_in >= $tanggaljam_akhir_toleransi && $ceklok_in <= $tanggaljam_awal_t2){
                             $clock_in           = $ceklok_in;
                             $st_clock_in        = 'Late';
+                            $is_pot_premi = 1;
                             // echo "Late";
                             // print_r('Late');
                             // $status_presensi_in = 'Late';
@@ -1487,14 +1489,14 @@
                         $is_pot_premi = 1;
                     }
 
-                    print_r($st_clock_in);
+                    // print_r($st_clock_in);
                     // revisi payroll, Late1/Late akan dipotong premi abs
-                    if ($st_clock_in == 'Late 1' || $st_clock_in = 'Late') {
-                        $is_pot_premi = 1;
-                    }
+                    // if ($st_clock_in == 'Late 1' || $st_clock_in = 'Late') {
+                    //     $is_pot_premi = 1;
+                    // }
 
                     // sudah menjadi late
-                    
+
                     //INSERT KE REPORT PRESENSI
                     $qi_htsprrd = $db
                         ->query('insert', 'htsprrd')
