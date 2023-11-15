@@ -243,18 +243,25 @@
                     // print_r($rs_htsprtd_clock_in);
                     
                     if (!empty($rs_htsprtd_clock_in)) {
+                        
+                        print_r($ceklok_in);
+                        print_r($tanggaljam_akhir_toleransi);
+                        print_r($tanggaljam_awal_t2);
                         $ceklok_in = new Carbon($rs_htsprtd_clock_in['dt_checkclock']);
                         if($ceklok_in >= $tanggaljam_awal_t1 && $ceklok_in <= $tanggaljam_awal_toleransi){
                             $clock_in           = $ceklok_in;
                             $st_clock_in        = 'OK';
+                            print_r('OK');
                             // $status_presensi_in = 'OK';
                         } else if($ceklok_in >= $tanggaljam_awal_toleransi && $ceklok_in <= $tanggaljam_akhir_toleransi){
                             $clock_in           = $ceklok_in;
                             $st_clock_in        = 'Late 1';
+                            print_r('Late 1');
                             // $status_presensi_in = 'Late 1';
                         } else if($ceklok_in >= $tanggaljam_akhir_toleransi && $ceklok_in <= $tanggaljam_awal_t2){
                             $clock_in           = $ceklok_in;
                             $st_clock_in        = 'Late';
+                            print_r('Late');
                             // $status_presensi_in = 'Late';
                             
                             // hitung potongan jam late (DIPINDAH DI STEP 5 IZIN)
