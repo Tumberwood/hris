@@ -551,9 +551,15 @@
                                             button_start_quiz.addEventListener("click", function() {
                                                 $('#nextPrevMultiQuiz').html(`
                                                     <br>
-                                                    <button id="prevButton" class="btn btn-primary">Previous</button>
-                                                    <button id="nextButton" class="btn btn-primary">Next</button>
-                                                    <button id="finishButton" class="btn btn-success">Finish</button>
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <button id="prevButton" class="btn btn-primary">Previous</button>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <button id="nextButton" class="btn btn-primary">Next</button>
+                                                            <button id="finishButton" class="btn btn-success">Finish</button>
+                                                        </div>
+                                                    </div>
                                                 `);
                                                 
                                                 $("#nextButton").show();

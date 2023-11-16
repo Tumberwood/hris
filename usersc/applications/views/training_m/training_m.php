@@ -86,7 +86,6 @@
 	</div>
 </div>
 
-
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_modal_log.php'; ?>
 
 <!-- BEGIN JS -->
