@@ -102,6 +102,10 @@
         } else {
             timerElement.innerHTML = "Time's up!";
             clearInterval(countdownInterval);
+            $('#materi').hide();
+            $("#nextButton").hide();
+            $("#prevButton").hide();
+            $("#finishButton").hide();
             
             $("#materi-kiri").show();
             $("#judul-tr").show(); 
@@ -789,9 +793,24 @@
     function finishQuiz() {
         // Log the selected answers for each question
         console.log('Selected Answers:', selectedAnswers);
-
         // You can add additional logic here, such as showing a summary or processing the answers
         alert('Quiz finished! Check the console for selected answers.');
+        
+        const timerElement = document.getElementById('countdown-timer');
+        timerElement.innerHTML = "Time's up!";
+        clearInterval(countdownInterval);
+        $('#materi').hide();
+        $("#nextButton").hide();
+        $("#prevButton").hide();
+        $("#finishButton").hide();
+        
+        $("#materi-kiri").show();
+        $("#judul-tr").show(); 
+        $("#hide-tr").show();  
+        $("#materi-sidebar").show(); 
+        const materiKanan = $("#materi-kanan");
+        materiKanan.removeClass("col-lg-12").addClass("col-lg-8");
+        
     }
 
     function updateButtonVisibility(totalQuizzes) {
