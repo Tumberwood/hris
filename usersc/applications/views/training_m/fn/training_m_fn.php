@@ -654,6 +654,9 @@
                                                                     if (materi.tipe_quiz == "True/False") {
                                                                         displayTrueFalse(data, currentQuizIndex);
                                                                     }
+                                                                    if (materi.tipe_quiz == "Essay") {
+                                                                        displayEssay(data, currentQuizIndex);
+                                                                    }
                                                                     updateButtonVisibility(totalQuizzes);
                                                                 }
                                                             });
@@ -667,6 +670,9 @@
                                                                     }
                                                                     if (materi.tipe_quiz == "True/False") {
                                                                         displayTrueFalse(data, currentQuizIndex);
+                                                                    }
+                                                                    if (materi.tipe_quiz == "Essay") {
+                                                                        displayEssay(data, currentQuizIndex);
                                                                     }
                                                                     updateButtonVisibility(totalQuizzes);
                                                                 }
@@ -683,6 +689,9 @@
                                                             }
                                                             if (materi.tipe_quiz == "True/False") {
                                                                 displayTrueFalse(data, currentQuizIndex);
+                                                            }
+                                                            if (materi.tipe_quiz == "Essay") {
+                                                                displayEssay(data, currentQuizIndex);
                                                             }
                                                             updateButtonVisibility(totalQuizzes);
                                                         }
@@ -881,7 +890,6 @@
     }
 
     // True False
-    
     function genTruFalseItem(choices, questionIndex) {
         let leftColumnHTML = '';
         let rightColumnHTML = '';
@@ -911,7 +919,7 @@
         `;
     }
 
-    // ini untuk Multiple Choice
+    // ini untuk True False
     function genHTMLTrueFalse(choice, questionIndex) {
         const isChecked = selectedAnswers[questionIndex] === choice.value ? 'checked' : '';
         return `
@@ -922,7 +930,7 @@
         `;
     }
 
-    // ini untuk Multiple Choice
+    // ini untuk True False
     function displayTrueFalse(data, index) {
         const valQuiz = data.data[index].quiz_m;
         const answerChoices = [
@@ -949,4 +957,26 @@
         // Add event listeners to checkboxes after updating the quiz display
         addCheckboxEventListeners(index);
     }
+    
+    // Essay
+    function displayEssay(data, index) {
+        const valQuiz = data.data[index].quiz_m;;
+
+        // Update the current quiz display
+        document.querySelector('#KontenQuizContainer').innerHTML = `
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="text-center">${valQuiz.nama}</h3>
+                    <textarea class="form-control" name="answer" id="essayAnswer${index}" placeholder="Type your answer here">${selectedAnswers[index] || ''}</textarea>
+                </div>
+            </div>
+        `;
+
+        // Add event listener to the textarea
+        const textarea = document.getElementById(`essayAnswer${index}`);
+        textarea.addEventListener('input', function () {
+            selectedAnswers[index] = this.value;
+        });
+    }
+
 </script>
