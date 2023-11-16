@@ -594,6 +594,7 @@
 						placeholder : "Select",
 						options: [
 							{ "label": "Essay", "value": "Essay" },
+							{ "label": "True/False", "value": "True/False" },
 							{ "label": "Multiple Choice", "value": "Multiple Choice" }
 						]
 					},
@@ -812,10 +813,7 @@
 						type: "select",
 						placeholder : "Select",
 						options: [
-							{ "label": "A", "value": 1 },
-							{ "label": "B", "value": 2 },
-							{ "label": "C", "value": 3 },
-							{ "label": "D", "value": 4 }
+							{ "label": "A", "value": 1 }
 						]
 					}
 				]

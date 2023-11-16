@@ -424,18 +424,17 @@
                                             edtquiz_m.field('quiz_m.id_materi_m').val(materi.id)
                                             if (materi.tipe_quiz == "Essay") {
                                                 edtquiz_m.field('quiz_m.nama').label("Soal Essay <sup class='text-danger'>*<sup>")
-                                                edtquiz_m.field('quiz_m.jawaban_a').hide()
-                                                edtquiz_m.field('quiz_m.jawaban_b').hide()
-                                                edtquiz_m.field('quiz_m.jawaban_c').hide()
-                                                edtquiz_m.field('quiz_m.jawaban_d').hide()
-                                                edtquiz_m.field('quiz_m.jawaban_benar').hide()
+                                            }
 
-                                                edtquiz_m.field('quiz_m.jawaban_a').val('')
-                                                edtquiz_m.field('quiz_m.jawaban_b').val('')
-                                                edtquiz_m.field('quiz_m.jawaban_c').val('')
-                                                edtquiz_m.field('quiz_m.jawaban_d').val('')
-                                                edtquiz_m.field('quiz_m.jawaban_benar').val('')
-                                            } else {
+                                            if (materi.tipe_quiz == "Multiple Choice") {
+                                                var customSelect = [
+                                                    { "label": "A", "value": 1 },
+                                                    { "label": "B", "value": 2 },
+                                                    { "label": "C", "value": 3 },
+                                                    { "label": "D", "value": 4 }
+                                                ];
+
+                                                edtquiz_m.field('quiz_m.jawaban_benar').update(customSelect);
                                                 edtquiz_m.field('quiz_m.nama').label("Soal Multiple Choice <sup class='text-danger'>*<sup>")
                                                 edtquiz_m.field('quiz_m.jawaban_a').show()
                                                 edtquiz_m.field('quiz_m.jawaban_b').show()
@@ -448,6 +447,30 @@
                                                 edtquiz_m.field('quiz_m.jawaban_c').val()
                                                 edtquiz_m.field('quiz_m.jawaban_d').val()
                                                 edtquiz_m.field('quiz_m.jawaban_benar').val()                                                
+                                            } else {
+                                                edtquiz_m.field('quiz_m.jawaban_a').hide()
+                                                edtquiz_m.field('quiz_m.jawaban_b').hide()
+                                                edtquiz_m.field('quiz_m.jawaban_c').hide()
+                                                edtquiz_m.field('quiz_m.jawaban_d').hide()
+                                                edtquiz_m.field('quiz_m.jawaban_benar').hide()
+
+                                                edtquiz_m.field('quiz_m.jawaban_a').val('')
+                                                edtquiz_m.field('quiz_m.jawaban_b').val('')
+                                                edtquiz_m.field('quiz_m.jawaban_c').val('')
+                                                edtquiz_m.field('quiz_m.jawaban_d').val('')
+                                                edtquiz_m.field('quiz_m.jawaban_benar').val('')
+                                            }
+                                            
+                                            if (materi.tipe_quiz == "True/False") {
+                                                edtquiz_m.field('quiz_m.nama').label("Soal True/False <sup class='text-danger'>*<sup>")
+                                                var customSelect = [
+                                                    { "label": "True", "value": 1 },
+                                                    { "label": "False", "value": 2 }
+                                                ];
+
+                                                edtquiz_m.field('quiz_m.jawaban_benar').update(customSelect);
+                                                edtquiz_m.field('quiz_m.jawaban_benar').show()
+                                                edtquiz_m.field('quiz_m.jawaban_benar').val() 
                                             }
                                         });
                                         
@@ -509,6 +532,12 @@
                                                             edtquiz_m.field('quiz_m.jawaban_d').error( 'Wajib diisi!' );
                                                         }
 
+                                                        jawaban_benar = edtquiz_m.field('quiz_m.jawaban_benar').val();
+                                                        if(!jawaban_benar || jawaban_benar == ''){
+                                                            edtquiz_m.field('quiz_m.jawaban_benar').error( 'Wajib diisi!' );
+                                                        } 
+                                                    }
+                                                    if (materi.tipe_quiz == "True/False") {
                                                         jawaban_benar = edtquiz_m.field('quiz_m.jawaban_benar').val();
                                                         if(!jawaban_benar || jawaban_benar == ''){
                                                             edtquiz_m.field('quiz_m.jawaban_benar').error( 'Wajib diisi!' );
@@ -622,6 +651,9 @@
                                                                     if (materi.tipe_quiz == "Multiple Choice") {
                                                                         displayQuiz(data, currentQuizIndex);
                                                                     }
+                                                                    if (materi.tipe_quiz == "True/False") {
+                                                                        displayTrueFalse(data, currentQuizIndex);
+                                                                    }
                                                                     updateButtonVisibility(totalQuizzes);
                                                                 }
                                                             });
@@ -632,6 +664,9 @@
                                                                     currentQuizIndex--;
                                                                     if (materi.tipe_quiz == "Multiple Choice") {
                                                                         displayQuiz(data, currentQuizIndex);
+                                                                    }
+                                                                    if (materi.tipe_quiz == "True/False") {
+                                                                        displayTrueFalse(data, currentQuizIndex);
                                                                     }
                                                                     updateButtonVisibility(totalQuizzes);
                                                                 }
@@ -645,6 +680,9 @@
                                                             // Initial display
                                                             if (materi.tipe_quiz == "Multiple Choice") {
                                                                 displayQuiz(data, currentQuizIndex);
+                                                            }
+                                                            if (materi.tipe_quiz == "True/False") {
+                                                                displayTrueFalse(data, currentQuizIndex);
                                                             }
                                                             updateButtonVisibility(totalQuizzes);
                                                         }
@@ -739,6 +777,7 @@
         `;
     }
 
+    // ini untuk Multiple Choice
     function generateListItemHTML(choice, questionIndex) {
         const isChecked = selectedAnswers[questionIndex] === choice.value ? 'checked' : '';
         return `
@@ -749,6 +788,7 @@
         `;
     }
 
+    // ini untuk Multiple Choice
     function displayQuiz(data, index) {
         const valQuiz = data.data[index].quiz_m;
         const answerChoices = [
@@ -837,5 +877,75 @@
             nextButton.style.display = 'block';
             finishButton.style.display = 'none';
         }
+    }
+
+    // True False
+    
+    function genTruFalseItem(choices, questionIndex) {
+        let leftColumnHTML = '';
+        let rightColumnHTML = '';
+
+        // Split choices into two halves
+        const halfLength = Math.ceil(choices.length / 2);
+        const leftChoices = choices.slice(0, halfLength);
+        const rightChoices = choices.slice(halfLength);
+
+        // Generate HTML for left column
+        leftChoices.forEach(choice => {
+            leftColumnHTML += genHTMLTrueFalse(choice, questionIndex);
+        });
+
+        // Generate HTML for right column
+        rightChoices.forEach(choice => {
+            rightColumnHTML += genHTMLTrueFalse(choice, questionIndex);
+        });
+
+        return `
+            <div class="col-md-6">
+                <ul class="todo-list m-t">${leftColumnHTML}</ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="todo-list m-t">${rightColumnHTML}</ul>
+            </div>
+        `;
+    }
+
+    // ini untuk Multiple Choice
+    function genHTMLTrueFalse(choice, questionIndex) {
+        const isChecked = selectedAnswers[questionIndex] === choice.value ? 'checked' : '';
+        return `
+            <li>
+                <input class="i-checks" type="checkbox" name="answer" id="choice${choice.id}" value="${choice.value}" ${isChecked}>
+                <span class="m-l-xs">${choice.label}</span>
+            </li>
+        `;
+    }
+
+    // ini untuk Multiple Choice
+    function displayTrueFalse(data, index) {
+        const valQuiz = data.data[index].quiz_m;
+        const answerChoices = [
+            { id: 'A', value: 1, label: 'True' },
+            { id: 'B', value: 2, label: 'False' },
+            // Add more choices as needed
+        ];
+
+        // Generate HTML for choices in two columns
+        let choicesHTML = '<div class="row">' + genTruFalseItem(answerChoices, index) + '</div>';
+
+        // Update the current quiz display
+        document.querySelector('#KontenQuizContainer').innerHTML = `
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="text-center">${valQuiz.nama}</h3>
+                    <form id="quizForm">
+                        ${choicesHTML}
+                    </form>
+                </div>
+            </div>
+        `;
+
+        // Add event listeners to checkboxes after updating the quiz display
+        addCheckboxEventListeners(index);
     }
 </script>
