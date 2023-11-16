@@ -77,6 +77,7 @@
 							<button id="materi-sidebar" class="btn btn-primary" title="Fullscreen Materi"><i class="fa fa-expand"></i></button>
 							<h3 class="text-center" id="judul"></h3>
 							<div id="materi"></div>
+							<div id="nextPrevMultiQuiz"></div>
 						</div>
 					</div>
 				</div>
@@ -106,6 +107,8 @@
 		$(document).ready(function() {
 			
 			$("#tr-kanan").hide();
+			$("#nextButton").hide();
+			$("#prevButton").hide();
 			
 			$("#tr-sidebar").click(function () {
 				$("#tr-kiri").show(); 

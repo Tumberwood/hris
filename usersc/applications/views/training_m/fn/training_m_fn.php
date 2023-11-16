@@ -1,4 +1,6 @@
 <script>
+    let currentQuizIndex = 0;
+    
     function val_edit(tabel, kolom, is_delete){
         $.ajax( {
             url: "../../models/training_m/fn_training_m.php",
@@ -518,6 +520,8 @@
                                         });
                                         
                                         if (jenis_materi == 1) {
+                                            $("#nextButton").hide();
+                                            $("#prevButton").hide();
                                             if (link_yt !== null && link_yt !== undefined) {
                                                 var match = link_yt.match(/[?&]v=([^&]+)/);
                                                 if (match) {
@@ -545,6 +549,15 @@
                                             h3Title.textContent = materi.nama;
                                             
                                             button_start_quiz.addEventListener("click", function() {
+                                                $('#nextPrevMultiQuiz').html(`
+                                                    <br>
+                                                    <button id="prevButton" class="btn btn-primary">Previous</button>
+                                                    <button id="nextButton" class="btn btn-primary">Next</button>
+                                                    <button id="finishButton" class="btn btn-success">Finish</button>
+                                                `);
+                                                
+                                                $("#nextButton").show();
+                                                $("#prevButton").show();
                                                 const materiKanan = $("#materi-kanan");
                                                 materiKanan.removeClass("col-lg-8").addClass("col-lg-12");
                                                 $("#materi-kiri").hide();
@@ -559,10 +572,10 @@
                                                 h3Title.innerHTML = `
                                                     <div class="widget navy-bg p-sm text-center">
                                                         <div class="row">
-                                                            <div class="col-md-6">
-                                                                <h2 class="m-xs">${materi.nama}</h2>
+                                                            <div class="col-md-9">
+                                                                <h2 class="m-xs" style="font-weight: bold;">${materi.nama}</h2>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-3">
                                                                 <div class="m-b-sm">
                                                                     <i class="fa fa-clock-o fa-2x"></i>
                                                                     <h4 class="m-xs" id="countdown-timer"></h4>
@@ -570,14 +583,7 @@
                                                             </div>
                                                         </div>  
                                                     </div>
-                                                `;
-
-                                                // var timerQuiz = document.createElement('div');
-                                                materiVideo.innerHTML = `
-                                                    <div class="row">
-                                                        <div class="col-md-12" id="KontenQuizContainer">
-                                                        </div>
-                                                    </div>
+                                                    <br>
                                                 `;
                                                 
                                                 updateCountdown(); // Start the countdown
@@ -585,65 +591,47 @@
                                                 window.addEventListener("beforeunload", function (e) {
                                                     e.returnValue = "Leaving this page will stop the countdown. Are you sure?";
                                                 });
-                                                h3Title.parentNode.insertBefore(materiVideo, h3Title.nextSibling);
-                                                
+
+                                                materiVideo.innerHTML = `
+                                                    <div class="row">
+                                                        <div class="col-md-12" id="KontenQuizContainer">
+                                                        </div>
+                                                    </div>
+                                                `;
                                                 $.ajax({
                                                     url: "../../models/quiz_m/quiz_m_data.php",
                                                     data: { id_materi_m: materi.id },
                                                     dataType: 'json',
-                                                    success: function(data) {
+                                                    success: function (data) {
                                                         if (Array.isArray(data.data)) {
-                                                            data.data.forEach(function(dataQuiz) {
-                                                                var valQuiz = dataQuiz.quiz_m;
-                                                                
-                                                                const answerChoices = [
-                                                                    { id: 'A', value: 1, label: valQuiz.jawaban_a },
-                                                                    { id: 'B', value: 2, label: valQuiz.jawaban_b },
-                                                                    { id: 'C', value: 3, label: valQuiz.jawaban_c },
-                                                                    { id: 'D', value: 4, label: valQuiz.jawaban_d },
-                                                                    // Add more choices as needed
-                                                                ];
+                                                            const totalQuizzes = data.data.length;
 
-                                                                // Generate radio buttons dynamically
-                                                                let choicesHTML = '';
-                                                                answerChoices.forEach(choice => {
-                                                                    choicesHTML += `
-                                                                        <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="answer" id="choice${choice.id}" value="${choice.value}">
-                                                                            <label class="form-check-label" for="choice${choice.id}">${choice.label}</label>
-                                                                        </div>
-                                                                    `;
-                                                                });
-                                                                var KontenQuiz = document.createElement('div');
-                                                                KontenQuiz.innerHTML = `
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12">
-                                                                            <h3 class="text-center">${valQuiz.nama}</h3>
-                                                                            <form id="quizForm">
-                                                                                ${choicesHTML}
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                `;
-                                                                document.querySelector('#KontenQuizContainer').appendChild(KontenQuiz);
-
-                                                                // Add an event listener to handle quiz submission
-                                                                document.getElementById('quizForm').addEventListener('submit', function (event) {
-                                                                    event.preventDefault(); // Prevent the default form submission behavior
-                                                                    const selectedAnswer = document.querySelector('input[name="answer"]:checked');
-
-                                                                    if (selectedAnswer) {
-                                                                        // Retrieve the selected answer value
-                                                                        const answerValue = selectedAnswer.value;
-
-                                                                        // Now you can use 'answerValue' for further processing (e.g., checking correctness)
-                                                                        console.log('Selected Answer:', answerValue);
-                                                                    } else {
-                                                                        alert('Please select an answer before submitting.');
-                                                                    }
-                                                                });
-
+                                                            // Event listener for the next button
+                                                            document.getElementById('nextButton').addEventListener('click', function () {
+                                                                if (currentQuizIndex < totalQuizzes - 1) {
+                                                                    currentQuizIndex++;
+                                                                    displayQuiz(data, currentQuizIndex);
+                                                                    updateButtonVisibility(totalQuizzes);
+                                                                }
                                                             });
+
+                                                            // Event listener for the previous button
+                                                            document.getElementById('prevButton').addEventListener('click', function () {
+                                                                if (currentQuizIndex > 0) {
+                                                                    currentQuizIndex--;
+                                                                    displayQuiz(data, currentQuizIndex);
+                                                                    updateButtonVisibility(totalQuizzes);
+                                                                }
+                                                            });
+
+                                                            document.getElementById('finishButton').addEventListener('click', function () {
+                                                                // Call a function to handle finishing the quiz
+                                                                finishQuiz();
+                                                            });
+
+                                                            // Initial display
+                                                            displayQuiz(data, currentQuizIndex);
+                                                            updateButtonVisibility(totalQuizzes);
                                                         }
                                                     }
                                                 });
@@ -702,5 +690,122 @@
                 genMateri(id_sub_materi_m, contentElement);
             }
         });
+    }
+
+    // Multiple Choice
+    const selectedAnswers = [];
+
+    function generateListItems(choices, questionIndex) {
+        let leftColumnHTML = '';
+        let rightColumnHTML = '';
+
+        // Split choices into two halves
+        const halfLength = Math.ceil(choices.length / 2);
+        const leftChoices = choices.slice(0, halfLength);
+        const rightChoices = choices.slice(halfLength);
+
+        // Generate HTML for left column
+        leftChoices.forEach(choice => {
+            leftColumnHTML += generateListItemHTML(choice, questionIndex);
+        });
+
+        // Generate HTML for right column
+        rightChoices.forEach(choice => {
+            rightColumnHTML += generateListItemHTML(choice, questionIndex);
+        });
+
+        return `
+            <div class="col-md-6">
+                <ul class="todo-list m-t">${leftColumnHTML}</ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="todo-list m-t">${rightColumnHTML}</ul>
+            </div>
+        `;
+    }
+
+    function generateListItemHTML(choice, questionIndex) {
+        const isChecked = selectedAnswers[questionIndex] === choice.value ? 'checked' : '';
+        return `
+            <li>
+                <input class="i-checks" type="checkbox" name="answer" id="choice${choice.id}" value="${choice.value}" ${isChecked}>
+                <span class="m-l-xs">${choice.label}</span>
+            </li>
+        `;
+    }
+
+    function displayQuiz(data, index) {
+        const valQuiz = data.data[index].quiz_m;
+        const answerChoices = [
+            { id: 'A', value: 1, label: valQuiz.jawaban_a },
+            { id: 'B', value: 2, label: valQuiz.jawaban_b },
+            { id: 'C', value: 3, label: valQuiz.jawaban_c },
+            { id: 'D', value: 4, label: valQuiz.jawaban_d },
+            // Add more choices as needed
+        ];
+
+        // Generate HTML for choices in two columns
+        let choicesHTML = '<div class="row">' + generateListItems(answerChoices, index) + '</div>';
+
+        // Update the current quiz display
+        document.querySelector('#KontenQuizContainer').innerHTML = `
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="text-center">${valQuiz.nama}</h3>
+                    <form id="quizForm">
+                        ${choicesHTML}
+                    </form>
+                </div>
+            </div>
+        `;
+
+        // Add event listeners to checkboxes after updating the quiz display
+        addCheckboxEventListeners(index);
+    }
+
+    function addCheckboxEventListeners(questionIndex) {
+        const checkboxes = document.querySelectorAll('.i-checks');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                // Update the selected answer for the current question
+                selectedAnswers[questionIndex] = checkbox.checked ? parseInt(checkbox.value) : null;
+
+                // Uncheck all checkboxes except the current one
+                checkboxes.forEach(otherCheckbox => {
+                    if (otherCheckbox !== checkbox) {
+                        otherCheckbox.checked = false;
+                    }
+                });
+            });
+        });
+    }
+
+    function finishQuiz() {
+        // Log the selected answers for each question
+        console.log('Selected Answers:', selectedAnswers);
+
+        // You can add additional logic here, such as showing a summary or processing the answers
+        alert('Quiz finished! Check the console for selected answers.');
+    }
+
+    function updateButtonVisibility(totalQuizzes) {
+        // Show/hide the prevButton based on currentQuizIndex
+        const prevButton = document.getElementById('prevButton');
+        if (currentQuizIndex === 0) {
+            prevButton.style.display = 'none';
+        } else {
+            prevButton.style.display = 'block';
+        }
+
+        // Show/hide the nextButton and finishButton based on currentQuizIndex
+        const nextButton = document.getElementById('nextButton');
+        const finishButton = document.getElementById('finishButton');
+        if (currentQuizIndex === totalQuizzes - 1) {
+            nextButton.style.display = 'none';
+            finishButton.style.display = 'block';
+        } else {
+            nextButton.style.display = 'block';
+            finishButton.style.display = 'none';
+        }
     }
 </script>
