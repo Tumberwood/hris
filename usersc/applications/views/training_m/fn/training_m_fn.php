@@ -544,29 +544,48 @@
                                                 $("#judul-tr").hide() 
                                                 $("#hide-tr").hide() 
                                                 $("#materi-sidebar").hide() 
-                                                countdownMinutes = 1; // Reset countdown minutes
+                                                countdownMinutes = materi.durasi; // Set Menit Countdown, bisa diambilkan di quiz
                                                 countdownSeconds = 0; // Reset countdown seconds
                                                 // console.log('kawoawkokawokawo');
                                                 
-                                                materiVideo.innerHTML = `
-                                                    <div class="row">
-                                                        <div class="col-lg-8">
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <div class="widget navy-bg p-sm text-center">
-                                                                <div class="m-b-sm">
-                                                                    <i class="fa fa-clock-o fa-4x"></i>
-                                                                    <h3 class="m-xs" id="countdown-timer"></h3>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                `
-                                                ;
-                                                updateCountdown(); // Start the countdown
-                                                countdownInterval = setInterval(updateCountdown, 1000);
-                                                window.addEventListener("beforeunload", function (e) {
-                                                    e.returnValue = "Leaving this page will stop the countdown. Are you sure?";
+                                                $.ajax({
+                                                    url: "../../models/quiz_m/quiz_m_data.php",
+                                                    data: { id_materi_m: materi.id },
+                                                    dataType: 'json',
+                                                    success: function(data) {
+                                                        if (Array.isArray(data.data)) {
+                                                            data.data.forEach(function(dataQuiz) {
+                                                                var valQuiz = dataQuiz.quiz_m;
+                                                                console.log(valQuiz.nama); 
+                                                                
+                                                                materiVideo.innerHTML = `
+                                                                    <div class="row">
+                                                                        <div class="col-lg-8">
+                                                                        </div>
+                                                                        <div class="col-lg-4">
+                                                                            <div class="widget navy-bg p-sm text-center">
+                                                                                <div class="m-b-sm">
+                                                                                    <i class="fa fa-clock-o fa-4x"></i>
+                                                                                    <h3 class="m-xs" id="countdown-timer"></h3>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12">
+                                                                            <h3 class="text-center">${valQuiz.nama}</h3>
+                                                                        </div>
+                                                                    </div>
+                                                                `
+                                                                ;
+                                                                updateCountdown(); // Start the countdown
+                                                                countdownInterval = setInterval(updateCountdown, 1000);
+                                                                window.addEventListener("beforeunload", function (e) {
+                                                                    e.returnValue = "Leaving this page will stop the countdown. Are you sure?";
+                                                                });
+                                                            });
+                                                        }
+                                                    }
                                                 });
                                             });
 

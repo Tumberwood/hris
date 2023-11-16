@@ -25,6 +25,7 @@
 				Field::inst( 'materi_m.kode' ),
 				Field::inst( 'materi_m.nama' ),
 				Field::inst( 'materi_m.jenis' ),
+				Field::inst( 'materi_m.durasi' ),
 				Field::inst( 'materi_m.link_yt' ),
 				Field::inst( 'materi_m.tipe_quiz' ),
 				Field::inst( 'materi_m.keterangan' ),

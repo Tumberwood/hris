@@ -617,7 +617,13 @@
 					{
 						label: "Link Youtube Video <sup class='text-danger'>*<sup>",
 						name: "materi_m.link_yt"
-					}, 	{
+					}
+					,{
+						label: "Durasi Quiz <sup class='text-danger'>*<sup>",
+						name: "materi_m.durasi",
+						fieldInfo: "Durasi Quiz dalam Menit"
+					}
+					,{
 						label: "Keterangan",
 						name: "materi_m.keterangan",
 						type: "textarea"
@@ -638,66 +644,87 @@
 					edtmateri_m.field('materi_m.link_yt').show();
 					edtmateri_m.field('materi_m.tipe_quiz').val('');
 					edtmateri_m.field('materi_m.tipe_quiz').hide();
+
+					edtmateri_m.field('materi_m.durasi').val('');
+					edtmateri_m.field('materi_m.durasi').hide();
 				} else {
 					edtmateri_m.field('materi_m.link_yt').val('');
 					edtmateri_m.field('materi_m.link_yt').hide();
+					
 					edtmateri_m.field('materi_m.tipe_quiz').val();
 					edtmateri_m.field('materi_m.tipe_quiz').show();
+
+					edtmateri_m.field('materi_m.durasi').val();
+					edtmateri_m.field('materi_m.durasi').show();
 				}
 				return {}
 			}, {event: 'keyup change'});
 
 			edtmateri_m.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					if(action == 'create'){
-						// BEGIN of validasi materi_m.nama
-						if ( ! edtmateri_m.field('materi_m.nama').isMultiValue() ) {
-							nama = edtmateri_m.field('materi_m.nama').val();
-							if(!nama || nama == ''){
-								edtmateri_m.field('materi_m.nama').error( 'Wajib diisi!' );
-							}
-							
-							// BEGIN of cek unik materi_m.nama
-							if(action == 'create'){
-								id_materi_m = 0;
-							}
-							
-							$.ajax( {
-								url: '../../../helpers/validate_fn_unique.php',
-								dataType: 'json',
-								type: 'POST',
-								async: false,
-								data: {
-									table_name: 'materi_m',
-									nama_field: 'nama',
-									nama_field_value: '"'+nama+'"',
-									id_transaksi: id_materi_m
-								},
-								success: function ( json ) {
-									if(json.data.count == 1){
-										edtmateri_m.field('materi_m.nama').error( 'Data tidak boleh kembar!' );
-									}
+					// BEGIN of validasi materi_m.nama
+					if ( ! edtmateri_m.field('materi_m.nama').isMultiValue() ) {
+						nama = edtmateri_m.field('materi_m.nama').val();
+						if(!nama || nama == ''){
+							edtmateri_m.field('materi_m.nama').error( 'Wajib diisi!' );
+						}
+						
+						// BEGIN of cek unik materi_m.nama
+						if(action == 'create'){
+							id_materi_m = 0;
+						}
+						
+						$.ajax( {
+							url: '../../../helpers/validate_fn_unique.php',
+							dataType: 'json',
+							type: 'POST',
+							async: false,
+							data: {
+								table_name: 'materi_m',
+								nama_field: 'nama',
+								nama_field_value: '"'+nama+'"',
+								id_transaksi: id_materi_m
+							},
+							success: function ( json ) {
+								if(json.data.count == 1){
+									edtmateri_m.field('materi_m.nama').error( 'Data tidak boleh kembar!' );
 								}
-							} );
-							// END of cek unik materi_m.nama
-						}
-						// END of validasi materi_m.nama
-
-						jenis = edtmateri_m.field('materi_m.jenis').val();
-						if(jenis == ''){
-							edtmateri_m.field('materi_m.jenis').error( 'Wajib diisi!' );
-						}
-
-						if (jenis == 1) {
-							link_yt = edtmateri_m.field('materi_m.link_yt').val();
-							if(!link_yt || link_yt == ''){
-								edtmateri_m.field('materi_m.link_yt').error( 'Wajib diisi!' );
 							}
-						} else {
-							tipe_quiz = edtmateri_m.field('materi_m.tipe_quiz').val();
-							if(!tipe_quiz || tipe_quiz == ''){
-								edtmateri_m.field('materi_m.tipe_quiz').error( 'Wajib diisi!' );
-							}
+						} );
+						// END of cek unik materi_m.nama
+					}
+					// END of validasi materi_m.nama
+
+					jenis = edtmateri_m.field('materi_m.jenis').val();
+					if(jenis == ''){
+						edtmateri_m.field('materi_m.jenis').error( 'Wajib diisi!' );
+					}
+
+					if (jenis == 1) {
+						link_yt = edtmateri_m.field('materi_m.link_yt').val();
+						if(!link_yt || link_yt == ''){
+							edtmateri_m.field('materi_m.link_yt').error( 'Wajib diisi!' );
+						}
+						console.log(1111111111111);
+					} else {
+						tipe_quiz = edtmateri_m.field('materi_m.tipe_quiz').val();
+						if(!tipe_quiz || tipe_quiz == ''){
+							edtmateri_m.field('materi_m.tipe_quiz').error( 'Wajib diisi!' );
+						}
+
+						durasi = edtmateri_m.field('materi_m.durasi').val();
+						console.log(durasi);
+						if(!durasi || durasi == ''){
+							edtmateri_m.field('materi_m.durasi').error( 'Wajib diisi!' );
+						}
+						// validasi min atau max angka
+						if(durasi <= 0 ){
+							edtmateri_m.field('materi_m.durasi').error( 'Inputan harus > 0' );
+						}
+						
+						// validasi angka
+						if(isNaN(durasi) ){
+							edtmateri_m.field('materi_m.durasi').error( 'Inputan harus berupa Angka!' );
 						}
 					}
 				}
@@ -730,6 +757,7 @@
 					edtmateri_m.field('materi_m.link_yt').val(edit_val.link_yt);
 					edtmateri_m.field('materi_m.tipe_quiz').val(edit_val.tipe_quiz);
 					edtmateri_m.field('materi_m.keterangan').val(edit_val.keterangan);
+					edtmateri_m.field('materi_m.durasi').val(edit_val.durasi);
 				});
 				edtmateri_m.title('Edit Materi').buttons(
 					{

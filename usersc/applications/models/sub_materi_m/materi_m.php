@@ -47,6 +47,7 @@
 			Field::inst( 'materi_m.keterangan' ),
 			Field::inst( 'materi_m.tipe_quiz' ),
 			Field::inst( 'materi_m.jenis' ),
+			Field::inst( 'materi_m.durasi' ),
 			Field::inst( 'materi_m.is_active' ),
 			Field::inst( 'materi_m.created_by' )
 				->set( Field::SET_CREATE )
