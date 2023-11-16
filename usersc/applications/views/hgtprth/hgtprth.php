@@ -393,7 +393,7 @@
 				if (total_approve > 0) {
 					tblhgtprth.button( 'btnGeneratePresensi:name' ).disable();
 				} else {
-					if (approve_lain > 0) {
+					if (approve_lain <= 0) {
 						notifyprogress = $.notify({
 							message: 'Tidak Bisa Generate!!! <br> Mohon Approve Overtime, Tukar Jadwal, Tukar Hari, Izin, dan Absen pada tanggal yang dipilih',
 							showProgress: true
