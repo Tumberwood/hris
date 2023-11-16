@@ -619,7 +619,9 @@
                                                             document.getElementById('nextButton').addEventListener('click', function () {
                                                                 if (currentQuizIndex < totalQuizzes - 1) {
                                                                     currentQuizIndex++;
-                                                                    displayQuiz(data, currentQuizIndex);
+                                                                    if (materi.tipe_quiz == "Multiple Choice") {
+                                                                        displayQuiz(data, currentQuizIndex);
+                                                                    }
                                                                     updateButtonVisibility(totalQuizzes);
                                                                 }
                                                             });
@@ -628,7 +630,9 @@
                                                             document.getElementById('prevButton').addEventListener('click', function () {
                                                                 if (currentQuizIndex > 0) {
                                                                     currentQuizIndex--;
-                                                                    displayQuiz(data, currentQuizIndex);
+                                                                    if (materi.tipe_quiz == "Multiple Choice") {
+                                                                        displayQuiz(data, currentQuizIndex);
+                                                                    }
                                                                     updateButtonVisibility(totalQuizzes);
                                                                 }
                                                             });
@@ -639,7 +643,9 @@
                                                             });
 
                                                             // Initial display
-                                                            displayQuiz(data, currentQuizIndex);
+                                                            if (materi.tipe_quiz == "Multiple Choice") {
+                                                                displayQuiz(data, currentQuizIndex);
+                                                            }
                                                             updateButtonVisibility(totalQuizzes);
                                                         }
                                                     }
