@@ -11,13 +11,6 @@
 	$nama_tabels_d = [];
 ?>
 <style>
-	/* Add this to your CSS */
-	.hovered {
-		color: transparent;
-		background-color: inherit;
-		border-color: currentColor;
-	}
-
 	.trainingh3 {
 		color: black;
 	}
@@ -75,21 +68,14 @@
 				</div>
 				<div class="row">
 					<div class="col-lg-4" id="materi-kiri">
-						<button id="btnCreatesub_materi_m" class="btn btn-primary" title="New"><i class="fa fa-plus"></i> sub_materi</button>
+						<button id="btnCreatesub_materi_m" class="btn btn-primary" title="New"><i class="fa fa-plus"></i> Sub Materi</button>
+						<br>
 						<div id="sub_materi_content"></div>
 					</div>
 					<div class="col-lg-8" id="materi-kanan">
 						<div class="ibox">
-							<div class="ibox-title">
-								<div class="row">
-									<div class="col-md-6">
-										<button id="materi-sidebar" class="btn btn-primary" title="Fullscreen Materi"><i class="fa fa-expand"></i></button>
-									</div>
-									<div class="col-md-6">
-										<h3 id="judul"></h3>
-									</div>
-								</div>
-							</div>
+							<button id="materi-sidebar" class="btn btn-primary" title="Fullscreen Materi"><i class="fa fa-expand"></i></button>
+							<h3 class="text-center" id="judul"></h3>
 							<div id="materi"></div>
 						</div>
 					</div>
@@ -97,11 +83,6 @@
 			</div>
 		</div>
 	</div>
-</div>
-
-<div class="row">
-	<div class="col-md-10"></div>
-	<div class="col-md-2"></div>
 </div>
 
 

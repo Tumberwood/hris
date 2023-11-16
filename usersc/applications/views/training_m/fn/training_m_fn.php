@@ -126,10 +126,9 @@
                         title.setAttribute("data-editor-id", id_sub); 
                         title.className = "ibox-title";
                         title.style.display = "flex";
-                        title.style.justifyContent = "space-between"; // Align items to both ends of the title
+                        title.style.justifyContent = "space-between";
                         const buttonsSub = [];
-
-                        // Create the dropdown button and add it to the array
+                        
                         const dropdownButton = document.createElement("div");
                         dropdownButton.classList.add("dropdown");
 
@@ -383,6 +382,7 @@
 
                     checkboxes.forEach(function(checkbox) {
                         checkbox.addEventListener('click', function() {
+                            $('#judul').empty();
                             $("#materi-kanan").show();
                             const materiVideo = document.getElementById('materi');
                             const previousH3 = lastClickedCheckbox ? lastClickedCheckbox.closest('h3') : null;
@@ -526,6 +526,10 @@
                                                 }
                                             }
                                             materiVideo.innerHTML = video_yt;
+                                            
+                                            // Set the video title
+                                            var h3Title = document.getElementById('judul');
+                                            h3Title.textContent = materi.nama;
                                         } else {
                                             $('#materi').empty();
                                             const button_quiz = createButton("btnCreatemateri btn btn-primary btn-sm", "fa fa-plus");
@@ -537,6 +541,9 @@
 
                                             let isCountdownStarted = false;
 
+                                            var h3Title = document.getElementById('judul');
+                                            h3Title.textContent = materi.nama;
+                                            
                                             button_start_quiz.addEventListener("click", function() {
                                                 const materiKanan = $("#materi-kanan");
                                                 materiKanan.removeClass("col-lg-8").addClass("col-lg-12");
@@ -548,6 +555,38 @@
                                                 countdownSeconds = 0; // Reset countdown seconds
                                                 // console.log('kawoawkokawokawo');
                                                 
+                                                // Set the video title
+                                                h3Title.innerHTML = `
+                                                    <div class="widget navy-bg p-sm text-center">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <h2 class="m-xs">${materi.nama}</h2>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="m-b-sm">
+                                                                    <i class="fa fa-clock-o fa-2x"></i>
+                                                                    <h4 class="m-xs" id="countdown-timer"></h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>  
+                                                    </div>
+                                                `;
+
+                                                // var timerQuiz = document.createElement('div');
+                                                materiVideo.innerHTML = `
+                                                    <div class="row">
+                                                        <div class="col-md-12" id="KontenQuizContainer">
+                                                        </div>
+                                                    </div>
+                                                `;
+                                                
+                                                updateCountdown(); // Start the countdown
+                                                countdownInterval = setInterval(updateCountdown, 1000);
+                                                window.addEventListener("beforeunload", function (e) {
+                                                    e.returnValue = "Leaving this page will stop the countdown. Are you sure?";
+                                                });
+                                                h3Title.parentNode.insertBefore(materiVideo, h3Title.nextSibling);
+                                                
                                                 $.ajax({
                                                     url: "../../models/quiz_m/quiz_m_data.php",
                                                     data: { id_materi_m: materi.id },
@@ -556,33 +595,54 @@
                                                         if (Array.isArray(data.data)) {
                                                             data.data.forEach(function(dataQuiz) {
                                                                 var valQuiz = dataQuiz.quiz_m;
-                                                                console.log(valQuiz.nama); 
                                                                 
-                                                                materiVideo.innerHTML = `
-                                                                    <div class="row">
-                                                                        <div class="col-lg-8">
+                                                                const answerChoices = [
+                                                                    { id: 'A', value: 1, label: valQuiz.jawaban_a },
+                                                                    { id: 'B', value: 2, label: valQuiz.jawaban_b },
+                                                                    { id: 'C', value: 3, label: valQuiz.jawaban_c },
+                                                                    { id: 'D', value: 4, label: valQuiz.jawaban_d },
+                                                                    // Add more choices as needed
+                                                                ];
+
+                                                                // Generate radio buttons dynamically
+                                                                let choicesHTML = '';
+                                                                answerChoices.forEach(choice => {
+                                                                    choicesHTML += `
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input" type="radio" name="answer" id="choice${choice.id}" value="${choice.value}">
+                                                                            <label class="form-check-label" for="choice${choice.id}">${choice.label}</label>
                                                                         </div>
-                                                                        <div class="col-lg-4">
-                                                                            <div class="widget navy-bg p-sm text-center">
-                                                                                <div class="m-b-sm">
-                                                                                    <i class="fa fa-clock-o fa-4x"></i>
-                                                                                    <h3 class="m-xs" id="countdown-timer"></h3>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                    `;
+                                                                });
+                                                                var KontenQuiz = document.createElement('div');
+                                                                KontenQuiz.innerHTML = `
                                                                     <div class="row">
                                                                         <div class="col-lg-12">
                                                                             <h3 class="text-center">${valQuiz.nama}</h3>
+                                                                            <form id="quizForm">
+                                                                                ${choicesHTML}
+                                                                            </form>
                                                                         </div>
                                                                     </div>
-                                                                `
-                                                                ;
-                                                                updateCountdown(); // Start the countdown
-                                                                countdownInterval = setInterval(updateCountdown, 1000);
-                                                                window.addEventListener("beforeunload", function (e) {
-                                                                    e.returnValue = "Leaving this page will stop the countdown. Are you sure?";
+                                                                `;
+                                                                document.querySelector('#KontenQuizContainer').appendChild(KontenQuiz);
+
+                                                                // Add an event listener to handle quiz submission
+                                                                document.getElementById('quizForm').addEventListener('submit', function (event) {
+                                                                    event.preventDefault(); // Prevent the default form submission behavior
+                                                                    const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+
+                                                                    if (selectedAnswer) {
+                                                                        // Retrieve the selected answer value
+                                                                        const answerValue = selectedAnswer.value;
+
+                                                                        // Now you can use 'answerValue' for further processing (e.g., checking correctness)
+                                                                        console.log('Selected Answer:', answerValue);
+                                                                    } else {
+                                                                        alert('Please select an answer before submitting.');
+                                                                    }
                                                                 });
+
                                                             });
                                                         }
                                                     }
@@ -602,8 +662,8 @@
                                             });
                                         }
                                         // Set the video title
-                                        var h3Title = document.getElementById('judul');
-                                        h3Title.textContent = materi.nama;
+                                        // var h3Title = document.getElementById('judul');
+                                        // h3Title.textContent = materi.nama;
 
                                         h3silabus.classList.add('ditekan');
                                     }
@@ -614,6 +674,7 @@
                                 lastClickedCheckbox = null;
                                 $("#materi-kanan").hide();
                                 $('#materi').empty();
+                                $('#judul').empty();
                                 
                                 const previousH3 = this.closest('h3');
                                 previousH3.classList.remove('ditekan');
