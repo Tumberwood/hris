@@ -102,7 +102,7 @@
         } else {
             timerElement.innerHTML = "Time's up!";
             clearInterval(countdownInterval);
-            $('#materi').hide();
+            $('#materi').empty();
             $("#nextButton").hide();
             $("#prevButton").hide();
             $("#finishButton").hide();
@@ -316,7 +316,6 @@
     }
 
     function genMateri(id_sub_materi_m, contentElement) {
-        // $("#materi").empty();
         $.ajax({
             url: "../../models/sub_materi_m/materi_m_data.php",
             data: { id_sub_materi_m: id_sub_materi_m },
@@ -799,7 +798,7 @@
         const timerElement = document.getElementById('countdown-timer');
         timerElement.innerHTML = "Time's up!";
         clearInterval(countdownInterval);
-        $('#materi').hide();
+        $('#materi').empty();
         $("#nextButton").hide();
         $("#prevButton").hide();
         $("#finishButton").hide();
