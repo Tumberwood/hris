@@ -746,7 +746,7 @@
     }
 
     // Multiple Choice
-    const selectedAnswers = [];
+    let selectedAnswers = [];
 
     function generateListItems(choices, questionIndex) {
         let leftColumnHTML = '';
@@ -855,6 +855,7 @@
         $("#materi-sidebar").show(); 
         const materiKanan = $("#materi-kanan");
         materiKanan.removeClass("col-lg-12").addClass("col-lg-8");
+        selectedAnswers = [];
         
     }
 
