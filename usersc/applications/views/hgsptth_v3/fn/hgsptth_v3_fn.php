@@ -41,10 +41,11 @@
                 tanggal_awal: tanggal_awal_select,
                 tanggal_akhir: tanggal_akhir_select,
                 id_hemxxmh: id_hemxxmh,
+                id_hgsptth_v3: id_hgsptth_v3,
                 hari: hari
             },
             success: function (json) {
-                var c_jadwal = json.data.rs_jadwal.c_jadwal;
+                var c_jadwal = json.data.c_jadwal;
                 if(action == 'create'){
                     if (c_jadwal > 0) {
                         edt.field('hgsemtd_v3.id_hemxxmh').error('Jadwal Pegawai Ini Sudah Pernah Dibuat!');
