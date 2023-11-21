@@ -357,6 +357,14 @@ use
                 ->where('id', $id_htsprrd)
             ->exec();
         }
+
+        if ($id_hemxxmh_select = 130) {
+            $sql_update = $editor->db()
+                ->query('update', 'htsprrd')
+                ->set('cek', 0)
+                ->where('id', $id_htsprrd)
+            ->exec();
+        }
             
 
         $db->commit();
