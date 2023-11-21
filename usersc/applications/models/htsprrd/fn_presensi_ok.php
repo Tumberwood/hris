@@ -358,7 +358,7 @@ use
             ->exec();
         }
 
-        if ($id_hemxxmh_select == 130) {
+        if ($id_hemxxmh_select == 130 || $id_hemxxmh_select == 134) {
             $sql_update = $editor->db()
                 ->query('update', 'htsprrd')
                 ->set('cek', 0)
