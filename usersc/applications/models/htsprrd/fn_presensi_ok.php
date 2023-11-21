@@ -362,6 +362,8 @@ use
             $sql_update = $editor->db()
                 ->query('update', 'htsprrd')
                 ->set('cek', 0)
+                ->set('status_presensi_in', "OFF")
+                ->set('status_presensi_out', "OFF")
                 ->where('id', $id_htsprrd)
             ->exec();
         }
