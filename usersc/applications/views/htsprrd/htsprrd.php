@@ -658,6 +658,10 @@
 				if (status_presensi_in == "Jadwal Salah") {
 				    tblhtsprrd.button('btnPresensiOK:name').enable();
                 }
+
+				if (id_hemxxmh_select == 130 || id_hemxxmh_select == 134) {
+				    tblhtsprrd.button('btnPresensiOK:name').enable();
+                }
 				// console.log(htsprrd_data.status_presensi_in);
 			} );
 			
