@@ -544,7 +544,7 @@
                                     $is_late_pot = 1;
                                 }
                                 
-                                //potongan early untuk late yang belum ada izin
+                                //potongan untuk late yang belum ada izin
                                 if ($is_late_pot == 1) {
                                     if ($clock_in == null) {
                                         $pot_jam_late_cek     = 0;

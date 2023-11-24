@@ -467,11 +467,12 @@
                                             $tanggal_jam_izin_awal = $tanggal . " " . $izin_dinas_in['jam_awal']; //kalau no CO maka diambil jam izin
                                             $carbon_ci = new Carbon($clock_in);
                                             $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
-
+                                            print_r('Jam izn');
                                             // $pot_jam_late_cek     = 0;
                                         } else {
                                             $carbon_ci = new Carbon($clock_in);
                                             $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                            print_r('Bukan Jam izn');
                                         }
                                         // hitung potongan jam late
                                         $pot_jam_late   = ceil($pot_jam_late_cek/60);
@@ -504,14 +505,15 @@
                                 $cek = 1;
                             } else {
                             $cek = 0; 
-                            }
-                            
+                        }
+                        
                             if ($st_clock_in == "Late") {
                                 $is_late_pot = 1;
                             }
                             
                             //potongan early untuk late yang belum ada izin
                             if ($is_late_pot == 1) {
+                                print_r('Bukan ada izn');
                                 if ($clock_in == null) {
                                     $pot_jam_late_cek     = 0;
                                 } else {
