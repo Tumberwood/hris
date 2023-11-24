@@ -924,7 +924,7 @@
 			
 			tblhpyxxth.on( 'init', function () {
 				// atur hak akses
-				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance];
+				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
 				CekInitHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
 				
@@ -951,7 +951,7 @@
 				id_heyxxmh_old = data_hpyxxth.id_heyxxmh;
 				
 				// atur hak akses
-				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance];
+				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
 				CekSelectHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).enable();
 				tblhpyemtd_kbm_reg.button( 'btnPrint:name' ).enable();
@@ -971,7 +971,7 @@
 				id_heyxxmh_select = 0;
 
 				// atur hak akses
-				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance];
+				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
 				CekDeselectHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
 				tblhpyemtd_kbm_reg.button( 'btnPrint:name' ).disable();
