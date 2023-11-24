@@ -499,7 +499,7 @@
                                         if ($is_late_pot == 1) {
                                             if ($clock_in == null) {
                                                 $tanggal_jam_izin_awal = $tanggal . " " . $izin_dinas_in['jam_awal']; //kalau no CO maka diambil jam izin
-                                                $carbon_ci = new Carbon($clock_in);
+                                                $carbon_ci = new Carbon($tanggal_jam_izin_awal);
                                                 $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
 
                                                 // $pot_jam_late_cek     = 0;
