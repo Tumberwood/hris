@@ -96,7 +96,9 @@
 			->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
 			->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 			->where('hpyemtd.id_hpyxxth',$_POST['id_hpyxxth'])
-			->where('heyxxmd.id', 1);
+			->where('heyxxmd.id', 1)
+			->where('hesxxmh.id', 3)
+			;
 		
 		// do not erase
 		// function show / hide inactive document
