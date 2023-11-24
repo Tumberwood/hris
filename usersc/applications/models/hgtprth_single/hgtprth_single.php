@@ -76,6 +76,12 @@
 			->where( 'hgtprth_single.is_active', 1);
 	}
 	
+	if($_POST['start_date'] != '' && $_POST['end_date'] != ''){
+		$editor
+			->where( 'hgtprth_single.tanggal', $_POST['start_date'], '>=' )
+			->where( 'hgtprth_single.tanggal', $_POST['end_date'], '<=' );
+	}
+
 	include( "hgtprth_single_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
