@@ -54,7 +54,7 @@
                     WHERE e.is_approve <> 1 AND e.tanggal_terpilih = :tanggal
                 ) AS e ON e.is_active = 1
                 
-                WHERE a.is_approve <> 1 AND a.tanggal = :tanggal
+                WHERE a.is_approve <> 1 AND a.tanggal = :tanggal AND a.is_active = 1
                 '
                 );
     $rs_approve = $qs_approve->fetch();
