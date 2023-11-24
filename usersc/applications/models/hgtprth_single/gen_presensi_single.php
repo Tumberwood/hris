@@ -773,6 +773,7 @@
                                 $pot_jam_izin_cek       = $tanggaljam_izin_awal->diffInMinutes($temp_tanggaljam_akhir_izin);
                                 $pot_jam_izin_temp      = ceil($pot_jam_izin_cek/60);
                                 $pot_jam_izin           = $pot_jam_izin + $pot_jam_izin_temp;
+                                print_r('menit = '. $pot_jam_izin_cek . '<br> jam = ' . $pot_jam_izin_temp . '<br> akhir = ' . $pot_jam_izin);
                             }
                         
                         }
