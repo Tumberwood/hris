@@ -25,6 +25,7 @@
                                 <th>% Perusahaan</th>
                                 <th>% Karyawan</th>
                                 <th>Gaji Maksimal</th>
+                                <th>Tanggal Efektif</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -91,7 +92,20 @@
 					{
 						label: "Gaji Maksimal <sup class='text-danger'>*<sup>",
 						name: "hibksmh.gaji_max"
-					}, 	
+					}, 
+					{
+						label: "Tanggal Efektif <sup class='text-danger'>*<sup>",
+						name: "hibksmh.tanggal_efektif",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},	
 					{
 						label: "Keterangan",
 						name: "hibksmh.keterangan",
@@ -115,6 +129,15 @@
 
             edthibksmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
+					
+					// BEGIN of validasi hibksmh.tanggal_efektif
+					if ( ! edthibksmh.field('hibksmh.tanggal_efektif').isMultiValue() ) {
+						tanggal_efektif = edthibksmh.field('hibksmh.tanggal_efektif').val();
+						if(!tanggal_efektif || tanggal_efektif == ''){
+							edthibksmh.field('hibksmh.tanggal_efektif').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi hibksmh.persen_perusahaan
 					
 					// BEGIN of validasi hibksmh.persen_perusahaan
 					if ( ! edthibksmh.field('hibksmh.persen_perusahaan').isMultiValue() ) {
@@ -200,6 +223,7 @@
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right"
 					},
+					{ data: "hibksmh.tanggal_efektif" },
 					{ data: "hibksmh.keterangan" }
 				],
 				buttons: [

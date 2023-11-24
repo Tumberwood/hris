@@ -51,6 +51,11 @@
 								<editor-field name="hibtkmh.keterangan"></editor-field>
 							</div>
 						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hibtkmh.tanggal_efektif"></editor-field>
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -64,6 +69,7 @@
                                 <th rowspan="2">JKM</th>
                                 <th colspan="2">JP</th>
                                 <th rowspan="2">Gaji Maksimal</th>
+                                <th rowspan="2">Tanggal Efektif</th>
                                 <th rowspan="2">Keterangan</th>
                             </tr>
                             <tr>
@@ -154,6 +160,19 @@
 						name: "hibtkmh.gaji_max"
 					}, 	
 					{
+						label: "Tanggal Efektif <sup class='text-danger'>*<sup>",
+						name: "hibtkmh.tanggal_efektif",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},	
+					{
 						label: "Keterangan",
 						name: "hibtkmh.keterangan",
 						type: "textarea"
@@ -177,6 +196,15 @@
             edthibtkmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					
+					// BEGIN of validasi hibtkmh.tanggal_efektif
+					if ( ! edthibtkmh.field('hibtkmh.tanggal_efektif').isMultiValue() ) {
+						tanggal_efektif = edthibtkmh.field('hibtkmh.tanggal_efektif').val();
+						if(!tanggal_efektif || tanggal_efektif == ''){
+							edthibtkmh.field('hibtkmh.tanggal_efektif').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi hibtkmh.persen_jht_perusahaan
+
 					// BEGIN of validasi hibtkmh.persen_jht_perusahaan
 					if ( ! edthibtkmh.field('hibtkmh.persen_jht_perusahaan').isMultiValue() ) {
 						persen_jht_perusahaan = edthibtkmh.field('hibtkmh.persen_jht_perusahaan').val();
@@ -341,6 +369,7 @@
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right"
 					},
+					{ data: "hibtkmh.tanggal_efektif" },
 					{ data: "hibtkmh.keterangan" }
 				],
 				buttons: [

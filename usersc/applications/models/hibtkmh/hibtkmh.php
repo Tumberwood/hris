@@ -41,6 +41,18 @@
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
 			Field::inst( 'hibtkmh.is_approve' ),
+			Field::inst( 'hibtkmh.tanggal_efektif' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y',
+					'to' =>   'Y-m-d'
+				) ),
 			Field::inst( 'hibtkmh.is_defaultprogram' ),
 			Field::inst( 'hibtkmh.persen_jht_perusahaan' ),
 			Field::inst( 'hibtkmh.persen_jht_karyawan' ),

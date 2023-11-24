@@ -642,6 +642,7 @@
                                 persen_jp_karyawan,
                                 is_active
                             FROM hibtkmh
+                            WHERE tanggal_efektif < :tanggal_awal
                         ) sel_bpjs
                     ) bpjs ON bpjs.is_active = 1
                     
@@ -677,6 +678,7 @@
                                 persen_karyawan,
                                 is_active
                             FROM hibksmh
+                            WHERE tanggal_efektif < :tanggal_awal
                         ) sel_bpjs
                     ) bpjs_kesehatan ON bpjs_kesehatan.is_active = 1
                     
