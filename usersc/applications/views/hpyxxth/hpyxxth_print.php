@@ -7,10 +7,13 @@
 	use Carbon\Carbon;
 
 	// BEGIN select header
+	$where = 'WHERE a.id_hpyxxth = '.$_GET['id_hpyxxth'].' AND c.id_heyxxmd = '.$_GET['id_heyxxmd'];
+	if (isset($_GET['id_hesxxmh']) && !empty($_GET['id_hesxxmh'])) {
+		$hes = $_GET['id_hesxxmh'];
+		$where .= ' AND c.id_hesxxmh = '.$hes;
+	}
 	$qs_hpyxxth = $db
 		->raw()
-			->bind(':id_hpyxxth', $_GET['id_hpyxxth'])
-			->bind(':id_heyxxmd', $_GET['id_heyxxmd'])
 			->exec(' SELECT
 						b.kode as nik,
 						b.nama as peg,
@@ -49,9 +52,8 @@
 					LEFT JOIN hevgrmh AS f ON f.id = e.id_hevgrmh
 					LEFT JOIN hpyxxth AS g ON g.id = a.id_hpyxxth
 					LEFT JOIN hosxxmh AS h ON h.id = c.id_hosxxmh
-					WHERE a.id_hpyxxth = :id_hpyxxth AND c.id_heyxxmd = :id_heyxxmd
+					'.$where.'
 					ORDER BY CONCAT(b.kode, " - ", b.nama)
-					limit 5
 					'
 					);
 	$rs_hpyxxth = $qs_hpyxxth->fetchAll();
@@ -321,7 +323,10 @@
 					</tr>
 				</table>';
     // Close the HTML content for this record
-    $html .= '</body></html>';
+    $html .= '
+	<page_break>
+	</body>
+	</html>';
 
 	if (strip_tags($html) != '') {
         $stylesheet = file_get_contents('../../../templates/inspinia-side/assets/css/print_mpdf.css');

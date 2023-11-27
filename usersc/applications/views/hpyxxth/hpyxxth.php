@@ -1663,7 +1663,7 @@
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
 							var url = $(this).attr('href'); 
-							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=1', 'hpyxxth');
+							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=1&id_hesxxmh=4', 'hpyxxth');
 						}
 					}
 				],
@@ -2022,7 +2022,7 @@
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
 							var url = $(this).attr('href'); 
-							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=1', 'hpyxxth');
+							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=1&id_hesxxmh=3', 'hpyxxth');
 						}
 					}
 				],
