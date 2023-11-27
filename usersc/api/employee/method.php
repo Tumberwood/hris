@@ -22,41 +22,25 @@
 				$authorizationHeader = null;
 			
 				// Check for the existence of indices before accessing them
-				if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-					$authorizationHeader = $_SERVER['HTTP_AUTHORIZATION'];
-				} elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
-					$authorizationHeader = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
-				} elseif (function_exists('apache_request_headers')) {
+				if (function_exists('apache_request_headers')) {
 					$headers = apache_request_headers();
 					if (isset($headers['Auth'])) {
 						$authorizationHeader = $headers['Auth'];
 					}
 				}
-			 // Debugging information
-			 echo "apache_request_headers: " . print_r(apache_request_headers(), true) . "<br><br>";
+				// Debugging information
+				//  echo "apache_request_headers: " . print_r(apache_request_headers(), true) . "<br><br>";
 
 				return $authorizationHeader;
 			}
 
 			$token = getAuthorizationHeader();
-			// $secret_key = 'ferry123';
-			// $pass = 'Bearer '.$secret_key;
-			$qs_emp = $db
-			->raw()
-			->exec(' SELECT
-						username
-					FROM users
-					WHERE id = 107
-					'
-					);
-			$hasil = $qs_emp->fetch();
-		
-			$username = $hasil['username'];
+			$decodedString = base64_decode($token);
 
-			$password = 'G:}*DA1]U1';
-			$credentials = base64_encode("$username:$password");
-			$pass = 'Basic '.$credentials;
-		
+			// Split the string at the colon
+			list($username, $password) = explode(':', $decodedString, 2);
+			$remember = false;
+
 			if (!$token) {
 				http_response_code(401);
 				echo json_encode(array("message" => "Unauthorized"));
@@ -64,7 +48,9 @@
 			}
 		
 			try {
-				if ($token == $pass) {
+				$user = new User();
+    			$login = $user->loginEmail($username, $password, $remember);
+				if ($login) {
 					$decoded = array('HS256');
 					return $decoded;
 				} else {
