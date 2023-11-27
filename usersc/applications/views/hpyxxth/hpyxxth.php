@@ -1293,7 +1293,7 @@
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
 							var url = $(this).attr('href'); 
-							window.open('hpyxxth_print_single.php?id_hemxxmh=' + id_hemxxmh, 'hpyxxth');
+							window.open('hpyxxth_print_single.php?id_hpyemtd=' + id_hpyemtd, 'hpyxxth');
 						}
 					}
 				],

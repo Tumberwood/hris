@@ -9,7 +9,7 @@
 	// BEGIN select header
 	$qs_hpyxxth = $db
 		->raw()
-			->bind(':id_hemxxmh', $_GET['id_hemxxmh'])
+			->bind(':id_hpyemtd', $_GET['id_hpyemtd'])
 			->exec(' SELECT
 						b.kode as nik,
 						b.nama as peg,
@@ -48,7 +48,7 @@
 					LEFT JOIN hevgrmh AS f ON f.id = e.id_hevgrmh
 					LEFT JOIN hpyxxth AS g ON g.id = a.id_hpyxxth
 					LEFT JOIN hosxxmh AS h ON h.id = c.id_hosxxmh
-					WHERE a.id_hemxxmh = :id_hemxxmh
+					WHERE a.id = :id_hpyemtd
 					ORDER BY CONCAT(b.kode, " - ", b.nama)
 					'
 					);
@@ -69,6 +69,34 @@
     $mpdf->SetTitle("");
     $mpdf->SetDisplayMode('fullpage');
 
+	$pph21 = '';
+	if ($rs_hpyxxth['pot_pph21'] != 0) {
+		$pph21 .= '<td width="5%"></td>';
+		$pph21 .= '<td width="24%">- PPh21</td>';
+		$pph21 .= '<td colspan="2" class="text-right">' . number_format($rs_hpyxxth['pot_pph21'], 2, ',', '.') . '</td>';
+	}
+		
+	$pot_lain = '';
+	if ($rs_hpyxxth['pot_lain'] != 0) {
+		$pot_lain .= '<td width="5%"></td>';
+		$pot_lain .= '<td width="24%">- Lain-lain</td>';
+		$pot_lain .= '<td colspan="2" class="text-right">' . number_format($rs_hpyxxth['pot_lain'], 2, ',', '.') . '</td>';
+	}
+		
+	$tidak_masuk = '';
+	if ($rs_hpyxxth['tidak_masuk'] != 0) {
+		$tidak_masuk .= '<td width="5%"></td>';
+		$tidak_masuk .= '<td width="24%">- Tidak Masuk</td>';
+		$tidak_masuk .= '<td colspan="2" class="text-right">' . number_format($rs_hpyxxth['tidak_masuk'], 2, ',', '.') . '</td>';
+	}
+		
+	$pot_makan = '';
+	if ($rs_hpyxxth['pot_makan'] != 0) {
+		$pot_makan .= '<td width="5%"></td>';
+		$pot_makan .= '<td width="24%">- Makan</td>';
+		$pot_makan .= '<td colspan="2" class="text-right">' . number_format($rs_hpyxxth['pot_makan'], 2, ',', '.') . '</td>';
+	}
+	
 	$html = '
     <html>
         <head></head>
@@ -111,112 +139,104 @@
 				<table class="pn" style="font-size: 8px;">
 					<tr>
 						<td width="5%"><h4>I</h4></td>
-						<td width="24%"><h4>Gaji Pokok</h4></td>
+						<td width="35%"><h4>Gaji Pokok</h4></td>
 						<td colspan="2" class="text-right">' .number_format($rs_hpyxxth['gp'],2,',','.'). '</td>
-						<td colspan="5"></td>
+						<td colspan="3"></td>
 
 						<td width="5%"><h4>V</h4></td>
-						<td width="24%"><h4>Potongan</h4>
+						<td width="35%"><h4>Potongan</h4>
 						<td colspan="2" class="text-right"></td>
 					</tr>
 					<tr>
 						<td width="5%"></td>
-						<td width="24%"></td>
+						<td width="35%"></td>
 						<td colspan="2" class="text-right"></td>
-						<td colspan="5"></td>
+						<td colspan="3"></td>
 
 						<td width="5%"></td>
-						<td width="24%">- BPJS-K</td>
+						<td width="35%">- BPJS-K</td>
 						<td colspan="2" class="text-right">' .number_format($rs_hpyxxth['pot_bpjs'],2,',','.'). '</td>
 					</tr>
 					<tr>
 						<td width="5%"><h4>II</h4></td>
-						<td width="24%"><h4>Tunjangan Tetap</h4></td>
+						<td width="35%"><h4>Tunjangan Tetap</h4></td>
 						<td colspan="2" class="text-right"></td>
-						<td colspan="5"></td>
+						<td colspan="3"></td>
 
 						<td width="5%"></td>
-						<td width="24%">- BPJS-TK (JHT)</td>
+						<td width="35%">- BPJS-TK (JHT)</td>
 						<td colspan="2" class="text-right">' .number_format($rs_hpyxxth['pot_jht'],2,',','.'). '</td>
 					</tr>
 					<tr>
 						<td width="5%"></td>
-						<td width="24%">- Tj. Jabatan</td>
+						<td width="35%">- Tj. Jabatan</td>
 						<td colspan="2" class="text-right">' .number_format($rs_hpyxxth['t_jab'],2,',','.'). '</td>
-						<td colspan="5"></td>
+						<td colspan="3"></td>
 
 						<td width="5%"></td>
-						<td width="24%">- BPJS-TK (JP)</td>
+						<td width="35%">- BPJS-TK (JP)</td>
 						<td colspan="2" class="text-right">' .number_format($rs_hpyxxth['pot_psiun'],2,',','.'). '</td>
 					</tr>
 					<tr>
 						<td width="5%"></td>
-						<td width="24%"></td>
+						<td width="35%"></td>
 						<td colspan="2" class="text-right"></td>
-						<td colspan="5"></td>
+						<td colspan="3"></td>
 
-						<td width="5%"></td>
-						<td width="24%">- PPh21</td>
-						<td colspan="2" class="text-right">' .number_format($rs_hpyxxth['pot_pph21'],2,',','.'). '</td>
+						' .$pph21 . '
 					</tr>
 					<tr>
 						<td width="5%" style="vertical-align: center"><h4>III</h4></td>
-						<td width="24%"><h4>Tunjangan Tidak Tetap</h4></td>
+						<td width="35%"><h4>Tunjangan Tidak Tetap</h4></td>
 						<td colspan="2" class="text-right"></td>
-						<td colspan="5"></td>
+						<td colspan="3"></td>
 
 						<td width="5%"></td>
-						<td width="24%" style="vertical-align: center">- JKK JKM</td>
+						<td width="35%" style="vertical-align: center">- JKK JKM</td>
 						<td colspan="2" class="text-right" style="vertical-align: center">' .number_format($rs_hpyxxth['pot_jkkjkm'],2,',','.'). '</td>
 					</tr>
 					<tr>
 						<td width="5%"></td>
-						<td width="24%">- Tj. Masa Kerja</td>
+						<td width="35%">- Tj. Masa Kerja</td>
 						<td colspan="2" class="text-right">' .number_format($rs_hpyxxth['fix_cost'],2,',','.'). '</td>
-						<td colspan="5"></td>
+						<td colspan="3"></td>
 
-						<td width="5%"></td>
-						<td width="24%">- Lain-lain</td>
-						<td colspan="2" class="text-right">' .number_format($rs_hpyxxth['pot_lain'],2,',','.'). '</td>
+						'.$pot_lain.'
 					</tr>
 					<tr>
 						<td width="5%"></td>
-						<td width="24%">- JKK JKM</td>
+						<td width="35%">- JKK JKM</td>
 						<td colspan="2" class="text-right">' .number_format($rs_hpyxxth['trm_jkkjkm'],2,',','.'). '</td>
-						<td colspan="5"></td>
+						<td colspan="3"></td>
 
-						<td width="5%"></td>
-						<td width="24%">- Tidak Masuk</td>
-						<td colspan="2" class="text-right" class="text-right">' .number_format($rs_hpyxxth['tidak_masuk'],2,',','.'). '</td>
+						'.$tidak_masuk.'
 					</tr>
 					<tr>
 						<td width="5%"></td>
-						<td width="24%"></td>
+						<td width="35%"></td>
 						<td colspan="2" class="text-right">______________</td>
-						<td colspan="5"></td>
+						<td colspan="3"></td>
 
-						<td width="5%"></td>
-						<td width="24%">- Makan</td>
-						<td colspan="2" class="text-right">' .number_format($rs_hpyxxth['pot_makan'],2,',','.'). '</td>
+						'.$pot_makan.'
 					</tr>
 					<tr>
 						<td width="5%"></td>
-						<td width="24%"></td>
+						<td width="35%"></td>
 						<td colspan="2" class="text-right">' .number_format($rs_hpyxxth['tunjangan'],2,',','.'). '</td>
-						<td colspan="5"></td>
+						<td colspan="3"></td>
 
 						<td width="5%"></td>
-						<td width="24%"></td>
+						<td width="35%"></td>
 						<td colspan="2" class="text-right">______________</td>
 					</tr>
 					<tr>
 						<td width="5%"></td>
-						<td width="24%"></td>
+						<td width="35%"></td>
 						<td colspan="2" class="text-right"></td>
-						<td colspan="5"></td>
+						<td colspan="3"></td>
 
 						<td width="5%"></td>
-						<td width="24%"></td>
+						<td width="35%"></td>
 						<td colspan="2" class="text-right">' .number_format($rs_hpyxxth['total_pot'],2,',','.'). '</td>
 					</tr>
 				</table>
