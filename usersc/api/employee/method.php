@@ -30,7 +30,7 @@
 					}
 				}
 				
-				return null;
+				// return null;
 			}
 
 			$token = getAuthorizationHeader();
