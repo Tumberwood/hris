@@ -33,7 +33,7 @@
 					}
 				}
 			 // Debugging information
-			 echo "apache_request_headers: " . print_r(apache_request_headers(), true) . "<br>";
+			 echo "apache_request_headers: " . print_r(apache_request_headers(), true) . "<br><br>";
 
 				return $authorizationHeader;
 			}
