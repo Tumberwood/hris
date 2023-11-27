@@ -32,20 +32,6 @@
 				
 				return null;
 			}
-			$user = '';
-			$pass = '';
-			// if (!empty($_GET["user"])) {
-			// 	$user = $_GET["user"];
-			// }
-
-			// if (!empty($_GET["pass"])) {
-			// 	$pass = $_GET["pass"];
-			// }
-
-			if (!empty($_GET["cG1pZXJwOkc6fSpEQTFdVTE"])) {
-				$pass = $_GET["cG1pZXJwOkc6fSpEQTFdVTE"];
-			}
-			$decodedString = base64_decode($pass);
 
 			$token = getAuthorizationHeader();
 			// $secret_key = 'ferry123';
@@ -66,21 +52,21 @@
 			$credentials = base64_encode("$username:$password");
 			$pass = 'Basic '.$credentials;
 		
-			if (!$token) {
-				http_response_code(401);
-				echo json_encode(array("message" => "Unauthorized"));
-				exit();
-			}
+			// if (!$token) {
+			// 	http_response_code(401);
+			// 	echo json_encode(array("message" => "Unauthorized"));
+			// 	exit();
+			// }
 		
 			try {
-				if ($token == $pass) {
-					$decoded = array('HS256');
-					return $decoded;
-				} else {
-					http_response_code(401);
-					echo json_encode(array("message" => "Invalid token"));
-					exit();
-				}
+				// if ($token == $pass) {
+				// 	$decoded = array('HS256');
+				// 	return $decoded;
+				// } else {
+				// 	http_response_code(401);
+				// 	echo json_encode(array("message" => "Invalid token"));
+				// 	exit();
+				// }
 				
 				echo $token . '<br>';
 				echo $credentials;
