@@ -307,7 +307,8 @@
                     IFNULL(pot_upah_lv_baru, 0) AS pot_upah_lv_baru,
 
                     -- nominal pengali rotasi level
-                    (ifnull(if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp),0) + ifnull(nominal_jab_rotasi,0) + ifnull(nominal_var_cost,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) AS pengali_rotasi_old
+                    (ifnull(if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp),0) + ifnull(nominal_jab_rotasi,0) + ifnull(nominal_var_cost,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) AS pengali_rotasi_old,
+                    a.is_approve
                     
                     
                 FROM htsprrd AS a
@@ -1256,7 +1257,7 @@
                  ) AS gaji_terima,
                  pendapatan_lain
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         //Pembulatan ROUND

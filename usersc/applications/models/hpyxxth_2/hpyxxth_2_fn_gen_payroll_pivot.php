@@ -1,3 +1,4 @@
+
 <?php 
     /**
      * Digunakan untuk melakukan perhitungan payroll karyawan
@@ -118,6 +119,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- gaji pokok
@@ -305,7 +307,7 @@
                 gp,
                 1
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // Tunjangan Jabatan
@@ -323,6 +325,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- tunjangan jabatan
@@ -434,7 +437,7 @@
                 t_jab,
                 1
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // Var Cost
@@ -452,6 +455,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- Var Cost
@@ -491,7 +495,7 @@
                 nominal,
                 1
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // Masa Kerja
@@ -509,6 +513,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- Masa Kerja
@@ -617,7 +622,7 @@
                 nominal,
                 1
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // Premi Absen
@@ -635,6 +640,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- Premi Absen
@@ -690,7 +696,7 @@
                 nominal,
                 1
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // JKK
@@ -708,6 +714,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- hitung jkk
@@ -782,7 +789,7 @@
                 floor(nominal) as jkk,
                 0
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // JKM
@@ -800,6 +807,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- hitung jkm
@@ -874,7 +882,7 @@
                 floor(nominal) as jkmc,
                 0
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // TRM JKKJKM
@@ -892,6 +900,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- hitung terima jkk jkm
@@ -966,7 +975,7 @@
                 floor(nominal) as trm_jkkjkm,
                 1
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // Pendapatan Lain
@@ -984,6 +993,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- hitung pendapatan lain
@@ -1019,7 +1029,7 @@
                 nominal,
                 1
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // Durasi Lembur 1.5
@@ -1037,6 +1047,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- hitung durasi lembur1.5
@@ -1086,7 +1097,7 @@
                 nominal,
                 0
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // Durasi Lembur 2
@@ -1104,6 +1115,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- hitung durasi lembur2
@@ -1153,7 +1165,7 @@
                 nominal,
                 0
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // Durasi Lembur 3
@@ -1171,6 +1183,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- hitung durasi lembur3
@@ -1220,7 +1233,7 @@
                 nominal,
                 0
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // rp Lembur 15
@@ -1238,6 +1251,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- hitung rp lembur15
@@ -1378,7 +1392,7 @@
                 nominal,
                 0
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // rp Lembur 2
@@ -1396,6 +1410,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- hitung rp lembur2
@@ -1536,7 +1551,7 @@
                 nominal,
                 0
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // rp Lembur 3
@@ -1554,6 +1569,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- hitung rp lembur3
@@ -1694,7 +1710,7 @@
                 nominal,
                 0
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // jam lembur
@@ -1712,6 +1728,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     sum_lembur15 AS lembur15,
@@ -1850,7 +1867,7 @@
                 (lembur15 + lembur2 + lembur3) AS jam_lembur,
                 0
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // jam lembur final
@@ -1868,6 +1885,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     sum_lembur15_final AS lembur15_final,
@@ -2006,7 +2024,7 @@
                 (lembur15_final + lembur2_final + lembur3_final) AS jam_lembur_final,
                 0
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // upah lembur final lembur bersih penambah
@@ -2024,6 +2042,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     FLOOR(
@@ -2171,7 +2190,7 @@
                 FLOOR(IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3), 0)) AS lemburbersih,
                 1
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // PPh21 Back
@@ -2189,6 +2208,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- pph21 back
@@ -2225,7 +2245,7 @@
                 pph21_back,
                 1
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // Kompensasi Rekontrak
@@ -2243,6 +2263,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- pph21 back
@@ -2278,7 +2299,7 @@
                 kompensasi_ak,
                 1
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // koreksi_lembur
@@ -2296,6 +2317,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     IFNULL(nominal_koreksi_lembur,0) AS koreksi_lembur
@@ -2330,7 +2352,7 @@
                 koreksi_lembur,
                 1
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // koreksi_status
@@ -2348,6 +2370,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     
@@ -2432,7 +2455,7 @@
                 floor(koreksi_status) as koreksi_status,
                 1
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // MULAI POTONGAN
@@ -2452,6 +2475,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     
@@ -2502,7 +2526,7 @@
                 FLOOR(pot_makan) AS pot_makan,
                 2
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // pot JKKJKM
@@ -2520,6 +2544,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     -- hitung terima jkk jkm
@@ -2594,7 +2619,7 @@
                 FLOOR(nominal) as pot_jkkjkm,
                 2
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // pot jht
@@ -2612,6 +2637,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     if(c.id_hesxxmh IN (1,2,5), if(skip_c_bpjs_tk > 0, 0, if(id_heyxxmd = 3,IFNULL((persen_jht_karyawan / 100) * gaji_bpjs, 0),0)), 0) AS pot_jht
@@ -2685,7 +2711,7 @@
                 FLOOR(pot_jht) AS pot_jht,
                 2
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // pot_upah
@@ -2703,6 +2729,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     c.id_hesxxmh as hesxx,
@@ -3273,7 +3300,7 @@
                 ) AS pot_upah,
                 2
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // pot_jam
@@ -3291,6 +3318,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     c.id_hesxxmh as hesxx,
@@ -3798,7 +3826,7 @@
                 ) AS pot_jam,
                 2
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
         
         // pot bpjs
@@ -3816,6 +3844,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     is_terminasi,
@@ -3899,7 +3928,7 @@
                 FLOOR(if(is_terminasi > 0, pot_bpjs * 2, pot_bpjs)) AS pot_bpjs,
                 2
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // pot psiun
@@ -3917,6 +3946,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     if(c.id_hesxxmh IN (1,2,5), if(skip_c_bpjs_tk > 0, 0, if(id_heyxxmd = 3,IFNULL((persen_jp_karyawan / 100) * gaji_bpjs, 0),0)), 0) AS pot_psiun
@@ -3990,7 +4020,7 @@
                 FLOOR(pot_psiun) AS pot_psiun,
                 2
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // pot pinjaman
@@ -4008,6 +4038,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     IFNULL(nominal_pinjaman,0) AS pot_pinjaman
@@ -4042,7 +4073,7 @@
                 pot_pinjaman,
                 2
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // pot klaim
@@ -4060,6 +4091,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     IFNULL(nominal_klaim,0) AS pot_klaim
@@ -4094,7 +4126,7 @@
                 pot_klaim,
                 2
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // pot denda_apd
@@ -4112,6 +4144,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     IFNULL(nominal_denda_apd,0) AS pot_denda_apd
@@ -4146,7 +4179,7 @@
                 pot_denda_apd,
                 2
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         // pot pot_pph21
@@ -4164,6 +4197,7 @@
             )
             WITH qs_payroll AS (
                 SELECT DISTINCT
+                    a.is_approve,
                     id_heyxxmd,
                     a.id_hemxxmh,
                     IFNULL(nominal_pph21,0) AS pot_pph21
@@ -4199,7 +4233,7 @@
                 pot_pph21,
                 2
             FROM qs_payroll
-            WHERE id_heyxxmd <> 2
+            WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
         $qu_hpyxxth_2 = $db

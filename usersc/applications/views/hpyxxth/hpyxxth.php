@@ -23,6 +23,14 @@
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-content">
+				<div class="alert alert-info alert-dismissable">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+					Sebelum melakukan Generate Payroll, pastikan sudah melakukan Approve data-data pada menu berikut ini!!!
+					<ul>
+						<li>Report Presensi</li>
+						<li>Payroll Lain-lain</li>
+					</ul>
+				</div>
 				<div class="table-responsive">
 					<table id="tblhpyxxth" class="table table-striped table-bordered table-hover nowrap" width="100%">
                         <thead>
