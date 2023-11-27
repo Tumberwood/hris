@@ -32,7 +32,11 @@
 						$authorizationHeader = $headers['Authorization'];
 					}
 				}
-			
+			 // Debugging information
+			 echo "HTTP_AUTHORIZATION: " . $_SERVER['HTTP_AUTHORIZATION'] . "<br>";
+			 echo "REDIRECT_HTTP_AUTHORIZATION: " . $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] . "<br>";
+			 echo "apache_request_headers: " . print_r(apache_request_headers(), true) . "<br>";
+			 
 				return $authorizationHeader;
 			}
 
