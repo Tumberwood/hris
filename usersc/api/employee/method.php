@@ -27,7 +27,7 @@
 					if (isset($headers['Auth'])) {
 						$authorizationHeader = $headers['Auth'];
 					} else if (isset($headers['Authorization'])) {
-						$AuthorizationorizationHeader = $headers['Authorization'];
+						$authorizationHeader = $headers['Authorization'];
 					}
 				}
 				// Debugging information
@@ -37,10 +37,15 @@
 			}
 
 			$token = getAuthorizationHeader();
-			$decodedString = base64_decode($token);
+			
+			// Remove the "Basic " prefix
+			$base64Credentials = strstr($token, ' ');
 
-			// Split the string at the colon
-			list($username, $password) = explode(':', $decodedString, 2);
+			// Decode the base64-encoded credentials
+			$decodedCredentials = base64_decode(trim($base64Credentials));
+
+			// Extract the username and password from the decoded credentials
+			list($username, $password) = explode(':', $decodedCredentials, 2);
 			$remember = false;
 
 			if (!$token) {
