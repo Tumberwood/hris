@@ -19,13 +19,13 @@
 			global $db;
 		
 			function getAuthorizationHeader() {
-				if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+				if ($_SERVER['HTTP_AUTHORIZATION']) {
 					return $_SERVER['HTTP_AUTHORIZATION'];
-				} elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+				} elseif ($_SERVER['REDIRECT_HTTP_AUTHORIZATION']) {
 					return $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
 				} elseif (function_exists('apache_request_headers')) {
 					$headers = apache_request_headers();
-					if (isset($headers['Authorization'])) {
+					if ($headers['Authorization']) {
 						return $headers['Authorization'];
 					}
 				}
