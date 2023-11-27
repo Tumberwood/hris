@@ -381,7 +381,7 @@
                             $st_clock_in = $jadwal['htsxxmh_kode'];
                             $st_clock_out = $jadwal['htsxxmh_kode'];
                             $cek = 0;
-                            if ($tanggaljam_awal != $tanggal. ' 00:00:00') {
+                            if ($tanggaljam_awal == $tanggal. ' 00:00:00') {
                                 $next_step = 9;
                             }
                         }
