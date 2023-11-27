@@ -16,6 +16,7 @@
 		// Function to validate the JWT token from the request
 		function validateToken() {
 			global $secret_key;
+			global $db;
 		
 			function getAuthorizationHeader() {
 				if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
@@ -49,39 +50,40 @@
 			$token = getAuthorizationHeader();
 			// $secret_key = 'ferry123';
 			// $pass = 'Bearer '.$secret_key;
-			$username = 'pmierp';
-			$password = 'G:}*DA1]U1';
-			$credentials = base64_encode("$password");
-			// $pass = 'Basic '.$credentials;
+			$qs_emp = $db
+			->raw()
+			->exec(' SELECT
+						username
+					FROM users
+					WHERE id = 107
+					'
+					);
+			$hasil = $qs_emp->fetch();
 		
-			// if ($user == '' || $pass == '') {
-			// 	http_response_code(401);
-			// 	echo json_encode(array("message" => "Unauthorized"));
-			// 	exit();
-			// }
+			$username = $hasil['username'];
 
-			if ($pass == '') {
+			$password = 'G:}*DA1]U1';
+			$credentials = base64_encode("$username:$password");
+			$pass = 'Basic '.$credentials;
+		
+			if (!$token) {
 				http_response_code(401);
 				echo json_encode(array("message" => "Unauthorized"));
 				exit();
 			}
 		
 			try {
-				// if ($username != $user || $password != $pass) {
-				// 	http_response_code(401);
-				// 	echo json_encode(array("message" => "Invalid token"));
-				// 	exit();
-				// }
-
-				if ($password != $decodedString) {
+				if ($token == $pass) {
+					$decoded = array('HS256');
+					return $decoded;
+				} else {
 					http_response_code(401);
 					echo json_encode(array("message" => "Invalid token"));
 					exit();
 				}
 				
-				// var_dump($_SERVER);
-				// echo $decodedString . '<br>';
-				// echo $credentials;
+				echo $token . '<br>';
+				echo $credentials;
 			} catch (Exception $e) {
 				http_response_code(401);
 				echo json_encode(array("message" => "Invalid token"));
