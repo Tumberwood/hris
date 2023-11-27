@@ -19,18 +19,21 @@
 			global $db;
 		
 			function getAuthorizationHeader() {
-				if ($_SERVER['HTTP_AUTHORIZATION']) {
-					return $_SERVER['HTTP_AUTHORIZATION'];
-				} elseif ($_SERVER['REDIRECT_HTTP_AUTHORIZATION']) {
-					return $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
+				$authorizationHeader = null;
+			
+				// Check for the existence of indices before accessing them
+				if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+					$authorizationHeader = $_SERVER['HTTP_AUTHORIZATION'];
+				} elseif (isset($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+					$authorizationHeader = $_SERVER['REDIRECT_HTTP_AUTHORIZATION'];
 				} elseif (function_exists('apache_request_headers')) {
 					$headers = apache_request_headers();
-					if ($headers['Authorization']) {
-						return $headers['Authorization'];
+					if (isset($headers['Authorization'])) {
+						$authorizationHeader = $headers['Authorization'];
 					}
 				}
-				
-				// return null;
+			
+				return $authorizationHeader;
 			}
 
 			$token = getAuthorizationHeader();
