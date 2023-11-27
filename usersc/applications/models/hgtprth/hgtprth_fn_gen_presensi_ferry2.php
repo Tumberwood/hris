@@ -1350,7 +1350,7 @@
                                 } else {
                                     // untuk yang lembur libur dan dia tidak off maka di 0 kan dan diberi cek = 1
                                     // $cek = 1;
-                                    $durasi_lembur_libur_jam = 0;
+                                    // $durasi_lembur_libur_jam = 0;
                                 }
 
                                 // if ($id_hemxxmh == 67) {
