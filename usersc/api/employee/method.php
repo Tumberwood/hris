@@ -26,6 +26,8 @@
 					$headers = apache_request_headers();
 					if (isset($headers['Auth'])) {
 						$authorizationHeader = $headers['Auth'];
+					} else if (isset($headers['Authorization'])) {
+						$AuthorizationorizationHeader = $headers['Authorization'];
 					}
 				}
 				// Debugging information
