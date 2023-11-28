@@ -38,7 +38,7 @@
 						(a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd) AS pot_lain,
 						a.pot_upah AS tidak_masuk,
 						a.pot_makan,
-						a.pot_bpjs + a.pot_jht + a.pot_psiun + a.pot_pph21 + a.pot_jkkjkm + (a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd) + a.pot_upah AS total_pot,
+						a.pot_makan + a.pot_bpjs + a.pot_jht + a.pot_psiun + a.pot_pph21 + a.pot_jkkjkm + (a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd) + a.pot_upah AS total_pot,
 						a.fix_cost + a.trm_jkkjkm AS tunjangan,
 						gaji_bersih,
 						a.gaji_terima,
@@ -74,33 +74,160 @@
     $mpdf->SetDisplayMode('fullpage');
 
 	foreach ($rs_hpyxxth as $record) {
-		
-	$pph21 = '';
-	if ($record['pot_pph21'] != 0) {
-		$pph21 .= '<td width="5%"></td>';
-		$pph21 .= '<td width="35%">- PPh21</td>';
-		$pph21 .= '<td colspan="2" class="text-right">' . number_format($record['pot_pph21'], 2, ',', '.') . '</td>';
+	
+	$tbl_tjab = '';
+	if ($record['t_jab'] > 0) {
+		$tbl_tjab .= 	'<tr>
+								<td></td>
+								<td>
+									<p>- Tj. Jabatan</p>
+								</td>
+								<td class="text-right">' .number_format($record['t_jab'],2,',','.'). '</td>
+							</tr>';
 	}
+
+	$tbl_tunjangan = '';
+	if ($record['tunjangan'] > 0) {
 		
-	$pot_lain = '';
-	if ($record['pot_lain'] != 0) {
-		$pot_lain .= '<td width="5%"></td>';
-		$pot_lain .= '<td width="35%">- Lain-lain</td>';
-		$pot_lain .= '<td colspan="2" class="text-right">' . number_format($record['pot_lain'], 2, ',', '.') . '</td>';
+		$tbl_tunjangan .='<td width= "8%">
+								<h4>III</h4>
+							</td>
+							<td width= "">
+								<h4>Tunjangan Tidak Tetap</h4>';
+		if ($record['pot_bpjs'] > 0) {
+			$tbl_tunjangan .= 	'<tr>
+								<td></td>
+								<td>
+									<p>- Tj. Masa Kerja</p>
+								</td>
+								<td class="text-right">' .number_format($record['fix_cost'],2,',','.'). '</td>
+							</tr>';
+		}
+
+		if ($record['pot_jht'] > 0) {
+			$tbl_tunjangan .= '<tr>
+								<td></td>
+								<td>
+									<p>- JKK JKM</p>
+								</td>
+								<td class="text-right">' .number_format($record['trm_jkkjkm'],2,',','.'). '</td>
+							</tr>';
+		}
+
+		$tbl_tunjangan .= 	'<tr>
+								<td></td>
+								<td>
+									<p></p>
+								</td>
+								<td class="text-right">______________</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<p> </p>
+								</td>
+								<td class="text-right">' .number_format($record['tunjangan'],2,',','.'). '</td>
+							</tr>';
+		$tbl_tunjangan .= '</td>';
 	}
+
+	$tbl_potongan = '';
+	if ($record['total_pot'] > 0) {
 		
-	$tidak_masuk = '';
-	if ($record['tidak_masuk'] != 0) {
-		$tidak_masuk .= '<td width="5%"></td>';
-		$tidak_masuk .= '<td width="35%">- Tidak Masuk</td>';
-		$tidak_masuk .= '<td colspan="2" class="text-right">' . number_format($record['tidak_masuk'], 2, ',', '.') . '</td>';
-	}
-		
-	$pot_makan = '';
-	if ($record['pot_makan'] != 0) {
-		$pot_makan .= '<td width="5%"></td>';
-		$pot_makan .= '<td width="35%">- Makan</td>';
-		$pot_makan .= '<td colspan="2" class="text-right">' . number_format($record['pot_makan'], 2, ',', '.') . '</td>';
+		$tbl_potongan .='<td width= "8%">
+								<h4>V</h4>
+							</td>
+							<td width= "">
+								<h4>Potongan</h4>';
+		if ($record['pot_bpjs'] > 0) {
+			$tbl_potongan .= 	'<tr>
+								<td></td>
+								<td>
+									<p>- BPJS-K</p>
+								</td>
+								<td class="text-right">' .number_format($record['pot_bpjs'],2,',','.'). '</td>
+							</tr>';
+		}
+
+		if ($record['pot_jht'] > 0) {
+			$tbl_potongan .= '<tr>
+								<td></td>
+								<td>
+									<p>- BPJS-TK</p>
+								</td>
+								<td class="text-right">' .number_format($record['pot_jht'],2,',','.'). '</td>
+							</tr>';
+		}
+
+		if ($record['pot_psiun'] > 0) {
+			$tbl_potongan .=
+								'<tr>
+									<td></td>
+									<td>
+										<p>- BPJS-TK (JP)</p>
+									</td>
+									<td class="text-right">' .number_format($record['pot_psiun'],2,',','.'). '</td>
+								</tr>';
+		}
+
+		if ($record['pot_pph21'] > 0) {
+			$tbl_potongan .=
+								'<tr>
+									<td></td>
+									<td>
+										<p>- PPh21</p>
+									</td>
+									<td class="text-right">' .number_format($record['pot_pph21'],2,',','.'). '</td>
+								</tr>';
+		}
+
+		if ($record['pot_jkkjkm'] > 0) {
+			$tbl_potongan .=
+								'<tr>
+									<td></td>
+									<td>
+										<p>- JKK JKM</p>
+									</td>
+									<td class="text-right">' .number_format($record['pot_jkkjkm'],2,',','.'). '</td>
+								</tr>';
+		}
+
+		if ($record['tidak_masuk'] > 0) {
+			$tbl_potongan .=						
+								'<tr>
+									<td></td>
+									<td>
+										<p>- Tidak Masuk</p>
+									</td>
+									<td class="text-right">' .number_format($record['tidak_masuk'],2,',','.'). '</td>
+								</tr>';
+		}
+
+		if ($record['pot_makan'] > 0) {
+			$tbl_potongan .=
+								'<tr>
+									<td></td>
+									<td>
+										<p>- Makan</p>
+									</td>
+									<td class="text-right">' .number_format($record['pot_makan'],2,',','.'). '</td>
+								</tr>';
+		}
+		$tbl_potongan .= 	'<tr>
+								<td></td>
+								<td>
+									<p></p>
+								</td>
+								<td class="text-right">______________</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<p> </p>
+								</td>
+								<td class="text-right">' .number_format($record['total_pot'],2,',','.'). '</td>
+							</tr>';
+		$tbl_potongan .= '</td>';
 	}
 
 	$html = '
@@ -144,106 +271,44 @@
 				<br>
 				<table class="pn" style="font-size: 8px;">
 					<tr>
-						<td width="5%"><h4>I</h4></td>
-						<td width="35%"><h4>Gaji Pokok</h4></td>
-						<td colspan="2" class="text-right">' .number_format($record['gp'],2,',','.'). '</td>
-						<td colspan="3"></td>
-
-						<td width="5%"><h4>V</h4></td>
-						<td width="35%"><h4>Potongan</h4>
-						<td colspan="2" class="text-right"></td>
-					</tr>
-					<tr>
-						<td width="5%"></td>
-						<td width="35%"></td>
-						<td colspan="2" class="text-right"></td>
-						<td colspan="3"></td>
-
-						<td width="5%"></td>
-						<td width="35%">- BPJS-K</td>
-						<td colspan="2" class="text-right">' .number_format($record['pot_bpjs'],2,',','.'). '</td>
-					</tr>
-					<tr>
-						<td width="5%"><h4>II</h4></td>
-						<td width="35%"><h4>Tunjangan Tetap</h4></td>
-						<td colspan="2" class="text-right"></td>
-						<td colspan="3"></td>
-
-						<td width="5%"></td>
-						<td width="35%">- BPJS-TK (JHT)</td>
-						<td colspan="2" class="text-right">' .number_format($record['pot_jht'],2,',','.'). '</td>
-					</tr>
-					<tr>
-						<td width="5%"></td>
-						<td width="35%">- Tj. Jabatan</td>
-						<td colspan="2" class="text-right">' .number_format($record['t_jab'],2,',','.'). '</td>
-						<td colspan="3"></td>
-
-						<td width="5%"></td>
-						<td width="35%">- BPJS-TK (JP)</td>
-						<td colspan="2" class="text-right">' .number_format($record['pot_psiun'],2,',','.'). '</td>
-					</tr>
-					<tr>
-						<td width="5%"></td>
-						<td width="35%"></td>
-						<td colspan="2" class="text-right"></td>
-						<td colspan="3"></td>
-
-						' .$pph21 . '
-					</tr>
-					<tr>
-						<td width="5%" style="vertical-align: center"><h4>III</h4></td>
-						<td width="35%"><h4>Tunjangan Tidak Tetap</h4></td>
-						<td colspan="2" class="text-right"></td>
-						<td colspan="3"></td>
-
-						<td width="5%"></td>
-						<td width="35%" style="vertical-align: center">- JKK JKM</td>
-						<td colspan="2" class="text-right" style="vertical-align: center">' .number_format($record['pot_jkkjkm'],2,',','.'). '</td>
-					</tr>
-					<tr>
-						<td width="5%"></td>
-						<td width="35%">- Tj. Masa Kerja</td>
-						<td colspan="2" class="text-right">' .number_format($record['fix_cost'],2,',','.'). '</td>
-						<td colspan="3"></td>
-
-						'.$pot_lain.'
-					</tr>
-					<tr>
-						<td width="5%"></td>
-						<td width="35%">- JKK JKM</td>
-						<td colspan="2" class="text-right">' .number_format($record['trm_jkkjkm'],2,',','.'). '</td>
-						<td colspan="3"></td>
-
-						'.$tidak_masuk.'
-					</tr>
-					<tr>
-						<td width="5%"></td>
-						<td width="35%"></td>
-						<td colspan="2" class="text-right">______________</td>
-						<td colspan="3"></td>
-
-						'.$pot_makan.'
-					</tr>
-					<tr>
-						<td width="5%"></td>
-						<td width="35%"></td>
-						<td colspan="2" class="text-right">' .number_format($record['tunjangan'],2,',','.'). '</td>
-						<td colspan="3"></td>
-
-						<td width="5%"></td>
-						<td width="35%"></td>
-						<td colspan="2" class="text-right">______________</td>
-					</tr>
-					<tr>
-						<td width="5%"></td>
-						<td width="35%"></td>
-						<td colspan="2" class="text-right"></td>
-						<td colspan="3"></td>
-
-						<td width="5%"></td>
-						<td width="35%"></td>
-						<td colspan="2" class="text-right">' .number_format($record['total_pot'],2,',','.'). '</td>
+						<td width= "40%" style="vertical-align: top">
+							<table class="pn" style="vertical-align: top"> 
+								<tr>
+									<td width= "8%">
+										<h4>I</h4>
+									</td>
+									<td width= "">
+										<h4>Gaji Pokok</h4>
+										<tr>
+											<td></td>
+											<td>
+												<p>- Gaji Pokok</p>
+											</td>
+											<td class="text-right">' .number_format($record['gp'],2,',','.'). '</td>
+										</tr>
+									</td>
+								</tr>
+								<tr>
+									<td width= "8%">
+										<h4>II</h4>
+									</td>
+									<td width= "">
+										<h4>Tunjangan Tetap</h4>
+										'.$tbl_tjab.'
+									</td>
+								</tr>
+								<tr>
+									'.$tbl_tunjangan.'
+							</table>
+						</td>
+						<td width= "10%" style="vertical-align: top">
+						<td width= "50%" style="vertical-align: top">
+							<table class="pn" style="vertical-align: top"> 
+								<tr>
+									'.$tbl_potongan .'
+								</tr>
+							</table>
+						</td>
 					</tr>
 				</table>
 				<table class="pn" style="font-size: 8px;">
