@@ -88,7 +88,7 @@
 							</td>
 							<td width= "">
 								<h4>Tunjangan Tidak Tetap</h4>';
-		if ($rs_hpyxxth['pot_bpjs'] > 0) {
+		if ($rs_hpyxxth['fix_cost'] > 0) {
 			$tbl_tunjangan .= 	'<tr>
 								<td></td>
 								<td>

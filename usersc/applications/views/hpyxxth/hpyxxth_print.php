@@ -94,7 +94,7 @@
 							</td>
 							<td width= "">
 								<h4>Tunjangan Tidak Tetap</h4>';
-		if ($record['pot_bpjs'] > 0) {
+		if ($record['fix_cost'] > 0) {
 			$tbl_tunjangan .= 	'<tr>
 								<td></td>
 								<td>
