@@ -303,11 +303,7 @@
 
                             var linkUrl = "../htlxxrh/htlxxrh.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
 							
-							if (kondite == '') {
-								str1 += '<th class="text-center" rowspan="3" style="vertical-align: middle;">Kondite</th>';
-							} else {
-								str1 += '<th class="text-center" rowspan="3" style="vertical-align: middle;"><a href="' + linkUrl + '" target="_blank">Kondite</a></th>';
-							}
+							str1 += '<th class="text-center" rowspan="3" style="vertical-align: middle;">Kondite</th>';
 
                             str1 += '<th class="text-center" colspan="2" rowspan="1">SPKL</th>';
                             str1 += '</tr>';
@@ -377,6 +373,23 @@
 									text: '<i class="fa fa-eye-slash"></i>',
 									className: 'btn btn-white',
 									titleAttr: 'Show / Hide Column'
+								},
+							],
+							columnDefs: [
+								{
+									targets: [4],
+									render: function (data, type, row, meta) {
+										var id_hemxxmh = row.id_hemxxmh;
+										var tanggal = row.tanggal;
+										var kondite = row.kondite;
+
+										if (kondite !== '') {
+											var linkUrlKondite = "../htlxxrh/htlxxrh.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+											return '<a href="' + linkUrlKondite + '" target="_blank">' + kondite + '</a>';
+										} else {
+											return data;
+										}
+									},
 								},
 							],
 							rowCallback: function (row, data, index) {
