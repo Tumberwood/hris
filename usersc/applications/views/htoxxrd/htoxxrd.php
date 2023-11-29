@@ -9,6 +9,17 @@
 <?php
 	$nama_tabel    = 'htoxxrd';
 	$nama_tabels_d = [];
+	
+	if (isset($_GET['id_hemxxmh'])){
+		$id_hemxxmh		= $_GET['id_hemxxmh'];
+	} else {
+		$id_hemxxmh		= 0;
+	}
+	if (isset($_GET['start_date'])){
+		$awal		= ($_GET['start_date']);
+	} else {
+		$awal = null;
+	}
 ?>
 
 <!-- begin content here -->
@@ -112,6 +123,11 @@
 		var tblhtoxxrd, show_inactive_status_htoxxrd = 0;
 		var id_hemxxmh = 0;
 		var id_hemxxmh_old = 0;
+		var id_hem_get = <?php echo $id_hemxxmh ?>;
+		var tanggal_get = "<?php echo $awal ?>";
+
+		console.log(id_hem_get);
+		console.log(tanggal_get);
 		// ------------- end of default variable
 
 		// BEGIN datepicker init
@@ -123,8 +139,14 @@
 			format: "dd M yyyy",
 			minViewMode: 'month' 
 		});
-		$('#start_date').datepicker('setDate', awal_bulan_dmy);
-		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		
+		if (tanggal_get === '') {
+			$('#start_date').datepicker('setDate', awal_bulan_dmy);
+			$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		} else {
+			$('#start_date').datepicker('setDate', new Date(tanggal_get));
+			$('#end_date').datepicker('setDate', new Date(tanggal_get));
+		}
         // END datepicker init
 
 		//Select2 init
@@ -143,12 +165,35 @@
 						return query;
 				},
 				processResults: function (data, params) {
-					return {
-						results: data.results,
-						pagination: {
-							more: true
+					if (id_hem_get > 0) {
+						var options = data.results.map(function (result) {
+							return {
+								id: result.id,
+								text: result.text
+							};
+						});
+
+						//add by ferry agar auto select 07 sep 23
+						if (params.page && params.page === 1) {
+							$('#select_hemxxmh').empty().select2({ data: options });
+						} else {
+							$('#select_hemxxmh').append(new Option(options[0].text, options[0].id, false, false)).trigger('change');
 						}
-					};
+
+						return {
+							results: options,
+							pagination: {
+								more: true
+							}
+						};
+					} else {
+						return {
+							results: data.results,
+							pagination: {
+								more: true
+							}
+						};
+					}
 				},
 				cache: true,
 				minimumInputLength: 1,
@@ -165,6 +210,14 @@
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 			
+			id_hemxxmh_old = id_hem_get;
+			
+			$('#select_hemxxmh').select2('open');
+
+			setTimeout(function() {
+				$('#select_hemxxmh').select2('close');
+			}, 5);
+
 			//start datatables
 			tblhtoxxrd = $('#tblhtoxxrd').DataTable( {
 				searchPanes:{
@@ -343,8 +396,16 @@
 				submitHandler: function(frmhtoxxrd) {
 					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
 					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
-					id_hemxxmh		= $('#select_hemxxmh').val();
-					
+					if ($('#select_hemxxmh').val() > 0) {
+						id_hemxxmh = $('#select_hemxxmh').val();
+					} else {
+						if (id_hem_get != 0) {
+							id_hemxxmh = id_hem_get;
+						} else {
+							id_hemxxmh = $('#select_hemxxmh').val();
+						}
+					}
+
 					notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
 					},{
@@ -362,6 +423,9 @@
 				}
 			});
 			
+			if (id_hem_get > 0) {
+				$("#frmhtoxxrd").submit();
+			}
 			
 		} );// end of document.ready
 	

@@ -298,9 +298,16 @@
                             str1 += '<th class="text-center" colspan="2" rowspan="1">SPKL</th>';
                             str1 += '</tr>';
 
-                            str1 += '<tr>';
-                            str1 += '<th class="text-center" colspan="2" rowspan="1">' + json.data[0].kode_spkl + '</th>';
-                            str1 += '</tr>';
+							var id_hemxxmh = json.data[0].id_hemxxmh;
+							var tanggal = json.data[0].tanggal;
+							var url = "../htoxxrd/htoxxrd.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+							var link = '<a href="' + url + '" target="_blank">Link Text</a>';
+							
+							str1 += '<tr>';
+							str1 += '<th class="text-center" colspan="2" rowspan="1">';
+							str1 += '<a href="' + url + '" target="_blank">' + json.data[0].kode_spkl + '</a>';
+							str1 += '</th>';
+							str1 += '</tr>';
 
                             str1 += '<tr>';
                             $.each(json.columns, function (k, colObj) {
