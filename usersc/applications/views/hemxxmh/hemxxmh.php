@@ -606,11 +606,10 @@
 					{
 						label: "Potong Makan <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.is_pot_makan",
-						type: "select",
-						placeholder : "Select",
+						type: "select2",
 						options: [
-							{ "label": "Catering", "value": 0 },
-							{ "label": "Potong Makan", "value": 1 }
+							{ "label": "Potong Makan", "value": 1 },
+							{ "label": "Catering", "value": 0 }
 						]
 					},
 					{
@@ -705,7 +704,7 @@
 					
 					// BEGIN of validasi hemxxmh.is_pot_makan 
 					is_pot_makan = edthemxxmh.field('hemxxmh.is_pot_makan').val();
-					if(is_pot_makan < 0){
+					if(!is_pot_makan || is_pot_makan == ''){
 						edthemxxmh.field('hemxxmh.is_pot_makan').error( 'Wajib diisi!' );
 					}
 					// END of validasi hemxxmh.is_pot_makan 
