@@ -86,7 +86,8 @@
                     </div>
                     <div class="col-md-4" >
                         <h3 id="tanggal"></h3>
-                        <h3 id="edit_jadwal"><a href="#" id="jadwal" data-editor-id=""></a></h3>
+                        <div id="edit_jadwal"></div>
+                        <!-- <h3 id="edit_jadwal"><a href="#" id="jadwal" data-editor-id=""></a></h3> -->
                         <h3 id="keterangan"></h3>
                     </div>
 					<div class="col-md-1"></div>
@@ -230,6 +231,7 @@
 
 		function generateTable(counter) {
             $('#report').show();
+			
 			$.ajax( {
 				url: "../../models/dashboard/d_hr_report_presensi.php",
 				dataType: 'json',
@@ -241,7 +243,9 @@
 				},
 				success: function ( json ) {
 					if(json.data.length > 0 && json.data[0].id_hemxxmh != null){
-						
+						$('#edit_jadwal').empty();
+						$('#jadwal').empty();
+
 						// hitung counter	
 						if (id_hemxxmh != null) {
 							$('#prevButton').hide();
@@ -266,15 +270,27 @@
 						var page_total = parseInt(json.data5) + 1; 
 
 						var id = json.data[0].id_jadwal;
+						console.log(id);
+						console.log('row_'+id);
 						$('#edit_jadwal').attr('data-editor-id', 'row_'+id);
+						
+						var h3Element = $('<h3>');
 
-						$('#jadwal').attr('data-id', id);
-						$('#jadwal').html(" : " + json.data[0].st_jadwal);
+						// Create the anchor element with the specified attributes
+						var anchorElement = $('<a>')
+							.attr('href', '#')
+							.attr('id', 'jadwal')
+							.attr('data-id',id)
+							.attr('data-empsjadwal',json.data7.nama)
+							.attr('data-id_jadwal',json.data[0].id_jadwal)
+							.html(" : " + json.data[0].st_jadwal);
+
+						// Append the anchor element to the h3 element
+						h3Element.append(anchorElement);
+						$('#edit_jadwal').append(h3Element);
 
 						$('#tanggal').html(" : " + json.data[0].tanggal);
 						$('#keterangan').html(" : " + json.data[0].keterangan);
-
-						
 
 						$('#dep').html(" : " + json.data7.dep);
 						$('#kmj').html(" : " + json.data7.kmj);
@@ -753,40 +769,9 @@
 						def: 1
 					},	
 					{
-						label: "Nama <sup class='text-danger'>*<sup>",
-						name: "htssctd.id_hemxxmh",
-						type: "select2",
-						opts: {
-							placeholder : "Select",
-							allowClear: true,
-							multiple: false,
-							ajax: {
-								url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
-								dataType: 'json',
-								data: function (params) {
-									var query = {
-										id_hemxxmh_old: id_hemxxmh_old,
-										search: params.term || '',
-										page: params.page || 1
-									}
-										return query;
-								},
-								processResults: function (data, params) {
-									return {
-										results: data.results,
-										pagination: {
-											more: true
-										}
-									};
-								},
-								cache: true,
-								minimumInputLength: 1,
-								maximum: 10,
-								delay: 500,
-								maximumSelectionLength: 5,
-								minimumResultsForSearch: -1,
-							},
-						}
+						label: "Nama",
+						name: "emp_jadwal",
+						type: "readonly"
 					},	
 					{
 						label: "Tanggal <sup class='text-danger'>*<sup>",
@@ -802,7 +787,7 @@
 						format: 'DD MMM YYYY'
 					},	
 					{
-						label: "Shift",
+						label: "Shift <sup class='text-danger'>*<sup>",
 						name: "htssctd.id_htsxxmh",
 						type: "select2",
 						opts: {
@@ -966,7 +951,6 @@
 			}, {event: 'keyup change'});
 
 			edthtssctd.dependent( 'htssctd.id_htsxxmh', function ( val, data, callback ) {
-				console.log(val);
 				if (id_htsxxmh_old != 0) {
 					if (val != id_htsxxmh_old) {
 						shift();
@@ -1025,14 +1009,6 @@
             edthtssctd.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					
-					// BEGIN of validasi htssctd.id_hemxxmh
-					if ( ! edthtssctd.field('htssctd.id_hemxxmh').isMultiValue() ) {
-						id_hemxxmh = edthtssctd.field('htssctd.id_hemxxmh').val();
-						if(!id_hemxxmh || id_hemxxmh == ''){
-							edthtssctd.field('htssctd.id_hemxxmh').error( 'Wajib diisi!' );
-						}
-					}
-					// END of validasi htssctd.id_hemxxmh
 					
 					// BEGIN of validasi htssctd.id_htsxxmh
 					if ( ! edthtssctd.field('htssctd.id_htsxxmh').isMultiValue() ) {
@@ -1041,7 +1017,6 @@
 							edthtssctd.field('htssctd.id_htsxxmh').error( 'Wajib diisi!' );
 						}
 					}
-					// END of validasi htssctd.id_hemxxmh
 
 					// BEGIN of validasi htssctd.tanggal
 					if ( ! edthtssctd.field('htssctd.tanggal').isMultiValue() ) {
@@ -1082,15 +1057,18 @@
 				edthtssctd.field('finish_on').val(finish_on);
 			});
 
-			$('#jadwal').click(function (e) {
+			$('#edit_jadwal').on('click', '#jadwal', function (e) {
 				e.preventDefault();
 				var id = $(this).data('id');
-				// console.log(id);
+				var empsjadwal = $(this).data('empsjadwal');
+				console.log('row_ = '+id);
 				val_edit('htssctd', id, 0); // nama tabel dan id yang parse int agar dinamis bisa digunakan banyak tabel dan is_delete
 
 				// preopen saya pindah kesini karena biar data old ditampilkan dulu sebelum dibuka formnya
 				edthtssctd.on( 'preOpen', function( e, mode, action ) {
-					edthtssctd.field('htssctd.id_hemxxmh').val(edit_val.id_hemxxmh);
+					console.log('peg = '+empsjadwal);
+					edthtssctd.field('emp_jadwal').val(empsjadwal);
+
 					edthtssctd.field('htssctd.id_htsxxmh').val(edit_val.id_htsxxmh);
 					console.log(edit_val.id_htsxxmh);
 					edthtssctd.field('htssctd.tanggal').val(moment(edit_val.tanggal).format('DD MMM YYYY') );
@@ -1108,7 +1086,6 @@
 					}
 				).edit(id);
 			});
-			
 		} );// end of document.ready
 	
 	</script>
