@@ -383,6 +383,21 @@
 				$(".modal-dialog").addClass("modal-lg");
 			});
 
+			edthtssctd.dependent( 'htssctd.tanggal', function ( val, data, callback ) {
+				id_htsxxmh = edthtssctd.field('htssctd.id_htsxxmh').val();
+				
+				shift();
+				
+				if (id_htsxxmh == 1) {
+					var tanggal = edthtssctd.field('htssctd.tanggal').val();
+					edthtssctd.field('htssctd.tanggaljam_awal_t1').val(tanggal+' 00:00');
+					edthtssctd.field('htssctd.tanggaljam_awal_t2').val(tanggal+' 00:00');
+					edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(tanggal+' 00:00');
+					edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(tanggal+' 00:00');
+				}
+				return {}
+			}, {event: 'keyup change'});
+
 			edthtssctd.dependent( 'htssctd.id_htsxxmh', function ( val, data, callback ) {
 				if (id_htsxxmh_old != 0) {
 					if (val != id_htsxxmh_old) {
