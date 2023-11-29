@@ -292,22 +292,39 @@
                             } else {
                                 str1 += '<th class="text-center text-danger" colspan="2" rowspan="2" style="vertical-align: middle;">Clock Finger</th>';
                             }
+							
+							var id_hemxxmh = json.data[0].id_hemxxmh;
+							var tanggal = json.data[0].tanggal;
+							var kondite = json.data[0].kondite;
+							var kode_spkl = json.data[0].kode_spkl;
+
                             str1 += '<th class="text-center" rowspan="3" style="vertical-align: middle;">Status IN</th>';
                             str1 += '<th class="text-center" rowspan="3" style="vertical-align: middle;" >Status OUT</th>';
-                            str1 += '<th class="text-center" rowspan="3" style="vertical-align: middle;" >Kondite</th>';
+
+                            var linkUrl = "../htlxxrh/htlxxrh.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+							
+							if (kondite == '') {
+								str1 += '<th class="text-center" rowspan="3" style="vertical-align: middle;">Kondite</th>';
+							} else {
+								str1 += '<th class="text-center" rowspan="3" style="vertical-align: middle;"><a href="' + linkUrl + '" target="_blank">Kondite</a></th>';
+							}
+
                             str1 += '<th class="text-center" colspan="2" rowspan="1">SPKL</th>';
                             str1 += '</tr>';
 
-							var id_hemxxmh = json.data[0].id_hemxxmh;
-							var tanggal = json.data[0].tanggal;
 							var url = "../htoxxrd/htoxxrd.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
-							var link = '<a href="' + url + '" target="_blank">Link Text</a>';
 							
-							str1 += '<tr>';
-							str1 += '<th class="text-center" colspan="2" rowspan="1">';
-							str1 += '<a href="' + url + '" target="_blank">' + json.data[0].kode_spkl + '</a>';
-							str1 += '</th>';
-							str1 += '</tr>';
+							if (kode_spkl == '-') {
+								str1 += '<tr>';
+								str1 += '<th class="text-center" colspan="2" rowspan="1">' + json.data[0].kode_spkl + '</th>';
+								str1 += '</tr>';
+							} else {
+								str1 += '<tr>';
+								str1 += '<th class="text-center" colspan="2" rowspan="1">';
+								str1 += '<a href="' + url + '" target="_blank">' + json.data[0].kode_spkl + '</a>';
+								str1 += '</th>';
+								str1 += '</tr>';
+							}
 
                             str1 += '<tr>';
                             $.each(json.columns, function (k, colObj) {

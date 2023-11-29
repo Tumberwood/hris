@@ -126,8 +126,8 @@
 		var id_hem_get = <?php echo $id_hemxxmh ?>;
 		var tanggal_get = "<?php echo $awal ?>";
 
-		console.log(id_hem_get);
-		console.log(tanggal_get);
+		// console.log(id_hem_get);
+		// console.log(tanggal_get);
 		// ------------- end of default variable
 
 		// BEGIN datepicker init
