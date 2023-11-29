@@ -171,8 +171,8 @@
 			format: "dd M yyyy",
 			minViewMode: 'month' 
 		});
-		$('#start_date').datepicker('setDate', "01 Sep 2023");
-		$('#end_date').datepicker('setDate', "01 Sep 2023");
+		$('#start_date').datepicker('setDate', awal_bulan_dmy);
+		$('#end_date').datepicker('setDate', akhir_bulan_dmy);
         // END datepicker init
 
         // BEGIN select2 init
