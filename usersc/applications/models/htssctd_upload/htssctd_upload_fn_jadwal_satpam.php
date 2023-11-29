@@ -91,123 +91,132 @@
 					);
 				}
 				$qs_htssctd = $db
+					->query('update', 'htssctd' )
+					->set('is_active',0)
+					->where('htssctd.id_hemxxmh', $id_hemxxmh )
+					->where('htssctd.tanggal', $tanggal )
+					->where('htssctd.is_active', 1 )
+					->exec();
+
+				$qs_htssctd = $db
 					->query('select', 'htssctd' )
 					->get([
 						'htssctd.id as id_htssctd'
 					] )
 					->where('htssctd.id_hemxxmh', $id_hemxxmh )
-					->where('htssctd.id_htsxxmh', $id_htsxxmh )
 					->where('htssctd.tanggal', $tanggal )
+					->where('htssctd.is_active', 1 )
 					->exec();
 				$rs_htssctd = $qs_htssctd->fetchAll();
+				
 				$c_rs_htssctd = count($rs_htssctd);
 				
 				if($c_rs_htssctd == 0){
 					
-                // Begin insert pengaju
-                $qr_htssctd_pengaju = $db
-					->raw()
-					->bind(':id_htsxxmh', $id_htsxxmh)
-					->bind(':id_hemxxmh', $id_hemxxmh)
-					->bind(':tanggal', $tanggal)
-					->exec('
-						INSERT INTO htssctd
-						(
-							id_hemxxmh,
-							id_htsxxmh,
-							keterangan,
-							tanggal,
-							jam_awal,
-							jam_akhir,
-							jam_awal_istirahat,
-							jam_akhir_istirahat,
-							menit_toleransi_awal_in,
-							menit_toleransi_akhir_in,
-							menit_toleransi_awal_out,
-							menit_toleransi_akhir_out,
+					// Begin insert pengaju
+					$qr_htssctd_pengaju = $db
+						->raw()
+						->bind(':id_htsxxmh', $id_htsxxmh)
+						->bind(':id_hemxxmh', $id_hemxxmh)
+						->bind(':tanggal', $tanggal)
+						->exec('
+							INSERT INTO htssctd
+							(
+								id_hemxxmh,
+								id_htsxxmh,
+								keterangan,
+								tanggal,
+								jam_awal,
+								jam_akhir,
+								jam_awal_istirahat,
+								jam_akhir_istirahat,
+								menit_toleransi_awal_in,
+								menit_toleransi_akhir_in,
+								menit_toleransi_awal_out,
+								menit_toleransi_akhir_out,
 
-							tanggaljam_awal_t1,
-							tanggaljam_awal,
-							tanggaljam_awal_t2,
-							tanggaljam_akhir_t1,
-							tanggaljam_akhir,
-							tanggaljam_akhir_t2,
-							tanggaljam_awal_istirahat,
-							tanggaljam_akhir_istirahat
-						)
-						SELECT
-							:id_hemxxmh,
-							:id_htsxxmh,
-							"Upload Jadwal Satpam",
-							:tanggal,
-							htsxxmh.jam_awal,
-							htsxxmh.jam_akhir,
-							htsxxmh.jam_awal_istirahat,
-							htsxxmh.jam_akhir_istirahat,
-							htsxxmh.menit_toleransi_awal_in,
-							htsxxmh.menit_toleransi_akhir_in,
-							htsxxmh.menit_toleransi_awal_out,
-							htsxxmh.menit_toleransi_akhir_out,
-							CONCAT(:tanggal, " ", TIME(DATE_SUB(htsxxmh.jam_awal, INTERVAL htsxxmh.menit_toleransi_awal_in MINUTE))) AS tanggaljam_awal_t1,
-							CONCAT(:tanggal, " ", htsxxmh.jam_awal) AS tanggaljam_awal,
-							CONCAT(
-								CASE
-									WHEN DATE_ADD(htsxxmh.jam_awal, INTERVAL htsxxmh.menit_toleransi_akhir_in MINUTE) >= "24:00:00" THEN DATE_ADD(:tanggal, INTERVAL 1 DAY)
-									ELSE :tanggal
-								END,
-								" ",
-								TIME(
+								tanggaljam_awal_t1,
+								tanggaljam_awal,
+								tanggaljam_awal_t2,
+								tanggaljam_akhir_t1,
+								tanggaljam_akhir,
+								tanggaljam_akhir_t2,
+								tanggaljam_awal_istirahat,
+								tanggaljam_akhir_istirahat
+							)
+							SELECT
+								:id_hemxxmh,
+								:id_htsxxmh,
+								"Upload Jadwal Satpam",
+								:tanggal,
+								htsxxmh.jam_awal,
+								htsxxmh.jam_akhir,
+								htsxxmh.jam_awal_istirahat,
+								htsxxmh.jam_akhir_istirahat,
+								htsxxmh.menit_toleransi_awal_in,
+								htsxxmh.menit_toleransi_akhir_in,
+								htsxxmh.menit_toleransi_awal_out,
+								htsxxmh.menit_toleransi_akhir_out,
+								CONCAT(:tanggal, " ", TIME(DATE_SUB(htsxxmh.jam_awal, INTERVAL htsxxmh.menit_toleransi_awal_in MINUTE))) AS tanggaljam_awal_t1,
+								CONCAT(:tanggal, " ", htsxxmh.jam_awal) AS tanggaljam_awal,
+								CONCAT(
 									CASE
-										WHEN DATE_ADD(htsxxmh.jam_awal, INTERVAL htsxxmh.menit_toleransi_akhir_in MINUTE) >= "24:00:00" THEN
-											TIMEDIFF(DATE_ADD(htsxxmh.jam_awal, INTERVAL htsxxmh.menit_toleransi_akhir_in MINUTE), "24:00:00")
-										ELSE
-											DATE_ADD(htsxxmh.jam_awal, INTERVAL htsxxmh.menit_toleransi_akhir_in MINUTE)
-									END
-								)
-							) AS tanggaljam_awal_t2,
+										WHEN DATE_ADD(htsxxmh.jam_awal, INTERVAL htsxxmh.menit_toleransi_akhir_in MINUTE) >= "24:00:00" THEN DATE_ADD(:tanggal, INTERVAL 1 DAY)
+										ELSE :tanggal
+									END,
+									" ",
+									TIME(
+										CASE
+											WHEN DATE_ADD(htsxxmh.jam_awal, INTERVAL htsxxmh.menit_toleransi_akhir_in MINUTE) >= "24:00:00" THEN
+												TIMEDIFF(DATE_ADD(htsxxmh.jam_awal, INTERVAL htsxxmh.menit_toleransi_akhir_in MINUTE), "24:00:00")
+											ELSE
+												DATE_ADD(htsxxmh.jam_awal, INTERVAL htsxxmh.menit_toleransi_akhir_in MINUTE)
+										END
+									)
+								) AS tanggaljam_awal_t2,
 
-							CASE
-								WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir <= "12:00:00"
-								THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", TIME(DATE_SUB(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE)))
-								ELSE CONCAT(:tanggal, " ", TIME(DATE_SUB(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE)))
-							END AS tanggaljam_akhir_t1,
-							CASE
-								WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir <= "12:00:00"
-								THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_akhir)
-								ELSE CONCAT(:tanggal, " ", htsxxmh.jam_akhir)
-							END AS tanggaljam_akhir,
-							CONCAT(
 								CASE
-									WHEN DATE_ADD(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE) >= "24:00:00" 
-										OR htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir <= "12:00:00" THEN DATE_ADD(:tanggal, INTERVAL 1 DAY)
-									ELSE :tanggal
-								END,
-								" ",
-								TIME(
+									WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir <= "12:00:00"
+									THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", TIME(DATE_SUB(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE)))
+									ELSE CONCAT(:tanggal, " ", TIME(DATE_SUB(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE)))
+								END AS tanggaljam_akhir_t1,
+								CASE
+									WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir <= "12:00:00"
+									THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_akhir)
+									ELSE CONCAT(:tanggal, " ", htsxxmh.jam_akhir)
+								END AS tanggaljam_akhir,
+								CONCAT(
 									CASE
-										WHEN DATE_ADD(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE) >= "24:00:00" THEN
-											TIMEDIFF(DATE_ADD(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE), "24:00:00")
-										ELSE
-											DATE_ADD(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE)
-									END
-								)
-							) AS tanggaljam_akhir_t2,
-							CASE
-								WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_awal_istirahat <= "12:00:00"
-								THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_awal_istirahat)
-								ELSE CONCAT(:tanggal, " ", htsxxmh.jam_awal_istirahat)
-							END AS tanggaljam_awal_istirahat,
-							CASE
-								WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir_istirahat <= "12:00:00"
-								THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_akhir_istirahat)
-								ELSE CONCAT(:tanggal, " ", htsxxmh.jam_akhir_istirahat)
-							END AS tanggaljam_akhir_istirahat
-						FROM htsxxmh
-						WHERE 
-							id = :id_htsxxmh
-					');
+										WHEN DATE_ADD(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE) >= "24:00:00" 
+											OR htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir <= "12:00:00" THEN DATE_ADD(:tanggal, INTERVAL 1 DAY)
+										ELSE :tanggal
+									END,
+									" ",
+									TIME(
+										CASE
+											WHEN DATE_ADD(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE) >= "24:00:00" THEN
+												TIMEDIFF(DATE_ADD(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE), "24:00:00")
+											ELSE
+												DATE_ADD(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE)
+										END
+									)
+								) AS tanggaljam_akhir_t2,
+								CASE
+									WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_awal_istirahat <= "12:00:00"
+									THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_awal_istirahat)
+									ELSE CONCAT(:tanggal, " ", htsxxmh.jam_awal_istirahat)
+								END AS tanggaljam_awal_istirahat,
+								CASE
+									WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir_istirahat <= "12:00:00"
+									THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_akhir_istirahat)
+									ELSE CONCAT(:tanggal, " ", htsxxmh.jam_akhir_istirahat)
+								END AS tanggaljam_akhir_istirahat
+							FROM htsxxmh
+							WHERE 
+								id = :id_htsxxmh
+						');
 
-                // END insert pengaju
+					// END insert pengaju
 
 					$dataupload = $dataupload + 1;
 					
