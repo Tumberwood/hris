@@ -122,7 +122,6 @@
 								<th></th>
 								<th>Total</th>
 
-								<th id="s_12"></th>
 								<th id="s_13"></th>
 								<th id="s_14"></th>
 								<th id="s_15"></th>
@@ -136,6 +135,7 @@
 								<th id="s_23"></th>
 								<th id="s_24"></th>
 								<th id="s_25"></th>
+								<th id="s_26"></th>
 
 							</tr>
 						</tfoot>
@@ -171,8 +171,8 @@
 			format: "dd M yyyy",
 			minViewMode: 'month' 
 		});
-		$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
-		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		$('#start_date').datepicker('setDate', "01 Sep 2023");
+		$('#end_date').datepicker('setDate', "01 Sep 2023");
         // END datepicker init
 
         // BEGIN select2 init
@@ -251,6 +251,158 @@
 				// scrollX: true,
 				responsive: false,
 				rowGroup: {
+					startRender: function ( rows, group ) {
+						return $('<tr/>')
+							.append( '<td colspan="2" class="font-bold">'+group+'</td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' );
+					},
+					endRender: function ( rows, group ) {
+						var sum_libur = rows
+							.data()
+							.pluck('durasi_lembur_libur') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_libur = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_libur );
+						
+						var sum_awal = rows
+							.data()
+							.pluck('durasi_lembur_awal') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_awal = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_awal );
+						
+						var sum_akhir = rows
+							.data()
+							.pluck('durasi_lembur_akhir') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_akhir = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_akhir );
+						
+						var sum_istirahat1 = rows
+							.data()
+							.pluck('durasi_lembur_istirahat1') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_istirahat1 = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_istirahat1 );
+						
+						var sum_istirahat2 = rows
+							.data()
+							.pluck('durasi_lembur_istirahat2') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_istirahat2 = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_istirahat2 );
+						
+						var sum_istirahat3 = rows
+							.data()
+							.pluck('durasi_lembur_istirahat3') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_istirahat3 = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_istirahat3 );
+						
+						var sum_total_jam = rows
+							.data()
+							.pluck('durasi_lembur_total_jam') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_total_jam = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_total_jam );
+						
+						var sum_pot_ti = rows
+							.data()
+							.pluck('pot_ti') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_pot_ti = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_pot_ti );
+						
+						var sum_pot_overtime = rows
+							.data()
+							.pluck('pot_overtime') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_pot_overtime = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_pot_overtime );
+						
+						var sum_final = rows
+							.data()
+							.pluck('durasi_lembur_final') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_final = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_final );
+						
+						var sum_lembur15 = rows
+							.data()
+							.pluck('lembur15') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_lembur15 = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_lembur15 );
+						
+						var sum_lembur2 = rows
+							.data()
+							.pluck('lembur2') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_lembur2 = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_lembur2 );
+						
+						var sum_lembur3 = rows
+							.data()
+							.pluck('lembur3') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_lembur3 = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_lembur3 );
+						
+						var sum_lembur4 = rows
+							.data()
+							.pluck('lembur4') 
+							.reduce( function (a, b) {
+								return parseFloat(a) + parseFloat(b);
+							}, 0);
+						sum_lembur4 = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_lembur4 );
+
+						return $('<tr/>')
+							.append( '<td colspan="2" class="font-bold">Total</td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_libur+'</td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_awal+'</td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_akhir+'</td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_istirahat1+'</td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_istirahat2+'</td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_istirahat3+'</td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_total_jam+'</td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_pot_ti+'</td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_pot_overtime+'</td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_final+'</td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_lembur15+'</td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_lembur2+'</td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_lembur3+'</td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_lembur4+'</td>' )
+							;
+					},
 					dataSrc: function (row) {
 						return row.hemxxmh_data;
 					}
@@ -365,7 +517,7 @@
 					var api       = this.api(), data;
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					
-					for (var i = 12; i <= 25; i++) {
+					for (var i = 13; i <= 26; i++) {
 						var columnIndex = i;
 						var sum = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
