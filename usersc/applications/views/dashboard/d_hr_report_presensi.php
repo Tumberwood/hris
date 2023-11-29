@@ -86,7 +86,7 @@
                     </div>
                     <div class="col-md-4" >
                         <h3 id="tanggal"></h3>
-                        <h3 id="jadwal"></h3>
+                        <h3 id="edit_jadwal"><a href="#" id="jadwal" data-editor-id=""></a></h3>
                         <h3 id="keterangan"></h3>
                     </div>
 					<div class="col-md-1"></div>
@@ -150,16 +150,21 @@
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_setup.php'; ?>
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_datatables_load.php'; ?>
 <script src="<?=$us_url_root?>usersc/helpers/hakaksescrud_hd_fn.js"></script>
+<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/htssctd/fn/htssctd_fn.php'; ?>
+<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/training_m/fn/training_m_fn.php'; ?>
 
 <!-- BEGIN datatables here -->
 <script type="text/javascript">
 		// ------------- default variable, do not erase
 		var tblhtsprrd, show_inactive_status_htsprrd = 0;
+		var edthtssctd, tblhtssctd, show_inactive_status_htssctd = 0, id_htssctd;
 		// ------------- end of default variable
 		var notifyprogress = '';
 		var id_hemxxmh_old = 0;
 		var id_hem_get = <?php echo $id_hemxxmh ?>;
 		var tanggal_get = "<?php echo $awal ?>";
+		var id_htsxxmh_old = 0;
+		var id_hemxxmh_filter = 0;
 		// BEGIN datepicker init
 		$('#periode').datepicker({
 			setDate: new Date(),
@@ -260,10 +265,16 @@
 						var page_now = parseInt(counter) + 1; 
 						var page_total = parseInt(json.data5) + 1; 
 
+						var id = json.data[0].id_jadwal;
+						$('#edit_jadwal').attr('data-editor-id', 'row_'+id);
+
+						$('#jadwal').attr('data-id', id);
+						$('#jadwal').html(" : " + json.data[0].st_jadwal);
 
 						$('#tanggal').html(" : " + json.data[0].tanggal);
-						$('#jadwal').html(" : " + json.data[0].st_jadwal);
 						$('#keterangan').html(" : " + json.data[0].keterangan);
+
+						
 
 						$('#dep').html(" : " + json.data7.dep);
 						$('#kmj').html(" : " + json.data7.kmj);
@@ -705,6 +716,398 @@
 				generateTable(counter);
 			}
 			
+///////// START EDIT SCHEDULE ////////////////
+
+			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
+			end_date   = moment($('#start_date').val()).format('YYYY-MM-DD');
+			//start datatables editor
+			edthtssctd = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/htssctd/htssctd.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_htssctd = show_inactive_status_htssctd;
+						d.start_date = start_date;
+						d.end_date = end_date;
+						d.id_hemxxmh_filter = id_hemxxmh_filter;
+					}
+				},
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "htssctd",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "htssctd.is_active",
+                        type: "hidden",
+						def: 1
+					},	
+					{
+						label: "Nama <sup class='text-danger'>*<sup>",
+						name: "htssctd.id_hemxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hemxxmh_old: id_hemxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},	
+					{
+						label: "Tanggal <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggal",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},	
+					{
+						label: "Shift",
+						name: "htssctd.id_htsxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/htsxxmh/htsxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_htsxxmh_old: id_htsxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},	
+					{
+						label: "Awal T1 <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_awal_t1",
+						type: "datetime",
+						def: function () {  
+							const currentDate = new Date();
+							currentDate.setHours(currentDate.getHours() - 2);
+							return currentDate;
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Awal <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_awal",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Awal T2 <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_awal_t2",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Akhir T1 <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_akhir_t1",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Akhir <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_akhir",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Akhir T2 <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_akhir_t2",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Tanggal Awal Istirahat <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_awal_istirahat",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Tanggal Akhir Istirahat <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_akhir_istirahat",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Keterangan",
+						name: "htssctd.keterangan",
+						type: "textarea"
+					}
+				]
+			} );
+
+			edthtssctd.on( 'preOpen', function( e, mode, action ) {
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthtssctd.field('start_on').val(start_on);
+				
+				if(action == 'create'){
+					tblhtssctd.rows().deselect();
+				}
+
+			});
+
+			edthtssctd.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+			});
+
+			edthtssctd.dependent( 'htssctd.tanggal', function ( val, data, callback ) {
+				id_htsxxmh = edthtssctd.field('htssctd.id_htsxxmh').val();
+				
+				shift();
+				
+				if (id_htsxxmh == 1) {
+					var tanggal = edthtssctd.field('htssctd.tanggal').val();
+					edthtssctd.field('htssctd.tanggaljam_awal_t1').val(tanggal+' 00:00');
+					edthtssctd.field('htssctd.tanggaljam_awal_t2').val(tanggal+' 00:00');
+					edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(tanggal+' 00:00');
+					edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(tanggal+' 00:00');
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+			edthtssctd.dependent( 'htssctd.id_htsxxmh', function ( val, data, callback ) {
+				console.log(val);
+				if (id_htsxxmh_old != 0) {
+					if (val != id_htsxxmh_old) {
+						shift();
+						if (val == 1) {
+							var tanggal = edthtssctd.field('htssctd.tanggal').val();
+							edthtssctd.field('htssctd.tanggaljam_awal_t1').val(tanggal+' 00:00');
+							edthtssctd.field('htssctd.tanggaljam_awal_t2').val(tanggal+' 00:00');
+							edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(tanggal+' 00:00');
+							edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(tanggal+' 00:00');
+							console.log(tanggal);
+						}
+					}
+				} else {
+					shift();
+					
+					if (val == 1) {
+							var tanggal = edthtssctd.field('htssctd.tanggal').val();
+							edthtssctd.field('htssctd.tanggaljam_awal_t1').val(tanggal+' 00:00');
+							edthtssctd.field('htssctd.tanggaljam_awal_t2').val(tanggal+' 00:00');
+							edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(tanggal+' 00:00');
+							edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(tanggal+' 00:00');
+						}
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+			edthtssctd.dependent( 'htssctd.tanggaljam_awal', function ( val, data, callback ) {
+				var tanggal_awal = edthtssctd.field('htssctd.tanggaljam_awal').val();
+      		 	id_htsxxmh = edthtssctd.field('htssctd.id_htsxxmh').val();
+				   
+					
+				if (id_htsxxmh != 1) {
+					akhir = moment(tanggal_awal).add(2, 'hour').format('DD MMM YYYY HH:mm');
+					awal = moment(tanggal_awal).subtract(2, 'hour').format('DD MMM YYYY HH:mm');
+					
+					edthtssctd.field('htssctd.tanggaljam_awal_t1').val(awal);
+					edthtssctd.field('htssctd.tanggaljam_awal_t2').val(akhir);
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+			edthtssctd.dependent( 'htssctd.tanggaljam_akhir', function ( val, data, callback ) {
+				var tanggal_akhir = edthtssctd.field('htssctd.tanggaljam_akhir').val();
+				id_htsxxmh = edthtssctd.field('htssctd.id_htsxxmh').val();
+				// tanggaljam_akhir_t2 = edthtssctd.field('htssctd.tanggaljam_akhir_t2').val();
+				
+				if (id_htsxxmh != 1) {
+						akhir = moment(tanggal_akhir).add(5, 'hour').format('DD MMM YYYY HH:mm');
+						awal = moment(tanggal_akhir).subtract(5, 'hour').format('DD MMM YYYY HH:mm');
+						edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(awal);
+						edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(akhir);
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+            edthtssctd.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+					
+					// BEGIN of validasi htssctd.id_hemxxmh
+					if ( ! edthtssctd.field('htssctd.id_hemxxmh').isMultiValue() ) {
+						id_hemxxmh = edthtssctd.field('htssctd.id_hemxxmh').val();
+						if(!id_hemxxmh || id_hemxxmh == ''){
+							edthtssctd.field('htssctd.id_hemxxmh').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htssctd.id_hemxxmh
+					
+					// BEGIN of validasi htssctd.id_htsxxmh
+					if ( ! edthtssctd.field('htssctd.id_htsxxmh').isMultiValue() ) {
+						id_htsxxmh = edthtssctd.field('htssctd.id_htsxxmh').val();
+						if(!id_htsxxmh || id_htsxxmh == ''){
+							edthtssctd.field('htssctd.id_htsxxmh').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htssctd.id_hemxxmh
+
+					// BEGIN of validasi htssctd.tanggal
+					if ( ! edthtssctd.field('htssctd.tanggal').isMultiValue() ) {
+						tanggal = edthtssctd.field('htssctd.tanggal').val();
+						if(!tanggal || tanggal == ''){
+							edthtssctd.field('htssctd.tanggal').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htssctd.tanggal
+
+					// BEGIN of validasi htssctd.tanggaljam_awal_istirahat
+					if ( ! edthtssctd.field('htssctd.tanggaljam_awal_istirahat').isMultiValue() ) {
+						tanggaljam_awal_istirahat = edthtssctd.field('htssctd.tanggaljam_awal_istirahat').val();
+						if(!tanggaljam_awal_istirahat || tanggaljam_awal_istirahat == ''){
+							edthtssctd.field('htssctd.tanggaljam_awal_istirahat').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htssctd.tanggaljam_awal_istirahat
+
+					// BEGIN of validasi htssctd.tanggaljam_akhir_istirahat
+					if ( ! edthtssctd.field('htssctd.tanggaljam_akhir_istirahat').isMultiValue() ) {
+						tanggaljam_akhir_istirahat = edthtssctd.field('htssctd.tanggaljam_akhir_istirahat').val();
+						if(!tanggaljam_akhir_istirahat || tanggaljam_akhir_istirahat == ''){
+							edthtssctd.field('htssctd.tanggaljam_akhir_istirahat').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htssctd.tanggaljam_akhir_istirahat
+					
+				}
+				
+				if ( edthtssctd.inError() ) {
+					return false;
+				}
+			});
+			
+			edthtssctd.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthtssctd.field('finish_on').val(finish_on);
+			});
+
+			$('#jadwal').click(function (e) {
+				e.preventDefault();
+				var id = $(this).data('id');
+				// console.log(id);
+				val_edit('htssctd', id, 0); // nama tabel dan id yang parse int agar dinamis bisa digunakan banyak tabel dan is_delete
+
+				// preopen saya pindah kesini karena biar data old ditampilkan dulu sebelum dibuka formnya
+				edthtssctd.on( 'preOpen', function( e, mode, action ) {
+					edthtssctd.field('htssctd.id_hemxxmh').val(edit_val.id_hemxxmh);
+					edthtssctd.field('htssctd.id_htsxxmh').val(edit_val.id_htsxxmh);
+					console.log(edit_val.id_htsxxmh);
+					edthtssctd.field('htssctd.tanggal').val(moment(edit_val.tanggal).format('DD MMM YYYY') );
+					edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(moment(edit_val.tanggaljam_akhir_t2).format('DD MMM YYYY HH:mm') );
+				});
+
+				edthtssctd.title('Edit Schedule').buttons(
+					{
+						label: 'Submit',
+						className: 'btn btn-primary',
+						action: function () {
+							this.submit();
+							generateTable(counter);
+						}
+					}
+				).edit(id);
+			});
 			
 		} );// end of document.ready
 	

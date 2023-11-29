@@ -69,8 +69,9 @@
 					group by kar.id
 				)
 				SELECT DISTINCT
+					b.id AS id_jadwal,
 					a.id_hemxxmh,
-					a.st_jadwal,
+					f.kode AS st_jadwal,
 					jumlah_grup,
 					a.pot_jam AS potong,
 					ifnull(a.pot_ti,0) AS ti,
@@ -100,6 +101,7 @@
 				LEFT JOIN htssctd AS b ON b.id_hemxxmh = a.id_hemxxmh AND b.tanggal = a.tanggal
 				LEFT JOIN htoxxrd AS c ON c.id_hemxxmh = a.id_hemxxmh AND c.tanggal = a.tanggal
 				LEFT JOIN grup AS d ON d.id_hemxxmh = a.id_hemxxmh
+				LEFT JOIN htsxxmh AS f on f.id = b.id_htsxxmh
 				WHERE a.tanggal = :start_date AND a.id_hemxxmh = :id_hemxxmh
 				'
 				);
