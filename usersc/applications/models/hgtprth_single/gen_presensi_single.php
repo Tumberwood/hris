@@ -321,6 +321,7 @@
                         // $status_presensi_out = 'No CO';
                     }
                     print_r($clock_out);
+                    print_r($st_clock_out);
                     
                 ////////////////////////////// LEVEL 3 - ABSEN //////////////////////////////
                     $qs_htlxxrh = $db
