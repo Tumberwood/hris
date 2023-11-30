@@ -151,9 +151,8 @@
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_setup.php'; ?>
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_datatables_load.php'; ?>
 <script src="<?=$us_url_root?>usersc/helpers/hakaksescrud_hd_fn.js"></script>
-<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/htssctd/fn/htssctd_fn.php'; ?>
 <?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/training_m/fn/training_m_fn.php'; ?>
-<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/htsprtd/fn/htsprtd_fn.php'; ?>
+<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/htssctd/fn/htssctd_fn.php'; ?>
 <?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/dashboard/fn/d_hr_report_presensi_fn.php'; ?>
 
 <!-- BEGIN datatables here -->
@@ -745,13 +744,9 @@
 			//start datatables editor
 			edthtssctd = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/htssctd/htssctd.php",
+					url: "../../models/htssctd/htssctd_presensi.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_htssctd = show_inactive_status_htssctd;
-						d.start_date = start_date;
-						d.end_date = end_date;
-						d.id_hemxxmh_filter = id_hemxxmh_filter;
 					}
 				},
 				fields: [ 
@@ -957,28 +952,14 @@
 			}, {event: 'keyup change'});
 
 			edthtssctd.dependent( 'htssctd.id_htsxxmh', function ( val, data, callback ) {
-				if (id_htsxxmh_old != 0) {
-					if (val != id_htsxxmh_old) {
-						shift();
-						if (val == 1) {
-							var tanggal = edthtssctd.field('htssctd.tanggal').val();
-							edthtssctd.field('htssctd.tanggaljam_awal_t1').val(tanggal+' 00:00');
-							edthtssctd.field('htssctd.tanggaljam_awal_t2').val(tanggal+' 00:00');
-							edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(tanggal+' 00:00');
-							edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(tanggal+' 00:00');
-							console.log(tanggal);
-						}
-					}
-				} else {
-					shift();
-					
-					if (val == 1) {
-							var tanggal = edthtssctd.field('htssctd.tanggal').val();
-							edthtssctd.field('htssctd.tanggaljam_awal_t1').val(tanggal+' 00:00');
-							edthtssctd.field('htssctd.tanggaljam_awal_t2').val(tanggal+' 00:00');
-							edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(tanggal+' 00:00');
-							edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(tanggal+' 00:00');
-						}
+				shift();
+				
+				if (val == 1) {
+					var tanggal = edthtssctd.field('htssctd.tanggal').val();
+					edthtssctd.field('htssctd.tanggaljam_awal_t1').val(tanggal+' 00:00');
+					edthtssctd.field('htssctd.tanggaljam_awal_t2').val(tanggal+' 00:00');
+					edthtssctd.field('htssctd.tanggaljam_akhir_t1').val(tanggal+' 00:00');
+					edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(tanggal+' 00:00');
 				}
 				return {}
 			}, {event: 'keyup change'});
@@ -1067,16 +1048,16 @@
 				e.preventDefault();
 				var id = $(this).data('id');
 				var empsjadwal = $(this).data('empsjadwal');
-				console.log('row_ = '+id);
+				// console.log('row_ = '+id);
 				val_edit('htssctd', id, 0); // nama tabel dan id yang parse int agar dinamis bisa digunakan banyak tabel dan is_delete
 
 				// preopen saya pindah kesini karena biar data old ditampilkan dulu sebelum dibuka formnya
 				edthtssctd.on( 'preOpen', function( e, mode, action ) {
-					console.log('peg = '+empsjadwal);
+					// console.log('peg = '+empsjadwal);
 					edthtssctd.field('emp_jadwal').val(empsjadwal);
-
-					edthtssctd.field('htssctd.id_htsxxmh').val(edit_val.id_htsxxmh);
-					console.log(edit_val.id_htsxxmh);
+					id_htsxxmh_old = edit_val.id_htsxxmh;
+					edthtssctd.field('htssctd.id_htsxxmh').val(id_htsxxmh_old);
+					// console.log(edit_val.id_htsxxmh);
 					edthtssctd.field('htssctd.tanggal').val(moment(edit_val.tanggal).format('DD MMM YYYY') );
 					edthtssctd.field('htssctd.tanggaljam_akhir_t2').val(moment(edit_val.tanggaljam_akhir_t2).format('DD MMM YYYY HH:mm') );
 				});
