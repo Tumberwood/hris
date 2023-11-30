@@ -153,19 +153,24 @@
 <script src="<?=$us_url_root?>usersc/helpers/hakaksescrud_hd_fn.js"></script>
 <?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/htssctd/fn/htssctd_fn.php'; ?>
 <?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/training_m/fn/training_m_fn.php'; ?>
+<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/htsprtd/fn/htsprtd_fn.php'; ?>
+<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/dashboard/fn/d_hr_report_presensi_fn.php'; ?>
 
 <!-- BEGIN datatables here -->
 <script type="text/javascript">
 		// ------------- default variable, do not erase
 		var tblhtsprrd, show_inactive_status_htsprrd = 0;
 		var edthtssctd, tblhtssctd, show_inactive_status_htssctd = 0, id_htssctd;
+		var edthtsprtd, tblhtsprtd, show_inactive_status_htsprtd = 0, id_htsprtd;
 		// ------------- end of default variable
 		var notifyprogress = '';
 		var id_hemxxmh_old = 0;
+		var id_hemxxmh = null;
 		var id_hem_get = <?php echo $id_hemxxmh ?>;
 		var tanggal_get = "<?php echo $awal ?>";
 		var id_htsxxmh_old = 0;
 		var id_hemxxmh_filter = 0;
+		
 		// BEGIN datepicker init
 		$('#periode').datepicker({
 			setDate: new Date(),
@@ -246,6 +251,46 @@
 						$('#edit_jadwal').empty();
 						$('#jadwal').empty();
 
+						var page_now = parseInt(counter) + 1; 
+						var page_total = parseInt(json.data5) + 1; 
+						if ($('#select_hemxxmh').val() > 0) {
+							id_hemxxmh = $('#select_hemxxmh').val();
+						} else {
+							if (id_hem_get != 0) {
+								id_hemxxmh = id_hem_get;
+							} else {
+								id_hemxxmh = $('#select_hemxxmh').val();
+							}
+						}
+
+						console.log('id_hemxxmh'+id_hemxxmh);
+						
+						var button_add = [
+							{
+								extend: 'collection',
+								text: '<i class="fa fa-wrench"></i>',
+								className: 'btn btn-white',
+								autoClose: true,
+								buttons: [
+									{ extend: "copy", text: '<i class="fa fa-copy">&nbsp &nbsp Copy</i>', className: '', titleAttr: 'Copy' },
+									{ extend: "excel", text: '<i class="fa fa-file-excel-o">&nbsp &nbsp Excel</i>', className: '', titleAttr: 'Export to Excel' }
+								]
+							}
+						];
+						
+						var buttons = [
+							{
+								extend: 'collection',
+								text: '<i class="fa fa-wrench"></i>',
+								className: 'btn btn-white',
+								autoClose: true,
+								buttons: [
+									{ extend: "copy", text: '<i class="fa fa-copy">&nbsp &nbsp Copy</i>', className: '', titleAttr: 'Copy' },
+									{ extend: "excel", text: '<i class="fa fa-file-excel-o">&nbsp &nbsp Excel</i>', className: '', titleAttr: 'Export to Excel' }
+								]
+							}
+						];
+
 						// hitung counter	
 						if (id_hemxxmh != null) {
 							$('#prevButton').hide();
@@ -253,6 +298,22 @@
 							$('#paging').hide();
 						} else {
 							$('#paging').show();
+							
+							button_add.push({
+								extend: 'create',
+								name: 'btnCreateCeklok',
+								id: 'addCeklok',
+								editor: edthtsprtd,
+								text: '<i class="fa fa-plus"></i>',
+								className: 'btn btn-outline',
+								titleAttr: 'New',
+								key: {
+									key: 'n',
+									ctrlKey: true,
+									altKey: true
+								}
+							});
+
 							if (counter == 0) {
 								$('#prevButton').hide();
 							} else {
@@ -265,9 +326,6 @@
 								$('#nextButton').show();
 							}
 						}
-
-						var page_now = parseInt(counter) + 1; 
-						var page_total = parseInt(json.data5) + 1; 
 
 						var id = json.data[0].id_jadwal;
 						console.log(id);
@@ -380,28 +438,7 @@
 							},
 							data: json.data,
 							columns: json.columns,
-							buttons: [
-								{
-									extend: 'collection',
-									text: '<i class="fa  fa-wrench">',
-									className: 'btn btn-white',
-									autoClose: true,
-									buttons: [
-										{ extend: "copy", text: '<i class="fa fa-copy">&nbsp &nbsp Copy</i>', className: '', titleAttr: 'Copy' },
-										{ extend: "excel", text: '<i class="fa fa-file-excel-o">&nbsp &nbsp Excel</i>', className: '', titleAttr: 'Export to Excel' }
-									]
-								},
-								{
-									extend: 'colvis',
-									columns: colvisCount,
-									columnText: function (dt, idx, title) {
-										return title;
-									},
-									text: '<i class="fa fa-eye-slash"></i>',
-									className: 'btn btn-white',
-									titleAttr: 'Show / Hide Column'
-								},
-							],
+							buttons: buttons,
 							columnDefs: [
 								{
 									targets: [4],
@@ -452,31 +489,23 @@
 						$('#h3_riwayat').text("Riwayat Checkclock");
 
 						$('#tblhtsprrd2').DataTable({
-								paging: false,          // Disable pagination
-								searching: false,       // Disable search
-								info: false,            // Disable "Showing X of Y entries" information
-								lengthChange: false,    // Disable "Show X entries" dropdown
-								responsive: false,
-								scrollY: '125px',       // Set the scrollY option
-								scrollCollapse: true,
-								data: json.data2,
-								columns: json.columns2,
-								buttons: [
-								{
-									extend: 'collection',
-									text: '<i class="fa  fa-wrench">',
-									className: 'btn btn-white',
-									autoClose: true,
-									buttons: [
-										{ extend: "copy", text: '<i class="fa fa-copy">&nbsp &nbsp Copy</i>', className: '', titleAttr: 'Copy' },
-										{ extend: "excel", text: '<i class="fa fa-file-excel-o">&nbsp &nbsp Excel</i>', className: '', titleAttr: 'Export to Excel' }
-									]
-								}
-							],
+							paging: false,
+							searching: false,
+							info: false,
+							lengthChange: false,
+							responsive: false,
+							scrollY: '125px',
+							scrollCollapse: true,
+							data: json.data2,
+							columns: json.columns2,
+							buttons: button_add,
 							rowCallback: function (row, data, index) {
-
+								// Your row callback code here
 							}
 						});
+						console.log('id_hemxxmh_old'+json.data[0].id_hemxxmh); 
+						id_hemxxmh_old = json.data[0].id_hemxxmh;
+						edthtsprtd.field('htsprtd.id_hemxxmh').val(id_hemxxmh_old);
 
 						var str3 = '<table id="tblhtsprrd3" class="table table-striped table-bordered">';
 						
@@ -514,18 +543,7 @@
 							scrollCollapse: true,
 							data: json.data3,
 							columns: json.columns3,
-							buttons: [
-								{
-									extend: 'collection',
-									text: '<i class="fa  fa-wrench">',
-									className: 'btn btn-white',
-									autoClose: true,
-									buttons: [
-										{ extend: "copy", text: '<i class="fa fa-copy">&nbsp &nbsp Copy</i>', className: '', titleAttr: 'Copy' },
-										{ extend: "excel", text: '<i class="fa fa-file-excel-o">&nbsp &nbsp Excel</i>', className: '', titleAttr: 'Export to Excel' }
-									]
-								}
-							],
+							buttons: buttons,
 							rowCallback: function (row, data, index) {
 
 							}
@@ -567,18 +585,7 @@
 							scrollCollapse: true,
 							data: json.data4,
 							columns: json.columns4,
-							buttons: [
-								{
-									extend: 'collection',
-									text: '<i class="fa  fa-wrench">',
-									className: 'btn btn-white',
-									autoClose: true,
-									buttons: [
-										{ extend: "copy", text: '<i class="fa fa-copy">&nbsp &nbsp Copy</i>', className: '', titleAttr: 'Copy' },
-										{ extend: "excel", text: '<i class="fa fa-file-excel-o">&nbsp &nbsp Excel</i>', className: '', titleAttr: 'Export to Excel' }
-									]
-								}
-							],
+							buttons: buttons,
 							rowCallback: function (row, data, index) {
 
 							}
@@ -722,6 +729,7 @@
 					});
 
 					generateTable(counter);
+					// addCeklok();
 					return false;
 				}
 			});
@@ -731,11 +739,9 @@
 				start_date = tanggal_get;
 				generateTable(counter);
 			}
-			
+			// addCeklok();
+        
 ///////// START EDIT SCHEDULE ////////////////
-
-			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
-			end_date   = moment($('#start_date').val()).format('YYYY-MM-DD');
 			//start datatables editor
 			edthtssctd = new $.fn.dataTable.Editor( {
 				ajax: {
@@ -1086,6 +1092,263 @@
 					}
 				).edit(id);
 			});
+///////////// END OF JADWAL //////////////
+
+
+/////////// START OF CEKLOK ////////////
+
+			edthtsprtd = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/htsprtd/htsprtd_report.php",
+					type: 'POST',
+					data: function (d){
+					}
+				},
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "htsprtd",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "htsprtd.is_active",
+                        type: "hidden",
+						def: 1
+					},	
+					{
+						label: "htsprtd.kode",
+						name: "htsprtd.kode",
+                        type: "hidden"
+					},
+					{
+						label: "Mesin <sup class='text-danger'>*<sup>",
+						name: "htsprtd.nama",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							// { "label": "Istirahat", "value": "istirahat" },
+							// { "label": "Makan", "value": "makan" },
+							{ "label": "Makan Manual", "value": "makan manual" },
+							{ "label": "Outsourcing", "value": "os" },
+							{ "label": "PMI", "value": "pmi" },
+							{ "label": "Staff", "value": "staff" }
+						]
+					},
+					{
+						label: "Employee <sup class='text-danger'>*<sup>",
+						name: "htsprtd.id_hemxxmh",
+						type: "select2",
+						id: "peg_ceklok",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hemxxmh_old: id_hemxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									var options = data.results.map(function (result) {
+										return {
+											id: result.id,
+											text: result.text
+										};
+									});
+
+									//add by ferry agar auto select 07 sep 23
+									if (params.page && params.page === 1) {
+										$('#peg_ceklok').empty().select2({ data: options });
+									} else {
+                                        $('#peg_ceklok').append(new Option(options[0].text, options[0].id, false, false)).trigger('change');
+									}
+
+									return {
+										results: options,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "Tanggal <sup class='text-danger'>*<sup>",
+						name: "htsprtd.tanggal",
+						type: "datetime",
+						def: function () { 
+							return moment($('#start_date').val()).format('DD MMM YYYY'); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},
+					{
+						label: "Jam <sup class='text-danger'>*<sup>",
+						name: "htsprtd.jam",
+						type: "datetime",
+						format: 'HH:mm'
+					},
+					{
+						label: "Keterangan <sup class='text-danger'>*<sup>",
+						name: "htsprtd.keterangan",
+						type: "textarea"
+					}
+				]
+			} );
+
+			edthtsprtd.on( 'preOpen', function( e, mode, action ) {
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthtsprtd.field('start_on').val(start_on);
+				//  console.log(id_hemxxmh_old);
+				edthtsprtd.field('htsprtd.id_hemxxmh').val(id_hemxxmh_old);
+				edthtsprtd.field('htsprtd.id_hemxxmh').disable();
+				
+			});
+
+			edthtsprtd.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+				
+				$('#peg_ceklok').select2('open');
+
+				setTimeout(function() {
+					$('#peg_ceklok').select2('close');
+				}, 5);
+			});
+
+			edthtsprtd.dependent( 'htsprtd.nama', function ( val, data, callback ) {
+				nama = edthtsprtd.field('htsprtd.nama').val();
+				if (nama ==  "makan manual") {
+					jamMakanManual();
+					// edthtsprtd.field('htsprtd.jam').disable();
+				}else {
+            		edthtsprtd.field('htsprtd.jam').enable();
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+			edthtsprtd.dependent( 'htsprtd.id_hemxxmh', function ( val, data, callback ) {
+				nama = edthtsprtd.field('htsprtd.nama').val();
+				if (nama ==  "makan manual") {
+					jamMakanManual();
+					// edthtsprtd.field('htsprtd.jam').disable();
+				}else {
+            		edthtsprtd.field('htsprtd.jam').enable();
+					edthtsprtd.field('htsprtd.jam').val('');
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+			edthtsprtd.dependent( 'htsprtd.tanggal', function ( val, data, callback ) {
+				nama = edthtsprtd.field('htsprtd.nama').val();
+				if (nama ==  "makan manual") {
+					jamMakanManual();
+					// edthtsprtd.field('htsprtd.jam').disable();
+				}else {
+            		edthtsprtd.field('htsprtd.jam').enable();
+					edthtsprtd.field('htsprtd.jam').val('');
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+            edthtsprtd.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+					// BEGIN of validasi htsprtd.nama
+					nama = edthtsprtd.field('htsprtd.nama').val();
+					if(!nama || nama == ''){
+						edthtsprtd.field('htsprtd.nama').error( 'Wajib diisi!' );
+					}
+					// END of validasi htsprtd.nama
+
+					// BEGIN of validasi htsprtd.id_hemxxmh
+					id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
+					if ( ! edthtsprtd.field('htsprtd.id_hemxxmh').isMultiValue() ) {
+						if(!id_hemxxmh || id_hemxxmh == ''){
+							edthtsprtd.field('htsprtd.id_hemxxmh').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htsprtd.id_hemxxmh
+
+					// BEGIN of validasi htsprtd.tanggal
+					if ( ! edthtsprtd.field('htsprtd.tanggal').isMultiValue() ) {
+						tanggal = edthtsprtd.field('htsprtd.tanggal').val();
+						if(!tanggal || tanggal == ''){
+							edthtsprtd.field('htsprtd.tanggal').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htsprtd.tanggal
+
+					jam = edthtsprtd.field('htsprtd.jam').val();
+					// unikMakan(jam);
+					if (nama != "makan manual") {
+						// BEGIN of validasi htsprtd.jam
+						if ( ! edthtsprtd.field('htsprtd.jam').isMultiValue() ) {
+							if(!jam || jam == ''){
+								edthtsprtd.field('htsprtd.jam').error( 'Wajib diisi!' );
+							}
+						}
+						// END of validasi htsprtd.jam
+					} else {
+						if (jam == '' || jam == null) {
+							edthtsprtd.field('htsprtd.jam').error( 'Jam Kosong Karena Jadwal Belum Dibuat!' );
+						}
+					}
+
+					// BEGIN of validasi htsprtd.keterangan
+					if ( ! edthtsprtd.field('htsprtd.keterangan').isMultiValue() ) {
+						keterangan = edthtsprtd.field('htsprtd.keterangan').val();
+						if(!keterangan || keterangan == ''){
+							edthtsprtd.field('htsprtd.keterangan').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htsprtd.keterangan
+				}
+				
+				if ( edthtsprtd.inError() ) {
+					return false;
+				}
+			});
+			
+			edthtsprtd.on('initSubmit', function(e, action) {
+				// update kode finger
+				id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
+				htsprtd_get_hemxxmh_kode();
+				console.log(kode_finger);
+				edthtsprtd.field('htsprtd.kode').val(kode_finger);
+
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthtsprtd.field('finish_on').val(finish_on);
+			});
+
+			edthtsprtd.on( 'postSubmit', function (e, json, data, action, xhr) {
+				generateTable(counter);
+			});
+//////////// END OF CEKLOK /////////////
+			
 		} );// end of document.ready
 	
 	</script>
