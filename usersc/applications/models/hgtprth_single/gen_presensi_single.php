@@ -292,6 +292,7 @@
                             'concat(htsprtd.tanggal," ",htsprtd.jam) as dt_checkclock'
                         ] )
                         
+                        ->where('htsprtd.is_active', 1 )
                         ->where('htsprtd.kode', $rs_hemxxmh['kode_finger'] )
                         ->where('htsprtd.nama', '("os", "out", "staff", "pmi")', 'IN', false )
                         ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t1, '>=' )
