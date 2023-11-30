@@ -581,19 +581,6 @@
 						format: 'DD MMM YYYY'
 					},
 					{
-						label: "Tanggal Keluar",
-						name: "hemjbmh.tanggal_keluar",
-						type: "datetime",
-						def: function () { 
-							return new Date(); 
-						},
-						opts:{
-							minDate: new Date('1900-01-01'),
-							firstDay: 0
-						},
-						format: 'DD MMM YYYY'
-					},
-					{
 						label: "Grup Hari Kerja <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.grup_hk",
 						type: "select",
@@ -628,7 +615,6 @@
 					},
 				]
 			} );
-			edthemxxmh.field('hemjbmh.tanggal_keluar').disable();
 			
 			edthemxxmh.on( 'preOpen', function( e, mode, action ) {
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
