@@ -550,6 +550,7 @@
                                     ->or_where('htlxxrh.id_htlxxmh', 6 ); //IZIN DINAS AKHIR
                             } )
                             ->where('htlxxrh.jenis', 2 )    // izin
+                            ->where('htlxxrh.is_active', 1 )    // izin
                             ->exec();
                         $rs_htlxxrh_dinas_out = $qs_htlxxrh_dinas_out->fetchAll();
                         // print_r($rs_htlxxrh_dinas_out);
