@@ -478,8 +478,8 @@
                                         }
                                         // hitung potongan jam late
                                         $pot_jam_late   = ceil($pot_jam_late_cek/60);
-                                        print_r('pot_jam_late_cek = '.$pot_jam_late_cek );
-                                        print_r('pot_jam_late = '.$pot_jam_late );
+                                        // print_r('pot_jam_late_cek = '.$pot_jam_late_cek );
+                                        // print_r('pot_jam_late = '.$pot_jam_late );
                                     }
                                 }
                             }
