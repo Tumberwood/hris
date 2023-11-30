@@ -95,8 +95,8 @@
         $nominal_lembur_final        = 0;
         $is_longshift = 0;
         $cek = 0;
-        $tanggal_jam_izin_awal = 0;
-        $tanggal_jam_izin_akhir = 0;
+        $tanggal_jam_izin_awal = null;
+        $tanggal_jam_izin_akhir = null;
         $tanggaljam_akhir_min_hour = null;
         $tanggaljam_akhir_hitung = null;
 
@@ -478,6 +478,8 @@
                                         }
                                         // hitung potongan jam late
                                         $pot_jam_late   = ceil($pot_jam_late_cek/60);
+                                        print_r('pot_jam_late_cek = '.$pot_jam_late_cek );
+                                        print_r('pot_jam_late = '.$pot_jam_late );
                                     }
                                 }
                             }
