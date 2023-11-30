@@ -685,11 +685,11 @@
 
                                     // $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
                                     $pot_jam_early   = ceil($pot_jam_early_cek/60);
-                                    print_r('htlxxrh_kode = '.$izin_dinas_out['htlxxrh_kode']);
-                                    print_r('jam_akhir = '.$izin_dinas_out['jam_akhir']);
-                                    print_r('karbon_co = '.$karbon_co);
-                                    print_r('pot_jam_early_cek = '.$pot_jam_early_cek);
-                                    print_r('pot_jam_early = '.$pot_jam_early);
+                                    // print_r('htlxxrh_kode = '.$izin_dinas_out['htlxxrh_kode']);
+                                    // print_r('jam_akhir = '.$izin_dinas_out['jam_akhir']);
+                                    // print_r('karbon_co = '.$karbon_co);
+                                    // print_r('pot_jam_early_cek = '.$pot_jam_early_cek);
+                                    // print_r('pot_jam_early = '.$pot_jam_early);
                                 }
                             }
                         } else {
