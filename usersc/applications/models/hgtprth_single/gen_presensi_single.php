@@ -631,8 +631,16 @@
                                 //FLAG EARLY UNTUK YANG TIDAK ADA IZIN, BUKAN DINAS (IZIN DENGAN POTONGAN) & IZIN/DINAS YANG BELUM DI APPROVE
                                 if ($is_early_pot == 1) {
                                     if ($clock_out == null) {
-                                        $tanggal_jam_izin_akhir = $tanggal . " " . $izin_dinas_out['jam_akhir']; //kalau no CO maka diambil jam izin
-                                        $karbon_co = new Carbon($tanggal_jam_izin_akhir);
+                                        if ($izin_dinas_out['jam_akhir'] < '04:00') {
+                                            $karbon_co    = new Carbon( $tanggal . ' ' . $izin_dinas_out['jam_akhir'] );
+                                        } else {
+                                            $karbon_co    = new Carbon( $tanggal . ' ' . $izin_dinas_out['jam_akhir'] );
+                                            $karbon_co->addDays(1);
+                                        }
+                                        
+                                        // $tanggal_jam_izin_akhir = $tanggal . " " . $izin_dinas_out['jam_akhir']; //kalau no CO maka diambil jam izin
+                                        // $karbon_co = new Carbon($tanggal_jam_izin_akhir);
+
 
                                         // 24 Oct 2023 - Pengecualian -1 jam akhir untuk Sabtu dan Shift Pagi 07-12
                                         if (($jadwal['id_htsxxmh'] == 5 || $jadwal['id_htsxxmh'] == 12)  && $rs_sabtu['is_sabtu'] == 1) {
@@ -671,7 +679,11 @@
                                     }
                                     
                                     // hitung potongan jam early
-                                    $pot_jam_early   = ceil($pot_jam_early_cek/60);
+                                    // $karbon_co = '00:15:00';
+                                    // $tanggaljam_akhir = '07:00:00';
+
+                                    // $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
+                                    // $pot_jam_early   = ceil($pot_jam_early_cek/60);
                                     print_r('pot_jam_early_cek'.$pot_jam_early_cek);
                                     print_r('pot_jam_early'.$pot_jam_early);
                                 }
