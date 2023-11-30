@@ -632,15 +632,15 @@
                                 //FLAG EARLY UNTUK YANG TIDAK ADA IZIN, BUKAN DINAS (IZIN DENGAN POTONGAN) & IZIN/DINAS YANG BELUM DI APPROVE
                                 if ($is_early_pot == 1) {
                                     if ($clock_out == null) {
-                                        // if ($izin_dinas_out['jam_akhir'] < '04:00:00') {
-                                        //     $karbon_co    = new Carbon( $tanggal . ' ' . $izin_dinas_out['jam_akhir'] );
-                                        // } else {
-                                        //     $karbon_co    = new Carbon( $tanggal . ' ' . $izin_dinas_out['jam_akhir'] );
-                                        //     $karbon_co->addDays(1);
-                                        // }
+                                        if ($izin_dinas_out['jam_akhir'] < '04:00:00') {
+                                            $karbon_co    = new Carbon( $tanggal . ' ' . $izin_dinas_out['jam_akhir'] );
+                                            $karbon_co->addDays(1);
+                                        } else {
+                                            $karbon_co    = new Carbon( $tanggal . ' ' . $izin_dinas_out['jam_akhir'] );
+                                        }
                                         
-                                        $tanggal_jam_izin_akhir = $tanggal . " " . $izin_dinas_out['jam_akhir']; //kalau no CO maka diambil jam izin
-                                        $karbon_co = new Carbon($tanggal_jam_izin_akhir);
+                                        // $tanggal_jam_izin_akhir = $tanggal . " " . $izin_dinas_out['jam_akhir']; //kalau no CO maka diambil jam izin
+                                        // $karbon_co = new Carbon($tanggal_jam_izin_akhir);
 
 
                                         // 24 Oct 2023 - Pengecualian -1 jam akhir untuk Sabtu dan Shift Pagi 07-12
@@ -685,11 +685,9 @@
 
                                     // $pot_jam_early_cek     = $karbon_co->diffInMinutes($tanggaljam_akhir);
                                     $pot_jam_early   = ceil($pot_jam_early_cek/60);
-                                    // print_r('htlxxrh_kode = '.$izin_dinas_out['htlxxrh_kode']);
-                                    // print_r('jam_akhir = '.$izin_dinas_out['jam_akhir']);
-                                    // print_r('karbon_co = '.$karbon_co);
-                                    // print_r('pot_jam_early_cek = '.$pot_jam_early_cek);
-                                    // print_r('pot_jam_early = '.$pot_jam_early);
+                                    print_r('karbon_co = '.$karbon_co);
+                                    print_r('pot_jam_early_cek = '.$pot_jam_early_cek);
+                                    print_r('pot_jam_early = '.$pot_jam_early);
                                 }
                             }
                         } else {
