@@ -672,6 +672,8 @@
                                     
                                     // hitung potongan jam early
                                     $pot_jam_early   = ceil($pot_jam_early_cek/60);
+                                    print_r('pot_jam_early_cek'.$pot_jam_early_cek);
+                                    print_r('pot_jam_early'.$pot_jam_early);
                                 }
                             }
                         } else {
