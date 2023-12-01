@@ -102,7 +102,7 @@
 				LEFT JOIN htoxxrd AS c ON c.id_hemxxmh = a.id_hemxxmh AND c.tanggal = a.tanggal
 				LEFT JOIN grup AS d ON d.id_hemxxmh = a.id_hemxxmh
 				LEFT JOIN htsxxmh AS f on f.id = b.id_htsxxmh
-				WHERE a.tanggal = :start_date AND a.id_hemxxmh = :id_hemxxmh AND b.is_active = 1 AND c.is_active = 1 
+				WHERE a.tanggal = :start_date AND a.id_hemxxmh = :id_hemxxmh AND b.is_active = 1 
 				'
 				);
 	$rs_report_presensi = $qs_report_presensi->fetchAll();
