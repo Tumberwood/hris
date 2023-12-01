@@ -129,6 +129,13 @@
 			->where( 'htsprrd.is_active', 1);
 	}
 
+	if ($_SESSION['user'] > 100){
+		$editor
+			->where( function ( $q ) {
+				$q->where('hemjbmh.id_heyxxmh', '(' . $_SESSION['str_arr_ha_heyxxmh'] . ')', 'IN', false );
+			} );
+	}
+
 	if($_POST['id_hemxxmh'] > 0){
 		$editor->where( 'htsprrd.id_hemxxmh', $_POST['id_hemxxmh'] );
 	}
