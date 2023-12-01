@@ -283,7 +283,11 @@
 						$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(1);
 					}
 			} else {
-				$tanggal_hitung = Carbon::parse($tanggal_mulai)->subDays(3);
+				if ($rs_flag_status['id_heyxxmh'] == 2) { // Case Outsourcing
+					$tanggal_hitung = Carbon::parse($tanggal_mulai)->subDays(2);
+				} else {
+					$tanggal_hitung = Carbon::parse($tanggal_mulai)->subDays(3);
+				}
 
 				// cek apakah hari libur
 				$qs_holiday = $db
@@ -294,10 +298,18 @@
 				$rs_holiday = $qs_holiday->fetch();
 
 				// jika hari libur maka mundur 4 hari
-				if (!empty($rs_holiday)) {
-					$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(4);
+				if ($rs_flag_status['id_heyxxmh'] == 2) {
+					if (!empty($rs_holiday)) {
+						$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(3);
+					} else {
+						$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(2);
+					}
 				} else {
-					$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(3);
+					if (!empty($rs_holiday)) {
+						$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(4);
+					} else {
+						$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(3);
+					}
 				}
 			}
 
