@@ -59,6 +59,7 @@
 			->bind(':id_hemxxmh', $id_hemxxmh)
 			->exec(' SELECT
 						a.id_heyxxmd,
+						a.id_heyxxmh,
 						a.id_hesxxmh
 					FROM hemjbmh AS a
 					WHERE a.id_hemxxmh = :id_hemxxmh
@@ -276,7 +277,11 @@
 
 			//update hemjbmh tanggal keluar
 			if ($flag_1hari == 1) {
-				$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(1);
+					if ($rs_flag_status['id_heyxxmh'] == 2) {
+						$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai);
+					} else {
+						$hemjbmh_tgl_akhir = Carbon::parse($tanggal_mulai)->subDays(1);
+					}
 			} else {
 				$tanggal_hitung = Carbon::parse($tanggal_mulai)->subDays(3);
 
