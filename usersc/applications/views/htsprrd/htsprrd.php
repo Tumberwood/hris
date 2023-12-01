@@ -61,108 +61,551 @@
                     <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
 					Apabila data presensi sudah final pada satu tanggal, mohon lakukan approval untuk mengunci data yang ada. Pastikan hanya memilih satu tanggal saja.
 				</div>
-				<div class="table-responsive">
-                    <table id="tblhtsprrd" class="table table-striped table-bordered table-hover nowrap" width="100%">
-						<thead>
-							<tr>
-								<th rowspan=2>ID</th>
-								<th rowspan=2>Nama</th>
-								<th rowspan=2>Link</th>
-								<th rowspan=2>Department</th>
-								<th rowspan=2>Jabatan</th>
-								<th rowspan=2>Tanggal</th>
-								<th rowspan=2>Cek</th>
-								<th rowspan=2>Shift In</th>
-								<th rowspan=2>Shift Out</th>
-								<th rowspan=2>Jadwal</th>
-								<th rowspan=2>Clock In</th>
-								<th rowspan=2>Clock Out</th>
-								<th rowspan=2>Cek CI</th>
-								<th rowspan=2>Cek CO</th>
-								
-								<th rowspan=2>Status In</th>
-								<th rowspan=2>Status Out</th>
+				<div class="tabs-container">
+					<ul class="nav nav-tabs" role="tablist">
+						<li><a class="nav-link active" data-toggle="tab" href="#tabhtsprrd"> All</a></li>
+						<li id="kbm"><a class="nav-link" data-toggle="tab" href="#tabhtsprrd_kbm"> KBM</a></li>
+						<li id="karyawan"><a class="nav-link" data-toggle="tab" href="#tabhtsprrd_karyawan"> Karyawan</a></li>
+						<li id="kmj"><a class="nav-link" data-toggle="tab" href="#tabhtsprrd_kmj"> KMJ</a></li>
+						<li id="freelance"><a class="nav-link" data-toggle="tab" href="#tabhtsprrd_freelance"> Freelance</a></li>
+					</ul>
+					<div class="tab-content">
+						<div role="tabpanel" id="tabhtsprrd" class="tab-pane active">
+							<div class="panel-body">
+								<div class="table-responsive">
+									<table id="tblhtsprrd" class="table table-striped table-bordered table-hover nowrap" width="100%">
+										<thead>
+											<tr>
+												<th rowspan=2>ID</th>
+												<th rowspan=2>Nama</th>
+												<th rowspan=2>Link</th>
+												<th rowspan=2>Department</th>
+												<th rowspan=2>Jabatan</th>
+												<th rowspan=2>Tanggal</th>
+												<th rowspan=2>Cek</th>
+												<th rowspan=2>Shift In</th>
+												<th rowspan=2>Shift Out</th>
+												<th rowspan=2>Jadwal</th>
+												<th rowspan=2>Clock In</th>
+												<th rowspan=2>Clock Out</th>
+												<th rowspan=2>Cek CI</th>
+												<th rowspan=2>Cek CO</th>
+												
+												<th rowspan=2>Status In</th>
+												<th rowspan=2>Status Out</th>
 
-								<th rowspan=2>Keterangan</th>
-								 <!-- //pot jam dihapus (16) --> 
-								<th rowspan=2>Potongan Makan</th>
-								
-								<th colspan=2>Lembur Libur</th>
-								<th colspan=2>Lembur Awal</th>
-								<th colspan=2>Lembur Akhir</th>
-								<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
-								<th class="text-center" colspan=3>Potongan Jam Overtime</th>
-								<th class="text-center" colspan=2>Potongan Jam</th>
+												<th rowspan=2>Keterangan</th>
+												<!-- //pot jam dihapus (16) --> 
+												<th rowspan=2>Potongan Makan</th>
+												
+												<th colspan=2>Lembur Libur</th>
+												<th colspan=2>Lembur Awal</th>
+												<th colspan=2>Lembur Akhir</th>
+												<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
+												<th class="text-center" colspan=3>Potongan Jam Overtime</th>
+												<th class="text-center" colspan=2>Potongan Jam</th>
 
-							</tr>
-							<tr>
-								<th>Awal</th>
-								<th>Akhir</th>
-								<th>Awal</th>
-								<th>Akhir</th>
-								<th>Awal</th>
-								<th>Akhir</th>
+											</tr>
+											<tr>
+												<th>Awal</th>
+												<th>Akhir</th>
+												<th>Awal</th>
+												<th>Akhir</th>
+												<th>Awal</th>
+												<th>Akhir</th>
 
-								<th data-toggle="tooltip" data-placement="top" title="Lembur Hari Libur">LB</th>
-								<th data-toggle="tooltip" data-placement="top" title="Lembur Awal">AW</th>
-								<th data-toggle="tooltip" data-placement="top" title="Lembur Akhir">AK</th>
-								<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Pagi">I1</th>
-								<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Sore">I2</th>
-								<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Malam">I3</th>
-								<th data-toggle="tooltip" data-placement="top" title="Total Lembur">Total</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Hari Libur">LB</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Awal">AW</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Akhir">AK</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Pagi">I1</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Sore">I2</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Malam">I3</th>
+												<th data-toggle="tooltip" data-placement="top" title="Total Lembur">Total</th>
 
-								<th>Pot TI</th>
-								<th>Pot Overtime</th>
-								<th>Overtime Final</th>
-								<th>Pot Hari Kerja</th>
-								<th>Pot Total</th>
-							</tr>
-						</thead>
-						<tfoot>
-							<tr>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th>Total</th>
-								<th id="s_makan"></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								<th></th>
-								
-								<th id="s_lb"></th>
-								<th id="s_aw"></th>
-								<th id="s_ak"></th>
-								<th id="s_i1"></th>
-								<th id="s_i2"></th>
-								<th id="s_i3"></th>
-								<th id="s_tl"></th>
-								
-								<th id="s_pot_ti"></th>
-								<th id="s_pot_overtime"></th>
-								<th id="s_overtime"></th>
-								<th id="s_pot_hk"></th>
-								<th id="s_pot_jam"></th>
-								<!-- <th id="s_hk"></th> -->
+												<th>Pot TI</th>
+												<th>Pot Overtime</th>
+												<th>Overtime Final</th>
+												<th>Pot Hari Kerja</th>
+												<th>Pot Total</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th>Total</th>
+												<th id="all_makan"></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												
+												<th id="all_lb"></th>
+												<th id="all_aw"></th>
+												<th id="all_ak"></th>
+												<th id="all_i1"></th>
+												<th id="all_i2"></th>
+												<th id="all_i3"></th>
+												<th id="all_tl"></th>
+												
+												<th id="all_pot_ti"></th>
+												<th id="all_pot_overtime"></th>
+												<th id="all_overtime"></th>
+												<th id="all_pot_hk"></th>
+												<th id="all_pot_jam"></th>
+												<!-- <th id="s_hk"></th> -->
 
-							</tr>
-						</tfoot>
-                    </table>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div role="tabpanel" id="tabhtsprrd_kbm" class="tab-pane">
+							<div class="panel-body">
+								<div class="table-responsive">
+									<table id="tblhtsprrd_kbm" class="table table-striped table-bordered table-hover nowrap" width="100%">
+										<thead>
+											<tr>
+												<th rowspan=2>ID</th>
+												<th rowspan=2>Nama</th>
+												<th rowspan=2>Link</th>
+												<th rowspan=2>Department</th>
+												<th rowspan=2>Jabatan</th>
+												<th rowspan=2>Tanggal</th>
+												<th rowspan=2>Cek</th>
+												<th rowspan=2>Shift In</th>
+												<th rowspan=2>Shift Out</th>
+												<th rowspan=2>Jadwal</th>
+												<th rowspan=2>Clock In</th>
+												<th rowspan=2>Clock Out</th>
+												<th rowspan=2>Cek CI</th>
+												<th rowspan=2>Cek CO</th>
+												
+												<th rowspan=2>Status In</th>
+												<th rowspan=2>Status Out</th>
+
+												<th rowspan=2>Keterangan</th>
+												<!-- //pot jam dihapus (16) --> 
+												<th rowspan=2>Potongan Makan</th>
+												
+												<th colspan=2>Lembur Libur</th>
+												<th colspan=2>Lembur Awal</th>
+												<th colspan=2>Lembur Akhir</th>
+												<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
+												<th class="text-center" colspan=3>Potongan Jam Overtime</th>
+												<th class="text-center" colspan=2>Potongan Jam</th>
+
+											</tr>
+											<tr>
+												<th>Awal</th>
+												<th>Akhir</th>
+												<th>Awal</th>
+												<th>Akhir</th>
+												<th>Awal</th>
+												<th>Akhir</th>
+
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Hari Libur">LB</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Awal">AW</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Akhir">AK</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Pagi">I1</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Sore">I2</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Malam">I3</th>
+												<th data-toggle="tooltip" data-placement="top" title="Total Lembur">Total</th>
+
+												<th>Pot TI</th>
+												<th>Pot Overtime</th>
+												<th>Overtime Final</th>
+												<th>Pot Hari Kerja</th>
+												<th>Pot Total</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th>Total</th>
+												<th id="kbm_makan"></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												
+												<th id="kbm_lb"></th>
+												<th id="kbm_aw"></th>
+												<th id="kbm_ak"></th>
+												<th id="kbm_i1"></th>
+												<th id="kbm_i2"></th>
+												<th id="kbm_i3"></th>
+												<th id="kbm_tl"></th>
+												
+												<th id="kbm_pot_ti"></th>
+												<th id="kbm_pot_overtime"></th>
+												<th id="kbm_overtime"></th>
+												<th id="kbm_pot_hk"></th>
+												<th id="kbm_pot_jam"></th>
+												<!-- <th id="s_hk"></th> -->
+
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div role="tabpanel" id="tabhtsprrd_karyawan" class="tab-pane">
+							<div class="panel-body">
+								<div class="table-responsive">
+									<table id="tblhtsprrd_karyawan" class="table table-striped table-bordered table-hover nowrap" width="100%">
+										<thead>
+											<tr>
+												<th rowspan=2>ID</th>
+												<th rowspan=2>Nama</th>
+												<th rowspan=2>Link</th>
+												<th rowspan=2>Department</th>
+												<th rowspan=2>Jabatan</th>
+												<th rowspan=2>Tanggal</th>
+												<th rowspan=2>Cek</th>
+												<th rowspan=2>Shift In</th>
+												<th rowspan=2>Shift Out</th>
+												<th rowspan=2>Jadwal</th>
+												<th rowspan=2>Clock In</th>
+												<th rowspan=2>Clock Out</th>
+												<th rowspan=2>Cek CI</th>
+												<th rowspan=2>Cek CO</th>
+												
+												<th rowspan=2>Status In</th>
+												<th rowspan=2>Status Out</th>
+
+												<th rowspan=2>Keterangan</th>
+												<!-- //pot jam dihapus (16) --> 
+												<th rowspan=2>Potongan Makan</th>
+												
+												<th colspan=2>Lembur Libur</th>
+												<th colspan=2>Lembur Awal</th>
+												<th colspan=2>Lembur Akhir</th>
+												<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
+												<th class="text-center" colspan=3>Potongan Jam Overtime</th>
+												<th class="text-center" colspan=2>Potongan Jam</th>
+
+											</tr>
+											<tr>
+												<th>Awal</th>
+												<th>Akhir</th>
+												<th>Awal</th>
+												<th>Akhir</th>
+												<th>Awal</th>
+												<th>Akhir</th>
+
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Hari Libur">LB</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Awal">AW</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Akhir">AK</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Pagi">I1</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Sore">I2</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Malam">I3</th>
+												<th data-toggle="tooltip" data-placement="top" title="Total Lembur">Total</th>
+
+												<th>Pot TI</th>
+												<th>Pot Overtime</th>
+												<th>Overtime Final</th>
+												<th>Pot Hari Kerja</th>
+												<th>Pot Total</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th>Total</th>
+												<th id="karyawan_makan"></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												
+												<th id="karyawan_lb"></th>
+												<th id="karyawan_aw"></th>
+												<th id="karyawan_ak"></th>
+												<th id="karyawan_i1"></th>
+												<th id="karyawan_i2"></th>
+												<th id="karyawan_i3"></th>
+												<th id="karyawan_tl"></th>
+												
+												<th id="karyawan_pot_ti"></th>
+												<th id="karyawan_pot_overtime"></th>
+												<th id="karyawan_overtime"></th>
+												<th id="karyawan_pot_hk"></th>
+												<th id="karyawan_pot_jam"></th>
+												<!-- <th id="s_hk"></th> -->
+
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div role="tabpanel" id="tabhtsprrd_kmj" class="tab-pane">
+							<div class="panel-body">
+								<div class="table-responsive">
+									<table id="tblhtsprrd_kmj" class="table table-striped table-bordered table-hover nowrap" width="100%">
+										<thead>
+											<tr>
+												<th rowspan=2>ID</th>
+												<th rowspan=2>Nama</th>
+												<th rowspan=2>Link</th>
+												<th rowspan=2>Department</th>
+												<th rowspan=2>Jabatan</th>
+												<th rowspan=2>Tanggal</th>
+												<th rowspan=2>Cek</th>
+												<th rowspan=2>Shift In</th>
+												<th rowspan=2>Shift Out</th>
+												<th rowspan=2>Jadwal</th>
+												<th rowspan=2>Clock In</th>
+												<th rowspan=2>Clock Out</th>
+												<th rowspan=2>Cek CI</th>
+												<th rowspan=2>Cek CO</th>
+												
+												<th rowspan=2>Status In</th>
+												<th rowspan=2>Status Out</th>
+
+												<th rowspan=2>Keterangan</th>
+												<!-- //pot jam dihapus (16) --> 
+												<th rowspan=2>Potongan Makan</th>
+												
+												<th colspan=2>Lembur Libur</th>
+												<th colspan=2>Lembur Awal</th>
+												<th colspan=2>Lembur Akhir</th>
+												<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
+												<th class="text-center" colspan=3>Potongan Jam Overtime</th>
+												<th class="text-center" colspan=2>Potongan Jam</th>
+
+											</tr>
+											<tr>
+												<th>Awal</th>
+												<th>Akhir</th>
+												<th>Awal</th>
+												<th>Akhir</th>
+												<th>Awal</th>
+												<th>Akhir</th>
+
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Hari Libur">LB</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Awal">AW</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Akhir">AK</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Pagi">I1</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Sore">I2</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Malam">I3</th>
+												<th data-toggle="tooltip" data-placement="top" title="Total Lembur">Total</th>
+
+												<th>Pot TI</th>
+												<th>Pot Overtime</th>
+												<th>Overtime Final</th>
+												<th>Pot Hari Kerja</th>
+												<th>Pot Total</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th>Total</th>
+												<th id="kmj_makan"></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												
+												<th id="kmj_lb"></th>
+												<th id="kmj_aw"></th>
+												<th id="kmj_ak"></th>
+												<th id="kmj_i1"></th>
+												<th id="kmj_i2"></th>
+												<th id="kmj_i3"></th>
+												<th id="kmj_tl"></th>
+												
+												<th id="kmj_pot_ti"></th>
+												<th id="kmj_pot_overtime"></th>
+												<th id="kmj_overtime"></th>
+												<th id="kmj_pot_hk"></th>
+												<th id="kmj_pot_jam"></th>
+												<!-- <th id="s_hk"></th> -->
+
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div role="tabpanel" id="tabhtsprrd_freelance" class="tab-pane">
+							<div class="panel-body">
+								<div class="table-responsive">
+									<table id="tblhtsprrd_freelance" class="table table-striped table-bordered table-hover nowrap" width="100%">
+										<thead>
+											<tr>
+												<th rowspan=2>ID</th>
+												<th rowspan=2>Nama</th>
+												<th rowspan=2>Link</th>
+												<th rowspan=2>Department</th>
+												<th rowspan=2>Jabatan</th>
+												<th rowspan=2>Tanggal</th>
+												<th rowspan=2>Cek</th>
+												<th rowspan=2>Shift In</th>
+												<th rowspan=2>Shift Out</th>
+												<th rowspan=2>Jadwal</th>
+												<th rowspan=2>Clock In</th>
+												<th rowspan=2>Clock Out</th>
+												<th rowspan=2>Cek CI</th>
+												<th rowspan=2>Cek CO</th>
+												
+												<th rowspan=2>Status In</th>
+												<th rowspan=2>Status Out</th>
+
+												<th rowspan=2>Keterangan</th>
+												<!-- //pot jam dihapus (16) --> 
+												<th rowspan=2>Potongan Makan</th>
+												
+												<th colspan=2>Lembur Libur</th>
+												<th colspan=2>Lembur Awal</th>
+												<th colspan=2>Lembur Akhir</th>
+												<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
+												<th class="text-center" colspan=3>Potongan Jam Overtime</th>
+												<th class="text-center" colspan=2>Potongan Jam</th>
+
+											</tr>
+											<tr>
+												<th>Awal</th>
+												<th>Akhir</th>
+												<th>Awal</th>
+												<th>Akhir</th>
+												<th>Awal</th>
+												<th>Akhir</th>
+
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Hari Libur">LB</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Awal">AW</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Akhir">AK</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Pagi">I1</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Sore">I2</th>
+												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Malam">I3</th>
+												<th data-toggle="tooltip" data-placement="top" title="Total Lembur">Total</th>
+
+												<th>Pot TI</th>
+												<th>Pot Overtime</th>
+												<th>Overtime Final</th>
+												<th>Pot Hari Kerja</th>
+												<th>Pot Total</th>
+											</tr>
+										</thead>
+										<tfoot>
+											<tr>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th>Total</th>
+												<th id="freelance_makan"></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												<th></th>
+												
+												<th id="freelance_lb"></th>
+												<th id="freelance_aw"></th>
+												<th id="freelance_ak"></th>
+												<th id="freelance_i1"></th>
+												<th id="freelance_i2"></th>
+												<th id="freelance_i3"></th>
+												<th id="freelance_tl"></th>
+												
+												<th id="freelance_pot_ti"></th>
+												<th id="freelance_pot_overtime"></th>
+												<th id="freelance_overtime"></th>
+												<th id="freelance_pot_hk"></th>
+												<th id="freelance_pot_jam"></th>
+												<!-- <th id="s_hk"></th> -->
+
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -184,6 +627,8 @@
 
 		var id_hemxxmh = 0;
 		var id_hemxxmh_old = 0;
+		var user_id = <?php echo $_SESSION['user'] ?>;
+		var str_arr_ha_heyxxmh = <?php echo "'" . $_SESSION['str_arr_ha_heyxxmh'] . "'" ?>;
 
 		// BEGIN datepicker init
 		$('#periode').datepicker({
@@ -235,8 +680,56 @@
 		$(document).ready(function() {
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
+
+			if (user_id > 100) {
+				if (str_arr_ha_heyxxmh == '1,2') {
+					$('#kbm').show();
+					$('#kmj').show();
+					$('#karyawan').show();
+					$('#freelance').show();
+				}
+				if (str_arr_ha_heyxxmh == '1') {
+					$('#karyawan').show();
+					$('#freelance').show();
+
+					$('#kbm').hide();
+					$('#kmj').hide();
+				}
+				if (str_arr_ha_heyxxmh == '2') {
+					$('#kbm').show();
+
+					$('#kmj').hide();
+					$('#karyawan').hide();
+					$('#freelance').hide();
+				}
+			} else {
+				$('#kbm').show();
+				$('#kmj').show();
+				$('#karyawan').show();
+				$('#freelance').show();
+			}
+			// var arr_ha_heyxxmh = str_arr_ha_heyxxmh.split(',').map(Number);
+			// if (arr_ha_heyxxmh.includes(1) && arr_ha_heyxxmh.includes(2)) {
+			// 	// Tidak melakukan hide karena berisi kedua angka
+			// } else {
+			// 	if (arr_ha_heyxxmh.includes(1)) {
+			// 		$('#kbm').hide();
+			// 		$('#kmj').hide();
+
+			// 		$('#karyawan').show();
+			// 		$('#freelance').show();
+			// 	}
+
+			// 	if (arr_ha_heyxxmh.includes(1)) {
+			// 		$('#karyawan').hide();
+			// 		$('#freelance').hide();
+
+			// 		$('#kbm').show();
+			// 		$('#kmj').show();
+			// 	}
+			// }
 			
-			//start datatables
+		///start datatables
 			tblhtsprrd = $('#tblhtsprrd').DataTable( {
 				searchPanes:{
 					layout: 'columns-4'
@@ -571,35 +1064,35 @@
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					
 					// s_pot_jam = api.column( 16 ).data().sum();
-					s_makan = api.column( 17 ).data().sum();
-					s_lb = api.column( 24 ).data().sum();
-					s_aw = api.column( 25 ).data().sum();
-					s_ak = api.column( 26 ).data().sum();
-					s_i1 = api.column( 27 ).data().sum();
-					s_i2 = api.column( 28 ).data().sum();
-					s_i3 = api.column( 29 ).data().sum();
-					s_tl = api.column( 30 ).data().sum();
+					all_makan = api.column( 17 ).data().sum();
+					all_lb = api.column( 24 ).data().sum();
+					all_aw = api.column( 25 ).data().sum();
+					all_ak = api.column( 26 ).data().sum();
+					all_i1 = api.column( 27 ).data().sum();
+					all_i2 = api.column( 28 ).data().sum();
+					all_i3 = api.column( 29 ).data().sum();
+					all_tl = api.column( 30 ).data().sum();
 
-					s_pot_ti = api.column( 31 ).data().sum();
-					s_pot_overtime = api.column( 32 ).data().sum();
-					s_overtime = api.column( 33 ).data().sum();
-					s_pot_hk = api.column( 34 ).data().sum();
-					s_pot_jam = api.column( 35 ).data().sum();
+					all_pot_ti = api.column( 31 ).data().sum();
+					all_pot_overtime = api.column( 32 ).data().sum();
+					all_overtime = api.column( 33 ).data().sum();
+					all_pot_hk = api.column( 34 ).data().sum();
+					all_pot_jam = api.column( 35 ).data().sum();
 
-					$( '#s_makan' ).html( numFormat(s_makan) );
-					$( '#s_lb' ).html( numFormat(s_lb) );
-					$( '#s_aw' ).html( numFormat(s_aw) );
-					$( '#s_ak' ).html( numFormat(s_ak) );
-					$( '#s_i1' ).html( numFormat(s_i1) );
-					$( '#s_i2' ).html( numFormat(s_i2) );
-					$( '#s_i3' ).html( numFormat(s_i3) );
-					$( '#s_tl' ).html( numFormat(s_tl) );
+					$( '#all_makan' ).html( numFormat(all_makan) );
+					$( '#all_lb' ).html( numFormat(all_lb) );
+					$( '#all_aw' ).html( numFormat(all_aw) );
+					$( '#all_ak' ).html( numFormat(all_ak) );
+					$( '#all_i1' ).html( numFormat(all_i1) );
+					$( '#all_i2' ).html( numFormat(all_i2) );
+					$( '#all_i3' ).html( numFormat(all_i3) );
+					$( '#all_tl' ).html( numFormat(all_tl) );
 
-					$( '#s_pot_ti' ).html( numFormat(s_pot_ti) );
-					$( '#s_pot_overtime' ).html( numFormat(s_pot_overtime) );
-					$( '#s_overtime' ).html( numFormat(s_overtime) );
-					$( '#s_pot_hk' ).html( numFormat(s_pot_hk) );
-					$( '#s_pot_jam' ).html( numFormat(s_pot_jam) );
+					$( '#all_pot_ti' ).html( numFormat(all_pot_ti) );
+					$( '#all_pot_overtime' ).html( numFormat(all_pot_overtime) );
+					$( '#all_overtime' ).html( numFormat(all_overtime) );
+					$( '#all_pot_hk' ).html( numFormat(all_pot_hk) );
+					$( '#all_pot_jam' ).html( numFormat(all_pot_jam) );
 
 				},
 				initComplete: function() {
@@ -610,7 +1103,16 @@
 			tblhtsprrd.button('btncekNol:name').disable();
 			tblhtsprrd.button('btnPresensiOK:name').disable();
 
-			tblhtsprrd.searchPanes.container().appendTo( '#searchPanes1' );
+			$('.nav-tabs a').on('shown.bs.tab', function (e) {
+				var activeTabId = $(e.target).attr('href').substring(1);
+				// console.log('Active Tab ID: ' + activeTabId);
+				if (activeTabId == 'tabhtsprrd') {
+					tblhtsprrd.searchPanes.container().appendTo( '#searchPanes1' );
+					
+				} else {
+					tblhtsprrd.searchPanes.container().detach();
+				}
+			});
 
 			tblhtsprrd.on( 'select', function( e, dt, type, indexes ) {
 				htsprrd_data    = tblhtsprrd.row( { selected: true } ).data().htsprrd;
@@ -669,6 +1171,1787 @@
 				tblhtsprrd.button('btncekNol:name').disable();
 				tblhtsprrd.button('btnPresensiOK:name').disable();
 			} );
+		///// end datatables
+			
+		///start datatables kbm
+			tblhtsprrd_kbm = $('#tblhtsprrd_kbm').DataTable( {
+				searchPanes:{
+					layout: 'columns-4'
+				},
+				dom:
+					"<'row'<'col-lg-4 col-md-4 col-sm-12 col-xs-12'l><'col-lg-8 col-md-8 col-sm-12 col-xs-12'f>>" +
+					"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'B>>" +
+					"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'tr>>" +
+					"<'row'<'col-lg-5 col-md-5 col-sm-12 col-xs-12'i><'col-lg-7 col-md-7 col-sm-12 col-xs-12'p>>",
+				columnDefs:[
+					{
+						searchPanes:{
+							show: true
+						},
+						targets: [1,3,5,6,12,13,14,15]
+					},
+					{
+						searchPanes:{
+							show: false
+						},
+						targets: [0,2,4,7,8,9,10,11,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35]
+					}
+				],
+				ajax: {
+					url: "../../models/htsprrd/htsprrd_kbm.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_htsprrd = show_inactive_status_htsprrd;
+						d.start_date = start_date;
+						d.end_date = end_date;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				order: [[1, "asc"]],
+				// scrollX: true,
+				responsive: false,
+				// rowGroup: {
+				// 	dataSrc: function (row) {
+				// 		return row.hemxxmh_data + ' - ' + row.hodxxmh.nama + ' - ' + row.hetxxmh.nama + ' (' + row.htsprrd.tanggal + ')';
+				// 	}
+				// },
+				columns: [
+					{ data: "htsprrd.id",visible:false },
+					{ 
+						data: "hemxxmh_data"
+						// ,visible:false 
+					},
+					{ 
+						data: null ,
+						render: function (data, type, row) {
+							var id_hemxxmh = row.htsprrd.id_hemxxmh;
+							var tanggal = row.htsprrd.tanggal;
+							var url = "../dashboard/d_hr_report_presensi.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+							var link = '<a href="' + url + '" target="_blank">Link Text</a>';
+							return link;
+						}
+					},
+					{ 
+						data: "hodxxmh.nama"
+						// ,visible:false 
+					},
+					{ 
+						data: "hetxxmh.nama"
+						// ,visible:false 
+					},
+					{ 
+						data: "htsprrd.tanggal"
+						// ,visible:false 
+					},
+					{ 
+						data: "htsprrd.cek" ,
+						render: function (data, type, row) {
+							var cek = 0;
+							if(row.htsprrd.cek == null) {
+								// console.log(row.htsprrd.status_presensi_in);
+								status_presensi_in = row.htsprrd.status_presensi_in;
+								status_presensi_out = row.htsprrd.status_presensi_out;
+								st_clock_in = row.htsprrd.st_clock_in;
+								if(
+									status_presensi_in == 'NJ' || 
+									status_presensi_in == 'AL' || 
+									status_presensi_in == 'Belum ada Izin' || 
+									status_presensi_in == 'Belum ada Absen' || 
+									status_presensi_in == 'Izin Belum Disetujui' || 
+									status_presensi_in == 'No CI' || 
+									status_presensi_out == 'Belum ada Absen' || 
+									status_presensi_out == 'Belum ada Izin' || 
+									status_presensi_out == 'Izin Belum Disetujui' || 
+									status_presensi_out == 'No CO'
+									){
+									cek = cek + 1;
+								}
+
+								if (st_clock_in == "LATE 1") {
+									return 0;
+								} else {
+									if(cek > 0){
+										return '<span class="text-danger">' + cek + '</span>';
+									}else{
+										return cek;
+									}
+								}
+								return row.htsprrd.status_presensi_in;
+							} else {
+								return row.htsprrd.cek
+							}
+					   	},
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.shift_in",
+						visible: false 
+					},
+					{ 
+						data: "htsprrd.shift_out" ,
+						visible: false
+					},
+					{ data: "htsprrd.st_jadwal" }, //8
+					{ data: "htsprrd.clock_in" },
+					{ data: "htsprrd.clock_out" },
+					{ data: "htsprrd.st_clock_in" },
+					{ data: "htsprrd.st_clock_out" },//12
+					{ data: "htsprrd.status_presensi_in" },
+					{ data: "htsprrd.status_presensi_out" },
+					{ data: "htsprrd.htlxxrh_kode" }, //15
+					{ 
+						data: "htsprrd.is_makan",
+						render: function (data){
+							if (data > 0){
+								return data;
+							}else {
+								return '';
+							}
+						},
+						class: "text-right"
+					}, //17 jadi 16
+					{ data: "htsprrd.jam_awal_lembur_libur" },//18
+					{ data: "htsprrd.jam_akhir_lembur_libur" },
+					{ data: "htsprrd.jam_awal_lembur_awal" },
+					{ data: "htsprrd.jam_akhir_lembur_awal" },
+					{ data: "htsprrd.jam_awal_lembur_akhir" },
+					{ data: "htsprrd.jam_akhir_lembur_akhir" }, //23
+					{ 
+						data: "htsprrd.durasi_lembur_libur",
+						class: "text-right"
+					}, //24
+					{ 
+						data: "htsprrd.durasi_lembur_awal" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_akhir" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat1" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat2" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat3" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_total_jam" ,
+						class: "text-right"
+					}, //30
+					{ 
+						data: "htsprrd.pot_ti" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_overtime" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_final",
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_hk" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_jam",
+						class: "text-right"
+					}
+					
+				],
+				buttons: [	
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_htsprrd';
+						$table       = 'tblhtsprrd_kbm';
+						$edt         = 'edthtsprrd';
+						$show_status = '_htsprrd';
+						$table_name  = $nama_tabel;
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
+						$arr_buttons_action 	= [];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+					,{
+						extend: 'collection',
+						name: 'btnSetApprovePresensi',
+						id: 'btnSetApprovePresensi',
+						text: 'Approval Presensi',
+						className: 'btn btn-outline',
+						autoClose: true,
+						buttons: [
+							{ 
+								text: '<span class="fa fa-check">&nbsp &nbsp Approve Presensi</span>', 
+								name: 'btnApprovePresensi',
+								className: 'btn btn-primary',
+								titleAttr: 'Approve',
+								action: function ( e, dt, node, config ) {
+									var approve_presensi = 1;
+									$.ajax( {
+										url: '../../models/htsprrd/fn_approve_presensi.php',
+										dataType: 'json',
+										type: 'POST',
+										data: {
+											start_date: start_date,
+											approve_presensi: approve_presensi
+										},
+										success: function ( json ) {
+											$.notify({
+												message: json.message
+											},{
+												type: json.type_message
+											});
+											tblhtsprrd_kbm.ajax.reload(null,false);
+											cariApprove();
+										}
+									});
+								}
+							},
+							{ 
+								text: '<span class="fa fa-undo">&nbsp &nbsp Cancel Approve Presensi</span>', 
+								name: 'btnCancelApprovePresensi',
+								className: 'btn btn-outline',
+								titleAttr: 'Cancel Approve',
+								action: function ( e, dt, node, config ) {
+									var approve_presensi = 0;
+									$.ajax( {
+										url: '../../models/htsprrd/fn_approve_presensi.php',
+										dataType: 'json',
+										type: 'POST',
+										data: {
+											start_date: start_date,
+											approve_presensi: approve_presensi
+										},
+										success: function ( json ) {
+											$.notify({
+												message: json.message
+											},{
+												type: json.type_message
+											});
+											tblhtsprrd_kbm.ajax.reload(null,false);
+											cariApprove();
+										}
+									});
+								}
+							},
+						]
+					},
+					{ 
+						// text: '<i class="fa fa-exchange" aria-hidden="true"></i>', 
+						text: 'AL', 
+						name: 'btncekNol',
+						className: 'btn btn-danger',
+						titleAttr: 'Meng Alpha-kan',
+						action: function ( e, dt, node, config ) {
+							$.ajax( {
+								url: '../../models/htsprrd/fn_ganti_alpha.php',
+								dataType: 'json',
+								type: 'POST',
+								data: {
+									id_htsprrd: id_htsprrd
+								},
+								success: function ( json ) {
+									$.notify({
+										message: json.message
+									},{
+										type: json.type_message
+									});
+									tblhtsprrd_kbm.ajax.reload(null,false);
+								}
+							});
+						}
+					},
+					{ 
+						text: '<i class="fa fa-exchange" aria-hidden="true"></i>',  
+						name: 'btnPresensiOK',
+						className: 'btn btn-primary',
+						titleAttr: 'Presensi OK',
+						action: function ( e, dt, node, config ) {
+							$.ajax( {
+								url: '../../models/htsprrd/fn_presensi_ok.php',
+								dataType: 'json',
+								type: 'POST',
+								data: {
+									id_htsprrd: id_htsprrd,
+									id_hemxxmh_select: id_hemxxmh_select,
+									tanggal: tanggal,
+									htlxxrh_kode: htlxxrh_kode,
+								},
+								success: function ( json ) {
+									$.notify({
+										message: json.message
+									},{
+										type: json.type_message
+									});
+									tblhtsprrd_kbm.ajax.reload(null,false);
+								}
+							});
+						}
+					}
+				],
+				rowCallback: function( row, data, index ) {
+					if ( data.htsprrd.is_active == 0 ) {
+						$('td', row).addClass('text-danger');
+					}
+				},
+				footerCallback: function ( row, data, start, end, display ) {
+					var api       = this.api(), data;
+					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+					
+					// s_pot_jam = api.column( 16 ).data().sum();
+					kbm_makan = api.column( 17 ).data().sum();
+					kbm_lb = api.column( 24 ).data().sum();
+					kbm_aw = api.column( 25 ).data().sum();
+					kbm_ak = api.column( 26 ).data().sum();
+					kbm_i1 = api.column( 27 ).data().sum();
+					kbm_i2 = api.column( 28 ).data().sum();
+					kbm_i3 = api.column( 29 ).data().sum();
+					kbm_tl = api.column( 30 ).data().sum();
+
+					kbm_pot_ti = api.column( 31 ).data().sum();
+					kbm_pot_overtime = api.column( 32 ).data().sum();
+					kbm_overtime = api.column( 33 ).data().sum();
+					kbm_pot_hk = api.column( 34 ).data().sum();
+					kbm_pot_jam = api.column( 35 ).data().sum();
+
+					$( '#kbm_makan' ).html( numFormat(kbm_makan) );
+					$( '#kbm_lb' ).html( numFormat(kbm_lb) );
+					$( '#kbm_aw' ).html( numFormat(kbm_aw) );
+					$( '#kbm_ak' ).html( numFormat(kbm_ak) );
+					$( '#kbm_i1' ).html( numFormat(kbm_i1) );
+					$( '#kbm_i2' ).html( numFormat(kbm_i2) );
+					$( '#kbm_i3' ).html( numFormat(kbm_i3) );
+					$( '#kbm_tl' ).html( numFormat(kbm_tl) );
+
+					$( '#kbm_pot_ti' ).html( numFormat(kbm_pot_ti) );
+					$( '#kbm_pot_overtime' ).html( numFormat(kbm_pot_overtime) );
+					$( '#kbm_overtime' ).html( numFormat(kbm_overtime) );
+					$( '#kbm_pot_hk' ).html( numFormat(kbm_pot_hk) );
+					$( '#kbm_pot_jam' ).html( numFormat(kbm_pot_jam) );
+
+				},
+				initComplete: function() {
+					this.api().searchPanes.rebuildPane();
+				}
+			} );
+			tblhtsprrd_kbm.button('btnSetApprovePresensi:name').disable();
+			tblhtsprrd_kbm.button('btncekNol:name').disable();
+			tblhtsprrd_kbm.button('btnPresensiOK:name').disable();
+
+			$('.nav-tabs a').on('shown.bs.tab', function (e) {
+				var activeTabId = $(e.target).attr('href').substring(1);
+				// console.log('Active Tab ID: ' + activeTabId);
+				if (activeTabId == 'tabhtsprrd_kbm') {
+					tblhtsprrd_kbm.searchPanes.container().appendTo( '#searchPanes1' );
+					
+				} else {
+					tblhtsprrd_kbm.searchPanes.container().detach();
+				}
+			});
+
+
+			tblhtsprrd_kbm.on( 'select', function( e, dt, type, indexes ) {
+				htsprrd_data    = tblhtsprrd_kbm.row( { selected: true } ).data().htsprrd;
+				id_htsprrd      = htsprrd_data.id;
+				status_presensi_in      = htsprrd_data.status_presensi_in;
+				status_presensi_out      = htsprrd_data.status_presensi_out;
+				st_clock_in      = htsprrd_data.st_clock_in;
+				st_clock_out      = htsprrd_data.st_clock_out;
+				id_hemxxmh_select      = htsprrd_data.id_hemxxmh;
+				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
+				tanggal      = htsprrd_data.tanggal;
+				cek      = htsprrd_data.cek;
+				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
+				
+				if (status_presensi_in == "AL" && status_presensi_out == "AL" || status_presensi_in == "Jadwal Salah" && status_presensi_out == "Jadwal Salah") {
+					tblhtsprrd_kbm.button('btncekNol:name').enable();
+				} else {
+					tblhtsprrd_kbm.button('btncekNol:name').disable();
+				}
+				// if (status_presensi_in == "" && status_presensi_out == "") {
+				// 	if (st_clock_in == "No CI" && st_clock_out == "No CO") {
+				// 	tblhtsprrd_kbm.button('btncekNol:name').enable();
+				// 	} else {
+				// 		tblhtsprrd_kbm.button('btncekNol:name').disable();
+				// 	}
+				// }
+
+				cariKMJ();
+				// console.log(htlxxrh_kode);
+				//Cek Apakah mengandung Kode Absen KD
+				if (htlxxrh_kode.includes("KD/") && cek == 1) {
+				    tblhtsprrd_kbm.button('btnPresensiOK:name').enable();
+					// console.log("11111");
+                }
+
+				if (st_clock_in == "Late" && status_presensi_in == "Belum ada Izin") {
+				    tblhtsprrd_kbm.button('btnPresensiOK:name').enable();
+					// console.log("11111");
+                }
+
+				if (st_clock_out == "EARLY" && status_presensi_out == "Belum ada Izin") {
+				    tblhtsprrd_kbm.button('btnPresensiOK:name').enable();
+                }
+
+				if (status_presensi_in == "Jadwal Salah") {
+				    tblhtsprrd_kbm.button('btnPresensiOK:name').enable();
+                }
+
+				if (id_hemxxmh_select == 130 || id_hemxxmh_select == 134) {
+				    tblhtsprrd_kbm.button('btnPresensiOK:name').enable();
+                }
+				// console.log(htsprrd_data.status_presensi_in);
+			} );
+			
+			tblhtsprrd_kbm.on( 'deselect', function () {
+				tblhtsprrd_kbm.button('btncekNol:name').disable();
+				tblhtsprrd_kbm.button('btnPresensiOK:name').disable();
+			} );
+		///// end datatables
+			
+		///start datatables karyawan
+			tblhtsprrd_karyawan = $('#tblhtsprrd_karyawan').DataTable( {
+				searchPanes:{
+					layout: 'columns-4'
+				},
+				dom:
+					"<'row'<'col-lg-4 col-md-4 col-sm-12 col-xs-12'l><'col-lg-8 col-md-8 col-sm-12 col-xs-12'f>>" +
+					"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'B>>" +
+					"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'tr>>" +
+					"<'row'<'col-lg-5 col-md-5 col-sm-12 col-xs-12'i><'col-lg-7 col-md-7 col-sm-12 col-xs-12'p>>",
+				columnDefs:[
+					{
+						searchPanes:{
+							show: true
+						},
+						targets: [1,3,5,6,12,13,14,15]
+					},
+					{
+						searchPanes:{
+							show: false
+						},
+						targets: [0,2,4,7,8,9,10,11,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35]
+					}
+				],
+				ajax: {
+					url: "../../models/htsprrd/htsprrd_karyawan.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_htsprrd = show_inactive_status_htsprrd;
+						d.start_date = start_date;
+						d.end_date = end_date;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				order: [[1, "asc"]],
+				// scrollX: true,
+				responsive: false,
+				// rowGroup: {
+				// 	dataSrc: function (row) {
+				// 		return row.hemxxmh_data + ' - ' + row.hodxxmh.nama + ' - ' + row.hetxxmh.nama + ' (' + row.htsprrd.tanggal + ')';
+				// 	}
+				// },
+				columns: [
+					{ data: "htsprrd.id",visible:false },
+					{ 
+						data: "hemxxmh_data"
+						// ,visible:false 
+					},
+					{ 
+						data: null ,
+						render: function (data, type, row) {
+							var id_hemxxmh = row.htsprrd.id_hemxxmh;
+							var tanggal = row.htsprrd.tanggal;
+							var url = "../dashboard/d_hr_report_presensi.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+							var link = '<a href="' + url + '" target="_blank">Link Text</a>';
+							return link;
+						}
+					},
+					{ 
+						data: "hodxxmh.nama"
+						// ,visible:false 
+					},
+					{ 
+						data: "hetxxmh.nama"
+						// ,visible:false 
+					},
+					{ 
+						data: "htsprrd.tanggal"
+						// ,visible:false 
+					},
+					{ 
+						data: "htsprrd.cek" ,
+						render: function (data, type, row) {
+							var cek = 0;
+							if(row.htsprrd.cek == null) {
+								// console.log(row.htsprrd.status_presensi_in);
+								status_presensi_in = row.htsprrd.status_presensi_in;
+								status_presensi_out = row.htsprrd.status_presensi_out;
+								st_clock_in = row.htsprrd.st_clock_in;
+								if(
+									status_presensi_in == 'NJ' || 
+									status_presensi_in == 'AL' || 
+									status_presensi_in == 'Belum ada Izin' || 
+									status_presensi_in == 'Belum ada Absen' || 
+									status_presensi_in == 'Izin Belum Disetujui' || 
+									status_presensi_in == 'No CI' || 
+									status_presensi_out == 'Belum ada Absen' || 
+									status_presensi_out == 'Belum ada Izin' || 
+									status_presensi_out == 'Izin Belum Disetujui' || 
+									status_presensi_out == 'No CO'
+									){
+									cek = cek + 1;
+								}
+
+								if (st_clock_in == "LATE 1") {
+									return 0;
+								} else {
+									if(cek > 0){
+										return '<span class="text-danger">' + cek + '</span>';
+									}else{
+										return cek;
+									}
+								}
+								return row.htsprrd.status_presensi_in;
+							} else {
+								return row.htsprrd.cek
+							}
+					   	},
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.shift_in",
+						visible: false 
+					},
+					{ 
+						data: "htsprrd.shift_out" ,
+						visible: false
+					},
+					{ data: "htsprrd.st_jadwal" }, //8
+					{ data: "htsprrd.clock_in" },
+					{ data: "htsprrd.clock_out" },
+					{ data: "htsprrd.st_clock_in" },
+					{ data: "htsprrd.st_clock_out" },//12
+					{ data: "htsprrd.status_presensi_in" },
+					{ data: "htsprrd.status_presensi_out" },
+					{ data: "htsprrd.htlxxrh_kode" }, //15
+					{ 
+						data: "htsprrd.is_makan",
+						render: function (data){
+							if (data > 0){
+								return data;
+							}else {
+								return '';
+							}
+						},
+						class: "text-right"
+					}, //17 jadi 16
+					{ data: "htsprrd.jam_awal_lembur_libur" },//18
+					{ data: "htsprrd.jam_akhir_lembur_libur" },
+					{ data: "htsprrd.jam_awal_lembur_awal" },
+					{ data: "htsprrd.jam_akhir_lembur_awal" },
+					{ data: "htsprrd.jam_awal_lembur_akhir" },
+					{ data: "htsprrd.jam_akhir_lembur_akhir" }, //23
+					{ 
+						data: "htsprrd.durasi_lembur_libur",
+						class: "text-right"
+					}, //24
+					{ 
+						data: "htsprrd.durasi_lembur_awal" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_akhir" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat1" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat2" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat3" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_total_jam" ,
+						class: "text-right"
+					}, //30
+					{ 
+						data: "htsprrd.pot_ti" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_overtime" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_final",
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_hk" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_jam",
+						class: "text-right"
+					}
+					
+				],
+				buttons: [	
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_htsprrd';
+						$table       = 'tblhtsprrd_karyawan';
+						$edt         = 'edthtsprrd';
+						$show_status = '_htsprrd';
+						$table_name  = $nama_tabel;
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
+						$arr_buttons_action 	= [];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+					,{
+						extend: 'collection',
+						name: 'btnSetApprovePresensi',
+						id: 'btnSetApprovePresensi',
+						text: 'Approval Presensi',
+						className: 'btn btn-outline',
+						autoClose: true,
+						buttons: [
+							{ 
+								text: '<span class="fa fa-check">&nbsp &nbsp Approve Presensi</span>', 
+								name: 'btnApprovePresensi',
+								className: 'btn btn-primary',
+								titleAttr: 'Approve',
+								action: function ( e, dt, node, config ) {
+									var approve_presensi = 1;
+									$.ajax( {
+										url: '../../models/htsprrd/fn_approve_presensi.php',
+										dataType: 'json',
+										type: 'POST',
+										data: {
+											start_date: start_date,
+											approve_presensi: approve_presensi
+										},
+										success: function ( json ) {
+											$.notify({
+												message: json.message
+											},{
+												type: json.type_message
+											});
+											tblhtsprrd_karyawan.ajax.reload(null,false);
+											cariApprove();
+										}
+									});
+								}
+							},
+							{ 
+								text: '<span class="fa fa-undo">&nbsp &nbsp Cancel Approve Presensi</span>', 
+								name: 'btnCancelApprovePresensi',
+								className: 'btn btn-outline',
+								titleAttr: 'Cancel Approve',
+								action: function ( e, dt, node, config ) {
+									var approve_presensi = 0;
+									$.ajax( {
+										url: '../../models/htsprrd/fn_approve_presensi.php',
+										dataType: 'json',
+										type: 'POST',
+										data: {
+											start_date: start_date,
+											approve_presensi: approve_presensi
+										},
+										success: function ( json ) {
+											$.notify({
+												message: json.message
+											},{
+												type: json.type_message
+											});
+											tblhtsprrd_karyawan.ajax.reload(null,false);
+											cariApprove();
+										}
+									});
+								}
+							},
+						]
+					},
+					{ 
+						// text: '<i class="fa fa-exchange" aria-hidden="true"></i>', 
+						text: 'AL', 
+						name: 'btncekNol',
+						className: 'btn btn-danger',
+						titleAttr: 'Meng Alpha-kan',
+						action: function ( e, dt, node, config ) {
+							$.ajax( {
+								url: '../../models/htsprrd/fn_ganti_alpha.php',
+								dataType: 'json',
+								type: 'POST',
+								data: {
+									id_htsprrd: id_htsprrd
+								},
+								success: function ( json ) {
+									$.notify({
+										message: json.message
+									},{
+										type: json.type_message
+									});
+									tblhtsprrd_karyawan.ajax.reload(null,false);
+								}
+							});
+						}
+					},
+					{ 
+						text: '<i class="fa fa-exchange" aria-hidden="true"></i>',  
+						name: 'btnPresensiOK',
+						className: 'btn btn-primary',
+						titleAttr: 'Presensi OK',
+						action: function ( e, dt, node, config ) {
+							$.ajax( {
+								url: '../../models/htsprrd/fn_presensi_ok.php',
+								dataType: 'json',
+								type: 'POST',
+								data: {
+									id_htsprrd: id_htsprrd,
+									id_hemxxmh_select: id_hemxxmh_select,
+									tanggal: tanggal,
+									htlxxrh_kode: htlxxrh_kode,
+								},
+								success: function ( json ) {
+									$.notify({
+										message: json.message
+									},{
+										type: json.type_message
+									});
+									tblhtsprrd_karyawan.ajax.reload(null,false);
+								}
+							});
+						}
+					}
+				],
+				rowCallback: function( row, data, index ) {
+					if ( data.htsprrd.is_active == 0 ) {
+						$('td', row).addClass('text-danger');
+					}
+				},
+				footerCallback: function ( row, data, start, end, display ) {
+					var api       = this.api(), data;
+					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+					
+					// s_pot_jam = api.column( 16 ).data().sum();
+					karyawan_makan = api.column( 17 ).data().sum();
+					karyawan_lb = api.column( 24 ).data().sum();
+					karyawan_aw = api.column( 25 ).data().sum();
+					karyawan_ak = api.column( 26 ).data().sum();
+					karyawan_i1 = api.column( 27 ).data().sum();
+					karyawan_i2 = api.column( 28 ).data().sum();
+					karyawan_i3 = api.column( 29 ).data().sum();
+					karyawan_tl = api.column( 30 ).data().sum();
+
+					karyawan_pot_ti = api.column( 31 ).data().sum();
+					karyawan_pot_overtime = api.column( 32 ).data().sum();
+					karyawan_overtime = api.column( 33 ).data().sum();
+					karyawan_pot_hk = api.column( 34 ).data().sum();
+					karyawan_pot_jam = api.column( 35 ).data().sum();
+
+					$( '#karyawan_makan' ).html( numFormat(karyawan_makan) );
+					$( '#karyawan_lb' ).html( numFormat(karyawan_lb) );
+					$( '#karyawan_aw' ).html( numFormat(karyawan_aw) );
+					$( '#karyawan_ak' ).html( numFormat(karyawan_ak) );
+					$( '#karyawan_i1' ).html( numFormat(karyawan_i1) );
+					$( '#karyawan_i2' ).html( numFormat(karyawan_i2) );
+					$( '#karyawan_i3' ).html( numFormat(karyawan_i3) );
+					$( '#karyawan_tl' ).html( numFormat(karyawan_tl) );
+
+					$( '#karyawan_pot_ti' ).html( numFormat(karyawan_pot_ti) );
+					$( '#karyawan_pot_overtime' ).html( numFormat(karyawan_pot_overtime) );
+					$( '#karyawan_overtime' ).html( numFormat(karyawan_overtime) );
+					$( '#karyawan_pot_hk' ).html( numFormat(karyawan_pot_hk) );
+					$( '#karyawan_pot_jam' ).html( numFormat(karyawan_pot_jam) );
+
+				},
+				initComplete: function() {
+					this.api().searchPanes.rebuildPane();
+				}
+			} );
+			tblhtsprrd_karyawan.button('btnSetApprovePresensi:name').disable();
+			tblhtsprrd_karyawan.button('btncekNol:name').disable();
+			tblhtsprrd_karyawan.button('btnPresensiOK:name').disable();
+
+			$('.nav-tabs a').on('shown.bs.tab', function (e) {
+				var activeTabId = $(e.target).attr('href').substring(1);
+				// console.log('Active Tab ID: ' + activeTabId);
+				if (activeTabId == 'tabhtsprrd_karyawan') {
+					tblhtsprrd_karyawan.searchPanes.container().appendTo( '#searchPanes1' );
+					
+				} else {
+					tblhtsprrd_karyawan.searchPanes.container().detach();
+				}
+			});
+
+
+			tblhtsprrd_karyawan.on( 'select', function( e, dt, type, indexes ) {
+				htsprrd_data    = tblhtsprrd_karyawan.row( { selected: true } ).data().htsprrd;
+				id_htsprrd      = htsprrd_data.id;
+				status_presensi_in      = htsprrd_data.status_presensi_in;
+				status_presensi_out      = htsprrd_data.status_presensi_out;
+				st_clock_in      = htsprrd_data.st_clock_in;
+				st_clock_out      = htsprrd_data.st_clock_out;
+				id_hemxxmh_select      = htsprrd_data.id_hemxxmh;
+				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
+				tanggal      = htsprrd_data.tanggal;
+				cek      = htsprrd_data.cek;
+				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
+				
+				if (status_presensi_in == "AL" && status_presensi_out == "AL" || status_presensi_in == "Jadwal Salah" && status_presensi_out == "Jadwal Salah") {
+					tblhtsprrd_karyawan.button('btncekNol:name').enable();
+				} else {
+					tblhtsprrd_karyawan.button('btncekNol:name').disable();
+				}
+				// if (status_presensi_in == "" && status_presensi_out == "") {
+				// 	if (st_clock_in == "No CI" && st_clock_out == "No CO") {
+				// 	tblhtsprrd_karyawan.button('btncekNol:name').enable();
+				// 	} else {
+				// 		tblhtsprrd_karyawan.button('btncekNol:name').disable();
+				// 	}
+				// }
+
+				cariKMJ();
+				// console.log(htlxxrh_kode);
+				//Cek Apakah mengandung Kode Absen KD
+				if (htlxxrh_kode.includes("KD/") && cek == 1) {
+				    tblhtsprrd_karyawan.button('btnPresensiOK:name').enable();
+					// console.log("11111");
+                }
+
+				if (st_clock_in == "Late" && status_presensi_in == "Belum ada Izin") {
+				    tblhtsprrd_karyawan.button('btnPresensiOK:name').enable();
+					// console.log("11111");
+                }
+
+				if (st_clock_out == "EARLY" && status_presensi_out == "Belum ada Izin") {
+				    tblhtsprrd_karyawan.button('btnPresensiOK:name').enable();
+                }
+
+				if (status_presensi_in == "Jadwal Salah") {
+				    tblhtsprrd_karyawan.button('btnPresensiOK:name').enable();
+                }
+
+				if (id_hemxxmh_select == 130 || id_hemxxmh_select == 134) {
+				    tblhtsprrd_karyawan.button('btnPresensiOK:name').enable();
+                }
+				// console.log(htsprrd_data.status_presensi_in);
+			} );
+			
+			tblhtsprrd_karyawan.on( 'deselect', function () {
+				tblhtsprrd_karyawan.button('btncekNol:name').disable();
+				tblhtsprrd_karyawan.button('btnPresensiOK:name').disable();
+			} );
+		///// end datatables
+			
+		///start datatables kmj
+			tblhtsprrd_kmj = $('#tblhtsprrd_kmj').DataTable( {
+				searchPanes:{
+					layout: 'columns-4'
+				},
+				dom:
+					"<'row'<'col-lg-4 col-md-4 col-sm-12 col-xs-12'l><'col-lg-8 col-md-8 col-sm-12 col-xs-12'f>>" +
+					"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'B>>" +
+					"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'tr>>" +
+					"<'row'<'col-lg-5 col-md-5 col-sm-12 col-xs-12'i><'col-lg-7 col-md-7 col-sm-12 col-xs-12'p>>",
+				columnDefs:[
+					{
+						searchPanes:{
+							show: true
+						},
+						targets: [1,3,5,6,12,13,14,15]
+					},
+					{
+						searchPanes:{
+							show: false
+						},
+						targets: [0,2,4,7,8,9,10,11,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35]
+					}
+				],
+				ajax: {
+					url: "../../models/htsprrd/htsprrd_kmj.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_htsprrd = show_inactive_status_htsprrd;
+						d.start_date = start_date;
+						d.end_date = end_date;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				order: [[1, "asc"]],
+				// scrollX: true,
+				responsive: false,
+				// rowGroup: {
+				// 	dataSrc: function (row) {
+				// 		return row.hemxxmh_data + ' - ' + row.hodxxmh.nama + ' - ' + row.hetxxmh.nama + ' (' + row.htsprrd.tanggal + ')';
+				// 	}
+				// },
+				columns: [
+					{ data: "htsprrd.id",visible:false },
+					{ 
+						data: "hemxxmh_data"
+						// ,visible:false 
+					},
+					{ 
+						data: null ,
+						render: function (data, type, row) {
+							var id_hemxxmh = row.htsprrd.id_hemxxmh;
+							var tanggal = row.htsprrd.tanggal;
+							var url = "../dashboard/d_hr_report_presensi.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+							var link = '<a href="' + url + '" target="_blank">Link Text</a>';
+							return link;
+						}
+					},
+					{ 
+						data: "hodxxmh.nama"
+						// ,visible:false 
+					},
+					{ 
+						data: "hetxxmh.nama"
+						// ,visible:false 
+					},
+					{ 
+						data: "htsprrd.tanggal"
+						// ,visible:false 
+					},
+					{ 
+						data: "htsprrd.cek" ,
+						render: function (data, type, row) {
+							var cek = 0;
+							if(row.htsprrd.cek == null) {
+								// console.log(row.htsprrd.status_presensi_in);
+								status_presensi_in = row.htsprrd.status_presensi_in;
+								status_presensi_out = row.htsprrd.status_presensi_out;
+								st_clock_in = row.htsprrd.st_clock_in;
+								if(
+									status_presensi_in == 'NJ' || 
+									status_presensi_in == 'AL' || 
+									status_presensi_in == 'Belum ada Izin' || 
+									status_presensi_in == 'Belum ada Absen' || 
+									status_presensi_in == 'Izin Belum Disetujui' || 
+									status_presensi_in == 'No CI' || 
+									status_presensi_out == 'Belum ada Absen' || 
+									status_presensi_out == 'Belum ada Izin' || 
+									status_presensi_out == 'Izin Belum Disetujui' || 
+									status_presensi_out == 'No CO'
+									){
+									cek = cek + 1;
+								}
+
+								if (st_clock_in == "LATE 1") {
+									return 0;
+								} else {
+									if(cek > 0){
+										return '<span class="text-danger">' + cek + '</span>';
+									}else{
+										return cek;
+									}
+								}
+								return row.htsprrd.status_presensi_in;
+							} else {
+								return row.htsprrd.cek
+							}
+					   	},
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.shift_in",
+						visible: false 
+					},
+					{ 
+						data: "htsprrd.shift_out" ,
+						visible: false
+					},
+					{ data: "htsprrd.st_jadwal" }, //8
+					{ data: "htsprrd.clock_in" },
+					{ data: "htsprrd.clock_out" },
+					{ data: "htsprrd.st_clock_in" },
+					{ data: "htsprrd.st_clock_out" },//12
+					{ data: "htsprrd.status_presensi_in" },
+					{ data: "htsprrd.status_presensi_out" },
+					{ data: "htsprrd.htlxxrh_kode" }, //15
+					{ 
+						data: "htsprrd.is_makan",
+						render: function (data){
+							if (data > 0){
+								return data;
+							}else {
+								return '';
+							}
+						},
+						class: "text-right"
+					}, //17 jadi 16
+					{ data: "htsprrd.jam_awal_lembur_libur" },//18
+					{ data: "htsprrd.jam_akhir_lembur_libur" },
+					{ data: "htsprrd.jam_awal_lembur_awal" },
+					{ data: "htsprrd.jam_akhir_lembur_awal" },
+					{ data: "htsprrd.jam_awal_lembur_akhir" },
+					{ data: "htsprrd.jam_akhir_lembur_akhir" }, //23
+					{ 
+						data: "htsprrd.durasi_lembur_libur",
+						class: "text-right"
+					}, //24
+					{ 
+						data: "htsprrd.durasi_lembur_awal" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_akhir" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat1" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat2" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat3" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_total_jam" ,
+						class: "text-right"
+					}, //30
+					{ 
+						data: "htsprrd.pot_ti" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_overtime" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_final",
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_hk" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_jam",
+						class: "text-right"
+					}
+					
+				],
+				buttons: [	
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_htsprrd';
+						$table       = 'tblhtsprrd_kmj';
+						$edt         = 'edthtsprrd';
+						$show_status = '_htsprrd';
+						$table_name  = $nama_tabel;
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
+						$arr_buttons_action 	= [];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+					,{
+						extend: 'collection',
+						name: 'btnSetApprovePresensi',
+						id: 'btnSetApprovePresensi',
+						text: 'Approval Presensi',
+						className: 'btn btn-outline',
+						autoClose: true,
+						buttons: [
+							{ 
+								text: '<span class="fa fa-check">&nbsp &nbsp Approve Presensi</span>', 
+								name: 'btnApprovePresensi',
+								className: 'btn btn-primary',
+								titleAttr: 'Approve',
+								action: function ( e, dt, node, config ) {
+									var approve_presensi = 1;
+									$.ajax( {
+										url: '../../models/htsprrd/fn_approve_presensi.php',
+										dataType: 'json',
+										type: 'POST',
+										data: {
+											start_date: start_date,
+											approve_presensi: approve_presensi
+										},
+										success: function ( json ) {
+											$.notify({
+												message: json.message
+											},{
+												type: json.type_message
+											});
+											tblhtsprrd_kmj.ajax.reload(null,false);
+											cariApprove();
+										}
+									});
+								}
+							},
+							{ 
+								text: '<span class="fa fa-undo">&nbsp &nbsp Cancel Approve Presensi</span>', 
+								name: 'btnCancelApprovePresensi',
+								className: 'btn btn-outline',
+								titleAttr: 'Cancel Approve',
+								action: function ( e, dt, node, config ) {
+									var approve_presensi = 0;
+									$.ajax( {
+										url: '../../models/htsprrd/fn_approve_presensi.php',
+										dataType: 'json',
+										type: 'POST',
+										data: {
+											start_date: start_date,
+											approve_presensi: approve_presensi
+										},
+										success: function ( json ) {
+											$.notify({
+												message: json.message
+											},{
+												type: json.type_message
+											});
+											tblhtsprrd_kmj.ajax.reload(null,false);
+											cariApprove();
+										}
+									});
+								}
+							},
+						]
+					},
+					{ 
+						// text: '<i class="fa fa-exchange" aria-hidden="true"></i>', 
+						text: 'AL', 
+						name: 'btncekNol',
+						className: 'btn btn-danger',
+						titleAttr: 'Meng Alpha-kan',
+						action: function ( e, dt, node, config ) {
+							$.ajax( {
+								url: '../../models/htsprrd/fn_ganti_alpha.php',
+								dataType: 'json',
+								type: 'POST',
+								data: {
+									id_htsprrd: id_htsprrd
+								},
+								success: function ( json ) {
+									$.notify({
+										message: json.message
+									},{
+										type: json.type_message
+									});
+									tblhtsprrd_kmj.ajax.reload(null,false);
+								}
+							});
+						}
+					},
+					{ 
+						text: '<i class="fa fa-exchange" aria-hidden="true"></i>',  
+						name: 'btnPresensiOK',
+						className: 'btn btn-primary',
+						titleAttr: 'Presensi OK',
+						action: function ( e, dt, node, config ) {
+							$.ajax( {
+								url: '../../models/htsprrd/fn_presensi_ok.php',
+								dataType: 'json',
+								type: 'POST',
+								data: {
+									id_htsprrd: id_htsprrd,
+									id_hemxxmh_select: id_hemxxmh_select,
+									tanggal: tanggal,
+									htlxxrh_kode: htlxxrh_kode,
+								},
+								success: function ( json ) {
+									$.notify({
+										message: json.message
+									},{
+										type: json.type_message
+									});
+									tblhtsprrd_kmj.ajax.reload(null,false);
+								}
+							});
+						}
+					}
+				],
+				rowCallback: function( row, data, index ) {
+					if ( data.htsprrd.is_active == 0 ) {
+						$('td', row).addClass('text-danger');
+					}
+				},
+				footerCallback: function ( row, data, start, end, display ) {
+					var api       = this.api(), data;
+					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+					
+					// s_pot_jam = api.column( 16 ).data().sum();
+					kmj_makan = api.column( 17 ).data().sum();
+					kmj_lb = api.column( 24 ).data().sum();
+					kmj_aw = api.column( 25 ).data().sum();
+					kmj_ak = api.column( 26 ).data().sum();
+					kmj_i1 = api.column( 27 ).data().sum();
+					kmj_i2 = api.column( 28 ).data().sum();
+					kmj_i3 = api.column( 29 ).data().sum();
+					kmj_tl = api.column( 30 ).data().sum();
+
+					kmj_pot_ti = api.column( 31 ).data().sum();
+					kmj_pot_overtime = api.column( 32 ).data().sum();
+					kmj_overtime = api.column( 33 ).data().sum();
+					kmj_pot_hk = api.column( 34 ).data().sum();
+					kmj_pot_jam = api.column( 35 ).data().sum();
+
+					$( '#kmj_makan' ).html( numFormat(kmj_makan) );
+					$( '#kmj_lb' ).html( numFormat(kmj_lb) );
+					$( '#kmj_aw' ).html( numFormat(kmj_aw) );
+					$( '#kmj_ak' ).html( numFormat(kmj_ak) );
+					$( '#kmj_i1' ).html( numFormat(kmj_i1) );
+					$( '#kmj_i2' ).html( numFormat(kmj_i2) );
+					$( '#kmj_i3' ).html( numFormat(kmj_i3) );
+					$( '#kmj_tl' ).html( numFormat(kmj_tl) );
+
+					$( '#kmj_pot_ti' ).html( numFormat(kmj_pot_ti) );
+					$( '#kmj_pot_overtime' ).html( numFormat(kmj_pot_overtime) );
+					$( '#kmj_overtime' ).html( numFormat(kmj_overtime) );
+					$( '#kmj_pot_hk' ).html( numFormat(kmj_pot_hk) );
+					$( '#kmj_pot_jam' ).html( numFormat(kmj_pot_jam) );
+
+				},
+				initComplete: function() {
+					this.api().searchPanes.rebuildPane();
+				}
+			} );
+			tblhtsprrd_kmj.button('btnSetApprovePresensi:name').disable();
+			tblhtsprrd_kmj.button('btncekNol:name').disable();
+			tblhtsprrd_kmj.button('btnPresensiOK:name').disable();
+
+			$('.nav-tabs a').on('shown.bs.tab', function (e) {
+				var activeTabId = $(e.target).attr('href').substring(1);
+				// console.log('Active Tab ID: ' + activeTabId);
+				if (activeTabId == 'tabhtsprrd_kmj') {
+					tblhtsprrd_kmj.searchPanes.container().appendTo( '#searchPanes1' );
+					
+				} else {
+					tblhtsprrd_kmj.searchPanes.container().detach();
+				}
+			});
+
+
+			tblhtsprrd_kmj.on( 'select', function( e, dt, type, indexes ) {
+				htsprrd_data    = tblhtsprrd_kmj.row( { selected: true } ).data().htsprrd;
+				id_htsprrd      = htsprrd_data.id;
+				status_presensi_in      = htsprrd_data.status_presensi_in;
+				status_presensi_out      = htsprrd_data.status_presensi_out;
+				st_clock_in      = htsprrd_data.st_clock_in;
+				st_clock_out      = htsprrd_data.st_clock_out;
+				id_hemxxmh_select      = htsprrd_data.id_hemxxmh;
+				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
+				tanggal      = htsprrd_data.tanggal;
+				cek      = htsprrd_data.cek;
+				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
+				
+				if (status_presensi_in == "AL" && status_presensi_out == "AL" || status_presensi_in == "Jadwal Salah" && status_presensi_out == "Jadwal Salah") {
+					tblhtsprrd_kmj.button('btncekNol:name').enable();
+				} else {
+					tblhtsprrd_kmj.button('btncekNol:name').disable();
+				}
+				// if (status_presensi_in == "" && status_presensi_out == "") {
+				// 	if (st_clock_in == "No CI" && st_clock_out == "No CO") {
+				// 	tblhtsprrd_kmj.button('btncekNol:name').enable();
+				// 	} else {
+				// 		tblhtsprrd_kmj.button('btncekNol:name').disable();
+				// 	}
+				// }
+
+				cariKMJ();
+				// console.log(htlxxrh_kode);
+				//Cek Apakah mengandung Kode Absen KD
+				if (htlxxrh_kode.includes("KD/") && cek == 1) {
+				    tblhtsprrd_kmj.button('btnPresensiOK:name').enable();
+					// console.log("11111");
+                }
+
+				if (st_clock_in == "Late" && status_presensi_in == "Belum ada Izin") {
+				    tblhtsprrd_kmj.button('btnPresensiOK:name').enable();
+					// console.log("11111");
+                }
+
+				if (st_clock_out == "EARLY" && status_presensi_out == "Belum ada Izin") {
+				    tblhtsprrd_kmj.button('btnPresensiOK:name').enable();
+                }
+
+				if (status_presensi_in == "Jadwal Salah") {
+				    tblhtsprrd_kmj.button('btnPresensiOK:name').enable();
+                }
+
+				if (id_hemxxmh_select == 130 || id_hemxxmh_select == 134) {
+				    tblhtsprrd_kmj.button('btnPresensiOK:name').enable();
+                }
+				// console.log(htsprrd_data.status_presensi_in);
+			} );
+			
+			tblhtsprrd_kmj.on( 'deselect', function () {
+				tblhtsprrd_kmj.button('btncekNol:name').disable();
+				tblhtsprrd_kmj.button('btnPresensiOK:name').disable();
+			} );
+		///// end datatables
+			
+		///start datatables freelance
+			tblhtsprrd_freelance = $('#tblhtsprrd_freelance').DataTable( {
+				searchPanes:{
+					layout: 'columns-4'
+				},
+				dom:
+					"<'row'<'col-lg-4 col-md-4 col-sm-12 col-xs-12'l><'col-lg-8 col-md-8 col-sm-12 col-xs-12'f>>" +
+					"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'B>>" +
+					"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'tr>>" +
+					"<'row'<'col-lg-5 col-md-5 col-sm-12 col-xs-12'i><'col-lg-7 col-md-7 col-sm-12 col-xs-12'p>>",
+				columnDefs:[
+					{
+						searchPanes:{
+							show: true
+						},
+						targets: [1,3,5,6,12,13,14,15]
+					},
+					{
+						searchPanes:{
+							show: false
+						},
+						targets: [0,2,4,7,8,9,10,11,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35]
+					}
+				],
+				ajax: {
+					url: "../../models/htsprrd/htsprrd_freelance.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_htsprrd = show_inactive_status_htsprrd;
+						d.start_date = start_date;
+						d.end_date = end_date;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				order: [[1, "asc"]],
+				// scrollX: true,
+				responsive: false,
+				// rowGroup: {
+				// 	dataSrc: function (row) {
+				// 		return row.hemxxmh_data + ' - ' + row.hodxxmh.nama + ' - ' + row.hetxxmh.nama + ' (' + row.htsprrd.tanggal + ')';
+				// 	}
+				// },
+				columns: [
+					{ data: "htsprrd.id",visible:false },
+					{ 
+						data: "hemxxmh_data"
+						// ,visible:false 
+					},
+					{ 
+						data: null ,
+						render: function (data, type, row) {
+							var id_hemxxmh = row.htsprrd.id_hemxxmh;
+							var tanggal = row.htsprrd.tanggal;
+							var url = "../dashboard/d_hr_report_presensi.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+							var link = '<a href="' + url + '" target="_blank">Link Text</a>';
+							return link;
+						}
+					},
+					{ 
+						data: "hodxxmh.nama"
+						// ,visible:false 
+					},
+					{ 
+						data: "hetxxmh.nama"
+						// ,visible:false 
+					},
+					{ 
+						data: "htsprrd.tanggal"
+						// ,visible:false 
+					},
+					{ 
+						data: "htsprrd.cek" ,
+						render: function (data, type, row) {
+							var cek = 0;
+							if(row.htsprrd.cek == null) {
+								// console.log(row.htsprrd.status_presensi_in);
+								status_presensi_in = row.htsprrd.status_presensi_in;
+								status_presensi_out = row.htsprrd.status_presensi_out;
+								st_clock_in = row.htsprrd.st_clock_in;
+								if(
+									status_presensi_in == 'NJ' || 
+									status_presensi_in == 'AL' || 
+									status_presensi_in == 'Belum ada Izin' || 
+									status_presensi_in == 'Belum ada Absen' || 
+									status_presensi_in == 'Izin Belum Disetujui' || 
+									status_presensi_in == 'No CI' || 
+									status_presensi_out == 'Belum ada Absen' || 
+									status_presensi_out == 'Belum ada Izin' || 
+									status_presensi_out == 'Izin Belum Disetujui' || 
+									status_presensi_out == 'No CO'
+									){
+									cek = cek + 1;
+								}
+
+								if (st_clock_in == "LATE 1") {
+									return 0;
+								} else {
+									if(cek > 0){
+										return '<span class="text-danger">' + cek + '</span>';
+									}else{
+										return cek;
+									}
+								}
+								return row.htsprrd.status_presensi_in;
+							} else {
+								return row.htsprrd.cek
+							}
+					   	},
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.shift_in",
+						visible: false 
+					},
+					{ 
+						data: "htsprrd.shift_out" ,
+						visible: false
+					},
+					{ data: "htsprrd.st_jadwal" }, //8
+					{ data: "htsprrd.clock_in" },
+					{ data: "htsprrd.clock_out" },
+					{ data: "htsprrd.st_clock_in" },
+					{ data: "htsprrd.st_clock_out" },//12
+					{ data: "htsprrd.status_presensi_in" },
+					{ data: "htsprrd.status_presensi_out" },
+					{ data: "htsprrd.htlxxrh_kode" }, //15
+					{ 
+						data: "htsprrd.is_makan",
+						render: function (data){
+							if (data > 0){
+								return data;
+							}else {
+								return '';
+							}
+						},
+						class: "text-right"
+					}, //17 jadi 16
+					{ data: "htsprrd.jam_awal_lembur_libur" },//18
+					{ data: "htsprrd.jam_akhir_lembur_libur" },
+					{ data: "htsprrd.jam_awal_lembur_awal" },
+					{ data: "htsprrd.jam_akhir_lembur_awal" },
+					{ data: "htsprrd.jam_awal_lembur_akhir" },
+					{ data: "htsprrd.jam_akhir_lembur_akhir" }, //23
+					{ 
+						data: "htsprrd.durasi_lembur_libur",
+						class: "text-right"
+					}, //24
+					{ 
+						data: "htsprrd.durasi_lembur_awal" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_akhir" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat1" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat2" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_istirahat3" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_total_jam" ,
+						class: "text-right"
+					}, //30
+					{ 
+						data: "htsprrd.pot_ti" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_overtime" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.durasi_lembur_final",
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_hk" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_jam",
+						class: "text-right"
+					}
+					
+				],
+				buttons: [	
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_htsprrd';
+						$table       = 'tblhtsprrd_freelance';
+						$edt         = 'edthtsprrd';
+						$show_status = '_htsprrd';
+						$table_name  = $nama_tabel;
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
+						$arr_buttons_action 	= [];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+					,{
+						extend: 'collection',
+						name: 'btnSetApprovePresensi',
+						id: 'btnSetApprovePresensi',
+						text: 'Approval Presensi',
+						className: 'btn btn-outline',
+						autoClose: true,
+						buttons: [
+							{ 
+								text: '<span class="fa fa-check">&nbsp &nbsp Approve Presensi</span>', 
+								name: 'btnApprovePresensi',
+								className: 'btn btn-primary',
+								titleAttr: 'Approve',
+								action: function ( e, dt, node, config ) {
+									var approve_presensi = 1;
+									$.ajax( {
+										url: '../../models/htsprrd/fn_approve_presensi.php',
+										dataType: 'json',
+										type: 'POST',
+										data: {
+											start_date: start_date,
+											approve_presensi: approve_presensi
+										},
+										success: function ( json ) {
+											$.notify({
+												message: json.message
+											},{
+												type: json.type_message
+											});
+											tblhtsprrd_freelance.ajax.reload(null,false);
+											cariApprove();
+										}
+									});
+								}
+							},
+							{ 
+								text: '<span class="fa fa-undo">&nbsp &nbsp Cancel Approve Presensi</span>', 
+								name: 'btnCancelApprovePresensi',
+								className: 'btn btn-outline',
+								titleAttr: 'Cancel Approve',
+								action: function ( e, dt, node, config ) {
+									var approve_presensi = 0;
+									$.ajax( {
+										url: '../../models/htsprrd/fn_approve_presensi.php',
+										dataType: 'json',
+										type: 'POST',
+										data: {
+											start_date: start_date,
+											approve_presensi: approve_presensi
+										},
+										success: function ( json ) {
+											$.notify({
+												message: json.message
+											},{
+												type: json.type_message
+											});
+											tblhtsprrd_freelance.ajax.reload(null,false);
+											cariApprove();
+										}
+									});
+								}
+							},
+						]
+					},
+					{ 
+						// text: '<i class="fa fa-exchange" aria-hidden="true"></i>', 
+						text: 'AL', 
+						name: 'btncekNol',
+						className: 'btn btn-danger',
+						titleAttr: 'Meng Alpha-kan',
+						action: function ( e, dt, node, config ) {
+							$.ajax( {
+								url: '../../models/htsprrd/fn_ganti_alpha.php',
+								dataType: 'json',
+								type: 'POST',
+								data: {
+									id_htsprrd: id_htsprrd
+								},
+								success: function ( json ) {
+									$.notify({
+										message: json.message
+									},{
+										type: json.type_message
+									});
+									tblhtsprrd_freelance.ajax.reload(null,false);
+								}
+							});
+						}
+					},
+					{ 
+						text: '<i class="fa fa-exchange" aria-hidden="true"></i>',  
+						name: 'btnPresensiOK',
+						className: 'btn btn-primary',
+						titleAttr: 'Presensi OK',
+						action: function ( e, dt, node, config ) {
+							$.ajax( {
+								url: '../../models/htsprrd/fn_presensi_ok.php',
+								dataType: 'json',
+								type: 'POST',
+								data: {
+									id_htsprrd: id_htsprrd,
+									id_hemxxmh_select: id_hemxxmh_select,
+									tanggal: tanggal,
+									htlxxrh_kode: htlxxrh_kode,
+								},
+								success: function ( json ) {
+									$.notify({
+										message: json.message
+									},{
+										type: json.type_message
+									});
+									tblhtsprrd_freelance.ajax.reload(null,false);
+								}
+							});
+						}
+					}
+				],
+				rowCallback: function( row, data, index ) {
+					if ( data.htsprrd.is_active == 0 ) {
+						$('td', row).addClass('text-danger');
+					}
+				},
+				footerCallback: function ( row, data, start, end, display ) {
+					var api       = this.api(), data;
+					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+					
+					// s_pot_jam = api.column( 16 ).data().sum();
+					freelance_makan = api.column( 17 ).data().sum();
+					freelance_lb = api.column( 24 ).data().sum();
+					freelance_aw = api.column( 25 ).data().sum();
+					freelance_ak = api.column( 26 ).data().sum();
+					freelance_i1 = api.column( 27 ).data().sum();
+					freelance_i2 = api.column( 28 ).data().sum();
+					freelance_i3 = api.column( 29 ).data().sum();
+					freelance_tl = api.column( 30 ).data().sum();
+
+					freelance_pot_ti = api.column( 31 ).data().sum();
+					freelance_pot_overtime = api.column( 32 ).data().sum();
+					freelance_overtime = api.column( 33 ).data().sum();
+					freelance_pot_hk = api.column( 34 ).data().sum();
+					freelance_pot_jam = api.column( 35 ).data().sum();
+
+					$( '#freelance_makan' ).html( numFormat(freelance_makan) );
+					$( '#freelance_lb' ).html( numFormat(freelance_lb) );
+					$( '#freelance_aw' ).html( numFormat(freelance_aw) );
+					$( '#freelance_ak' ).html( numFormat(freelance_ak) );
+					$( '#freelance_i1' ).html( numFormat(freelance_i1) );
+					$( '#freelance_i2' ).html( numFormat(freelance_i2) );
+					$( '#freelance_i3' ).html( numFormat(freelance_i3) );
+					$( '#freelance_tl' ).html( numFormat(freelance_tl) );
+
+					$( '#freelance_pot_ti' ).html( numFormat(freelance_pot_ti) );
+					$( '#freelance_pot_overtime' ).html( numFormat(freelance_pot_overtime) );
+					$( '#freelance_overtime' ).html( numFormat(freelance_overtime) );
+					$( '#freelance_pot_hk' ).html( numFormat(freelance_pot_hk) );
+					$( '#freelance_pot_jam' ).html( numFormat(freelance_pot_jam) );
+
+				},
+				initComplete: function() {
+					this.api().searchPanes.rebuildPane();
+				}
+			} );
+			tblhtsprrd_freelance.button('btnSetApprovePresensi:name').disable();
+			tblhtsprrd_freelance.button('btncekNol:name').disable();
+			tblhtsprrd_freelance.button('btnPresensiOK:name').disable();
+
+			$('.nav-tabs a').on('shown.bs.tab', function (e) {
+				var activeTabId = $(e.target).attr('href').substring(1);
+				// console.log('Active Tab ID: ' + activeTabId);
+				if (activeTabId == 'tabhtsprrd_freelance') {
+					tblhtsprrd_freelance.searchPanes.container().appendTo( '#searchPanes1' );
+					
+				} else {
+					tblhtsprrd_freelance.searchPanes.container().detach();
+				}
+			});
+
+
+			tblhtsprrd_freelance.on( 'select', function( e, dt, type, indexes ) {
+				htsprrd_data    = tblhtsprrd_freelance.row( { selected: true } ).data().htsprrd;
+				id_htsprrd      = htsprrd_data.id;
+				status_presensi_in      = htsprrd_data.status_presensi_in;
+				status_presensi_out      = htsprrd_data.status_presensi_out;
+				st_clock_in      = htsprrd_data.st_clock_in;
+				st_clock_out      = htsprrd_data.st_clock_out;
+				id_hemxxmh_select      = htsprrd_data.id_hemxxmh;
+				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
+				tanggal      = htsprrd_data.tanggal;
+				cek      = htsprrd_data.cek;
+				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
+				
+				if (status_presensi_in == "AL" && status_presensi_out == "AL" || status_presensi_in == "Jadwal Salah" && status_presensi_out == "Jadwal Salah") {
+					tblhtsprrd_freelance.button('btncekNol:name').enable();
+				} else {
+					tblhtsprrd_freelance.button('btncekNol:name').disable();
+				}
+				// if (status_presensi_in == "" && status_presensi_out == "") {
+				// 	if (st_clock_in == "No CI" && st_clock_out == "No CO") {
+				// 	tblhtsprrd_freelance.button('btncekNol:name').enable();
+				// 	} else {
+				// 		tblhtsprrd_freelance.button('btncekNol:name').disable();
+				// 	}
+				// }
+
+				carifreelance();
+				// console.log(htlxxrh_kode);
+				//Cek Apakah mengandung Kode Absen KD
+				if (htlxxrh_kode.includes("KD/") && cek == 1) {
+				    tblhtsprrd_freelance.button('btnPresensiOK:name').enable();
+					// console.log("11111");
+                }
+
+				if (st_clock_in == "Late" && status_presensi_in == "Belum ada Izin") {
+				    tblhtsprrd_freelance.button('btnPresensiOK:name').enable();
+					// console.log("11111");
+                }
+
+				if (st_clock_out == "EARLY" && status_presensi_out == "Belum ada Izin") {
+				    tblhtsprrd_freelance.button('btnPresensiOK:name').enable();
+                }
+
+				if (status_presensi_in == "Jadwal Salah") {
+				    tblhtsprrd_freelance.button('btnPresensiOK:name').enable();
+                }
+
+				if (id_hemxxmh_select == 130 || id_hemxxmh_select == 134) {
+				    tblhtsprrd_freelance.button('btnPresensiOK:name').enable();
+                }
+				// console.log(htsprrd_data.status_presensi_in);
+			} );
+			
+			tblhtsprrd_freelance.on( 'deselect', function () {
+				tblhtsprrd_freelance.button('btncekNol:name').disable();
+				tblhtsprrd_freelance.button('btnPresensiOK:name').disable();
+			} );
+		///// end datatables
 				
 			$("#frmhtsprrd").submit(function(e) {
 				e.preventDefault();
@@ -695,6 +2978,23 @@
 					tblhtsprrd.ajax.reload(function ( json ) {
 						notifyprogress.close();
 					}, false);
+
+					tblhtsprrd_kbm.ajax.reload(function ( json ) {
+						notifyprogress.close();
+					}, false);
+
+					tblhtsprrd_karyawan.ajax.reload(function ( json ) {
+						notifyprogress.close();
+					}, false);
+
+					tblhtsprrd_kmj.ajax.reload(function ( json ) {
+						notifyprogress.close();
+					}, false);
+
+					tblhtsprrd_freelance.ajax.reload(function ( json ) {
+						notifyprogress.close();
+					}, false);
+
 					return false; 
 				}
 			});
