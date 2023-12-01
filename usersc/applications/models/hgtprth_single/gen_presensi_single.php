@@ -1645,7 +1645,6 @@
         $data = array(
             'message'=> 'Generate Presensi Berhasil Dibuat dalam waktu ' . $awal->diffInSeconds($akhir) . ' detik', 
             'type_message'=>'success',
-            'st_in'=>$st_clock_in,
             'waktu'=> $awal . ' - ' . $akhir . ' /  ' . $awal->diffInSeconds($akhir)
         );
         
