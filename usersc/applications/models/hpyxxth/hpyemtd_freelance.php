@@ -85,7 +85,8 @@
 				Field::inst( 'heyxxmd.nama' ),
 				Field::inst( 'hesxxmh.nama' ),
 				
-				Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' )
+				Field::inst( 'hemxxmh.kode as kode' ),
+				Field::inst( 'hemxxmh.nama as nama' )
 			)
 			->leftJoin( 'hemxxmh','hemxxmh.id','=','hpyemtd.id_hemxxmh' )
 			->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )

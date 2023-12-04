@@ -61,6 +61,7 @@
 												<tr>
 													<th>ID</th>
 													<th>id_hpyxxth</th>
+													<th>NIK</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -116,9 +117,9 @@
 													<th></th>
 													<th></th>
 													<th></th>
+													<th></th>
 													<th>Total</th>
 													<th></th>
-													<th id="all_9"></th>
 													<th id="all_10"></th>
 													<th id="all_11"></th>
 													<th id="all_12"></th>
@@ -154,6 +155,7 @@
 													<th id="all_42"></th>
 													<th id="all_43"></th>
 													<th id="all_44"></th>
+													<th id="all_45"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -168,6 +170,7 @@
 												<tr>
 													<th>ID</th>
 													<th>id_hpyxxth</th>
+													<th>NIK</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -223,9 +226,9 @@
 													<th></th>
 													<th></th>
 													<th></th>
+													<th></th>
 													<th>Total</th>
 													<th></th>
-													<th id="kbm_reg9"></th>
 													<th id="kbm_reg10"></th>
 													<th id="kbm_reg11"></th>
 													<th id="kbm_reg12"></th>
@@ -261,6 +264,7 @@
 													<th id="kbm_reg42"></th>
 													<th id="kbm_reg43"></th>
 													<th id="kbm_reg44"></th>
+													<th id="kbm_reg45"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -275,6 +279,7 @@
 												<tr>
 													<th>ID</th>
 													<th>id_hpyxxth</th>
+													<th>NIK</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -330,9 +335,9 @@
 													<th></th>
 													<th></th>
 													<th></th>
+													<th></th>
 													<th>Total</th>
 													<th></th>
-													<th id="kbm_tr9"></th>
 													<th id="kbm_tr10"></th>
 													<th id="kbm_tr11"></th>
 													<th id="kbm_tr12"></th>
@@ -368,6 +373,7 @@
 													<th id="kbm_tr42"></th>
 													<th id="kbm_tr43"></th>
 													<th id="kbm_tr44"></th>
+													<th id="kbm_t45"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -382,6 +388,7 @@
 												<tr>
 													<th>ID</th>
 													<th>id_hpyxxth</th>
+													<th>NIK</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -437,9 +444,9 @@
 													<th></th>
 													<th></th>
 													<th></th>
+													<th></th>
 													<th>Total</th>
 													<th></th>
-													<th id="karyawan_9"></th>
 													<th id="karyawan_10"></th>
 													<th id="karyawan_11"></th>
 													<th id="karyawan_12"></th>
@@ -475,6 +482,7 @@
 													<th id="karyawan_42"></th>
 													<th id="karyawan_43"></th>
 													<th id="karyawan_44"></th>
+													<th id="karyawan_45"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -489,6 +497,7 @@
 												<tr>
 													<th>ID</th>
 													<th>id_hpyxxth</th>
+													<th>NIK</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -544,9 +553,9 @@
 													<th></th>
 													<th></th>
 													<th></th>
+													<th></th>
 													<th>Total</th>
 													<th></th>
-													<th id="kmj_9"></th>
 													<th id="kmj_10"></th>
 													<th id="kmj_11"></th>
 													<th id="kmj_12"></th>
@@ -582,6 +591,7 @@
 													<th id="kmj_42"></th>
 													<th id="kmj_43"></th>
 													<th id="kmj_44"></th>
+													<th id="kmj_45"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -596,6 +606,7 @@
 												<tr>
 													<th>ID</th>
 													<th>id_hpyxxth</th>
+													<th>NIK</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -651,9 +662,9 @@
 													<th></th>
 													<th></th>
 													<th></th>
+													<th></th>
 													<th>Total</th>
 													<th></th>
-													<th id="freelance_9"></th>
 													<th id="freelance_10"></th>
 													<th id="freelance_11"></th>
 													<th id="freelance_12"></th>
@@ -689,6 +700,7 @@
 													<th id="freelance_42"></th>
 													<th id="freelance_43"></th>
 													<th id="freelance_44"></th>
+													<th id="freelance_45"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -1095,7 +1107,8 @@
 				columns: [
 					{ data: "hpyemtd.id",visible:false },
 					{ data: "hpyemtd.id_hpyxxth",visible:false },
-					{ data: "hemxxmh_data" },
+					{ data: "kode" },
+					{ data: "nama" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "heyxxmh.nama" },
@@ -1309,7 +1322,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 44; i++) {
+					for (var i = 10; i <= 45; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1457,7 +1470,8 @@
 				columns: [
 					{ data: "hpyemtd.id",visible:false },
 					{ data: "hpyemtd.id_hpyxxth",visible:false },
-					{ data: "hemxxmh_data" },
+					{ data: "kode" },
+					{ data: "nama" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "heyxxmh.nama" },
@@ -1671,7 +1685,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 44; i++) {
+					for (var i = 10; i <= 45; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1816,7 +1830,8 @@
 				columns: [
 					{ data: "hpyemtd.id",visible:false },
 					{ data: "hpyemtd.id_hpyxxth",visible:false },
-					{ data: "hemxxmh_data" },
+					{ data: "kode" },
+					{ data: "nama" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "heyxxmh.nama" },
@@ -2030,7 +2045,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 44; i++) {
+					for (var i = 10; i <= 45; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -2174,7 +2189,8 @@
 				columns: [
 					{ data: "hpyemtd.id",visible:false },
 					{ data: "hpyemtd.id_hpyxxth",visible:false },
-					{ data: "hemxxmh_data" },
+					{ data: "kode" },
+					{ data: "nama" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "heyxxmh.nama" },
@@ -2388,7 +2404,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 44; i++) {
+					for (var i = 10; i <= 45; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -2532,7 +2548,8 @@
 				columns: [
 					{ data: "hpyemtd.id",visible:false },
 					{ data: "hpyemtd.id_hpyxxth",visible:false },
-					{ data: "hemxxmh_data" },
+					{ data: "kode" },
+					{ data: "nama" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "heyxxmh.nama" },
@@ -2746,7 +2763,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 44; i++) {
+					for (var i = 10; i <= 45; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -2890,7 +2907,8 @@
 				columns: [
 					{ data: "hpyemtd.id",visible:false },
 					{ data: "hpyemtd.id_hpyxxth",visible:false },
-					{ data: "hemxxmh_data" },
+					{ data: "kode" },
+					{ data: "nama" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "heyxxmh.nama" },
@@ -3104,7 +3122,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 9; i <= 44; i++) {
+					for (var i = 10; i <= 45; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
