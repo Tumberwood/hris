@@ -19,7 +19,7 @@
             'count(id) as approve'
         ])
         ->where('tanggal', $_POST['start_date'] )
-        ->where('is_approve', 1 )
+        ->where('is_approve', 0 )
         ->exec();
     $rs_htsprrd = $qs_htsprrd->fetch();
 

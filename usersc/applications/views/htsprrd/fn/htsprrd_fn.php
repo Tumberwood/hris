@@ -23,11 +23,12 @@
                 if (start_date == end_date && total_data > 0 && is_payroll == 0 && cek_data == 0) {
                     tblhtsprrd.button('btnSetApprovePresensi:name').enable();
                     if (total_approve > 0) {
-                        tblhtsprrd.button('btnCancelApprovePresensi:name').enable();
-                        tblhtsprrd.button('btnApprovePresensi:name').disable();
-                    } else {
                         tblhtsprrd.button('btnApprovePresensi:name').enable();
                         tblhtsprrd.button('btnCancelApprovePresensi:name').disable();
+                    } else {
+                        
+                        tblhtsprrd.button('btnCancelApprovePresensi:name').enable();
+                        tblhtsprrd.button('btnApprovePresensi:name').disable();
                     }
                 } else {
                     tblhtsprrd.button('btnSetApprovePresensi:name').disable();
