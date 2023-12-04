@@ -373,7 +373,7 @@
 													<th id="kbm_tr42"></th>
 													<th id="kbm_tr43"></th>
 													<th id="kbm_tr44"></th>
-													<th id="kbm_t45"></th>
+													<th id="kbm_tr45"></th>
 												</tr>
 											</tfoot>
 										</table>
