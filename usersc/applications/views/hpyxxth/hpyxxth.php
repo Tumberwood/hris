@@ -863,7 +863,7 @@
 						d.show_inactive_status_hpyxxth = show_inactive_status_hpyxxth;
 					}
 				},
-				order: [[ 1, "desc" ],[2, "asc"]],
+				order: [[ 1, "desc" ]],
 				columns: [
 					{ data: "hpyxxth.id",visible:false },
 					{ 
