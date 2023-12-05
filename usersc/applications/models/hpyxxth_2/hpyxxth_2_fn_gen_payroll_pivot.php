@@ -2374,12 +2374,13 @@
                     id_heyxxmd,
                     a.id_hemxxmh,
                     
+                    -- Koreksi Perubahan Status
                     IFNULL( 
-                        if( c.tanggal_masuk BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_akhir), 
+                        if( c.tanggal_masuk BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_akhir) AND id_status IS NOT NULL, 
                             ((hk_baru / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
                             0
 	                     )
-                    ,0) AS koreksi_status
+                    ,0) AS koreksi_status,
                     
                 FROM htsprrd AS a
                 LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = a.id_hemxxmh
@@ -2401,6 +2402,31 @@
                         GROUP BY a.id_hemxxmh
                     ) AS report
                 ) AS hk_baru ON hk_baru.id_hemxxmh = a.id_hemxxmh
+
+                -- HK NIK LAMA
+                LEFT JOIN (
+                    SELECT
+                        hem.nama AS nama,
+                        hk_nik_lama,
+                        hem.id AS id_hemxxmh,
+                        b.id AS id_hemxxmh_new
+                    FROM hemxxmh AS hem
+                    LEFT JOIN hemxxmh AS b ON b.nama = hem.nama
+                    LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
+                    LEFT JOIN (
+                        SELECT
+                            COUNT(rd.id) AS hk_nik_lama,
+                            job.tanggal_masuk,
+                            rd.id_hemxxmh
+                        FROM htsprrd AS rd
+                        LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = rd.id_hemxxmh
+                        WHERE rd.tanggal BETWEEN date_add(job.tanggal_masuk, INTERVAL 1 DAY) AND LAST_DAY(:tanggal_awal)
+                    AND rd.status_presensi_in = "HK"
+                        GROUP BY rd.id_hemxxmh
+                    ) AS prd ON prd.id_hemxxmh = b.id
+                    GROUP BY nama
+                    ORDER BY b.id DESC
+                ) AS hk_nik_lama ON hk_nik_lama.id_hemxxmh = a.id_hemxxmh
 
                 -- gaji pokok pelatihan
                 LEFT JOIN (
@@ -2445,6 +2471,23 @@
                     ) AS subquery
                     WHERE row_num = 1
                 ) tbl_htpr_hemxxmh ON tbl_htpr_hemxxmh.id_hemxxmh = a.id_hemxxmh
+                
+                -- Cek Perubahan Status
+                LEFT JOIN (
+                   SELECT
+                        ifnull(id_status, 0) as id_status,
+                        nama_peg,
+                        report.id_hemxxmh
+                    FROM (
+                        SELECT 
+                            a.id as id_status,
+                            peg.nama AS nama_peg,
+                            a.id_hemxxmh
+                        FROM hesxxtd AS a
+                        LEFT JOIN hemxxmh AS peg ON peg.id = a.id_hemxxmh
+                        WHERE a.is_active = 1 AND a.is_approve = 1 AND a.tanggal_mulai BETWEEN :tanggal_awal AND :tanggal_akhir
+                    ) AS report
+                ) AS perubahan_status ON perubahan_status.nama_peg = hem.nama
                 
                 WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
             )
