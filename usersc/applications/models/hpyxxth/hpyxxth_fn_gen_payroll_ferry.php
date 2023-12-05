@@ -1188,7 +1188,7 @@
                                 a.id_hemxxmh
                             FROM hesxxtd AS a
                             LEFT JOIN hemxxmh AS peg ON peg.id = a.id_hemxxmh
-                            WHERE a.is_active = 1 AND a.is_approve = 1
+                            WHERE a.is_active = 1 AND a.is_approve = 1 AND a.tanggal_mulai BETWEEN :tanggal_awal AND :tanggal_akhir
                         ) AS report
                     ) AS perubahan_status ON perubahan_status.nama_peg = hem.nama
 
