@@ -787,6 +787,8 @@
 						edthtoemtd.field('htoemtd.is_valid_checkclock').error( 'Checkclock belum valid!' );
 					}
 					// END validasi checkclock
+					
+					lemburLibur(id_hemxxmh, tanggal, id_htotpmh);
 				}
 				
 				if ( edthtoemtd.inError() ) {

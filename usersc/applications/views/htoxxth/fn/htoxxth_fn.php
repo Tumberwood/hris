@@ -59,4 +59,33 @@
             }
         } );
     }
+    
+    function lemburLibur(id_hemxxmh, tanggal, id_htotpmh){
+        $.ajax( {
+            url: "../../models/htoxxth/fn_lembur_libur.php",
+            dataType: 'json',
+            type: 'POST',
+            async: false,
+            data: {
+                id_hemxxmh: id_hemxxmh,
+                tanggal: tanggal,
+                id_htotpmh: id_htotpmh
+            },
+            success: function ( json ) {
+                jadwal = json.data.jadwal;
+                is_holiday = json.data.is_holiday;
+                
+                if (id_htotpmh == 4) {
+                    if (jadwal != 1) {
+                        if (is_holiday == 1) {
+                            console.log('Add');
+                        } else {
+                            edthtoemtd.field('htoemtd.id_htotpmh').error( 'Lembur Libur Tidak Bisa dipilih karena Shift Pegawai ini bukan OFF dan tanggal bukan public holiday!' );
+                        }
+                    }
+                }
+
+            }
+        });
+    }
 </script>
