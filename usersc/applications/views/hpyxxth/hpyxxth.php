@@ -36,6 +36,7 @@
                         <thead>
                             <tr>
 								<th>ID</th>
+                                <th>Tanggal Awal</th>
                                 <th>Periode</th>
                                 <th>Jenis</th>
                                 <th>Keterangan</th>
@@ -866,6 +867,7 @@
 				order: [[ 1, "desc" ]],
 				columns: [
 					{ data: "hpyxxth.id",visible:false },
+					{ data: "hpyxxth.tanggal_awal",visible:false },
 					{ 
 						data: null ,
 						render: function (data, type, row) {
