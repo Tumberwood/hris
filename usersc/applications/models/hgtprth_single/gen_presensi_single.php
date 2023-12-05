@@ -1167,7 +1167,7 @@
                                 $is_tgl_merah = 1;
                             }
                             
-                            if ($id_shift == 1) {
+                            // if ($id_shift == 1) {
                                 if ($is_tgl_merah == 1) {
                                     $lembur15 = 0;
                                     $lembur15_final = 0;
@@ -1225,11 +1225,11 @@
                                     $lembur3_final = $lembur3 * 3;
                                 }
                                 
-                            } else {
+                            // } else {
                                 // untuk yang lembur libur dan dia tidak off maka di 0 kan dan diberi cek = 1
                                 // $cek = 1;
                                 // $durasi_lembur_libur_jam = 0;
-                            }
+                            // }
 
                             // if ($id_hemxxmh == 67) {
                             // } else {
