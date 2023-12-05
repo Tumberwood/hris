@@ -2384,6 +2384,7 @@
                     
                 FROM htsprrd AS a
                 LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = a.id_hemxxmh
+                LEFT JOIN hemxxmh AS hem ON hem.id = a.id_hemxxmh
                 
                 -- hari kerja NIK baru
                 LEFT JOIN (
@@ -2402,31 +2403,6 @@
                         GROUP BY a.id_hemxxmh
                     ) AS report
                 ) AS hk_baru ON hk_baru.id_hemxxmh = a.id_hemxxmh
-
-                -- HK NIK LAMA
-                LEFT JOIN (
-                    SELECT
-                        hem.nama AS nama,
-                        hk_nik_lama,
-                        hem.id AS id_hemxxmh,
-                        b.id AS id_hemxxmh_new
-                    FROM hemxxmh AS hem
-                    LEFT JOIN hemxxmh AS b ON b.nama = hem.nama
-                    LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
-                    LEFT JOIN (
-                        SELECT
-                            COUNT(rd.id) AS hk_nik_lama,
-                            job.tanggal_masuk,
-                            rd.id_hemxxmh
-                        FROM htsprrd AS rd
-                        LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = rd.id_hemxxmh
-                        WHERE rd.tanggal BETWEEN date_add(job.tanggal_masuk, INTERVAL 1 DAY) AND LAST_DAY(:tanggal_awal)
-                    AND rd.status_presensi_in = "HK"
-                        GROUP BY rd.id_hemxxmh
-                    ) AS prd ON prd.id_hemxxmh = b.id
-                    GROUP BY nama
-                    ORDER BY b.id DESC
-                ) AS hk_nik_lama ON hk_nik_lama.id_hemxxmh = a.id_hemxxmh
 
                 -- gaji pokok pelatihan
                 LEFT JOIN (
