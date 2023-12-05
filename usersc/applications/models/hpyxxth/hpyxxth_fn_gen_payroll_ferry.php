@@ -290,7 +290,7 @@
                     
                     -- Koreksi Perubahan Status
                     IFNULL( 
-                        if( c.tanggal_masuk BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_akhir), 
+                        if( c.tanggal_masuk BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_akhir) AND id_status IS NOT NULL, 
                             ((hk_baru / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
                             0
 	                     )
@@ -1174,6 +1174,23 @@
                         ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh 
                         
                     ) AS pot_upah_rotasi ON pot_upah_rotasi.id_hemxxmh = a.id_hemxxmh
+
+                    -- Cek Perubahan Status
+                    LEFT JOIN (
+                       SELECT
+                            ifnull(id_status, 0) as id_status,
+                            nama_peg,
+                            report.id_hemxxmh
+                        FROM (
+                            SELECT 
+                                a.id as id_status,
+                                peg.nama AS nama_peg,
+                                a.id_hemxxmh
+                            FROM hesxxtd AS a
+                            LEFT JOIN hemxxmh AS peg ON peg.id = a.id_hemxxmh
+                            WHERE a.is_active = 1 AND a.is_approve = 1
+                        ) AS report
+                    ) AS perubahan_status ON perubahan_status.nama_peg = hem.nama
 
                 WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
             )
