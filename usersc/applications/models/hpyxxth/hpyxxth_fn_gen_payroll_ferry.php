@@ -313,6 +313,7 @@
                     
                 FROM htsprrd AS a
                 LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = a.id_hemxxmh
+                LEFT JOIN hemxxmh AS hem ON hem.id = a.id_hemxxmh
                 
                     -- Masa Kerja
                     LEFT JOIN (
