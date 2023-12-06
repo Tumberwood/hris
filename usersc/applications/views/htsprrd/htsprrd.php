@@ -1103,6 +1103,8 @@
 			tblhtsprrd.button('btncekNol:name').disable();
 			tblhtsprrd.button('btnPresensiOK:name').disable();
 
+			tblhtsprrd.searchPanes.container().appendTo( '#searchPanes1' );
+
 			$('.nav-tabs a').on('shown.bs.tab', function (e) {
 				var activeTabId = $(e.target).attr('href').substring(1);
 				// console.log('Active Tab ID: ' + activeTabId);
