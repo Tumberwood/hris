@@ -72,13 +72,13 @@
     </div>
 </div>
 
-<div class="row" id="report">
+<div class="row" id="report" style="display: none;">
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-content">
 				<h3 class="text-center" id="nama_peg"></h3>
 				<br>
-                <div class="row">
+                <div class="row" id="konten">
 					<div class="col-md-1">
                        <h4>Tanggal</h4> 
                        <h4>Jadwal</h4> 
@@ -143,6 +143,12 @@
 			</div>
 		</div>
     </div>
+	</div>
+</div>
+
+<div class="ibox"  id="no_jadwal" style="display: none;">
+	<div class="ibox-content">
+		<h1 class="text-center"> JADWAL BELUM DIBUAT !!! </h1>
 	</div>
 </div>
 
@@ -234,7 +240,6 @@
         // END select2 init
 
 		function generateTable(counter) {
-            $('#report').show();
 			if ($('#select_hemxxmh').val() > 0) {
 				id_hemxxmh = $('#select_hemxxmh').val();
 			} else {
@@ -258,6 +263,9 @@
 					if(json.data.length > 0 && json.data[0].id_hemxxmh != null){
 						$('#edit_jadwal').empty();
 						$('#jadwal').empty();
+						
+						$('#report').show();
+						$('#no_jadwal').hide();
 
 						var page_now = parseInt(counter) + 1; 
 						var page_total = parseInt(json.data5) + 1; 
@@ -664,7 +672,12 @@
 						}
 
 					}else{
-						notifyprogress.close();
+						$('#no_jadwal').show();
+						$('#report').hide();
+
+						if(notifyprogress != ''){
+							notifyprogress.close();
+						}
 						notifyprogress = $.notify({
 							message: 'Tidak ada data pada tanggal tersebut!'
 						},{
@@ -679,6 +692,10 @@
 		}
 
 		$(document).ready(function() {
+			$('#prevButton').hide();
+			$('#nextButton').hide();
+			$('#report').hide();
+			
 			const prevButton = document.getElementById("prevButton");
         	const nextButton = document.getElementById("nextButton");
 			id_hemxxmh_old = id_hem_get;
