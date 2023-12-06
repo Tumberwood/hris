@@ -235,7 +235,16 @@
 
 		function generateTable(counter) {
             $('#report').show();
-			
+			if ($('#select_hemxxmh').val() > 0) {
+				id_hemxxmh = $('#select_hemxxmh').val();
+			} else {
+				if (id_hem_get != 0) {
+					id_hemxxmh = id_hem_get;
+				} else {
+					id_hemxxmh = $('#select_hemxxmh').val();
+				}
+			}
+
 			$.ajax( {
 				url: "../../models/dashboard/d_hr_report_presensi.php",
 				dataType: 'json',
@@ -262,7 +271,7 @@
 							}
 						}
 
-						console.log('id_hemxxmh'+id_hemxxmh);
+						// console.log('id_hemxxmh'+id_hemxxmh);
 						
 						var button_add = [
 							{
@@ -318,7 +327,7 @@
 							} else {
 								$('#prevButton').show();
 							}
-							// console.log(json.data5);
+							console.log(json.data5);
 							if (counter == json.data5) {
 								$('#nextButton').hide();
 							} else {
@@ -327,8 +336,8 @@
 						}
 
 						var id = json.data[0].id_jadwal;
-						console.log(id);
-						console.log('row_'+id);
+						// console.log(id);
+						// console.log('row_'+id);
 						$('#edit_jadwal').attr('data-editor-id', 'row_'+id);
 						
 						var h3Element = $('<h3>');
@@ -502,7 +511,7 @@
 								// Your row callback code here
 							}
 						});
-						console.log('id_hemxxmh_old'+json.data[0].id_hemxxmh); 
+						// console.log('id_hemxxmh_old'+json.data[0].id_hemxxmh); 
 						id_hemxxmh_old = json.data[0].id_hemxxmh;
 						edthtsprtd.field('htsprtd.id_hemxxmh').val(id_hemxxmh_old);
 
@@ -579,7 +588,7 @@
 							paging: false,          // Disable pagination
 							searching: false,       // Disable search
 							info: false,            // Disable "Showing X of Y entries" information
-							lengthChange: false,    // Disable "Show X entries" dropdown
+							lengthChange: false,    // Disable "console.log X entries" dropdown
 							responsive: false,
 							scrollCollapse: true,
 							data: json.data4,
@@ -673,6 +682,7 @@
 			const prevButton = document.getElementById("prevButton");
         	const nextButton = document.getElementById("nextButton");
 			id_hemxxmh_old = id_hem_get;
+			// console.log(id_hemxxmh_old);
 			
             $('#report').hide();
 
@@ -1205,7 +1215,7 @@
 			edthtsprtd.on( 'preOpen', function( e, mode, action ) {
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthtsprtd.field('start_on').val(start_on);
-				//  console.log(id_hemxxmh_old);
+				 console.log(id_hemxxmh_old);
 				edthtsprtd.field('htsprtd.id_hemxxmh').val(id_hemxxmh_old);
 				edthtsprtd.field('htsprtd.id_hemxxmh').disable();
 				
@@ -1318,7 +1328,7 @@
 				// update kode finger
 				id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
 				htsprtd_get_hemxxmh_kode();
-				console.log(kode_finger);
+				// console.log(kode_finger);
 				edthtsprtd.field('htsprtd.kode').val(kode_finger);
 
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');

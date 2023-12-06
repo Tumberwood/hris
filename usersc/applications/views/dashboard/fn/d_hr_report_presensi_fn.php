@@ -44,7 +44,7 @@
             },
             success: function ( json ) {
                 jam = json.data.jam_istirahat.jam;
-                console.log(jam);
+                // console.log(jam);
                 if (jam == undefined) {
                     edthtsprtd.field('htsprtd.jam').val('');
                 } else {
@@ -61,7 +61,7 @@
         let tanggal_ymd = moment(tanggal).format('YYYY-MM-DD');
         // id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
         nama = edthtsprtd.field('htsprtd.nama').val();
-        console.log(jam);
+        // console.log(jam);
 
         $.ajax( {
             url: "../../models/htsprtd/fn_cek_unik_makan.php",
@@ -77,11 +77,11 @@
                 status = json.data.peg_makan.status;
                 range_awal = json.data.peg_makan.range_awal;
                 range_akhir = json.data.peg_makan.range_akhir;
-                console.log(json.data.peg_makan.range_awal);
-                console.log(range_akhir);
+                // console.log(json.data.peg_makan.range_awal);
+                // console.log(range_akhir);
 
                 if (nama == "makan" || nama == "makan manual") {
-                    // console.log(c_peg);
+                    console.log(c_peg);
                     if(status == "invalid"){
                         edthtsprtd.field('htsprtd.id_hemxxmh').error( 'Pegawai Sudah Pernah Diinput pada Mesin Makan/Makan Manual!' );
                     }
@@ -95,7 +95,7 @@
         var tanggal = moment(originalDate).format('YYYY-MM-DD');
         
         id_htsxxmh = edthtssctd.field('htssctd.id_htsxxmh').val();
-		console.log(id_htsxxmh);
+		// console.log(id_htsxxmh);
         
         $.ajax( {
             url: "../../models/htssctd/fn_cari_jam_shift.php",
