@@ -114,7 +114,7 @@
 	if($from != NULL && $currentPage == $filename) {
 		$qi_ = $db
 			->query('insert', 'crons_logs_si')
-			->set('name', "emailserver")
+			->set('name', "jadwal_belum_dibuat")
 			->set('created_by',1)
 			->set('created_on',$today)
 			->exec();
