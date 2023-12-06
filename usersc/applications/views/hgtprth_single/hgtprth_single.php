@@ -376,7 +376,13 @@
 
 				// atur hak akses
 				CekSelectHeaderH(tblhgtprth_single);
-				tblhgtprth_single.button( 'btnGeneratePresensi:name' ).enable();
+				
+				cariApprove();
+				if (total_approve > 0) {
+					tblhgtprth_single.button( 'btnGeneratePresensi:name' ).disable();
+				} else {
+					tblhgtprth_single.button( 'btnGeneratePresensi:name' ).enable();
+				}
 
 			} );
 
