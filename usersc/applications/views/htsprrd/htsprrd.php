@@ -13,7 +13,7 @@
 
 <!-- begin content here -->
 
-<div class="row">
+<div class="row" id="filterPresensi">
     <div class="col">
         <div class="ibox collapsed" id="iboxfilter">
             <div class="ibox-title">
@@ -629,6 +629,7 @@
 		var id_hemxxmh_old = 0;
 		var user_id = <?php echo $_SESSION['user'] ?>;
 		var str_arr_ha_heyxxmh = <?php echo "'" . $_SESSION['str_arr_ha_heyxxmh'] . "'" ?>;
+		$('.collapse-link').prop('disabled', true);
 
 		// BEGIN datepicker init
 		$('#periode').datepicker({
@@ -678,6 +679,7 @@
         // END select2 init
 		
 		$(document).ready(function() {
+			$('.collapse-link').prop('disabled', true);
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 
@@ -2433,6 +2435,8 @@
 				},
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
+					console.log('brrrrro');
+					$('.collapse-link').prop('disabled', false);
 				}
 			} );
 			tblhtsprrd_kmj.button('btnSetApprovePresensi:name').disable();
