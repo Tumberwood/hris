@@ -109,15 +109,13 @@
 	}
 	//your code ends here.
 	
-	//diganti datatables biasa di table cronjob
-	$from = Input::get('from');
-	if($from != NULL && $currentPage == $filename) {
-		$qi_ = $db
-			->query('insert', 'crons_logs_si')
-			->set('name', "jadwal_belum_dibuat")
-			->set('created_by',1)
-			->set('created_on',$today)
-			->exec();
-	}
+	$today = date('Y-m-d H:i:s');
+
+	$qi_cronjob = $db
+		->query('insert', 'crons_logs_si')
+		->set('name', "jadwal_belum_dibuat")
+		->set('created_by',1)
+		->set('created_on',$today)
+		->exec();
 
 ?>
