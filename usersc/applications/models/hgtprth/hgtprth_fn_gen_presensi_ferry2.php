@@ -1371,7 +1371,7 @@
                         //Sisa pot jam masuk HK
                         $pot_hk = 0;
                         if ($pot_jam > 0) {
-                            $pot_hk = $pot_jam;
+                            $pot_hk = ceil($pot_jam); // POT HK TIDAK BOLEH KOMA
                         }
                         
                         //Durasi Lembur
