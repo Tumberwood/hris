@@ -1003,6 +1003,7 @@
                                     $status_presensi_in = 'AL';
                                     $status_presensi_out = 'AL';
                                     $cek = 1;
+                                    $is_pot_upah = 1;
                                 } else {
                                     $cek = 0; // jika OFF maka cek 0
                                 }
