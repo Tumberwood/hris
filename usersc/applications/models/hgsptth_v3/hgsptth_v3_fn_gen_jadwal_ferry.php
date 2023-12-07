@@ -272,7 +272,7 @@
                     LEFT JOIN htsxxmh AS d ON d.id = a.id_htsxxmh
                     WHERE
                         b.id = :id_hgsptth_v3
-                        AND a.nama = "sabtu" THEN DAYOFWEEK(c.sabtu) = 7;
+                        AND a.nama = "sabtu" AND DAYOFWEEK(c.sabtu) = 7;
                     '
             );
             
@@ -384,7 +384,7 @@
                     LEFT JOIN htsxxmh AS d ON d.id = a.id_htsxxmh
                     WHERE
                         b.id = :id_hgsptth_v3
-                        AND a.nama = "minggu" THEN DAYOFWEEK(c.sabtu) = 1;
+                        AND a.nama = "minggu" AND DAYOFWEEK(c.sabtu) = 1;
                     '
             );
             
@@ -495,7 +495,7 @@
                     LEFT JOIN date_range AS c ON c.sabtu BETWEEN b.tanggal_awal AND b.tanggal_akhir
                     LEFT JOIN htsxxmh AS d ON d.id = a.id_htsxxmh
                     WHERE
-                        b.id = :id_hgsptth_v3
+                        b.id = :id_hgsptth_v3 AND a.nama = "senjum"
                         AND DAYOFWEEK(c.sabtu) BETWEEN 2 AND 6;
                     '
             );
