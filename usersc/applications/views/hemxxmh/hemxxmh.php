@@ -34,6 +34,110 @@
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-content">
+				<!-- start Custom Form Datatables Editor -->
+				<div id="custom_hem">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.nama"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.kode"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.kode_finger"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.ktp_no"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.no_bpjs_tk"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.no_bpjs_kes"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemjbmh.id_hovxxmh"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemjbmh.id_hodxxmh"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemjbmh.id_hosxxmh"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemjbmh.id_hevxxmh"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemjbmh.id_hetxxmh"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemjbmh.id_heyxxmd"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemjbmh.id_heyxxmh"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemjbmh.id_hesxxmh"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.id_gtxpkmh"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemjbmh.tanggal_masuk"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="tanggal_akhir"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemjbmh.grup_hk"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.is_pot_makan"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.is_npwp"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.npwp_no"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.npwp_alamat"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.keterangan"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="status_aktif"></editor-field>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- end Custom Form Datatables Editor -->
 				<div class="table-responsive">
                     <table id="tblhemxxmh" class="table table-striped table-bordered table-hover nowrap" width="100%">
                         <thead>
@@ -200,6 +304,7 @@
 
 		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0, id_hevxxmh_old = 0, id_heyxxmh_old = 0, id_hesxxmh_old = 0;
 		var id_hedlvmh_old = 0;
+		var id_gtxpkmh_old = 0;
 		var id_heyxxmd_old = 0;
 
 		$(document).ready(function() {
@@ -213,6 +318,7 @@
 						d.show_inactive_status_hemxxmh = show_inactive_status_hemxxmh;
 					}
 				},
+				template: "#custom_hem",
 				table: "#tblhemxxmh",
 				fields: [ 
 					{
@@ -613,6 +719,60 @@
 							{ "label": "Non Aktif", "value": 0 }
 						]
 					},
+					{
+						label: "PTKP <sup class='text-danger'>*<sup>",
+						name: "hemdcmh.id_gtxpkmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/gtxpkmh/gtxpkmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_gtxpkmh_old: id_gtxpkmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "NPWP <sup class='text-danger'>*<sup>",
+						name: "hemdcmh.is_npwp",
+						type: "select2",
+						options: [
+							{ "label": "Ya", "value": 1 },
+							{ "label": "Tidak", "value": 0 }
+						]
+					},
+					{
+						label: "No NPWP <sup class='text-danger'>*<sup>" ,
+						name: "hemdcmh.npwp_no"
+					},
+					{
+						label: "Alamat NPWP <sup class='text-danger'>*<sup>" ,
+						name: "hemdcmh.npwp_alamat",
+						type: "textarea"
+					},
 				]
 			} );
 			
@@ -632,8 +792,23 @@
 			});
 
             edthemxxmh.on("open", function (e, mode, action) {
-				$(".modal-dialog").addClass("modal-lg");
+				$(".modal-dialog").addClass("modal-xl");
 			});
+
+			edthemxxmh.dependent( 'hemdcmh.is_npwp', function ( val, data, callback ) {
+				if (val == 1) {
+					edthemxxmh.field('hemdcmh.npwp_no').show();
+					edthemxxmh.field('hemdcmh.npwp_alamat').show();
+					edthemxxmh.field('hemdcmh.npwp_no').val();
+					edthemxxmh.field('hemdcmh.npwp_alamat').val();
+				} else {
+					edthemxxmh.field('hemdcmh.npwp_no').hide();
+					edthemxxmh.field('hemdcmh.npwp_alamat').hide();
+					edthemxxmh.field('hemdcmh.npwp_no').val('');
+					edthemxxmh.field('hemdcmh.npwp_alamat').val('');
+				}
+				return {}
+			}, {event: 'keyup change'});
 			
 			edthemxxmh.dependent( 'hemjbmh.tanggal_masuk', function ( val, data, callback ) {
 				tanggal_akhir = moment(val).add('month', 6).subtract(1, 'day').format('DD MMM YYYY');
@@ -793,6 +968,30 @@
 						edthemxxmh.field('hemjbmh.id_hetxxmh').error( 'Wajib diisi!' );
 					}
 					// END of validasi hemjbmh.id_hetxxmh 
+
+					is_npwp = edthemxxmh.field('hemdcmh.is_npwp').val();
+					if(!is_npwp || is_npwp == ''){
+						edthemxxmh.field('hemdcmh.is_npwp').error( 'Wajib diisi!' );
+					}
+					if (is_npwp == 1) {
+						// BEGIN of validasi hemdcmh.npwp_no 
+						npwp_no = edthemxxmh.field('hemdcmh.npwp_no').val();
+						if(!npwp_no || npwp_no == ''){
+							edthemxxmh.field('hemdcmh.npwp_no').error( 'Wajib diisi!' );
+						}
+								
+						if(isNaN(npwp_no) ){
+							edthemxxmh.field('hemdcmh.npwp_no').error( 'Inputan harus berupa Angka!' );
+						}
+						// END of validasi hemdcmh.npwp_no 
+
+						// BEGIN of validasi hemdcmh.npwp_alamat 
+						npwp_alamat = edthemxxmh.field('hemdcmh.npwp_alamat').val();
+						if(!npwp_alamat || npwp_alamat == ''){
+							edthemxxmh.field('hemdcmh.npwp_alamat').error( 'Wajib diisi!' );
+						}
+						// END of validasi hemdcmh.npwp_alamat 
+					}
 
 					// BEGIN of validasi hemjbmh.id_heyxxmd 
 					id_heyxxmd = edthemxxmh.field('hemjbmh.id_heyxxmd').val();
@@ -970,6 +1169,9 @@
 				id_heyxxmh_old   = data_hemjbmh.id_heyxxmh;
 				id_heyxxmd_old   = data_hemjbmh.id_heyxxmd;
 				id_hesxxmh_old   = data_hemjbmh.id_hesxxmh;
+
+				data_hemdcmh = tblhemxxmh.row( { selected: true } ).data().hemdcmh;
+				id_gtxpkmh_old   = data_hemdcmh.id_gtxpkmh;
 				
 				// atur hak akses
 				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth, tblhemjbrd];
@@ -981,6 +1183,7 @@
 				// reload dipanggil di function CekDeselectHeader
 				id_hemxxmh = 0;
 				id_heyxxmd_old = 0;
+				id_gtxpkmh_old = 0;
 				id_hovxxmh_old   = 0, id_hodxxmh_old   = 0, id_hosxxmh_old   = 0, id_hevxxmh_old   = 0, id_hetxxmh_old   = 0, id_heyxxmh_old   = 0, id_hesxxmh_old   = 0;
 
 				// atur hak akses

@@ -88,6 +88,11 @@
 			Field::inst( 'hemjbmh.grup_hk' ),
 			Field::inst( 'hovxxmh.nama' ),
 			Field::inst( 'hodxxmh.nama' ),
+			Field::inst( 'hemdcmh.id_gtxpkmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemdcmh.is_npwp' ),
+			Field::inst( 'hemdcmh.npwp_alamat' ),
+			Field::inst( 'hemdcmh.npwp_no' ),
 			Field::inst( 'hemdcmh.ktp_no' ),
 			Field::inst( 'hemdcmh.no_bpjs_tk' ),
 			Field::inst( 'hemdcmh.no_bpjs_kes' ),
