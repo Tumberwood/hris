@@ -623,7 +623,7 @@
                             FROM htsprrd AS a
                             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
                             WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND DATE_SUB(job.tanggal_keluar, INTERVAL 1 DAY)
-                                AND (a.st_clock_in <> "off" AND a.st_jadwal <> "OFF")
+                                AND a.status_presensi_in = "HK"
                             GROUP BY a.id_hemxxmh
                         ) AS report
                     ) AS keluar ON keluar.id_hemxxmh = a.id_hemxxmh
