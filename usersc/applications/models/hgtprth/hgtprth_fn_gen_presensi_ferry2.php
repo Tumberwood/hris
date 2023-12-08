@@ -1497,7 +1497,7 @@
                                             $lembur3 = 0;
                                         }
                                         
-                                        $lembur1_final = $lembur15 * 1.5;
+                                        $lembur15_final = $lembur15 * 1.5;
                                         $lembur2_final = $lembur2 * 2;
                                         $lembur3_final = $lembur3 * 3;
                                     }
