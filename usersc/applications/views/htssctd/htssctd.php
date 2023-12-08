@@ -568,7 +568,7 @@
 						d.id_hemxxmh_filter = id_hemxxmh_filter;
 					}
 				},
-				order: [[ 2, "desc" ],[3, "asc"]],
+				order: [[ 2, "asc" ]],
 				responsive: false,
 				scrollX: true,
 				columns: [
