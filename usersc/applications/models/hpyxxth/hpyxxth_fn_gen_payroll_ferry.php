@@ -196,7 +196,7 @@
                                 ((hk_report / if(grup_hk_lama = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp))
                                 +
                                 ((hk_jadwal / if(grup_hk_baru = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
-                                if(c.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
+                                if(c.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-02") AND LAST_DAY(:tanggal_akhir), 
                                     hari_kerja / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) ,
                                     if(c.tanggal_keluar BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
                                         keluar_report / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) ,
