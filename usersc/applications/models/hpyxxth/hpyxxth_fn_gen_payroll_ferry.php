@@ -597,7 +597,7 @@
                             FROM htsprrd AS a
                             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
                             WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND :tanggal_akhir
-                                AND a.st_clock_in <> "OFF" -- sebelumnya st-clock in
+                                AND (a.st_clock_in <> "off" AND a.st_jadwal <> "OFF") -- sebelumnya st-clock in
                             GROUP BY a.id_hemxxmh
                         ) AS report
                         LEFT JOIN (
@@ -623,7 +623,7 @@
                             FROM htsprrd AS a
                             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
                             WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND DATE_SUB(job.tanggal_keluar, INTERVAL 1 DAY)
-                                AND a.st_clock_in <> "OFF"
+                                AND (a.st_clock_in <> "off" AND a.st_jadwal <> "OFF")
                             GROUP BY a.id_hemxxmh
                         ) AS report
                     ) AS keluar ON keluar.id_hemxxmh = a.id_hemxxmh
@@ -872,7 +872,7 @@
                         ) AS subquery
                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
 
-                    -- Cari koreksi_lembur rekontrak KAK id_hpc = 108
+                    -- Cari koreksi_lembur id_hpc = 111
                     LEFT JOIN (
                         SELECT
                             id_hemxxmh,
@@ -957,7 +957,7 @@
                             ) AS history ON history.id_hemxxmh = a.id_hemxxmh
                             LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
                             WHERE a.tanggal BETWEEN job.tanggal_masuk AND akhir_grup_hk_lama
-                            AND a.st_clock_in <> "OFF"
+                            AND (a.st_clock_in <> "off" AND a.st_jadwal <> "OFF") -- sebelumnya a.st_clock_in <> "off"
                             GROUP BY a.id_hemxxmh
                         ) AS report
                         LEFT JOIN (
@@ -1671,7 +1671,7 @@
         //                     FROM htsprrd AS a
         //                     LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
         //                     WHERE a.tanggal BETWEEN job.tanggal_masuk AND :tanggal_akhir
-        //                         AND a.st_clock_in <> "OFF"
+        //                         AND (a.st_clock_in <> "off" AND a.st_jadwal <> "OFF")
         //                     GROUP BY a.id_hemxxmh
         //                 ) AS report
         //                 LEFT JOIN (
