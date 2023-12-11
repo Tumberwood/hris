@@ -169,10 +169,19 @@
                     WITH qs_payroll AS (
                         SELECT DISTINCT
                             ifnull(is_terminasi, 0) as is_terminasi,
+                            CONCAT(hem.kode, " - ", hem.nama) AS nama,
+                            is_perubahan_hk,
+                            premiabs,
+                            hk_baru,
+                            c.id_heyxxmh,
+                            c.tanggal_keluar,
+                            presensi_hk,
+                            jadwal_bukan_off,
+                            hari_kerja,
                             a.id_hemxxmh,
                             report_pot_upah,
                             report_pot_jam,
-                            (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173))) AS nominal_lembur_jam,
+                            if( c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal), 0, (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173)) )) AS nominal_lembur_jam,
                             FLOOR(
                                 (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
                                     sum_lembur15_final
@@ -193,30 +202,46 @@
                             c.id_hesxxmh as hesxx,
                             c.id_heyxxmd as id_heyxxmd,
                             c.grup_hk,
-                            (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) AS pengali,
+                            (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1, nominal_t_jab, ifnull(nominal_jabatan, 0)),0)) AS pengali,
                             (ifnull(if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp),0) + ifnull(nominal_t_jab,0) + ifnull(nominal_var_cost,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) AS pengali_jam,
+                            keluar_report,
                             -- gaji pokok
                             IFNULL( 
                                 if( c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal), 0,
-                                    if(is_perubahan_hk > 0, 
+                                    if(ifnull(is_perubahan_hk,0) > 0, 
                                         ((hk_report / if(grup_hk_lama = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp))
                                         +
                                         ((hk_jadwal / if(grup_hk_baru = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
-                                        if(c.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-02") AND LAST_DAY(:tanggal_akhir), 
-                                            hari_kerja / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) ,
-                                            if(c.tanggal_keluar BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
+                                        if(c.tanggal_masuk BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-01") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))), 
+                                            (hari_kerja / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) ,
+                                            if(c.tanggal_keluar BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-01") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))), 
                                                 keluar_report / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) ,
                                             if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) )
                                         )
                                     )
                                 )
                             ,0) AS gp,
+                            DATEDIFF(LAST_DAY(:tanggal_awal), c.tanggal_keluar) AS diff,                        
+                            pot_gp_pelatihan,
+                            hk_report,
+                            grup_hk_lama,
+                            hk_jadwal,
+                            grup_hk_baru,
+                                nominal_gp,
+                                (hari_kerja / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) AS fixed_gp,
+                            -- Koreksi Perubahan Status
+                            IFNULL( 
+                                if( c.tanggal_masuk BETWEEN :tanggal_awal AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))) AND id_status IS NOT NULL, 
+                                    ((hk_baru / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
+                                    0
+                                )
+                            ,0) AS koreksi_status,
                             
                             -- tunjangan jabatan
                             IFNULL( 
-                                if(c.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
+                                if(c.tanggal_masuk BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-01") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))), 
                                     hari_kerja / if(c.grup_hk = 1, 21, 25) * ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0),
-                                    if(c.tanggal_keluar BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
+                                    if(c.tanggal_keluar BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-01") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))), 
                                         keluar_report / if(c.grup_hk = 1, 21, 25) * ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0),
                                     ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0))
                                 ),
@@ -228,9 +253,9 @@
                             -- fix cost atau masa kerja
                             if(c.id_heyxxmh = 1, 
                                 IFNULL( 
-                                    if(c.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
+                                    if(c.tanggal_masuk BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-01") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))), 
                                         hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_mk,
-                                        if(c.tanggal_keluar BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
+                                        if(c.tanggal_keluar BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-01") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))), 
                                             keluar_report / if(c.grup_hk = 1, 21, 25) * nominal_mk,
                                         nominal_mk)
                                     ),
@@ -256,7 +281,7 @@
                             sum_lembur2 AS lembur2,
                             sum_lembur3 AS lembur3,
                             sum_lembur4 AS lembur4,
-                            
+                            c.tanggal_masuk,
                             sum_lembur15_final AS lembur15_final,
                             sum_lembur2_final AS lembur2_final,
                             sum_lembur3_final AS lembur3_final,
@@ -287,34 +312,20 @@
                             IFNULL(nominal_klaim,0) AS pot_klaim,
                             IFNULL(nominal_denda_apd,0) AS pot_denda_apd,
                             IFNULL(nominal_pph21,0) AS pot_pph21,
+                            hk_nik_lama,
                             IFNULL(nominal_pendapatan_lain,0) AS pendapatan_lain,
                             IFNULL(nominal_koreksi_lembur,0) AS koreksi_lembur,
                             IFNULL(nominal_kompensasi_ak,0) AS kompensasi_ak,
-                            hk_baru,
-                            c.tanggal_keluar,
-                            hk_nik_lama,
-                            
-                            -- Koreksi Perubahan Status
-                            IFNULL( 
-                                if( c.tanggal_masuk BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_akhir) AND id_status IS NOT NULL, 
-                                    ((hk_baru / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
-                                    0
-                                )
-                            ,0) AS koreksi_status,
-                            
-                            -- ini untuk pot_jam rotasi
                             is_pot_jam_rotasi_lv,
                             ifnull(pot_jam_lv_lama, 0) as pot_jam_lv_lama,
                             IFNULL(pot_jam_lv_baru, 0) AS pot_jam_lv_baru,
-
-                            -- ini untuk pot_upah rotasi
                             is_pot_upah_rotasi_lv,
                             ifnull(pot_upah_lv_lama, 0) as pot_upah_lv_lama,
                             IFNULL(pot_upah_lv_baru, 0) AS pot_upah_lv_baru,
-
-                            -- nominal pengali rotasi level
                             (ifnull(if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp),0) + ifnull(nominal_jab_rotasi,0) + ifnull(nominal_var_cost,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) AS pengali_rotasi_old,
-                            a.is_approve,
+                            ifnull(id_status, 0) as id_status,
+                            hem.nama AS nama_saat_ini,
+                            if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) as nominal_gpp,
                             if(c.id_heyxxmd = 1 AND c.id_hesxxmh = 3,
                                 if(c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal),
                                     if(is_terminasi > 0, 
@@ -332,7 +343,10 @@
                                     (IFNULL(pot_upah_spesial,0) * IF(grup_hk = 1, 83509, 70148)),
                                     0
                                 )
-                            ) AS alpha_min_satu
+                            ) AS alpha_min_satu,
+                            id_harxxmh,
+                            jadwal_bulan_lalu,
+                            a.is_approve
                             
                         FROM htsprrd AS a
                         LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = a.id_hemxxmh
@@ -399,7 +413,6 @@
                                 WHERE row_num = 1
                             ) tbl_htpr_hemxxmh ON tbl_htpr_hemxxmh.id_hemxxmh = a.id_hemxxmh
                             
-                            
                             -- var_cost htpr_hemxxmh.id_hpcxxmh = 102
                             LEFT JOIN (
                                 SELECT
@@ -421,7 +434,6 @@
                                 ) AS subquery
                                 WHERE row_num = 1
                             ) tbl_var_cost ON tbl_var_cost.id_hemxxmh = a.id_hemxxmh
-                            
                             
                             -- Ambil lembur mati dari htpr_hesxxmh untuk pelatihan
                             LEFT JOIN (
@@ -467,7 +479,7 @@
                                 WHERE row_num = 1
                             ) pot_uang_makan ON pot_uang_makan.id_hesxxmh = c.id_hesxxmh
                             
-                            -- t jabatan untuk Tetap
+                            -- t jabatan untuk yang Tetap
                             LEFT JOIN (
                                 SELECT
                                     id_hevxxmh,
@@ -488,7 +500,7 @@
                                 ) AS subquery
                                 WHERE row_num = 1
                             ) t_jabatan ON t_jabatan.id_hevxxmh = c.id_hevxxmh
-                            
+
                             -- nominal tunjangan jabatan di menu per karyawan
                             LEFT JOIN (
                                 SELECT
@@ -536,12 +548,26 @@
                             -- sum durasi lembur dan makan
                             LEFT JOIN (
                                 SELECT
-                                    id_hemxxmh,
+                                    a.id_hemxxmh,
                                     SUM(durasi_lembur_final) AS lembur_sum,
                                     SUM(is_makan) AS pot_makan
-                                FROM htsprrd
-                                WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                                GROUP BY id_hemxxmh
+                                FROM htsprrd as a
+                                LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                LEFT JOIN (
+                                    SELECT
+                                        id_hemxxmh,
+                                        IFNULL(is_terminasi, 0) AS is_terminasi
+                                    FROM (
+                                        SELECT
+                                            id_hemxxmh,
+                                            COUNT(id) AS is_terminasi
+                                        FROM hemjbrd
+                                        WHERE id_harxxmh IN (3, 4)
+                                        GROUP BY id_hemxxmh
+                                    ) AS subquery
+                                ) resign ON resign.id_hemxxmh = a.id_hemxxmh
+                                WHERE tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
+                                GROUP BY a.id_hemxxmh
                             ) lembur_sum_table ON lembur_sum_table.id_hemxxmh = a.id_hemxxmh
                             
                             -- cari lembur 1.5, lembur 2, lembur 3
@@ -570,8 +596,21 @@
                                         SUM(IFNULL(prr.lembur3_final, 0)) AS sum_lembur3_final,
                                         SUM(IFNULL(prr.lembur4_final, 0)) AS sum_lembur4_final
                                     FROM htsprrd AS prr
-                                    LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = prr.id_hemxxmh
-                                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = prr.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = prr.id_hemxxmh
+                                    WHERE tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                     GROUP BY id_hemxxmh
                                 ) lembur_sum_table
                             ) lembur_calc ON lembur_calc.id_hemxxmh = a.id_hemxxmh
@@ -595,44 +634,258 @@
                             -- validasi cari izin/absen yang memotong upah dari report presensi
                             LEFT JOIN (
                                 SELECT
-                                id_hemxxmh,
+                                    id_hemxxmh,
                                     report_pot_upah
                                 FROM (
                                     SELECT
-                                        id_hemxxmh,
-                                        COUNT(id) AS report_pot_upah
-                                    FROM htsprrd
-                                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.id_hemxxmh,
+                                        COUNT(a.id) AS report_pot_upah
+                                    FROM htsprrd AS a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
+                                    WHERE tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                         AND is_pot_upah = 1
                                     GROUP BY id_hemxxmh
                                 ) c_report_pot_upah
                             ) presensi_pot_upah ON presensi_pot_upah.id_hemxxmh = a.id_hemxxmh
+
+                            -- Pot Upah Spesial KBM Pelatihan 
+                            LEFT JOIN (
+                                SELECT
+                                    id_hemxxmh,
+                                    nama,
+                                    ifnull(pot_upah_min_satu,0) AS pot_upah_min_satu,
+                                    tanggal AS tanggal_pot_upah,
+                                    tanggal_keluar
+                                FROM (
+                                    SELECT
+                                        a.id_hemxxmh,
+                                        CONCAT(hem.kode, " - ", hem.nama) AS nama,
+                                        COUNT(a.id) AS pot_upah_min_satu,
+                                        a.tanggal,
+                                        c.tanggal_keluar
+                                    FROM htsprrd AS a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN hemxxmh AS hem ON hem.id = a.id_hemxxmh
+                                    WHERE a.tanggal = DATE_SUB(c.tanggal_keluar, INTERVAL 1 DAY) AND a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
+                                        AND is_pot_upah = 1 AND c.id_heyxxmd = 1 AND c.id_hesxxmh = 3
+                                    GROUP BY a.id_hemxxmh
+                                ) report_pot_upah_min_satu
+                            ) presensi_pot_upah_min_satu ON presensi_pot_upah_min_satu.id_hemxxmh = a.id_hemxxmh
+                            
+                            -- Pot Upah Spesial KBM Pelatihan 
+                            LEFT JOIN (
+                                SELECT
+                                    id_hemxxmh,
+                                    IFNULL(pot_upah_spesial,0) AS pot_upah_spesial,
+                                    tanggal,
+                                    tanggal_keluar
+                                FROM (
+                                    SELECT
+                                        a.id_hemxxmh,
+                                        COUNT(a.id) AS pot_upah_spesial,
+                                        a.tanggal,
+                                        c.tanggal_keluar
+                                    FROM htsprrd AS a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
+                                    WHERE if(c.tanggal_keluar IS NOT NULL,  a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)) AND a.tanggal <> DATE_SUB(c.tanggal_keluar, INTERVAL 1 DAY), a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)))
+                                        AND is_pot_upah = 1 AND c.id_heyxxmd = 1 AND c.id_hesxxmh = 3
+                                    GROUP BY a.id_hemxxmh
+                                ) report_pot_upah_spesial
+                            ) presensi_pot_upah_spesial ON presensi_pot_upah_spesial.id_hemxxmh = a.id_hemxxmh
                             
                             -- hari kerja karyawan baru
                             LEFT JOIN (
                                 SELECT
                                     (hk_report + IFNULL(jadwal.jadwal, 0)) AS hari_kerja,
+                                    hk_report as presensi_hk,
+                                    IFNULL(jadwal.jadwal, 0) as jadwal_bukan_off,
                                     report.id_hemxxmh
                                 FROM (
                                     SELECT 
                                         COUNT(a.id) AS hk_report,
                                         a.id_hemxxmh
                                     FROM htsprrd AS a
-                                    LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
-                                    WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND :tanggal_akhir
-                                        AND (a.st_clock_in <> "off" AND a.st_jadwal <> "OFF") -- sebelumnya st-clock in
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
+                                    WHERE a.tanggal BETWEEN c.tanggal_masuk AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
+                                        AND a.st_jadwal <> "OFF" -- sebelumnya st-clock in
                                     GROUP BY a.id_hemxxmh
                                 ) AS report
                                 LEFT JOIN (
                                     SELECT
-                                        id_hemxxmh,
-                                        COUNT(id) AS jadwal
-                                    FROM htssctd
-                                    WHERE tanggal BETWEEN DATE_ADD(:tanggal_akhir, INTERVAL 1 DAY) AND LAST_DAY(:tanggal_akhir) AND is_active = 1
+                                        a.id_hemxxmh,
+                                        COUNT(a.id) AS jadwal
+                                    FROM htssctd as a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
+                                    WHERE tanggal BETWEEN DATE_ADD(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)), INTERVAL 1 DAY) AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))) AND is_active = 1
                                         AND id_htsxxmh <> 1
                                     GROUP BY id_hemxxmh
                                 ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh
                             ) AS hk ON hk.id_hemxxmh = a.id_hemxxmh
+                            
+                            -- hari kerja NIK baru
+                            LEFT JOIN (
+                                SELECT
+                                    (hk_report) AS hk_baru,
+                                    report.id_hemxxmh
+                                FROM (
+                                    SELECT 
+                                        COUNT(a.id) AS hk_report,
+                                        c.tanggal_masuk,
+                                        a.id_hemxxmh
+                                    FROM htsprrd AS a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
+                                    WHERE a.tanggal BETWEEN c.tanggal_masuk AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)))
+                                        AND a.st_jadwal <> "OFF"
+                                    GROUP BY a.id_hemxxmh
+                                ) AS report
+                            ) AS hk_baru ON hk_baru.id_hemxxmh = a.id_hemxxmh
+                            
+                            -- case HK 5 HK 6
+                            LEFT JOIN (
+                                SELECT
+                                    grup_hk_lama,
+                                    grup_hk_baru,
+                                    hk_report,
+                                    IFNULL(jadwal.jadwal_zz, 0) AS hk_jadwal,
+                                    akhir_grup_hk_lama,
+                                    awal_grup_hk_baru,
+                                    report.id_hemxxmh,
+                                    IFNULL(is_perubahan_hk, 0) AS is_perubahan_hk
+                                FROM (
+                                    SELECT 
+                                        COUNT(a.id) AS hk_report,
+                                        is_perubahan_hk,
+                                        a.id_hemxxmh,
+                                        akhir_grup_hk_lama,
+                                        awal_grup_hk_baru,
+                                        grup_hk_lama,
+                                        grup_hk_baru,
+                                        job.tanggal_masuk
+                                    FROM htsprrd AS a
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_perubahan_hk, 0) AS is_perubahan_hk,
+                                            grup_hk_lama,
+                                            grup_hk_baru,
+                                            akhir_grup_hk_lama,
+                                            awal_grup_hk_baru
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_perubahan_hk,
+                                                jb.grup_hk AS grup_hk_baru,
+                                                if(grup_hk = 1, 2, 1) AS grup_hk_lama,
+                                                jb.tanggal_awal AS awal_grup_hk_baru,
+                                                DATE_SUB(jb.tanggal_awal, INTERVAL 1 DAY) AS akhir_grup_hk_lama
+                                            FROM hemjbrd AS jb
+                                            WHERE is_from_hk = 1 AND tanggal_awal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND LAST_DAY(:tanggal_awal)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) AS history ON history.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
+                                    WHERE a.tanggal BETWEEN job.tanggal_masuk AND akhir_grup_hk_lama
+                                    AND (a.st_clock_in <> "off" AND a.st_jadwal <> "OFF")
+                                    GROUP BY a.id_hemxxmh
+                                ) AS report
+                                LEFT JOIN (
+                                    SELECT
+                                        tanggal,
+                                        htssctd.id_hemxxmh,
+                                        COUNT(id) AS jadwal_zz
+                                    FROM htssctd
+                                    LEFT JOIN (
+                                        SELECT
+                                        id_hemxxmh,
+                                        COUNT(id) AS is_perubahan_hk,
+                                        if(grup_hk = 1, 2, 1) AS grup_hk_baru,
+                                        jb.tanggal_awal AS awal_grup_hk_baru
+                                    FROM hemjbrd AS jb
+                                    WHERE is_from_hk = 1 AND tanggal_awal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND LAST_DAY(:tanggal_awal)
+                                    GROUP BY id_hemxxmh
+                                    ) AS jbrd ON jbrd.id_hemxxmh = htssctd.id_hemxxmh
+                                    WHERE id_htsxxmh <> 1 AND tanggal BETWEEN awal_grup_hk_baru AND LAST_DAY(:tanggal_awal) AND is_active = 1
+                                    GROUP BY id_hemxxmh
+                                ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh 
+                            ) AS hk5hk6 ON hk5hk6.id_hemxxmh = a.id_hemxxmh
                             
                             -- tanggal keluar
                             LEFT JOIN (
@@ -644,12 +897,63 @@
                                         COUNT(a.id) AS keluar_report,
                                         a.id_hemxxmh
                                     FROM htsprrd AS a
-                                    LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
-                                    WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND DATE_SUB(job.tanggal_keluar, INTERVAL 1 DAY)
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
+                                    WHERE a.tanggal BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-01") AND DATE_SUB(c.tanggal_keluar, INTERVAL 1 DAY)
                                         AND a.st_jadwal <> "OFF"
                                     GROUP BY a.id_hemxxmh
                                 ) AS report
                             ) AS keluar ON keluar.id_hemxxmh = a.id_hemxxmh
+                            
+                            -- HK NIK LAMA
+                            LEFT JOIN (
+                                SELECT
+                                    hem.nama AS nama,
+                                    hk_nik_lama,
+                                    hem.id AS id_hemxxmh,
+                                    b.id AS id_hemxxmh_new
+                                FROM hemxxmh AS hem
+                                LEFT JOIN hemxxmh AS b ON b.nama = hem.nama
+                                LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
+                                LEFT JOIN (
+                                    SELECT
+                                        COUNT(rd.id) AS hk_nik_lama,
+                                        c.tanggal_masuk,
+                                        rd.id_hemxxmh
+                                    FROM htsprrd AS rd
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = rd.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = rd.id_hemxxmh
+                                    WHERE rd.tanggal BETWEEN date_add(c.tanggal_masuk, INTERVAL 1 DAY) AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)))
+                                AND rd.status_presensi_in = "HK"
+                                    GROUP BY rd.id_hemxxmh
+                                ) AS prd ON prd.id_hemxxmh = b.id
+                                GROUP BY nama
+                                ORDER BY b.id DESC
+                            ) AS hk_nik_lama ON hk_nik_lama.id_hemxxmh = a.id_hemxxmh
 
                             -- select data dari hibtkmh untuk hitung bpjs
                             LEFT JOIN (
@@ -667,7 +971,6 @@
                                         persen_jp_karyawan,
                                         is_active
                                     FROM hibtkmh
-                                    WHERE tanggal_efektif < :tanggal_awal
                                 ) sel_bpjs
                             ) bpjs ON bpjs.is_active = 1
                             
@@ -703,7 +1006,6 @@
                                         persen_karyawan,
                                         is_active
                                     FROM hibksmh
-                                    WHERE tanggal_efektif < :tanggal_awal
                                 ) sel_bpjs
                             ) bpjs_kesehatan ON bpjs_kesehatan.is_active = 1
                             
@@ -714,11 +1016,25 @@
                                     IFNULL(nominal, 0) AS nominal_pinjaman
                                 FROM (
                                     SELECT
-                                        id_hemxxmh,
+                                        a.id_hemxxmh,
                                         SUM(nominal) as nominal
-                                    FROM hpy_piutang_d
+                                    FROM hpy_piutang_d as a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                         AND id_hpcxxmh = 105
                                         AND is_approve = 1
                                     GROUP BY id_hemxxmh
@@ -732,11 +1048,25 @@
                                     IFNULL(nominal, 0) AS nominal_klaim
                                 FROM (
                                     SELECT
-                                        id_hemxxmh,
+                                        a.id_hemxxmh,
                                         SUM(nominal) as nominal
-                                    FROM hpy_piutang_d
+                                    FROM hpy_piutang_d as a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                         AND id_hpcxxmh = 104
                                         AND is_approve = 1
                                     GROUP BY id_hemxxmh
@@ -750,11 +1080,25 @@
                                     IFNULL(nominal, 0) AS nominal_denda_apd
                                 FROM (
                                     SELECT
-                                        id_hemxxmh,
+                                        a.id_hemxxmh,
                                         SUM(nominal) as nominal
-                                    FROM hpy_piutang_d
+                                    FROM hpy_piutang_d as a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                         AND id_hpcxxmh = 103
                                         AND is_approve = 1
                                     GROUP BY id_hemxxmh
@@ -768,11 +1112,25 @@
                                     IFNULL(nominal, 0) AS nominal_pendapatan_lain
                                 FROM (
                                     SELECT
-                                        id_hemxxmh,
+                                        a.id_hemxxmh,
                                         SUM(nominal) as nominal
-                                    FROM hpy_piutang_d
+                                    FROM hpy_piutang_d as a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                         AND id_hpcxxmh = 106
                                         AND is_approve = 1
                                     GROUP BY id_hemxxmh
@@ -786,11 +1144,25 @@
                                     IFNULL(nominal, 0) AS nominal_pph21
                                 FROM (
                                     SELECT
-                                        id_hemxxmh,
+                                        a.id_hemxxmh,
                                         SUM(nominal) as nominal
-                                    FROM hpy_piutang_d
+                                    FROM hpy_piutang_d as a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                         AND id_hpcxxmh = 11
                                         AND plus_min = "Pengurang"
                                         AND is_approve = 1
@@ -805,11 +1177,25 @@
                                     IFNULL(nominal, 0) AS nominal_pph21_back
                                 FROM (
                                     SELECT
-                                        id_hemxxmh,
+                                        a.id_hemxxmh,
                                         SUM(nominal) as nominal
-                                    FROM hpy_piutang_d
+                                    FROM hpy_piutang_d as a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                         AND id_hpcxxmh = 11
                                         AND plus_min = "Penambah"
                                         AND is_approve = 1
@@ -820,14 +1206,28 @@
                             -- validasi cari izin/absen yang memotong jam dari report presensi
                             LEFT JOIN (
                                 SELECT
-                                id_hemxxmh,
+                                    id_hemxxmh,
                                     report_pot_jam
                                 FROM (
                                     SELECT
-                                        id_hemxxmh,
+                                        a.id_hemxxmh,
                                         SUM(pot_hk) AS report_pot_jam
-                                    FROM htsprrd
-                                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    FROM htsprrd as a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
+                                    WHERE tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                     GROUP BY id_hemxxmh
                                 ) c_report_pot_jam
                             ) presensi_pot_jam ON presensi_pot_jam.id_hemxxmh = a.id_hemxxmh
@@ -839,10 +1239,24 @@
                                     IFNULL(c_bpjs_kes, 0) AS skip_c_bpjs_kes
                                 FROM (
                                     SELECT
-                                        COUNT(id) AS c_bpjs_kes,
+                                        COUNT(bpjs_kes.id) AS c_bpjs_kes,
                                         bpjs_kes.id_hemxxmh
                                     FROM bpjs_kes_exclude AS bpjs_kes
-                                    WHERE bpjs_kes.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = bpjs_kes.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = bpjs_kes.id_hemxxmh
+                                    WHERE bpjs_kes.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                     GROUP BY id_hemxxmh
                                 ) AS subquery
                             ) bpjs_kes_exclude ON bpjs_kes_exclude.id_hemxxmh = a.id_hemxxmh
@@ -854,10 +1268,24 @@
                                     IFNULL(c_bpjs_tk, 0) AS skip_c_bpjs_tk
                                 FROM (
                                     SELECT
-                                        COUNT(id) AS c_bpjs_tk,
+                                        COUNT(bpjs_tk.id) AS c_bpjs_tk,
                                         bpjs_tk.id_hemxxmh
                                     FROM bpjs_tk_exclude AS bpjs_tk
-                                    WHERE bpjs_tk.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = bpjs_tk.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = bpjs_tk.id_hemxxmh
+                                    WHERE bpjs_tk.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                     GROUP BY id_hemxxmh
                                 ) AS subquery
                             ) bpjs_tk_exclude ON bpjs_tk_exclude.id_hemxxmh = a.id_hemxxmh
@@ -869,11 +1297,25 @@
                                     IFNULL(nominal, 0) AS nominal_kompensasi_ak
                                 FROM (
                                     SELECT
-                                        id_hemxxmh,
+                                        a.id_hemxxmh,
                                         SUM(nominal) as nominal
-                                    FROM hpy_piutang_d
+                                    FROM hpy_piutang_d as a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                         AND id_hpcxxmh = 108
                                         AND is_approve = 1
                                     GROUP BY id_hemxxmh
@@ -883,10 +1325,12 @@
                             -- Cari resign
                             LEFT JOIN (
                                 SELECT
+                                    id_harxxmh,
                                     id_hemxxmh,
                                     IFNULL(is_terminasi, 0) AS is_terminasi
                                 FROM (
                                     SELECT
+                                        id_harxxmh,
                                         id_hemxxmh,
                                         COUNT(id) AS is_terminasi
                                     FROM hemjbrd
@@ -894,19 +1338,33 @@
                                     GROUP BY id_hemxxmh
                                 ) AS subquery
                             ) resign ON resign.id_hemxxmh = a.id_hemxxmh
-
-                            -- Cari koreksi_lembur id_hpc = 111
+                            
+                            -- Cari koreksi_lembur rekontrak KAK id_hpc = 108
                             LEFT JOIN (
                                 SELECT
                                     id_hemxxmh,
                                     IFNULL(nominal, 0) AS nominal_koreksi_lembur
                                 FROM (
                                     SELECT
-                                        id_hemxxmh,
+                                        a.id_hemxxmh,
                                         SUM(nominal) as nominal
-                                    FROM hpy_piutang_d
+                                    FROM hpy_piutang_d as a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        hpy_piutang_d.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                         AND id_hpcxxmh = 111
                                         AND is_approve = 1
                                     GROUP BY id_hemxxmh
@@ -934,119 +1392,7 @@
                                 ) AS subquery
                                 WHERE row_num = 1
                             ) pot_gp_pelatihan ON pot_gp_pelatihan.id_hesxxmh = c.id_hesxxmh
-
-                            -- case HK 5 HK 6
-                            LEFT JOIN (
-                                SELECT
-                                    grup_hk_lama,
-                                    grup_hk_baru,
-                                    hk_report,
-                                    IFNULL(jadwal.jadwal, 0) AS hk_jadwal,
-                                    akhir_grup_hk_lama,
-                                    awal_grup_hk_baru,
-                                    report.id_hemxxmh,
-                                    IFNULL(is_perubahan_hk, 0) AS is_perubahan_hk
-                                FROM (
-                                    SELECT 
-                                        COUNT(a.id) AS hk_report,
-                                        is_perubahan_hk,
-                                        a.id_hemxxmh,
-                                        akhir_grup_hk_lama,
-                                        awal_grup_hk_baru,
-                                        grup_hk_lama,
-                                        grup_hk_baru,
-                                        job.tanggal_masuk
-                                    FROM htsprrd AS a
-                                    LEFT JOIN (
-                                        SELECT
-                                            id_hemxxmh,
-                                            IFNULL(is_perubahan_hk, 0) AS is_perubahan_hk,
-                                            grup_hk_lama,
-                                            grup_hk_baru,
-                                            akhir_grup_hk_lama,
-                                            awal_grup_hk_baru
-                                        FROM (
-                                            SELECT
-                                                id_hemxxmh,
-                                                COUNT(id) AS is_perubahan_hk,
-                                                jb.grup_hk AS grup_hk_baru,
-                                                if(grup_hk = 1, 2, 1) AS grup_hk_lama,
-                                                jb.tanggal_awal AS awal_grup_hk_baru,
-                                                DATE_SUB(jb.tanggal_awal, INTERVAL 1 DAY) AS akhir_grup_hk_lama
-                                            FROM hemjbrd AS jb
-                                            WHERE is_from_hk = 1 AND tanggal_awal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir)
-                                            GROUP BY id_hemxxmh
-                                        ) AS subquery
-                                    ) AS history ON history.id_hemxxmh = a.id_hemxxmh
-                                    LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
-                                    WHERE a.tanggal BETWEEN job.tanggal_masuk AND akhir_grup_hk_lama
-                                    AND (a.st_clock_in <> "off" AND a.st_jadwal <> "OFF") -- sebelumnya a.st_clock_in <> "off"
-                                    GROUP BY a.id_hemxxmh
-                                ) AS report
-                                LEFT JOIN (
-                                    SELECT
-                                        tanggal,
-                                        htssctd.id_hemxxmh,
-                                        COUNT(id) AS jadwal
-                                    FROM htssctd
-                                    LEFT JOIN (
-                                        SELECT
-                                        id_hemxxmh,
-                                        COUNT(id) AS is_perubahan_hk,
-                                        if(grup_hk = 1, 2, 1) AS grup_hk_baru,
-                                        jb.tanggal_awal AS awal_grup_hk_baru
-                                    FROM hemjbrd AS jb
-                                    WHERE is_from_hk = 1 AND tanggal_awal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir)
-                                    GROUP BY id_hemxxmh
-                                    ) AS jbrd ON jbrd.id_hemxxmh = htssctd.id_hemxxmh
-                                    WHERE id_htsxxmh <> 1 AND tanggal BETWEEN awal_grup_hk_baru AND LAST_DAY(:tanggal_akhir) AND is_active = 1
-                                    GROUP BY id_hemxxmh
-                                ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh 
-                            ) AS hk5hk6 ON hk5hk6.id_hemxxmh = a.id_hemxxmh
                             
-                            -- HK NIK LAMA
-                            LEFT JOIN (
-                                SELECT
-                                    hem.nama AS nama,
-                                    hk_nik_lama,
-                                    hem.id AS id_hemxxmh,
-                                    b.id AS id_hemxxmh_new
-                                FROM hemxxmh AS hem
-                                LEFT JOIN hemxxmh AS b ON b.nama = hem.nama
-                                LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
-                                LEFT JOIN (
-                                    SELECT
-                                        COUNT(rd.id) AS hk_nik_lama,
-                                        job.tanggal_masuk,
-                                        rd.id_hemxxmh
-                                    FROM htsprrd AS rd
-                                    LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = rd.id_hemxxmh
-                                    WHERE rd.tanggal BETWEEN date_add(job.tanggal_masuk, INTERVAL 1 DAY) AND LAST_DAY(:tanggal_awal)
-                                AND rd.status_presensi_in = "HK"
-                                    GROUP BY rd.id_hemxxmh
-                                ) AS prd ON prd.id_hemxxmh = b.id
-                                GROUP BY nama
-                                ORDER BY b.id DESC
-                            ) AS hk_nik_lama ON hk_nik_lama.id_hemxxmh = a.id_hemxxmh
-
-                            -- hari kerja NIK baru
-                            LEFT JOIN (
-                                SELECT
-                                    (hk_report) AS hk_baru,
-                                    report.id_hemxxmh
-                                FROM (
-                                    SELECT 
-                                        COUNT(a.id) AS hk_report,
-                                        job.tanggal_masuk,
-                                        a.id_hemxxmh
-                                    FROM htsprrd AS a
-                                    LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
-                                    WHERE a.tanggal BETWEEN job.tanggal_masuk AND LAST_DAY(:tanggal_awal)
-                                        AND a.st_jadwal <> "OFF"
-                                    GROUP BY a.id_hemxxmh
-                                ) AS report
-                            ) AS hk_baru ON hk_baru.id_hemxxmh = a.id_hemxxmh
-
                             -- rotasi level pot_jam
                             LEFT JOIN (
                                 SELECT
@@ -1076,12 +1422,26 @@
                                             tgl_awal_lv_baru
                                         FROM (
                                             SELECT
-                                                id_hemxxmh,
-                                                COUNT(id) AS is_pot_jam_rotasi_lv,
+                                                jb.id_hemxxmh,
+                                                COUNT(jb.id) AS is_pot_jam_rotasi_lv,
                                                 jb.tanggal_awal AS tgl_awal_lv_baru,
                                                 DATE_SUB(jb.tanggal_awal, INTERVAL 1 DAY) AS akhir_tgl_level_akhir
                                             FROM hemjbrd AS jb
-                                            WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                            LEFT JOIN hemjbmh as c on c.id_hemxxmh = jb.id_hemxxmh
+                                            LEFT JOIN (
+                                                SELECT
+                                                    id_hemxxmh,
+                                                    IFNULL(is_terminasi, 0) AS is_terminasi
+                                                FROM (
+                                                    SELECT
+                                                        id_hemxxmh,
+                                                        COUNT(id) AS is_terminasi
+                                                    FROM hemjbrd
+                                                    WHERE id_harxxmh IN (3, 4)
+                                                    GROUP BY id_hemxxmh
+                                                ) AS subquery
+                                            ) resign ON resign.id_hemxxmh = jb.id_hemxxmh
+                                            WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                     GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) AS history ON history.id_hemxxmh = a.id_hemxxmh
@@ -1100,15 +1460,43 @@
                                     FROM htsprrd
                                     LEFT JOIN (
                                         SELECT
-                                        id_hemxxmh,
+                                        jb.id_hemxxmh,
                                         id_hevxxmh_awal,
                                         id_hevxxmh_akhir,
                                         jb.tanggal_awal AS tgl_awal_lv_baru
                                     FROM hemjbrd AS jb
-                                    WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = jb.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = jb.id_hemxxmh
+                                    WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                     GROUP BY id_hemxxmh
                                     ) AS jbrd ON jbrd.id_hemxxmh = htsprrd.id_hemxxmh
-                                    WHERE pot_hk > 0 AND tanggal BETWEEN tgl_awal_lv_baru AND :tanggal_akhir AND is_active = 1
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = jbrd.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = jbrd.id_hemxxmh
+                                    WHERE pot_hk > 0 AND tanggal BETWEEN tgl_awal_lv_baru AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)) AND is_active = 1
                                     GROUP BY id_hemxxmh
                                 ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh 
                                 LEFT JOIN (
@@ -1132,7 +1520,8 @@
                                 WHERE row_num = 1
                                 ) t_jabatan ON t_jabatan.id_hevxxmh = jadwal.id_hevxxmh_awal
                             ) AS pot_jam_rotasi ON pot_jam_rotasi.id_hemxxmh = a.id_hemxxmh
-
+                            
+                            
                             -- rotasi level pot_upah
                             LEFT JOIN (
                                 SELECT
@@ -1161,12 +1550,26 @@
                                             tgl_awal_lv_baru
                                         FROM (
                                             SELECT
-                                                id_hemxxmh,
-                                                COUNT(id) AS is_pot_upah_rotasi_lv,
+                                                jb.id_hemxxmh,
+                                                COUNT(jb.id) AS is_pot_upah_rotasi_lv,
                                                 jb.tanggal_awal AS tgl_awal_lv_baru,
                                                 DATE_SUB(jb.tanggal_awal, INTERVAL 1 DAY) AS akhir_tgl_level_akhir
                                             FROM hemjbrd AS jb
-                                            WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                            LEFT JOIN hemjbmh as c on c.id_hemxxmh = jb.id_hemxxmh
+                                            LEFT JOIN (
+                                                SELECT
+                                                    id_hemxxmh,
+                                                    IFNULL(is_terminasi, 0) AS is_terminasi
+                                                FROM (
+                                                    SELECT
+                                                        id_hemxxmh,
+                                                        COUNT(id) AS is_terminasi
+                                                    FROM hemjbrd
+                                                    WHERE id_harxxmh IN (3, 4)
+                                                    GROUP BY id_hemxxmh
+                                                ) AS subquery
+                                            ) resign ON resign.id_hemxxmh = jb.id_hemxxmh
+                                            WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                     GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) AS history ON history.id_hemxxmh = a.id_hemxxmh
@@ -1184,22 +1587,50 @@
                                         SUM(is_pot_upah) AS pot_upah_lv_new
                                     FROM htsprrd
                                     LEFT JOIN (
-                                        SELECT
-                                        id_hemxxmh,
+                                    SELECT
+                                        jb.id_hemxxmh,
                                         id_hevxxmh_awal,
                                         id_hevxxmh_akhir,
                                         jb.tanggal_awal AS tgl_awal_lv_baru
                                     FROM hemjbrd AS jb
-                                    WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = jb.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = jb.id_hemxxmh
+                                    WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                                     GROUP BY id_hemxxmh
                                     ) AS jbrd ON jbrd.id_hemxxmh = htsprrd.id_hemxxmh
-                                    WHERE is_pot_upah > 0 AND tanggal BETWEEN tgl_awal_lv_baru AND :tanggal_akhir AND is_active = 1
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = jbrd.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = jbrd.id_hemxxmh
+                                    WHERE is_pot_upah > 0 AND tanggal BETWEEN tgl_awal_lv_baru AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)) AND is_active = 1
                                     GROUP BY id_hemxxmh
                                 ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh 
                                 
                             ) AS pot_upah_rotasi ON pot_upah_rotasi.id_hemxxmh = a.id_hemxxmh
 
-                            -- Cek Perubahan Status
+                            -- hesxxtd
                             LEFT JOIN (
                             SELECT
                                     ifnull(id_status, 0) as id_status,
@@ -1210,77 +1641,45 @@
                                         a.id as id_status,
                                         peg.nama AS nama_peg,
                                         a.id_hemxxmh
-                                    FROM hesxxtd AS a
+                                    FROM hesxxtd  as a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT
+                                            id_hemxxmh,
+                                            IFNULL(is_terminasi, 0) AS is_terminasi
+                                        FROM (
+                                            SELECT
+                                                id_hemxxmh,
+                                                COUNT(id) AS is_terminasi
+                                            FROM hemjbrd
+                                            WHERE id_harxxmh IN (3, 4)
+                                            GROUP BY id_hemxxmh
+                                        ) AS subquery
+                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     LEFT JOIN hemxxmh AS peg ON peg.id = a.id_hemxxmh
-                                    WHERE a.is_active = 1 AND a.is_approve = 1 AND a.tanggal_mulai BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    WHERE a.is_active = 1 AND a.is_approve = 1 AND a.tanggal_mulai BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir)) 
                                 ) AS report
                             ) AS perubahan_status ON perubahan_status.nama_peg = hem.nama
-
+                            
                         
-                         -- Pot Upah Spesial KBM Pelatihan 
-                         LEFT JOIN (
-                            SELECT
-	                            id_hemxxmh,
-	                            nama,
-                                ifnull(pot_upah_min_satu,0) AS pot_upah_min_satu,
-                                tanggal AS tanggal_pot_upah,
-                                tanggal_keluar
-                            FROM (
+                            -- Ambil Jadwal Report Presensi dari awal bulan periode Payroll (contoh = 23 Oct) 
+                            LEFT JOIN (
                                 SELECT
-                                    a.id_hemxxmh,
-                                    CONCAT(hem.kode, " - ", hem.nama) AS nama,
-                                    COUNT(a.id) AS pot_upah_min_satu,
-                                    a.tanggal,
-                                    b.tanggal_keluar
-                                FROM htsprrd AS a
-                                LEFT JOIN hemjbmh AS b ON b.id_hemxxmh = a.id_hemxxmh
-                                LEFT JOIN hemxxmh AS hem ON hem.id = a.id_hemxxmh
-                                WHERE a.tanggal = DATE_SUB(b.tanggal_keluar, INTERVAL 1 DAY) AND a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                                    AND is_pot_upah = 1 AND b.id_heyxxmd = 1 AND b.id_hesxxmh = 3
-                                GROUP BY a.id_hemxxmh
-                            ) report_pot_upah_min_satu
-                        ) presensi_pot_upah_min_satu ON presensi_pot_upah_min_satu.id_hemxxmh = a.id_hemxxmh
-                        
-                        -- Pot Upah Spesial KBM Pelatihan 
-                        LEFT JOIN (
-                            SELECT
-                            id_hemxxmh,
-                                IFNULL(pot_upah_spesial,0) AS pot_upah_spesial,
-                                tanggal,
-                                tanggal_keluar
-                            FROM (
-                                SELECT
-                                    a.id_hemxxmh,
-                                    COUNT(a.id) AS pot_upah_spesial,
-                                    a.tanggal,
-                                    b.tanggal_keluar
-                                FROM htsprrd AS a
-                                LEFT JOIN hemjbmh AS b ON b.id_hemxxmh = a.id_hemxxmh
-                                WHERE if(b.tanggal_keluar IS NOT NULL,  a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND a.tanggal <> DATE_SUB(b.tanggal_keluar, INTERVAL 1 DAY), a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir)
-                                    AND is_pot_upah = 1 AND b.id_heyxxmd = 1 AND b.id_hesxxmh = 3
-                                GROUP BY a.id_hemxxmh
-                            ) report_pot_upah_spesial
-                        ) presensi_pot_upah_spesial ON presensi_pot_upah_spesial.id_hemxxmh = a.id_hemxxmh
-                        
-                        
-                        -- Ambil Jadwal Report Presensi dari awal bulan periode Payroll (contoh = 23 Oct) 
-                        LEFT JOIN (
-                            SELECT
-                                jadwal_bulan_lalu,
-                                report.id_hemxxmh
-                            FROM (
-                                SELECT 
-                                    COUNT(a.id) AS jadwal_bulan_lalu,
-                                    a.id_hemxxmh
-                                FROM htsprrd AS a
-                                LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
-                                WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND DATE_SUB(job.tanggal_keluar, INTERVAL 1 DAY)
-                                    AND a.st_jadwal <> "OFF"
-                                GROUP BY a.id_hemxxmh
-                            ) AS report
-                        ) AS hk_bulan_sebelumnya ON hk_bulan_sebelumnya.id_hemxxmh = a.id_hemxxmh
+                                    jadwal_bulan_lalu,
+                                    report.id_hemxxmh
+                                FROM (
+                                    SELECT 
+                                        COUNT(a.id) AS jadwal_bulan_lalu,
+                                        a.id_hemxxmh
+                                    FROM htsprrd AS a
+                                    LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
+                                    WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND DATE_SUB(job.tanggal_keluar, INTERVAL 1 DAY)
+                                        AND a.st_jadwal <> "OFF"
+                                    GROUP BY a.id_hemxxmh
+                                ) AS report
+                            ) AS hk_bulan_sebelumnya ON hk_bulan_sebelumnya.id_hemxxmh = a.id_hemxxmh
 
-                        WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                        WHERE a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh, c.tanggal_keluar, :tanggal_akhir))
                     )
                     SELECT
                     ' . $id_hpyxxth . ',
@@ -1368,6 +1767,74 @@
                     WHERE id_heyxxmd <> 2 AND is_approve = 1
         ');
 
+        // Update Value Menjadi 0 untuk yang terminasi/resign dengan periode bulan pertama payroll (ex: 23 Oct s/d last October) dan Tipe Organik
+        $qu_resign= $db
+            ->raw()
+            ->bind(':id_hpyxxth', $id_hpyxxth)
+            ->bind(':tanggal_awal', $tanggal_awal)
+            ->exec('UPDATE hpyemtd AS a
+                    LEFT JOIN hemjbmh AS b ON b.id_hemxxmh = a.id_hemxxmh
+                    LEFT JOIN (
+                        SELECT
+                            id_hemxxmh,
+                            IFNULL(is_terminasi, 0) AS is_terminasi
+                        FROM (
+                            SELECT
+                                id_hemxxmh,
+                                COUNT(id) AS is_terminasi
+                            FROM hemjbrd
+                            WHERE id_harxxmh IN (3, 4)
+                            GROUP BY id_hemxxmh
+                        ) AS subquery
+                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
+                    SET
+                        gp = 0,
+                        t_jab = 0,
+                        var_cost = 0,
+                        fix_cost = 0,
+                        premi_abs = 0,
+                        jkk = 0,
+                        jkm = 0,
+                        trm_jkkjkm = 0,
+                        lembur15 = 0,
+                        lembur2 = 0,
+                        lembur3 = 0,
+                        lembur4 = 0,
+                        lembur15_final = 0,
+                        lembur2_final = 0,
+                        lembur3_final = 0,
+                        lembur4_final = 0,
+                        rp_lembur15 = 0,
+                        rp_lembur2 = 0,
+                        rp_lembur3 = 0,
+                        rp_lembur4 = 0,
+                        jam_lembur = 0,
+                        jam_lembur_final = 0,
+                        lemburbersih = 0,
+                        pph21_back = 0,
+                        kompensasi_ak = 0,
+                        koreksi_lembur = 0,
+                        koreksi_status = 0,
+                        pot_makan = 0,
+                        pot_jkkjkm = 0,
+                        pot_jht = 0,
+                        pot_upah = 0,
+                        pot_jam = 0,
+                        pot_bpjs = 0,
+                        pot_psiun = 0,
+                        pot_pinjaman = 0,
+                        pot_klaim = 0,
+                        pot_denda_apd = 0,
+                        pot_pph21 = 0,
+                        gaji_bersih = 0,
+                        bulat = 0,
+                        gaji_terima = 0,
+                        pendapatan_lain = 0
+                    WHERE
+                        b.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal) AND id_hpyxxth = :id_hpyxxth AND a.id_heyxxmh = 1 AND is_terminasi > 0;
+            
+        ');
+        
         // INSERT PPH21
         $qr_pph21 = $db
             ->raw()
