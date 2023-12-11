@@ -318,7 +318,7 @@
                             if(c.id_heyxxmd = 1 AND c.id_hesxxmh = 3,
                                 if(c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal),
                                     if(is_terminasi > 0, 
-                                        (DATEDIFF(LAST_DAY(:tanggal_awal), c.tanggal_keluar)  / if(c.grup_hk = 1, 21, 25)) * (if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)) 
+                                        (if(c.grup_hk = 1, 21, 25) - jadwal_bulan_lalu)  / if(c.grup_hk = 1, 21, 25) * (if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)) 
                                         ,0
                                     ), 0
                                 ),0
@@ -646,7 +646,7 @@
                                     FROM htsprrd AS a
                                     LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
                                     WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND DATE_SUB(job.tanggal_keluar, INTERVAL 1 DAY)
-                                        AND a.status_presensi_in = "HK"
+                                        AND a.st_jadwal <> "OFF"
                                     GROUP BY a.id_hemxxmh
                                 ) AS report
                             ) AS keluar ON keluar.id_hemxxmh = a.id_hemxxmh
@@ -1262,6 +1262,24 @@
                             ) report_pot_upah_spesial
                         ) presensi_pot_upah_spesial ON presensi_pot_upah_spesial.id_hemxxmh = a.id_hemxxmh
                         
+                        
+                        -- Ambil Jadwal Report Presensi dari awal bulan periode Payroll (contoh = 23 Oct) 
+                        LEFT JOIN (
+                            SELECT
+                                jadwal_bulan_lalu,
+                                report.id_hemxxmh
+                            FROM (
+                                SELECT 
+                                    COUNT(a.id) AS jadwal_bulan_lalu,
+                                    a.id_hemxxmh
+                                FROM htsprrd AS a
+                                LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
+                                WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND DATE_SUB(job.tanggal_keluar, INTERVAL 1 DAY)
+                                    AND a.st_jadwal <> "OFF"
+                                GROUP BY a.id_hemxxmh
+                            ) AS report
+                        ) AS hk_bulan_sebelumnya ON hk_bulan_sebelumnya.id_hemxxmh = a.id_hemxxmh
+
                         WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                     )
                     SELECT
