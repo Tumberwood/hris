@@ -212,7 +212,7 @@
                                         ((hk_report / if(grup_hk_lama = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp))
                                         +
                                         ((hk_jadwal / if(grup_hk_baru = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
-                                        if(c.tanggal_masuk BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-01") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))), 
+                                        if(c.tanggal_masuk BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-02") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))), 
                                             (hari_kerja / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) ,
                                             if(c.tanggal_keluar BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-01") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))), 
                                                 keluar_report / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) ,
@@ -328,7 +328,7 @@
                             if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) as nominal_gpp,
                             if(c.id_heyxxmd = 1 AND c.id_hesxxmh = 3,
                                 if(c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal),
-                                    if(is_terminasi > 0, 
+                                    if(is_terminasi > 0 OR id_status IS NOT NULL, 
                                         (if(c.grup_hk = 1, 21, 25) - jadwal_bulan_lalu)  / if(c.grup_hk = 1, 21, 25) * (if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)) 
                                         ,0
                                     ), 0
