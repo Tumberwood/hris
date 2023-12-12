@@ -231,7 +231,7 @@
                                 (hari_kerja / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) AS fixed_gp,
                             -- Koreksi Perubahan Status
                             IFNULL( 
-                                if( c.tanggal_masuk BETWEEN :tanggal_awal AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))) AND id_status IS NOT NULL, 
+                                if( c.tanggal_masuk BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal) AND id_status IS NOT NULL, 
                                     ((hk_baru / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
                                     0
                                 )
@@ -812,7 +812,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
-                                    WHERE a.tanggal BETWEEN c.tanggal_masuk AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir)))
+                                    WHERE a.tanggal BETWEEN c.tanggal_masuk AND LAST_DAY(:tanggal_awal)
                                         AND a.st_jadwal <> "OFF"
                                     GROUP BY a.id_hemxxmh
                                 ) AS report
@@ -1831,7 +1831,7 @@
                         gaji_terima = 0,
                         pendapatan_lain = 0
                     WHERE
-                        b.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal) AND id_hpyxxth = :id_hpyxxth AND a.id_heyxxmh = 1 AND is_terminasi > 0;
+                        b.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal) AND id_hpyxxth = :id_hpyxxth AND b.id_heyxxmh = 1 AND is_terminasi > 0;
             
         ');
         
