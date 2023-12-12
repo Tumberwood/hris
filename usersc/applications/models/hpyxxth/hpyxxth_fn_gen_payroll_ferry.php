@@ -231,7 +231,7 @@
                                 (hari_kerja / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) AS fixed_gp,
                             -- Koreksi Perubahan Status
                             IFNULL( 
-                                if( c.tanggal_masuk BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal) AND id_status IS NOT NULL, 
+                                if( c.tanggal_masuk BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal), -- AND id_status IS NOT NULL, 
                                     ((hk_baru / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
                                     0
                                 )
