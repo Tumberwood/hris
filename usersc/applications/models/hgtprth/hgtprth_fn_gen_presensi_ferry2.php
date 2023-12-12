@@ -94,7 +94,8 @@
                     lembur4,
                     rp_lembur4,
                     lembur4_final,
-                    nominal_lembur_jam
+                    nominal_lembur_jam,
+                    grup_hk
                 )
                 SELECT
                     id_hemxxmh,
@@ -158,7 +159,8 @@
                     lembur4,
                     rp_lembur4,
                     lembur4_final,
-                    nominal_lembur_jam
+                    nominal_lembur_jam,
+                    grup_hk
                 FROM htsprrd
                 WHERE tanggal = :tanggal AND 
                     id_hemxxmh IN (
