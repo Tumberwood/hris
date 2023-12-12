@@ -247,6 +247,7 @@
         if (!empty($rs_hemxxmh)){
             $keterangan = '';
             $kode_finger = $rs_hemxxmh['kode_finger'];
+            $grup_hk = $row_hemxxmh['grup_hk'];
             $htlxxrh_kode = '';
             $status_presensi_in = '';
             $status_presensi_out = '';
@@ -1739,7 +1740,7 @@
                         ->set('lembur4_final', $lembur4_final)
 
                         ->set('nominal_lembur_jam', $nominal_lembur_jam)
-                        
+                        ->set('grup_hk', $grup_hk)
                     ->exec();
                 }
             }else{
