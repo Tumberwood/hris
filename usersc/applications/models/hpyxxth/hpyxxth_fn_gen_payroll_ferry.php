@@ -329,7 +329,12 @@
                             if(c.id_heyxxmd = 1 AND c.id_hesxxmh = 3,
                                 if(c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal),
                                     if(is_terminasi > 0 OR id_status IS NOT NULL, 
-                                        (if(c.grup_hk = 1, 21, 25) - jadwal_bulan_lalu)  / if(c.grup_hk = 1, 21, 25) * (if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)) 
+                                        if(c.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND LAST_DAY(:tanggal_awal), 
+                                            (jadwal_baru_masuk - jadwal_bulan_lalu) / if(c.grup_hk = 1, 21, 25) * (if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)) 
+                                            ,
+                                        
+                                            (if(c.grup_hk = 1, 21, 25) - jadwal_bulan_lalu)  / if(c.grup_hk = 1, 21, 25) * (if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)) 
+                                        )
                                         ,0
                                     ), 0
                                 ),0
@@ -338,9 +343,9 @@
                             IFNULL(pot_upah_spesial,0) AS pot_upah_spesial,
                             ROUND(
                                 if(pot_upah_min_satu > 0, 
-                                    (pot_upah_min_satu * (ifnull(if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp),0) + ifnull(nominal_t_jab,0) + ifnull(nominal_var_cost,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) / IF(grup_hk = 1, 21, 25))
+                                    (pot_upah_min_satu * (ifnull(if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp),0) + ifnull(nominal_t_jab,0) + ifnull(nominal_var_cost,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) / IF(c.grup_hk = 1, 21, 25))
                                     +
-                                    (IFNULL(pot_upah_spesial,0) * IF(grup_hk = 1, 83509, 70148)),
+                                    (IFNULL(pot_upah_spesial,0) * IF(c.grup_hk = 1, 83509, 70148)),
                                     0
                                 )
                             ) AS alpha_min_satu,
@@ -1662,22 +1667,40 @@
                             ) AS perubahan_status ON perubahan_status.nama_peg = hem.nama
                             
                         
-                            -- Ambil Jadwal Report Presensi dari awal bulan periode Payroll (contoh = 23 Oct) 
-                            LEFT JOIN (
-                                SELECT
-                                    jadwal_bulan_lalu,
-                                    report.id_hemxxmh
-                                FROM (
-                                    SELECT 
-                                        COUNT(a.id) AS jadwal_bulan_lalu,
-                                        a.id_hemxxmh
-                                    FROM htsprrd AS a
-                                    LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
-                                    WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND DATE_SUB(job.tanggal_keluar, INTERVAL 1 DAY)
-                                        AND a.st_jadwal <> "OFF"
-                                    GROUP BY a.id_hemxxmh
-                                ) AS report
-                            ) AS hk_bulan_sebelumnya ON hk_bulan_sebelumnya.id_hemxxmh = a.id_hemxxmh
+                        -- Ambil Jadwal Report Presensi dari awal bulan periode Payroll (contoh = 23 Oct) 
+                        LEFT JOIN (
+                            SELECT
+                                jadwal_bulan_lalu,
+                                report.id_hemxxmh
+                            FROM (
+                                SELECT 
+                                    COUNT(a.id) AS jadwal_bulan_lalu,
+                                    a.id_hemxxmh
+                                FROM htsprrd AS a
+                                LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
+                                WHERE a.tanggal BETWEEN if(job.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND DATE_SUB(job.tanggal_keluar, INTERVAL 1 DAY), job.tanggal_masuk,  DATE_FORMAT(:tanggal_awal, "%Y-%m-01")) AND DATE_SUB(job.tanggal_keluar, INTERVAL 1 DAY)
+                                    AND a.st_jadwal <> "OFF"
+                                GROUP BY a.id_hemxxmh
+                            ) AS report
+                        ) AS hk_bulan_sebelumnya ON hk_bulan_sebelumnya.id_hemxxmh = a.id_hemxxmh
+                    
+                        -- Ambil Jadwal Schedule
+                        LEFT JOIN (
+                            SELECT
+                                jadwal_baru_masuk,
+                                report.id_hemxxmh
+                            FROM (
+                                SELECT 
+                                    COUNT(a.id) AS jadwal_baru_masuk,
+                                    a.id_hemxxmh
+                                FROM htssctd AS a
+                                LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
+                                WHERE a.tanggal BETWEEN job.tanggal_masuk AND LAST_DAY(:tanggal_awal)
+                                    AND a.id_htsxxmh <> 1
+                                GROUP BY a.id_hemxxmh
+                            ) AS report
+                        ) AS hk_awal_masuk_sebelumnya ON hk_awal_masuk_sebelumnya.id_hemxxmh = a.id_hemxxmh
+
 
                         WHERE a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))
                     )
