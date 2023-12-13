@@ -249,7 +249,7 @@
         if (!empty($rs_hemxxmh)){
             $keterangan = '';
             $kode_finger = $rs_hemxxmh['kode_finger'];
-            $grup_hk = $row_hemxxmh['grup_hk'];
+            $grup_hk = $rs_hemxxmh['grup_hk'];
             $htlxxrh_kode = '';
             $status_presensi_in = '';
             $status_presensi_out = '';
