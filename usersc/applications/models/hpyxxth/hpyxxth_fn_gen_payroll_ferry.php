@@ -209,9 +209,9 @@
                             IFNULL( 
                                 if( c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal), 0,
                                     if(ifnull(is_perubahan_hk,0) > 0, 
-                                        ((hk_report / if(grup_hk_lama = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp))
+                                        (hk_lama_report * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp))
                                         +
-                                        ((hk_jadwal / if(grup_hk_baru = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
+                                        (hk_baru_jadwal * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
                                         if(c.tanggal_masuk BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-02") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))), 
                                             (hari_kerja / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) ,
                                             if(c.tanggal_keluar BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-01") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))), 
@@ -223,12 +223,8 @@
                             ,0) AS gp,
                             DATEDIFF(LAST_DAY(:tanggal_awal), c.tanggal_keluar) AS diff,                        
                             pot_gp_pelatihan,
-                            hk_report,
-                            grup_hk_lama,
-                            hk_jadwal,
-                            grup_hk_baru,
-                                nominal_gp,
-                                (hari_kerja / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) AS fixed_gp,
+                            nominal_gp,
+                            (hari_kerja / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp) AS fixed_gp,
                             -- Koreksi Perubahan Status
                             IFNULL( 
                                 if( c.tanggal_masuk BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal), -- AND id_status IS NOT NULL, 
@@ -823,75 +819,67 @@
                                 ) AS report
                             ) AS hk_baru ON hk_baru.id_hemxxmh = a.id_hemxxmh
                             
-                            -- case HK 5 HK 6
-                            LEFT JOIN (
-                                SELECT
-                                    grup_hk_lama,
-                                    grup_hk_baru,
-                                    hk_report,
-                                    IFNULL(jadwal.jadwal_zz, 0) AS hk_jadwal,
-                                    akhir_grup_hk_lama,
-                                    awal_grup_hk_baru,
-                                    report.id_hemxxmh,
-                                    IFNULL(is_perubahan_hk, 0) AS is_perubahan_hk
-                                FROM (
-                                    SELECT 
-                                        COUNT(a.id) AS hk_report,
-                                        is_perubahan_hk,
-                                        a.id_hemxxmh,
-                                        akhir_grup_hk_lama,
-                                        awal_grup_hk_baru,
-                                        grup_hk_lama,
-                                        grup_hk_baru,
-                                        job.tanggal_masuk
-                                    FROM htsprrd AS a
-                                    LEFT JOIN (
-                                        SELECT
-                                            id_hemxxmh,
-                                            IFNULL(is_perubahan_hk, 0) AS is_perubahan_hk,
-                                            grup_hk_lama,
-                                            grup_hk_baru,
-                                            akhir_grup_hk_lama,
-                                            awal_grup_hk_baru
-                                        FROM (
-                                            SELECT
-                                                id_hemxxmh,
-                                                COUNT(id) AS is_perubahan_hk,
-                                                jb.grup_hk AS grup_hk_baru,
-                                                if(grup_hk = 1, 2, 1) AS grup_hk_lama,
-                                                jb.tanggal_awal AS awal_grup_hk_baru,
-                                                DATE_SUB(jb.tanggal_awal, INTERVAL 1 DAY) AS akhir_grup_hk_lama
-                                            FROM hemjbrd AS jb
-                                            WHERE is_from_hk = 1 AND tanggal_awal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND LAST_DAY(:tanggal_awal)
-                                            GROUP BY id_hemxxmh
-                                        ) AS subquery
-                                    ) AS history ON history.id_hemxxmh = a.id_hemxxmh
-                                    LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
-                                    WHERE a.tanggal BETWEEN job.tanggal_masuk AND akhir_grup_hk_lama
-                                    AND (a.st_clock_in <> "off" AND a.st_jadwal <> "OFF")
-                                    GROUP BY a.id_hemxxmh
-                                ) AS report
+                            
+                        -- case HK 5 HK 6
+                        LEFT JOIN (
+                            SELECT
+                                hk_report,
+                                hk_jadwal_non_off,
+                                hk_lama_report,
+                                IFNULL(jadwal.hk_baru_jadwal, 0) AS hk_baru_jadwal,
+                                report.id_hemxxmh,
+                                IFNULL(is_perubahan_hk, 0) AS is_perubahan_hk
+                            FROM (
+                                SELECT 
+                                    COUNT(a.id) AS hk_report,
+                                    IFNULL(COUNT(a.id), 0) / if(a.grup_hk = 1, 21,25) AS hk_lama_report,
+                                    is_perubahan_hk,
+                                    a.id_hemxxmh,
+                                    tanggal_hk_baru_min_day,
+                                    a.grup_hk,
+                                    job.tanggal_masuk
+                                FROM htsprrd AS a
                                 LEFT JOIN (
                                     SELECT
-                                        tanggal,
-                                        htssctd.id_hemxxmh,
-                                        COUNT(id) AS jadwal_zz
-                                    FROM htssctd
-                                    LEFT JOIN (
-                                        SELECT
                                         id_hemxxmh,
-                                        COUNT(id) AS is_perubahan_hk,
-                                        if(grup_hk = 1, 2, 1) AS grup_hk_baru,
-                                        jb.tanggal_awal AS awal_grup_hk_baru
-                                    FROM hemjbrd AS jb
-                                    WHERE is_from_hk = 1 AND tanggal_awal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND LAST_DAY(:tanggal_awal)
-                                    GROUP BY id_hemxxmh
-                                    ) AS jbrd ON jbrd.id_hemxxmh = htssctd.id_hemxxmh
-                                    WHERE id_htsxxmh <> 1 AND tanggal BETWEEN awal_grup_hk_baru AND LAST_DAY(:tanggal_awal) AND is_active = 1
-                                    GROUP BY id_hemxxmh
-                                ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh 
-                            ) AS hk5hk6 ON hk5hk6.id_hemxxmh = a.id_hemxxmh
-                            
+                                        IFNULL(is_perubahan_hk, 0) AS is_perubahan_hk,
+                                        tanggal_hk_baru_min_day
+                                    FROM (
+                                        SELECT
+                                            id_hemxxmh,
+                                            COUNT(id) AS is_perubahan_hk,
+                                            DATE_SUB(jb.tanggal_awal, INTERVAL 1 DAY) AS tanggal_hk_baru_min_day
+                                        FROM hemjbrd AS jb
+                                        WHERE is_from_hk = 1 AND tanggal_awal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir)
+                                        GROUP BY id_hemxxmh
+                                    ) AS subquery
+                                ) AS history ON history.id_hemxxmh = a.id_hemxxmh
+                                LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
+                                WHERE a.tanggal BETWEEN job.tanggal_masuk AND tanggal_hk_baru_min_day 
+                                AND (a.st_clock_in <> "off" AND a.st_jadwal <> "OFF")
+                                GROUP BY a.id_hemxxmh
+                            ) AS report
+                            LEFT JOIN (
+                                SELECT
+                                    tanggal,
+                                    htssctd.id_hemxxmh,
+                                    COUNT(id) AS hk_jadwal_non_off,
+                                    ifnull(COUNT(id),0) / if(grup_hk = 1, 21, 25) AS hk_baru_jadwal
+                                FROM htssctd
+                                LEFT JOIN (
+                                    SELECT
+                                    id_hemxxmh,
+                                    grup_hk,
+                                    jb.tanggal_awal AS awal_grup_hk_baru
+                                FROM hemjbrd AS jb
+                                WHERE is_from_hk = 1 AND tanggal_awal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir)
+                                GROUP BY id_hemxxmh
+                                ) AS jbrd ON jbrd.id_hemxxmh = htssctd.id_hemxxmh
+                                WHERE id_htsxxmh <> 1 AND tanggal BETWEEN awal_grup_hk_baru AND LAST_DAY(:tanggal_akhir) AND is_active = 1
+                                GROUP BY id_hemxxmh
+                            ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh 
+                        ) AS hk5hk6 ON hk5hk6.id_hemxxmh = a.id_hemxxmh
+
                             -- tanggal keluar
                             LEFT JOIN (
                                 SELECT
