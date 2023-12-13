@@ -325,7 +325,7 @@
                             if(c.id_heyxxmd = 1 AND c.id_hesxxmh = 3,
                                 if(c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal),
                                     if(is_terminasi > 0 OR id_status IS NOT NULL, 
-                                        if(c.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND LAST_DAY(:tanggal_awal), 
+                                        if(c.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-02") AND LAST_DAY(:tanggal_awal), 
                                             (jadwal_baru_masuk - jadwal_bulan_lalu) / if(c.grup_hk = 1, 21, 25) * (if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)) 
                                             ,
                                         
