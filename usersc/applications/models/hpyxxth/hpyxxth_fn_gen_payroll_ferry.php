@@ -1939,8 +1939,8 @@
                             SELECT
                                 a.id,
                                 a.id_hemxxmh,
-                                SUM(a.pph21_final) AS sum_pph21_this_year_until_this_month
-                            FROM hppphth AS a
+                                SUM(a.pot_pph21) AS sum_pph21_this_year_until_this_month
+                            FROM hpyemtd AS a
                             LEFT JOIN hpyxxth AS b ON b.id = a.id_hpyxxth
                             WHERE YEAR(b.tanggal_awal) = YEAR(:tanggal_akhir) AND MONTH(b.tanggal_akhir) <= MONTH(:tanggal_akhir)
                             GROUP BY a.id_hemxxmh
@@ -2170,13 +2170,13 @@
             ->exec('UPDATE hpyemtd AS a
                     LEFT JOIN hppphth AS b ON b.id_hpyemtd = a.id
                     SET 
-                        a.pot_pph21 = if(a.pot_pph21 > 0, a.pot_pph21, if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_total)),
+                        a.pot_pph21 = if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_final),
                         
                         a.gaji_bersih =
                         FLOOR(
                             (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status)
                             -
-                            (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(a.pot_pph21 > 0, a.pot_pph21, if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_total)))
+                            (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_final))
                         ),
                         
                         a.bulat =
@@ -2184,7 +2184,7 @@
                             (
                                 (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status)
                                 -
-                                (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(a.pot_pph21 > 0, a.pot_pph21, if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_total)))
+                                (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_final))
                             ) % 100
                         ),
                         
@@ -2193,14 +2193,14 @@
                             (
                                 (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status)
                                 -
-                                (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(a.pot_pph21 > 0, a.pot_pph21, if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_total)))
+                                (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_final))
                             )
                             -
                             (
                                 (
                                     (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status)
                                     -
-                                    (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(a.pot_pph21 > 0, a.pot_pph21, if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_total)))
+                                    (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_final))
                                 ) % 100
                             )
                         )
