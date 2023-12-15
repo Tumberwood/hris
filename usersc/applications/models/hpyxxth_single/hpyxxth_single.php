@@ -22,7 +22,7 @@
 		->debug(true)
 		->fields(
 			Field::inst( 'hpyxxth.id' ),
-			Field::inst( 'hpyxxth.id_heyxxmh' )
+			Field::inst( 'hpyxxth.id_hemxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hpyxxth.kode' )
 				->setFormatter( function ( $val ) {
@@ -77,10 +77,11 @@
 					'from' => 'd M Y',
 					'to' =>   'Y-m-d'
 				) ),
-			Field::inst( 'heyxxmh.nama' )
+			Field::inst( 'hemxxmh.kode' ),
+			Field::inst( 'hemxxmh.nama' )
 		)
-		->leftJoin( 'heyxxmh','heyxxmh.id','=','hpyxxth.id_heyxxmh' )
-		->where( 'hpyxxth.is_single', 0);
+		->leftJoin( 'hemxxmh','hemxxmh.id','=','hpyxxth.id_hemxxmh' )
+		->where( 'hpyxxth.is_single', 1);
 	
 	// do not erase
 	// function show / hide inactive document
@@ -89,7 +90,6 @@
 			->where( 'hpyxxth.is_active', 1);
 	}
 	
-	include( "hpyxxth_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
 	$editor

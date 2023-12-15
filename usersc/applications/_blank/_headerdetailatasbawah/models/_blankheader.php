@@ -46,6 +46,7 @@
 			Field::inst( '_blankheader.is_approve' ),
 			Field::inst( '_blankheader.is_defaultprogram' )
 		)
+
 		->where( '_blankheader.tanggal', $start_date, '>=' )	// disesuaikan
 		->where( '_blankheader.tanggal', $end_date, '<=' );
 	
