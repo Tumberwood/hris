@@ -935,6 +935,49 @@
 								}
 							} );
 						}
+					},
+					{
+						text: 'PPh21',
+						name: 'btnGenPPh21',
+						className: 'btn btn-xs btn-outline',
+						titleAttr: '',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+
+							notifyprogress = $.notify({
+								message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
+							},{
+								z_index: 9999,
+								allow_dismiss: false,
+								type: 'info',
+								delay: 0
+							});
+
+							$.ajax( {
+								url: "../../models/hpyxxth/hpyxxth_fn_gen_pph21.php",
+								dataType: 'json',
+								type: 'POST',
+								data: {
+									id_hpyxxth		: id_hpyxxth,
+									tanggal_awal	: tanggal_awal_select,
+									tanggal_akhir	: tanggal_akhir_select,
+									timestamp		: timestamp
+								},
+								success: function ( json ) {
+
+									$.notify({
+										message: json.data.message
+									},{
+										type: json.data.type_message
+									});
+
+									tblhpyxxth.ajax.reload(function ( json ) {
+										notifyprogress.close();
+									}, false);
+								}
+							} );
+						}
 					}
 				],
 				rowCallback: function( row, data, index ) {
@@ -949,6 +992,7 @@
 				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
 				CekInitHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
+				tblhpyxxth.button( 'btnGenPPh21:name' ).disable();
 				
 				tblhpyemtd_kbm_reg.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_karyawan.button( 'btnPrint:name' ).disable();
@@ -976,6 +1020,7 @@
 				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
 				CekSelectHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).enable();
+				tblhpyxxth.button( 'btnGenPPh21:name' ).enable();
 				tblhpyemtd_kbm_reg.button( 'btnPrint:name' ).enable();
 				tblhpyemtd_karyawan.button( 'btnPrint:name' ).enable();
 				tblhpyemtd_kmj.button( 'btnPrint:name' ).enable();
@@ -996,6 +1041,7 @@
 				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
 				CekDeselectHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
+				tblhpyxxth.button( 'btnGenPPh21:name' ).disable();
 				tblhpyemtd_kbm_reg.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_karyawan.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_kmj.button( 'btnPrint:name' ).disable();

@@ -1924,7 +1924,7 @@
                                 SUM(IFNULL(a.thr, 0)) AS thr_this_year
                             FROM hpyemtd AS a
                             LEFT JOIN hpyxxth AS b ON b.id = a.id_hpyxxth
-                            WHERE YEAR(b.tanggal_awal) = YEAR(:tanggal_akhir) AND MONTH(b.tanggal_akhir) <= MONTH(:tanggal_akhir)
+                            WHERE YEAR(b.tanggal_akhir) = YEAR(:tanggal_akhir) AND MONTH(b.tanggal_akhir) <= MONTH(:tanggal_akhir)
                             GROUP BY a.id_hemxxmh
                         ) AS old_pay ON old_pay.id_hemxxmh = a.id_hemxxmh
                     
@@ -1943,7 +1943,7 @@
                                 SUM(a.pot_pph21) AS sum_pph21_this_year_until_this_month
                             FROM hpyemtd AS a
                             LEFT JOIN hpyxxth AS b ON b.id = a.id_hpyxxth
-                            WHERE YEAR(b.tanggal_awal) = YEAR(:tanggal_akhir) AND MONTH(b.tanggal_akhir) <= MONTH(:tanggal_akhir)
+                            WHERE YEAR(b.tanggal_akhir) = YEAR(:tanggal_akhir) AND MONTH(b.tanggal_akhir) <= MONTH(:tanggal_akhir)
                             GROUP BY a.id_hemxxmh
                         ) AS sum_pph21 ON sum_pph21.id_hemxxmh = a.id_hemxxmh
                     
@@ -1957,80 +1957,46 @@
                         peg AS nama, -- nama pegawai concat NIK dan Nama
                         
                         -- gaji_for_pph = sum dari komponen penambah dan komponen pengurang yg is_pph21 = 1 (note :1)					
-                        gaji_for_pph,
+                        round(gaji_for_pph) AS gaji_for_pph,
                         
                         -- sum_gaji_for_pph = sum dari nilai gaji_for_pph dari januari s/d bulan payroll yg dihitung					
-                        sum_gaji_for_pph,
+                        round(sum_gaji_for_pph) AS sum_gaji_for_pph,
                         
                         -- nilai_est_gaji = sum dari komponen gaji yg is_est_pph21 = 1 (note : 2)					
-                        nilai_est_gaji,
+                        ROUND(nilai_est_gaji) AS nilai_est_gaji,
                         
                         -- estimasi_gaji = nilai_est_gaji * (12 - bulan payroll yg dihitung)					
-                        estimasi_gaji,
+                        ROUND(estimasi_gaji) AS estimasi_gaji,
                         
                         -- bruto_total = sum_gaji_for_pph + estimasi_gaji					
-                        bruto_total,
+                        ROUND(bruto_total) AS bruto_total,
                         
                         -- bruto_gaji = bruto_total - thr (note : 4) 					
-                        bruto_gaji,
+                        ROUND(bruto_gaji) AS bruto_gaji,
                         
                         -- jhtjp_tahunan = (pot_jht + pot_jp) * 12					
-                        jhthp_tahunan,
+                        ROUND(jhthp_tahunan) AS jhthp_tahunan,
                         
                         -- by_jabatan_total = (bruto_total + jhtjp_tahunan) * 0,05 (dengan maks nilai 6jt)					
-                        by_jabatan_total,
+                        ROUND(by_jabatan_total) AS by_jabatan_total,
                         
                         -- by_jabatan_gaji = (bruto_gaji + jhtjp_tahunan) * 0,05 (dengan nilai maks 6jt)					
-                        by_jabatan_gaji,
+                        ROUND(by_jabatan_gaji) AS by_jabatan_gaji,
                         
-                        --netto_total = bruto_total - by_jabatan_total					
-                        netto_total,
+                        -- netto_total = bruto_total - by_jabatan_total					
+                        ROUND(netto_total) AS netto_total,
                         
                         -- netto_gaji = bruto_gaji - by_jabatan_gaji					
-                        netto_gaji,
+                        ROUND(netto_gaji) AS netto_gaji,
                         
                         --  PKP_total = netto_total - PTKP (if hasil <= 0 then PKP_total = 0)					
-                        if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0) AS pkp_total,
+                        ROUND(if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0)) AS pkp_total,
                         
                         -- PKP_gaji = netto_gaji - PTKP (if hasil <= 0 then PKP_gaji = 0)					
-                        if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) AS pkp_gaji,
+                        ROUND(if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0)) AS pkp_gaji,
                         
                         -- PPH21_total = PKP_total * %Pajak (note : 3)					
-                        IF(
-                            if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0) - pkp_akhir > 0,
-                            IF(if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0) - (pkp_lanjut + pkp_akhir) > 0,
-                                ((pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
-                                +
-                                ((pkp_lanjut) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut + 1, persen_lanjut) / 100))
-                                +
-                                ((if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0) - (pkp_lanjut + pkp_akhir)) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut_ketiga + 1, persen_lanjut_ketiga) / 100)),
-                                
-                                ((pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
-                                +
-                                ((if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0) - pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut + 1, persen_lanjut) / 100))
-                                ),
-                            ((if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0)) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
-                        ) AS pph21_total,
-                        
-                        -- PPH21_gaji = PKP_gaji * %Pajak (note : 3)					
-                        IF(
-                            if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - pkp_akhir > 0,
-                            IF(if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - (pkp_lanjut + pkp_akhir) > 0,
-                                ((pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
-                                +
-                                ((pkp_lanjut) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut + 1, persen_lanjut) / 100))
-                                +
-                                ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - (pkp_lanjut + pkp_akhir)) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut_ketiga + 1, persen_lanjut_ketiga) / 100)),
-                                
-                                ((pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
-                                +
-                                ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut + 1, persen_lanjut) / 100))
-                                ),
-                            ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0)) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
-                        ) AS pph21_gaji,
-                        
-                        -- PPH21_THR = PPH21_total - PPH21_gaji					
-                        (
+                        ROUND(
                             IF(
                                 if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0) - pkp_akhir > 0,
                                 IF(if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0) - (pkp_lanjut + pkp_akhir) > 0,
@@ -2046,27 +2012,11 @@
                                     ),
                                 ((if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0)) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
                             )
-                        ) - 
-                        (
-                            IF(
-                                if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - pkp_akhir > 0,
-                                IF(if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - (pkp_lanjut + pkp_akhir) > 0,
-                                    ((pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
-                                    +
-                                    ((pkp_lanjut) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut + 1, persen_lanjut) / 100))
-                                    +
-                                    ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - (pkp_lanjut + pkp_akhir)) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut_ketiga + 1, persen_lanjut_ketiga) / 100)),
-                                    
-                                    ((pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
-                                    +
-                                    ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut + 1, persen_lanjut) / 100))
-                                    ),
-                                ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0)) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
-                            )
-                        ) AS pph21_thr,
-                    
-                        -- pph21_gaji * (bulan sekarang/12)
-                        (
+                        ) 
+                        AS pph21_total,
+                        
+                        -- PPH21_gaji = PKP_gaji * %Pajak (note : 3)					
+                        ROUND(    
                             IF(
                                 if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - pkp_akhir > 0,
                                 IF(if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - (pkp_lanjut + pkp_akhir) > 0,
@@ -2083,8 +2033,10 @@
                                 ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0)) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
                             )
                         ) 
-                        * (bulan / 12) AS sum_pph_berjalan,
-                        (
+                        AS pph21_gaji,
+                        
+                        -- PPH21_THR = PPH21_total - PPH21_gaji					
+                        ROUND(
                             (
                                 IF(
                                     if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0) - pkp_akhir > 0,
@@ -2119,8 +2071,52 @@
                                     ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0)) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
                                 )
                             )
-                            +
+                        )
+                        AS pph21_thr,
+
+                        -- pph21_gaji * (bulan sekarang/12)
+                        ROUND(   
                             (
+                                IF(
+                                    if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - pkp_akhir > 0,
+                                    IF(if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - (pkp_lanjut + pkp_akhir) > 0,
+                                        ((pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
+                                        +
+                                        ((pkp_lanjut) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut + 1, persen_lanjut) / 100))
+                                        +
+                                        ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - (pkp_lanjut + pkp_akhir)) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut_ketiga + 1, persen_lanjut_ketiga) / 100)),
+                                        
+                                        ((pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
+                                        +
+                                        ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut + 1, persen_lanjut) / 100))
+                                        ),
+                                    ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0)) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
+                                )
+                            ) 
+                            * (bulan / 12) 
+                        )
+                        AS sum_pph_berjalan,
+                        
+                        ROUND
+                        (
+                            (
+                                (
+                                    IF(
+                                        if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0) - pkp_akhir > 0,
+                                        IF(if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0) - (pkp_lanjut + pkp_akhir) > 0,
+                                            ((pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
+                                            +
+                                            ((pkp_lanjut) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut + 1, persen_lanjut) / 100))
+                                            +
+                                            ((if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0) - (pkp_lanjut + pkp_akhir)) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut_ketiga + 1, persen_lanjut_ketiga) / 100)),
+                                            
+                                            ((pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
+                                            +
+                                            ((if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0) - pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut + 1, persen_lanjut) / 100))
+                                            ),
+                                        ((if(ptkp is not null, CASE WHEN netto_total - ptkp <= 0 THEN 0 ELSE netto_total - ptkp END, 0)) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
+                                    )
+                                ) - 
                                 (
                                     IF(
                                         if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - pkp_akhir > 0,
@@ -2137,12 +2133,33 @@
                                             ),
                                         ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0)) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
                                     )
-                                ) 
-                                * (bulan / 12)
+                                )
+                                +
+                                (
+                                    (
+                                        IF(
+                                            if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - pkp_akhir > 0,
+                                            IF(if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - (pkp_lanjut + pkp_akhir) > 0,
+                                                ((pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
+                                                +
+                                                ((pkp_lanjut) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut + 1, persen_lanjut) / 100))
+                                                +
+                                                ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - (pkp_lanjut + pkp_akhir)) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut_ketiga + 1, persen_lanjut_ketiga) / 100)),
+                                                
+                                                ((pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
+                                                +
+                                                ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0) - pkp_akhir) * (IF(is_npwp = 0 OR is_npwp IS NULL, persen_lanjut + 1, persen_lanjut) / 100))
+                                                ),
+                                            ((if(ptkp is not null, CASE WHEN netto_gaji - ptkp <= 0 THEN 0 ELSE netto_gaji - ptkp END, 0)) * (IF(is_npwp = 0 OR is_npwp IS NULL, pajak + 1, pajak) / 100))
+                                        )
+                                    ) 
+                                    * (bulan / 12)
+                                )
                             )
+                            - -- dikurangi dengan sum pph21 tahun ini dari bulan sebelumnya sampai bulan sekaang
+                            sum_pph21_this_year_until_this_month 
                         )
-                        - -- dikurangi dengan sum pph21 tahun ini dari bulan sebelumnya sampai bulan sekaang
-                        sum_pph21_this_year_until_this_month AS pph21_final
+                        AS pph21_final
                     
                     FROM payroll
                     LEFT JOIN (
@@ -2171,13 +2188,13 @@
             ->exec('UPDATE hpyemtd AS a
                     LEFT JOIN hppphth AS b ON b.id_hpyemtd = a.id
                     SET 
-                        a.pot_pph21 = if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_final),
-                        
+                        a.pot_pph21 = if(b.pph21_final > 0, b.pph21_final, a.pot_pph21),
+                        a.pph21_back = if(b.pph21_final < 0, b.pph21_final, a.pph21_back),
                         a.gaji_bersih =
                         FLOOR(
                             (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status)
                             -
-                            (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_final))
+                            (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(b.pph21_final > 0, b.pph21_final, a.pot_pph21))
                         ),
                         
                         a.bulat =
@@ -2185,7 +2202,7 @@
                             (
                                 (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status)
                                 -
-                                (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_final))
+                                (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(b.pph21_final > 0, b.pph21_final, a.pot_pph21))
                             ) % 100
                         ),
                         
@@ -2194,14 +2211,14 @@
                             (
                                 (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status)
                                 -
-                                (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_final))
+                                (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(b.pph21_final > 0, b.pph21_final, a.pot_pph21))
                             )
                             -
                             (
                                 (
                                     (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status)
                                     -
-                                    (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(a.pot_pph21 > 0, a.pot_pph21, b.pph21_final))
+                                    (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(b.pph21_final > 0, b.pph21_final, a.pot_pph21))
                                 ) % 100
                             )
                         )
