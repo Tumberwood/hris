@@ -1924,7 +1924,7 @@
                                 SUM(IFNULL(a.thr, 0)) AS thr_this_year
                             FROM hpyemtd AS a
                             LEFT JOIN hpyxxth AS b ON b.id = a.id_hpyxxth
-                            WHERE YEAR(b.tanggal_akhir) = YEAR(:tanggal_akhir) AND MONTH(b.tanggal_akhir) <= MONTH(:tanggal_akhir)
+                            WHERE YEAR(b.tanggal_akhir) = YEAR(:tanggal_akhir) AND MONTH(b.tanggal_akhir) <= MONTH(:tanggal_akhir) AND b.is_active = 1
                             GROUP BY a.id_hemxxmh
                         ) AS old_pay ON old_pay.id_hemxxmh = a.id_hemxxmh
                     
@@ -1943,7 +1943,7 @@
                                 SUM(a.pot_pph21) AS sum_pph21_this_year_until_this_month
                             FROM hpyemtd AS a
                             LEFT JOIN hpyxxth AS b ON b.id = a.id_hpyxxth
-                            WHERE YEAR(b.tanggal_akhir) = YEAR(:tanggal_akhir) AND MONTH(b.tanggal_akhir) <= MONTH(:tanggal_akhir)
+                            WHERE YEAR(b.tanggal_akhir) = YEAR(:tanggal_akhir) AND MONTH(b.tanggal_akhir) <= MONTH(:tanggal_akhir) AND b.is_active = 1
                             GROUP BY a.id_hemxxmh
                         ) AS sum_pph21 ON sum_pph21.id_hemxxmh = a.id_hemxxmh
                     
@@ -2189,7 +2189,6 @@
                     LEFT JOIN hppphth AS b ON b.id_hpyemtd = a.id
                     SET 
                         a.pot_pph21 = if(b.pph21_final > 0, b.pph21_final, a.pot_pph21),
-                        a.pph21_back = if(b.pph21_final < 0, b.pph21_final, a.pph21_back),
                         a.gaji_bersih =
                         FLOOR(
                             (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status)
