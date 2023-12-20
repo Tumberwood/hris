@@ -37,6 +37,9 @@
 				} ),
 			Field::inst( 'htoxxth.keterangan' ),
 			Field::inst( 'htoxxth.is_active' ),
+			Field::inst( 'htoxxth.is_susulan' )
+				->set( Field::SET_CREATE )
+				->setValue(1),
 			Field::inst( 'htoxxth.created_by' )
 				->set( Field::SET_CREATE )
 				->setValue($_SESSION['user']),
@@ -65,7 +68,7 @@
 		)
 		->leftJoin( 'holxxmd','holxxmd.id','=','htoxxth.id_holxxmd' )
 		->leftJoin( 'heyxxmh','heyxxmh.id','=','htoxxth.id_heyxxmh' )
-		->where( 'htoxxth.is_susulan', 0)
+		->where( 'htoxxth.is_susulan', 1)
 		->where( 'htoxxth.tanggal', $start_date, '>=' )
 		->where( 'htoxxth.tanggal', $end_date, '<=' );
 	
