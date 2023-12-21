@@ -204,7 +204,7 @@
                             GROUP BY a.id_hemxxmh
                         ) AS sum_pph21 ON sum_pph21.id_hemxxmh = a.id_hemxxmh
                     
-                        WHERE a.id_hpyxxth = :id_hpyxxth
+                        WHERE a.id_hpyxxth = :id_hpyxxth AND a.is_active = 1
                     )
                     SELECT
                         id_header, -- untuk mempermudah pick periode
