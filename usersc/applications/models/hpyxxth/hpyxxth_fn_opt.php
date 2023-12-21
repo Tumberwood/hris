@@ -46,6 +46,7 @@
             'hpyxxth.id as id',
             'concat(hpyxxth.tanggal_awal," s/d ",hpyxxth.tanggal_akhir ) as text'
         ])
+        ->where('hpyxxth.is_single',0)
         ->where('hpyxxth.is_active',1)
         ->where('hpyxxth.id', $id_hpyxxth_old, '<>' )
         ->where( function ( $r ) {
