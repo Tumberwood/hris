@@ -697,6 +697,30 @@
 
 			tblhtoxxrd_susulan.searchPanes.container().appendTo( '#searchPanes1' );
 
+			tblhtoxxrd_susulan.on( 'select', function( e, dt, type, indexes ) {
+				data_htoxxrd_susulan = tblhtoxxrd_susulan.row( { selected: true } ).data().htoxxrd_susulan;
+				id_htoxxrd_susulan   = data_htoxxrd_susulan.id;
+				id_transaksi_d    = id_htoxxrd_susulan; // dipakai untuk general
+				is_active_d       = data_htoxxrd_susulan.is_active;
+
+				id_hpyxxth_old    = data_htoxxrd_susulan.id_hpyxxth;
+				id_hemxxmh_old    = data_htoxxrd_susulan.id_hemxxmh;
+				id_htotpmh_old    = data_htoxxrd_susulan.id_htotpmh;
+				
+				// atur hak akses
+			} );
+
+			tblhtoxxrd_susulan.on( 'deselect', function() {
+				id_htoxxrd_susulan = 0;
+				is_active_d = 0;
+
+				id_hpyxxth_old = 0;
+				id_hemxxmh_old = 0;
+				id_htotpmh_old = 0;
+				
+				// atur hak akses
+			} );
+			
 			$("#frmhtoxxrd_susulan").submit(function(e) {
 				e.preventDefault();
 			}).validate({
