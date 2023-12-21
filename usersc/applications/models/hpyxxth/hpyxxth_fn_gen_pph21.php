@@ -151,7 +151,11 @@
                             ((IFNULL(sum_gaji_for_pph, 0) + IFNULL(nilai_est_gaji, 0) * (12 - MONTH(b.tanggal_akhir))) + (a.pot_jht + a.pot_psiun) * 12) * 0.05 AS by_jabatan_total,
                             ((IFNULL(sum_gaji_for_pph, 0) + nilai_est_gaji * (12 - MONTH(b.tanggal_akhir)) - IFNULL(thr_this_year, 0)) + (a.pot_jht + a.pot_psiun) * 12) * 0.05 AS by_jabatan_gaji,
                             (IFNULL(sum_gaji_for_pph, 0) + nilai_est_gaji * (12 - MONTH(b.tanggal_akhir))) - ((IFNULL(sum_gaji_for_pph, 0) + IFNULL(nilai_est_gaji, 0) * (12 - MONTH(b.tanggal_akhir)) + (a.pot_jht + a.pot_psiun) * 12) * 0.05) AS netto_total,
-                            ((IFNULL(sum_gaji_for_pph, 0) + nilai_est_gaji * (12 - MONTH(b.tanggal_akhir)) - IFNULL(thr_this_year, 0)) - ((IFNULL(sum_gaji_for_pph, 0) + IFNULL(nilai_est_gaji, 0) * (12 - MONTH(b.tanggal_akhir)) + (a.pot_jht + a.pot_psiun) * 12) * 0.05)) AS netto_gaji,
+                            (IFNULL(sum_gaji_for_pph, 0) + (nilai_est_gaji * (12 - MONTH(b.tanggal_akhir)))) - IFNULL(thr_this_year, 0)
+                            - 
+                            (
+                                ((IFNULL(sum_gaji_for_pph, 0) + nilai_est_gaji * (12 - MONTH(b.tanggal_akhir)) - IFNULL(thr_this_year, 0)) + (a.pot_jht + a.pot_psiun) * 12) * 0.05  
+                            ) AS netto_gaji,
                             ptkp.amount AS ptkp,
                             doc.is_npwp,
                             persen_total.pkp_akhir,
@@ -184,7 +188,7 @@
                             WHERE YEAR(b.tanggal_akhir) = YEAR(:tanggal_akhir) AND MONTH(b.tanggal_akhir) <= MONTH(:tanggal_akhir) AND b.is_active = 1 AND a.is_active = 1
                             GROUP BY a.id_hemxxmh
                         ) AS old_pay ON old_pay.id_hemxxmh = a.id_hemxxmh
-                    
+
                         LEFT JOIN (
                             SELECT *
                             FROM hppphmh
@@ -192,20 +196,21 @@
                             ORDER BY id
                             LIMIT 1
                         ) AS persen_total ON persen_total.is_active = 1
-                    
+
                         LEFT JOIN (
                             SELECT
                                 a.id,
                                 a.id_hemxxmh,
-                                SUM(a.pot_pph21) AS sum_pph21_this_year_until_this_month
-                            FROM hpyemtd AS a
+                                SUM(a.pph21_final) AS sum_pph21_this_year_until_this_month
+                            FROM hppphth AS a
                             LEFT JOIN hpyxxth AS b ON b.id = a.id_hpyxxth
-                            WHERE YEAR(b.tanggal_akhir) = YEAR(:tanggal_akhir) AND MONTH(b.tanggal_akhir) <= MONTH(:tanggal_akhir) AND b.is_active = 1 AND a.is_active = 1
+                            WHERE YEAR(b.tanggal_awal) = YEAR(:tanggal_akhir) AND MONTH(b.tanggal_akhir) < MONTH(:tanggal_akhir) AND b.is_active = 1 AND a.is_active = 1
                             GROUP BY a.id_hemxxmh
                         ) AS sum_pph21 ON sum_pph21.id_hemxxmh = a.id_hemxxmh
-                    
+
                         WHERE a.id_hpyxxth = :id_hpyxxth AND a.is_active = 1
                     )
+
                     SELECT
                         id_header, -- untuk mempermudah pick periode
                         id_detail, -- untuk mempermudah join dengan payroll
@@ -417,7 +422,7 @@
                             sum_pph21_this_year_until_this_month 
                         )
                         AS pph21_final
-                    
+
                     FROM payroll
                     LEFT JOIN (
                         SELECT
@@ -426,15 +431,16 @@
                             pkp_akhir AS pkp_lanjut
                         FROM hppphmh
                     ) AS persen_pph21 ON pkp_akhir =  persen_pph21.pkp_awal
-                    
+
                     LEFT JOIN (
                         SELECT
                             pajak AS persen_lanjut_ketiga,
                             pkp_awal,
                             pkp_akhir AS pkp_lanjut_ketiga
                         FROM hppphmh
-                    ) AS persen_pph21_ketiga ON pkp_lanjut = persen_pph21_ketiga.pkp_awal
+                    ) AS persen_pph21_ketiga ON pkp_lanjut =  persen_pph21_ketiga.pkp_awal
                     ORDER BY id_hemxxmh;
+
             
         ');
 
