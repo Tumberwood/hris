@@ -422,6 +422,11 @@
 						]
 					}, 	
 					{
+						label: "Checkclock Valid",
+						name: "htoemtd.is_valid_checkclock",
+						type: "readonly"
+					},
+					{
 						label: "Keterangan",
 						name: "htoxxrd_susulan.keterangan",
 						type: "textarea"
@@ -545,6 +550,14 @@
 						edthtoxxrd_susulan.field('jadwal').error( 'Jadwal belum ada!' );
 					}
 					// END validasi jadwal
+					// BEGIN validasi checkclock
+					check_valid_checkclock();
+					if(is_valid_checkclock == 0){
+						edthtoxxrd_susulan.field('htoxxrd_susulan.is_valid_checkclock').error( 'Checkclock belum valid!' );
+					}
+					// END validasi checkclock
+					
+					lemburLibur(id_hemxxmh, tanggal, id_htotpmh);
 				}
 				
 				if ( edthtoxxrd_susulan.inError() ) {

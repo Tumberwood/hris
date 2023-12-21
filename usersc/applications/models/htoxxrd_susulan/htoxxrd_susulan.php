@@ -68,6 +68,7 @@
 			Field::inst( 'htoxxrd_susulan.durasi_lembur_jam' ),
 			Field::inst( 'htoxxrd_susulan.durasi_jam_final' ),
 			Field::inst( 'htoxxrd_susulan.upah_lembur' ),
+			Field::inst( 'htoxxrd_susulan.is_valid_checkclock' ),
 			Field::inst( 'htoxxrd_susulan.is_istirahat' ),
 			Field::inst( 'htoxxrd_susulan.pot_ti' ),
 			Field::inst( 'hpyxxth.tanggal_awal' )
