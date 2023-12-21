@@ -495,7 +495,7 @@
         $akhir = new Carbon();
 
         $data = array(
-            'message' => 'Generate Payroll Berhasil Dibuat dalam waktu ' . $awal->diffInSeconds($akhir) . ' detik', 
+            'message' => 'Generate PPh21 Berhasil Dibuat dalam waktu ' . $awal->diffInSeconds($akhir) . ' detik', 
             'type_message' => 'success',
             'waktu'=> $awal . ' - ' . $akhir . ' /  ' . $awal->diffInSeconds($akhir)
         );  
