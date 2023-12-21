@@ -119,8 +119,8 @@
 						->bind(':id_htsxxmh', $id_htsxxmh)
 						->bind(':id_hemxxmh', $id_hemxxmh)
 						->bind(':tanggal', $tanggal)
-						->exec('
-							INSERT INTO htssctd
+						->bind(':shift', $shift)
+						->exec('INSERT INTO htssctd
 							(
 								id_hemxxmh,
 								id_htsxxmh,
@@ -142,7 +142,9 @@
 								tanggaljam_akhir,
 								tanggaljam_akhir_t2,
 								tanggaljam_awal_istirahat,
-								tanggaljam_akhir_istirahat
+								tanggaljam_akhir_istirahat,
+								is_upload_jadwal,
+								kode
 							)
 							SELECT
 								:id_hemxxmh,
@@ -210,7 +212,9 @@
 									WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir_istirahat <= "12:00:00"
 									THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", htsxxmh.jam_akhir_istirahat)
 									ELSE CONCAT(:tanggal, " ", htsxxmh.jam_akhir_istirahat)
-								END AS tanggaljam_akhir_istirahat
+								END AS tanggaljam_akhir_istirahat,
+								1,
+								:shift
 							FROM htsxxmh
 							WHERE 
 								id = :id_htsxxmh
