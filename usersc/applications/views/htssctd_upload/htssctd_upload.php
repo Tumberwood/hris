@@ -93,6 +93,7 @@
 							<li><b>3 &nbsp = &nbsp </b> MALAM 23:00-07:00</li>
 						</ul>
 					</div>
+                	<div id="searchPanes1"></div>
 					<div id="tabel_atas"></div>
 				</div> <!-- end of table -->
 			</div>
@@ -236,9 +237,33 @@
 							$('#tabel_atas').html(str1);
 
 							// Initialize DataTable
-							$('#tblhtsprrd1').DataTable({
+							tblhtsprrd1 = $('#tblhtsprrd1').DataTable({
 								responsive: false,
+								searchPanes:{
+									layout: 'columns-2',
+								},
+								dom: 
+									"<P>"+
+									"<lf>"+
+									"<B>"+
+									"<rt>"+
+									"<'row'<'col-sm-4'i><'col-sm-8'p>>",
+								columnDefs:[
+									{
+										searchPanes:{
+											show: true,
+										},
+										targets: [0,1]
+									},
+									{
+										searchPanes:{
+											show: false,
+										},
+										targets: '_all'
+									}
+								],
 							});
+							tblhtsprrd1.searchPanes.container().appendTo( '#searchPanes1' );
 							
 						} else {
 							// notifyprogress.close();
