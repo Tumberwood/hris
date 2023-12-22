@@ -14,6 +14,37 @@
 <!-- begin content here -->
 
 <div class="row">
+    <div class="col">
+        <div class="ibox" id="iboxfilter">
+            <div class="ibox-title">
+                <h5 class="text-navy">Filter</h5>&nbsp
+                <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+            </div>
+            <div class="ibox-content">
+                <form class="form-horizontal" id="frmperiode">
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Periode</label>
+                        <div class="col-lg-5">
+                            <div class="input-group input-daterange" id="periode">
+                                <input type="text" id="start_date" class="form-control">
+                                <div class="input-group-addon">
+                                    <span class="fa fa-calendar"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-4">
+                            <button class="btn btn-primary" type="submit" id="go">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-content">
@@ -42,6 +73,19 @@
 	</div>
 </div>
 
+<div class="row" id="report" style="display: none">
+	<div class="col">
+		<div class="ibox ">
+			<div class="ibox-content">
+				<div class="table-responsive">
+					<h3 id="judul"></h3>
+					<div id="tabel_atas"></div>
+				</div> <!-- end of table -->
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- BEGIN JS -->
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_load.php'; ?>
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_setup.php'; ?>
@@ -50,8 +94,21 @@
 
 <!-- BEGIN datatables here -->
 <script type="text/javascript">
+		$('#periode').datepicker({
+			setDate: new Date(),
+			autoclose: true,
+			todayHighlight: true,
+			clearBtn: true,
+			format: "M yyyy", 
+			minViewMode: 'months' 
+		});
+
+		$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
+
 		
 		$(document).ready(function() {
+			start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
+			generateTable(start_date);
 
 			//Edit by Ferry, revisi dijadikan 1 button untuk semua inputan
 			// BEGIN upload data
@@ -111,6 +168,114 @@
 			});
 			// END upload data
 
+			//GENERATE TABLE
+			
+			function generateTable(start_date) {
+				$('#report').show();
+				$('#tabel_atas').empty();
+				tanggal 		= moment($('#start_date').val()).format('MMM YYYY');
+				$('#judul').html(" Jadwal Satpam Bulan " + tanggal);
+				
+				$.ajax({
+					url: "../../models/htssctd_upload/htssctd_upload.php",
+					dataType: 'json',
+					type: 'POST',
+					data: {
+						start_date: start_date
+					},
+					success: function (json) {
+						if (json.data.length > 0) {
+							// Create an empty table
+							var str1 = '<table id="tblhtsprrd1" class="table table-striped table-bordered table-hover nowrap">';
+							str1 += '<thead>';
+							str1 += '<tr>';
+							var sum1 = 0; // Sum of columns starting with "1"
+							var sum2 = 0; // Sum of columns starting with "2"
+
+							// Loop through columns and add them to the table header
+							$.each(json.columns, function (k, colObj) {
+								str1 += '<th>';
+								str1 += colObj.data + '</th>';
+							});
+							str1 += '</tr>';
+							str1 = str1 + '</thead>';
+							str1 += '<tbody>';
+
+							// Loop through data and add rows to the table body
+							$.each(json.data, function (index, rowData) {
+								str1 += '<tr>';
+								sum1 = 0; // Reset the sum for each row
+								sum2 = 0; // Reset the sum for each row
+
+								$.each(json.columns, function (k, colObj) {
+									var columnName = colObj.data;
+									var cellValue = rowData[columnName];
+									// console.log(cellValue);
+									if (cellValue == undefined) {
+										cellValue = "-";
+									}
+									str1 += '<td>' + cellValue + '</td>';
+								});
+								str1 += '</tr>';
+							});
+
+							str1 += '</tbody>';
+							str1 += '</table>';
+
+							// Update the table element
+							$('#tabel_atas').html(str1);
+
+							// Initialize DataTable
+							$('#tblhtsprrd1').DataTable({
+								lengthChange: false,
+								responsive: false,
+								fixedHeader: {
+									header: false,
+								}
+							});
+							
+						} else {
+							// notifyprogress.close();
+							notifyprogress = $.notify({
+								message: 'Tidak ada data pada tanggal tersebut!'
+							}, {
+								z_index: 9999,
+								allow_dismiss: false,
+								type: 'danger',
+								delay: 3
+							});
+						}
+					}
+				});
+			}
+
+			// FORM PERIODE
+			
+			$("#frmperiode").submit(function(e) {
+				e.preventDefault();
+			}).validate({
+				rules: {
+					
+				},
+				submitHandler: function(frmperiode) {
+					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
+					console.log(start_date);
+					
+					notifyprogress = $.notify({
+						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
+					},{
+						z_index: 9999,
+						allow_dismiss: false,
+						type: 'info',
+						delay: 0
+					});
+					// tblhtsprrd.destroy();
+					generateTable(start_date)
+					
+					notifyprogress.close();
+					return false; 
+				}
+			});
 		} );// end of document.ready
 	
 	</script>
