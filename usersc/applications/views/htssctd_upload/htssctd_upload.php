@@ -83,6 +83,16 @@
 			<div class="ibox-content">
 				<div class="table-responsive">
 					<h3 id="judul"></h3>
+					<div class="alert alert-info alert-dismissable">
+						<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+						<b>Penjelasan Kode Shift:</b>
+						<ul>
+							<li><b>L &nbsp = &nbsp </b> OFF</li>
+							<li><b>1 &nbsp = &nbsp </b> PAGI 07:00-15:00</li>
+							<li><b>2 &nbsp = &nbsp </b> SORE 15:00-23:00</li>
+							<li><b>3 &nbsp = &nbsp </b> MALAM 23:00-07:00</li>
+						</ul>
+					</div>
 					<div id="tabel_atas"></div>
 				</div> <!-- end of table -->
 			</div>
@@ -231,11 +241,7 @@
 
 							// Initialize DataTable
 							$('#tblhtsprrd1').DataTable({
-								lengthChange: false,
 								responsive: false,
-								fixedHeader: {
-									header: false,
-								}
 							});
 							
 						} else {
