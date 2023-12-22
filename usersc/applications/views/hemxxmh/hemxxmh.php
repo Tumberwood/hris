@@ -711,6 +711,7 @@
 						label: "Potong Makan <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.is_pot_makan",
 						type: "select2",
+						def: 1,
 						options: [
 							{ "label": "Potong Makan", "value": 1 },
 							{ "label": "Catering", "value": 0 }

@@ -81,6 +81,7 @@
 				'hemxxmh.tanggal_lahir as tanggal_lahir',
 				'hemxxmh.gender as gender',
 				'hemxxmh.agama as agama',
+				'hemxxmh.is_pot_makan as is_pot_makan',
 				'hemxxmh.perkawinan as perkawinan'
 			] )
 			->where('hemxxmh.id', $id_hemxxmh )
@@ -102,6 +103,7 @@
 				'hemjbmh.id_holxxmh as id_holxxmh',
 				'hemjbmh.id_hemxxmh_al as id_hemxxmh_al',
 				'hemjbmh.id_heyxxmh as id_heyxxmh',
+				'hemjbmh.id_heyxxmd as id_heyxxmd',
 				'hemjbmh.id_hbnxxmh as id_hbnxxmh',
 				'hemjbmh.is_checkclock as is_checkclock',
 				'hemjbmh.email_perusahaan as email_perusahaan',
@@ -111,6 +113,7 @@
 				'hemjbmh.bpjskes_no as bpjskes_no',
 				'hemjbmh.bpjstk_no as bpjstk_no',
 				'hemjbmh.grup_hk as grup_hk',
+				'hemjbmh.jumlah_grup as jumlah_grup'
 			] )
 			->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
 			->where('hemxxmh.id', $id_hemxxmh )
