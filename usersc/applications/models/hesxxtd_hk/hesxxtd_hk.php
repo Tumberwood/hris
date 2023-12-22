@@ -57,6 +57,8 @@
 				) ),
 			Field::inst( 'hesxxtd_hk.is_defaultprogram' ),
 			Field::inst( 'hesxxtd_hk.grup_hk' ),
+			Field::inst( 'hesxxtd_hk.is_perubahan_hk' ),
+			Field::inst( 'hesxxtd_hk.jumlah_grup' ),
 			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' )
 		)
 		->leftJoin( 'hemxxmh','hemxxmh.id','=','hesxxtd_hk.id_hemxxmh' )
