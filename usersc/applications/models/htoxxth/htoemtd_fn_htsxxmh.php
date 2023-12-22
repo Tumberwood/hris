@@ -24,6 +24,7 @@
                 'htsxxmh.jam_akhir as jam_akhir'
             ])
             ->join('htsxxmh','htsxxmh.id = htssctd.id_htsxxmh','LEFT' )
+            ->where('htssctd.is_active', 1)
             ->where('htssctd.id_hemxxmh', $_POST['id_hemxxmh'] )
             ->where('htssctd.tanggal', $tanggal->format('Y-m-d') )
             ->exec();
