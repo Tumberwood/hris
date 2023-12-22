@@ -183,6 +183,7 @@
             'hemxxmh.is_pot_makan as is_pot_makan',
             'hemxxmh.kode_finger as kode_finger',
             'hemjbmh.grup_hk as grup_hk',
+            'hemjbmh.id_heyxxmd as id_heyxxmd',
             'hemjbmh.jumlah_grup as jumlah_grup',
             'hemjbmh.id_hesxxmh as id_hesxxmh'
         ] )
@@ -252,6 +253,7 @@
             $kode_finger = $rs_hemxxmh['kode_finger'];
             $grup_hk = $rs_hemxxmh['grup_hk'];
             $jumlah_grup = $rs_hemxxmh['jumlah_grup'];
+            $id_heyxxmd = $rs_hemxxmh['id_heyxxmd'];
             $htlxxrh_kode = '';
             $status_presensi_in = '';
             $status_presensi_out = '';
@@ -994,6 +996,30 @@
                     //JIKA TIDAK ADA ABSEN DAN SALAH SATU STATUS PRESENSI BELUM ADA IZIN MAKA CEK 1
                     if(empty($rs_htlxxrh) && $status_presensi_in == "Belum ada Izin" || $status_presensi_out == "Belum ada Izin"){
                         $cek = 1;
+                    }
+
+                    if ($id_heyxxmd == 4) {
+                        $qs_kmj_tukar_jadwal = $db
+                            ->raw()
+                            ->bind(':id_hemxxmh', $id_hemxxmh)
+                            ->bind(':tanggal', $tanggal)
+                            ->exec(' SELECT
+                                        COUNT(id) AS c_id
+                                    FROM htscctd AS a
+                                    WHERE (a.id_hemxxmh_pengaju = :id_hemxxmh OR a.id_hemxxmh_pengganti = :id_hemxxmh) 
+                                        AND a.tanggal = :tanggal
+                                        AND a.is_active = 1 
+                                        AND a.is_approve = 1
+                                    '
+                                    );
+                        $rs_kmj_tukar_jadwal = $qs_kmj_tukar_jadwal->fetch();
+
+                        // KMJ yang tukar jadwal diberi flag cek 1
+                        if (!empty($rs_kmj_tukar_jadwal)) {
+                            if ($rs_kmj_tukar_jadwal['c_id'] > 0) {
+                                $cek = 1;
+                            }
+                        }
                     }
 
                     $htlxxrh_kode = implode(', ', $kode_izin);
