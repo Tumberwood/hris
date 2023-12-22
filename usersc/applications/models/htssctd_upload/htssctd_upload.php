@@ -37,7 +37,7 @@ $qs_payroll = $db
                     END AS shift
                 FROM htsxxmh AS sh
             ) AS b ON b.id = a.id_htsxxmh
-            WHERE YEAR(a.tanggal) = YEAR(:start_date) AND MONTH(a.tanggal) = MONTH(:start_date) AND a.is_active = 1 AND is_upload_jadwal = 1
+            WHERE YEAR(a.tanggal) = YEAR(:start_date) AND MONTH(a.tanggal) = MONTH(:start_date) AND a.is_active = 1 AND (a.keterangan = "Upload Jadwal Satpam" OR is_upload_jadwal = 1)
             ORDER BY a.tanggal;
 
     ');
