@@ -188,7 +188,7 @@
 				$('#report').show();
 				$('#tabel_atas').empty();
 				tanggal 		= moment($('#start_date').val()).format('MMM YYYY');
-				$('#judul').html(" Jadwal Satpam Bulan " + tanggal);
+				$('#judul').html("Tabel Upload Jadwal Bulan " + tanggal);
 				
 				$.ajax({
 					url: "../../models/htssctd_upload/htssctd_upload.php",
