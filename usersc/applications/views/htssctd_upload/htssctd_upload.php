@@ -47,6 +47,10 @@
 <div class="row">
 	<div class="col">
 		<div class="ibox ">
+			<div class="ibox-title">
+                <h5 class="text-navy">Upload Jadwal</h5>&nbsp
+                <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+            </div>
 			<div class="ibox-content">
 				<h3 class="text-info">Format file harus dalam .xlsx dan disesuaikan dengan format template</h3>
 				<hr>
