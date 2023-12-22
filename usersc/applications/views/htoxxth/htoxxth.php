@@ -826,6 +826,7 @@
 					}
 				},
 				order: [[ 2, "desc" ]],
+				responsive: false,
 				columns: [
 					{ data: "htoemtd.id",visible:false },
 					{ data: "htoemtd.id_htoxxth",visible:false },
