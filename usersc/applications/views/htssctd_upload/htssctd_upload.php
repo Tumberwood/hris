@@ -203,8 +203,6 @@
 							var str1 = '<table id="tblhtsprrd1" class="table table-striped table-bordered table-hover nowrap">';
 							str1 += '<thead>';
 							str1 += '<tr>';
-							var sum1 = 0; // Sum of columns starting with "1"
-							var sum2 = 0; // Sum of columns starting with "2"
 
 							// Loop through columns and add them to the table header
 							$.each(json.columns, function (k, colObj) {
@@ -218,8 +216,6 @@
 							// Loop through data and add rows to the table body
 							$.each(json.data, function (index, rowData) {
 								str1 += '<tr>';
-								sum1 = 0; // Reset the sum for each row
-								sum2 = 0; // Reset the sum for each row
 
 								$.each(json.columns, function (k, colObj) {
 									var columnName = colObj.data;

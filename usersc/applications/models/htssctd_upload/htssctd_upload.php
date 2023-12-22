@@ -18,12 +18,15 @@ $qs_payroll = $db
     ->exec('SELECT
                 CONCAT(h.kode, " - ", h.nama) AS peg,
                 a.id_hemxxmh,
+                s.nama AS section,
                 b.kode,
                 shift,
                 day(a.tanggal) AS tanggal
 
             FROM htssctd AS a
             LEFT JOIN hemxxmh AS h ON h.id = a.id_hemxxmh
+            LEFT JOIN hemjbmh AS j ON j.id_hemxxmh = a.id_hemxxmh
+            LEFT JOIN hosxxmh AS s ON s.id = j.id_hosxxmh
             LEFT JOIN (
                 SELECT 
                     sh.id,
@@ -38,6 +41,7 @@ $qs_payroll = $db
                 FROM htsxxmh AS sh
             ) AS b ON b.id = a.id_htsxxmh
             WHERE YEAR(a.tanggal) = YEAR(:start_date) AND MONTH(a.tanggal) = MONTH(:start_date) AND a.is_active = 1 AND (a.keterangan = "Upload Jadwal Satpam" OR is_upload_jadwal = 1)
+            GROUP BY a.id_hemxxmh, a.tanggal
             ORDER BY a.tanggal;
 
     ');
@@ -51,11 +55,13 @@ if (count($rs_payroll) > 0) {
     foreach ($rs_payroll as $row) {
         $id_hemxxmh = $row['id_hemxxmh'];
         $peg = $row['peg'];
+        $section = $row['section'];
 		// var_dump($peg);
         if (!isset($pivotedData[$id_hemxxmh])) {
             $pivotedData[$id_hemxxmh] = [
                 'id_hemxxmh' => $id_hemxxmh,
-                'Nama' => $peg
+                'Nama' => $peg,
+                'Section' => $section
             ];
         }
 		
