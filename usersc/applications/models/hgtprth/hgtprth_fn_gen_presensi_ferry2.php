@@ -188,6 +188,7 @@
             'hemxxmh.is_pot_makan as is_pot_makan',
             'hemxxmh.kode_finger as kode_finger',
             'hemjbmh.grup_hk as grup_hk',
+            'hemjbmh.jumlah_grup as jumlah_grup',
             'hemjbmh.id_hesxxmh as id_hesxxmh'
         ] )
         ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
@@ -258,6 +259,7 @@
                 $keterangan = '';
                 $kode_finger = $row_hemxxmh['kode_finger'];
                 $grup_hk = $row_hemxxmh['grup_hk'];
+                $jumlah_grup = $row_hemxxmh['jumlah_grup'];
                 $htlxxrh_kode = '';
                 $status_presensi_in = '';
                 $status_presensi_out = '';
@@ -734,44 +736,45 @@
                             
                             $is_early_pot = 0;
 
-                            //Select Grup Shift BARU 24 Oct
-                            $qs_grup = $db
-                            ->raw()
-                            ->bind(':id_hemxxmh', $id_hemxxmh)
-                            ->exec('SELECT 
-                                        a.id_hemxxmh AS id_hemxxmh,
-                                        c.jumlah_grup
-                                    from htsemtd_new as a 
-                                    left join htsptth_new c ON c.id = a.id_htsptth_new
-                                    WHERE a.is_active = 1 AND c.is_active = 1 AND a.id_hemxxmh = :id_hemxxmh
-                                    group by a.id 
-                                    '
-                                    );
-                            $rs_grup = $qs_grup->fetch();
-
-                            // prioritas yang shift menu baru
-                            if (!empty($rs_grup)) {
-                               $jumlah_grup = $rs_grup['jumlah_grup'];
-                            } else {  // jika tidak ada maka cari di menu lama
-                                // SELECT GRUP SHIFT LAMA
-                                $qs_grup2 = $db
+                            if ($jumlah_grup == null) { // UPDATE JUMLAH GRUP 22 Dec 2023
+                                //Select Grup Shift BARU 24 Oct
+                                $qs_grup = $db
                                 ->raw()
                                 ->bind(':id_hemxxmh', $id_hemxxmh)
                                 ->exec('SELECT 
                                             a.id_hemxxmh AS id_hemxxmh,
                                             c.jumlah_grup
-                                        from htsemtd as a 
-                                        left join htsptth c ON c.id = a.id_htsptth 
+                                        from htsemtd_new as a 
+                                        left join htsptth_new c ON c.id = a.id_htsptth_new
                                         WHERE a.is_active = 1 AND c.is_active = 1 AND a.id_hemxxmh = :id_hemxxmh
                                         group by a.id 
                                         '
                                         );
-                                $rs_grup2 = $qs_grup2->fetch();
-                                if (!empty($rs_grup2)) {
-                                    $jumlah_grup = $rs_grup2['jumlah_grup'];
+                                $rs_grup = $qs_grup->fetch();
+
+                                // prioritas yang shift menu baru
+                                if (!empty($rs_grup)) {
+                                    $jumlah_grup = $rs_grup['jumlah_grup'];
+                                } else {  // jika tidak ada maka cari di menu lama
+                                    // SELECT GRUP SHIFT LAMA
+                                    $qs_grup2 = $db
+                                    ->raw()
+                                    ->bind(':id_hemxxmh', $id_hemxxmh)
+                                    ->exec('SELECT 
+                                                a.id_hemxxmh AS id_hemxxmh,
+                                                c.jumlah_grup
+                                            from htsemtd as a 
+                                            left join htsptth c ON c.id = a.id_htsptth 
+                                            WHERE a.is_active = 1 AND c.is_active = 1 AND a.id_hemxxmh = :id_hemxxmh
+                                            group by a.id 
+                                            '
+                                            );
+                                    $rs_grup2 = $qs_grup2->fetch();
+                                    if (!empty($rs_grup2)) {
+                                        $jumlah_grup = $rs_grup2['jumlah_grup'];
+                                    }
                                 }
                             }
-                            
 
                             // cari sabtu
                             $qs_sabtu = $db
