@@ -188,6 +188,7 @@
 			function generateTable(start_date) {
 				$('#report').show();
 				$('#tabel_atas').empty();
+				$('#searchPanes1').empty();
 				tanggal 		= moment($('#start_date').val()).format('MMM YYYY');
 				$('#judul').html("Tabel Upload Jadwal Bulan " + tanggal);
 				
