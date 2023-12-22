@@ -111,10 +111,13 @@
 								<editor-field name="hemjbmh.grup_hk"></editor-field>
 							</div>
 							<div class="col-lg-6">
-								<editor-field name="hemxxmh.is_pot_makan"></editor-field>
+								<editor-field name="hemjbmh.jumlah_grup"></editor-field>
 							</div>
 						</div>
 						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.is_pot_makan"></editor-field>
+							</div>
 							<div class="col-lg-6">
 								<editor-field name="hemdcmh.is_npwp"></editor-field>
 							</div>
@@ -156,8 +159,6 @@
                                 <th>Tanggal Join</th>
                                 <th>Tanggal Keluar</th>
                                 <th>Grup HK</th>
-                                <th>Pola Shift</th>
-                                <th>Grup Ke</th>
                                 <th>Aktif</th>
                             </tr>
                         </thead>
@@ -697,6 +698,16 @@
 						]
 					},
 					{
+						label: "Jumlah Grup <sup class='text-danger'>*<sup>",
+						name: "hemjbmh.jumlah_grup",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "3 Grup", "value": 1 },
+							{ "label": "4 Grup", "value": 2 }
+						]
+					},
+					{
 						label: "Potong Makan <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.is_pot_makan",
 						type: "select2",
@@ -1000,6 +1011,13 @@
 					}
 					// END of validasi hemjbmh.id_heyxxmd 
 
+					// BEGIN of validasi hemjbmh.jumlah_grup 
+					jumlah_grup = edthemxxmh.field('hemjbmh.jumlah_grup').val();
+					if(!jumlah_grup || jumlah_grup == ''){
+						edthemxxmh.field('hemjbmh.jumlah_grup').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemjbmh.jumlah_grup 
+
 					// BEGIN of validasi hemjbmh.id_hesxxmh 
 					id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
 					if(!id_hesxxmh || id_hesxxmh == ''){
@@ -1060,7 +1078,7 @@
 						searchPanes:{
 							show: false,
 						},
-						targets: [0,1,2,3,11,12,14,15,16]
+						targets: [0,1,2,3,11,12,14]
 					}
 				],
 				ajax: {
@@ -1101,8 +1119,6 @@
 							}
 						}
 					},
-					{ data: "v_hemxxmh_htsptth.pola_shift" },
-					{ data: "v_hemxxmh_htsptth.grup_ke" },
 					{ 
 						data: "hemxxmh.is_active",
 						render: function (data){

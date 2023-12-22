@@ -86,6 +86,7 @@
 					'to' =>   'Y-m-d'
 				) ),
 			Field::inst( 'hemjbmh.grup_hk' ),
+			Field::inst( 'hemjbmh.jumlah_grup' ),
 			Field::inst( 'hovxxmh.nama' ),
 			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'hemdcmh.id_gtxpkmh' )
@@ -101,9 +102,10 @@
 			Field::inst( 'hetxxmh.nama' ),
 			Field::inst( 'heyxxmh.nama' ),
 			Field::inst( 'heyxxmd.nama' ),
-			Field::inst( 'hesxxmh.nama' ),
-			Field::inst( 'v_hemxxmh_htsptth.pola_shift' ),
-			Field::inst( 'v_hemxxmh_htsptth.grup_ke' )
+			Field::inst( 'hesxxmh.nama' )
+			// ,
+			// Field::inst( 'v_hemxxmh_htsptth.pola_shift' ),
+			// Field::inst( 'v_hemxxmh_htsptth.grup_ke' )
 		)
 		->leftJoin( 'hemdcmh','hemdcmh.id_hemxxmh','=','hemxxmh.id' )
 		->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
@@ -115,7 +117,7 @@
 		->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
 		->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
 		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
-		->leftJoin( 'v_hemxxmh_htsptth','v_hemxxmh_htsptth.id_hemxxmh','=','hemxxmh.id' )
+		// ->leftJoin( 'v_hemxxmh_htsptth','v_hemxxmh_htsptth.id_hemxxmh','=','hemxxmh.id' )
 		;
 	
 	// do not erase
