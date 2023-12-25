@@ -77,6 +77,7 @@
 				Field::inst( 'hpyemtd.kompensasi_ak' ),  
 				Field::inst( 'hpyemtd.koreksi_lembur' ),
 				Field::inst( 'hpyemtd.koreksi_status' ),
+				Field::inst( 'hpyemtd.overtime_susulan' ),
 
 				Field::inst( 'hetxxmh.nama' ),
 				Field::inst( 'hodxxmh.nama' ),

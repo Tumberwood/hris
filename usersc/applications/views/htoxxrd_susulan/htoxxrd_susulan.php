@@ -637,6 +637,69 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					{
+						extend: 'collection',
+						name: 'btnSetApprove',
+						text: 'Approval ',
+						className: 'btn btn-outline',
+						autoClose: true,
+						buttons: [
+							{ 
+								text: '<span class="fa fa-check">&nbsp &nbsp Approve </span>', 
+								name: 'btnApprove',
+								className: 'btn btn-primary',
+								titleAttr: 'Approve',
+								action: function ( e, dt, node, config ) {
+									var is_approve = 1;
+									$.ajax( {
+										url: '../../models/htoxxrd_susulan/fn_approve.php',
+										dataType: 'json',
+										type: 'POST',
+										data: {
+											id_htoxxrd_susulan: id_htoxxrd_susulan,
+											is_approve: is_approve
+										},
+										success: function ( json ) {
+											$.notify({
+												message: json.message
+											},{
+												type: json.type_message
+											});
+											tblhtoxxrd_susulan.ajax.reload(null,false);
+											tblhtoxxrd_susulan_.ajax.reload(null,false);
+										}
+									});
+								}
+							},
+							{ 
+								text: '<span class="fa fa-undo">&nbsp &nbsp Cancel Approve </span>', 
+								name: 'btnCancelApprove',
+								className: 'btn btn-outline',
+								titleAttr: 'Cancel Approve',
+								action: function ( e, dt, node, config ) {
+									var is_approve = 0;
+									$.ajax( {
+										url: '../../models/htoxxrd_susulan/fn_approve.php',
+										dataType: 'json',
+										type: 'POST',
+										data: {
+											id_htoxxrd_susulan: id_htoxxrd_susulan,
+											is_approve: is_approve
+										},
+										success: function ( json ) {
+											$.notify({
+												message: json.message
+											},{
+												type: json.type_message
+											});
+											tblhtoxxrd_susulan.ajax.reload(null,false);
+											tblhtoxxrd_susulan_.ajax.reload(null,false);
+										}
+									});
+								}
+							},
+						]
+					}
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.htoxxrd_susulan.is_active == 0 ) {
