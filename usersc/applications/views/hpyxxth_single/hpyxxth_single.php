@@ -79,6 +79,7 @@
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
 													<th>Total Lembur (Rp) </th>
+													<th>Lembur Susulan (Rp) </th>
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
@@ -148,6 +149,7 @@
 													<th id="all_43"></th>
 													<th id="all_44"></th>
 													<th id="all_45"></th>
+													<th id="all_46"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -653,6 +655,11 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.overtime_susulan",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
 						data: "hpyemtd.pph21_back",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
@@ -762,7 +769,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 45; i++) {
+					for (var i = 10; i <= 46; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
