@@ -350,7 +350,7 @@
                     $tanggaljam_akhir_t2        = $jadwal['tanggaljam_akhir_t2'];
 
                     // BEGIN untuk keperluan toleransi terlambat Late -1 jam
-                    $tanggaljam_akhir_toleransi_min1jam  = $tanggaljam_akhir_toleransi->subMinutes(60);
+                    $tanggaljam_akhir_toleransi_min1jam  = $tanggaljam_akhir_toleransi->addMinutes(60);
                     // END untuk keperluan toleransi terlambat
                 
                     // BEGIN untuk keperluan toleransi terlambat
