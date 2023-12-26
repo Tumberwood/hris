@@ -638,17 +638,17 @@
                                             $carbon_ci = new Carbon($tanggal_jam_izin_awal);
                                             // 24 Oct 2023 - Pengecualian -1 jam akhir untuk Sabtu dan Shift Pagi 07-12
                                             if (($jadwal['id_htsxxmh'] == 5 || $jadwal['id_htsxxmh'] == 12)  && $rs_sabtu['is_sabtu'] == 1) {
-                                                $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                                $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
                                             } else {
                                                 if ($jumlah_grup != 4) { // valid ini saat != 4 maka ada potongan
                                                     //jika CO < akhir istirahat maka, jam akhir - 1
                                                     if ($carbon_ci > $tanggaljam_awal_istirahat) {
-                                                        $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi_min1jam);
+                                                        $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi_min1jam);
                                                     } else {
-                                                        $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                                        $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
                                                     }
                                                 } else {
-                                                    $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                                    $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
                                                 } 
                                             }
 
@@ -658,17 +658,17 @@
                                         } else {
                                             $carbon_ci = new Carbon($clock_in);
                                             if (($jadwal['id_htsxxmh'] == 5 || $jadwal['id_htsxxmh'] == 12)  && $rs_sabtu['is_sabtu'] == 1) {
-                                                $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                                $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
                                             } else {
                                                 if ($jumlah_grup != 4) { // valid ini saat != 4 maka ada potongan
                                                     //jika CO < akhir istirahat maka, jam akhir - 1
                                                     if ($carbon_ci > $tanggaljam_awal_istirahat) {
-                                                        $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi_min1jam);
+                                                        $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi_min1jam);
                                                     } else {
-                                                        $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                                        $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
                                                     }
                                                 } else {
-                                                    $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                                    $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
                                                 } 
                                             }
                                         }
@@ -716,17 +716,17 @@
                                 } else {
                                     $carbon_ci = new Carbon($clock_in);
                                     if (($jadwal['id_htsxxmh'] == 5 || $jadwal['id_htsxxmh'] == 12)  && $rs_sabtu['is_sabtu'] == 1) {
-                                        $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                        $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
                                     } else {
                                         if ($jumlah_grup != 4) { // valid ini saat != 4 maka ada potongan
                                             //jika CO < akhir istirahat maka, jam akhir - 1
                                             if ($carbon_ci > $tanggaljam_awal_istirahat) {
-                                                $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi_min1jam);
+                                                $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi_min1jam);
                                             } else {
-                                                $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                                $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
                                             }
                                         } else {
-                                            $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                            $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
                                         } 
                                     }
                                 }
