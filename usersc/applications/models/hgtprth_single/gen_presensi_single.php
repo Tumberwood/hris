@@ -349,7 +349,7 @@
                     $tanggaljam_akhir           = $jadwal['tanggaljam_akhir'];
                     $tanggaljam_akhir_t2        = $jadwal['tanggaljam_akhir_t2'];
 
-                    // BEGIN untuk keperluan toleransi terlambat Late -1 jam
+                    // BEGIN untuk keperluan toleransi terlambat Late +1 jam 26 Dec Ferry
                     $tanggaljam_akhir_toleransi_min1jam  = $tanggaljam_akhir_toleransi->addMinutes(60);
                     // END untuk keperluan toleransi terlambat
                 
@@ -641,7 +641,7 @@
                                                 $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
                                             } else {
                                                 if ($jumlah_grup != 4) { // valid ini saat != 4 maka ada potongan
-                                                    //jika CO < akhir istirahat maka, jam akhir - 1
+                                                    //26 Dec Ferry
                                                     if ($carbon_ci > $tanggaljam_awal_istirahat) {
                                                         $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi_min1jam);
                                                     } else {
@@ -661,7 +661,7 @@
                                                 $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
                                             } else {
                                                 if ($jumlah_grup != 4) { // valid ini saat != 4 maka ada potongan
-                                                    //jika CO < akhir istirahat maka, jam akhir - 1
+                                                    //26 Dec Ferry
                                                     if ($carbon_ci > $tanggaljam_awal_istirahat) {
                                                         $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi_min1jam);
                                                     } else {
@@ -719,7 +719,7 @@
                                         $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
                                     } else {
                                         if ($jumlah_grup != 4) { // valid ini saat != 4 maka ada potongan
-                                            //jika CO < akhir istirahat maka, jam akhir - 1
+                                            //26 Dec Ferry
                                             if ($carbon_ci > $tanggaljam_awal_istirahat) {
                                                 $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi_min1jam);
                                             } else {
