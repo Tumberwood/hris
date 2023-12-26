@@ -253,6 +253,14 @@
             $kode_finger = $rs_hemxxmh['kode_finger'];
             $grup_hk = $rs_hemxxmh['grup_hk'];
             $jumlah_grup = $rs_hemxxmh['jumlah_grup'];
+            if($jumlah_grup != null) {
+                if ($jumlah_grup == 1) {
+                    $jumlah_grup = 3;
+                } else {
+                    $jumlah_grup = 4;
+                }
+            }
+
             $id_heyxxmd = $rs_hemxxmh['id_heyxxmd'];
             $htlxxrh_kode = '';
             $status_presensi_in = '';
@@ -341,6 +349,10 @@
                     $tanggaljam_akhir           = $jadwal['tanggaljam_akhir'];
                     $tanggaljam_akhir_t2        = $jadwal['tanggaljam_akhir_t2'];
 
+                    // BEGIN untuk keperluan toleransi terlambat Late -1 jam
+                    $tanggaljam_akhir_toleransi_min1jam  = $tanggaljam_akhir_toleransi->subMinutes(60);
+                    // END untuk keperluan toleransi terlambat
+                
                     // BEGIN untuk keperluan toleransi terlambat
                     $tanggaljam_akhir_min1  = $jadwal['tanggaljam_akhir'];
                     $tanggaljam_akhir_min1  = new Carbon($tanggaljam_akhir_min1);
@@ -551,6 +563,16 @@
                         // $next_step = 5;
                     }
 
+                    // cari sabtu
+                    $qs_sabtu = $db
+                        ->raw()
+                        ->bind(':tanggal', $tanggal)
+                        ->exec('SELECT
+                                if(DAYNAME(:tanggal) = "saturday", 1, 0) AS is_sabtu;
+                                '
+                                );
+                    $rs_sabtu = $qs_sabtu->fetch();
+                    
                     //STEP 5 IZIN
                     if ($next_step == 5) {
 
@@ -614,17 +636,44 @@
                                         if ($clock_in == null) {
                                             $tanggal_jam_izin_awal = $tanggal . " " . $izin_dinas_in['jam_awal']; //kalau no CO maka diambil jam izin
                                             $carbon_ci = new Carbon($tanggal_jam_izin_awal);
-                                            $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                            // 24 Oct 2023 - Pengecualian -1 jam akhir untuk Sabtu dan Shift Pagi 07-12
+                                            if (($jadwal['id_htsxxmh'] == 5 || $jadwal['id_htsxxmh'] == 12)  && $rs_sabtu['is_sabtu'] == 1) {
+                                                $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                            } else {
+                                                if ($jumlah_grup != 4) { // valid ini saat != 4 maka ada potongan
+                                                    //jika CO < akhir istirahat maka, jam akhir - 1
+                                                    if ($carbon_ci > $tanggaljam_awal_istirahat) {
+                                                        $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi_min1jam);
+                                                    } else {
+                                                        $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                                    }
+                                                } else {
+                                                    $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                                } 
+                                            }
+
+                                            // $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
 
                                             // $pot_jam_late_cek     = 0;
                                         } else {
                                             $carbon_ci = new Carbon($clock_in);
-                                            $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                            if (($jadwal['id_htsxxmh'] == 5 || $jadwal['id_htsxxmh'] == 12)  && $rs_sabtu['is_sabtu'] == 1) {
+                                                $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                            } else {
+                                                if ($jumlah_grup != 4) { // valid ini saat != 4 maka ada potongan
+                                                    //jika CO < akhir istirahat maka, jam akhir - 1
+                                                    if ($carbon_ci > $tanggaljam_awal_istirahat) {
+                                                        $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi_min1jam);
+                                                    } else {
+                                                        $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                                    }
+                                                } else {
+                                                    $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                                } 
+                                            }
                                         }
                                         // hitung potongan jam late
                                         $pot_jam_late   = ceil($pot_jam_late_cek/60);
-                                        // print_r('pot_jam_late_cek = '.$pot_jam_late_cek );
-                                        // print_r('pot_jam_late = '.$pot_jam_late );
                                     }
                                 }
                             }
@@ -660,13 +709,26 @@
                                 $is_late_pot = 1;
                             }
                             
-                            //potongan early untuk late yang belum ada izin
+                            //potongan untuk late yang belum ada izin
                             if ($is_late_pot == 1) {
                                 if ($clock_in == null) {
                                     $pot_jam_late_cek     = 0;
                                 } else {
                                     $carbon_ci = new Carbon($clock_in);
-                                    $pot_jam_late_cek     = $carbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                    if (($jadwal['id_htsxxmh'] == 5 || $jadwal['id_htsxxmh'] == 12)  && $rs_sabtu['is_sabtu'] == 1) {
+                                        $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                    } else {
+                                        if ($jumlah_grup != 4) { // valid ini saat != 4 maka ada potongan
+                                            //jika CO < akhir istirahat maka, jam akhir - 1
+                                            if ($carbon_ci > $tanggaljam_awal_istirahat) {
+                                                $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi_min1jam);
+                                            } else {
+                                                $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                            }
+                                        } else {
+                                            $pot_jam_late_cek     = $karbon_ci->diffInMinutes($tanggaljam_akhir_toleransi);
+                                        } 
+                                    }
                                 }
                                 // hitung potongan jam late
                                 $pot_jam_late   = ceil($pot_jam_late_cek/60);
@@ -701,56 +763,6 @@
                         // print_r($rs_htlxxrh_dinas_out);
                         
                         $is_early_pot = 0;
-
-                        if ($jumlah_grup == null) { // UPDATE JUMLAH GRUP 22 Dec 2023
-                            //Select Grup Shift BARU 24 Oct
-                            $qs_grup = $db
-                            ->raw()
-                            ->bind(':id_hemxxmh', $id_hemxxmh)
-                            ->exec('SELECT 
-                                        a.id_hemxxmh AS id_hemxxmh,
-                                        c.jumlah_grup
-                                    from htsemtd_new as a 
-                                    left join htsptth_new c ON c.id = a.id_htsptth_new
-                                    WHERE a.is_active = 1 AND c.is_active = 1 AND a.id_hemxxmh = :id_hemxxmh
-                                    group by a.id 
-                                    '
-                                    );
-                            $rs_grup = $qs_grup->fetch();
-    
-                            // prioritas yang shift menu baru
-                            if (!empty($rs_grup)) {
-                               $jumlah_grup = $rs_grup['jumlah_grup'];
-                            } else {  // jika tidak ada maka cari di menu lama
-                                // SELECT GRUP SHIFT LAMA
-                                $qs_grup2 = $db
-                                ->raw()
-                                ->bind(':id_hemxxmh', $id_hemxxmh)
-                                ->exec('SELECT 
-                                            a.id_hemxxmh AS id_hemxxmh,
-                                            c.jumlah_grup
-                                        from htsemtd as a 
-                                        left join htsptth c ON c.id = a.id_htsptth 
-                                        WHERE a.is_active = 1 AND c.is_active = 1 AND a.id_hemxxmh = :id_hemxxmh
-                                        group by a.id 
-                                        '
-                                        );
-                                $rs_grup2 = $qs_grup2->fetch();
-                                if (!empty($rs_grup2)) {
-                                    $jumlah_grup = $rs_grup2['jumlah_grup'];
-                                }
-                            }
-                        }
-
-                        // cari sabtu
-                        $qs_sabtu = $db
-                            ->raw()
-                            ->bind(':tanggal', $tanggal)
-                            ->exec('SELECT
-                                    if(DAYNAME(:tanggal) = "saturday", 1, 0) AS is_sabtu;
-                                    '
-                                    );
-                        $rs_sabtu = $qs_sabtu->fetch();
 
                         if(!empty($rs_htlxxrh_dinas_out) ){
                             foreach ($rs_htlxxrh_dinas_out as $key => $izin_dinas_out) {
