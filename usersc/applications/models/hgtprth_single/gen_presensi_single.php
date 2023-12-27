@@ -439,7 +439,9 @@
                         $st_clock_in        = 'No CI';
                         // $status_presensi_in = 'No CI';
                     }
-                    // print_r($pot_jam_late . '<br>');
+                    print_r($tanggaljam_akhir_toleransi . ' (tanggaljam_akhir_toleransi) <br> ');
+                    print_r($tanggaljam_akhir_toleransi_min1jam . ' (tanggaljam_akhir_toleransi_min1jam) <br> ');
+                    print_r($ceklok_in . ' (ceklok_in) <br> ');
 
                     //STEP 3 clock_out
                     // BEGIN check clock_out
