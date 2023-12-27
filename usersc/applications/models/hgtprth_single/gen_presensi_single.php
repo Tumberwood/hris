@@ -350,8 +350,9 @@
                     $tanggaljam_akhir_t2        = $jadwal['tanggaljam_akhir_t2'];
 
                     // BEGIN untuk keperluan toleransi terlambat Late +1 jam 26 Dec Ferry
-                    $tanggaljam_akhir_toleransi_min1jam  = $tanggaljam_akhir_toleransi;
-                    $tanggaljam_akhir_toleransi_min1jam  = $tanggaljam_akhir_toleransi_min1jam->addMinutes(60);
+                    $tanggaljam_akhir_toleransi_min1jam  = $jadwal['tanggaljam_awal'];
+                    $tanggaljam_akhir_toleransi_min1jam  = new Carbon($tanggaljam_akhir_toleransi_min1jam);
+                    $tanggaljam_akhir_toleransi_min1jam  = $tanggaljam_akhir_toleransi_min1jam->addMinutes(65);
                     // END untuk keperluan toleransi terlambat
                 
                     // BEGIN untuk keperluan toleransi terlambat
