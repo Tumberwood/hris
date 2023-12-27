@@ -24,7 +24,7 @@
 		->debug(true)
 		->fields(
 			Field::inst( 'htssctd_tukarhari.id' ),
-			Field::inst( 'htssctd_tukarhari.id_hodxxmh' )
+			Field::inst( 'htssctd_tukarhari.id_hosxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'htssctd_tukarhari.kode' ),
 			Field::inst( 'htssctd_tukarhari.nama' ),
@@ -36,7 +36,6 @@
 			Field::inst( 'htssctd_tukarhari.created_on' )
 				->set( Field::SET_CREATE ),
 			Field::inst( 'htssctd_tukarhari.is_approve' ),
-			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'htssctd_tukarhari.tanggal_terpilih' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === "0000-00-00" || $val === null){
@@ -62,7 +61,23 @@
 					'to' =>   'Y-m-d'
 				) )
 		)
-		->leftJoin( 'hodxxmh','hodxxmh.id','=','htssctd_tukarhari.id_hodxxmh' )
+		->join(
+			Mjoin::inst( 'hosxxmh' )
+				->link( 'htssctd_tukarhari.id', 'hosxxmh_htssctd_tukarhari.id_htssctd_tukarhari' )
+				->link( 'hosxxmh.id', 'hosxxmh_task_report.id_hosxxmh' )
+				->order( 'hosxxmh.nama asc' )
+				->fields(
+					Field::inst( 'id' )
+                    	->validator( 'Validate::required' )
+						->options( Options::inst()
+							->table( 'hosxxmh' )
+							->value( 'id' )
+							->label( 'nama' )
+						),
+					Field::inst( 'id' ),
+					Field::inst( 'nama' )
+				)
+		)
 		->where( 'htssctd_tukarhari.tanggal_terpilih', $_POST['start_date'], '>=')
 		->where( 'htssctd_tukarhari.tanggal_terpilih', $_POST['end_date'], '<=')
 		;
