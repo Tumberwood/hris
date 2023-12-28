@@ -314,21 +314,6 @@
 							$('#paging').hide();
 						} else {
 							$('#paging').show();
-							
-							button_add.push({
-								extend: 'create',
-								name: 'btnCreateCeklok',
-								id: 'addCeklok',
-								editor: edthtsprtd,
-								text: '<i class="fa fa-plus"></i>',
-								className: 'btn btn-outline',
-								titleAttr: 'New',
-								key: {
-									key: 'n',
-									ctrlKey: true,
-									altKey: true
-								}
-							});
 
 							if (counter == 0) {
 								$('#prevButton').hide();
@@ -343,6 +328,21 @@
 							}
 						}
 
+						button_add.push({
+							extend: 'create',
+							name: 'btnCreateCeklok',
+							id: 'addCeklok',
+							editor: edthtsprtd,
+							text: '<i class="fa fa-plus"></i>',
+							className: 'btn btn-outline',
+							titleAttr: 'New',
+							key: {
+								key: 'n',
+								ctrlKey: true,
+								altKey: true
+							}
+						});
+						
 						var id = json.data[0].id_jadwal;
 						// console.log(id);
 						// console.log('row_'+id);
