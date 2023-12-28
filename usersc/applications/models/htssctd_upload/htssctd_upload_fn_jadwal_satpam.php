@@ -73,6 +73,9 @@
 				} else {
 					$id_htsxxmh = 1;
 				}
+				
+				$bagian 		= strtoupper($sheetData[$i]['4']) ;
+				$grup 		= strtoupper($sheetData[$i]['5']) ;
 
                 // print_r($id_htsxxmh);
 				//cari NIK
@@ -119,7 +122,8 @@
 						->bind(':id_htsxxmh', $id_htsxxmh)
 						->bind(':id_hemxxmh', $id_hemxxmh)
 						->bind(':tanggal', $tanggal)
-						->bind(':shift', $shift)
+						->bind(':bagian', $bagian)
+						->bind(':grup', $grup)
 						->exec('INSERT INTO htssctd
 							(
 								id_hemxxmh,
@@ -144,7 +148,8 @@
 								tanggaljam_awal_istirahat,
 								tanggaljam_akhir_istirahat,
 								is_upload_jadwal,
-								kode
+								bagian,
+								grup
 							)
 							SELECT
 								:id_hemxxmh,
@@ -214,7 +219,8 @@
 									ELSE CONCAT(:tanggal, " ", htsxxmh.jam_akhir_istirahat)
 								END AS tanggaljam_akhir_istirahat,
 								1,
-								:shift
+								:bagian,
+								:grup
 							FROM htsxxmh
 							WHERE 
 								id = :id_htsxxmh

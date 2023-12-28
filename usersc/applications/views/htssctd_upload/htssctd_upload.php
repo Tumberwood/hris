@@ -173,6 +173,7 @@
 										'</div>'
 								});
 								$("#inputfilethimportjadwal_satpam").val('');
+								generateTable(start_date);
 							},
 							error: function (xhr, Status, err){
 								console.log('x');
@@ -241,7 +242,7 @@
 							tblhtsprrd1 = $('#tblhtsprrd1').DataTable({
 								responsive: false,
 								searchPanes:{
-									layout: 'columns-2',
+									layout: 'columns-3',
 								},
 								dom: 
 									"<P>"+
@@ -254,7 +255,7 @@
 										searchPanes:{
 											show: true,
 										},
-										targets: [0,1]
+										targets: [0,1,2]
 									},
 									{
 										searchPanes:{
