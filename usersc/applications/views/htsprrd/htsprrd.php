@@ -640,6 +640,8 @@
 			format: "dd M yyyy",
 			minViewMode: 'month' 
 		});
+		// $('#start_date').datepicker('setDate', "15 Dec 2023");
+		// $('#end_date').datepicker('setDate', "15 Dec 2023");
 		$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
 		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
         // END datepicker init
@@ -733,6 +735,9 @@
 			
 		///start datatables
 			tblhtsprrd = $('#tblhtsprrd').DataTable( {
+				select: {
+					style: 'multi', // 'single', 'multi', 'os', 'multi+shift'
+				},
 				searchPanes:{
 					layout: 'columns-4'
 				},
@@ -1011,7 +1016,7 @@
 						titleAttr: 'Meng Alpha-kan',
 						action: function ( e, dt, node, config ) {
 							$.ajax( {
-								url: '../../models/htsprrd/fn_ganti_alpha.php',
+								url: '../../models/htsprrd/fn_ganti_alpha_multi.php',
 								dataType: 'json',
 								type: 'POST',
 								data: {
@@ -1024,6 +1029,7 @@
 										type: json.type_message
 									});
 									tblhtsprrd.ajax.reload(null,false);
+									id_htsprrd = [];
 								}
 							});
 						}
@@ -1035,14 +1041,11 @@
 						titleAttr: 'Presensi OK',
 						action: function ( e, dt, node, config ) {
 							$.ajax( {
-								url: '../../models/htsprrd/fn_presensi_ok.php',
+								url: '../../models/htsprrd/fn_presensi_ok_multi.php',
 								dataType: 'json',
 								type: 'POST',
 								data: {
-									id_htsprrd: id_htsprrd,
-									id_hemxxmh_select: id_hemxxmh_select,
-									tanggal: tanggal,
-									htlxxrh_kode: htlxxrh_kode,
+									id_htsprrd: id_htsprrd
 								},
 								success: function ( json ) {
 									$.notify({
@@ -1051,6 +1054,7 @@
 										type: json.type_message
 									});
 									tblhtsprrd.ajax.reload(null,false);
+									id_htsprrd = [];
 								}
 							});
 						}
@@ -1119,62 +1123,50 @@
 			});
 
 			tblhtsprrd.on( 'select', function( e, dt, type, indexes ) {
-				htsprrd_data    = tblhtsprrd.row( { selected: true } ).data().htsprrd;
-				id_htsprrd      = htsprrd_data.id;
-				status_presensi_in      = htsprrd_data.status_presensi_in;
-				status_presensi_out      = htsprrd_data.status_presensi_out;
-				st_clock_in      = htsprrd_data.st_clock_in;
-				st_clock_out      = htsprrd_data.st_clock_out;
-				id_hemxxmh_select      = htsprrd_data.id_hemxxmh;
-				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
-				tanggal      = htsprrd_data.tanggal;
-				cek      = htsprrd_data.cek;
-				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
-				
-				if (status_presensi_in == "AL" && status_presensi_out == "AL" || status_presensi_in == "Jadwal Salah" && status_presensi_out == "Jadwal Salah") {
-					tblhtsprrd.button('btncekNol:name').enable();
-				} else {
-					tblhtsprrd.button('btncekNol:name').disable();
-				}
-				// if (status_presensi_in == "" && status_presensi_out == "") {
-				// 	if (st_clock_in == "No CI" && st_clock_out == "No CO") {
-				// 	tblhtsprrd.button('btncekNol:name').enable();
-				// 	} else {
-				// 		tblhtsprrd.button('btncekNol:name').disable();
-				// 	}
-				// }
-
-				cariKMJ();
-				// console.log(htlxxrh_kode);
-				//Cek Apakah mengandung Kode Absen KD
-				if (htlxxrh_kode.includes("KD/") && cek == 1) {
-				    tblhtsprrd.button('btnPresensiOK:name').enable();
-					// console.log("11111");
-                }
-
-				if (st_clock_in == "Late" && status_presensi_in == "Belum ada Izin") {
-				    tblhtsprrd.button('btnPresensiOK:name').enable();
-					// console.log("11111");
-                }
-
-				if (st_clock_out == "EARLY" && status_presensi_out == "Belum ada Izin") {
-				    tblhtsprrd.button('btnPresensiOK:name').enable();
-                }
-
-				if (status_presensi_in == "Jadwal Salah") {
-				    tblhtsprrd.button('btnPresensiOK:name').enable();
-                }
-
-				if (id_hemxxmh_select == 130 || id_hemxxmh_select == 134) {
-				    tblhtsprrd.button('btnPresensiOK:name').enable();
-                }
-				// console.log(htsprrd_data.status_presensi_in);
+				updateSelectedData();
 			} );
 			
 			tblhtsprrd.on( 'deselect', function () {
-				tblhtsprrd.button('btncekNol:name').disable();
-				tblhtsprrd.button('btnPresensiOK:name').disable();
+				updateSelectedData();
 			} );
+
+			function updateSelectedData() {
+
+				var data_multi = tblhtsprrd.rows({ selected: true }).data().toArray();
+				id_htsprrd = data_multi.map(row => row.htsprrd.id);
+				status_presensi_in = data_multi.map(row => row.htsprrd.status_presensi_in);
+				status_presensi_out = data_multi.map(row => row.htsprrd.status_presensi_out);
+				st_clock_in = data_multi.map(row => row.htsprrd.st_clock_in);
+				st_clock_out = data_multi.map(row => row.htsprrd.st_clock_out);
+				htlxxrh_kode = data_multi.map(row => row.htsprrd.htlxxrh_kode);
+				tanggal = data_multi.map(row => row.htsprrd.tanggal);
+				cek = data_multi.map(row => row.htsprrd.cek);
+				id_hemxxmh_select = data_multi.map(row => row.htsprrd.id_hemxxmh);
+				
+				var btncekNol = data_multi.every(row =>
+					(row.htsprrd.status_presensi_in === "AL" && row.htsprrd.status_presensi_out === "AL") ||
+					(row.htsprrd.status_presensi_in === "Jadwal Salah" && row.htsprrd.status_presensi_out === "Jadwal Salah")
+				);
+
+				tblhtsprrd.button('btncekNol:name').enable(btncekNol);
+				
+				var btnPresensiOK = data_multi.every(row =>
+					(row.htsprrd.htlxxrh_kode.includes("KD/") && row.htsprrd.cek === 1) ||
+					(row.htsprrd.st_clock_in === "Late" && row.htsprrd.status_presensi_in === "Belum ada Izin") ||
+					(row.htsprrd.st_clock_out === "EARLY" && row.htsprrd.status_presensi_out === "Belum ada Izin") ||
+					(row.hemjbmh.id_heyxxmd === 4 && row.htsprrd.cek === 1) ||
+					(row.htsprrd.status_presensi_in === "Jadwal Salah") ||
+					(row.htsprrd.id_hemxxmh_select === 130 || row.htsprrd.id_hemxxmh_select === 134)
+				);
+
+				tblhtsprrd.button('btnPresensiOK:name').enable(btnPresensiOK);
+				
+				if (id_htsprrd.length === 0) {
+					tblhtsprrd.button('btncekNol:name').disable();
+					tblhtsprrd.button('btnPresensiOK:name').disable();
+				}
+			}
+
 		///// end datatables
 			
 		///start datatables kbm
@@ -2435,7 +2427,6 @@
 				},
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
-					console.log('brrrrro');
 					$('.collapse-link').prop('disabled', false);
 				}
 			} );
@@ -2926,7 +2917,7 @@
 				// 	}
 				// }
 
-				carifreelance();
+				cariKMJ();
 				// console.log(htlxxrh_kode);
 				//Cek Apakah mengandung Kode Absen KD
 				if (htlxxrh_kode.includes("KD/") && cek == 1) {

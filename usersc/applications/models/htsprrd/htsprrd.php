@@ -111,6 +111,7 @@
 			Field::inst( 'htsprrd.durasi_lembur_total_jam' ),
 			
 			Field::inst( 'hodxxmh.nama' ),
+			Field::inst( 'hemjbmh.id_heyxxmd' ),
 			Field::inst( 'hetxxmh.nama' ),
 			Field::inst( 'heyxxmh.nama' ),
 
