@@ -698,13 +698,13 @@
 						]
 					},
 					{
-						label: "Jumlah Grup <sup class='text-danger'>*<sup>",
+						label: "4 Grup <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.jumlah_grup",
 						type: "select",
 						placeholder : "Select",
 						options: [
-							{ "label": "3 Grup", "value": 1 },
-							{ "label": "4 Grup", "value": 2 }
+							{ "label": "Tidak", "value": 1 },
+							{ "label": "Ya", "value": 2 }
 						]
 					},
 					{

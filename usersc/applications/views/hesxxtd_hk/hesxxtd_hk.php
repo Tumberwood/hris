@@ -149,22 +149,13 @@
 						format: 'DD MMM YYYY'
 					},
 					{
-						label: "Jenis Perubahan <sup class='text-danger'>*<sup>",
-						name: "hesxxtd_hk.is_perubahan_hk",
-						type: "select2",
-						options: [
-							{ "label": "Perubahan HK", "value": 1 },
-							{ "label": "Perubahan Jumlah Grup", "value": 0 }
-						]
-					},
-					{
-						label: "Jumlah Grup <sup class='text-danger'>*<sup>",
+						label: "4 Grup <sup class='text-danger'>*<sup>",
 						name: "hesxxtd_hk.jumlah_grup",
 						type: "select",
 						placeholder : "Select",
 						options: [
-							{ "label": "3 Grup", "value": 1 },
-							{ "label": "4 Grup", "value": 2 }
+							{ "label": "Tidak", "value": 1 },
+							{ "label": "Ya", "value": 2 }
 						]
 					},
 					{
@@ -201,45 +192,23 @@
 				$(".modal-dialog").addClass("modal-lg");
 			});
 
-			edthesxxtd_hk.dependent( 'hesxxtd_hk.is_perubahan_hk', function ( val, data, callback ) {
-				is_perubahan_hk = edthesxxtd_hk.field('hesxxtd_hk.is_perubahan_hk').val();
-				if (is_perubahan_hk == 1) {
-					edthesxxtd_hk.field('hesxxtd_hk.grup_hk').show();
-					edthesxxtd_hk.field('hesxxtd_hk.jumlah_grup').hide();
-
-					edthesxxtd_hk.field('hesxxtd_hk.grup_hk').val();
-					edthesxxtd_hk.field('hesxxtd_hk.jumlah_grup').val('');
-				} else {
-					edthesxxtd_hk.field('hesxxtd_hk.grup_hk').hide();
-					edthesxxtd_hk.field('hesxxtd_hk.jumlah_grup').show();
-
-					edthesxxtd_hk.field('hesxxtd_hk.grup_hk').val('');
-					edthesxxtd_hk.field('hesxxtd_hk.jumlah_grup').val();
-				}
-				return {}
-			}, {event: 'keyup change'});
-
             edthesxxtd_hk.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					id_hemxxmh = edthesxxtd_hk.field('hesxxtd_hk.id_hemxxmh').val();
 					if(!id_hemxxmh || id_hemxxmh == ''){
 						edthesxxtd_hk.field('hesxxtd_hk.id_hemxxmh').error( 'Wajib diisi!' );
 					}
-					is_perubahan_hk = edthesxxtd_hk.field('hesxxtd_hk.is_perubahan_hk').val();
-					if(!is_perubahan_hk || is_perubahan_hk == ''){
-						edthesxxtd_hk.field('hesxxtd_hk.is_perubahan_hk').error( 'Wajib diisi!' );
+					
+					grup_hk = edthesxxtd_hk.field('hesxxtd_hk.grup_hk').val();
+					if(!grup_hk || grup_hk == ''){
+						edthesxxtd_hk.field('hesxxtd_hk.grup_hk').error( 'Wajib diisi!' );
 					}
-					if (is_perubahan_hk == 1) {
-						grup_hk = edthesxxtd_hk.field('hesxxtd_hk.grup_hk').val();
-						if(!grup_hk || grup_hk == ''){
-							edthesxxtd_hk.field('hesxxtd_hk.grup_hk').error( 'Wajib diisi!' );
-						}
-					} else {
-						jumlah_grup = edthesxxtd_hk.field('hesxxtd_hk.jumlah_grup').val();
-						if(!jumlah_grup || jumlah_grup == ''){
-							edthesxxtd_hk.field('hesxxtd_hk.jumlah_grup').error( 'Wajib diisi!' );
-						}
+					
+					jumlah_grup = edthesxxtd_hk.field('hesxxtd_hk.jumlah_grup').val();
+					if(!jumlah_grup || jumlah_grup == ''){
+						edthesxxtd_hk.field('hesxxtd_hk.jumlah_grup').error( 'Wajib diisi!' );
 					}
+					
 					tanggal_awal = edthesxxtd_hk.field('hesxxtd_hk.tanggal_awal').val();
 					if(!tanggal_awal || tanggal_awal == ''){
 						edthesxxtd_hk.field('hesxxtd_hk.tanggal_awal').error( 'Wajib diisi!' );
