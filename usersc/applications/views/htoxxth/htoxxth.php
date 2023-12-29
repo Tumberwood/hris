@@ -10,6 +10,12 @@
 	$nama_tabel       = 'htoxxth';
     $nama_tabels_d 	= [];
     $nama_tabels_d[0] = 'htoemtd';
+	
+	if (isset($_GET['kode_hto'])){
+		$kode_hto		= ($_GET['kode_hto']);
+	} else {
+		$kode_hto = null;
+	}
 ?>
 
 <!-- begin content here -->
@@ -131,7 +137,9 @@
 		// ------------- end of default variable
 
 		is_need_approval = 1;
+		var kode_hto = "<?php echo $kode_hto ?>";
 
+		console.log(kode_hto);
 		// sementara di 0 kan
 		// is_need_generate_kode = 1;
 
@@ -164,6 +172,7 @@
 					data: function (d){
 						d.start_date = start_date;
 						d.end_date = end_date;
+						d.kode_hto = kode_hto;
 						d.show_inactive_status_htoxxth = show_inactive_status_htoxxth;
 					}
 				},
@@ -401,6 +410,7 @@
 					data: function (d){
 						d.start_date = start_date;
 						d.end_date = end_date;
+						d.kode_hto = kode_hto;
 						d.show_inactive_status_htoxxth = show_inactive_status_htoxxth;
 					}
 				},
@@ -943,7 +953,7 @@
 				submitHandler: function(frmFilter) {
 					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
 					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
-					
+					kode_hto
 					notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
 					},{

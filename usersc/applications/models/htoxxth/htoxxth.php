@@ -83,6 +83,11 @@
 			} );
 	}
 	
+	if (isset($_POST['kode_hto']) && $_POST['kode_hto'] != null) {
+		$editor
+			->where( 'htoxxth.kode', $_POST['kode_hto']);
+	}
+	
 	include( "htoxxth_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	include( "../../../helpers/kode_fn_generate_c.php" );

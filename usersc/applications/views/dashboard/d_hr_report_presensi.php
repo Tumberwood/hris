@@ -409,7 +409,7 @@
                             str1 += '<th class="text-center" colspan="2" rowspan="1">SPKL</th>';
                             str1 += '</tr>';
 
-							var url = "../htoxxrd/htoxxrd.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+							var url = "../htoxxth/htoxxth.php?kode_hto=" + json.data[0].kode_spkl;
 							
 							if (kode_spkl == '-') {
 								str1 += '<tr>';
