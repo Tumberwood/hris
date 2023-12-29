@@ -38,7 +38,7 @@
         $rs_hadxxmh_self = $qs_hadxxmh_self->fetchAll();
     }else{
         // $rs_hadxxmh_self = [];
-        if($_GET['id_hadxxmh_saran'] > 0){
+        if(isset($_GET['id_hadxxmh_saran']) && $_GET['id_hadxxmh_saran'] > 0){
             $qs_hadxxmh_self = $db
                 ->query('select', 'havxxmh')
                 ->get([
