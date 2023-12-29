@@ -110,6 +110,7 @@
 	$qs_orang = $db
 		->raw()
 		->bind(':id_hemxxmh', $id_hemxxmh)
+		->bind(':start_date', $start_date)
 		->exec('SELECT
 					concat(b.kode, " - ", b.nama, " - ", d.nama) as nama,
 					b.id AS id_hemxxmh,
@@ -118,6 +119,7 @@
 					g.nama AS kmj,
 					h.nama AS stat,
 					i.nama AS lev,
+					DATE_FORMAT(:start_date, "%d %b %Y") AS tanggal,
 					j.nama AS STATUS,
 					k.nama AS kelompok
 				FROM hemxxmh AS b

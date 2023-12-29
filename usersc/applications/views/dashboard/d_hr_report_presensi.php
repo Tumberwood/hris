@@ -346,24 +346,39 @@
 					var id = json.data8.id_jadwal;
 					// console.log(id);
 					// console.log('row_'+id);
-					$('#edit_jadwal').attr('data-editor-id', 'row_'+id);
-					
-					var h3Element = $('<h3>');
+					console.log(json.data8.id_jadwal);
+					if(json.data8.id_jadwal > 0){
+						$('#edit_jadwal').attr('data-editor-id', 'row_'+id);
+						
+						var h3Element = $('<h3>');
 
-					// Create the anchor element with the specified attributes
-					var anchorElement = $('<a>')
-						.attr('href', '#')
-						.attr('id', 'jadwal')
-						.attr('data-id',id)
-						.attr('data-empsjadwal',json.data7.nama)
-						.attr('data-id_jadwal',json.data8.id_jadwal)
-						.html(" : " + json.data8.st_jadwal);
+						// Create the anchor element with the specified attributes
+						var anchorElement = $('<a>')
+							.attr('href', '#')
+							.attr('id', 'jadwal')
+							.attr('data-id',id)
+							.attr('data-empsjadwal',json.data7.nama)
+							.attr('data-id_jadwal',json.data8.id_jadwal)
+							.html(" : " + json.data8.st_jadwal);
 
-					// Append the anchor element to the h3 element
-					h3Element.append(anchorElement);
-					$('#edit_jadwal').append(h3Element);
+						// Append the anchor element to the h3 element
+						h3Element.append(anchorElement);
+						$('#edit_jadwal').append(h3Element);
+					} else {
+						var h3Element = $('<h3>');
 
-					$('#tanggal').html(" : " + json.data8.tanggal);
+						// Create the anchor element with the specified attributes
+						var anchorElement = $('<a>')
+							.attr('href', '#')
+							.attr('id', 'buat_jadwal')
+							.html(" : Jadwal Belum Dibuat");
+
+						// Append the anchor element to the h3 element
+						h3Element.append(anchorElement);
+						$('#edit_jadwal').append(h3Element);
+					}
+
+					$('#tanggal').html(" : " + json.data7.tanggal);
 					
 
 					$('#dep').html(" : " + json.data7.dep);
@@ -941,10 +956,6 @@
 			edthtssctd.on( 'preOpen', function( e, mode, action ) {
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthtssctd.field('start_on').val(start_on);
-				
-				if(action == 'create'){
-					tblhtssctd.rows().deselect();
-				}
 
 			});
 
@@ -955,7 +966,7 @@
 			edthtssctd.dependent( 'htssctd.tanggal', function ( val, data, callback ) {
 				id_htsxxmh = edthtssctd.field('htssctd.id_htsxxmh').val();
 				
-				shift();
+				shift(edthtssctd);
 				
 				if (id_htsxxmh == 1) {
 					var tanggal = edthtssctd.field('htssctd.tanggal').val();
@@ -968,7 +979,7 @@
 			}, {event: 'keyup change'});
 
 			edthtssctd.dependent( 'htssctd.id_htsxxmh', function ( val, data, callback ) {
-				shift();
+				shift(edthtssctd);
 				
 				if (val == 1) {
 					var tanggal = edthtssctd.field('htssctd.tanggal').val();
@@ -1343,6 +1354,380 @@
 
 			edthtsprtd.on( 'postSubmit', function (e, json, data, action, xhr) {
 				generateTable(counter);
+			});
+//////////// END OF CEKLOK /////////////
+
+/////////// START OF CEKLOK ////////////
+
+			edthtssctd_add = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/htssctd/htssctd_presensi.php",
+					type: 'POST',
+					data: function (d){
+					}
+				},
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "htssctd",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "htssctd.is_active",
+                        type: "hidden",
+						def: 1
+					},	
+					{
+						label: "htssctd.kode",
+						name: "htssctd.kode",
+                        type: "hidden"
+					},
+					{
+						label: "Employee <sup class='text-danger'>*<sup>",
+						name: "htssctd.id_hemxxmh",
+						type: "select2",
+						id: "peg_ceklok",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hemxxmh_old: id_hemxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									var options = data.results.map(function (result) {
+										return {
+											id: result.id,
+											text: result.text
+										};
+									});
+
+									//add by ferry agar auto select 07 sep 23
+									if (params.page && params.page === 1) {
+										$('#peg_ceklok').empty().select2({ data: options });
+									} else {
+                                        $('#peg_ceklok').append(new Option(options[0].text, options[0].id, false, false)).trigger('change');
+									}
+
+									return {
+										results: options,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "Tanggal <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggal",
+						type: "datetime",
+						def: function () { 
+							return moment($('#start_date').val()).format('DD MMM YYYY'); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},
+					{
+						label: "Shift <sup class='text-danger'>*<sup>",
+						name: "htssctd.id_htsxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/htsxxmh/htsxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_htsxxmh_old: id_htsxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},	
+					{
+						label: "Awal T1 <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_awal_t1",
+						type: "datetime",
+						def: function () {  
+							const currentDate = new Date();
+							currentDate.setHours(currentDate.getHours() - 2);
+							return currentDate;
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Awal <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_awal",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Awal T2 <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_awal_t2",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Akhir T1 <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_akhir_t1",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Akhir <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_akhir",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Akhir T2 <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_akhir_t2",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Tanggal Awal Istirahat <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_awal_istirahat",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Tanggal Akhir Istirahat <sup class='text-danger'>*<sup>",
+						name: "htssctd.tanggaljam_akhir_istirahat",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY HH:mm'
+					},
+					{
+						label: "Keterangan",
+						name: "htssctd.keterangan",
+						type: "textarea"
+					}
+				]
+			} );
+
+			edthtssctd_add.on( 'preOpen', function( e, mode, action ) {
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthtssctd_add.field('start_on').val(start_on);
+				 console.log(id_hemxxmh_old);
+				edthtssctd_add.field('htssctd.id_hemxxmh').val(id_hemxxmh_old);
+				edthtssctd_add.field('htssctd.id_hemxxmh').disable();
+				
+			});
+
+			edthtssctd_add.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+				
+				$('#peg_ceklok').select2('open');
+
+				setTimeout(function() {
+					$('#peg_ceklok').select2('close');
+				}, 5);
+			});
+
+			edthtssctd_add.dependent( 'htssctd.tanggal', function ( val, data, callback ) {
+				id_htsxxmh = edthtssctd_add.field('htssctd.id_htsxxmh').val();
+				
+				shift(edthtssctd_add);
+				
+				if (id_htsxxmh == 1) {
+					var tanggal = edthtssctd_add.field('htssctd.tanggal').val();
+					edthtssctd_add.field('htssctd.tanggaljam_awal_t1').val(tanggal+' 00:00');
+					edthtssctd_add.field('htssctd.tanggaljam_awal_t2').val(tanggal+' 00:00');
+					edthtssctd_add.field('htssctd.tanggaljam_akhir_t1').val(tanggal+' 00:00');
+					edthtssctd_add.field('htssctd.tanggaljam_akhir_t2').val(tanggal+' 00:00');
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+			edthtssctd_add.dependent( 'htssctd.id_htsxxmh', function ( val, data, callback ) {
+				shift(edthtssctd_add);
+				
+				if (val == 1) {
+					var tanggal = edthtssctd_add.field('htssctd.tanggal').val();
+					edthtssctd_add.field('htssctd.tanggaljam_awal_t1').val(tanggal+' 00:00');
+					edthtssctd_add.field('htssctd.tanggaljam_awal_t2').val(tanggal+' 00:00');
+					edthtssctd_add.field('htssctd.tanggaljam_akhir_t1').val(tanggal+' 00:00');
+					edthtssctd_add.field('htssctd.tanggaljam_akhir_t2').val(tanggal+' 00:00');
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+			edthtssctd_add.dependent( 'htssctd.tanggaljam_awal', function ( val, data, callback ) {
+				var tanggal_awal = edthtssctd_add.field('htssctd.tanggaljam_awal').val();
+      		 	id_htsxxmh = edthtssctd_add.field('htssctd.id_htsxxmh').val();
+				   
+					
+				if (id_htsxxmh != 1) {
+					akhir = moment(tanggal_awal).add(2, 'hour').format('DD MMM YYYY HH:mm');
+					awal = moment(tanggal_awal).subtract(2, 'hour').format('DD MMM YYYY HH:mm');
+					
+					edthtssctd_add.field('htssctd.tanggaljam_awal_t1').val(awal);
+					edthtssctd_add.field('htssctd.tanggaljam_awal_t2').val(akhir);
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+			edthtssctd_add.dependent( 'htssctd.tanggaljam_akhir', function ( val, data, callback ) {
+				var tanggal_akhir = edthtssctd_add.field('htssctd.tanggaljam_akhir').val();
+				id_htsxxmh = edthtssctd_add.field('htssctd.id_htsxxmh').val();
+				// tanggaljam_akhir_t2 = edthtssctd_add.field('htssctd.tanggaljam_akhir_t2').val();
+				
+				if (id_htsxxmh != 1) {
+						akhir = moment(tanggal_akhir).add(5, 'hour').format('DD MMM YYYY HH:mm');
+						awal = moment(tanggal_akhir).subtract(5, 'hour').format('DD MMM YYYY HH:mm');
+						edthtssctd_add.field('htssctd.tanggaljam_akhir_t1').val(awal);
+						edthtssctd_add.field('htssctd.tanggaljam_akhir_t2').val(akhir);
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+            edthtssctd_add.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+					
+					
+					// BEGIN of validasi htssctd.id_htsxxmh
+					if ( ! edthtssctd_add.field('htssctd.id_htsxxmh').isMultiValue() ) {
+						id_htsxxmh = edthtssctd_add.field('htssctd.id_htsxxmh').val();
+						if(!id_htsxxmh || id_htsxxmh == ''){
+							edthtssctd_add.field('htssctd.id_htsxxmh').error( 'Wajib diisi!' );
+						}
+					}
+
+					// BEGIN of validasi htssctd.tanggal
+					if ( ! edthtssctd_add.field('htssctd.tanggal').isMultiValue() ) {
+						tanggal = edthtssctd_add.field('htssctd.tanggal').val();
+						if(!tanggal || tanggal == ''){
+							edthtssctd_add.field('htssctd.tanggal').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htssctd.tanggal
+
+					// BEGIN of validasi htssctd.tanggaljam_awal_istirahat
+					if ( ! edthtssctd_add.field('htssctd.tanggaljam_awal_istirahat').isMultiValue() ) {
+						tanggaljam_awal_istirahat = edthtssctd_add.field('htssctd.tanggaljam_awal_istirahat').val();
+						if(!tanggaljam_awal_istirahat || tanggaljam_awal_istirahat == ''){
+							edthtssctd_add.field('htssctd.tanggaljam_awal_istirahat').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htssctd.tanggaljam_awal_istirahat
+
+					// BEGIN of validasi htssctd.tanggaljam_akhir_istirahat
+					if ( ! edthtssctd_add.field('htssctd.tanggaljam_akhir_istirahat').isMultiValue() ) {
+						tanggaljam_akhir_istirahat = edthtssctd_add.field('htssctd.tanggaljam_akhir_istirahat').val();
+						if(!tanggaljam_akhir_istirahat || tanggaljam_akhir_istirahat == ''){
+							edthtssctd_add.field('htssctd.tanggaljam_akhir_istirahat').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htssctd.tanggaljam_akhir_istirahat
+					
+				}
+				
+				if ( edthtssctd_add.inError() ) {
+					return false;
+				}
+			});
+
+			edthtssctd_add.on( 'postSubmit', function (e, json, data, action, xhr) {
+				generateTable(counter);
+			});
+			
+			$('#edit_jadwal').on('click', '#buat_jadwal', function (e) {
+				e.preventDefault();
+				edthtssctd_add.title('Create Schedule').buttons(
+					{
+						label: 'Submit',
+						className: 'btn btn-primary',
+						action: function () {
+							this.submit();
+							generateTable(counter);
+						}
+					}
+				).create();
 			});
 //////////// END OF CEKLOK /////////////
 			
