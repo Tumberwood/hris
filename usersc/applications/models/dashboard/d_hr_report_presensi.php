@@ -112,6 +112,7 @@
 		->bind(':id_hemxxmh', $id_hemxxmh)
 		->exec('SELECT
 					concat(b.kode, " - ", b.nama, " - ", d.nama) as nama,
+					b.id AS id_hemxxmh,
 					e.nama AS dep,
 					f.nama AS os,
 					g.nama AS kmj,
@@ -148,7 +149,9 @@
 				LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
 				LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
 				LEFT JOIN hetxxmh AS d ON d.id = c.id_hetxxmh
-				WHERE a.tanggal BETWEEN DATE_SUB(:start_date, INTERVAL 1 DAY) AND DATE_ADD(:start_date, INTERVAL 2 DAY) AND b.id = :id_hemxxmh AND a.nama NOT IN ("makan", "istirahat", "makan manual");
+				WHERE a.tanggal BETWEEN DATE_SUB(:start_date, INTERVAL 1 DAY) AND DATE_ADD(:start_date, INTERVAL 2 DAY) AND b.id = :id_hemxxmh AND a.nama NOT IN ("makan", "istirahat", "makan manual")
+				ORDER BY concat(a.tanggal, " " , a.jam) ASC
+				;
 				'
 				);
 	$rs_riwayat_ceklok = $qs_riwayat_ceklok->fetchAll();
@@ -166,6 +169,7 @@
 				FROM htsprtd AS a
 				LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
 				WHERE a.tanggal BETWEEN :start_date AND CURDATE() AND b.id = :id_hemxxmh AND a.nama IN ("makan", "makan manual")
+				ORDER BY concat(a.tanggal, " " , a.jam) ASC
 				LIMIT 3;
 				'
 				);
@@ -184,20 +188,37 @@
 				FROM htsprtd AS a
 				LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
 				WHERE a.tanggal BETWEEN :start_date AND CURDATE() AND b.id = :id_hemxxmh AND a.nama = "istirahat"
+				ORDER BY concat(a.tanggal, " " , a.jam) ASC
 				LIMIT 5;
 				'
 				);
 	$rs_istirahat = $qs_istirahat->fetchAll();
+	
+	$qs_jadwal = $db
+		->raw()
+		->bind(':start_date', $start_date)
+		->bind(':id_hemxxmh', $id_hemxxmh)
+		->exec('SELECT
+					a.id as id_jadwal,
+					DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
+					b.kode as st_jadwal
+				FROM htssctd AS a
+				LEFT JOIN htsxxmh AS b ON b.id = a.id_htsxxmh
+				WHERE a.tanggal = :start_date AND a.id_hemxxmh = :id_hemxxmh AND a.is_active = 1;
+				'
+				);
+	$rs_jadwal = $qs_jadwal->fetch();
 
 	$results = array();
 
-	if (!empty($rs_report_presensi)) {
+	if (!empty($rs_orang)) {
 		$results['data'] = $rs_report_presensi;
 		$results['data2'] = $rs_riwayat_ceklok;
 		$results['data3'] = $rs_makan;
 		$results['data4'] = $rs_istirahat;
 		$results['data5'] = $c_cek_satu;
 		$results['data7'] = $rs_orang;
+		$results['data8'] = $rs_jadwal;
 		
 		// harus urut sama tablenya
 		$results['columns'] = [
