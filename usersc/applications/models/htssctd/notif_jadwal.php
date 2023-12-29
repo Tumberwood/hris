@@ -41,7 +41,8 @@
 				LEFT JOIN htssctd ON a.id_hemxxmh = htssctd.id_hemxxmh AND htssctd.tanggal = senjum
 				LEFT JOIN hemxxmh AS hem ON hem.id = a.id_hemxxmh
 				LEFT JOIN hemjbmh AS jb ON jb.id_hemxxmh = hem.id
-				WHERE a.id_hemxxmh > 0
+				-- Kondisi tanggal masuk kurang atau sama dengan tanggal jadwal yg belum dibaut (senjum) dan tanggal_keluar is null atau tanggal keluar lebih dari tanggal jadwal yang belum dibuat
+				WHERE a.id_hemxxmh > 0 AND jb.tanggal_masuk <= senjum AND jb.is_checkclock = 1 AND hem.is_active = 1  AND (jb.tanggal_keluar IS NULL OR jb.tanggal_keluar > senjum)
 				GROUP BY senjum, id_hemxxmh
 				HAVING STATUS = "No Jadwal"
 				ORDER BY id_hemxxmh, senjum
