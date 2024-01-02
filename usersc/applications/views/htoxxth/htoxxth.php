@@ -16,6 +16,12 @@
 	} else {
 		$kode_hto = null;
 	}
+	
+	if (isset($_GET['start_date'])){
+		$awal		= ($_GET['start_date']);
+	} else {
+		$awal = null;
+	}
 ?>
 
 <!-- begin content here -->
@@ -146,6 +152,7 @@
 		var id_holxxmd_old = 0, id_heyxxmh_old = 0;
 		var id_heyxxmh = 0, id_htotpmh_old  = 0, id_hemxxmh_old = 0;
 		var tanggal, is_valid_checkclock;
+		var tanggal_get = "<?php echo $awal ?>";
 		
 		// BEGIN datepicker init
 		$('#periode').datepicker({
@@ -156,8 +163,16 @@
 			format: "dd M yyyy",
 			minViewMode: 'month' 
 		});
-		$('#start_date').datepicker('setDate', awal_bulan_dmy);
-		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		// $('#start_date').datepicker('setDate', awal_bulan_dmy);
+		// $('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		
+		if (tanggal_get === '') {
+			$('#start_date').datepicker('setDate', awal_bulan_dmy);
+			$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		} else {
+			$('#start_date').datepicker('setDate', new Date(tanggal_get));
+			$('#end_date').datepicker('setDate', new Date(tanggal_get));
+		}
         // END datepicker init
 
 		$(document).ready(function() {

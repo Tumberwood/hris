@@ -62,11 +62,11 @@
 		->exec('WITH grup AS (
 					SELECT 
 						kar.id_hemxxmh AS id_hemxxmh,
-					shift.jumlah_grup
-					from htsemtd as kar 
-					left join htsptth shift ON shift.id = kar.id_htsptth 
-					WHERE kar.is_active = 1 AND shift.is_active = 1
-					group by kar.id
+						if(jumlah_grup = 1, 3, 4) AS jumlah_grup
+					FROM hemjbmh as kar 
+					LEFT JOIN hemxxmh as hem on hem.id = kar.id_hemxxmh
+					WHERE hem.is_active = 1
+					GROUP BY kar.id_hemxxmh
 				)
 				SELECT DISTINCT
 					b.id AS id_jadwal,
@@ -265,7 +265,7 @@
 		];
 		
 	} else {
-		$results['data'] = [];
+		$results['data7'] = [];
 		$results['columns'] = [];
 	}
 

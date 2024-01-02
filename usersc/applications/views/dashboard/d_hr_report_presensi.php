@@ -148,7 +148,7 @@
 
 <div class="ibox"  id="no_jadwal" style="display: none;">
 	<div class="ibox-content">
-		<h1 class="text-center"> JADWAL BELUM DIBUAT !!! </h1>
+		<h1 class="text-center text-danger text-bold"> Data Tidak Valid !!! </h1>
 	</div>
 </div>
 
@@ -260,436 +260,443 @@
 					id_hemxxmh: id_hemxxmh
 				},
 				success: function ( json ) {
-				
-					$('#edit_jadwal').empty();
-					$('#jadwal').empty();
-					
-					$('#report').show();
-					$('#no_jadwal').hide();
+					if (json.data7 && Object.keys(json.data7).length > 0) {
+						$('#edit_jadwal').empty();
+						$('#jadwal').empty();
+						
+						$('#report').show();
+						$('#no_jadwal').hide();
 
-					var page_now = parseInt(counter) + 1; 
-					var page_total = parseInt(json.data5) + 1; 
-					if ($('#select_hemxxmh').val() > 0) {
-						id_hemxxmh = $('#select_hemxxmh').val();
-					} else {
-						if (id_hem_get != 0) {
-							id_hemxxmh = id_hem_get;
-						} else {
+						var page_now = parseInt(counter) + 1; 
+						var page_total = parseInt(json.data5) + 1; 
+						if ($('#select_hemxxmh').val() > 0) {
 							id_hemxxmh = $('#select_hemxxmh').val();
+						} else {
+							if (id_hem_get != 0) {
+								id_hemxxmh = id_hem_get;
+							} else {
+								id_hemxxmh = $('#select_hemxxmh').val();
+							}
 						}
-					}
 
-					// console.log('id_hemxxmh'+id_hemxxmh);
-					
-					var button_add = [
-						{
-							extend: 'collection',
-							text: '<i class="fa fa-wrench"></i>',
-							className: 'btn btn-white',
-							autoClose: true,
-							buttons: [
-								{ extend: "copy", text: '<i class="fa fa-copy">&nbsp &nbsp Copy</i>', className: '', titleAttr: 'Copy' },
-								{ extend: "excel", text: '<i class="fa fa-file-excel-o">&nbsp &nbsp Excel</i>', className: '', titleAttr: 'Export to Excel' }
-							]
-						}
-					];
-					
-					var buttons = [
-						{
-							extend: 'collection',
-							text: '<i class="fa fa-wrench"></i>',
-							className: 'btn btn-white',
-							autoClose: true,
-							buttons: [
-								{ extend: "copy", text: '<i class="fa fa-copy">&nbsp &nbsp Copy</i>', className: '', titleAttr: 'Copy' },
-								{ extend: "excel", text: '<i class="fa fa-file-excel-o">&nbsp &nbsp Excel</i>', className: '', titleAttr: 'Export to Excel' }
-							]
-						}
-					];
+						// console.log('id_hemxxmh'+id_hemxxmh);
+						
+						var button_add = [
+							{
+								extend: 'collection',
+								text: '<i class="fa fa-wrench"></i>',
+								className: 'btn btn-white',
+								autoClose: true,
+								buttons: [
+									{ extend: "copy", text: '<i class="fa fa-copy">&nbsp &nbsp Copy</i>', className: '', titleAttr: 'Copy' },
+									{ extend: "excel", text: '<i class="fa fa-file-excel-o">&nbsp &nbsp Excel</i>', className: '', titleAttr: 'Export to Excel' }
+								]
+							}
+						];
+						
+						var buttons = [
+							{
+								extend: 'collection',
+								text: '<i class="fa fa-wrench"></i>',
+								className: 'btn btn-white',
+								autoClose: true,
+								buttons: [
+									{ extend: "copy", text: '<i class="fa fa-copy">&nbsp &nbsp Copy</i>', className: '', titleAttr: 'Copy' },
+									{ extend: "excel", text: '<i class="fa fa-file-excel-o">&nbsp &nbsp Excel</i>', className: '', titleAttr: 'Export to Excel' }
+								]
+							}
+						];
 
-					// hitung counter	
-					if (id_hemxxmh != null) {
-						$('#prevButton').hide();
-						$('#nextButton').hide();
-						$('#paging').hide();
-					} else {
-						$('#paging').show();
-
-						if (counter == 0) {
+						// hitung counter	
+						if (id_hemxxmh != null) {
 							$('#prevButton').hide();
-						} else {
-							$('#prevButton').show();
-						}
-						console.log(json.data5);
-						if (counter == json.data5) {
 							$('#nextButton').hide();
+							$('#paging').hide();
 						} else {
-							$('#nextButton').show();
-						}
-					}
+							$('#paging').show();
 
-					button_add.push({
-						extend: 'create',
-						name: 'btnCreateCeklok',
-						id: 'addCeklok',
-						editor: edthtsprtd,
-						text: '<i class="fa fa-plus"></i>',
-						className: 'btn btn-outline',
-						titleAttr: 'New',
-						key: {
-							key: 'n',
-							ctrlKey: true,
-							altKey: true
-						}
-					});
-					
-					var id = json.data8.id_jadwal;
-					// console.log(id);
-					// console.log('row_'+id);
-					console.log(json.data8.id_jadwal);
-					if(json.data8.id_jadwal > 0){
-						$('#edit_jadwal').attr('data-editor-id', 'row_'+id);
-						
-						var h3Element = $('<h3>');
-
-						// Create the anchor element with the specified attributes
-						var anchorElement = $('<a>')
-							.attr('href', '#')
-							.attr('id', 'jadwal')
-							.attr('data-id',id)
-							.attr('data-empsjadwal',json.data7.nama)
-							.attr('data-id_jadwal',json.data8.id_jadwal)
-							.html(" : " + json.data8.st_jadwal);
-
-						// Append the anchor element to the h3 element
-						h3Element.append(anchorElement);
-						$('#edit_jadwal').append(h3Element);
-					} else {
-						var h3Element = $('<h3>');
-
-						// Create the anchor element with the specified attributes
-						var anchorElement = $('<a>')
-							.attr('href', '#')
-							.attr('id', 'buat_jadwal')
-							.html(" : Jadwal Belum Dibuat");
-
-						// Append the anchor element to the h3 element
-						h3Element.append(anchorElement);
-						$('#edit_jadwal').append(h3Element);
-					}
-
-					$('#tanggal').html(" : " + json.data7.tanggal);
-					
-
-					$('#dep').html(" : " + json.data7.dep);
-					$('#kmj').html(" : " + json.data7.kmj);
-					$('#kelompok').html(" : " + json.data7.kelompok);
-					$('#stat').html(" : " + json.data7.stat);
-					$('#STATUS').html(" : " + json.data7.STATUS);
-					$('#lev').html(" : " + json.data7.lev);
-
-					$('#nama_peg').text(json.data7.nama);
-					$('#paging').text( page_now + " / " + page_total);
-					$('#h3_riwayat').text("Riwayat Checkclock");
-
-					if(json.data.length > 0 && json.data[0].id_hemxxmh != null){
-						$('#keterangan').html(" : " + json.data[0].keterangan);
-						var str1 = '<table id="tblhtsprrd1" class="table table-striped table-bordered">';
-						
-						if ($.fn.dataTable.isDataTable('#tblhtsprrd1')) {
-							$('#tblhtsprrd1').DataTable().clear();
-							$('#tblhtsprrd1').DataTable().destroy();
-							$('#tblhtsprrd1 tbody').empty();
-							$('#tblhtsprrd1 thead').empty();
-						}
-						str1 += '<thead>';
-							// BEGIN header baris 1
-							str1 += '<tr>';
-							if (json.data[0].cek == 0) {
-								str1 += '<th class="text-center" style="color: blue; vertical-align: middle;" colspan="2" rowspan="2" >Clock Finger</th>';
+							if (counter == 0) {
+								$('#prevButton').hide();
 							} else {
-								str1 += '<th class="text-center text-danger" colspan="2" rowspan="2" style="vertical-align: middle;">Clock Finger</th>';
+								$('#prevButton').show();
 							}
-							
-							var id_hemxxmh = json.data[0].id_hemxxmh;
-							var tanggal = json.data[0].tanggal;
-							var kondite = json.data[0].kondite;
-							var kode_spkl = json.data[0].kode_spkl;
-
-							str1 += '<th class="text-center" rowspan="3" style="vertical-align: middle;">Status IN</th>';
-							str1 += '<th class="text-center" rowspan="3" style="vertical-align: middle;" >Status OUT</th>';
-
-							var linkUrl = "../htlxxrh/htlxxrh.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
-							
-							str1 += '<th class="text-center" rowspan="3" style="vertical-align: middle;">Kondite</th>';
-
-							str1 += '<th class="text-center" colspan="2" rowspan="1">SPKL</th>';
-							str1 += '</tr>';
-
-							var url = "../htoxxth/htoxxth.php?kode_hto=" + json.data[0].kode_spkl;
-							
-							if (kode_spkl == '-') {
-								str1 += '<tr>';
-								str1 += '<th class="text-center" colspan="2" rowspan="1">' + json.data[0].kode_spkl + '</th>';
-								str1 += '</tr>';
+							console.log(json.data5);
+							if (counter == json.data5) {
+								$('#nextButton').hide();
 							} else {
-								str1 += '<tr>';
-								str1 += '<th class="text-center" colspan="2" rowspan="1">';
-								str1 += '<a href="' + url + '" target="_blank">' + json.data[0].kode_spkl + '</a>';
-								str1 += '</th>';
-								str1 += '</tr>';
+								$('#nextButton').show();
 							}
+						}
 
-							str1 += '<tr>';
-							$.each(json.columns, function (k, colObj) {
-								// BEGIN render column name
-								if (colObj.name == 'clock_in') {
-									str1 += '<th class="text-center">IN</th>';
-								} else if (colObj.name == 'clock_out') {
-									str1 += '<th class="text-center">OUT</th>';
-								} else if (colObj.name == 'jam_awal') {
-									str1 += '<th class="text-center">Jam Awal</th>';
-								} else if (colObj.name == 'jam_akhir') {
-									str1 += '<th class="text-center">Jam Akhir</th>';
-								}
-							});
-							str1 += '</tr>';
-							// END header baris 1
-						str1 = str1 + '</thead>';
-
-						$('#tabel_atas').html(str1);
-
-						$('#tblhtsprrd1').DataTable({
-							paging: false,          // Disable pagination
-							searching: false,       // Disable search
-							info: false,            // Disable "Showing X of Y entries" information
-							lengthChange: false,    // Disable "Show X entries" dropdown
-							responsive: false,
-							fixedHeader: {
-								header: false,
-								// footer: true
-							},
-							data: json.data,
-							columns: json.columns,
-							buttons: buttons,
-							columnDefs: [
-								{
-									targets: [4],
-									render: function (data, type, row, meta) {
-										var id_hemxxmh = row.id_hemxxmh;
-										var tanggal = row.tanggal;
-										var kondite = row.kondite;
-
-										if (kondite !== '') {
-											var linkUrlKondite = "../htlxxrh/htlxxrh.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
-											return '<a href="' + linkUrlKondite + '" target="_blank">' + kondite + '</a>';
-										} else {
-											return data;
-										}
-									},
-								},
-							],
-							rowCallback: function (row, data, index) {
-
+						button_add.push({
+							extend: 'create',
+							name: 'btnCreateCeklok',
+							id: 'addCeklok',
+							editor: edthtsprtd,
+							text: '<i class="fa fa-plus"></i>',
+							className: 'btn btn-outline',
+							titleAttr: 'New',
+							key: {
+								key: 'n',
+								ctrlKey: true,
+								altKey: true
 							}
 						});
+						
+						var id = json.data8.id_jadwal;
+						// console.log(id);
+						// console.log('row_'+id);
+						// console.log(json.data8.id_jadwal);
+						if(json.data8.id_jadwal > 0){
+							$('#edit_jadwal').attr('data-editor-id', 'row_'+id);
+							
+							var h3Element = $('<h3>');
 
-						
-						var str5 = '<table id="tblhtsprrd5" class="table table-striped table-bordered">';
-						
-						if ($.fn.dataTable.isDataTable('#tblhtsprrd5')) {
-							$('#tblhtsprrd5').DataTable().clear();
-							$('#tblhtsprrd5').DataTable().destroy();
-							$('#tblhtsprrd5 tbody').empty();
-							$('#tblhtsprrd5 thead').empty();
+							// Create the anchor element with the specified attributes
+							var anchorElement = $('<a>')
+								.attr('href', '#')
+								.attr('id', 'jadwal')
+								.attr('data-id',id)
+								.attr('data-empsjadwal',json.data7.nama)
+								.attr('data-id_jadwal',json.data8.id_jadwal)
+								.html(" : " + json.data8.st_jadwal);
+
+							// Append the anchor element to the h3 element
+							h3Element.append(anchorElement);
+							$('#edit_jadwal').append(h3Element);
+						} else {
+							var h3Element = $('<h3>');
+
+							// Create the anchor element with the specified attributes
+							var anchorElement = $('<a>')
+								.attr('href', '#')
+								.attr('id', 'buat_jadwal')
+								.html(" : Jadwal Belum Dibuat");
+
+							// Append the anchor element to the h3 element
+							h3Element.append(anchorElement);
+							$('#edit_jadwal').append(h3Element);
 						}
-						str5 += '<thead>';
-							str5 += '<tr>';
-							$.each(json.columns5, function (k, colObj5) {
-								// BEGIN render column name
-								if (colObj5.name == 'jam_kerja') {
-									str5 += '<th class="text-center">Jam Kerja</th>';
-								} else if (colObj5.name == 'jam_wajib') {
-									str5 += '<th class="text-center">Jam Wajib</th>';
-								} else if (colObj5.name == 'potong') {
-									str5 += '<th class="text-center">Potong</th>';
-								} else if (colObj5.name == 'ti') {
-									str5 += '<th class="text-center">TI</th>';
-								} else if (colObj5.name == 'makan') {
-									str5 += '<th class="text-center">Makan</th>';
-								} else if (colObj5.name == 'lembur') {
-									str5 += '<th class="text-center">Lembur</th>';
-								} else if (colObj5.name == 'lembur15') {
-									str5 += '<th class="text-center">x1.5</th>';
-								} else if (colObj5.name == 'lembur2') {
-									str5 += '<th class="text-center">x2</th>';
-								} else if (colObj5.name == 'lembur3') {
-									str5 += '<th class="text-center">x3</th>';
-								} else if (colObj5.name == 'lembur4') {
-									str5 += '<th class="text-center">x4</th>';
+
+						$('#tanggal').html(" : " + json.data7.tanggal);
+						
+
+						$('#dep').html(" : " + json.data7.dep);
+						$('#kmj').html(" : " + json.data7.kmj);
+						$('#kelompok').html(" : " + json.data7.kelompok);
+						$('#stat').html(" : " + json.data7.stat);
+						$('#STATUS').html(" : " + json.data7.STATUS);
+						$('#lev').html(" : " + json.data7.lev);
+
+						$('#nama_peg').text(json.data7.nama);
+						$('#paging').text( page_now + " / " + page_total);
+						$('#h3_riwayat').text("Riwayat Checkclock");
+
+						if(json.data.length > 0 && json.data[0].id_hemxxmh != null){
+							$('#keterangan').html(" : " + json.data[0].keterangan);
+							var str1 = '<table id="tblhtsprrd1" class="table table-striped table-bordered">';
+							
+							if ($.fn.dataTable.isDataTable('#tblhtsprrd1')) {
+								$('#tblhtsprrd1').DataTable().clear();
+								$('#tblhtsprrd1').DataTable().destroy();
+								$('#tblhtsprrd1 tbody').empty();
+								$('#tblhtsprrd1 thead').empty();
+							}
+							str1 += '<thead>';
+								// BEGIN header baris 1
+								str1 += '<tr>';
+								if (json.data[0].cek == 0) {
+									str1 += '<th class="text-center" style="color: blue; vertical-align: middle;" colspan="2" rowspan="2" >Clock Finger</th>';
+								} else {
+									str1 += '<th class="text-center text-danger" colspan="2" rowspan="2" style="vertical-align: middle;">Clock Finger</th>';
+								}
+								
+								var id_hemxxmh = json.data[0].id_hemxxmh;
+								var tanggal = json.data[0].tanggal;
+								var kondite = json.data[0].kondite;
+								var kode_spkl = json.data[0].kode_spkl;
+
+								str1 += '<th class="text-center" rowspan="3" style="vertical-align: middle;">Status IN</th>';
+								str1 += '<th class="text-center" rowspan="3" style="vertical-align: middle;" >Status OUT</th>';
+
+								var linkUrl = "../htlxxrh/htlxxrh.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+								
+								str1 += '<th class="text-center" rowspan="3" style="vertical-align: middle;">Kondite</th>';
+
+								str1 += '<th class="text-center" colspan="2" rowspan="1">SPKL</th>';
+								str1 += '</tr>';
+
+								var url = "../htoxxth/htoxxth.php?kode_hto=" + json.data[0].kode_spkl + "&start_date=" + tanggal;
+								
+								if (kode_spkl == '-') {
+									str1 += '<tr>';
+									str1 += '<th class="text-center" colspan="2" rowspan="1">' + json.data[0].kode_spkl + '</th>';
+									str1 += '</tr>';
+								} else {
+									str1 += '<tr>';
+									str1 += '<th class="text-center" colspan="2" rowspan="1">';
+									str1 += '<a href="' + url + '" target="_blank">' + json.data[0].kode_spkl + '</a>';
+									str1 += '</th>';
+									str1 += '</tr>';
+								}
+
+								str1 += '<tr>';
+								$.each(json.columns, function (k, colObj) {
+									// BEGIN render column name
+									if (colObj.name == 'clock_in') {
+										str1 += '<th class="text-center">IN</th>';
+									} else if (colObj.name == 'clock_out') {
+										str1 += '<th class="text-center">OUT</th>';
+									} else if (colObj.name == 'jam_awal') {
+										str1 += '<th class="text-center">Jam Awal</th>';
+									} else if (colObj.name == 'jam_akhir') {
+										str1 += '<th class="text-center">Jam Akhir</th>';
+									}
+								});
+								str1 += '</tr>';
+								// END header baris 1
+							str1 = str1 + '</thead>';
+
+							$('#tabel_atas').html(str1);
+
+							$('#tblhtsprrd1').DataTable({
+								paging: false,          // Disable pagination
+								searching: false,       // Disable search
+								info: false,            // Disable "Showing X of Y entries" information
+								lengthChange: false,    // Disable "Show X entries" dropdown
+								responsive: false,
+								fixedHeader: {
+									header: false,
+									// footer: true
+								},
+								data: json.data,
+								columns: json.columns,
+								buttons: buttons,
+								columnDefs: [
+									{
+										targets: [4],
+										render: function (data, type, row, meta) {
+											var id_hemxxmh = row.id_hemxxmh;
+											var tanggal = row.tanggal;
+											var kondite = row.kondite;
+
+											if (kondite !== '') {
+												var linkUrlKondite = "../htlxxrh/htlxxrh.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+												return '<a href="' + linkUrlKondite + '" target="_blank">' + kondite + '</a>';
+											} else {
+												return data;
+											}
+										},
+									},
+								],
+								rowCallback: function (row, data, index) {
+
 								}
 							});
-							str5 += '</tr>';
-							// END header baris 5
-						str5 = str5 + '</thead>';
 
-						$('#tabel_bawah').html(str5);
-						// $('#h3_bawah').text("Checkclock bawah");
+							
+							var str5 = '<table id="tblhtsprrd5" class="table table-striped table-bordered">';
+							
+							if ($.fn.dataTable.isDataTable('#tblhtsprrd5')) {
+								$('#tblhtsprrd5').DataTable().clear();
+								$('#tblhtsprrd5').DataTable().destroy();
+								$('#tblhtsprrd5 tbody').empty();
+								$('#tblhtsprrd5 thead').empty();
+							}
+							str5 += '<thead>';
+								str5 += '<tr>';
+								$.each(json.columns5, function (k, colObj5) {
+									// BEGIN render column name
+									if (colObj5.name == 'jam_kerja') {
+										str5 += '<th class="text-center">Jam Kerja</th>';
+									} else if (colObj5.name == 'jam_wajib') {
+										str5 += '<th class="text-center">Jam Wajib</th>';
+									} else if (colObj5.name == 'potong') {
+										str5 += '<th class="text-center">Potong</th>';
+									} else if (colObj5.name == 'ti') {
+										str5 += '<th class="text-center">TI</th>';
+									} else if (colObj5.name == 'makan') {
+										str5 += '<th class="text-center">Makan</th>';
+									} else if (colObj5.name == 'lembur') {
+										str5 += '<th class="text-center">Lembur</th>';
+									} else if (colObj5.name == 'lembur15') {
+										str5 += '<th class="text-center">x1.5</th>';
+									} else if (colObj5.name == 'lembur2') {
+										str5 += '<th class="text-center">x2</th>';
+									} else if (colObj5.name == 'lembur3') {
+										str5 += '<th class="text-center">x3</th>';
+									} else if (colObj5.name == 'lembur4') {
+										str5 += '<th class="text-center">x4</th>';
+									}
+								});
+								str5 += '</tr>';
+								// END header baris 5
+							str5 = str5 + '</thead>';
 
-						$('#tblhtsprrd5').DataTable({
+							$('#tabel_bawah').html(str5);
+							// $('#h3_bawah').text("Checkclock bawah");
+
+							$('#tblhtsprrd5').DataTable({
+								paging: false,          // Disable pagination
+								searching: false,       // Disable search
+								info: false,            // Disable "Showing X of Y entries" information
+								lengthChange: false,    // Disable "Show X entries" dropdown
+								responsive: false,
+								scrollCollapse: true,
+								data: json.data,
+								columns: json.columns5,
+								columnDefs: [
+									{ targets: '_all', className: 'text-right' } // Apply text-right class to all columns
+								],
+								buttons: [
+								],
+								rowCallback: function (row, data, index) {
+
+								}
+							});
+						} else {
+							$('#tabel_atas').html('<h1 style="color: red; text-align: center;"><b>REPORT PRESENSI BELUM DI GENERATE!!!<b></h1><br><br><br>');
+						}
+
+						var str2 = '<table id="tblhtsprrd2" class="table table-striped table-bordered">';
+						
+						if ($.fn.dataTable.isDataTable('#tblhtsprrd2')) {
+							$('#tblhtsprrd2').DataTable().clear();
+							$('#tblhtsprrd2').DataTable().destroy();
+							$('#tblhtsprrd2 tbody').empty();
+							$('#tblhtsprrd2 thead').empty();
+						}
+						str2 += '<thead>';
+							str2 += '<tr>';
+							$.each(json.columns2, function (k, colObj2) {
+								// BEGIN render column name
+								if (colObj2.name == 'jam') {
+									str2 += '<th class="text-center">Jam</th>';
+								} else if (colObj2.name == 'tanggal') {
+									str2 += '<th class="text-center">Tanggal</th>';
+								} else if (colObj2.name == 'mesin') {
+									str2 += '<th class="text-center">Mesin</th>';
+								}
+							});
+							str2 += '</tr>';
+							// END header baris 2
+						str2 = str2 + '</thead>';
+
+						$('#tabel_riwayat').html(str2);
+						$('#h3_riwayat').text("Riwayat Checkclock");
+
+						$('#tblhtsprrd2').DataTable({
+							paging: false,
+							searching: false,
+							info: false,
+							lengthChange: false,
+							responsive: false,
+							scrollY: '125px',
+							scrollCollapse: true,
+							data: json.data2,
+							columns: json.columns2,
+							buttons: button_add,
+							rowCallback: function (row, data, index) {
+								// Your row callback code here
+							}
+						});
+						// console.log('id_hemxxmh_old'+json.data[0].id_hemxxmh); 
+						id_hemxxmh_old = json.data7.id_hemxxmh;
+						edthtsprtd.field('htsprtd.id_hemxxmh').val(id_hemxxmh_old);
+
+						var str3 = '<table id="tblhtsprrd3" class="table table-striped table-bordered">';
+						
+						if ($.fn.dataTable.isDataTable('#tblhtsprrd3')) {
+							$('#tblhtsprrd3').DataTable().clear();
+							$('#tblhtsprrd3').DataTable().destroy();
+							$('#tblhtsprrd3 tbody').empty();
+							$('#tblhtsprrd3 thead').empty();
+						}
+						str3 += '<thead>';
+							str3 += '<tr>';
+							$.each(json.columns3, function (k, colObj3) {
+								// BEGIN render column name
+								if (colObj3.name == 'jam') {
+									str3 += '<th class="text-center">Jam</th>';
+								} else if (colObj3.name == 'tanggal') {
+									str3 += '<th class="text-center">Tanggal</th>';
+								} else if (colObj3.name == 'mesin') {
+									str3 += '<th class="text-center">Mesin</th>';
+								}
+							});
+							str3 += '</tr>';
+							// END header baris 3
+						str3 = str3 + '</thead>';
+
+						$('#tabel_makan').html(str3);
+						$('#h3_makan').text("Checkclock Makan");
+
+						$('#tblhtsprrd3').DataTable({
 							paging: false,          // Disable pagination
 							searching: false,       // Disable search
 							info: false,            // Disable "Showing X of Y entries" information
 							lengthChange: false,    // Disable "Show X entries" dropdown
 							responsive: false,
 							scrollCollapse: true,
-							data: json.data,
-							columns: json.columns5,
-							columnDefs: [
-								{ targets: '_all', className: 'text-right' } // Apply text-right class to all columns
-							],
-							buttons: [
-							],
+							data: json.data3,
+							columns: json.columns3,
+							buttons: buttons,
 							rowCallback: function (row, data, index) {
 
 							}
 						});
+
+						var str4 = '<table id="tblhtsprrd4" class="table table-striped table-bordered">';
+						
+						if ($.fn.dataTable.isDataTable('#tblhtsprrd4')) {
+							$('#tblhtsprrd4').DataTable().clear();
+							$('#tblhtsprrd4').DataTable().destroy();
+							$('#tblhtsprrd4 tbody').empty();
+							$('#tblhtsprrd4 thead').empty();
+						}
+						str4 += '<thead>';
+							str4 += '<tr>';
+							$.each(json.columns4, function (k, colObj4) {
+								// BEGIN render column name
+								if (colObj4.name == 'jam') {
+									str4 += '<th class="text-center">Jam</th>';
+								} else if (colObj4.name == 'tanggal') {
+									str4 += '<th class="text-center">Tanggal</th>';
+								} else if (colObj4.name == 'mesin') {
+									str4 += '<th class="text-center">Mesin</th>';
+								}
+							});
+							str4 += '</tr>';
+							// END header baris 4
+						str4 = str4 + '</thead>';
+
+						$('#tabel_istirahat').html(str4);
+						$('#h3_istirahat').text("Checkclock Istirahat");
+
+						$('#tblhtsprrd4').DataTable({
+							paging: false,          // Disable pagination
+							searching: false,       // Disable search
+							info: false,            // Disable "Showing X of Y entries" information
+							lengthChange: false,    // Disable "console.log X entries" dropdown
+							responsive: false,
+							scrollCollapse: true,
+							data: json.data4,
+							columns: json.columns4,
+							buttons: buttons,
+							rowCallback: function (row, data, index) {
+
+							}
+						});
+
+						if(notifyprogress != ''){
+							notifyprogress.close();
+						}
 					} else {
-						$('#tabel_atas').html('<h1 style="color: red; text-align: center;"><b>REPORT PRESENSI BELUM DI GENERATE!!!<b></h1><br><br><br>');
-					}
-
-					var str2 = '<table id="tblhtsprrd2" class="table table-striped table-bordered">';
-					
-					if ($.fn.dataTable.isDataTable('#tblhtsprrd2')) {
-						$('#tblhtsprrd2').DataTable().clear();
-						$('#tblhtsprrd2').DataTable().destroy();
-						$('#tblhtsprrd2 tbody').empty();
-						$('#tblhtsprrd2 thead').empty();
-					}
-					str2 += '<thead>';
-						str2 += '<tr>';
-						$.each(json.columns2, function (k, colObj2) {
-							// BEGIN render column name
-							if (colObj2.name == 'jam') {
-								str2 += '<th class="text-center">Jam</th>';
-							} else if (colObj2.name == 'tanggal') {
-								str2 += '<th class="text-center">Tanggal</th>';
-							} else if (colObj2.name == 'mesin') {
-								str2 += '<th class="text-center">Mesin</th>';
-							}
-						});
-						str2 += '</tr>';
-						// END header baris 2
-					str2 = str2 + '</thead>';
-
-					$('#tabel_riwayat').html(str2);
-					$('#h3_riwayat').text("Riwayat Checkclock");
-
-					$('#tblhtsprrd2').DataTable({
-						paging: false,
-						searching: false,
-						info: false,
-						lengthChange: false,
-						responsive: false,
-						scrollY: '125px',
-						scrollCollapse: true,
-						data: json.data2,
-						columns: json.columns2,
-						buttons: button_add,
-						rowCallback: function (row, data, index) {
-							// Your row callback code here
+						$('#report').hide();
+						$('#no_jadwal').show();
+						if(notifyprogress != ''){
+							notifyprogress.close();
 						}
-					});
-					// console.log('id_hemxxmh_old'+json.data[0].id_hemxxmh); 
-					id_hemxxmh_old = json.data7.id_hemxxmh;
-					edthtsprtd.field('htsprtd.id_hemxxmh').val(id_hemxxmh_old);
-
-					var str3 = '<table id="tblhtsprrd3" class="table table-striped table-bordered">';
-					
-					if ($.fn.dataTable.isDataTable('#tblhtsprrd3')) {
-						$('#tblhtsprrd3').DataTable().clear();
-						$('#tblhtsprrd3').DataTable().destroy();
-						$('#tblhtsprrd3 tbody').empty();
-						$('#tblhtsprrd3 thead').empty();
-					}
-					str3 += '<thead>';
-						str3 += '<tr>';
-						$.each(json.columns3, function (k, colObj3) {
-							// BEGIN render column name
-							if (colObj3.name == 'jam') {
-								str3 += '<th class="text-center">Jam</th>';
-							} else if (colObj3.name == 'tanggal') {
-								str3 += '<th class="text-center">Tanggal</th>';
-							} else if (colObj3.name == 'mesin') {
-								str3 += '<th class="text-center">Mesin</th>';
-							}
-						});
-						str3 += '</tr>';
-						// END header baris 3
-					str3 = str3 + '</thead>';
-
-					$('#tabel_makan').html(str3);
-					$('#h3_makan').text("Checkclock Makan");
-
-					$('#tblhtsprrd3').DataTable({
-						paging: false,          // Disable pagination
-						searching: false,       // Disable search
-						info: false,            // Disable "Showing X of Y entries" information
-						lengthChange: false,    // Disable "Show X entries" dropdown
-						responsive: false,
-						scrollCollapse: true,
-						data: json.data3,
-						columns: json.columns3,
-						buttons: buttons,
-						rowCallback: function (row, data, index) {
-
-						}
-					});
-
-					var str4 = '<table id="tblhtsprrd4" class="table table-striped table-bordered">';
-					
-					if ($.fn.dataTable.isDataTable('#tblhtsprrd4')) {
-						$('#tblhtsprrd4').DataTable().clear();
-						$('#tblhtsprrd4').DataTable().destroy();
-						$('#tblhtsprrd4 tbody').empty();
-						$('#tblhtsprrd4 thead').empty();
-					}
-					str4 += '<thead>';
-						str4 += '<tr>';
-						$.each(json.columns4, function (k, colObj4) {
-							// BEGIN render column name
-							if (colObj4.name == 'jam') {
-								str4 += '<th class="text-center">Jam</th>';
-							} else if (colObj4.name == 'tanggal') {
-								str4 += '<th class="text-center">Tanggal</th>';
-							} else if (colObj4.name == 'mesin') {
-								str4 += '<th class="text-center">Mesin</th>';
-							}
-						});
-						str4 += '</tr>';
-						// END header baris 4
-					str4 = str4 + '</thead>';
-
-					$('#tabel_istirahat').html(str4);
-					$('#h3_istirahat').text("Checkclock Istirahat");
-
-					$('#tblhtsprrd4').DataTable({
-						paging: false,          // Disable pagination
-						searching: false,       // Disable search
-						info: false,            // Disable "Showing X of Y entries" information
-						lengthChange: false,    // Disable "console.log X entries" dropdown
-						responsive: false,
-						scrollCollapse: true,
-						data: json.data4,
-						columns: json.columns4,
-						buttons: buttons,
-						rowCallback: function (row, data, index) {
-
-						}
-					});
-
-					if(notifyprogress != ''){
-						notifyprogress.close();
 					}
 				}
 			} );
