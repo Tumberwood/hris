@@ -99,7 +99,6 @@
 		var kode_finger;
 
 		id_heyxxmh = "<?php echo $_SESSION['str_arr_ha_heyxxmh']; ?>";
-		console.log(id_heyxxmh);
 
 		// BEGIN datepicker init
 		$('#periode').datepicker({
@@ -377,13 +376,14 @@
 			
 			edthtsprtd.on('initSubmit', function(e, action) {
 				// update kode finger
-				id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
-				htsprtd_get_hemxxmh_kode();
-				console.log(kode_finger);
-				edthtsprtd.field('htsprtd.kode').val(kode_finger);
+				if (action != 'remove') {
+					id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
+					htsprtd_get_hemxxmh_kode();
+					edthtsprtd.field('htsprtd.kode').val(kode_finger);
 
-				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthtsprtd.field('finish_on').val(finish_on);
+					finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+					edthtsprtd.field('finish_on').val(finish_on);
+				}
 			});
 
 			edthtsprtd.on( 'postSubmit', function (e, json, data, action, xhr) {
@@ -460,6 +460,18 @@
 
 			tblhtsprtd.searchPanes.container().appendTo( '#searchPanes1' );
 
+			tblhtsprtd.on( 'select', function( e, dt, type, indexes ) {
+				data_htsprtd = tblhtsprtd.row( { selected: true } ).data().htsprtd;
+				mesin   = data_htsprtd.nama;
+				mesin = mesin.toUpperCase();
+				
+				if (mesin == "MAKAN MANUAL") {
+					tblhtsprtd.button('btnRemove:name').enable();
+				} else {
+					tblhtsprtd.button('btnRemove:name').disable();
+				}
+			} );
+			
 			$("#frmhtsprtd").submit(function(e) {
 				e.preventDefault();
 			}).validate({
