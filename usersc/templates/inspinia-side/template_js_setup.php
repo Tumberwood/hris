@@ -37,42 +37,78 @@
 	}
 	// end of toastr setup
 
-	// start of setup search menu
-	// $("#selectmenu").select2({
-	// 	placeholder: 'Search Menu ... ',
-	// 	allowClear: true,
-	// 	ajax: {
-	// 		url: "../../helpers/load_select2_menu.php",
-	// 		dataType: 'json',
-	// 		data: function (params) {
-	// 			return {
-	// 				q          : params.term, // search term
-	// 				page       : params.page,
-	// 				rows       : 10
-	// 			};
-	// 		},
-	// 		processResults: function (data, params) {
-	// 			return {
-	// 				results: data
-	// 			};
-	// 		},
-	// 		minimumInputLength     : 2,
-	// 		maximum                : 10,
-	// 		delay                  : 500,
-	// 		maximumSelectionLength : 5,
-	// 		minimumResultsForSearch: -1,
-	// 	}
-	// }); 
-	
-	// $('#selectmenu').on('select2:select', function (e) { 
-		
-	// 	var data_pages = e.params.data.page;
-	// 	var new_url = window.location.origin + "/solusiapp_starterpack/" + data_pages;
-		
-	// 	var url = window.location.href;  
-	// 	window.location.href = new_url;
-	// });
-	// end of setup search menu
+	// BEGIN Notifications
+	var is_notification, notification_interval_ms;
+	$.ajax( {
+		url: '../../../helpers/fn_notification_setting.php',
+		dataType: 'json',
+		type: 'POST',
+		async: false,
+		data: {},
+		success: function ( json ) {
+			notification_interval_ms = json.data.rs_notification_interval_setting.notification_interval_ms;
+			is_notification = json.data.rs_notification_interval_setting.is_notification;
+		}
+	} );
+
+	if(is_notification == 1){
+		setInterval(cekNotification, notification_interval_ms);
+	}
+
+	function cekNotification(){
+		$('#notification_dropdown').empty();
+		// load notif
+		$.ajax( {
+			url: '../../../helpers/fn_notification_load.php',
+			dataType: 'json',
+			type: 'POST',
+			data: {
+				id_users: <?php echo $_SESSION['user']; ?>
+			},
+			success: function ( json ) {
+				str = '';
+				if( json.data.c_rs_notifications_unread > 0){
+					$('#c_notification_unread').show();
+					$('#c_notification_unread').html(json.data.c_rs_notifications_unread);
+					$.each( json.data.rs_notifications, function( key, value ) {
+						str='<li>'+
+								'<div id="notif_'+value.id_notifications+'">'+
+									value.message +
+									'<span class="float-right text-muted small">'+moment(value.date_created).fromNow()+'</span>'+
+								'</div>'+
+							'</li>';
+						if(key+1 != json.data.c_rs_notifications_unread){
+							str=str+'<li class="dropdown-divider"></li>';
+						}
+						$("#notification_dropdown").append(str);
+					});
+				}else{
+					$('#c_notification_unread').hide();
+					str='<li>No Unread Notification</li>';
+					$("#notification_dropdown").append(str);
+				}
+			
+			}
+		} );
+	}
+
+	$("#notification_dropdown").on("click", "li", function(e){
+		id_notifications = e.target.id;
+
+		$.ajax( {
+			url: '../../../helpers/fn_notification_read.php',
+			dataType: 'json',
+			type: 'POST',
+			data: {
+				id_notifications: id_notifications
+			},
+			success: function ( json ) {
+				cekNotification();
+			}
+		} );
+
+	});
+	// END Notifications
 
 	// global variable
 	var hak_c               = <?php echo json_encode($hak_c) ?>;
@@ -107,4 +143,16 @@
 
 	var nama_tabels_d = <?php echo json_encode($nama_tabels_d);?>;
 	var imtxxmh_kode = 0; // untuk movement type
+
+	$(document).ready(function() {
+		// BEGIN notification
+		if(is_notification == 1){
+			$("#notification_parent").show();
+			cekNotification();
+		}else{
+			$("#notification_parent").hide();
+		}
+		// END notification
+
+	} );// end of document.ready global
 </script>

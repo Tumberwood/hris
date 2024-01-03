@@ -66,6 +66,13 @@ Make menu tree
             <li>
                 <span class="m-r-sm text-muted welcome-message">Welcome <b><?=echouser($user->data()->id)?></b></span>
             </li>
+            <li class="dropdown" id="notification_parent">
+                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                    <i class="fa fa-bell" id="notification_icon"></i> <span class="label label-warning" id="c_notification_unread"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-messages dropdown-menu-right" id="notification_dropdown">                        
+                </ul>
+            </li>
 
             <?php
             /**
