@@ -907,7 +907,7 @@
 			}, {event: 'keyup change'});
 
 			edthgsemtd_v3_sabtu_s1.on( 'preSubmit', function (e, data, action) {
-				if(action != 'remove'){
+				if(action == 'create'){
 					validasiSubmit(action, edthgsemtd_v3_sabtu_s1, 'sabtu');
 				}
 				
@@ -1258,7 +1258,7 @@
 			}, {event: 'keyup change'});
 
 			edthgsemtd_v3_sabtu_s2.on( 'preSubmit', function (e, data, action) {
-				if(action != 'remove'){
+				if(action == 'create'){
 					validasiSubmit(action, edthgsemtd_v3_sabtu_s2, 'sabtu');
 				}
 				
@@ -1609,7 +1609,7 @@
 			}, {event: 'keyup change'});
 
 			edthgsemtd_v3_sabtu_s3.on( 'preSubmit', function (e, data, action) {
-				if(action != 'remove'){
+				if(action == 'create'){
 					validasiSubmit(action, edthgsemtd_v3_sabtu_s3, 'sabtu');
 				}
 				
@@ -1961,7 +1961,7 @@
 			}, {event: 'keyup change'});
 
 			edthgsemtd_v3_minggu_s1.on( 'preSubmit', function (e, data, action) {
-				if(action != 'remove'){
+				if(action == 'create'){
 					validasiSubmit(action, edthgsemtd_v3_minggu_s1, 'minggu');
 				}
 				
@@ -2312,7 +2312,7 @@
 			}, {event: 'keyup change'});
 
 			edthgsemtd_v3_minggu_s2.on( 'preSubmit', function (e, data, action) {
-				if(action != 'remove'){
+				if(action == 'create'){
 					validasiSubmit(action, edthgsemtd_v3_minggu_s2, 'minggu');
 				}
 				
@@ -2663,7 +2663,7 @@
 			}, {event: 'keyup change'});
 
 			edthgsemtd_v3_minggu_s3.on( 'preSubmit', function (e, data, action) {
-				if(action != 'remove'){
+				if(action == 'create'){
 					validasiSubmit(action, edthgsemtd_v3_minggu_s3, 'minggu');
 				}
 				
@@ -3015,7 +3015,7 @@
 			}, {event: 'keyup change'});
 
 			edthgsemtd_v3_senjum_s1.on( 'preSubmit', function (e, data, action) {
-				if(action != 'remove'){
+				if(action == 'create'){
 					validasiSubmit(action, edthgsemtd_v3_senjum_s1, 'senjum',);
 				}
 				
@@ -3366,7 +3366,7 @@
 			}, {event: 'keyup change'});
 
 			edthgsemtd_v3_senjum_s2.on( 'preSubmit', function (e, data, action) {
-				if(action != 'remove'){
+				if(action == 'create'){
 					validasiSubmit(action, edthgsemtd_v3_senjum_s2, 'senjum');
 				}
 				
@@ -3717,7 +3717,7 @@
 			}, {event: 'keyup change'});
 
 			edthgsemtd_v3_senjum_s3.on( 'preSubmit', function (e, data, action) {
-				if(action != 'remove'){
+				if(action == 'create'){
 					validasiSubmit(action, edthgsemtd_v3_senjum_s3, 'senjum');
 				}
 				
