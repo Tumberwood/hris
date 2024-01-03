@@ -33,7 +33,7 @@
 					SELECT DISTINCT
 						a.kode_finger,
 						CONCAT(b.kode, " - ", b.nama) AS hemxxmh_data,
-						DATEDIFF(:end_date, :start_date) AS HR,
+						DATEDIFF(:end_date, :start_date) + 1 AS HR,
 						d.nama AS hodxxmh_nama,
 						e.nama AS hetxxmh_nama,
 						hk_in + hk_out AS hk,
@@ -43,9 +43,10 @@
 						ct_in + ct_out AS ct,
 						cb_in + cb_out AS cb,
 						sd_in + sd_out AS sd,
-						sk_in + sk_out AS sk,
+						kk_in + kk_out AS kk,
 						al_in + al_out AS al,
 						ip_in + ip_out AS ip,
+						lain_in + lain_out AS lain,
 						ak_in + ak_out AS absen_khusus
 				
 						
@@ -66,9 +67,10 @@
 								ct_in,
 								cb_in,
 								sd_in,
-								sk_in,
+								kk_in,
 								al_in,
 								ip_in,
+								lain_in,
 								ak_in
 							FROM (
 								SELECT
@@ -80,9 +82,10 @@
 										SUM(if(absen.id = 1, 0.5,0)) AS ct_in,
 										SUM(if(absen.id = 2, 0.5,0)) AS cb_in,
 										SUM(if(absen.id = 3, 0.5,0)) AS sd_in,
-										SUM(if(absen.id = 4, 0.5,0)) AS sk_in,
+										SUM(if(absen.id = 19, 0.5,0)) AS kk_in,
 										SUM(if(absen.id = 5, 0.5,0)) AS al_in,
 										SUM(if(absen.id = 6, 0.5,0)) AS ip_in,
+										SUM(if(absen.id NOT IN (20,1,2,3,19,5,6), 0.5,0)) AS lain_in,
 										SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_in
 								FROM htsprrd AS prr
 								LEFT JOIN htlxxmh AS absen ON absen.kode = prr.status_presensi_in
@@ -100,9 +103,10 @@
 								ct_out,
 								cb_out,
 								sd_out,
-								sk_out,
+								kk_out,
 								al_out,
 								ip_out,
+								lain_out,
 								ak_out
 							FROM (
 								SELECT
@@ -112,9 +116,10 @@
 										SUM(if(absen.id = 1, 0.5,0)) AS ct_out,
 										SUM(if(absen.id = 2, 0.5,0)) AS cb_out,
 										SUM(if(absen.id = 3, 0.5,0)) AS sd_out,
-										SUM(if(absen.id = 4, 0.5,0)) AS sk_out,
+										SUM(if(absen.id = 19, 0.5,0)) AS kk_out,
 										SUM(if(absen.id = 5, 0.5,0)) AS al_out,
 										SUM(if(absen.id = 6, 0.5,0)) AS ip_out,
+										SUM(if(absen.id NOT IN (20,1,2,3,19,5,6), 0.5,0)) AS lain_out,
 										SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_out
 								FROM htsprrd AS prr
 								LEFT JOIN htlxxmh AS absen ON absen.kode = prr.status_presensi_out
@@ -136,10 +141,11 @@
 					ct,
 					cb,
 					sd,
-					sk,
+					kk,
 					al,
 					ip,
-					absen_khusus
+					absen_khusus,
+					lain
 				FROM qs_rekap_presensi
 				'
 				);
@@ -163,10 +169,11 @@
 			['data' => 'ct', 'name' => 'ct'],
 			['data' => 'cb', 'name' => 'cb'],
 			['data' => 'sd', 'name' => 'sd'],
-			['data' => 'sk', 'name' => 'sk'],
+			['data' => 'kk', 'name' => 'kk'],
 			['data' => 'al', 'name' => 'al'],
 			['data' => 'ip', 'name' => 'ip'],
-			['data' => 'absen_khusus', 'name' => 'absen_khusus']
+			['data' => 'absen_khusus', 'name' => 'absen_khusus'],
+			['data' => 'lain', 'name' => 'lain']
 		];
 		
 	} else {

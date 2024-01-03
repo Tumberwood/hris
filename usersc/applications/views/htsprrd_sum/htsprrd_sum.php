@@ -133,14 +133,16 @@
 									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Cuti Bersama">CB</th>';
 								}else if( colObj.name == 'sd' ){
 									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Sakit Dengan Surat Dokter Resmi">SD</th>';
-								}else if( colObj.name == 'sk' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Sakit">SK</th>';
+								}else if( colObj.name == 'kk' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Kecelakaan Kerja">KK</th>';
 								}else if( colObj.name == 'al' ){
 									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Alpa" class="text-danger">AL</th>';
 								}else if( colObj.name == 'ip' ){
 									str = str + '<th data-toggle="tooltip" data-placement="top" title="Izin Pribadi">IP</th>';
 								}else if( colObj.name == 'absen_khusus' ){
 									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Izin Khusus">Absen Khusus</th>';
+								}else if( colObj.name == 'lain' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Absen lain">Absen Lain</th>';
 								}
 							});
 							str = str + '</tr>';
@@ -158,6 +160,17 @@
 							},
 							data: json.data,
 							columns: json.columns,
+							columnDefs: [
+								{
+									targets: '_all', // Apply to all columns
+									render: function (data, type, row, meta) {
+										if (![0, 1, 2, 3].includes(meta.col)) {
+											return type === 'display' ? Math.floor(data) : data;
+										}
+										return data;									
+									}
+								}
+							],
 							buttons: [
 								{
 									extend: 'collection',
