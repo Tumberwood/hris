@@ -41,25 +41,64 @@
 	// $user_id = 1; //just for testing purposes. Most cron jobs won't have a logged in user.
 	
 	$nama = array();
-	//NON AKTIFKAN PEGAWAI TANGGAL KELUAR 2 BULAN DARI TODAY
-	$qs_non_aktif = $db
+	//NON AKTIFKAN PEGAWAI TANGGAL KELUAR 2 BULAN Yang Lalu
+	
+	//db raw template db raw template raw
+	$qs_peg = $db
 		->raw()
-		->exec('UPDATE hemxxmh AS a
+		->exec(' SELECT
+					COUNT(a.id) AS c_peg,
+					DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 2 MONTH), "%d %b %Y") AS tanggal
+				FROM hemxxmh AS a
 				LEFT JOIN hemjbmh AS b ON b.id_hemxxmh = a.id
-				SET a.is_active = 0
-				WHERE b.tanggal_keluar > DATE_SUB(CURDATE(), INTERVAL 2 MONTH);
+				WHERE b.tanggal_keluar < DATE_SUB(CURDATE(), INTERVAL 2 MONTH) AND a.is_active = 1
+				'
+				);
+	$rs_peg = $qs_peg->fetch();
+
+	if ($rs_peg['c_peg'] > 0) {
+		$pesan = 'Terdapat <b>'.$rs_peg['c_peg'].'</b> karyawan yang keluar <b>2 Bulan yang lalu </b>atau dibawah tanggal <b>'.$rs_peg['tanggal'].'</b> telah otomatis di non aktifkan!';
+		$full_message = '<p>' . $pesan . '</p>';
+		echo $full_message;
+	
+		$qi_notif = $db
+		->raw()
+		->bind(':full_message', $full_message)
+		->exec('INSERT INTO notifications (
+					user_id,
+					message,
+					date_created
+				)
+				SELECT
+					b.id_users_penerima,
+					:full_message,
+					NOW() AS date_created
+				FROM gntxxsh AS a
+				LEFT JOIN gntussd AS b ON b.id_gntxxsh = a.id 
+				WHERE a.nama = "Nonaktif Pegawai Keluar 2 Bulan Yang Lalu";
 				;
 				'
 				);
-	//your code ends here.
 	
-	$today = date('Y-m-d H:i:s');
-
-	$qi_cronjob = $db
-		->query('insert', 'crons_logs_si')
-		->set('nama', "nonaktif_pegawai_2_bulan")
-		->set('created_by',1)
-		->set('created_on',$today)
-		->exec();
+		$qs_non_aktif = $db
+			->raw()
+			->exec('UPDATE hemxxmh AS a
+					LEFT JOIN hemjbmh AS b ON b.id_hemxxmh = a.id
+					SET a.is_active = 0
+					WHERE b.tanggal_keluar < DATE_SUB(CURDATE(), INTERVAL 2 MONTH) AND a.is_active = 1;
+					;
+					'
+					);
+		//your code ends here.
+		
+		$today = date('Y-m-d H:i:s');
+	
+		$qi_cronjob = $db
+			->query('insert', 'crons_logs_si')
+			->set('nama', "nonaktif_pegawai_2_bulan")
+			->set('created_by',1)
+			->set('created_on',$today)
+			->exec();
+	}
 
 ?>
