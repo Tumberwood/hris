@@ -100,7 +100,7 @@
 				SELECT
 					b.id_users_penerima,
 					:full_message,
-					CURDATE() AS date_created
+					NOW() AS date_created
 				FROM gntxxsh AS a
 				LEFT JOIN gntussd AS b ON b.id_gntxxsh = a.id 
 				WHERE a.nama = "Jadwal Belum Dibuat";
