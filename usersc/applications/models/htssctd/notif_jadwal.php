@@ -11,14 +11,17 @@
 		DataTables\Editor\Query,
 		DataTables\Editor\Result;
 	
+	$periode = $_POST['periode'];
+
 	$qs_dashboard = $db
 		->raw()
+		->bind(':periode', $periode)
 		->exec('WITH RECURSIVE date_range AS (
-					SELECT DATE(DATE_FORMAT(CURDATE(), "%Y-%m-01")) AS senjum
+					SELECT DATE(DATE_FORMAT(:periode, "%Y-%m-01")) AS senjum
 					UNION ALL
 					SELECT DATE_ADD(senjum, INTERVAL 1 DAY)
 					FROM date_range
-					WHERE senjum < LAST_DAY(CURDATE())
+					WHERE senjum < LAST_DAY(:periode)
 				)
 				
 				SELECT
@@ -35,7 +38,7 @@
 				FROM (
 					SELECT DISTINCT id_hemxxmh
 					FROM htssctd
-					WHERE tanggal BETWEEN DATE_FORMAT(CURDATE(), "%Y-%m-01") AND LAST_DAY(CURDATE()) AND is_active = 1
+					WHERE tanggal BETWEEN DATE_FORMAT(:periode, "%Y-%m-01") AND LAST_DAY(:periode) AND is_active = 1
 				) AS a
 				CROSS JOIN date_range
 				LEFT JOIN htssctd ON a.id_hemxxmh = htssctd.id_hemxxmh AND htssctd.tanggal = senjum

@@ -20,7 +20,10 @@
     $morePages = 0;
     // END definisi variable untuk fn_ajax_results.php
 	
-	$id_notifications     = substr($_POST['id_notifications'],6);
+	// $id_notifications     = substr($_POST['id_notifications'],6);
+
+    // Update Ferry 03 Jan 2024, Tidak perlu substring karena yang diambil adalah id notif
+	$id_notifications     = $_POST['id_notifications'];
 
     try{
         $db->transaction();

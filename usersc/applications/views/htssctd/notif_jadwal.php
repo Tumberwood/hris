@@ -9,6 +9,12 @@
 <?php
 	$nama_tabel    = 'notif_jadwal';
 	$nama_tabels_d = [];
+	
+	if (isset($_GET['periode'])){
+		$periode		= ($_GET['periode']);
+	} else {
+		$periode = null;
+	}
 ?>
 
 <!-- begin content here -->
@@ -43,6 +49,7 @@
 		// ------------- default variable, do not erase
 		var edtnotif_jadwal, tblnotif_jadwal, show_inactive_status_notif_jadwal = 0, id_notif_jadwal;
 		// ------------- end of default variable
+		var periode = "<?php echo $periode ?>";
 		
 		$(document).ready(function() {
 			//start datatables
@@ -52,6 +59,7 @@
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_notif_jadwal = show_inactive_status_notif_jadwal;
+						d.periode = periode;
 					}
 				},
 				order: [[ 0, "asc" ]],

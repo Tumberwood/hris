@@ -71,8 +71,11 @@
 					$('#c_notification_unread').show();
 					$('#c_notification_unread').html(json.data.c_rs_notifications_unread);
 					$.each( json.data.rs_notifications, function( key, value ) {
-						str='<li>'+
-								'<div id="notif_'+value.id_notifications+'">'+
+						// Update Ferry 03 Jan 2024, Berikan data-id dengan value id_notif di dalam element li agar mudah untuk mengambil id nya di function click
+						var id_notifications = value.id_notifications;
+
+						str = '<li data-id="' + id_notifications + '">'+
+								'<div id="notif_' + id_notifications + '">'+
 									value.message +
 									'<span class="float-right text-muted small">'+moment(value.date_created).fromNow()+'</span>'+
 								'</div>'+
@@ -92,22 +95,24 @@
 		} );
 	}
 
-	$("#notification_dropdown").on("click", "li", function(e){
-		id_notifications = e.target.id;
-
-		$.ajax( {
+	$("#notification_dropdown").on("click", "li", function () {
+		//Ambil data id element li yang di click dengan this data id
+		var id_notifications = $(this).data("id");
+		// console.log(id_notifications);
+		$.ajax({
 			url: '../../../helpers/fn_notification_read.php',
 			dataType: 'json',
 			type: 'POST',
 			data: {
 				id_notifications: id_notifications
 			},
-			success: function ( json ) {
+			success: function (json) {
+				// After successfully reading the notification, refresh the notification list
 				cekNotification();
 			}
-		} );
-
+		});
 	});
+
 	// END Notifications
 
 	// global variable

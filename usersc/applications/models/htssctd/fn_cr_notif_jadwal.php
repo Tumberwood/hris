@@ -86,7 +86,7 @@
 
 	if ($c_no_jadwal > 0) {
 		$pesan = 'Terdapat <b>'.$c_no_jadwal.'</b> karyawan pada periode <b>'.$rs_no_jadwal[0]['periode'].'</b> yang jadwalnya belum lengkap!!!';
-		$full_message = '<a class="text-danger" href="'.$us_url_root.'usersc/applications/views/htssctd/notif_jadwal.php" target="_blank">' . $pesan . '</a>';
+		$full_message = '<a style="font-size: 12px" class="text-danger" href="'.$us_url_root.'usersc/applications/views/htssctd/notif_jadwal.php?periode='.$rs_no_jadwal[0]['tanggal'].'" target="_blank">' . $pesan . '</a>';
 		echo $full_message;
 
 		$qi_notif = $db
