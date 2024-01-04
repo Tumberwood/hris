@@ -42,8 +42,8 @@ $qs_payroll = $db
             LEFT JOIN (
                 SELECT 
                     id_hemxxmh,
-                    group_concat(sc.grup separator ",") AS h_grup,
-                    group_concat(sc.bagian separator ",") AS h_bagian
+                    GROUP_CONCAT(DISTINCT sc.grup ORDER BY sc.grup SEPARATOR ",") AS h_grup,
+                    GROUP_CONCAT(DISTINCT sc.bagian ORDER BY sc.bagian SEPARATOR ",") AS h_bagian
                 FROM htssctd AS sc
                 WHERE sc.is_active = 1 AND YEAR(sc.tanggal) = YEAR(:start_date) AND MONTH(sc.tanggal) = MONTH(:start_date)
                 GROUP BY sc.id_hemxxmh
