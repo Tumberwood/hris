@@ -51,7 +51,7 @@
                     SELECT
                         ' . $_POST['id_transaksi_h'] . ',
                         2,
-                        20,
+                        2,
                         hemxxmh.id,
                         "'.$rs_htlgnth["kode"].'",
                         "'.$rs_htlgnth["tanggal"].'",
