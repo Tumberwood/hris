@@ -204,7 +204,7 @@
 						d.show_inactive_status_htlgnth = show_inactive_status_htlgnth;
 					}
 				},
-				order: [[ 1, "asc" ]],
+				order: [[ 1, "desc" ]],
 				columns: [
 					{ data: "htlgnth.id",visible:false },
 					{ data: "htlgnth.tanggal" },

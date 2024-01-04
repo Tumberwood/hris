@@ -226,6 +226,10 @@
 							},
 						}
 					},	{
+						label: "Sisa Saldo Cuti",
+						name: "sisa_saldo_cuti",
+						type: "readonly"
+					},	{
 						label: "Tanggal Awal <sup class='text-danger'>*<sup>",
 						name: "htlxxth.tanggal_awal",
 						type: "datetime",
@@ -283,6 +287,30 @@
 			edthtlxxth.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
+
+			edthtlxxth.dependent( 'htlxxth.id_hemxxmh', function ( val, data, callback ) {
+				if (val > 0) {
+					sisaCuti();
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+			edthtlxxth.dependent( 'htlxxth.tanggal_awal', function ( val, data, callback ) {
+				if (val != null) {
+					sisaCuti();
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+			edthtlxxth.dependent( 'htlxxth.id_htlxxmh', function ( val, data, callback ) {
+				if (val == 1 || val == 2) {
+					edthtlxxth.field('sisa_saldo_cuti').show();
+					sisaCuti();
+				} else {
+					edthtlxxth.field('sisa_saldo_cuti').hide();
+				}
+				return {}
+			}, {event: 'keyup change'});
 
             edthtlxxth.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
