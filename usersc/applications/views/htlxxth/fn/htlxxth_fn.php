@@ -13,7 +13,7 @@
             },
             success: function ( json ) {
                 saldo = json.data.rs_saldo.sisa_saldo;
-                console.log(saldo);
+                // console.log(saldo);
                 edthtlxxth.field('sisa_saldo_cuti').val(saldo);
             }
         } );
