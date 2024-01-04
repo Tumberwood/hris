@@ -54,10 +54,15 @@
 				)
 				SELECT
 					b.id_hemxxmh,
-					IF(b.tanggal_masuk < DATE_FORMAT(CURDATE(), "%Y-01-01"), 
-						12, 
-						12 - (MONTH(b.tanggal_masuk))
-					) AS saldo,
+					IF( YEAR(b.tanggal_masuk) <> YEAR(CURDATE()) AND DATE_ADD(b.tanggal_masuk, INTERVAL 1 YEAR) < CURDATE(), 
+						IF(
+							TIMESTAMPDIFF(MONTH, b.tanggal_masuk, DATE_FORMAT(CURDATE(), "%Y-01-01")) >= 12,
+							12,
+							12 - MONTH(b.tanggal_masuk)
+						),
+						0
+					) 
+					AS saldo,
 					CURDATE() AS tanggal,
 					ifnull(c_id,0) AS c_id,
 					"saldo"
