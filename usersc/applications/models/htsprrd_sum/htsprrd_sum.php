@@ -36,7 +36,7 @@
 						DATEDIFF(:end_date, :start_date) + 1 AS HR,
 						d.nama AS hodxxmh_nama,
 						e.nama AS hetxxmh_nama,
-						hk_in + hk_out AS hk,
+						CEIL(hk_in + hk_out) AS hk,
 						st_off,
 						st_nj,
 						hl_in + hl_out AS hl,
