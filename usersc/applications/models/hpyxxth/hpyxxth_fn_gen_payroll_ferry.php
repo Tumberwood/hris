@@ -1732,9 +1732,10 @@
                         WHERE a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))
                         AND a.id_hemxxmh NOT IN (
                             SELECT
-                                id_hemxxmh
-                            FROM hemjbrd
-                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN DATE_ADD(:tanggal_akhir, INTERVAL 1 DAY) AND LAST_DAY(:tanggal_akhir)
+                                rd.id_hemxxmh
+                            FROM hemjbrd AS rd
+                            LEFT JOIN hemjbmh AS mh ON mh.id_hemxxmh = rd.id_hemxxmh
+                            WHERE rd.id_harxxmh IN (3, 4) AND mh.id_heyxxmd = 3 AND rd.tanggal_akhir BETWEEN DATE_ADD(:tanggal_akhir, INTERVAL 1 DAY) AND LAST_DAY(:tanggal_akhir)
                             GROUP BY id_hemxxmh
                         )
                     )
