@@ -337,7 +337,6 @@
                             hk_nik_lama,
                             IFNULL(nominal_pendapatan_lain,0) AS pendapatan_lain,
                             IFNULL(nominal_koreksi_lembur,0) AS koreksi_lembur,
-                            IFNULL(nominal_kompensasi_ak,0) AS kompensasi_ak,
                             is_pot_jam_rotasi_lv,
                             ifnull(pot_jam_lv_lama, 0) as pot_jam_lv_lama,
                             IFNULL(pot_jam_lv_baru, 0) AS pot_jam_lv_baru,
@@ -1313,38 +1312,6 @@
                                     GROUP BY id_hemxxmh
                                 ) AS subquery
                             ) bpjs_tk_exclude ON bpjs_tk_exclude.id_hemxxmh = a.id_hemxxmh
-                            
-                            -- Cari kompensasi_ak rekontrak KAK id_hpc = 108
-                            LEFT JOIN (
-                                SELECT
-                                    id_hemxxmh,
-                                    IFNULL(nominal, 0) AS nominal_kompensasi_ak
-                                FROM (
-                                    SELECT
-                                        a.id_hemxxmh,
-                                        SUM(nominal) as nominal
-                                    FROM hpy_piutang_d as a
-                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
-                                    LEFT JOIN (
-                                        SELECT
-                                            id_hemxxmh,
-                                            IFNULL(is_terminasi, 0) AS is_terminasi
-                                        FROM (
-                                            SELECT
-                                                id_hemxxmh,
-                                                COUNT(id) AS is_terminasi
-                                            FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
-                                            GROUP BY id_hemxxmh
-                                        ) AS subquery
-                                    ) resign ON resign.id_hemxxmh = a.id_hemxxmh
-                                    WHERE
-                                        tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))
-                                        AND id_hpcxxmh = 108
-                                        AND is_approve = 1
-                                    GROUP BY id_hemxxmh
-                                ) AS subquery
-                            ) kompensasi_ak ON kompensasi_ak.id_hemxxmh = a.id_hemxxmh
                             
                             -- Cari resign
                             LEFT JOIN (
