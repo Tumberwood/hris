@@ -356,7 +356,8 @@
                             id_harxxmh,
                             jadwal_bulan_lalu,
                             a.is_approve,
-                            ifnull(susulan, 0) as susulan
+                            ifnull(susulan, 0) as susulan,
+                            (ifnull(if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp),0) + ifnull(nominal_t_jab,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) * (ifnull(masa_kontrak, 0) / 12) AS auto_kompensasi_ak
                             
                         FROM htsprrd AS a
                         LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = a.id_hemxxmh
@@ -1711,6 +1712,21 @@
                                 GROUP BY a.id_hemxxmh
                             ) AS overtime_susulan ON overtime_susulan.id_hemxxmh = a.id_hemxxmh
 
+                            -- HITUNG OTOMATIS KOMPENSASI AKHIR KONTRAK 05 JAN 2024
+                            LEFT JOIN (
+                                SELECT
+                                    a.id_hemxxmh,
+                                    peg.kode,
+                                    peg.nama,
+                                    a.tanggal_masuk,
+                                    a.tanggal_keluar,
+                                    TIMESTAMPDIFF(MONTH, a.tanggal_masuk, a.tanggal_keluar) AS masa_kontrak
+                                FROM hemjbmh AS a
+                                LEFT JOIN hemxxmh AS peg ON peg.id = a.id_hemxxmh
+                                LEFT JOIN hemjbrd AS rd ON rd.id_hemxxmh = a.id_hemxxmh
+                                WHERE a.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir AND a.id_hesxxmh = 2 AND rd.id_harxxmh NOT IN (3,4)
+                            ) AS otomatis_akhir_kontrak on otomatis_akhir_kontrak.id_hemxxmh = a.id_hemxxmh 
+                            
                         WHERE a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1, c.tanggal_keluar, :tanggal_akhir))
                         AND a.id_hemxxmh = :id_hemxxmh_select
                     )
@@ -1744,7 +1760,7 @@
                         (lembur15_final + lembur2_final + lembur3_final + lembur4_final) AS jam_lembur_final,
                         FLOOR(IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0)) AS lemburbersih,
                         pph21_back,
-                        kompensasi_ak,
+                        auto_kompensasi_ak,
                         koreksi_lembur,
                         floor(koreksi_status) as koreksi_status,
                         FLOOR(pot_makan) AS pot_makan,
@@ -1770,27 +1786,27 @@
                         pot_denda_apd,
                         pot_pph21,
                         FLOOR(
-                            (gp + susulan + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak + koreksi_lembur + koreksi_status)
+                            (gp + susulan + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + auto_kompensasi_ak + koreksi_lembur + koreksi_status)
                                 -
                             (if( is_pot_jam_rotasi_lv > 0, (if(id_heyxxmd = 1 AND hesxx = 3, pot_jam_lv_lama * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, pot_jam_lv_lama * pengali_rotasi_old / 173)) + (if(id_heyxxmd = 1 AND hesxx = 3, pot_jam_lv_baru * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, pot_jam_lv_baru * pengali_jam / 173)), IF(report_pot_jam > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_jam * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, report_pot_jam * pengali_jam / 173), 0)) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (pot_gp + if(alpha_min_satu > 0, alpha_min_satu, if( is_pot_upah_rotasi_lv > 0, (IF(pot_upah_lv_lama > 0, if(id_heyxxmd = 1 AND hesxx = 3, pot_upah_lv_lama * IF(grup_hk = 1, 83509, 70148), pot_upah_lv_lama * pengali_rotasi_old / IF(grup_hk = 1, 21, 25)) , 0)) + (IF(pot_upah_lv_baru > 0, if(id_heyxxmd = 1 AND hesxx = 3, pot_upah_lv_baru * IF(grup_hk = 1, 83509, 70148), pot_upah_lv_baru * pengali_jam / IF(grup_hk = 1, 21, 25)) , 0)), (IF(report_pot_upah > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_upah, report_pot_upah * pengali_jam) , 0))))  ) + if(is_terminasi > 0 AND day(tanggal_keluar) > 20, pot_bpjs * 2, pot_bpjs) + pot_psiun)
                         ) AS gaji_bersih,
                         FLOOR(
                             (
-                                (gp + susulan + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak + koreksi_lembur + koreksi_status)
+                                (gp + susulan + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + auto_kompensasi_ak + koreksi_lembur + koreksi_status)
                                     -
                             (if( is_pot_jam_rotasi_lv > 0, (if(id_heyxxmd = 1 AND hesxx = 3, pot_jam_lv_lama * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, pot_jam_lv_lama * pengali_rotasi_old / 173)) + (if(id_heyxxmd = 1 AND hesxx = 3, pot_jam_lv_baru * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, pot_jam_lv_baru * pengali_jam / 173)), IF(report_pot_jam > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_jam * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, report_pot_jam * pengali_jam / 173), 0)) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (pot_gp + if(alpha_min_satu > 0, alpha_min_satu, if( is_pot_upah_rotasi_lv > 0, (IF(pot_upah_lv_lama > 0, if(id_heyxxmd = 1 AND hesxx = 3, pot_upah_lv_lama * IF(grup_hk = 1, 83509, 70148), pot_upah_lv_lama * pengali_rotasi_old / IF(grup_hk = 1, 21, 25)) , 0)) + (IF(pot_upah_lv_baru > 0, if(id_heyxxmd = 1 AND hesxx = 3, pot_upah_lv_baru * IF(grup_hk = 1, 83509, 70148), pot_upah_lv_baru * pengali_jam / IF(grup_hk = 1, 21, 25)) , 0)), (IF(report_pot_upah > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_upah, report_pot_upah * pengali_jam) , 0))))  ) + if(is_terminasi > 0 AND day(tanggal_keluar) > 20, pot_bpjs * 2, pot_bpjs) + pot_psiun)
                             ) % 100
                         ) AS bulat,
                         FLOOR(
                             (
-                                (gp + susulan + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak + koreksi_lembur + koreksi_status)
+                                (gp + susulan + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + auto_kompensasi_ak + koreksi_lembur + koreksi_status)
                                     -
                             (if( is_pot_jam_rotasi_lv > 0, (if(id_heyxxmd = 1 AND hesxx = 3, pot_jam_lv_lama * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, pot_jam_lv_lama * pengali_rotasi_old / 173)) + (if(id_heyxxmd = 1 AND hesxx = 3, pot_jam_lv_baru * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, pot_jam_lv_baru * pengali_jam / 173)), IF(report_pot_jam > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_jam * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, report_pot_jam * pengali_jam / 173), 0)) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (pot_gp + if(alpha_min_satu > 0, alpha_min_satu, if( is_pot_upah_rotasi_lv > 0, (IF(pot_upah_lv_lama > 0, if(id_heyxxmd = 1 AND hesxx = 3, pot_upah_lv_lama * IF(grup_hk = 1, 83509, 70148), pot_upah_lv_lama * pengali_rotasi_old / IF(grup_hk = 1, 21, 25)) , 0)) + (IF(pot_upah_lv_baru > 0, if(id_heyxxmd = 1 AND hesxx = 3, pot_upah_lv_baru * IF(grup_hk = 1, 83509, 70148), pot_upah_lv_baru * pengali_jam / IF(grup_hk = 1, 21, 25)) , 0)), (IF(report_pot_upah > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_upah, report_pot_upah * pengali_jam) , 0))))  ) + if(is_terminasi > 0 AND day(tanggal_keluar) > 20, pot_bpjs * 2, pot_bpjs) + pot_psiun)
                             )
                                 -
                             (
                                 (
-                                    (gp + susulan + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + kompensasi_ak + koreksi_lembur + koreksi_status)
+                                    (gp + susulan + pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + IFNULL((rp_lembur15 + rp_lembur2 + rp_lembur3 + rp_lembur4), 0) + pph21_back + auto_kompensasi_ak + koreksi_lembur + koreksi_status)
                                         -
                                 (if( is_pot_jam_rotasi_lv > 0, (if(id_heyxxmd = 1 AND hesxx = 3, pot_jam_lv_lama * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, pot_jam_lv_lama * pengali_rotasi_old / 173)) + (if(id_heyxxmd = 1 AND hesxx = 3, pot_jam_lv_baru * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, pot_jam_lv_baru * pengali_jam / 173)), IF(report_pot_jam > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_jam * IF(grup_hk = 1, 83509 * 21, 70148 * 25) / 173, report_pot_jam * pengali_jam / 173), 0)) + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + (pot_gp + if(alpha_min_satu > 0, alpha_min_satu, if( is_pot_upah_rotasi_lv > 0, (IF(pot_upah_lv_lama > 0, if(id_heyxxmd = 1 AND hesxx = 3, pot_upah_lv_lama * IF(grup_hk = 1, 83509, 70148), pot_upah_lv_lama * pengali_rotasi_old / IF(grup_hk = 1, 21, 25)) , 0)) + (IF(pot_upah_lv_baru > 0, if(id_heyxxmd = 1 AND hesxx = 3, pot_upah_lv_baru * IF(grup_hk = 1, 83509, 70148), pot_upah_lv_baru * pengali_jam / IF(grup_hk = 1, 21, 25)) , 0)), (IF(report_pot_upah > 0, if(id_heyxxmd = 1 AND hesxx = 3, report_pot_upah, report_pot_upah * pengali_jam) , 0))))  ) + if(is_terminasi > 0 AND day(tanggal_keluar) > 20, pot_bpjs * 2, pot_bpjs) + pot_psiun)
                                 ) % 100
