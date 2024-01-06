@@ -105,14 +105,14 @@
 				<!-- end Custom Form Datatables Editor -->
 				<div class="tabs-container">
 					<ul class="nav nav-tabs" role="tablist">
-						<li><a class="nav-link active" data-toggle="tab" href="#tabMakan"> Mesin Finger</a></li>
+						<li><a class="nav-link active" data-toggle="tab" href="#tabAll"> All</a></li>
+						<li><a class="nav-link" data-toggle="tab" href="#tabMakan"> Mesin Finger</a></li>
 						<li><a class="nav-link" data-toggle="tab" href="#tabMakanManual"> Makan Manual</a></li>
 						<li><a class="nav-link" data-toggle="tab" href="#tabKoor"> Koordinator</a></li>
 						<li><a class="nav-link" data-toggle="tab" href="#tabUmum"> Umum/HL</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#tabAll"> All</a></li>
 					</ul>
 					<div class="tab-content">
-						<div role="tabpanel" id="tabMakan" class="tab-pane active">
+						<div role="tabpanel" id="tabMakan" class="tab-pane">
 							<div class="panel-body">
 								<div class="table-responsive">
 									<table id="tblmakan_h" class="table table-striped table-bordered table-hover nowrap" width="100%">
@@ -272,7 +272,7 @@
 								</div>
 							</div>
 						</div>
-						<div role="tabpanel" id="tabAll" class="tab-pane">
+						<div role="tabpanel" id="tabAll" class="tab-pane active">
 							<div class="panel-body">
 								<div class="table-responsive">
 									<table id="tblmakan_h_all" class="table table-striped table-bordered table-hover nowrap" width="100%">
@@ -349,10 +349,10 @@
 			format: "dd M yyyy",
 			minViewMode: 'month' 
 		});
-		$('#start_date').datepicker('setDate', "15 Dec 2023");
-		$('#end_date').datepicker('setDate', "15 Dec 2023");
-		// $('#start_date').datepicker('setDate', awal_bulan_dmy);
-		// $('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		// $('#start_date').datepicker('setDate', "15 Dec 2023");
+		// $('#end_date').datepicker('setDate', "15 Dec 2023");
+		$('#start_date').datepicker('setDate', awal_bulan_dmy);
+		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
         // END datepicker init
 		
 		$(document).ready(function() {
