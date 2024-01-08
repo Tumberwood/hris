@@ -735,9 +735,9 @@
 			
 		///start datatables
 			tblhtsprrd = $('#tblhtsprrd').DataTable( {
-				select: {
-					style: 'multi', // 'single', 'multi', 'os', 'multi+shift'
-				},
+				// select: {
+				// 	style: 'multi', // 'single', 'multi', 'os', 'multi+shift'
+				// },
 				searchPanes:{
 					layout: 'columns-4'
 				},
@@ -1029,6 +1029,10 @@
 										type: json.type_message
 									});
 									tblhtsprrd.ajax.reload(null,false);
+									tblhtsprrd_kbm.ajax.reload(null,false);
+									tblhtsprrd_karyawan.ajax.reload(null,false);
+									tblhtsprrd_kmj.ajax.reload(null,false);
+									tblhtsprrd_freelance.ajax.reload(null,false);
 									id_htsprrd = [];
 								}
 							});
@@ -1054,6 +1058,10 @@
 										type: json.type_message
 									});
 									tblhtsprrd.ajax.reload(null,false);
+									tblhtsprrd_kbm.ajax.reload(null,false);
+									tblhtsprrd_karyawan.ajax.reload(null,false);
+									tblhtsprrd_kmj.ajax.reload(null,false);
+									tblhtsprrd_freelance.ajax.reload(null,false);
 									id_htsprrd = [];
 								}
 							});
