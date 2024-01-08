@@ -78,6 +78,7 @@
 				Field::inst( 'hpyemtd.koreksi_lembur' ),
 				Field::inst( 'hpyemtd.koreksi_status' ),
 				Field::inst( 'hpyemtd.overtime_susulan' ),
+				Field::inst( 'hpyemtd.sisa_cuti' ),
 
 				Field::inst( 'hetxxmh.nama' ),
 				Field::inst( 'hodxxmh.nama' ),
