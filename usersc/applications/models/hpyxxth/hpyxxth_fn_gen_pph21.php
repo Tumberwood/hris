@@ -454,7 +454,7 @@
                         a.pot_pph21 = if(b.pph21_final > 0, b.pph21_final, a.pot_pph21),
                         a.gaji_bersih =
                         FLOOR(
-                            (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status)
+                            (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status + a.sisa_cuti)
                             -
                             (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(b.pph21_final > 0, b.pph21_final, a.pot_pph21))
                         ),
@@ -462,7 +462,7 @@
                         a.bulat =
                         FLOOR(
                             (
-                                (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status)
+                                (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status + a.sisa_cuti)
                                 -
                                 (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(b.pph21_final > 0, b.pph21_final, a.pot_pph21))
                             ) % 100
@@ -471,14 +471,14 @@
                         a.gaji_terima = 
                         FLOOR(
                             (
-                                (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status)
+                                (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status + a.sisa_cuti)
                                 -
                                 (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(b.pph21_final > 0, b.pph21_final, a.pot_pph21))
                             )
                             -
                             (
                                 (
-                                    (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status)
+                                    (a.gp + a.t_jab + a.var_cost + a.fix_cost + a.premi_abs + a.trm_jkkjkm + a.lemburbersih + a.pendapatan_lain + a.pph21_back + a.kompensasi_ak + a.koreksi_lembur + a.koreksi_status + a.sisa_cuti)
                                     -
                                     (a.pot_makan + a.pot_jkkjkm + a.pot_jht + a.pot_upah + a.pot_jam + a.pot_bpjs + a.pot_psiun + a.pot_pinjaman + a.pot_klaim + a.pot_denda_apd + if(b.pph21_final > 0, b.pph21_final, a.pot_pph21))
                                 ) % 100
