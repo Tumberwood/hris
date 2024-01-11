@@ -465,11 +465,12 @@
 				mesin   = data_htsprtd.nama;
 				mesin = mesin.toUpperCase();
 				
-				if (mesin == "MAKAN MANUAL") {
-					tblhtsprtd.button('btnRemove:name').enable();
-				} else {
-					tblhtsprtd.button('btnRemove:name').disable();
-				}
+				//Hapus Sementara
+				// if (mesin == "MAKAN MANUAL") {
+				// 	tblhtsprtd.button('btnRemove:name').enable();
+				// } else {
+				// 	tblhtsprtd.button('btnRemove:name').disable();
+				// }
 			} );
 			
 			$("#frmhtsprtd").submit(function(e) {
