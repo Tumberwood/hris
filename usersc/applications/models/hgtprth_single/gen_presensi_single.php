@@ -1356,7 +1356,7 @@
                             }
                             
                             // if ($id_shift == 1) {
-                                if ($is_tgl_merah == 1) {
+                                // if ($is_tgl_merah == 1) {
                                     $lembur15 = 0;
                                     $lembur15_final = 0;
 
@@ -1387,34 +1387,34 @@
                                     $lembur2_final = $lembur2 * 2;
                                     $lembur3_final = $lembur3 * 3;
                                     $lembur4_final = 0;
-                                } else {
-                                    if ($durasi_lembur_final > 1) {
-                                        $lembur15 = 1;
-                                    } else {
-                                        $lembur15 = $durasi_lembur_final;
-                                    }
+                                // } else {
+                                //     if ($durasi_lembur_final > 1) {
+                                //         $lembur15 = 1;
+                                //     } else {
+                                //         $lembur15 = $durasi_lembur_final;
+                                //     }
 
-                                    if ($durasi_lembur_final > 1 && $durasi_lembur_final <= 7 || $durasi_lembur_final >= 7) {
-                                        if ($durasi_lembur_final > 7) {
-                                            $lembur2 = 7;
-                                        } else {
-                                            $lembur2 = $durasi_lembur_final - 1;
-                                        }
-                                    } else {
-                                        $lembur2 = 0;
-                                    }
+                                //     if ($durasi_lembur_final > 1 && $durasi_lembur_final <= 7 || $durasi_lembur_final >= 7) {
+                                //         if ($durasi_lembur_final > 7) {
+                                //             $lembur2 = 7;
+                                //         } else {
+                                //             $lembur2 = $durasi_lembur_final - 1;
+                                //         }
+                                //     } else {
+                                //         $lembur2 = 0;
+                                //     }
                                     
-                                    // lembur3
-                                    if ($durasi_lembur_final >= 8) {
-                                        $lembur3 = $durasi_lembur_final - 8;
-                                    } else {
-                                        $lembur3 = 0;
-                                    }
+                                //     // lembur3
+                                //     if ($durasi_lembur_final >= 8) {
+                                //         $lembur3 = $durasi_lembur_final - 8;
+                                //     } else {
+                                //         $lembur3 = 0;
+                                //     }
                                     
-                                    $lembur15_final = $lembur15 * 1.5;
-                                    $lembur2_final = $lembur2 * 2;
-                                    $lembur3_final = $lembur3 * 3;
-                                }
+                                //     $lembur15_final = $lembur15 * 1.5;
+                                //     $lembur2_final = $lembur2 * 2;
+                                //     $lembur3_final = $lembur3 * 3;
+                                // }
                                 
                             // } else {
                                 // untuk yang lembur libur dan dia tidak off maka di 0 kan dan diberi cek = 1
