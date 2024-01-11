@@ -358,7 +358,7 @@
                             a.is_approve,
                             ifnull(susulan, 0) as susulan,
                             (ifnull(if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp),0) + ifnull(nominal_t_jab,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) * (ifnull(masa_kontrak, 0) / 12) AS auto_kompensasi_ak,
-                            if(MONTH(:tanggal_akhir) = 12, 
+                            if(MONTH(:tanggal_akhir) = 1, 
 								(
 									(ifnull(if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp),0) + ifnull(nominal_t_jab,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) )
 									/ IF(c.grup_hk = 1, 21, 25) 
@@ -1724,11 +1724,11 @@
                                         COUNT(rh.id) AS c_cb
                                     FROM htlxxrh AS rh
                                     LEFT JOIN htlxxmh AS mh ON mh.id = rh.id_htlxxmh
-                                    WHERE YEAR(rh.tanggal) = YEAR(:tanggal_akhir) AND rh.jenis = 1 AND mh.is_potongcuti = 1
+                                    WHERE YEAR(rh.tanggal) = YEAR(DATE_SUB(:tanggal_akhir, INTERVAL 1 YEAR)) AND rh.jenis = 1 AND mh.is_potongcuti = 1
                                     GROUP BY rh.id_hemxxmh
                                 ) AS cb ON cb.id_hemxxmh = a.id_hemxxmh
 
-                                WHERE YEAR(a.tanggal) = YEAR(:tanggal_akhir) AND jb.is_checkclock = 1
+                                WHERE YEAR(a.tanggal) = YEAR(DATE_SUB(:tanggal_akhir, INTERVAL 1 YEAR)) AND jb.is_checkclock = 1
                                 GROUP BY a.id_hemxxmh
                             ) AS saldo_sisa_cuti on saldo_sisa_cuti.id_hemxxmh = a.id_hemxxmh 
                         
