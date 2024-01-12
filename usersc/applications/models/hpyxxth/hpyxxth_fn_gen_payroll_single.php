@@ -383,7 +383,7 @@
                                         hev.id_hevgrmh AS id_hevgrmh,
                                         IF(
                                             a.tanggal_keluar IS NULL,
-                                            TIMESTAMPDIFF(YEAR, a.tanggal_masuk, CURDATE()),
+                                            TIMESTAMPDIFF(YEAR, a.tanggal_masuk, :tanggal_akhir),
                                             TIMESTAMPDIFF(YEAR, a.tanggal_masuk, a.tanggal_keluar)
                                         ) AS masa_kerja_year
                                     FROM hemjbmh AS a
