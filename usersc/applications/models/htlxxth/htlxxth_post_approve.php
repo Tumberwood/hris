@@ -95,12 +95,14 @@
 								id_transaksi,
 								id_hemxxmh,
 								nama,
+								tanggal,
 								saldo
 							)
 							SELECT
 								:id_transaksi,
 								a.id_hemxxmh,
 								"sisa saldo cuti",
+								:tanggal_awal,
 								SUM(
 									CASE
 										WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0) + IFNULL(c_rd,0))

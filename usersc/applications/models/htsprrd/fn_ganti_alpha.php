@@ -40,11 +40,13 @@ use
             ->exec(' INSERT INTO htlxxrh (
                         id_hemxxmh,
                         nama,
+                        tanggal,
                         saldo
                     )
                     SELECT
                         a.id_hemxxmh,
                         "sisa saldo cuti",
+                        tanggal,
                         SUM(
                             CASE
                                 WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0) + IFNULL(c_rd,0))

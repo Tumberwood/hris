@@ -31,7 +31,7 @@ use
                 ->exec();
             $rs_tgl = $qs_tgl->fetch();
             $tanggal = $rs_tgl['tanggal'];
-            
+
             $qi_sisa_saldo = $db
                 ->raw()
                 ->bind(':id_htsprrd', $id_htsprrd)
@@ -39,11 +39,13 @@ use
                 ->exec(' INSERT INTO htlxxrh (
                             id_hemxxmh,
                             nama,
+                            tanggal,
                             saldo
                         )
                         SELECT
                             a.id_hemxxmh,
                             "sisa saldo cuti",
+                            :tanggal,
                             SUM(
                                 CASE
                                     WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0) + IFNULL(c_rd,0))
