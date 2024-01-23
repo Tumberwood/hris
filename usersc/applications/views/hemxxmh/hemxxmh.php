@@ -124,6 +124,11 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
+								<editor-field name="hemxxmh.is_tukar"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
 								<editor-field name="hemdcmh.npwp_no"></editor-field>
 							</div>
 							<div class="col-lg-6">
@@ -718,6 +723,16 @@
 						]
 					},
 					{
+						label: "Tukar Jadwal <sup class='text-danger'>*<sup>",
+						name: "hemxxmh.is_tukar",
+						type: "select2",
+						placeholder : "Select",
+						options: [
+							{ "label": "Ya", "value": 1 },
+							{ "label": "Tidak", "value": -9 }
+						]
+					},
+					{
 						label: "Keterangan",
 						name: "hemxxmh.keterangan",
 						type: "textarea"
@@ -881,6 +896,13 @@
 						edthemxxmh.field('hemxxmh.is_pot_makan').error( 'Wajib diisi!' );
 					}
 					// END of validasi hemxxmh.is_pot_makan 
+					
+					// BEGIN of validasi hemxxmh.is_tukar 
+					is_tukar = edthemxxmh.field('hemxxmh.is_tukar').val();
+					if(is_tukar == 0){
+						edthemxxmh.field('hemxxmh.is_tukar').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemxxmh.is_tukar 
 
 					// BEGIN of validasi hemdcmh.ktp_no 
 					ktp_no = edthemxxmh.field('hemdcmh.ktp_no').val();

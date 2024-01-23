@@ -39,7 +39,7 @@
 								a.id_hemxxmh
 							FROM htssctd AS a
 							LEFT JOIN hemjbmh as b on b.id_hemxxmh = a.id_hemxxmh
-							LEFT JOIN v_hemxxmh_htsptth as c on c.id_hemxxmh = a.id_hemxxmh
+							LEFT JOIN hemxxmh as c on c.id = a.id_hemxxmh
 							WHERE a.tanggal = :tanggal 
 								AND a.id_htsxxmh <> 1 
 								AND a.is_active = 1
@@ -91,7 +91,7 @@
 								a.id_hemxxmh
 							FROM htssctd AS a
 							LEFT JOIN hemjbmh as b on b.id_hemxxmh = a.id_hemxxmh
-							LEFT JOIN v_hemxxmh_htsptth as c on c.id_hemxxmh = a.id_hemxxmh
+							LEFT JOIN hemxxmh as c on c.id = a.id_hemxxmh
 							WHERE a.tanggal = :tanggal 
 								AND a.id_htsxxmh <> 1 
 								AND a.is_active = 1
