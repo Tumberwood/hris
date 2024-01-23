@@ -80,7 +80,7 @@
                         tanggaljam_akhir_istirahat
                     )
                     SELECT
-                        CONCAT("Hari Libur - ", :nama),
+                        CONCAT("Public Holiday - ", :nama),
                         :tanggal,
                         htssctd.id_hemxxmh,
                         1,

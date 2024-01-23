@@ -51,7 +51,26 @@
 
         if (!empty($rs_find_old_gen)) {
             
-            $qd_jadwal = $db
+            // $qd_jadwal = $db
+            // ->raw()
+            // ->bind(':id_hgsptth_v3', $id_hgsptth_v3)
+            // ->bind(':tanggal_awal', $tanggal_awal)
+            // ->bind(':tanggal_akhir', $tanggal_akhir)
+            // ->exec('UPDATE htssctd AS b
+            //         LEFT JOIN hgsemtd_v3 AS a ON a.id_hemxxmh = b.id_hemxxmh
+            //         SET 
+            //             b.is_active = 0
+            //         WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND a.id_hgsptth_v3 = :id_hgsptth_v3
+            //         AND CASE
+            //         WHEN a.nama = "sabtu" THEN DAYOFWEEK(tanggal) = 7
+            //         WHEN a.nama = "minggu" THEN DAYOFWEEK(tanggal) = 1
+            //         ELSE DAYOFWEEK(tanggal) BETWEEN 2 AND 6
+            //         END;
+            //         '
+            // );
+
+            // sabtu
+            $qd_jadwal_sabtu = $db
             ->raw()
             ->bind(':id_hgsptth_v3', $id_hgsptth_v3)
             ->bind(':tanggal_awal', $tanggal_awal)
@@ -61,11 +80,7 @@
                     SET 
                         b.is_active = 0
                     WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND a.id_hgsptth_v3 = :id_hgsptth_v3
-                    AND CASE
-                    WHEN a.nama = "sabtu" THEN DAYOFWEEK(tanggal) = 7
-                    WHEN a.nama = "minggu" THEN DAYOFWEEK(tanggal) = 1
-                    ELSE DAYOFWEEK(tanggal) BETWEEN 2 AND 6
-                    END;
+                    ;
                     '
             );
 
