@@ -37,7 +37,7 @@
 			LEFT JOIN htlxxmh ON htlxxrh.jenis = 1 AND htlxxmh.id = htlxxrh.id_htlxxmh
 			LEFT JOIN htpxxmh ON htlxxrh.jenis = 2 AND htpxxmh.id = htlxxrh.id_htlxxmh
 			LEFT JOIN hemxxmh ON hemxxmh.id = htlxxrh.id_hemxxmh
-			WHERE htlxxrh.is_active = 1 AND htlxxrh.id_transaksi <> 0 " . $where;
+			WHERE htlxxrh.is_active = 1 AND htlxxrh.id_htlxxmh <> 0 " . $where;
 		;
 
 		// echo $sql;

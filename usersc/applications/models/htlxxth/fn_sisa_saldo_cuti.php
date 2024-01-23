@@ -27,11 +27,14 @@
                     COALESCE(cb.c_cb, 0) AS c_cb,
                     IFNULL(c_rd, 0) AS c_rd,
                     ifnull(a.saldo,0) AS saldo,
-                    SUM(
-                        CASE
-                            WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0) + IFNULL(c_rd,0))
-                            ELSE 0
-                        END
+                    if(sisa_saldo_cuti IS NOT NULL,
+                        sisa_saldo_cuti,
+                        SUM(
+                            CASE
+                                WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0) + IFNULL(c_rd,0))
+                                ELSE 0
+                            END
+                        )
                     ) AS sisa_saldo
                 FROM htlxxrh AS a
                 -- employee
@@ -56,6 +59,16 @@
                     WHERE YEAR(a.tanggal) = YEAR(:tanggal) AND a.status_presensi_in = "AL"
                     GROUP BY id_hemxxmh
                 ) AS rd ON rd.id_hemxxmh = a.id_hemxxmh
+
+                LEFT JOIN (
+                    SELECT
+                        id_hemxxmh,
+                        a.saldo AS sisa_saldo_cuti
+                    FROM htlxxrh AS a
+                    WHERE a.id_hemxxmh = :id_hemxxmh AND a.nama = "sisa saldo cuti" AND YEAR(a.tanggal) = YEAR(:tanggal)
+                    ORDER BY id DESC
+                    LIMIT 1
+                ) AS sisa_cuti ON sisa_cuti.id_hemxxmh = a.id_hemxxmh
                 
                 WHERE YEAR(a.tanggal) = YEAR(:tanggal) AND peg.id = :id_hemxxmh AND a.nama = "saldo"
                 GROUP BY a.id_hemxxmh 
