@@ -1724,10 +1724,14 @@
                         LEFT JOIN (
                             SELECT
 								a.id_hemxxmh,
+								peg.kode,
+								peg.nama,
 								COALESCE(cb.c_cb, 0) AS c_cb,
+								IFNULL(c_rd, 0) AS c_rd,
+								ifnull(a.saldo,0) AS saldo,
 								SUM(
 									CASE
-										WHEN a.saldo > 0 THEN a.saldo - COALESCE(cb.c_cb, 0)
+										WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0) + IFNULL(c_rd,0))
 										ELSE 0
 									END
 								) AS sisa_saldo
@@ -1745,9 +1749,19 @@
 								WHERE YEAR(rh.tanggal) = YEAR(DATE_SUB(:tanggal_akhir, INTERVAL 1 YEAR)) AND rh.jenis = 1 AND mh.is_potongcuti = 1
 								GROUP BY rh.id_hemxxmh
 							) AS cb ON cb.id_hemxxmh = a.id_hemxxmh
+							
+							LEFT JOIN (
+								SELECT
+									id_hemxxmh,
+									COUNT(a.id) AS c_rd
+								FROM htsprrd AS a
+								WHERE YEAR(a.tanggal) = YEAR(DATE_SUB(:tanggal_akhir, INTERVAL 1 YEAR)) AND a.status_presensi_in = "AL"
+								GROUP BY id_hemxxmh
+							) AS rd ON rd.id_hemxxmh = a.id_hemxxmh
+							
+							WHERE YEAR(a.tanggal) = YEAR(DATE_SUB(:tanggal_akhir, INTERVAL 1 YEAR)) AND jb.is_checkclock = 1 
+							GROUP BY a.id_hemxxmh 
 
-							WHERE YEAR(a.tanggal) = YEAR(DATE_SUB(:tanggal_akhir, INTERVAL 1 YEAR)) AND jb.is_checkclock = 1
-							GROUP BY a.id_hemxxmh
                         ) AS saldo_sisa_cuti on saldo_sisa_cuti.id_hemxxmh = a.id_hemxxmh 
                         
                         WHERE a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))
