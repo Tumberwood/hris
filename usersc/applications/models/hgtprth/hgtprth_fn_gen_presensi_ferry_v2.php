@@ -1028,7 +1028,7 @@
                     id_hemxxmh,
                     keterangan,
                     kode_finger,
-                    tanggal,
+                    ifnull(tanggal, :tanggal) AS tanggal,
 
                     shift_in,
                     shift_out,
@@ -1043,11 +1043,12 @@
 
                     ceklok_in,
                     ceklok_out,
-                    st_clock_in,
-                    st_clock_out,
                     
-                    status_presensi_in,
-                    status_presensi_out,
+                    if(kode_shift = "NJ", NULL, st_clock_in) AS st_clock_in,
+                    if(kode_shift = "NJ", NULL, st_clock_out) AS st_clock_out,
+                    
+                    if(kode_shift = "NJ", "NJ", status_presensi_in) AS status_presensi_in,
+                    if(kode_shift = "NJ", "NJ", status_presensi_out) AS status_presensi_out,
 
                     keterangan AS htlxxrh_kode,
                     jam_awal_lembur_libur,
@@ -1082,7 +1083,7 @@
 
                     is_pot_premi,
                     is_pot_upah,
-                    cek,
+                    if(kode_shift = "NJ", 1, cek) AS cek,
                     
                     lembur15,
                     rp_lembur15,
