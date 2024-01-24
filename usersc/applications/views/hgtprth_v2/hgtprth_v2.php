@@ -104,10 +104,10 @@
 			format: "dd M yyyy",
 			minViewMode: 'month' 
 		});
-		// $('#start_date').datepicker('setDate', awal_bulan_dmy);
-		// $('#end_date').datepicker('setDate', tanggal_hariini_dmy);
-		$('#start_date').datepicker('setDate', "06 Jan 2024");
-		$('#end_date').datepicker('setDate', "06 Jan 2024");
+		$('#start_date').datepicker('setDate', awal_bulan_dmy);
+		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		// $('#start_date').datepicker('setDate', "06 Jan 2024");
+		// $('#end_date').datepicker('setDate', "06 Jan 2024");
 
 		$(document).ready(function() {
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
