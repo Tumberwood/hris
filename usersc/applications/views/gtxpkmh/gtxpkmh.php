@@ -23,6 +23,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Kode</th>
+                                <th>Kelas</th>
                                 <th>Keterangan</th>
                                 <th>Nominal</th>
                             </tr>
@@ -81,8 +82,19 @@
 					},	{
 						label: "Kode <sup class='text-danger'>*<sup>",
 						name: "gtxpkmh.kode"
-					}, 	{
-						label: "Keterangan <sup class='text-danger'>*<sup>",
+					}, 	
+					{
+						label: "Kelas <sup class='text-danger'>*<sup>",
+						name: "gtxpkmh.kategori_kelas",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "A", "value": "A" },
+							{ "label": "B", "value": "B" },
+							{ "label": "C", "value": "C" }
+						]
+					},	{
+						label: "Keterangan",
 						name: "gtxpkmh.keterangan",
 						type: "textarea"
 					}, 	{
@@ -140,13 +152,22 @@
 					}
 					// END of validasi gtxpkmh.kode
 					
-					// BEGIN of validasi gtxpkmh.keterangan
-					if ( ! edtgtxpkmh.field('gtxpkmh.keterangan').isMultiValue() ) {
-						keterangan = edtgtxpkmh.field('gtxpkmh.keterangan').val();
-						if(!keterangan || keterangan == ''){
-							edtgtxpkmh.field('gtxpkmh.keterangan').error( 'Wajib diisi!' );
+					// BEGIN of validasi gtxpkmh.kategori_kelas
+					if ( ! edtgtxpkmh.field('gtxpkmh.kategori_kelas').isMultiValue() ) {
+						kategori_kelas = edtgtxpkmh.field('gtxpkmh.kategori_kelas').val();
+						if(!kategori_kelas || kategori_kelas == ''){
+							edtgtxpkmh.field('gtxpkmh.kategori_kelas').error( 'Wajib diisi!' );
 						}
 					}
+					// END of validasi gtxpkmh.keterangan
+					
+					// BEGIN of validasi gtxpkmh.keterangan
+					// if ( ! edtgtxpkmh.field('gtxpkmh.keterangan').isMultiValue() ) {
+					// 	keterangan = edtgtxpkmh.field('gtxpkmh.keterangan').val();
+					// 	if(!keterangan || keterangan == ''){
+					// 		edtgtxpkmh.field('gtxpkmh.keterangan').error( 'Wajib diisi!' );
+					// 	}
+					// }
 					// END of validasi gtxpkmh.keterangan
 					
 					// BEGIN of validasi gtxpkmh.amount
@@ -190,6 +211,7 @@
 				columns: [
 					{ data: "gtxpkmh.id",visible:false },
 					{ data: "gtxpkmh.kode" },
+					{ data: "gtxpkmh.kategori_kelas" },
 					{ data: "gtxpkmh.keterangan" },
 					{ 
 						data: "gtxpkmh.amount",

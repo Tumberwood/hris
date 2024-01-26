@@ -15,45 +15,47 @@
 		DataTables\Editor\Result;
 	
 	// ----------- do not erase
-	$show_inactive_status = $_POST['show_inactive_status_gtxpkmh'];
+	$show_inactive_status = $_POST['show_inactive_status_hpcatmh'];
 	// -----------
 	
-	$editor = Editor::inst( $db, 'gtxpkmh' )
+	$editor = Editor::inst( $db, 'hpcatmh' )
 		->debug(true)
 		->fields(
-			Field::inst( 'gtxpkmh.id' ),
-			Field::inst( 'gtxpkmh.kode' )
+			Field::inst( 'hpcatmh.id' ),
+			Field::inst( 'hpcatmh.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);
 				} ),
-			Field::inst( 'gtxpkmh.nama' )
+			Field::inst( 'hpcatmh.nama' )
 				->setFormatter( function ( $val ) {
 					return ucwords($val);
 				} ),
-			Field::inst( 'gtxpkmh.keterangan' ),
-			Field::inst( 'gtxpkmh.is_active' ),
-			Field::inst( 'gtxpkmh.created_by' )
+			Field::inst( 'hpcatmh.keterangan' ),
+			Field::inst( 'hpcatmh.is_active' ),
+			Field::inst( 'hpcatmh.created_by' )
 				->set( Field::SET_CREATE )
 				->setValue($_SESSION['user']),
-			Field::inst( 'gtxpkmh.created_on' )
+			Field::inst( 'hpcatmh.created_on' )
 				->set( Field::SET_CREATE ),
-			Field::inst( 'gtxpkmh.last_edited_by' )
+			Field::inst( 'hpcatmh.last_edited_by' )
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
-			Field::inst( 'gtxpkmh.is_approve' ),
-			Field::inst( 'gtxpkmh.is_defaultprogram' ),
-			Field::inst( 'gtxpkmh.kategori_kelas' ),
-			Field::inst( 'gtxpkmh.amount' )
+			Field::inst( 'hpcatmh.is_approve' ),
+			Field::inst( 'hpcatmh.is_defaultprogram' ),
+			Field::inst( 'hpcatmh.nominal_awal' ),
+			Field::inst( 'hpcatmh.nominal_akhir' ),
+			Field::inst( 'hpcatmh.persen' ),
+			Field::inst( 'hpcatmh.kategori' )
 		);
 	
 	// do not erase
 	// function show / hide inactive document
 	if ($show_inactive_status == 0){
 		$editor
-			->where( 'gtxpkmh.is_active', 1);
+			->where( 'hpcatmh.is_active', 1);
 	}
 	
-	include( "gtxpkmh_extra.php" );
+	include( "hpcatmh_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
 	$editor
