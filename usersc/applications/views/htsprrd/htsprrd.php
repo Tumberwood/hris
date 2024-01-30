@@ -96,14 +96,14 @@
 
 												<th rowspan=2>Keterangan</th>
 												<!-- //pot jam dihapus (16) --> 
-												<th rowspan=2>Potongan Makan</th>
+												<th rowspan=2 class="text-danger">Potongan Makan</th>
 												
 												<th colspan=2>Lembur Libur</th>
 												<th colspan=2>Lembur Awal</th>
 												<th colspan=2>Lembur Akhir</th>
 												<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
-												<th class="text-center" colspan=3>Potongan Jam Overtime</th>
-												<th class="text-center" colspan=2>Potongan Jam</th>
+												<th class="text-center text-danger" colspan=3>Potongan Jam Overtime</th>
+												<th class="text-center text-danger" colspan=2>Potongan Jam</th>
 
 											</tr>
 											<tr>
@@ -122,11 +122,11 @@
 												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Malam">I3</th>
 												<th data-toggle="tooltip" data-placement="top" title="Total Lembur">Total</th>
 
-												<th>Pot TI</th>
-												<th>Pot Overtime</th>
+												<th class="text-danger">Pot TI</th>
+												<th class="text-danger">Pot Overtime</th>
 												<th>Overtime Final</th>
-												<th>Pot Hari Kerja</th>
-												<th>Pot Total</th>
+												<th class="text-danger">Pot Hari Kerja</th>
+												<th class="text-danger">Pot Total</th>
 											</tr>
 										</thead>
 										<tfoot>
@@ -203,14 +203,14 @@
 
 												<th rowspan=2>Keterangan</th>
 												<!-- //pot jam dihapus (16) --> 
-												<th rowspan=2>Potongan Makan</th>
+												<th rowspan=2 class="text-danger">Potongan Makan</th>
 												
 												<th colspan=2>Lembur Libur</th>
 												<th colspan=2>Lembur Awal</th>
 												<th colspan=2>Lembur Akhir</th>
 												<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
-												<th class="text-center" colspan=3>Potongan Jam Overtime</th>
-												<th class="text-center" colspan=2>Potongan Jam</th>
+												<th class="text-center text-danger" colspan=3>Potongan Jam Overtime</th>
+												<th class="text-center text-danger" colspan=2>Potongan Jam</th>
 
 											</tr>
 											<tr>
@@ -229,11 +229,11 @@
 												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Malam">I3</th>
 												<th data-toggle="tooltip" data-placement="top" title="Total Lembur">Total</th>
 
-												<th>Pot TI</th>
-												<th>Pot Overtime</th>
+												<th class="text-danger">Pot TI</th>
+												<th class="text-danger">Pot Overtime</th>
 												<th>Overtime Final</th>
-												<th>Pot Hari Kerja</th>
-												<th>Pot Total</th>
+												<th class="text-danger">Pot Hari Kerja</th>
+												<th class="text-danger">Pot Total</th>
 											</tr>
 										</thead>
 										<tfoot>
@@ -310,14 +310,14 @@
 
 												<th rowspan=2>Keterangan</th>
 												<!-- //pot jam dihapus (16) --> 
-												<th rowspan=2>Potongan Makan</th>
+												<th rowspan=2 class="text-danger">Potongan Makan</th>
 												
 												<th colspan=2>Lembur Libur</th>
 												<th colspan=2>Lembur Awal</th>
 												<th colspan=2>Lembur Akhir</th>
 												<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
-												<th class="text-center" colspan=3>Potongan Jam Overtime</th>
-												<th class="text-center" colspan=2>Potongan Jam</th>
+												<th class="text-center text-danger" colspan=3>Potongan Jam Overtime</th>
+												<th class="text-center text-danger" colspan=2>Potongan Jam</th>
 
 											</tr>
 											<tr>
@@ -336,11 +336,11 @@
 												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Malam">I3</th>
 												<th data-toggle="tooltip" data-placement="top" title="Total Lembur">Total</th>
 
-												<th>Pot TI</th>
-												<th>Pot Overtime</th>
+												<th class="text-danger">Pot TI</th>
+												<th class="text-danger">Pot Overtime</th>
 												<th>Overtime Final</th>
-												<th>Pot Hari Kerja</th>
-												<th>Pot Total</th>
+												<th class="text-danger">Pot Hari Kerja</th>
+												<th class="text-danger">Pot Total</th>
 											</tr>
 										</thead>
 										<tfoot>
@@ -417,14 +417,14 @@
 
 												<th rowspan=2>Keterangan</th>
 												<!-- //pot jam dihapus (16) --> 
-												<th rowspan=2>Potongan Makan</th>
+												<th rowspan=2 class="text-danger">Potongan Makan</th>
 												
 												<th colspan=2>Lembur Libur</th>
 												<th colspan=2>Lembur Awal</th>
 												<th colspan=2>Lembur Akhir</th>
 												<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
-												<th class="text-center" colspan=3>Potongan Jam Overtime</th>
-												<th class="text-center" colspan=2>Potongan Jam</th>
+												<th class="text-center text-danger" colspan=3>Potongan Jam Overtime</th>
+												<th class="text-center text-danger" colspan=2>Potongan Jam</th>
 
 											</tr>
 											<tr>
@@ -443,11 +443,11 @@
 												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Malam">I3</th>
 												<th data-toggle="tooltip" data-placement="top" title="Total Lembur">Total</th>
 
-												<th>Pot TI</th>
-												<th>Pot Overtime</th>
+												<th class="text-danger">Pot TI</th>
+												<th class="text-danger">Pot Overtime</th>
 												<th>Overtime Final</th>
-												<th>Pot Hari Kerja</th>
-												<th>Pot Total</th>
+												<th class="text-danger">Pot Hari Kerja</th>
+												<th class="text-danger">Pot Total</th>
 											</tr>
 										</thead>
 										<tfoot>
@@ -524,14 +524,14 @@
 
 												<th rowspan=2>Keterangan</th>
 												<!-- //pot jam dihapus (16) --> 
-												<th rowspan=2>Potongan Makan</th>
+												<th rowspan=2 class="text-danger">Potongan Makan</th>
 												
 												<th colspan=2>Lembur Libur</th>
 												<th colspan=2>Lembur Awal</th>
 												<th colspan=2>Lembur Akhir</th>
 												<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
-												<th class="text-center" colspan=3>Potongan Jam Overtime</th>
-												<th class="text-center" colspan=2>Potongan Jam</th>
+												<th class="text-center text-danger" colspan=3>Potongan Jam Overtime</th>
+												<th class="text-center text-danger" colspan=2>Potongan Jam</th>
 
 											</tr>
 											<tr>
@@ -550,11 +550,11 @@
 												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Malam">I3</th>
 												<th data-toggle="tooltip" data-placement="top" title="Total Lembur">Total</th>
 
-												<th>Pot TI</th>
-												<th>Pot Overtime</th>
+												<th class="text-danger">Pot TI</th>
+												<th class="text-danger">Pot Overtime</th>
 												<th>Overtime Final</th>
-												<th>Pot Hari Kerja</th>
-												<th>Pot Total</th>
+												<th class="text-danger">Pot Hari Kerja</th>
+												<th class="text-danger">Pot Total</th>
 											</tr>
 										</thead>
 										<tfoot>
