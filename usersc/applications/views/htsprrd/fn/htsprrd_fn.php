@@ -36,7 +36,7 @@
             }
         } );
     };
-    function cariKMJ(){
+    function cariKMJ(tbl){
 
         $.ajax( {
             url: "../../models/htsprrd/fn_cari_os_kmj.php",
@@ -50,9 +50,9 @@
                 id_heyxxmd_ajax = json.data.rs_kmj.id_heyxxmd;
                 
                 if (id_heyxxmd_ajax == 4 && cek == 1) {
-				    tblhtsprrd.button('btnPresensiOK:name').enable();
+				    tbl.button('btnPresensiOK:name').enable();
                 } else {
-				    tblhtsprrd.button('btnPresensiOK:name').disable();
+				    tbl.button('btnPresensiOK:name').disable();
                 }
             }
         } );

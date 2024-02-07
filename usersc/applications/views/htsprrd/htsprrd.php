@@ -1591,7 +1591,7 @@
 				// 	}
 				// }
 
-				cariKMJ();
+				cariKMJ(tblhtsprrd_kbm);
 				// console.log(htlxxrh_kode);
 				//Cek Apakah mengandung Kode Absen KD
 				if (htlxxrh_kode.includes("KD/") && cek == 1) {
@@ -2036,7 +2036,7 @@
 				// 	}
 				// }
 
-				cariKMJ();
+				cariKMJ(tblhtsprrd_karyawan);
 				// console.log(htlxxrh_kode);
 				//Cek Apakah mengandung Kode Absen KD
 				if (htlxxrh_kode.includes("KD/") && cek == 1) {
@@ -2482,7 +2482,7 @@
 				// 	}
 				// }
 
-				cariKMJ();
+				cariKMJ(tblhtsprrd_kmj);
 				// console.log(htlxxrh_kode);
 				//Cek Apakah mengandung Kode Absen KD
 				if (htlxxrh_kode.includes("KD/") && cek == 1) {
@@ -2927,7 +2927,7 @@
 				// 	}
 				// }
 
-				cariKMJ();
+				cariKMJ(tblhtsprrd_freelance);
 				// console.log(htlxxrh_kode);
 				//Cek Apakah mengandung Kode Absen KD
 				if (htlxxrh_kode.includes("KD/") && cek == 1) {
