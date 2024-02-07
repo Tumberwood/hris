@@ -1162,6 +1162,8 @@
 					(row.htsprrd.htlxxrh_kode.includes("KD/") && row.htsprrd.cek === 1) ||
 					(row.htsprrd.st_clock_in === "Late" && row.htsprrd.status_presensi_in === "Belum ada Izin") ||
 					(row.htsprrd.st_clock_out === "EARLY" && row.htsprrd.status_presensi_out === "Belum ada Izin") ||
+					(row.htsprrd.st_clock_in === "HK" && row.htsprrd.status_presensi_in === "Belum ada Izin") ||
+					(row.htsprrd.st_clock_out === "HK" && row.htsprrd.status_presensi_out === "Belum ada Izin") ||
 					(row.hemjbmh.id_heyxxmd === 4 && row.htsprrd.cek === 1) ||
 					(row.htsprrd.status_presensi_in === "Jadwal Salah") ||
 					(row.htsprrd.id_hemxxmh_select === 130 || row.htsprrd.id_hemxxmh_select === 134)
@@ -2933,7 +2935,7 @@
 					// console.log("11111");
                 }
 
-				if (st_clock_in == "Late" && status_presensi_in == "Belum ada Izin") {
+				if (st_clock_in != "Late" && status_presensi_in == "Belum ada Izin") {
 				    tblhtsprrd_freelance.button('btnPresensiOK:name').enable();
 					// console.log("11111");
                 }
