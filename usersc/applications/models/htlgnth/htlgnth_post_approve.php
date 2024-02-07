@@ -64,8 +64,9 @@
                         null
                     FROM
                         hemxxmh
+                    LEFT JOIN hemjbmh AS jb ON jb.id_hemxxmh = hemxxmh.id
                     WHERE 
-                        hemxxmh.is_active = :is_active;
+                        hemxxmh.is_active = :is_active AND jb.id_hetxxmh NOT IN (99, 48);
                 ');
             // BEGIN non aktif
             $qd_terpilih = $db
@@ -77,12 +78,25 @@
             $tanggal_jam_off = $rs_htlgnth["tanggal"] . " 00:00:00";
     
             $qu_htssctd = $db
-                ->query('update', 'htssctd')
-                ->set('is_active',0)
-                ->set('keterangan', "Cuti Bersama - " . $rs_htlgnth["nama"])
-                ->where('tanggal', $rs_htlgnth["tanggal"])
-                ->where('is_active', 1)
-            ->exec();
+            ->raw()
+            ->bind(':keterangan', $rs_htlgnth["nama"])
+            ->bind(':tanggal', $rs_htlgnth["tanggal"])
+            ->exec('UPDATE htssctd AS a
+                LEFT JOIN hemjbmh AS jb on jb.id_hemxxmh = a.id_hemxxmh
+                SET
+                    a.is_active = 0,
+                    a.keterangan = CONCAT("Cuti Bersama - ", :keterangan)
+                WHERE 
+                    tanggal = :tanggal AND jb.id_hetxxmh NOT IN (99, 48)
+                    AND a.is_active = 1
+                    ;
+            ');
+            //     ->query('update', 'htssctd')
+            //     ->set('is_active',0)
+            //     ->set('keterangan', "Cuti Bersama - " . $rs_htlgnth["nama"])
+            //     ->where('tanggal', $rs_htlgnth["tanggal"])
+            //     ->where('is_active', 1)
+            // ->exec();
 
             // Begin insert pengaju
             $qr_tanggal = $db
@@ -137,9 +151,10 @@
                         :tanggal_jam_off
                        
                     FROM htssctd
+                    LEFT JOIN hemjbmh AS jb on jb.id_hemxxmh = htssctd.id_hemxxmh
                     WHERE 
                         tanggal = :tanggal
-                    AND keterangan = CONCAT("Cuti Bersama - ", :nama)
+                    AND keterangan = CONCAT("Cuti Bersama - ", :nama) AND jb.id_hetxxmh NOT IN (99, 48)
                 ');
             // END insert pengaju
 
@@ -152,10 +167,24 @@
             ->exec();
 
             $qd_pengganti = $db
-                ->query('delete', 'htssctd')
-                ->where('is_active', 1)
-                ->where('tanggal', $rs_htlgnth["tanggal"])
-            ->exec();
+                ->raw()
+                ->bind(':tanggal', $rs_htlgnth["tanggal"])
+                ->exec(' DELETE FROM htssctd
+                        WHERE 
+                            id_hemxxmh IN (
+                                SELECT
+                                    id_hemxxmh
+                                FROM hemjbmh
+                                WHERE id_hetxxmh NOT IN (99, 48)
+                            )
+                            AND is_active = 1
+                            AND tanggal = :tanggal
+                            ;
+                    ');
+                // ->query('delete', 'htssctd')
+                // ->where('is_active', 1)
+                // ->where('tanggal', $rs_htlgnth["tanggal"])
+            // ->exec();
             
             $qu_htssctd = $db
                 ->query('update', 'htssctd')
