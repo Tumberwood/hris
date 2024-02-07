@@ -47,9 +47,9 @@
                 id_hemxxmh_select: id_hemxxmh_select
             },
             success: function ( json ) {
-                id_heyxxmd = json.data.rs_kmj.id_heyxxmd;
+                id_heyxxmd_ajax = json.data.rs_kmj.id_heyxxmd;
                 
-                if (id_heyxxmd == 4 && cek == 1) {
+                if (id_heyxxmd_ajax == 4 && cek == 1) {
 				    tblhtsprrd.button('btnPresensiOK:name').enable();
                 } else {
 				    tblhtsprrd.button('btnPresensiOK:name').disable();
