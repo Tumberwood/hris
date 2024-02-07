@@ -169,6 +169,7 @@
             $qd_pengganti = $db
                 ->raw()
                 ->bind(':tanggal', $rs_htlgnth["tanggal"])
+                ->bind(':nama', $rs_htlgnth["nama"])
                 ->exec(' DELETE FROM htssctd
                         WHERE 
                             id_hemxxmh IN (
@@ -179,6 +180,7 @@
                             )
                             AND is_active = 1
                             AND tanggal = :tanggal
+                            AND keterangan = CONCAT("Cuti Bersama - ", :nama)
                             ;
                     ');
                 // ->query('delete', 'htssctd')

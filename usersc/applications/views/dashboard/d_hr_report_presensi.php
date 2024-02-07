@@ -112,6 +112,7 @@
                         <h4 id="lev"></h4>
                     </div>
                 </div>
+				<button id="del_cuti_holiday" class="btn btn-danger fa fa-trash" style="display: none"> Hapus Cuti & Public Holiday</button>
 				<br>
 				<div id="tabel_atas"></div>
 				<div style="margin-top: -40px" id="tabel_bawah"></div>
@@ -352,6 +353,41 @@
 							
 							var h3Element = $('<h3>');
 
+							keterangan_jadwal = '';
+							if (json.data8.keterangan != null) {
+								keterangan_jadwal = `(${json.data8.keterangan})`;
+							}
+
+							console.log(json.data8.is_cuti_holiday);
+
+							if (json.data8.is_cuti_holiday != 0) {
+								$('#del_cuti_holiday').show();
+
+								$("#del_cuti_holiday").click(function () {
+									$('#del_cuti_holiday').hide();
+									$.ajax( {
+										url: '../../models/hthhdth/fn_hapus_cuti_holiday.php',
+										dataType: 'json',
+										type: 'POST',
+										data: {
+											tanggal: json.data7.tanggal,
+											id_hemxxmh: json.data7.id_hemxxmh
+										},
+										success: function ( json ) {
+											$.notify({
+												message: json.data.message
+											},{
+												type: json.data.type_message
+											});
+											generateTable(counter);
+										}
+									});
+									console.log(json.data7.id_hemxxmh);
+								});
+							} else {
+								$('#del_cuti_holiday').hide();
+							}
+
 							// Create the anchor element with the specified attributes
 							var anchorElement = $('<a>')
 								.attr('href', '#')
@@ -359,7 +395,7 @@
 								.attr('data-id',id)
 								.attr('data-empsjadwal',json.data7.nama)
 								.attr('data-id_jadwal',json.data8.id_jadwal)
-								.html(" : " + json.data8.st_jadwal);
+								.html(` :  ${json.data8.st_jadwal} ${keterangan_jadwal}`);
 
 							// Append the anchor element to the h3 element
 							h3Element.append(anchorElement);

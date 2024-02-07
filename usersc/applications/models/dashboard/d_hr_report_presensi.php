@@ -203,7 +203,9 @@
 		->exec('SELECT
 					a.id as id_jadwal,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
-					b.kode as st_jadwal
+					b.kode as st_jadwal,
+					if(a.keterangan like "Public Holiday%" OR a.keterangan like "Cuti Bersama%", 1, 0) as is_cuti_holiday,
+					a.keterangan
 				FROM htssctd AS a
 				LEFT JOIN htsxxmh AS b ON b.id = a.id_htsxxmh
 				WHERE a.tanggal = :start_date AND a.id_hemxxmh = :id_hemxxmh AND a.is_active = 1;

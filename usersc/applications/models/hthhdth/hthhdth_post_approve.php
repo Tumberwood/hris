@@ -129,6 +129,7 @@
             $qd_pengganti = $db
                 ->raw()
                 ->bind(':tanggal', $rs_hthhdth["tanggal"])
+                ->bind(':nama', $rs_hthhdth["nama"])
                 ->exec(' DELETE FROM htssctd
                         WHERE 
                             id_hemxxmh IN (
@@ -139,6 +140,7 @@
                             )
                             AND is_active = 1
                             AND tanggal = :tanggal
+                            AND keterangan = CONCAT("Public Holiday - ", :nama)
                             ;
                     ');
 
