@@ -88,4 +88,27 @@
             }
         });
     }
+
+    function cekApproveTanggal() {
+        $.ajax( {
+            url: '../../models/htoxxth/fn_approve_per_tanggal.php',
+            dataType: 'json',
+            type: 'POST',
+            async: false,
+            data: {
+                end_date: end_date,
+                status: "cek"
+            },
+            success: function ( json ) {
+                console.log(json);
+                c_approve = json.data.c_approve;
+                console.log('c_approve = ' +c_approve);
+                if (c_approve == 0 && start_date == end_date) {
+				    tblhtoxxth.button('btnApproveTanggal:name').enable();
+                } else {
+				    tblhtoxxth.button('btnApproveTanggal:name').disable();
+                }
+            }
+        });
+    }
 </script>

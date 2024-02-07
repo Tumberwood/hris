@@ -1104,6 +1104,26 @@
             '
     );
 
+        // Khusus untuk karyawan a/n 09110415 MASKUR dan 12090891 SUGIONO 
+        // ini jika hari Sabtu ada jadwal, tetapi mereka tidak masuk, ini statusnya tetap alpa, tetapi tidak memotong apa-apa 
+        //Update 7 Feb 2024 by Ferry
+        $qu_pengecualian = $db
+            ->raw()
+            ->bind(':tanggal', $tanggal)
+            ->exec(' UPDATE htsprrd AS a
+                    SET 
+                        a.pot_jam = 0,
+                        a.pot_ti = 0,
+                        a.pot_jam_final = 0,
+                        a.is_pot_premi = 0,
+                        a.is_pot_upah = 0,
+                        a.pot_overtime = 0,
+                        a.pot_hk = 0,
+                        a.durasi_lembur_final = durasi_lembur_total_jam
+                    WHERE DAYOFWEEK(:tanggal) = 7 AND id_hemxxmh IN (130, 208) AND a.status_presensi_in = "AL"
+                    '
+        );
+        
         // di commit per karyawan
         $qu_hgtprth = $db
             ->query('update', 'hgtprth')

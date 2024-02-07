@@ -178,7 +178,7 @@
 		$(document).ready(function() {
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
-			
+
 			//start datatables editor
 			edthtoxxth = new $.fn.dataTable.Editor( {
 				ajax: {
@@ -467,6 +467,31 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					{ 
+						text: '<span>Approve Per Tanggal</span>', 
+						name: 'btnApproveTanggal',
+						className: 'btn btn-primary',
+						action: function ( e, dt, node, config ) {
+							$.ajax( {
+								url: '../../models/htoxxth/fn_approve_per_tanggal.php',
+								dataType: 'json',
+								type: 'POST',
+								data: {
+									end_date: end_date,
+									status: "approve"
+								},
+								success: function ( json ) {
+									$.notify({
+										message: json.data.message
+									},{
+										type: json.data.type_message
+									});
+									tblhtoxxth.ajax.reload(null,false);
+									cekApproveTanggal();
+								}
+							});
+						}
+					}
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.htoxxth.is_active == 0 ) {
@@ -478,12 +503,13 @@
 				}
 				
 			} );
-			
+
+			cekApproveTanggal();
+
 			tblhtoxxth.on( 'init', function () {
 				// atur hak akses
 				tbl_details = [tblhtoemtd];
 				CekInitHeaderHD(tblhtoxxth, tbl_details);
-
 			} );
 			
 			tblhtoxxth.on( 'select', function( e, dt, type, indexes ) {
@@ -983,6 +1009,7 @@
 					tblhtoxxth.ajax.reload(function ( json ) {
 						notifyprogress.close();
 					}, false);
+					cekApproveTanggal()
 					return false; 
 				}
 			});
