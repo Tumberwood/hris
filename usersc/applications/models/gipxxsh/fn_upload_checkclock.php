@@ -57,27 +57,7 @@
             } else {
                 $arr_kode .= 'UNION ALL SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" ';
             }
-
-            // $qs_htsprtd = $db
-            //     ->query('select', 'htsprtd')
-            //     ->get(['count(id) as c_id'])
-            //     ->where('htsprtd.kode', $kode)
-            //     ->where('htsprtd.nama', $nama)
-            //     ->where('htsprtd.tanggal', $tanggal)
-            //     ->where('htsprtd.jam', $jam)
-            //     ->exec();
-            // $rs_htsprtd = $qs_htsprtd->fetch();
-            // $c_rs_htsprtd = $rs_htsprtd['c_id'];
-
-            // if ($c_rs_htsprtd == 0) {
-
-            //     $dataupload = $dataupload + 1;
-            // } else {
-            //     $datakembar = $datakembar + 1;
-            // }
         }
-        // $arr_kode = rtrim($arr_kode, ',');
-        // print_r($arr_kode);
         
         if ($arr_kode != "") {
             $qi_ceklok = $db
@@ -106,49 +86,18 @@
                     '
                     );
 
-            // $qs_tidak_kembar = $db
-            // ->raw()
-            // ->bind(':tanggal', $tanggal)
-            // ->bind(':nama', $nama)
-            // ->exec(' WITH ada AS (
-            //             SELECT
-            //                 CONCAT(kode," ", nama, " ", tanggal, " " ,jam) AS conc_ada
-            //             FROM htsprtd
-            //             WHERE tanggal = :tanggal AND nama = :nama AND tipe = "upload"
-            //         ),
-            //         excel_data AS (
-            //             '.$arr_kode.'
-            //         )
-            //         SELECT
-            //             COUNT(excel_value) AS c_id
-            //         FROM excel_data
-            //         WHERE excel_value NOT IN (SELECT conc_ada FROM ada);
-            //         '
-            //         );
-            // $rs_tidak_kembar = $qs_tidak_kembar->fetch();
-            // $dataupload = $rs_tidak_kembar['c_id'];
-
-            // $qs_kembar = $db
-            // ->raw()
-            // ->bind(':tanggal', $tanggal)
-            // ->bind(':nama', $nama)
-            // ->exec(' WITH ada AS (
-            //             SELECT
-            //                 CONCAT(kode," ", nama, " ", tanggal, " " ,jam) AS conc_ada
-            //             FROM htsprtd
-            //             WHERE tanggal = :tanggal AND nama = :nama AND tipe = "upload"
-            //         ),
-            //         excel_data AS (
-            //             '.$arr_kode.'
-            //         )
-            //         SELECT
-            //             COUNT(excel_value) AS c_id
-            //         FROM excel_data
-            //         WHERE excel_value IN (SELECT conc_ada FROM ada);
-            //         '
-            //         );
-            // $rs_kembar = $qs_kembar->fetch();
-            // $datakembar = $rs_kembar['c_id'];
+            $qs_tidak_kembar = $db
+            ->raw()
+            ->bind(':tanggal', $tanggal)
+            ->bind(':nama', $nama)
+            ->exec(' SELECT 
+                        FOUND_ROWS() AS found_rows
+                    ;
+                    '
+                    );
+            $rs_tidak_kembar = $qs_tidak_kembar->fetch();
+            $dataupload = $rs_tidak_kembar['found_rows'];
+            $datakembar = count($sheetData) - ($dataupload + 1);
         }
     }
 ?>
