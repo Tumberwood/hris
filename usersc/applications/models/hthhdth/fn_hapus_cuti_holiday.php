@@ -24,6 +24,12 @@
     try{
         $db->transaction();
 
+        $qd_htl = $db
+            ->query('delete', 'htlxxrh')
+            ->where('tanggal', $tanggal)
+            ->where('id_hemxxmh', $id_hemxxmh)
+        ->exec();
+
         $qd_pengganti = $db
             ->raw()
             ->bind(':tanggal', $tanggal)

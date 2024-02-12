@@ -58,6 +58,11 @@
     </div>
 </div>
 
+<div class="alert alert-info alert-dismissable">
+	<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+	Pastikan tanggal awal dan akhir (pada filter periode) harus sama, supaya dapat melakukan approve SPKL per tanggal !!!
+</div>
+
 <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
