@@ -115,7 +115,7 @@
 					//STAFF
 					var fd_staff = new FormData();
 					var staff = $('#inputfilethimportcheckclock_staff')[0].files[0];
-					console.log(staff);
+					// console.log(staff);
 					if (staff != undefined) {
 						fd_staff.append('filename',staff);
 			
@@ -144,7 +144,7 @@
 								$("#inputfilethimportcheckclock_staff").val('');
 							},
 							error: function (xhr, Status, err){
-								console.log('x');
+								// console.log('x');
 							}
 						} );
 					}
@@ -152,7 +152,7 @@
 					//PMI
 					var fd_pmi = new FormData();
 					var pmi = $('#inputfilethimportcheckclock_pmi')[0].files[0];
-					console.log(pmi);
+					// console.log(pmi);
 					fd_pmi.append('filename',pmi);
 					
 					if (pmi != undefined) {
@@ -183,7 +183,7 @@
 								$("#inputfilethimportcheckclock_pmi").val('');
 							},
 							error: function (xhr, Status, err){
-								console.log('x');
+								// console.log('x');
 							}
 						} );
 					}
@@ -191,7 +191,7 @@
 					//os
 					var fd_os = new FormData();
 					var os = $('#inputfilethimportcheckclock_os')[0].files[0];
-					console.log(os);
+					// console.log(os);
 					fd_os.append('filename',os);
 					
 					if (os != undefined) {
@@ -222,7 +222,7 @@
 								$("#inputfilethimportcheckclock_os").val('');
 							},
 							error: function (xhr, Status, err){
-								console.log('x');
+								// console.log('x');
 							}
 						} );
 					}
@@ -230,7 +230,7 @@
 					//istirahat
 					var fd_istirahat = new FormData();
 					var istirahat = $('#inputfilethimportcheckclock_istirahat')[0].files[0];
-					console.log(istirahat);
+					// console.log(istirahat);
 					fd_istirahat.append('filename',istirahat);
 					
 					if (istirahat != undefined) {
@@ -261,7 +261,7 @@
 								$("#inputfilethimportcheckclock_istirahat").val('');
 							},
 							error: function (xhr, Status, err){
-								console.log('x');
+								// console.log('x');
 							}
 						} );
 					}
@@ -270,7 +270,7 @@
 					//makan
 					var fd_makan = new FormData();
 					var makan = $('#inputfilethimportcheckclock_makan')[0].files[0];
-					console.log(makan);
+					// console.log(makan);
 					fd_makan.append('filename',makan);
 					
 					if (makan != undefined) {
@@ -301,7 +301,7 @@
 								$("#inputfilethimportcheckclock_makan").val('');
 							},
 							error: function (xhr, Status, err){
-								console.log('x');
+								// console.log('x');
 							}
 						} );
 					}
@@ -310,7 +310,7 @@
 					//makan_manual
 					var fd_makan_manual = new FormData();
 					var makan_manual = $('#inputfilethimportcheckclock_makan_manual')[0].files[0];
-					console.log(makan_manual);
+					// console.log(makan_manual);
 					fd_makan_manual.append('filename',makan_manual);
 					
 					if (makan_manual != undefined) {
@@ -341,7 +341,7 @@
 								$("#inputfilethimportcheckclock_makan_manual").val('');
 							},
 							error: function (xhr, Status, err){
-								console.log('x');
+								// console.log('x');
 							}
 						} );
 					}
