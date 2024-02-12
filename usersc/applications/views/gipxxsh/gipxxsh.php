@@ -97,7 +97,7 @@
 			//Edit by Ferry, revisi dijadikan 1 button untuk semua inputan
 			var frmUploadthimportcheckclock = $("#frmUploadthimportcheckclock").submit(function(e) {
 				e.preventDefault();
-				$('#submit_ceklok').hide();
+				// $('#submit_ceklok').hide();
 			}).validate({
 
 				submitHandler: function(form) { 
