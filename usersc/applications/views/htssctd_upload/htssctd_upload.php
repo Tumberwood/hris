@@ -264,6 +264,22 @@
 										targets: '_all'
 									}
 								],
+								buttons: [
+
+									// BEGIN breaking generate button
+									<?php
+										$id_table    = 'id_htoxxth';
+										$table       = 'tblhtoxxth';
+										$edt         = 'edthtoxxth';
+										$show_status = '_htoxxth';
+										$table_name  = $nama_tabel;
+
+										$arr_buttons_tools 		= ['copy','excel','colvis'];
+										$arr_buttons_action 	= [];
+										$arr_buttons_approve 	= [];
+										include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+									?>
+								]
 							});
 							tblhtsprrd1.searchPanes.container().appendTo( '#searchPanes1' );
 							
