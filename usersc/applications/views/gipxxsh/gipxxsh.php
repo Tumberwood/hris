@@ -75,7 +75,7 @@
 					</div>
 
 					<span class="input-group-append"> 
-						<button type="submit" class="btn btn-primary">Import</button>
+						<button type="submit" id="submit_ceklok" class="btn btn-primary">Import</button>
 					</span>
 				</form>
 			</div>
@@ -95,7 +95,6 @@
 		$(document).ready(function() {
 
 			//Edit by Ferry, revisi dijadikan 1 button untuk semua inputan
-			// BEGIN upload data
 			var frmUploadthimportcheckclock = $("#frmUploadthimportcheckclock").submit(function(e) {
 				e.preventDefault();
 			}).validate({
@@ -110,8 +109,7 @@
 						delay: 0,
 						element: 'body'
 					});
-
-					var notifyprogress;
+					
 					//STAFF
 					var fd_staff = new FormData();
 					var staff = $('#inputfilethimportcheckclock_staff')[0].files[0];

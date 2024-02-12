@@ -3,6 +3,8 @@
 	require_once( "../../../../usersc/lib/DataTables.php" );
 	require_once( "../../../../usersc/helpers/datatables_fn_debug.php" );
 	require_once( "../../../../usersc/vendor/autoload.php" );
+	// Untuk Function upload 12 feb 2024
+	require_once( "../../../../usersc/helpers/fn_upload_checkclock.php" );
 	
 	use PhpOffice\PhpSpreadsheet\Spreadsheet;
 	use PhpOffice\PhpSpreadsheet\Reader\Csv;
@@ -49,109 +51,14 @@
 			
 			$datakembar = 0;
 			$dataupload = 0;
-			$emptyPeg = array();
-			/**
-             *                      : nama
-             * 0: no akun           : kode
-             * 1: Nama              
-             * 2: Waktu             : slip jadi tanggal dan jam
-             * 3: Kondisi
-             * 4: Kondisi Baru
-             * 5: Status
-             * 6: Operasi
-             */
-			for($i = 1;$i < count($sheetData);$i++){
-				
-				$nama  = 'MAKAN MANUAL';
-                if(strlen($sheetData[$i]['0']) == 1){
-                    $kode 		= '000' . $sheetData[$i]['0'] ;
-                }elseif(strlen($sheetData[$i]['0']) == 2){
-                    $kode 		= '00' . $sheetData[$i]['0'] ;
-                }elseif(strlen($sheetData[$i]['0']) == 3){
-                    $kode 		= '0' . $sheetData[$i]['0'] ;
-                }elseif(strlen($sheetData[$i]['0']) == 4){
-                    $kode 		= $sheetData[$i]['0'] ;
-                }
-                // print_r($kode);
-				//cari kode finger
-				$qs_hemxxmh = $db
-					->query('select', 'hemxxmh' )
-					->get(['count(id) as id'] )
-					->where('kode_finger', $kode)
-					->exec();
-				$rs_hemxxmh = $qs_hemxxmh->fetch();	
-
-				if ($rs_hemxxmh['id'] == 0) {
-					$emptyPeg[] = array(
-						'rowIndex' => $i + 1
-					);
-				}
-
-				$dt = explode(" ",$sheetData[$i]['2']);
-				
-				// foreach ($dt as $key => $value) {
-					$str_tanggal = $dt[0];
-					$tahun = substr($str_tanggal,6,4);
-					$bulan = substr($str_tanggal,3,2);
-					$tgl = substr($str_tanggal,0,2);
-					$tanggal = $tahun .'-'.$bulan.'-'.$tgl;
-					$jam     = $dt[1];
-				// }
-				
-				$qs_htsprtd = $db
-					->query('select', 'htsprtd' )
-					->get([
-						'htsprtd.id as id_htsprtd'
-					] )
-					->where('htsprtd.kode', $kode )
-					->where('htsprtd.nama', $nama )
-					->where('htsprtd.tanggal', $tanggal )
-					->where('htsprtd.jam', $jam )
-					->exec();
-				$rs_htsprtd = $qs_htsprtd->fetchAll();
-				$c_rs_htsprtd = count($rs_htsprtd);
-				
-				if($c_rs_htsprtd == 0){
-					$qi_htsprtd = $db
-						->query('insert', 'htsprtd')
-						->set('kode',$kode) //menghubungkan hemxxmh dengan kode finger
-						->set('nama',$nama)
-						->set('tipe', 'upload')
-						->set('tanggal',$tanggal)
-						->set('jam',$jam)
-						->exec();
-					$dataupload = $dataupload + 1;
-					
-				}else{
-					$datakembar = $datakembar + 1;
-				}
-			}
-			
-			// print_r(count($emptyPeg));
-			if (count($emptyPeg) >= 1) {
-				$errorMessage = "";
-				foreach ($emptyPeg as $index => $emptyPegawai) {
-					$rowIndex = $emptyPegawai['rowIndex'];
-					$errorMessage .= $rowIndex;
-					if ($index < count($emptyPeg) - 1) {
-						$errorMessage .= ", ";
-					}
-				}
-				$data = array(
-					"message" => "No Akun tidak sesuai pada Baris " . $errorMessage,
-					"type_message" => "danger"
-				);
-			} else {
-				$data = array(
-					"message" => "Upload Makan Manual Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
-					"type_message" => "success",
-					"debug" => $emptyPeg,
-					"hem" => $rs_hemxxmh
-				);
-			}
-
+			processSheetData(1, $sheetData, $db, $dataupload, $datakembar, "MAKAN MANUAL");
 		
-		$db->commit();
+			$db->commit();
+			$data = array(
+				"message" => "Upload Makan Manual Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
+				"type_message" => "success"
+			);
+			
 		}catch (PDOException $e){
 			$db->rollback();
 			$data = array(
