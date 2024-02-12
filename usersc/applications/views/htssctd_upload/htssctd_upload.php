@@ -137,7 +137,7 @@
 					//STAFF
 					var fd_staff = new FormData();
 					var staff = $('#inputfilethimportjadwal_satpam')[0].files[0];
-					console.log(staff);
+					// console.log(staff);
 					if (staff != undefined) {
 						fd_staff.append('filename',staff);
 
@@ -176,7 +176,7 @@
 								generateTable(start_date);
 							},
 							error: function (xhr, Status, err){
-								console.log('x');
+								// console.log('x');
 							}
 						} );
 					}
@@ -292,7 +292,7 @@
 				},
 				submitHandler: function(frmperiode) {
 					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
-					console.log(start_date);
+					// console.log(start_date);
 					
 					notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
