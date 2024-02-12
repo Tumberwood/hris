@@ -4,7 +4,7 @@
 	require_once( "../../../../usersc/helpers/datatables_fn_debug.php" );
 	require_once( "../../../../usersc/vendor/autoload.php" );
 	// Untuk Function upload 12 feb 2024
-	require_once( "../../../../usersc/helpers/fn_upload_checkclock.php" );
+	require_once( "fn_upload_checkclock.php" );
 	
 	use PhpOffice\PhpSpreadsheet\Spreadsheet;
 	use PhpOffice\PhpSpreadsheet\Reader\Csv;
@@ -51,8 +51,9 @@
 			
 			$datakembar = 0;
 			$dataupload = 0;
-			processSheetData(1, $sheetData, $db, $dataupload, $datakembar, "STAFF");
-						
+			$arr_kode = "";
+			processSheetData($sheetData, $db, $dataupload, $datakembar, "STAFF");
+
 			$db->commit();
 			$data = array(
 				"message" => "Upload Staff Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",

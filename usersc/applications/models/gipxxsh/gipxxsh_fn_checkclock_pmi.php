@@ -3,7 +3,7 @@
 	require_once( "../../../../usersc/lib/DataTables.php" );
 	require_once( "../../../../usersc/helpers/datatables_fn_debug.php" );
 	// Untuk Function upload 12 feb 2024
-	require_once( "../../../../usersc/helpers/fn_upload_checkclock.php" );
+	require_once( "fn_upload_checkclock.php" );
 	require_once( "../../../../usersc/vendor/autoload.php" );
 	
 	use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -51,7 +51,10 @@
 
 			$dataupload = 0;
 			$datakembar = 0;
-			processSheetData(1, $sheetData, $db, $dataupload, $datakembar, "PMI");
+			$arr_kode = "";
+			processSheetData($sheetData, $db, $dataupload, $datakembar, "PMI");
+
+			
 						
 			$db->commit();
 			$data = array(

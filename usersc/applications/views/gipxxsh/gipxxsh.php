@@ -97,23 +97,24 @@
 			//Edit by Ferry, revisi dijadikan 1 button untuk semua inputan
 			var frmUploadthimportcheckclock = $("#frmUploadthimportcheckclock").submit(function(e) {
 				e.preventDefault();
+				$('#submit_ceklok').hide();
 			}).validate({
 
 				submitHandler: function(form) { 
 					
-					notifyprogress = $.notify({
+					var notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
 					},{
+						z_index: 9999,
 						allow_dismiss: false,
 						type: 'danger',
-						delay: 0,
-						element: 'body'
+						delay: 0
 					});
+
 					
 					//STAFF
 					var fd_staff = new FormData();
 					var staff = $('#inputfilethimportcheckclock_staff')[0].files[0];
-					// console.log(staff);
 					if (staff != undefined) {
 						fd_staff.append('filename',staff);
 			
@@ -126,7 +127,7 @@
 							contentType: false,
 							processData: false,
 							success: function ( json ) {
-								notifyprogress.close();
+								
 								$.notify({
 									message: json.data.message
 								},{
@@ -140,6 +141,8 @@
 										'</div>'
 								});
 								$("#inputfilethimportcheckclock_staff").val('');
+								notifyprogress.close();
+								$('#submit_ceklok').show();
 							},
 							error: function (xhr, Status, err){
 								// console.log('x');
@@ -165,7 +168,7 @@
 							contentType: false,
 							processData: false,
 							success: function ( json ) {
-								notifyprogress.close();
+								
 								$.notify({
 									message: json.data.message
 								},{
@@ -179,6 +182,8 @@
 										'</div>'
 								});
 								$("#inputfilethimportcheckclock_pmi").val('');
+								notifyprogress.close();
+								$('#submit_ceklok').show();
 							},
 							error: function (xhr, Status, err){
 								// console.log('x');
@@ -204,7 +209,7 @@
 							contentType: false,
 							processData: false,
 							success: function ( json ) {
-								notifyprogress.close();
+								
 								$.notify({
 									message: json.data.message
 								},{
@@ -218,6 +223,8 @@
 										'</div>'
 								});
 								$("#inputfilethimportcheckclock_os").val('');
+								notifyprogress.close();
+								$('#submit_ceklok').show();
 							},
 							error: function (xhr, Status, err){
 								// console.log('x');
@@ -243,7 +250,7 @@
 							contentType: false,
 							processData: false,
 							success: function ( json ) {
-								notifyprogress.close();
+								
 								$.notify({
 									message: json.data.message
 								},{
@@ -257,6 +264,8 @@
 										'</div>'
 								});
 								$("#inputfilethimportcheckclock_istirahat").val('');
+								notifyprogress.close();
+								$('#submit_ceklok').show();
 							},
 							error: function (xhr, Status, err){
 								// console.log('x');
@@ -283,7 +292,7 @@
 							contentType: false,
 							processData: false,
 							success: function ( json ) {
-								notifyprogress.close();
+								
 								$.notify({
 									message: json.data.message
 								},{
@@ -297,6 +306,8 @@
 										'</div>'
 								});
 								$("#inputfilethimportcheckclock_makan").val('');
+								notifyprogress.close();
+								$('#submit_ceklok').show();
 							},
 							error: function (xhr, Status, err){
 								// console.log('x');
@@ -323,7 +334,7 @@
 							contentType: false,
 							processData: false,
 							success: function ( json ) {
-								notifyprogress.close();
+								
 								$.notify({
 									message: json.data.message
 								},{
@@ -337,6 +348,8 @@
 										'</div>'
 								});
 								$("#inputfilethimportcheckclock_makan_manual").val('');
+								notifyprogress.close();
+								$('#submit_ceklok').show();
 							},
 							error: function (xhr, Status, err){
 								// console.log('x');
