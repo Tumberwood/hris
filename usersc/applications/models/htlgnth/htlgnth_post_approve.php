@@ -128,7 +128,7 @@
                         tanggaljam_awal_istirahat,
                         tanggaljam_akhir_istirahat
                     )
-                    SELECT
+                    SELECT DISTINCT
                         CONCAT("Cuti Bersama - ", :nama),
                         :tanggal,
                         htssctd.id_hemxxmh,
