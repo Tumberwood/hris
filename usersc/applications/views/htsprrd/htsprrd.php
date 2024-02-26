@@ -1162,7 +1162,7 @@
 				tblhtsprrd.button('btncekNol:name').enable(btncekNol);
 				
 				var btnPresensiOK = data_multi.every(row =>
-					(row.htsprrd.htlxxrh_kode.includes("KD/") && row.htsprrd.cek === "1") ||
+					(row.htsprrd.htlxxrh_kode.includes("KD/") && row.htsprrd.cek == "1") ||
 					(row.htsprrd.st_clock_in === "Late" && row.htsprrd.status_presensi_in === "Belum ada Izin") ||
 					(row.htsprrd.st_clock_out === "EARLY" && row.htsprrd.status_presensi_out === "Belum ada Izin") ||
 					(row.htsprrd.st_clock_in === "HK" && row.htsprrd.status_presensi_in === "Belum ada Izin") ||
