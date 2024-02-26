@@ -726,7 +726,6 @@
 						label: "Tukar Jadwal <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.is_tukar",
 						type: "select2",
-						placeholder : "Select",
 						options: [
 							{ "label": "Ya", "value": 1 },
 							{ "label": "Tidak", "value": -9 }
@@ -899,7 +898,7 @@
 					
 					// BEGIN of validasi hemxxmh.is_tukar 
 					is_tukar = edthemxxmh.field('hemxxmh.is_tukar').val();
-					if(is_tukar == 0){
+					if(!is_tukar || is_tukar == ''){
 						edthemxxmh.field('hemxxmh.is_tukar').error( 'Wajib diisi!' );
 					}
 					// END of validasi hemxxmh.is_tukar 
