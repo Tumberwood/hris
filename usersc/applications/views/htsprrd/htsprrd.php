@@ -1152,7 +1152,6 @@
 				id_heyxxmd = data_multi.map(row => row.hemjbmh.id_heyxxmd);
 				id_hemxxmh_select = data_multi.map(row => row.htsprrd.id_hemxxmh);
 				// console.log(id_heyxxmd);
-				// console.log(cek);
 				
 				var btncekNol = data_multi.every(row =>
 					(row.htsprrd.status_presensi_in === "AL" && row.htsprrd.status_presensi_out === "AL") ||
@@ -1161,8 +1160,20 @@
 
 				tblhtsprrd.button('btncekNol:name').enable(btncekNol);
 				
+				htlxxrh_kode.forEach(value => {
+					if (value.includes("KD/")) {
+						kode = "KD"; // Log 1 if the string contains "KD/"
+					} else {
+						kode = "NO"
+					}
+				});
+
+				// console.log(kode);
+				// console.log(cek);
+
 				var btnPresensiOK = data_multi.every(row =>
-					(row.htsprrd.htlxxrh_kode.includes("KD/") && row.htsprrd.cek == "1") ||
+    				(kode == "KD" && row.htsprrd.cek == "1") || 
+					(row.htsprrd.st_clock_in === "Late 1" && row.htsprrd.status_presensi_in === "Belum ada Izin") ||
 					(row.htsprrd.st_clock_in === "Late" && row.htsprrd.status_presensi_in === "Belum ada Izin") ||
 					(row.htsprrd.st_clock_out === "EARLY" && row.htsprrd.status_presensi_out === "Belum ada Izin") ||
 					(row.htsprrd.st_clock_in === "HK" && row.htsprrd.status_presensi_in === "Belum ada Izin") ||
