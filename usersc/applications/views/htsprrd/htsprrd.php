@@ -1149,7 +1149,9 @@
 				htlxxrh_kode = data_multi.map(row => row.htsprrd.htlxxrh_kode);
 				tanggal = data_multi.map(row => row.htsprrd.tanggal);
 				cek = data_multi.map(row => row.htsprrd.cek);
+				id_heyxxmd = data_multi.map(row => row.hemjbmh.id_heyxxmd);
 				id_hemxxmh_select = data_multi.map(row => row.htsprrd.id_hemxxmh);
+				console.log(id_heyxxmd);
 				
 				var btncekNol = data_multi.every(row =>
 					(row.htsprrd.status_presensi_in === "AL" && row.htsprrd.status_presensi_out === "AL") ||
