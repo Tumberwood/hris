@@ -35,7 +35,8 @@
 					->setValue($_SESSION['user']),
 				Field::inst( 'htssctd_tukarhari_pegawai.created_on' )
 					->set( Field::SET_CREATE ),
-				Field::inst( 'htssctd_tukarhari_pegawai.id_hemxxmh' ),
+				Field::inst( 'htssctd_tukarhari_pegawai.id_hemxxmh' )
+					->setFormatter( Format::ifEmpty( 0 ) ),
 
 				Field::inst( 'hemxxmh.nama' ),
 				Field::inst( 'hemxxmh.kode' ),

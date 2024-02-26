@@ -112,6 +112,7 @@
 		var is_need_approval = 1;
 		var id_hosxxmh_old = 0;
 		var is_need_generate_kode = 1;
+		var id_hemxxmh_old = 0;
 		
 		// BEGIN datepicker init
 		$('#periode').datepicker({
@@ -267,7 +268,7 @@
 					// BEGIN of validasi htssctd_tukarhari.tanggal_pengganti 
 					tanggal_pengganti = edthtssctd_tukarhari.field('htssctd_tukarhari.tanggal_pengganti').val();
 					if(!tanggal_pengganti || tanggal_pengganti == ''){
-						edthtssctd_tukarhari.field('htssctd_tukarhari.tanggal_pengganti').error( 'Wajib diisi!' );
+						edthtssctd_tukarhari.field('htssctd_tukarhari.tanggal_pengganti').error( 'htssctd_tukarhari_pegawai!' );
 					}
 					
 					// BEGIN of cek unik htssctd_tukarhari.tanggal_pengganti 
@@ -298,13 +299,13 @@
 					// BEGIN of validasi hosxxmh[].id 
 					id_hosxxmh = edthtssctd_tukarhari.field('hosxxmh[].id').val();
 					if(!id_hosxxmh || id_hosxxmh == ''){
-						edthtssctd_tukarhari.field('hosxxmh[].id').error( 'Wajib diisi!' );
+						edthtssctd_tukarhari.field('hosxxmh[].id').error( 'htssctd_tukarhari_pegawai!' );
 					}
 					
 					// BEGIN of validasi htssctd_tukarhari.tanggal_terpilih 
 					tanggal_terpilih = edthtssctd_tukarhari.field('htssctd_tukarhari.tanggal_terpilih').val();
 					if(!tanggal_terpilih || tanggal_terpilih == ''){
-						edthtssctd_tukarhari.field('htssctd_tukarhari.tanggal_terpilih').error( 'Wajib diisi!' );
+						edthtssctd_tukarhari.field('htssctd_tukarhari.tanggal_terpilih').error( 'htssctd_tukarhari_pegawai!' );
 					}
 					
 					// BEGIN of cek unik htssctd_tukarhari.tanggal_terpilih 
@@ -336,7 +337,7 @@
 					keterangan = edthtssctd_tukarhari.field('htssctd_tukarhari.keterangan').val();
 					if ( ! edthtssctd_tukarhari.field('htssctd_tukarhari.keterangan').isMultiValue() ) {
 						if(!keterangan || keterangan == ''){
-							edthtssctd_tukarhari.field('htssctd_tukarhari.keterangan').error( 'Wajib diisi!' );
+							edthtssctd_tukarhari.field('htssctd_tukarhari.keterangan').error( 'htssctd_tukarhari_pegawai!' );
 						}
 					}
 					// END of validasi htssctd_tukarhari.keterangan
@@ -492,7 +493,43 @@
 						name: "htssctd_tukarhari_pegawai.is_active",
                         type: "hidden",
 						def: 1
-					}
+					},	{
+						label: "Nama <sup class='text-danger'>*<sup>",
+						name: "htssctd_tukarhari_pegawai.id_hemxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/htssctd_tukarhari/hemxxmh_fn_opt_section.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hemxxmh_old: id_hemxxmh_old,
+										id_htssctd_tukarhari: id_htssctd_tukarhari,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
 				]
 			} );
 			
@@ -513,6 +550,10 @@
 			
 			edthtssctd_tukarhari_pegawai.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
+					id_hemxxmh = edthtssctd_tukarhari_pegawai.field('htssctd_tukarhari_pegawai.id_hemxxmh').val();
+					if(!id_hemxxmh || id_hemxxmh == ''){
+						edthtssctd_tukarhari_pegawai.field('htssctd_tukarhari_pegawai.id_hemxxmh').error( 'htssctd_tukarhari_pegawai!' );
+					}
 				}
 				
 				if ( edthtssctd_tukarhari_pegawai.inError() ) {
@@ -561,7 +602,7 @@
 						$table_name  = $nama_tabels_d[0];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
-						$arr_buttons_action 	= ['remove'];
+						$arr_buttons_action 	= ['create', 'edit', 'remove'];
 						$arr_buttons_approve 	= [];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
@@ -586,6 +627,7 @@
 				id_htssctd_tukarhari_pegawai   = data_htssctd_tukarhari_pegawai.id;
 				id_transaksi_d    = id_htssctd_tukarhari_pegawai; // dipakai untuk general
 				is_active_d       = data_htssctd_tukarhari_pegawai.is_active;
+				id_hemxxmh_old       = data_htssctd_tukarhari_pegawai.id_hemxxmh;
 				
 				// atur hak akses
 				CekSelectDetailHD(tblhtssctd_tukarhari, tblhtssctd_tukarhari_pegawai );
@@ -594,6 +636,7 @@
 			tblhtssctd_tukarhari_pegawai.on( 'deselect', function() {
 				id_htssctd_tukarhari_pegawai = '';
 				is_active_d = 0;
+				id_hemxxmh_old = 0;
 				
 				// atur hak akses
 				CekDeselectDetailHD(tblhtssctd_tukarhari, tblhtssctd_tukarhari_pegawai );
