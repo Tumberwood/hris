@@ -1151,8 +1151,8 @@
 				cek = data_multi.map(row => row.htsprrd.cek);
 				id_heyxxmd = data_multi.map(row => row.hemjbmh.id_heyxxmd);
 				id_hemxxmh_select = data_multi.map(row => row.htsprrd.id_hemxxmh);
-				console.log(id_heyxxmd);
-				console.log(cek);
+				// console.log(id_heyxxmd);
+				// console.log(cek);
 				
 				var btncekNol = data_multi.every(row =>
 					(row.htsprrd.status_presensi_in === "AL" && row.htsprrd.status_presensi_out === "AL") ||
