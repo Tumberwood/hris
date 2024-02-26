@@ -1119,6 +1119,7 @@
                         a.is_pot_upah = 0,
                         a.pot_overtime = 0,
                         a.pot_hk = 0,
+                        a.cek = 0,
                         a.durasi_lembur_final = durasi_lembur_total_jam
                     WHERE DAYOFWEEK(:tanggal) = 7 AND id_hemxxmh IN (130, 208) AND a.status_presensi_in = "AL"
                     '
