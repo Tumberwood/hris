@@ -1152,6 +1152,7 @@
 				id_heyxxmd = data_multi.map(row => row.hemjbmh.id_heyxxmd);
 				id_hemxxmh_select = data_multi.map(row => row.htsprrd.id_hemxxmh);
 				console.log(id_heyxxmd);
+				console.log(cek);
 				
 				var btncekNol = data_multi.every(row =>
 					(row.htsprrd.status_presensi_in === "AL" && row.htsprrd.status_presensi_out === "AL") ||
@@ -1161,14 +1162,14 @@
 				tblhtsprrd.button('btncekNol:name').enable(btncekNol);
 				
 				var btnPresensiOK = data_multi.every(row =>
-					(row.htsprrd.htlxxrh_kode.includes("KD/") && row.htsprrd.cek === 1) ||
+					(row.htsprrd.htlxxrh_kode.includes("KD/") && row.htsprrd.cek === "1") ||
 					(row.htsprrd.st_clock_in === "Late" && row.htsprrd.status_presensi_in === "Belum ada Izin") ||
 					(row.htsprrd.st_clock_out === "EARLY" && row.htsprrd.status_presensi_out === "Belum ada Izin") ||
 					(row.htsprrd.st_clock_in === "HK" && row.htsprrd.status_presensi_in === "Belum ada Izin") ||
 					(row.htsprrd.st_clock_out === "HK" && row.htsprrd.status_presensi_out === "Belum ada Izin") ||
-					(row.hemjbmh.id_heyxxmd == 4 && row.htsprrd.cek === 1) ||
+					(row.hemjbmh.id_heyxxmd == "4" && row.htsprrd.cek == "1") ||
 					(row.htsprrd.status_presensi_in === "Jadwal Salah") ||
-					(row.htsprrd.id_hemxxmh_select === 130 || row.htsprrd.id_hemxxmh_select === 134)
+					(row.htsprrd.id_hemxxmh_select == "130" || row.htsprrd.id_hemxxmh_select == "134")
 				);
 
 				tblhtsprrd.button('btnPresensiOK:name').enable(btnPresensiOK);
