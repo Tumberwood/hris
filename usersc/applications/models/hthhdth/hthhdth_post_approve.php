@@ -95,7 +95,7 @@
                         tanggaljam_awal_istirahat,
                         tanggaljam_akhir_istirahat
                     )
-                    SELECT
+                    SELECT DISTINCT
                         CONCAT("Public Holiday - ", :nama),
                         :tanggal,
                         htssctd.id_hemxxmh,
