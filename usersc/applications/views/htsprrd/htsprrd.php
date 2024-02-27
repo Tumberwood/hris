@@ -1186,7 +1186,8 @@
 					(row.htsprrd.id_hemxxmh_select == "130" || row.htsprrd.id_hemxxmh_select == "134")
 				);
 
-				tblhtsprrd.button('btnPresensiOK:name').enable(btnPresensiOK);
+				// tblhtsprrd.button('btnPresensiOK:name').enable(btnPresensiOK);
+				tblhtsprrd.button('btnPresensiOK:name').enable();
 				
 				if (id_htsprrd.length === 0) {
 					tblhtsprrd.button('btncekNol:name').disable();
