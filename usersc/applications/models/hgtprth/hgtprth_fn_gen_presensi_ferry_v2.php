@@ -875,11 +875,13 @@
                             WHEN status_presensi_in = "OFF" AND status_presensi_out = "OFF" THEN 0
                             WHEN status_presensi_in = "Izin Belum Disetujui" THEN 1
                             WHEN status_presensi_in = "Belum Ada Izin" THEN 1
+                            WHEN status_presensi_in = "Jadwal Salah" AND durasi_lembur_total_jam > 0 THEN 0
+                            WHEN status_presensi_in = "Jadwal Salah" AND durasi_lembur_total_jam <= 0 THEN 1
                             WHEN keterangan = "" AND st_clock_in = "No CI" AND status_presensi_in <> "HK" THEN 1
                             WHEN status_presensi_out = "Izin Belum Disetujui" THEN 1
                             WHEN status_presensi_out = "Belum Ada Izin" THEN 1
                             WHEN keterangan = "" AND st_clock_out = "No CO" AND status_presensi_out <> "HK" THEN 1
-                            WHEN status_presensi_in = "Jadwal Salah" THEN 1
+                            -- WHEN status_presensi_in = "Jadwal Salah" THEN 1
                             WHEN status_presensi_in = "AL" THEN 1
                             WHEN kode_absen IS NULL AND (status_presensi_in = "Belum ada Izin" OR status_presensi_out = "Belum ada Izin") THEN 1
                             WHEN id_tukar_jadwal > 0 THEN 1
