@@ -1844,6 +1844,10 @@
                             $is_pot_premi = 1;
                         }
 
+                        if ($durasi_lembur_total_jam > 0 && $status_presensi_in == 'Jadwal Salah') {
+                            $cek = 0;
+                        }
+
                         //INSERT KE REPORT PRESENSI
                         $qi_htsprrd = $db
                             ->query('insert', 'htsprrd')
