@@ -75,6 +75,7 @@
 					'to' =>   'Y-m-d'
 				) ),
 			Field::inst( 'hemjbmh.tanggal_keluar' )
+				->set( Field::SET_CREATE )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === '0000-00-00' || $val === null){
 						echo '';

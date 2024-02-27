@@ -103,7 +103,7 @@
 								<editor-field name="hemjbmh.tanggal_masuk"></editor-field>
 							</div>
 							<div class="col-lg-6">
-								<editor-field name="tanggal_akhir"></editor-field>
+								<editor-field name="hemjbmh.tanggal_keluar"></editor-field>
 							</div>
 						</div>
 						<div class="row">
@@ -681,7 +681,7 @@
 					},
 					{
 						label: "Tanggal Akhir Kontrak",
-						name: "tanggal_akhir",
+						name: "hemjbmh.tanggal_keluar",
 						type: "datetime",
 						def: function () { 
 							return new Date(); 
@@ -812,8 +812,10 @@
 					edthemxxmh.field('status_aktif').show();
 					edthemxxmh.field('status_aktif').val(is_active);
 					edthemxxmh.field('hemjbmh.grup_hk').hide();
+					edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
 				} else {
 					edthemxxmh.field('hemjbmh.grup_hk').show();
+					edthemxxmh.field('hemjbmh.tanggal_keluar').show();
 				}
 			});
 
@@ -836,9 +838,31 @@
 				return {}
 			}, {event: 'keyup change'});
 			
+			edthemxxmh.dependent( 'hemjbmh.id_hesxxmh', function ( val, data, callback ) {
+				id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
+				tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
+				if (id_hesxxmh == 1 || id_hesxxmh  == 5) {
+					edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
+					edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
+				} else {
+					edthemxxmh.field('hemjbmh.tanggal_keluar').show();
+					tanggal_akhir = moment(tanggal_masuk).add('month', 6).format('DD MMM YYYY');
+					edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_akhir);
+				}
+				return {}
+			}, {event: 'keyup change'});
+			
 			edthemxxmh.dependent( 'hemjbmh.tanggal_masuk', function ( val, data, callback ) {
-				tanggal_akhir = moment(val).add('month', 6).subtract(1, 'day').format('DD MMM YYYY');
-				edthemxxmh.field('tanggal_akhir').val(tanggal_akhir);
+				id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
+				tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
+				if (id_hesxxmh == 1 || id_hesxxmh  == 5) {
+					edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
+					edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
+				} else {
+					edthemxxmh.field('hemjbmh.tanggal_keluar').show();
+					tanggal_akhir = moment(tanggal_masuk).add('month', 6).format('DD MMM YYYY');
+					edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_akhir);
+				}
 				return {}
 			}, {event: 'keyup change'});
 			
@@ -1046,6 +1070,22 @@
 						edthemxxmh.field('hemjbmh.id_hesxxmh').error( 'Wajib diisi!' );
 					}
 					// END of validasi hemjbmh.id_hesxxmh 
+					if (id_hesxxmh != 1 && id_hesxxmh  != 5) {
+						console.log(111111111);
+						// BEGIN of validasi hemjbmh.tanggal_keluar 
+						tanggal_keluar = edthemxxmh.field('hemjbmh.tanggal_keluar').val();
+						if(!tanggal_keluar || tanggal_keluar == ''){
+							edthemxxmh.field('hemjbmh.tanggal_keluar').error( 'Wajib diisi!' );
+						}
+						// END of validasi hemjbmh.tanggal_keluar 
+
+						// BEGIN of validasi hemjbmh.tanggal_masuk 
+						tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
+						if(!tanggal_masuk || tanggal_masuk == ''){
+							edthemxxmh.field('hemjbmh.tanggal_masuk').error( 'Wajib diisi!' );
+						}
+						// END of validasi hemjbmh.tanggal_masuk 
+					} 
 
 					if (action == 'create') {
 						// BEGIN of validasi hemjbmh.grup_hk 
