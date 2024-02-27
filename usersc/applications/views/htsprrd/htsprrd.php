@@ -1168,7 +1168,8 @@
 					}
 				});
 
-				// console.log(kode);
+				console.log(st_clock_in);
+				console.log(status_presensi_in);
 				// console.log(cek);
 
 				var btnPresensiOK = data_multi.every(row =>
