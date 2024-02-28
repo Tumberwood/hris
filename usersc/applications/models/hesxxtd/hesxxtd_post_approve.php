@@ -209,6 +209,7 @@
 			->set('id_hesxxmh',$id_hesxxmh)
 			->set($rs_hemjbmh)
 			->set('tanggal_masuk',$tanggal_mulai)
+			->set('tanggal_keluar',$tanggal_selesai)
 			->exec();
 
 			// insert ke hemdcmh
@@ -316,17 +317,17 @@
 			// 	}
 			// }
 
-			$qu_hemxxmh = $db
-				->query('update', 'hemjbmh')
-				->set('tanggal_keluar', $hemjbmh_tgl_akhir)
-				->where('id_hemxxmh', $id_hemxxmh )
-				->exec();
+			// $qu_hemxxmh = $db
+			// 	->query('update', 'hemjbmh')
+			// 	->set('tanggal_keluar', $hemjbmh_tgl_akhir)
+			// 	->where('id_hemxxmh', $id_hemxxmh )
+			// 	->exec();
 			
 			// Untuk rekontrak dapat tambahan kompensasi
 			if ($is_kompensasi == 1) {
 				$qi_htpr = $db
 					->raw()
-					->bind(':tanggal_keluar', $hemjbmh_tgl_akhir)
+					->bind(':tanggal_keluar', $tanggal_selesai)
 					->bind(':id_hemxxmh', $id_hemxxmh)
 					->exec(' INSERT INTO hpy_piutang_d
 							(
@@ -402,7 +403,7 @@
 			// INSERT BULAN INI KE BPJS AGAR TIDAK KENA POTONGAN
 			$qi_bpjs_tk_first = $db
 				->raw()
-				->bind(':hemjbmh_tgl_akhir', $hemjbmh_tgl_akhir)
+				->bind(':tanggal_selesai', $tanggal_selesai)
 				->exec('INSERT INTO bpjs_tk_exclude
 						(
 							id_hemxxmh,
@@ -410,14 +411,14 @@
 						)
 						SELECT
 						' . $id_insert_hemx . ',
-						DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 0 MONTH), "%Y-%m-01")
+						DATE_FORMAT(DATE_ADD(:tanggal_selesai, INTERVAL 0 MONTH), "%Y-%m-01")
 						;
 						'
 						);
 
 			$qi_bpjs_kes_first = $db
 				->raw()
-				->bind(':hemjbmh_tgl_akhir', $hemjbmh_tgl_akhir)
+				->bind(':tanggal_selesai', $tanggal_selesai)
 				->exec('INSERT INTO bpjs_kes_exclude
 						(
 							id_hemxxmh,
@@ -425,7 +426,7 @@
 						)
 						SELECT
 						' . $id_insert_hemx . ',
-						DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 0 MONTH), "%Y-%m-01")
+						DATE_FORMAT(DATE_ADD(:tanggal_selesai, INTERVAL 0 MONTH), "%Y-%m-01")
 						;
 						'
 						);
@@ -433,7 +434,7 @@
 			// insert ke BPJS Kesehatan
 			$qi_bpjs_kes = $db
 			->raw()
-			->bind(':hemjbmh_tgl_akhir', $hemjbmh_tgl_akhir)
+			->bind(':tanggal_selesai', $tanggal_selesai)
 			->exec('INSERT INTO bpjs_kes_exclude
 					(
 						id_hemxxmh,
@@ -442,8 +443,8 @@
 					SELECT
 					' . $id_insert_hemx . ',
 						CASE
-							WHEN DAY(:hemjbmh_tgl_akhir) > 20 THEN DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 2 MONTH), "%Y-%m-01")
-							ELSE DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 1 MONTH), "%Y-%m-01")
+							WHEN DAY(:tanggal_selesai) > 20 THEN DATE_FORMAT(DATE_ADD(:tanggal_selesai, INTERVAL 2 MONTH), "%Y-%m-01")
+							ELSE DATE_FORMAT(DATE_ADD(:tanggal_selesai, INTERVAL 1 MONTH), "%Y-%m-01")
 						END AS Result;
 					'
 					);
@@ -451,7 +452,7 @@
 			// insert ke BPJS TK
 			$qi_bpjs_tk = $db
 			->raw()
-			->bind(':hemjbmh_tgl_akhir', $hemjbmh_tgl_akhir)
+			->bind(':tanggal_selesai', $tanggal_selesai)
 			->exec('INSERT INTO bpjs_tk_exclude
 					(
 						id_hemxxmh,
@@ -460,7 +461,7 @@
 					SELECT
 					' . $id_insert_hemx . ',
 						CASE
-							WHEN DAY(:hemjbmh_tgl_akhir) > 20 THEN DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 1 MONTH), "%Y-%m-01")
+							WHEN DAY(:tanggal_selesai) > 20 THEN DATE_FORMAT(DATE_ADD(:tanggal_selesai, INTERVAL 1 MONTH), "%Y-%m-01")
 							ELSE NULL
 						END AS Result;
 					'
@@ -469,7 +470,7 @@
 			// insert ke BPJS TK Old id_hemxxmh (NIK LAMA)
 			$qi_bpjs_tk_old = $db
 			->raw()
-			->bind(':hemjbmh_tgl_akhir', $hemjbmh_tgl_akhir)
+			->bind(':tanggal_selesai', $tanggal_selesai)
 			->exec('INSERT INTO bpjs_tk_exclude
 					(
 						id_hemxxmh,
@@ -478,7 +479,7 @@
 					SELECT
 					' . $id_hemxxmh . ',
 						CASE
-							WHEN DAY(:hemjbmh_tgl_akhir) <= 20 THEN DATE_FORMAT(DATE_ADD(:hemjbmh_tgl_akhir, INTERVAL 0 MONTH), "%Y-%m-01")
+							WHEN DAY(:tanggal_selesai) <= 20 THEN DATE_FORMAT(DATE_ADD(:tanggal_selesai, INTERVAL 0 MONTH), "%Y-%m-01")
 							ELSE NULL
 						END AS Result;
 					'
@@ -517,11 +518,11 @@
 			->set('tanggal_akhir',$tanggal_selesai)
 			->exec();
 
-			$qu_hemxxmh = $db
-				->query('update', 'hemjbmh')
-				->set('tanggal_keluar', $tanggal_selesai)
-				->where('id_hemxxmh', $id_hemxxmh )
-				->exec();
+			// $qu_hemxxmh = $db
+			// 	->query('update', 'hemjbmh')
+			// 	->set('tanggal_keluar', $tanggal_selesai)
+			// 	->where('id_hemxxmh', $id_hemxxmh )
+			// 	->exec();
 		}
 
 	}elseif($state == 2){
