@@ -78,7 +78,7 @@
                 if (id_htotpmh == 4) {
                     if (jadwal != 1) {
                         if (is_holiday == 1) {
-                            console.log('Add');
+                            // console.log('Add');
                         } else {
                             edthtoemtd.field('htoemtd.id_htotpmh').error( 'Lembur Libur Tidak Bisa dipilih karena Shift Pegawai ini bukan OFF dan tanggal bukan public holiday!' );
                         }
@@ -100,9 +100,9 @@
                 status: "cek"
             },
             success: function ( json ) {
-                console.log(json);
+                // console.log(json);
                 c_approve = json.data.c_approve;
-                console.log('c_approve = ' +c_approve);
+                // console.log('c_approve = ' +c_approve);
                 if (c_approve == 0 && start_date == end_date) {
 				    tblhtoxxth.button('btnApproveTanggal:name').enable();
                 } else {

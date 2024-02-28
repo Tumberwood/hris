@@ -178,7 +178,7 @@
             }
         
         }elseif($state == 2){
-            print_r($id_transaksi_h);
+            // print_r($id_transaksi_h);
             $qd_htoxxrd = $db
                 ->query('delete', 'htoxxrd')
                 ->where('id_htoxxth', $id_transaksi_h )
