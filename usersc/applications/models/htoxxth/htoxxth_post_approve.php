@@ -182,12 +182,12 @@
             $qu_approve = $db
                 ->query('update', 'htoxxth')
                 ->set('is_approve',0)
-                ->where('id_htoxxth',$_POST['id_transaksi_h'])
+                ->where('id_htoxxth',$id_transaksi_h)
                 ->exec();
 
             $qd_htoxxrd = $db
                 ->query('delete', 'htoxxrd')
-                ->where('id_htoxxth', $_POST['id_transaksi_h'] )
+                ->where('id_htoxxth', $id_transaksi_h )
                 ->exec();
 
             foreach ($rs_htoemtd as $row_htoemtd) {
