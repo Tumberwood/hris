@@ -1812,6 +1812,36 @@
                                 WHERE DAYOFWEEK(:tanggal) = 7 AND id_hemxxmh IN (130, 208) AND a.status_presensi_in = "AL"
                                 '
                     );
+
+                    //Case Satpam selain KMJ yang pada tanggal merah, tidak masuk tidak apa2 atau cek = 0 dan Status Presensi dari AL jadi OFF
+                    $qu_satpam = $db
+                        ->raw()
+                        ->bind(':tanggal', $tanggal)
+                        ->exec(' UPDATE htsprrd AS a
+                                LEFT JOIN hemxxmh AS h ON h.id = a.id_hemxxmh
+                                LEFT JOIN hemjbmh AS b ON b.id_hemxxmh = a.id_hemxxmh
+                                LEFT JOIN (
+                                    SELECT
+                                        count(ho.id) AS is_holiday,
+                                        tanggal
+                                    FROM hthhdth AS ho
+                                    WHERE ho.tanggal = :tanggal
+                                ) AS holiday ON holiday.tanggal = a.tanggal
+                                LEFT JOIN (
+                                    SELECT
+                                        count(cu.id) AS is_cuti,
+                                        tanggal
+                                    FROM htlgnth AS cu
+                                    WHERE cu.tanggal = :tanggal
+                                ) AS cuti ON cuti.tanggal = a.tanggal
+                                
+                                SET 
+                                    a.cek = 0,
+                                    a.status_presensi_in = "OFF",
+                                    a.status_presensi_out = "OFF"
+                                WHERE a.tanggal = :tanggal AND b.id_hetxxmh IN (99, 48) AND b.id_heyxxmd <> 4 AND a.status_presensi_in = "AL" AND (is_holiday IS NOT NULL OR is_cuti IS NOT null)
+                                '
+                    );
                 }
             }else{
                 // jika jadwal belum dibuat
