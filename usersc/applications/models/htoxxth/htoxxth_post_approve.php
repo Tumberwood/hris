@@ -178,13 +178,7 @@
             }
         
         }elseif($state == 2){
-
-            $qu_approve = $db
-                ->query('update', 'htoxxth')
-                ->set('is_approve',0)
-                ->where('id_htoxxth',$id_transaksi_h)
-                ->exec();
-
+            print_r($id_transaksi_h);
             $qd_htoxxrd = $db
                 ->query('delete', 'htoxxrd')
                 ->where('id_htoxxth', $id_transaksi_h )
