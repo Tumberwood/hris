@@ -817,8 +817,8 @@
 						async: false,
 						data: {
 							table_name: 'htoemtd',
-							nama_field: 'id_htoxxth,id_htotpmh,id_hemxxmh',
-							nama_field_value: id_htoxxth+','+id_htotpmh+','+id_hemxxmh,
+							nama_field: 'id_htoxxth,id_htotpmh,id_hemxxmh,id_htoxxth',
+							nama_field_value: id_htoxxth+','+id_htotpmh+','+id_hemxxmh+1,
 							id_transaksi: id_htoemtd
 						},
 						success: function ( json ) {
