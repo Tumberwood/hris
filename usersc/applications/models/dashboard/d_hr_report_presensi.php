@@ -151,7 +151,7 @@
 				LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
 				LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
 				LEFT JOIN hetxxmh AS d ON d.id = c.id_hetxxmh
-				WHERE a.tanggal BETWEEN DATE_SUB(:start_date, INTERVAL 1 DAY) AND DATE_ADD(:start_date, INTERVAL 2 DAY) AND b.id = :id_hemxxmh AND a.nama NOT IN ("makan", "istirahat", "makan manual")
+				WHERE a.tanggal BETWEEN DATE_SUB(:start_date, INTERVAL 1 DAY) AND DATE_ADD(:start_date, INTERVAL 2 DAY) AND b.id = :id_hemxxmh AND a.nama NOT IN ("makan", "istirahat", "makan manual") AND a.is_active = 1
 				ORDER BY concat(a.tanggal, " " , a.jam) ASC
 				;
 				'
@@ -170,7 +170,7 @@
 					a.nama as mesin
 				FROM htsprtd AS a
 				LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
-				WHERE a.tanggal BETWEEN :start_date AND CURDATE() AND b.id = :id_hemxxmh AND a.nama IN ("makan", "makan manual")
+				WHERE a.tanggal BETWEEN :start_date AND CURDATE() AND b.id = :id_hemxxmh AND a.nama IN ("makan", "makan manual") AND a.is_active = 1
 				ORDER BY concat(a.tanggal, " " , a.jam) ASC
 				LIMIT 10;
 				'
@@ -189,7 +189,7 @@
 					a.nama as mesin
 				FROM htsprtd AS a
 				LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
-				WHERE a.tanggal BETWEEN :start_date AND CURDATE() AND b.id = :id_hemxxmh AND a.nama = "istirahat"
+				WHERE a.tanggal BETWEEN :start_date AND CURDATE() AND b.id = :id_hemxxmh AND a.nama = "istirahat" AND a.is_active = 1
 				ORDER BY concat(a.tanggal, " " , a.jam) ASC
 				LIMIT 5;
 				'
