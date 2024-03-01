@@ -172,7 +172,7 @@
 				LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
 				WHERE a.tanggal BETWEEN :start_date AND CURDATE() AND b.id = :id_hemxxmh AND a.nama IN ("makan", "makan manual")
 				ORDER BY concat(a.tanggal, " " , a.jam) ASC
-				LIMIT 3;
+				LIMIT 10;
 				'
 				);
 	$rs_makan = $qs_makan->fetchAll();
