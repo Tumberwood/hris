@@ -30,6 +30,7 @@
                 FROM htsprtd AS a
                 WHERE a.tanggal = :tanggal 
                     AND a.kode = :kode_finger
+                    AND a.is_active = 1
                     AND (nama = "Makan" OR nama = "Makan Manual");
     
                 '
