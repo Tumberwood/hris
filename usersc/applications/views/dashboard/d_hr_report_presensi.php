@@ -668,11 +668,12 @@
 						$('#h3_makan').text("Checkclock Makan");
 
 						$('#tblhtsprrd3').DataTable({
-							paging: false,          // Disable pagination
-							searching: false,       // Disable search
-							info: false,            // Disable "Showing X of Y entries" information
-							lengthChange: false,    // Disable "Show X entries" dropdown
+							paging: false,
+							searching: false,
+							info: false,
+							lengthChange: false,
 							responsive: false,
+							scrollY: '125px',
 							scrollCollapse: true,
 							data: json.data3,
 							columns: json.columns3,
