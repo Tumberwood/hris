@@ -1,8 +1,4 @@
 <?php
-    if (!isset($_SESSION['user'])) {
-        header("Location: ".$us_url_root."usersc/applications/views/core/login.php");
-        exit();
-    }
     
     function get_menu_tree($parent_id){
         $db = DB::getInstance();
