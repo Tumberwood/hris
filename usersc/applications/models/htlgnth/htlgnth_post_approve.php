@@ -27,47 +27,7 @@
         $rs_htlgnth = $qs_htlgnth->fetch();
 
         if ($state == 1) {
-            //INI TETAP DIINSERT
-            $qr_htsprrd = $db
-                ->raw()
-                ->bind(':is_active', 1)
-                ->exec('
-                    INSERT INTO htlxxrh
-                        (
-                            id_transaksi,
-                            id_htlgrmh,
-                            id_htlxxmh,
-                            id_hemxxmh,
-                            kode,
-                            tanggal,
-                            keterangan,
-                            jenis,
-                            htlxxmh_kode,
-                            htlgrmh_kode,
-                            jumlah,
-                            jam_awal,
-                            jam_akhir
-                        )
-                    SELECT
-                        ' . $_POST['id_transaksi_h'] . ',
-                        2,
-                        2,
-                        hemxxmh.id,
-                        "'.$rs_htlgnth["kode"].'",
-                        "'.$rs_htlgnth["tanggal"].'",
-                        "'.$rs_htlgnth["nama"].'",
-                        1,
-                        "CB",
-                        "CB",
-                        1,
-                        null,
-                        null
-                    FROM
-                        hemxxmh
-                    LEFT JOIN hemjbmh AS jb ON jb.id_hemxxmh = hemxxmh.id
-                    WHERE 
-                        hemxxmh.is_active = :is_active AND jb.id_hetxxmh NOT IN (99, 48);
-                ');
+            
             // BEGIN non aktif
             $qd_terpilih = $db
                 ->query('delete', 'htssctd')
@@ -87,16 +47,16 @@
                     a.is_active = 0,
                     a.keterangan = CONCAT("Cuti Bersama - ", :keterangan)
                 WHERE 
-                    tanggal = :tanggal AND jb.id_hetxxmh NOT IN (99, 48)
-                    AND a.is_active = 1
-                    ;
+                    a.is_active = 1
+                AND a.tanggal = :tanggal
+                AND NOT (
+                    id_hetxxmh IN (99, 48) 
+                    OR id_heyxxmd = 1 
+                    OR (id_heyxxmd = 2 AND id_hesxxmh = 2) 
+                    OR (id_heyxxmd = 3 AND id_hesxxmh = 2)
+                    OR id_htsxxmh = 1
+                );
             ');
-            //     ->query('update', 'htssctd')
-            //     ->set('is_active',0)
-            //     ->set('keterangan', "Cuti Bersama - " . $rs_htlgnth["nama"])
-            //     ->where('tanggal', $rs_htlgnth["tanggal"])
-            //     ->where('is_active', 1)
-            // ->exec();
 
             // Begin insert pengaju
             $qr_tanggal = $db
@@ -154,9 +114,114 @@
                     LEFT JOIN hemjbmh AS jb on jb.id_hemxxmh = htssctd.id_hemxxmh
                     WHERE 
                         tanggal = :tanggal
-                    AND keterangan = CONCAT("Cuti Bersama - ", :nama) AND jb.id_hetxxmh NOT IN (99, 48)
+                    AND keterangan = CONCAT("Cuti Bersama - ", :nama) 
                 ');
             // END insert pengaju
+
+            // Update Untuk mendapatkan flag
+            $qu_tanggal = $db
+                ->raw()
+                ->bind(':tanggal', $rs_htlgnth["tanggal"])
+                ->exec('UPDATE htssctd AS jad
+                        LEFT JOIN 
+                        (
+                            SELECT
+                                a.id_hemxxmh,
+                                "sisa saldo cuti",
+                                :tanggal,
+                                SUM(
+                                    CASE
+                                        WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0) + IFNULL(c_rd,0))
+                                        ELSE 0
+                                    END
+                                ) AS sisa_saldo
+                            FROM htlxxrh AS a
+                            -- employee
+                            LEFT JOIN hemxxmh AS peg ON peg.id = a.id_hemxxmh
+                            LEFT JOIN hemjbmh AS jb ON jb.id_hemxxmh = peg.id
+                            -- Izin yang memotong Cuti
+                            LEFT JOIN (
+                                SELECT
+                                    rh.id_hemxxmh,
+                                    COUNT(rh.id) AS c_cb
+                                FROM htlxxrh AS rh
+                                LEFT JOIN htlxxmh AS mh ON mh.id = rh.id_htlxxmh
+                                WHERE YEAR(rh.tanggal) = YEAR(:tanggal) AND rh.jenis = 1 AND mh.is_potongcuti = 1
+                                GROUP BY rh.id_hemxxmh
+                            ) AS cb ON cb.id_hemxxmh = a.id_hemxxmh
+                            
+                            LEFT JOIN (
+                                SELECT
+                                    a.id AS id_presensi,
+                                    id_hemxxmh,
+                                    COUNT(a.id) AS c_rd
+                                FROM htsprrd AS a
+                                WHERE YEAR(a.tanggal) = YEAR(:tanggal) AND a.status_presensi_in = "AL"
+                                GROUP BY id_hemxxmh
+                            ) AS rd ON rd.id_hemxxmh = a.id_hemxxmh
+                            
+                            WHERE YEAR(a.tanggal) = YEAR(:tanggal) AND jb.is_checkclock = 1 AND a.nama = "saldo"
+                            GROUP BY a.id_hemxxmh
+                        ) AS sal ON sal.id_hemxxmh = jad.id_hemxxmh
+                        LEFT JOIN hemjbmh AS jb ON jb.id_hemxxmh = jad.id_hemxxmh
+                        SET 
+                            jad.is_pot_hk = 
+                                case 
+                                    when ifnull(sisa_saldo,0) = 0 AND jad.id_htsxxmh <> 1 AND id_hetxxmh NOT IN (99, 48) then 1
+                                    when ifnull(sisa_saldo,0) = 0 AND jad.keterangan LIKE "%cuti bersama%" then 1
+                                ELSE 0
+                                END ,
+                            jad.is_pot_cuti = if(IFNULL(sisa_saldo,0) > 0 AND jad.keterangan LIKE "%cuti bersama%", 1, 0)
+                        WHERE jad.tanggal = :tanggal
+                        AND jad.is_active = 1;
+                ');
+            //End flag is_pot_hk dan is_pot_cuti
+            
+            //INI TETAP DIINSERT
+            $qr_htsprrd = $db
+                ->raw()
+                ->bind(':tanggal', $rs_htlgnth["tanggal"])
+                ->exec('
+                    INSERT INTO htlxxrh
+                        (
+                            id_transaksi,
+                            id_htlgrmh,
+                            id_htlxxmh,
+                            id_hemxxmh,
+                            kode,
+                            tanggal,
+                            keterangan,
+                            jenis,
+                            htlxxmh_kode,
+                            htlgrmh_kode,
+                            jumlah,
+                            jam_awal,
+                            jam_akhir
+                        )
+                    SELECT
+                        ' . $_POST['id_transaksi_h'] . ',
+                        2,
+                        2,
+                        hem.id,
+                        "'.$rs_htlgnth["kode"].'",
+                        "'.$rs_htlgnth["tanggal"].'",
+                        "'.$rs_htlgnth["nama"].'",
+                        1,
+                        "CB",
+                        "CB",
+                        1,
+                        null,
+                        null
+                        FROM
+                            htssctd AS a
+                        LEFT JOIN hemxxmh AS hem ON hem.id = a.id_hemxxmh
+                        LEFT JOIN hemjbmh AS jb ON jb.id_hemxxmh = hem.id
+                        WHERE 
+                            a.is_active = 1
+                        AND a.tanggal = :tanggal
+                        AND a.is_pot_cuti = 1
+                ');
+            // BEGIN non aktif
 
         } else if($state == 2) {
             $qd_htl = $db
@@ -171,26 +236,16 @@
                 ->bind(':tanggal', $rs_htlgnth["tanggal"])
                 ->bind(':nama', $rs_htlgnth["nama"])
                 ->exec(' DELETE FROM htssctd
-                        WHERE 
-                            id_hemxxmh IN (
-                                SELECT
-                                    id_hemxxmh
-                                FROM hemjbmh
-                                WHERE id_hetxxmh NOT IN (99, 48)
-                            )
-                            AND is_active = 1
+                        WHERE is_active = 1
                             AND tanggal = :tanggal
                             AND keterangan = CONCAT("Cuti Bersama - ", :nama)
                             ;
                     ');
-                // ->query('delete', 'htssctd')
-                // ->where('is_active', 1)
-                // ->where('tanggal', $rs_htlgnth["tanggal"])
-            // ->exec();
             
             $qu_htssctd = $db
                 ->query('update', 'htssctd')
                 ->set('is_active', 1)
+                ->set('keterangan', "")
                 ->where('is_active',0)
                 ->where('tanggal', $rs_htlgnth["tanggal"])
             ->exec();
