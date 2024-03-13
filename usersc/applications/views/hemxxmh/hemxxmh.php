@@ -221,6 +221,7 @@
 							</div>
 							<div role="tabpanel" id="tabhtlxxth" class="tab-pane">
 								<div class="panel-body">
+									<h3 id="sisa_cuti_text">AKOWKOK</h3>
 									<div class="table-responsive">
 										<table id="tblhtlxxth" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
@@ -1255,6 +1256,23 @@
 				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth, tblhemjbrd];
 				CekSelectHeaderHD(tblhemxxmh, tbl_details);
 
+				$('#sisa_cuti_text').empty();
+				const tanggal = moment().format('YYYY-MM-DD');
+				const year = moment().format('YYYY');
+
+				$.ajax( {
+					url: "../../models/htlxxth/fn_sisa_saldo_cuti.php",
+					dataType: 'json',
+					type: 'POST',
+					data: {
+						tanggal: tanggal,
+						id_hemxxmh: id_hemxxmh
+					},
+					success: function ( json ) {
+						saldo = json.data.rs_saldo.sisa_saldo;
+						$('#sisa_cuti_text').html('Sisa Cuti '+ year + ' : ' +saldo);
+					}
+				} );
 			} );
 			
 			tblhemxxmh.on( 'deselect', function () {
@@ -1267,6 +1285,8 @@
 				// atur hak akses
 				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth, tblhemjbrd];
 				CekDeselectHeaderHD(tblhemxxmh, tbl_details);
+				
+				$('#sisa_cuti_text').empty();
 			} );
 			
 // --------- start _detail --------------- //

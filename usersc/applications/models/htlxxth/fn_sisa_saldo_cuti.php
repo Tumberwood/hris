@@ -76,6 +76,9 @@
                 '
                 );
     $rs_saldo = $qs_saldo->fetch();
+    if(empty($rs_saldo)) {
+        $rs_saldo['sisa_saldo'] = 0;
+    }
 
     $data = array(
         'rs_saldo' => $rs_saldo
