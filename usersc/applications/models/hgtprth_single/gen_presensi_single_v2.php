@@ -167,7 +167,7 @@
                         SELECT hemxxmh.id
                         FROM hemxxmh
                         LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = hemxxmh.id
-                        WHERE hemjbmh.id_heyxxmh = :id_heyxxmh
+                        WHERE hemjbmh.id_hemxxmh = :id_heyxxmh
                     )
                 '
     );
@@ -176,7 +176,7 @@
     $qd_htsprrd = $db
         ->query('delete', 'htsprrd')
         ->where('htsprrd.tanggal',$tanggal)
-        ->where( 'htsprrd.id_hemxxmh', '(SELECT hemxxmh.id FROM hemxxmh LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = hemxxmh.id WHERE hemjbmh.id_heyxxmh = ' . $id_heyxxmh . ')', 'IN', false )
+        ->where( 'htsprrd.id_hemxxmh', '(SELECT hemxxmh.id FROM hemxxmh LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = hemxxmh.id WHERE hemjbmh.id_hemxxmh = ' . $id_heyxxmh . ')', 'IN', false )
         ->exec();
     // END delete old data
     
@@ -201,7 +201,7 @@
         ->where('hemjbmh.tanggal_masuk', $tanggal, '<=' )
         ->where('hemxxmh.is_active', 1 )
         ->where('hemjbmh.is_checkclock', 1 ) // skip yang tidak perlu checkclock
-        ->where('hemjbmh.id_heyxxmh', $id_heyxxmh ) // skip yang tidak perlu checkclock
+        ->where('hemjbmh.id_hemxxmh', $id_heyxxmh ) // skip yang tidak perlu checkclock
         ->exec();
     $rs_hemxxmh = $qs_hemxxmh->fetchAll();
 
@@ -2065,10 +2065,10 @@
             }
         }
         // di commit per karyawan
-        $qu_hgtprth = $db
-            ->query('update', 'hgtprth')
+        $qu_hgtprth_single = $db
+            ->query('update', 'hgtprth_single')
             ->set('generated_on',$timestamp)
-            ->where('id_heyxxmh',$id_heyxxmh)
+            ->where('id_hemxxmh',$id_hemxxmh)
             ->where('tanggal',$tanggal)
         ->exec();
         

@@ -1177,9 +1177,12 @@
                                 if(!empty($rs_htsprtd_break)){
                                     // $potongan_ti_jam = 0;
                                     // jika $durasi_break_menit > 20, maka TI tidak berlaku
+                                    // jika $durasi_break_menit > 30, revisi jadi 30 menit
+                                    // -Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
+                                    
                                     // jika check clock istirahat gitang, dianggap tidak melewati 20 menit
                                     if($row_htoxxrd['is_istirahat'] == 2){
-                                        if($durasi_break_menit > 20){
+                                        if($durasi_break_menit > 30){
                                             $potongan_ti_menit = 30;
                                             $potongan_ti_jam = 0.5;
 

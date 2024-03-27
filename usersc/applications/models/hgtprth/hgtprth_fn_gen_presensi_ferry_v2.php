@@ -395,8 +395,9 @@
                         jadwal.tanggaljam_awal_t1,
                         jadwal.tanggaljam_awal_t2,  
                         jadwal.tanggaljam_akhir_t1,
-                        jadwal.tanggaljam_akhir_t2,  
-                        IF(a.is_pot_makan = 1 AND ceklok_makan > 0, ceklok_makan, 0) AS is_makan
+                        jadwal.tanggaljam_akhir_t2, 
+                        IF(a.is_pot_makan = 1 AND ceklok_makan > 0, ceklok_makan, 0) AS is_makan,
+                        pot_jam_keluar_istirahat
 
                     FROM hemxxmh AS a
                     LEFT JOIN hemjbmh AS b ON b.id_hemxxmh = a.id
@@ -618,7 +619,9 @@
                                     if(is_istirahat = 2, 1, 0)  AS is_pot_ti,
                                     if(is_istirahat = 2, durasi_break_menit, 0)  AS durasi_break_menit,
                                     CASE
-                                        WHEN is_istirahat = 2 AND durasi_break_menit > 20 THEN 0.5
+                                    -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
+                                    -- disetting jika menit_toleransi_ti dari settingan itu null, maka belum tanggalnya
+                                        WHEN is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_ti, 0) THEN 0.5
                                         ELSE 0
                                     END AS potongan_ti_jam
                                 FROM htoxxrd as hto
@@ -641,6 +644,27 @@
 
                                 ) AS cek_istirahat ON cek_istirahat.id_hemxxmh = hto.id_hemxxmh
 
+                                -- menit_toleransi_ti settingan
+                                LEFT JOIN (
+                                    SELECT
+                                        is_active,
+                                        tanggal_efektif,
+                                        IFNULL(menit, 0) AS menit_toleransi_ti
+                                    FROM (
+                                        SELECT
+                                            id,
+                                            is_active,
+                                            tanggal_efektif,
+                                            menit,
+                                            ROW_NUMBER() OVER (PARTITION BY nama ORDER BY tanggal_efektif DESC) AS row_num
+                                        FROM htpr_ti
+                                        WHERE
+                                            htpr_ti.nama = "Toleransi TI"
+                                            AND tanggal_efektif <= :tanggal
+                                    ) AS subquery
+                                    WHERE row_num = 1
+                                ) menit_toleransi_ti ON menit_toleransi_ti.is_active = 1
+
                                 WHERE hto.tanggal = :tanggal AND hto.is_active = 1
                                 GROUP BY hto.id_htoemtd
                             )
@@ -648,6 +672,78 @@
                         GROUP BY
                             ot.id_hemxxmh, id_jadwal
                     ) AS lembur ON lembur.id_hemxxmh = a.id
+
+                    -- keluar waktu istirahat
+                    LEFT JOIN (
+                        SELECT
+                            ot.id as id_hemxxmh,
+                            jumlah_grup,
+                            kode,
+                            nama,
+                            id_jadwal,
+                            pot_jam_keluar_istirahat,
+                            tanggal
+                        FROM(
+                                SELECT
+                                    hem.*,
+                                    jumlah_grup,
+                                    id_jadwal,
+                                    tanggal,
+                                    durasi_break_menit,
+                                    CASE
+                                    -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
+                                        WHEN jb.jumlah_grup = 2 AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
+                                        ELSE 0
+                                    END AS pot_jam_keluar_istirahat
+                                FROM hemxxmh as hem
+                                INNER JOIN hemjbmh as jb on jb.id_hemxxmh = hem.id
+
+                                -- ceklok ISTIRAHAT
+                                LEFT JOIN (
+                                    SELECT
+                                        a.id_hemxxmh,
+                                        a.id AS id_jadwal,
+                                        a.tanggal,
+                                        concat(c.tanggal," ",c.jam) AS ceklok_istirahat,
+                                        TIMESTAMPDIFF(MINUTE,MIN(CONCAT(c.tanggal," ",c.jam)),	MAX(CONCAT(c.tanggal," ",c.jam))) as durasi_break_menit
+                                    FROM htssctd AS a
+                                    LEFT JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
+                                    LEFT JOIN htsprtd AS c ON c.kode = b.kode_finger
+                                    WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
+                                        AND c.nama IN ("os", "out", "staff", "pmi", "istirahat")
+                                        AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+                                    GROUP BY a.id
+                                    ORDER BY ceklok_istirahat
+
+                                ) AS cek_istirahat ON cek_istirahat.id_hemxxmh = hem.id
+
+                                -- menit_toleransi_keluar_istirahat settingan
+                                LEFT JOIN (
+                                    SELECT
+                                        is_active,
+                                        tanggal_efektif,
+                                        IFNULL(menit, 0) AS menit_toleransi_keluar_istirahat
+                                    FROM (
+                                        SELECT
+                                            id,
+                                            is_active,
+                                            tanggal_efektif,
+                                            menit,
+                                            ROW_NUMBER() OVER (PARTITION BY nama ORDER BY tanggal_efektif DESC) AS row_num
+                                        FROM htpr_ti
+                                        WHERE
+                                            htpr_ti.nama = "Toleransi Keluar Istirahat"
+                                            AND tanggal_efektif <= :tanggal
+                                    ) AS subquery
+                                    WHERE row_num = 1
+                                ) menit_toleransi_keluar_istirahat ON menit_toleransi_keluar_istirahat.is_active = 1
+
+                                WHERE cek_istirahat.tanggal = :tanggal AND hem.is_active = 1
+                            )
+                            AS ot
+                        GROUP BY
+                            ot.id, id_jadwal
+                    ) AS keluar_isirahat on keluar_isirahat.id_hemxxmh = a.id
                     
                     -- Ambil lembur mati dari htpr_hesxxmh untuk pelatihan
                     LEFT JOIN (
@@ -888,7 +984,7 @@
                             ELSE 0
                         END AS cek,
 
-                        IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_early, 0) + IFNULL(pot_jam_izin,0) AS total_pot_jam
+                        IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_early, 0) + IFNULL(pot_jam_izin,0) + ifnull(pot_jam_keluar_istirahat,0) AS total_pot_jam
                     FROM perhitungan
                 ),
                 hitung_pot_ti AS (
