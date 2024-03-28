@@ -677,6 +677,8 @@
                             nama,
                             id_jadwal,
                             pot_jam_keluar_istirahat,
+                            ceklok_istirahat,
+                            ceklok_makan_case_keluar_istirahat,
                             tanggal
                         FROM(
                                 SELECT
@@ -684,9 +686,12 @@
                                     jumlah_grup,
                                     id_jadwal,
                                     tanggal,
-                                    durasi_break_menit,
+                                    ceklok_istirahat,
+                                    ceklok_makan_case_keluar_istirahat,
                                     CASE
-                                    -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
+                                        -- apabila 4 grup sudah ada finger makan atau inputan makan manual, maka tidak boleh ada finger keluar di mesin PMI, KBM, atau Istirahat. Jika diketahui ada makan dan ada finger keluar (meskipun <30 menit), maka akan dipotong 1 jam.
+                                        WHEN jb.jumlah_grup = 2 AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 AND ceklok_istirahat IS NOT NULL THEN 1
+                                    	-- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
                                         WHEN jb.jumlah_grup = 2 AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
                                         ELSE 0
                                     END AS pot_jam_keluar_istirahat
@@ -712,6 +717,21 @@
 
                                 ) AS cek_istirahat ON cek_istirahat.id_hemxxmh = hem.id
 
+                                 -- ceklok makan
+                                LEFT JOIN (
+                                    SELECT
+                                        a.id_hemxxmh,
+                                        COUNT(c.id) AS ceklok_makan_case_keluar_istirahat
+                                    FROM htssctd AS a
+                                    LEFT JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
+                                    LEFT JOIN htsprtd AS c ON c.kode = b.kode_finger
+                                    WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
+                                        AND c.nama IN ("makan", "makan manual")
+                                        AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
+                                    GROUP BY a.id
+
+                                ) AS cek_makan ON cek_makan.id_hemxxmh = hem.id
+                                
                                 -- menit_toleransi_keluar_istirahat settingan
                                 LEFT JOIN (
                                     SELECT
