@@ -14,7 +14,14 @@
     $page        = $_GET['page'];
     $resultCount = 10;
     $offset      = ($page - 1) * $resultCount;
-    $tanggal = date('Y-m-d');
+    // $tanggal = date('Y-m-d');
+
+    //Permisi pak, ijin bertanya. Kenapa ya saya tidak bisa membuat perubah status rekontrak untuk nanda 2630?
+    //case yang sudah resign tanggalny diubah 1 bulan yang lalu batasnya dari today
+    $tanggal_bulan_sebelumnya = new DateTime();
+    $tanggal_bulan_sebelumnya->modify('-1 month');
+    $tanggal_akhir = $tanggal_bulan_sebelumnya->format('Y-m-d');
+
     
     // END select2 pagination preparation
 
@@ -95,10 +102,10 @@
         ->where('hemjbmh.id_heyxxmh', $w_id_heyxxmh, $s_id_heyxxmh, false )
         ->where('hemjbmh.id_hesxxmh', $w_id_hesxxmh, $s_id_hesxxmh)
         ->where('hemxxmh.id', $id_hemxxmh_old, '<>' )
-        ->where( function ( $q ) use ($tanggal) {
+        ->where( function ( $q ) use ($tanggal_akhir) {
             $q
               ->where( 'hemjbmh.tanggal_keluar', null)
-              ->or_where( 'hemjbmh.tanggal_keluar', $tanggal , '>' ); //revisi dari < menjadi >
+              ->or_where( 'hemjbmh.tanggal_keluar', $tanggal_akhir , '>' ); //revisi dari < menjadi >
         } )
         ->where( function ( $r ) {
             $q = $_GET['search'];
