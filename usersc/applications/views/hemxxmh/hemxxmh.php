@@ -842,7 +842,7 @@
 			edthemxxmh.dependent( 'hemjbmh.id_hesxxmh', function ( val, data, callback ) {
 				id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
 				tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
-				if (id_hesxxmh == 1 || id_hesxxmh  == 5) {
+				if (id_hesxxmh == 1 || id_hesxxmh  == 5 || id_hesxxmh  == 4) {
 					edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
 					edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
 				} else {
@@ -856,7 +856,7 @@
 			edthemxxmh.dependent( 'hemjbmh.tanggal_masuk', function ( val, data, callback ) {
 				id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
 				tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
-				if (id_hesxxmh == 1 || id_hesxxmh  == 5) {
+				if (id_hesxxmh == 1 || id_hesxxmh  == 5 || id_hesxxmh  == 4) {
 					edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
 					edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
 				} else {
@@ -1071,22 +1071,13 @@
 						edthemxxmh.field('hemjbmh.id_hesxxmh').error( 'Wajib diisi!' );
 					}
 					// END of validasi hemjbmh.id_hesxxmh 
-					if (id_hesxxmh != 1 && id_hesxxmh  != 5) {
-						console.log(111111111);
-						// BEGIN of validasi hemjbmh.tanggal_keluar 
-						tanggal_keluar = edthemxxmh.field('hemjbmh.tanggal_keluar').val();
-						if(!tanggal_keluar || tanggal_keluar == ''){
-							edthemxxmh.field('hemjbmh.tanggal_keluar').error( 'Wajib diisi!' );
-						}
-						// END of validasi hemjbmh.tanggal_keluar 
 
-						// BEGIN of validasi hemjbmh.tanggal_masuk 
-						tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
-						if(!tanggal_masuk || tanggal_masuk == ''){
-							edthemxxmh.field('hemjbmh.tanggal_masuk').error( 'Wajib diisi!' );
-						}
-						// END of validasi hemjbmh.tanggal_masuk 
-					} 
+					// BEGIN of validasi hemjbmh.tanggal_masuk 
+					tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
+					if(!tanggal_masuk || tanggal_masuk == ''){
+						edthemxxmh.field('hemjbmh.tanggal_masuk').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemjbmh.tanggal_masuk 
 
 					if (action == 'create') {
 						// BEGIN of validasi hemjbmh.grup_hk 

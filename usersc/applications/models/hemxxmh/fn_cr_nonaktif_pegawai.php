@@ -85,7 +85,7 @@
 			->exec('UPDATE hemxxmh AS a
 					LEFT JOIN hemjbmh AS b ON b.id_hemxxmh = a.id
 					SET a.is_active = 0
-					WHERE b.tanggal_keluar < DATE_SUB(CURDATE(), INTERVAL 2 MONTH) AND a.is_active = 1;
+					WHERE b.tanggal_keluar < DATE_SUB(CURDATE(), INTERVAL 2 MONTH) AND a.is_active = 1 AND id_hesxxmh <> 4;
 					;
 					'
 					);
