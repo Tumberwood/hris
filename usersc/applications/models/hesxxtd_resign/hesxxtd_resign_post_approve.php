@@ -21,23 +21,24 @@
 	$id_hesxxtd = $_POST['id_transaksi_h'];
 	$state = $_POST['state'];
 
+	$qs_hesxxtd = $db
+		->query('select', 'hesxxtd_resign' )
+		->get([
+			'hesxxtd_resign.kode as kode_hesxxtd',
+			'hesxxtd_resign.id_hemxxmh as id_hemxxmh',
+			'hesxxtd_resign.tanggal_selesai as tanggal_selesai',
+		] )
+		->where('hesxxtd_resign.id', $id_hesxxtd )
+		->join('hemxxmh','hemxxmh.id = hesxxtd_resign.id_hemxxmh','LEFT' )
+		->exec();
+
+	$rs_hesxxtd = $qs_hesxxtd->fetch();
+	
+	$id_hemxxmh = $rs_hesxxtd['id_hemxxmh'];
+	$kode_hesxxtd = $rs_hesxxtd['kode_hesxxtd'];
+
 	if($state == 1){
 
-		$qs_hesxxtd = $db
-			->query('select', 'hesxxtd_resign' )
-			->get([
-				'hesxxtd_resign.kode as kode_hesxxtd',
-				'hesxxtd_resign.id_hemxxmh as id_hemxxmh',
-				'hesxxtd_resign.tanggal_selesai as tanggal_selesai',
-			] )
-			->where('hesxxtd_resign.id', $id_hesxxtd )
-			->join('hemxxmh','hemxxmh.id = hesxxtd_resign.id_hemxxmh','LEFT' )
-			->exec();
-
-		$rs_hesxxtd = $qs_hesxxtd->fetch();
-
-		$kode_hesxxtd = $rs_hesxxtd['kode_hesxxtd'];
-		$id_hemxxmh = $rs_hesxxtd['id_hemxxmh'];
 		$tanggal_selesai = $rs_hesxxtd['tanggal_selesai'];
 
 		// ini untuk insert
@@ -103,6 +104,20 @@
 			->where('id_hemxxmh', $id_hemxxmh )
 			->exec();
 
+	} else {
+
+		$qd_hemjbrd = $db
+			->query('delete', 'hemjbrd')
+			->where('id_hemxxmh', $id_hemxxmh )
+			->where('id_harxxmh',4)
+			// ->where('kode', $kode_hesxxtd)
+			->exec();
+			
+		$qu_hemxxmh = $db
+			->query('update', 'hemjbmh')
+			->set('tanggal_keluar', null)
+			->where('id_hemxxmh', $id_hemxxmh )
+			->exec();
 	}
 
 	
