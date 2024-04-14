@@ -22,6 +22,7 @@
     function get_tgl_keluar(){
         id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
         tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
+        // console.log(id_hemxxmh);
 
         $.ajax( {
             url: "../../models/hemxxmh/fn_get_tgl_resign n_terminasi.php",
