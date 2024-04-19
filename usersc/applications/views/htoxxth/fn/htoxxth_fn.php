@@ -73,14 +73,18 @@
             },
             success: function ( json ) {
                 jadwal = json.data.jadwal;
+                jabatan = json.data.jabatan;
                 is_holiday = json.data.is_holiday;
                 
-                if (id_htotpmh == 4) {
-                    if (jadwal != 1) {
-                        if (is_holiday == 1) {
-                            // console.log('Add');
-                        } else {
-                            edthtoemtd.field('htoemtd.id_htotpmh').error( 'Lembur Libur Tidak Bisa dipilih karena Shift Pegawai ini bukan OFF dan tanggal bukan public holiday!' );
+                //Jika Bukan Security atau  koor satpam maka ikut validasi harus off atau ada public holiday saat mengajukan lembur libur
+                if(jabatan != 48 || jabatan != 99) {
+                    if (id_htotpmh == 4) {
+                        if (jadwal != 1) {
+                            if (is_holiday == 1) {
+                                // console.log('Add');
+                            } else {
+                                edthtoemtd.field('htoemtd.id_htotpmh').error( 'Lembur Libur Tidak Bisa dipilih karena Shift Pegawai ini bukan OFF dan tanggal bukan public holiday!' );
+                            }
                         }
                     }
                 }

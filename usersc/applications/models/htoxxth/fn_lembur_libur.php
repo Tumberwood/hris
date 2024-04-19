@@ -16,6 +16,15 @@
     $tanggal_select = new Carbon($_POST['tanggal']); //gunakan carbon untuk ambil data tanggal
     $tanggal = $tanggal_select->format('Y-m-d'); //format jadi 2023-09-12
 
+    $qs_jabatan = $db
+        ->query('select', 'hemxxmh' )
+        ->get(['id_hetxxmh'] )
+        ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
+        ->where('id_hemxxmh', $id_hemxxmh )
+        ->exec();
+    $rs_jabatan = $qs_jabatan->fetch();
+    $jabatan = $rs_jabatan['id_hetxxmh'];
+
     $qs_jadwal = $db
         ->query('select', 'htssctd')
         ->get([
@@ -47,6 +56,7 @@
     
     $data = array(
         'jadwal' => $jadwal,
+        'jabatan' => $jabatan,
         'is_holiday' => $is_holiday
     );
     
