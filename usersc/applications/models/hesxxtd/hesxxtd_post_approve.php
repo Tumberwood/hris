@@ -21,37 +21,38 @@
 	$id_hesxxtd = $_POST['id_transaksi_h'];
 	$state = $_POST['state'];
 
+	$qs_hesxxtd = $db
+		->query('select', 'hesxxtd' )
+		->get([
+			'hesxxtd.kode as kode_hesxxtd',
+			'hesxxtd.id_hemxxmh as id_hemxxmh',
+			'hesxxtd.id_hesxxmh as id_hesxxmh',
+			'hesxxtd.tanggal_mulai as tanggal_mulai',
+			'hesxxtd.tanggal_selesai as tanggal_selesai',
+			'hesxxtd.id_hesxxmh_tetap as id_hesxxmh_tetap',
+			'hesxxtd.keterangan as keterangan',
+			'hesxxtd.keputusan as keputusan',
+			'hemxxmh.kode as kode',
+			'hesxxtd.nik_baru as nik_baru'
+		] )
+		->where('hesxxtd.id', $id_hesxxtd )
+		->join('hemxxmh','hemxxmh.id = hesxxtd.id_hemxxmh','LEFT' )
+		->exec();
+
+	$rs_hesxxtd = $qs_hesxxtd->fetch();
+
+	$kode_hesxxtd = $rs_hesxxtd['kode_hesxxtd'];
+	$keputusan = $rs_hesxxtd['keputusan'];
+	$id_hemxxmh = $rs_hesxxtd['id_hemxxmh'];
+	$tanggal_selesai = $rs_hesxxtd['tanggal_selesai'];
+	$tanggal_mulai = $rs_hesxxtd['tanggal_mulai'];
+	$id_hesxxmh = $rs_hesxxtd['id_hesxxmh'];
+	$id_hesxxmh_tetap = $rs_hesxxtd['id_hesxxmh_tetap'];
+	$nik_baru = $rs_hesxxtd['nik_baru'];
+	$kode_lama = $rs_hesxxtd['kode'];
+
 	if($state == 1){
 
-		$qs_hesxxtd = $db
-			->query('select', 'hesxxtd' )
-			->get([
-				'hesxxtd.kode as kode_hesxxtd',
-				'hesxxtd.id_hemxxmh as id_hemxxmh',
-				'hesxxtd.id_hesxxmh as id_hesxxmh',
-				'hesxxtd.tanggal_mulai as tanggal_mulai',
-				'hesxxtd.tanggal_selesai as tanggal_selesai',
-				'hesxxtd.id_hesxxmh_tetap as id_hesxxmh_tetap',
-				'hesxxtd.keterangan as keterangan',
-				'hesxxtd.keputusan as keputusan',
-				'hemxxmh.kode as kode',
-				'hesxxtd.nik_baru as nik_baru'
-			] )
-			->where('hesxxtd.id', $id_hesxxtd )
-			->join('hemxxmh','hemxxmh.id = hesxxtd.id_hemxxmh','LEFT' )
-			->exec();
-
-		$rs_hesxxtd = $qs_hesxxtd->fetch();
-
-		$kode_hesxxtd = $rs_hesxxtd['kode_hesxxtd'];
-		$keputusan = $rs_hesxxtd['keputusan'];
-		$id_hemxxmh = $rs_hesxxtd['id_hemxxmh'];
-		$tanggal_selesai = $rs_hesxxtd['tanggal_selesai'];
-		$tanggal_mulai = $rs_hesxxtd['tanggal_mulai'];
-		$id_hesxxmh = $rs_hesxxtd['id_hesxxmh'];
-		$id_hesxxmh_tetap = $rs_hesxxtd['id_hesxxmh_tetap'];
-		$nik_baru = $rs_hesxxtd['nik_baru'];
-		$kode_lama = $rs_hesxxtd['kode'];
 
 		// ini untuk flag
 		$qs_flag_status = $db
@@ -323,6 +324,19 @@
 			// 	->where('id_hemxxmh', $id_hemxxmh )
 			// 	->exec();
 			
+			//Update masih muncul di cek 1, padahal ybs sudah naik ke reguler (nik baru) sejak 12/4. Bu Cia 27 Apr 2024 WA Grup HRIS PMI
+			$qs_keluar = $db
+				->raw()
+				->bind(':id_hemxxmh', $id_hemxxmh)
+				->exec(' UPDATE hemjbmh b
+						SET 
+							b.tanggal_keluar =  IF(b.tanggal_keluar IS NULL, DATE_SUB(DATE_ADD(b.tanggal_masuk, INTERVAL 6 MONTH), INTERVAL 1 DAY), b.tanggal_keluar)
+						WHERE
+							b.id_hemxxmh = :id_hemxxmh;
+				
+						'
+			);
+			
 			// Untuk rekontrak dapat tambahan kompensasi
 			if ($is_kompensasi == 1) {
 				$qi_htpr = $db
@@ -525,17 +539,12 @@
 			// 	->exec();
 		}
 
-	}elseif($state == 2){
+	}else {
 		$qd_hemxxmh = $db
 			->query('delete', 'hemxxmh')
 			->where('kode', $nik_baru )
 			->exec();
 
-	}elseif($state == -9){
-		$qd_hemxxmh = $db
-			->query('delete', 'hemxxmh')
-			->where('kode', $nik_baru )
-			->exec();
 	}
 
 	
