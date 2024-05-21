@@ -454,7 +454,7 @@
                         LEFT JOIN htsprtd AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                             AND c.nama IN ("os", "out", "staff", "pmi")
-                            AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(:tanggal, " 09:00:00") AND DATE_ADD(CONCAT(:tanggal, " 05:00:00"), INTERVAL 1 DAY)
+                            AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(:tanggal, " 09:00:00") AND DATE_ADD(CONCAT(:tanggal, " 04:00:00"), INTERVAL 1 DAY)
                         GROUP BY a.id
                         ORDER BY ceklok_luar
 
@@ -907,7 +907,7 @@
                         -- STATUS PRESENSI IN
                         CASE
                             WHEN kode_absen IS NOT NULL AND keterangan <> "" AND id_htsxxmh <> 1 THEN kode_kondite
-                            WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND id_htsxxmh <> 1 AND ceklok_luar IS NOT NULL THEN "Jadwal Salah"
+                            WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND ceklok_luar IS NOT NULL THEN "Jadwal Salah"
                             WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND id_htsxxmh <> 1 AND ceklok_luar IS NULL THEN "AL"
                             WHEN st_clock_in = "NO CI" AND st_clock_out = "NO CO" AND id_htsxxmh = 1 THEN "OFF"
                             WHEN st_clock_in = "OK" AND st_clock_out = "OK" THEN "HK"
@@ -921,7 +921,7 @@
                         -- STATUS PRESENSI OUT
                         CASE
                             WHEN kode_absen IS NOT NULL AND keterangan <> "" AND id_htsxxmh <> 1 THEN kode_kondite
-                            WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND id_htsxxmh <> 1 AND ceklok_luar IS NOT NULL THEN "Jadwal Salah"
+                            WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND ceklok_luar IS NOT NULL THEN "Jadwal Salah"
                             WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND id_htsxxmh <> 1 AND ceklok_luar IS NULL THEN "AL"
                             WHEN st_clock_in = "NO CI" AND st_clock_out = "NO CO" AND id_htsxxmh = 1 THEN "OFF"
                             WHEN st_clock_in = "OK" AND st_clock_out = "OK" THEN "HK"
