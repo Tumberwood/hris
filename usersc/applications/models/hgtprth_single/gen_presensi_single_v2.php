@@ -907,7 +907,7 @@
                         -- STATUS PRESENSI IN
                         CASE
                             WHEN kode_absen IS NOT NULL AND keterangan <> "" AND id_htsxxmh <> 1 THEN kode_kondite
-                            WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND ceklok_luar IS NOT NULL THEN "Jadwal Salah"
+                            WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND id_htsxxmh <> 1 AND ceklok_luar IS NOT NULL THEN "Jadwal Salah"
                             WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND id_htsxxmh <> 1 AND ceklok_luar IS NULL THEN "AL"
                             WHEN st_clock_in = "NO CI" AND st_clock_out = "NO CO" AND id_htsxxmh = 1 THEN "OFF"
                             WHEN st_clock_in = "OK" AND st_clock_out = "OK" THEN "HK"
@@ -921,7 +921,7 @@
                         -- STATUS PRESENSI OUT
                         CASE
                             WHEN kode_absen IS NOT NULL AND keterangan <> "" AND id_htsxxmh <> 1 THEN kode_kondite
-                            WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND ceklok_luar IS NOT NULL THEN "Jadwal Salah"
+                            WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND id_htsxxmh <> 1 AND ceklok_luar IS NOT NULL THEN "Jadwal Salah"
                             WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND id_htsxxmh <> 1 AND ceklok_luar IS NULL THEN "AL"
                             WHEN st_clock_in = "NO CI" AND st_clock_out = "NO CO" AND id_htsxxmh = 1 THEN "OFF"
                             WHEN st_clock_in = "OK" AND st_clock_out = "OK" THEN "HK"
