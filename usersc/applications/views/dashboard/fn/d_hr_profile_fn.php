@@ -31,8 +31,8 @@
                 // tanggal_akhir: tanggal_akhir
             },
             success: function ( json ) {
-                c_laki = json.data.hemxxmh_gender[0]['c_gender'];
-                c_perempuan = json.data.hemxxmh_gender[1]['c_gender'];
+                c_laki = json.data.hemxxmh_gender[1]['c_gender'];
+                c_perempuan = json.data.hemxxmh_gender[2]['c_gender'];
                 c_total = c_laki  + c_perempuan;
 
                 p_laki = (c_laki / c_total * 100).toFixed(2);
