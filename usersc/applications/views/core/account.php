@@ -66,7 +66,7 @@
 			                    <input type="submit" name="uncloak" value="Uncloak!" class='btn btn-danger btn-block'>
 		                    </form><br>
 		                <?php }?>
-		                <?php includeHook($hooks, 'body'); ?>
+		                <?php //includeHook($hooks, 'body'); ?>
 	                </div>
                     <div class="col-sm-12 col-md-9">
                         <h1 id="username"><?=echousername($user->data()->id); ?></h1>

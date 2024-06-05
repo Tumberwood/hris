@@ -270,25 +270,37 @@
 
                             <div class="form-group" id="fname-group">
                                 <label id="fname-label"><?=lang('GEN_FNAME'); ?></label>
-                                <input  class='form-control' type='text' id='fname' name='fname' value='<?=$userdetails->fname; ?>' autocomplete="off" />
+                                <input  class='form-control' type='text' id='fname' name='fname' value='<?=$userdetails->fname; ?>' autocomplete="off" <?php if (($settings->change_un == 0) || (($settings->change_un == 2) && ($userdetails->un_changed == 1))) {?>readonly<?php } ?>>
+                                
+                                <?php if (($settings->change_un == 0) || (($settings->change_un == 2) && ($userdetails->un_changed == 1))) {?>
+                                <?php } ?>
                             </div>
 
                             <div class="form-group" id="lname-group">
                                 <label id="lname-label"><?=lang('GEN_LNAME'); ?></label>
-                                <input  class='form-control' type='text' id="lname-label" name='lname' value='<?=$userdetails->lname; ?>' autocomplete="off" />
+                                <input  class='form-control' type='text' id="lname-label" name='lname' value='<?=$userdetails->lname; ?>' autocomplete="off" <?php if (($settings->change_un == 0) || (($settings->change_un == 2) && ($userdetails->un_changed == 1))) {?>readonly<?php } ?>>
+                                
+                                <?php if (($settings->change_un == 0) || (($settings->change_un == 2) && ($userdetails->un_changed == 1))) {?>
+                                <?php } ?>
                             </div>
 
                             <div class="form-group" id="email-group">
                                 <label id="email-label"><?=lang('GEN_EMAIL'); ?></label>
-                                <input class='form-control' type='text' id="email" name='email' value='<?=$userdetails->email; ?>' autocomplete="off" />
+                                <input class='form-control' type='text' id="email" name='email' value='<?=$userdetails->email; ?>' autocomplete="off" <?php if (($settings->change_un == 0) || (($settings->change_un == 2) && ($userdetails->un_changed == 1))) {?>readonly<?php } ?>>
                                 <?php if (!is_null($userdetails->email_new)) {?><br /><div class="alert alert-danger">
                                 <?=lang('SET_NOTE1'); ?> <?=$userdetails->email_new; ?> <?=lang('SET_NOTE2'); ?>
                                 </div><?php } ?>
+                                
+                                <?php if (($settings->change_un == 0) || (($settings->change_un == 2) && ($userdetails->un_changed == 1))) {?>
+                                <?php } ?>
                             </div>
 
                             <div class="form-group" id="confemail-group">
                                 <label id="confemail-label"><?=lang('EML_CONF'); ?></label>
-                                <input class='form-control' type='text' id="confemail" name='confemail' autocomplete="off" />
+                                <input class='form-control' type='text' id="confemail" name='confemail' autocomplete="off" <?php if (($settings->change_un == 0) || (($settings->change_un == 2) && ($userdetails->un_changed == 1))) {?>readonly<?php } ?>>
+                                
+                                <?php if (($settings->change_un == 0) || (($settings->change_un == 2) && ($userdetails->un_changed == 1))) {?>
+                                <?php } ?>
                             </div>
 
                             <div class="form-group" id="password-group">
@@ -364,3 +376,18 @@
 
 <!-- do not erase -->
 <?php require_once $abs_us_root.$us_url_root.'users/includes/html_footer.php'; ?>
+
+<script>
+    $(document).ready(function() {
+        $('.password_view_control').hover(function() {
+            $('#password').attr('type', 'text');
+            $('#confirm').attr('type', 'text');
+            $('#old').attr('type', 'text');
+        }, function() {
+            $('#password').attr('type', 'password');
+            $('#confirm').attr('type', 'password');
+            $('#old').attr('type', 'password');
+        });
+    
+    });
+</script>
