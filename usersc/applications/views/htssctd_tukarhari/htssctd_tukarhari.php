@@ -438,9 +438,9 @@
 				id_hosxxmh_old        = data_htssctd_tukarhari.id_hosxxmh;
 
 				if (is_approve == 1) {
-					tblhtssctd_tukarhari.button('btnRemove:name').disable();
+					tblhtssctd_tukarhari_pegawai.button('btnRemove:name').disable();
 				} else {
-					tblhtssctd_tukarhari.button('btnRemove:name').enable();
+					tblhtssctd_tukarhari_pegawai.button('btnRemove:name').enable();
 
 				}
 				
