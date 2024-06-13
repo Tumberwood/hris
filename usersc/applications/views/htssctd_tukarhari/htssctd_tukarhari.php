@@ -627,7 +627,15 @@
 				id_htssctd_tukarhari_pegawai   = data_htssctd_tukarhari_pegawai.id;
 				id_transaksi_d    = id_htssctd_tukarhari_pegawai; // dipakai untuk general
 				is_active_d       = data_htssctd_tukarhari_pegawai.is_active;
+				is_approve       = data_htssctd_tukarhari_pegawai.is_approve;
 				id_hemxxmh_old       = data_htssctd_tukarhari_pegawai.id_hemxxmh;
+
+				if (is_approve == 1) {
+					tblhtssctd_tukarhari_pegawai.button('btnRemove:name').disable();
+				} else {
+					tblhtssctd_tukarhari_pegawai.button('btnRemove:name').enable();
+
+				}
 				
 				// atur hak akses
 				CekSelectDetailHD(tblhtssctd_tukarhari, tblhtssctd_tukarhari_pegawai );
