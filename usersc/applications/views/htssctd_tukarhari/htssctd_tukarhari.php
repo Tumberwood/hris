@@ -436,6 +436,10 @@
 				is_jurnal        = data_htssctd_tukarhari.is_jurnal;
 				is_active        = data_htssctd_tukarhari.is_active;
 				id_hosxxmh_old        = data_htssctd_tukarhari.id_hosxxmh;
+				
+				// atur hak akses
+				tbl_details = [tblhtssctd_tukarhari_pegawai];
+				CekSelectHeaderHD(tblhtssctd_tukarhari, tbl_details);
 
 				if (is_approve == 1) {
 					tblhtssctd_tukarhari_pegawai.button('btnRemove:name').disable();
@@ -443,10 +447,6 @@
 					tblhtssctd_tukarhari_pegawai.button('btnRemove:name').enable();
 
 				}
-				
-				// atur hak akses
-				tbl_details = [tblhtssctd_tukarhari_pegawai];
-				CekSelectHeaderHD(tblhtssctd_tukarhari, tbl_details);
 
 			} );
 			
