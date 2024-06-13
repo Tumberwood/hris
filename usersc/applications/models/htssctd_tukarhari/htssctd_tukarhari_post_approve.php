@@ -44,6 +44,7 @@
                 'id_hemxxmh'
             ] )
             ->where('id_htssctd_tukarhari', $id_transaksi_h )
+            ->where('is_active', 1 )
             ->exec();
         $rs_htssctd_tukarhari_pegawai = $qs_htssctd_tukarhari_pegawai->fetchAll();
 

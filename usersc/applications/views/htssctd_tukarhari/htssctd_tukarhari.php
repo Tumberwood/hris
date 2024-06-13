@@ -441,13 +441,6 @@
 				tbl_details = [tblhtssctd_tukarhari_pegawai];
 				CekSelectHeaderHD(tblhtssctd_tukarhari, tbl_details);
 
-				if (is_approve == 1) {
-					tblhtssctd_tukarhari_pegawai.button('btnRemove:name').disable();
-				} else {
-					tblhtssctd_tukarhari_pegawai.button('btnRemove:name').enable();
-
-				}
-
 			} );
 			
 			tblhtssctd_tukarhari.on( 'deselect', function () {
@@ -609,7 +602,7 @@
 						$table_name  = $nama_tabels_d[0];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
-						$arr_buttons_action 	= ['create', 'edit', 'remove'];
+						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_d'];
 						$arr_buttons_approve 	= [];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
