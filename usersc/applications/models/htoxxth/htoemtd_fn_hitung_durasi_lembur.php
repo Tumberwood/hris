@@ -24,8 +24,10 @@
             $subminutes = 0;
         }elseif($is_istirahat == 1){
             $subminutes = 60;
-        }else{
+        }elseif($is_istirahat == 1){
             $subminutes = 30;
+        } else {
+            $subminutes = 120;
         }
 
         $jam_awal	= new Carbon($values['htoemtd']['jam_awal']);

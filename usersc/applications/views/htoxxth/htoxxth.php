@@ -711,6 +711,7 @@
 						options: [
 							{ "label": "Ya", "value": 1 },
 							{ "label": "TI", "value":2 },
+							{ "label": "Istirahat 2x", "value":3 },
 							{ "label": "Tidak", "value": 0 }
 						]
 					}, 	
@@ -899,6 +900,8 @@
 								return 'Ya';
 							}else if(data == 2){
 								return 'TI';
+							}else if(data == 3){
+								return 'Istirahat 2x';
 							}else{
 								return '';
 							}
