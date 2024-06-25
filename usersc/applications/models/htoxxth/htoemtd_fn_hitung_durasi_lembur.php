@@ -24,7 +24,7 @@
             $subminutes = 0;
         }elseif($is_istirahat == 1){
             $subminutes = 60;
-        }elseif($is_istirahat == 1){
+        }elseif($is_istirahat == 2){
             $subminutes = 30;
         } else {
             $subminutes = 120;
