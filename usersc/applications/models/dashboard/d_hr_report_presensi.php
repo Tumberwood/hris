@@ -141,7 +141,7 @@
 		->raw()
 		->bind(':start_date', $start_date)
 		->bind(':id_hemxxmh', $id_hemxxmh)
-		->exec('SELECT
+		->exec('SELECT DISTINCT
 					concat(b.kode, " - ", b.nama, " - ", d.nama) as nama,
 					a.id_hemxxmh,
 					a.jam,
