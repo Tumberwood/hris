@@ -15,7 +15,7 @@
 
     $tanggal_select = new Carbon($_POST['tanggal']); //gunakan carbon untuk ambil data tanggal
     $tanggal = $tanggal_select->format('Y-m-d'); //format jadi 2023-09-12
-
+    $id_hemxxmh = $_POST['id_hemxxmh'];
     $qs_jabatan = $db
         ->query('select', 'hemxxmh' )
         ->get(['id_hetxxmh'] )
