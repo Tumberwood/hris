@@ -389,6 +389,7 @@
 								dataType: 'json',
 								type: 'POST',
 								data: {
+									id_hgtprth: id_hgtprth,
 									tanggal_select: tanggal_select,
 									id_heyxxmh_select: id_heyxxmh_select,
 									timestamp: timestamp

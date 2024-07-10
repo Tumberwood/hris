@@ -25,6 +25,7 @@
     // outsourcing or organik
     $id_heyxxmh     = $_POST['id_heyxxmh_select'];
     $timestamp     = $_POST['timestamp']; //tambah timestamp untuk view
+    $id_hgtprth     = $_POST['id_hgtprth']; //tambah timestamp untuk view
     // print_r($timestamp);
 
     // INSERT DATA BACKUP / OLD
@@ -373,153 +374,153 @@
                 // $total_shift = count($rs_htssctd);
                 // print_r($total_shift);
 
-////////////////////////////// LEVEL 1 JADWAL //////////////////////////////
+                ////////////////////////////// LEVEL 1 JADWAL //////////////////////////////
 
-                if(!empty($rs_htssctd)){
-                    foreach ($rs_htssctd as $key => $jadwal) {
-                        // jika jadwal sudah dibuat
-                        $id_shift  = $jadwal['id_htsxxmh'];
-                        $shift_in  = $jadwal['jam_awal'];
-                        $shift_out = $jadwal['jam_akhir'];
-                        $st_jadwal = $jadwal['htsxxmh_kode'];
+                                if(!empty($rs_htssctd)){
+                                    foreach ($rs_htssctd as $key => $jadwal) {
+                                        // jika jadwal sudah dibuat
+                                        $id_shift  = $jadwal['id_htsxxmh'];
+                                        $shift_in  = $jadwal['jam_awal'];
+                                        $shift_out = $jadwal['jam_akhir'];
+                                        $st_jadwal = $jadwal['htsxxmh_kode'];
 
-                        $tanggaljam_awal_t1         = $jadwal['tanggaljam_awal_t1'];
-                        $tanggaljam_awal            = $jadwal['tanggaljam_awal'];
+                                        $tanggaljam_awal_t1         = $jadwal['tanggaljam_awal_t1'];
+                                        $tanggaljam_awal            = $jadwal['tanggaljam_awal'];
 
-                        // BEGIN untuk keperluan toleransi terlambat
-                        $tanggaljam_awal_toleransi  = $jadwal['tanggaljam_awal'];
-                        $tanggaljam_awal_toleransi  = new Carbon($tanggaljam_awal_toleransi);
-                        $tanggaljam_awal_toleransi  = $tanggaljam_awal_toleransi->subMinutes($menit_toleransi_terlambat);
+                                        // BEGIN untuk keperluan toleransi terlambat
+                                        $tanggaljam_awal_toleransi  = $jadwal['tanggaljam_awal'];
+                                        $tanggaljam_awal_toleransi  = new Carbon($tanggaljam_awal_toleransi);
+                                        $tanggaljam_awal_toleransi  = $tanggaljam_awal_toleransi->subMinutes($menit_toleransi_terlambat);
 
-                        $tanggaljam_akhir_toleransi  = $jadwal['tanggaljam_awal'];
-                        $tanggaljam_akhir_toleransi  = new Carbon($tanggaljam_akhir_toleransi);
-                        $tanggaljam_akhir_toleransi  = $tanggaljam_akhir_toleransi->addMinutes($menit_toleransi_terlambat);
-                        // END untuk keperluan toleransi terlambat
+                                        $tanggaljam_akhir_toleransi  = $jadwal['tanggaljam_awal'];
+                                        $tanggaljam_akhir_toleransi  = new Carbon($tanggaljam_akhir_toleransi);
+                                        $tanggaljam_akhir_toleransi  = $tanggaljam_akhir_toleransi->addMinutes($menit_toleransi_terlambat);
+                                        // END untuk keperluan toleransi terlambat
 
-                        $tanggaljam_awal_t2         = $jadwal['tanggaljam_awal_t2'];
-                        $tanggaljam_akhir_t1        = $jadwal['tanggaljam_akhir_t1'];
-                        $tanggaljam_akhir           = $jadwal['tanggaljam_akhir'];
-                        $tanggaljam_akhir_t2        = $jadwal['tanggaljam_akhir_t2'];
+                                        $tanggaljam_awal_t2         = $jadwal['tanggaljam_awal_t2'];
+                                        $tanggaljam_akhir_t1        = $jadwal['tanggaljam_akhir_t1'];
+                                        $tanggaljam_akhir           = $jadwal['tanggaljam_akhir'];
+                                        $tanggaljam_akhir_t2        = $jadwal['tanggaljam_akhir_t2'];
 
-                        // BEGIN untuk keperluan toleransi terlambat Late +1 jam 26 Dec Ferry
-                        $tanggaljam_akhir_toleransi_min1jam  = $jadwal['tanggaljam_awal'];
-                        $tanggaljam_akhir_toleransi_min1jam  = new Carbon($tanggaljam_akhir_toleransi_min1jam);
-                        $tanggaljam_akhir_toleransi_min1jam  = $tanggaljam_akhir_toleransi_min1jam->addMinutes(65);
-                        // END untuk keperluan toleransi terlambat
+                                        // BEGIN untuk keperluan toleransi terlambat Late +1 jam 26 Dec Ferry
+                                        $tanggaljam_akhir_toleransi_min1jam  = $jadwal['tanggaljam_awal'];
+                                        $tanggaljam_akhir_toleransi_min1jam  = new Carbon($tanggaljam_akhir_toleransi_min1jam);
+                                        $tanggaljam_akhir_toleransi_min1jam  = $tanggaljam_akhir_toleransi_min1jam->addMinutes(65);
+                                        // END untuk keperluan toleransi terlambat
 
-                        // BEGIN untuk keperluan toleransi terlambat
-                        $tanggaljam_akhir_min1  = $jadwal['tanggaljam_akhir'];
-                        $tanggaljam_akhir_min1  = new Carbon($tanggaljam_akhir_min1);
-                        $tanggaljam_akhir_min1  = $tanggaljam_akhir_min1->subMinutes(60);
-                        // END untuk keperluan toleransi terlambat
+                                        // BEGIN untuk keperluan toleransi terlambat
+                                        $tanggaljam_akhir_min1  = $jadwal['tanggaljam_akhir'];
+                                        $tanggaljam_akhir_min1  = new Carbon($tanggaljam_akhir_min1);
+                                        $tanggaljam_akhir_min1  = $tanggaljam_akhir_min1->subMinutes(60);
+                                        // END untuk keperluan toleransi terlambat
 
-                        // add by Ferry untuk is_makan akhir t2 - 1 jam
-                        $akhir_t2_min_1jam          = new DateTime($tanggaljam_akhir_t2);
-                        $akhir_t2_min_1jam->modify('-1 hour');
-                        $tanggaljam_akhir_t2_min_hour = $akhir_t2_min_1jam->format('Y-m-d H:i:s');
+                                        // add by Ferry untuk is_makan akhir t2 - 1 jam
+                                        $akhir_t2_min_1jam          = new DateTime($tanggaljam_akhir_t2);
+                                        $akhir_t2_min_1jam->modify('-1 hour');
+                                        $tanggaljam_akhir_t2_min_hour = $akhir_t2_min_1jam->format('Y-m-d H:i:s');
 
-                        $tanggaljam_awal_istirahat  = $jadwal['tanggaljam_awal_istirahat'];
-                        $tanggaljam_akhir_istirahat = $jadwal['tanggaljam_akhir_istirahat'];
+                                        $tanggaljam_awal_istirahat  = $jadwal['tanggaljam_awal_istirahat'];
+                                        $tanggaljam_akhir_istirahat = $jadwal['tanggaljam_akhir_istirahat'];
 
-                        // init var
-                        $pot_jam_late = 0;
-                        $pot_jam_izin = 0;
-                        $pot_jam_early = 0;
-                        $pot_jam_final = 0;
-                        $potongan_ti_jam = 0;
+                                        // init var
+                                        $pot_jam_late = 0;
+                                        $pot_jam_izin = 0;
+                                        $pot_jam_early = 0;
+                                        $pot_jam_final = 0;
+                                        $potongan_ti_jam = 0;
 
-                        $durasi_lembur_final = 0;
-                        $nominal_lembur_jam = 0;
-                        $nominal_lembur_final = 0;
-                        $is_makan = 0;
-                        $is_pot_premi = 0;
-                        $is_pot_upah = 0;
-                        $pot_overtime = 0;
-                        $pot_hk = 0;
+                                        $durasi_lembur_final = 0;
+                                        $nominal_lembur_jam = 0;
+                                        $nominal_lembur_final = 0;
+                                        $is_makan = 0;
+                                        $is_pot_premi = 0;
+                                        $is_pot_upah = 0;
+                                        $pot_overtime = 0;
+                                        $pot_hk = 0;
 
-////////////////////////////// LEVEL 2 - CHECKCLOCK //////////////////////////////
-                        //STEP 2 CEK CHECK IN
-                        $qs_htsprtd_clock_in = $db
-                            ->query('select', 'htsprtd')
-                            ->get([
-                                'CONCAT(htsprtd.tanggal, " ", htsprtd.jam) as dt_checkclock'
-                            ])
-                            ->where('htsprtd.kode', $row_hemxxmh['kode_finger'])
-                            ->where('htsprtd.nama', '("os", "out", "staff", "pmi")', 'IN', false )
-                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_t1, '>=' )
-                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_t2, '<=' )
-                            ->order('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)')
-                            ->exec();
-                        $rs_htsprtd_clock_in = $qs_htsprtd_clock_in->fetch();
-                        // print_r($rs_htsprtd_clock_in);
-                        
-                        if (!empty($rs_htsprtd_clock_in)) {
-                            $ceklok_in = new Carbon($rs_htsprtd_clock_in['dt_checkclock']);
-                            if($ceklok_in >= $tanggaljam_awal_t1 && $ceklok_in <= $tanggaljam_awal_toleransi){
-                                $clock_in           = $ceklok_in;
-                                $st_clock_in        = 'OK';
-                                // $status_presensi_in = 'OK';
-                            } else if($ceklok_in >= $tanggaljam_awal_toleransi && $ceklok_in <= $tanggaljam_akhir_toleransi){
-                                $clock_in           = $ceklok_in;
-                                $st_clock_in        = 'Late 1';
-                                $is_pot_premi = 1;
-                                // $status_presensi_in = 'Late 1';
-                            } else if($ceklok_in >= $tanggaljam_akhir_toleransi && $ceklok_in <= $tanggaljam_awal_t2){
-                                $clock_in           = $ceklok_in;
-                                $st_clock_in        = 'Late';
-                                $is_pot_premi = 1;
-                                // $status_presensi_in = 'Late';
-                                
-                                // hitung potongan jam late (DIPINDAH DI STEP 5 IZIN)
-                                // $pot_jam_late_cek       = $clock_in->diffInMinutes($tanggaljam_awal_toleransi);
-                                // $pot_jam_late           = ceil($pot_jam_late_cek/60);
-                            }
-                        } else {
-                            $clock_in           = null;
-                            $st_clock_in        = 'No CI';
-                            // $status_presensi_in = 'No CI';
-                        }
+                ////////////////////////////// LEVEL 2 - CHECKCLOCK //////////////////////////////
+                                        //STEP 2 CEK CHECK IN
+                                        $qs_htsprtd_clock_in = $db
+                                            ->query('select', 'htsprtd')
+                                            ->get([
+                                                'CONCAT(htsprtd.tanggal, " ", htsprtd.jam) as dt_checkclock'
+                                            ])
+                                            ->where('htsprtd.kode', $row_hemxxmh['kode_finger'])
+                                            ->where('htsprtd.nama', '("os", "out", "staff", "pmi")', 'IN', false )
+                                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_t1, '>=' )
+                                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_t2, '<=' )
+                                            ->order('CONCAT(htsprtd.tanggal, " ", htsprtd.jam)')
+                                            ->exec();
+                                        $rs_htsprtd_clock_in = $qs_htsprtd_clock_in->fetch();
+                                        // print_r($rs_htsprtd_clock_in);
+                                        
+                                        if (!empty($rs_htsprtd_clock_in)) {
+                                            $ceklok_in = new Carbon($rs_htsprtd_clock_in['dt_checkclock']);
+                                            if($ceklok_in >= $tanggaljam_awal_t1 && $ceklok_in <= $tanggaljam_awal_toleransi){
+                                                $clock_in           = $ceklok_in;
+                                                $st_clock_in        = 'OK';
+                                                // $status_presensi_in = 'OK';
+                                            } else if($ceklok_in >= $tanggaljam_awal_toleransi && $ceklok_in <= $tanggaljam_akhir_toleransi){
+                                                $clock_in           = $ceklok_in;
+                                                $st_clock_in        = 'Late 1';
+                                                $is_pot_premi = 1;
+                                                // $status_presensi_in = 'Late 1';
+                                            } else if($ceklok_in >= $tanggaljam_akhir_toleransi && $ceklok_in <= $tanggaljam_awal_t2){
+                                                $clock_in           = $ceklok_in;
+                                                $st_clock_in        = 'Late';
+                                                $is_pot_premi = 1;
+                                                // $status_presensi_in = 'Late';
+                                                
+                                                // hitung potongan jam late (DIPINDAH DI STEP 5 IZIN)
+                                                // $pot_jam_late_cek       = $clock_in->diffInMinutes($tanggaljam_awal_toleransi);
+                                                // $pot_jam_late           = ceil($pot_jam_late_cek/60);
+                                            }
+                                        } else {
+                                            $clock_in           = null;
+                                            $st_clock_in        = 'No CI';
+                                            // $status_presensi_in = 'No CI';
+                                        }
 
-                        // print_r($pot_jam_late . '<br>');
+                                        // print_r($pot_jam_late . '<br>');
 
-                        //STEP 3 clock_out
-                        // BEGIN check clock_out
-                        $qs_htsprtd_clock_out = $db
-                            ->query('select', 'htsprtd' )
-                            ->get([
-                                'concat(htsprtd.tanggal," ",htsprtd.jam) as dt_checkclock'
-                            ] )
-                            
-                            ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
-                            ->where('htsprtd.nama', '("os", "out", "staff", "pmi")', 'IN', false )
-                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t1, '>=' )
-                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t2, '<=' )
-                            ->order('concat(htsprtd.tanggal," ",htsprtd.jam) DESC')
-                            ->exec();
-                        $rs_htsprtd_clock_out = $qs_htsprtd_clock_out->fetch();
+                                        //STEP 3 clock_out
+                                        // BEGIN check clock_out
+                                        $qs_htsprtd_clock_out = $db
+                                            ->query('select', 'htsprtd' )
+                                            ->get([
+                                                'concat(htsprtd.tanggal," ",htsprtd.jam) as dt_checkclock'
+                                            ] )
+                                            
+                                            ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
+                                            ->where('htsprtd.nama', '("os", "out", "staff", "pmi")', 'IN', false )
+                                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t1, '>=' )
+                                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t2, '<=' )
+                                            ->order('concat(htsprtd.tanggal," ",htsprtd.jam) DESC')
+                                            ->exec();
+                                        $rs_htsprtd_clock_out = $qs_htsprtd_clock_out->fetch();
 
-                        if (!empty($rs_htsprtd_clock_out)) {
-                            $ceklok_out = new Carbon($rs_htsprtd_clock_out['dt_checkclock']);
-                            if($ceklok_out >= $tanggaljam_akhir && $ceklok_out <= $tanggaljam_akhir_t2){
-                                $clock_out           = $ceklok_out;
-                                $st_clock_out        = 'OK';
-                                // $status_presensi_out = 'OK';
-                            } else if($ceklok_out >= $tanggaljam_akhir_t1 && $ceklok_out <= $tanggaljam_akhir){
-                                $clock_out           = $ceklok_out;
-                                $st_clock_out        = 'EARLY';
-                                // $status_presensi_out = 'EARLY';
-                                
-                                // hitung potongan jam early (DIPINDAH DI STEP 5 IZIN)
-                                // $pot_jam_early_cek     = $clock_out->diffInMinutes($tanggaljam_akhir);
-                                // $pot_jam_early   = ceil($pot_jam_early_cek/60);
-                            }
-                        } else {
-                            $clock_out           = null;
-                            $st_clock_out        = 'No CO';
-                            // $status_presensi_out = 'No CO';
-                        }
-                        
-////////////////////////////// LEVEL 3 - ABSEN //////////////////////////////
+                                        if (!empty($rs_htsprtd_clock_out)) {
+                                            $ceklok_out = new Carbon($rs_htsprtd_clock_out['dt_checkclock']);
+                                            if($ceklok_out >= $tanggaljam_akhir && $ceklok_out <= $tanggaljam_akhir_t2){
+                                                $clock_out           = $ceklok_out;
+                                                $st_clock_out        = 'OK';
+                                                // $status_presensi_out = 'OK';
+                                            } else if($ceklok_out >= $tanggaljam_akhir_t1 && $ceklok_out <= $tanggaljam_akhir){
+                                                $clock_out           = $ceklok_out;
+                                                $st_clock_out        = 'EARLY';
+                                                // $status_presensi_out = 'EARLY';
+                                                
+                                                // hitung potongan jam early (DIPINDAH DI STEP 5 IZIN)
+                                                // $pot_jam_early_cek     = $clock_out->diffInMinutes($tanggaljam_akhir);
+                                                // $pot_jam_early   = ceil($pot_jam_early_cek/60);
+                                            }
+                                        } else {
+                                            $clock_out           = null;
+                                            $st_clock_out        = 'No CO';
+                                            // $status_presensi_out = 'No CO';
+                                        }
+                                        
+                ////////////////////////////// LEVEL 3 - ABSEN //////////////////////////////
                         $qs_htlxxrh = $db
                             ->query('select', 'htlxxrh' )
                             ->get([
@@ -1928,112 +1929,6 @@
                             ->set('grup_hk', $grup_hk)
                             
                         ->exec();
-                        
-                        // Khusus untuk karyawan a/n 09110415 MASKUR dan 12090891 SUGIONO 
-                        // ini jika hari Sabtu ada jadwal, tetapi mereka tidak masuk, ini statusnya tetap alpa, tetapi tidak memotong apa-apa 
-                        //Update 7 Feb 2024 by Ferry
-                        $qu_pengecualian = $db
-                            ->raw()
-                            ->bind(':tanggal', $tanggal)
-                            ->exec(' UPDATE htsprrd AS a
-                                    SET 
-                                        a.pot_jam = 0,
-                                        a.pot_ti = 0,
-                                        a.pot_jam_final = 0,
-                                        a.is_pot_premi = 0,
-                                        a.is_pot_upah = 0,
-                                        a.pot_overtime = 0,
-                                        a.pot_hk = 0,
-                                        a.cek = 0,
-                                        a.durasi_lembur_final = durasi_lembur_total_jam
-                                    WHERE DAYOFWEEK(:tanggal) = 7 AND id_hemxxmh IN (130, 208) AND a.status_presensi_in = "AL"
-                                    '
-                        );
-                        
-                        //Case Satpam selain KMJ yang pada tanggal merah, tidak masuk tidak apa2 atau cek = 0 dan Status Presensi dari AL jadi OFF
-                        $qu_satpam = $db
-                            ->raw()
-                            ->bind(':tanggal', $tanggal)
-                            ->exec(' UPDATE htsprrd AS a
-                                    LEFT JOIN hemxxmh AS h ON h.id = a.id_hemxxmh
-                                    LEFT JOIN hemjbmh AS b ON b.id_hemxxmh = a.id_hemxxmh
-                                    LEFT JOIN (
-                                        SELECT
-                                            count(ho.id) AS is_holiday,
-                                            tanggal
-                                        FROM hthhdth AS ho
-                                        WHERE ho.tanggal = :tanggal
-                                    ) AS holiday ON holiday.tanggal = a.tanggal
-                                    LEFT JOIN (
-                                        SELECT
-                                            count(cu.id) AS is_cuti,
-                                            tanggal
-                                        FROM htlgnth AS cu
-                                        WHERE cu.tanggal = :tanggal
-                                    ) AS cuti ON cuti.tanggal = a.tanggal
-                                    
-                                    SET 
-                                        a.cek = 0,
-                                        a.status_presensi_in = "OFF",
-                                        a.status_presensi_out = "OFF"
-                                    WHERE a.tanggal = :tanggal AND b.id_hetxxmh IN (99, 48) AND b.id_heyxxmd <> 4 AND a.status_presensi_in = "AL" AND (is_holiday IS NOT NULL OR is_cuti IS NOT null)
-                                    '
-                        );
-                        
-                        //Case Pot Upah - Cuti Bersama untuk pegawai yang mendapat flaf is_pot cuti di schedule, 
-                        // pegawai yang mendapat flag is_pot_cuti di schedule dan tidak ada ceklok maka dibuat cek = 0 dan diberikan flag_is_pot_upah dan pot premi,
-                        // Jika terdapat flag is_pot_cuti di schedule dan ada ceklok salah satu maka cek = 1 
-                        //Jika ada kedua ceklok maka, akan cek tidak akan dirubah atau sesuai dengan cek asli dari generate presensi.
-                        $qu_pot_upah = $db
-                            ->raw()
-                            ->bind(':tanggal', $tanggal)
-                            ->exec('UPDATE htsprrd AS a
-                                    LEFT JOIN htssctd AS b 
-                                        ON b.id_hemxxmh = a.id_hemxxmh 
-                                        AND b.tanggal = a.tanggal
-                                    SET 
-                                        cek = IF(
-                                            a.clock_in IS NULL AND a.clock_out IS NULL, 
-                                            0, 
-                                            IF(
-                                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
-                                                a.cek, 
-                                                1
-                                            )
-                                        ),
-                                        a.htlxxrh_kode = IF(
-                                            a.clock_in IS NULL AND a.clock_out IS NULL, 
-                                            "Cuti Bersama - Potong Upah", 
-                                            IF(
-                                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
-                                                a.htlxxrh_kode, 
-                                                "Cuti Bersama - Potong Upah"
-                                            )
-                                        ),
-                                        a.is_pot_upah = IF(
-                                            a.clock_in IS NULL AND a.clock_out IS NULL, 
-                                            1, 
-                                            IF(
-                                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
-                                                a.cek, 
-                                                1
-                                            )
-                                        ),
-                                        a.is_pot_premi = IF(
-                                            a.clock_in IS NULL AND a.clock_out IS NULL, 
-                                            1, 
-                                            IF(
-                                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
-                                                a.cek, 
-                                                1
-                                            )
-                                        )
-                                    WHERE 
-                                        a.tanggal = :tanggal
-                                        AND b.is_active = 1 
-                                        AND b.is_pot_hk = 1;
-                            '
-                        );
                     }
                 }else{
                     // jika jadwal belum dibuat
@@ -2064,6 +1959,112 @@
                 }
             }
         }
+
+        // Khusus untuk karyawan a/n 09110415 MASKUR dan 12090891 SUGIONO 
+        // ini jika hari Sabtu ada jadwal, tetapi mereka tidak masuk, ini statusnya tetap alpa, tetapi tidak memotong apa-apa 
+        //Update 7 Feb 2024 by Ferry
+        $qu_pengecualian = $db
+            ->raw()
+            ->bind(':tanggal', $tanggal)
+            ->exec(' UPDATE htsprrd AS a
+                    SET 
+                        a.pot_jam = 0,
+                        a.pot_ti = 0,
+                        a.pot_jam_final = 0,
+                        a.is_pot_premi = 0,
+                        a.is_pot_upah = 0,
+                        a.pot_overtime = 0,
+                        a.pot_hk = 0,
+                        a.cek = 0,
+                        a.durasi_lembur_final = durasi_lembur_total_jam
+                    WHERE DAYOFWEEK(:tanggal) = 7 AND id_hemxxmh IN (130, 208) AND a.status_presensi_in = "AL"
+                    '
+        );
+        
+        //Case Satpam selain KMJ yang pada tanggal merah, tidak masuk tidak apa2 atau cek = 0 dan Status Presensi dari AL jadi OFF
+        $qu_satpam = $db
+            ->raw()
+            ->bind(':tanggal', $tanggal)
+            ->exec(' UPDATE htsprrd AS a
+                    LEFT JOIN hemxxmh AS h ON h.id = a.id_hemxxmh
+                    LEFT JOIN hemjbmh AS b ON b.id_hemxxmh = a.id_hemxxmh
+                    LEFT JOIN (
+                        SELECT
+                            count(ho.id) AS is_holiday,
+                            tanggal
+                        FROM hthhdth AS ho
+                        WHERE ho.tanggal = :tanggal
+                    ) AS holiday ON holiday.tanggal = a.tanggal
+                    LEFT JOIN (
+                        SELECT
+                            count(cu.id) AS is_cuti,
+                            tanggal
+                        FROM htlgnth AS cu
+                        WHERE cu.tanggal = :tanggal
+                    ) AS cuti ON cuti.tanggal = a.tanggal
+                    
+                    SET 
+                        a.cek = 0,
+                        a.status_presensi_in = "OFF",
+                        a.status_presensi_out = "OFF"
+                    WHERE a.tanggal = :tanggal AND b.id_hetxxmh IN (99, 48) AND b.id_heyxxmd <> 4 AND a.status_presensi_in = "AL" AND (is_holiday IS NOT NULL OR is_cuti IS NOT null)
+                    '
+        );
+        
+        //Case Pot Upah - Cuti Bersama untuk pegawai yang mendapat flaf is_pot cuti di schedule, 
+        // pegawai yang mendapat flag is_pot_cuti di schedule dan tidak ada ceklok maka dibuat cek = 0 dan diberikan flag_is_pot_upah dan pot premi,
+        // Jika terdapat flag is_pot_cuti di schedule dan ada ceklok salah satu maka cek = 1 
+        //Jika ada kedua ceklok maka, akan cek tidak akan dirubah atau sesuai dengan cek asli dari generate presensi.
+        $qu_pot_upah = $db
+            ->raw()
+            ->bind(':tanggal', $tanggal)
+            ->exec('UPDATE htsprrd AS a
+                    LEFT JOIN htssctd AS b 
+                        ON b.id_hemxxmh = a.id_hemxxmh 
+                        AND b.tanggal = a.tanggal
+                    SET 
+                        cek = IF(
+                            a.clock_in IS NULL AND a.clock_out IS NULL, 
+                            0, 
+                            IF(
+                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+                                a.cek, 
+                                1
+                            )
+                        ),
+                        a.htlxxrh_kode = IF(
+                            a.clock_in IS NULL AND a.clock_out IS NULL, 
+                            "Cuti Bersama - Potong Upah", 
+                            IF(
+                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+                                a.htlxxrh_kode, 
+                                "Cuti Bersama - Potong Upah"
+                            )
+                        ),
+                        a.is_pot_upah = IF(
+                            a.clock_in IS NULL AND a.clock_out IS NULL, 
+                            1, 
+                            IF(
+                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+                                a.cek, 
+                                1
+                            )
+                        ),
+                        a.is_pot_premi = IF(
+                            a.clock_in IS NULL AND a.clock_out IS NULL, 
+                            1, 
+                            IF(
+                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+                                a.cek, 
+                                1
+                            )
+                        )
+                    WHERE 
+                        a.tanggal = :tanggal
+                        AND b.is_active = 1 
+                        AND b.is_pot_hk = 1;
+            '
+        );
         // di commit per karyawan
         $qu_hgtprth = $db
             ->query('update', 'hgtprth')
@@ -2075,7 +2076,20 @@
         $db->commit();
         
         $akhir = new Carbon();
-        
+
+        $qi_activity_log_ml = $db
+            ->query('insert', 'activity_log_ml')
+            ->set('id_transaksi',$id_hgtprth)
+            ->set('kode','GENERATE')
+            ->set('nama','hgtprth')
+            ->set('keterangan','Generate Presensi '.$tanggal)
+            ->set('created_by',$_SESSION['user'])
+            ->set('username',$_SESSION['username'])
+            ->set('start_on',$awal)
+            ->set('finish_on', $akhir)
+            ->set('durasi_detik',$awal->diffInSeconds($akhir))
+        ->exec();
+
         $data = array(
             'message'=> 'Generate Presensi Berhasil Dibuat dalam waktu ' . $awal->diffInSeconds($akhir) . ' detik', 
             'type_message'=>'success',

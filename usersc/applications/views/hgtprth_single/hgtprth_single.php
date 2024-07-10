@@ -328,6 +328,7 @@
 								dataType: 'json',
 								type: 'POST',
 								data: {
+									id_hgtprth_single: id_hgtprth_single,
 									tanggal_select: tanggal_select,
 									id_hemxxmh_select: id_hemxxmh_select,
 									timestamp: timestamp
