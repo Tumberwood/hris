@@ -111,7 +111,7 @@
 		->raw()
 		->bind(':id_hemxxmh', $id_hemxxmh)
 		->bind(':start_date', $start_date)
-		->exec('SELECT
+		->exec('SELECT DISTINCT
 					concat(b.kode, " - ", b.nama, " - ", d.nama) as nama,
 					b.id AS id_hemxxmh,
 					e.nama AS dep,
@@ -162,7 +162,7 @@
 		->raw()
 		->bind(':start_date', $start_date)
 		->bind(':id_hemxxmh', $id_hemxxmh)
-		->exec('SELECT
+		->exec('SELECT DISTINCT
 					concat(b.kode, " - ", b.nama) as nama,
 					a.id_hemxxmh,
 					a.jam,
@@ -181,7 +181,7 @@
 		->raw()
 		->bind(':start_date', $start_date)
 		->bind(':id_hemxxmh', $id_hemxxmh)
-		->exec('SELECT
+		->exec('SELECT DISTINCT
 				concat(b.kode, " - ", b.nama) as nama,
 					a.id_hemxxmh,
 					a.jam,
@@ -200,7 +200,7 @@
 		->raw()
 		->bind(':start_date', $start_date)
 		->bind(':id_hemxxmh', $id_hemxxmh)
-		->exec('SELECT
+		->exec('SELECT DISTINCT
 					a.id as id_jadwal,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
 					b.kode as st_jadwal,
