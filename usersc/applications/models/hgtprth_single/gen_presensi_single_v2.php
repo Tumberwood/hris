@@ -830,15 +830,24 @@
                     LEFT JOIN (
                         SELECT
                             a.id,
-                            COUNT(c.id) AS ceklok_makan
+                            COUNT(c.kode) ceklok_makan,
+                            c.nama,
+                            c.kode,
+                            c.jam
                         FROM htssctd AS a
                         LEFT JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
-                        LEFT JOIN htsprtd AS c ON c.kode = b.kode_finger
+                        LEFT JOIN (
+                            SELECT DISTINCT
+                                cl.kode,
+                                cl.nama,
+                                cl.jam,
+                                cl.tanggal
+                            FROM htsprtd cl
+                            WHERE cl.tanggal = :tanggal AND cl.nama IN ("makan", "makan manual")
+                        ) AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                            AND c.nama IN ("makan", "makan manual")
                             AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
                         GROUP BY a.id
-
                     ) AS cek_makan ON cek_makan.id = jadwal.id
 
                     WHERE b.is_checkclock = 1 AND a.is_active = 1 AND b.id_hemxxmh = :id_hemxxmh 

@@ -1825,16 +1825,24 @@
                         // ditandai dengan check clock makan
                         // concat(htsprtd.tanggal," ",htsprtd.jam)
                         $qs_htsprtd_makan = $db
-                            ->query('select', 'htsprtd' )
-                            ->get([
-                                'count(id) as c_makan'
-                            ] )
-                            ->where('htsprtd.kode', $row_hemxxmh['kode_finger'] )
-                            ->where('htsprtd.nama', '("makan", "makan manual")', 'IN', false ) // tambah makan manual
-                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_awal_t1, '>=' )
-                            ->where('concat(htsprtd.tanggal," ",htsprtd.jam)', $tanggaljam_akhir_t2_min_hour, '<=' ) //diganti menjadi akhir t2 - 1 jam
-                            ->order('concat(htsprtd.tanggal," ",htsprtd.jam)')
-                            ->exec();
+                            ->raw()
+                            ->bind(':kode_finger', $row_hemxxmh['kode_finger'])
+                            ->bind(':tanggaljam_awal_t1', $tanggaljam_awal_t1)
+                            ->bind(':tanggaljam_akhir_t2_min_hour', $tanggaljam_akhir_t2_min_hour)
+                            ->exec('WITH makan AS (
+                                    SELECT DISTINCT
+                                        a.kode,
+                                        a.nama,
+                                        a.jam,
+                                        a.tanggal
+                                    FROM htsprtd a
+                                    WHERE a.kode = :kode_finger AND a.nama IN ("makan", "makan manual") AND concat(a.tanggal," ",a.jam) BETWEEN :tanggaljam_awal_t1 AND :tanggaljam_akhir_t2_min_hour
+                                )
+                                SELECT
+                                    COUNT(kode) AS c_makan
+                                FROM makan
+                            '
+                            );
                         $rs_htsprtd_makan = $qs_htsprtd_makan->fetch();
 
                         $is_makan = 0;
