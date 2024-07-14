@@ -1830,17 +1830,17 @@
                             ->bind(':tanggaljam_awal_t1', $tanggaljam_awal_t1)
                             ->bind(':tanggaljam_akhir_t2_min_hour', $tanggaljam_akhir_t2_min_hour)
                             ->exec('WITH makan AS (
-                                    SELECT DISTINCT
-                                        a.kode,
-                                        a.nama,
-                                        a.jam,
-                                        a.tanggal
-                                    FROM htsprtd a
-                                    WHERE a.kode = :kode_finger AND a.nama IN ("makan", "makan manual") AND concat(a.tanggal," ",a.jam) BETWEEN :tanggaljam_awal_t1 AND :tanggaljam_akhir_t2_min_hour
-                                )
-                                SELECT
-                                    COUNT(kode) AS c_makan
-                                FROM makan
+                                        SELECT DISTINCT
+                                            a.kode,
+                                            a.nama,
+                                            a.jam,
+                                            a.tanggal
+                                        FROM htsprtd a
+                                        WHERE a.kode = :kode_finger AND a.nama IN ("makan", "makan manual") AND concat(a.tanggal," ",a.jam) BETWEEN :tanggaljam_awal_t1 AND :tanggaljam_akhir_t2_min_hour
+                                    )
+                                    SELECT
+                                        COUNT(kode) AS c_makan
+                                    FROM makan
                             '
                             );
                         $rs_htsprtd_makan = $qs_htsprtd_makan->fetch();
@@ -2081,8 +2081,6 @@
             ->where('tanggal',$tanggal)
         ->exec();
         
-        $db->commit();
-        
         $akhir = new Carbon();
 
         $qi_activity_log_ml = $db
@@ -2098,6 +2096,8 @@
             ->set('durasi_detik',$awal->diffInSeconds($akhir))
         ->exec();
 
+        $db->commit();
+        
         $data = array(
             'message'=> 'Generate Presensi Berhasil Dibuat dalam waktu ' . $awal->diffInSeconds($akhir) . ' detik', 
             'type_message'=>'success',

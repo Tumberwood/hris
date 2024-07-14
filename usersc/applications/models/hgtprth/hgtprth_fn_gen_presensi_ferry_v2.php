@@ -25,6 +25,7 @@
     // outsourcing or organik
     $id_heyxxmh     = $_POST['id_heyxxmh_select'];
     $timestamp     = $_POST['timestamp']; //tambah timestamp untuk view
+    $id_hgtprth     = $_POST['id_hgtprth']; //tambah timestamp untuk view
     // print_r($timestamp);
 
     // INSERT DATA BACKUP / OLD
@@ -1356,9 +1357,23 @@
             ->where('tanggal',$tanggal)
         ->exec();
         
+        $akhir = new Carbon();
+
+        $qi_activity_log_ml = $db
+            ->query('insert', 'activity_log_ml')
+            ->set('id_transaksi',$id_hgtprth)
+            ->set('kode','GENERATE')
+            ->set('nama','hgtprth')
+            ->set('keterangan','Generate Presensi '.$tanggal)
+            ->set('created_by',$_SESSION['user'])
+            ->set('username',$_SESSION['username'])
+            ->set('start_on',$awal)
+            ->set('finish_on', $akhir)
+            ->set('durasi_detik',$awal->diffInSeconds($akhir))
+        ->exec();
+
         $db->commit();
         
-        $akhir = new Carbon();
         
         $data = array(
             'message'=> 'Generate Presensi Berhasil Dibuat dalam waktu ' . $awal->diffInSeconds($akhir) . ' detik', 

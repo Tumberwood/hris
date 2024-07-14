@@ -1341,8 +1341,6 @@
             ->where('tanggal',$tanggal)
         ->exec();
         
-        $db->commit();
-        
         $akhir = new Carbon();
         
         $qi_activity_log_ml = $db
@@ -1357,6 +1355,8 @@
             ->set('finish_on', $akhir)
             ->set('durasi_detik',$awal->diffInSeconds($akhir))
         ->exec();
+        
+        $db->commit();
         
         $data = array(
             'message'=> 'Generate Presensi Berhasil Dibuat dalam waktu ' . $awal->diffInSeconds($akhir) . ' detik', 
