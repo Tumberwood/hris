@@ -324,7 +324,7 @@
 							});
 
 							$.ajax( {
-								url: "../../models/hgtprth_single/gen_presensi_single_v2.php",
+								url: "../../models/hgtprth_single/gen_presensi_single_v3.php",
 								dataType: 'json',
 								type: 'POST',
 								data: {
