@@ -183,25 +183,32 @@
     
     //STEP 0 PILIH PEGAWAI AKTIF
     $qs_hemxxmh = $db
-        ->raw()
-        ->bind(':tanggal', $tanggal)
-        ->bind(':id_heyxxmh', $id_heyxxmh)
-        ->exec(' SELECT
-                    CONCAT("(",GROUP_CONCAT(hemxxmh.id), ")") r_id_hemxxmh
-                FROM hemxxmh
-                LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = hemxxmh.id
-                WHERE (
-                    hemjbmh.tanggal_keluar IS NULL
-                    OR hemjbmh.tanggal_keluar > :tanggal
-                )
-                AND hemjbmh.tanggal_masuk <= :tanggal
-                AND hemxxmh.is_active = 1
-                AND hemjbmh.is_checkclock = 1
-                AND hemjbmh.id_heyxxmh = :id_heyxxmh;
+        ->query('select', 'hemxxmh' )
+        ->get([
+            'hemxxmh.id as id_hemxxmh',
+            'hemxxmh.is_pot_makan as is_pot_makan',
+            'hemxxmh.kode_finger as kode_finger',
+            'hemjbmh.grup_hk as grup_hk',
+            'hemjbmh.id_heyxxmd as id_heyxxmd',
+            'hemjbmh.jumlah_grup as jumlah_grup',
+            'hemjbmh.id_hesxxmh as id_hesxxmh'
+        ] )
+        ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
+        ->where( function ( $q ) use ($tanggal) {
+            $q
+              ->where( 'hemjbmh.tanggal_keluar', null)
+              ->or_where( 'hemjbmh.tanggal_keluar', $tanggal , '>' ); //revisi dari < menjadi >
+        } )
+        ->where('hemjbmh.tanggal_masuk', $tanggal, '<=' )
+        ->where('hemxxmh.is_active', 1 )
+        ->where('hemjbmh.is_checkclock', 1 ) // skip yang tidak perlu checkclock
+        ->where('hemjbmh.id_heyxxmh', $id_heyxxmh ) // skip yang tidak perlu checkclock
+        ->exec();
+    $rs_hemxxmh = $qs_hemxxmh->fetchAll();
 
-                '
-            );
-    $rs_hemxxmh = $qs_hemxxmh->fetch();
+    $id_hemxxmh_values = array_column($rs_hemxxmh, 'id_hemxxmh');
+    $id_hemxxmh_str = implode(',', $id_hemxxmh_values);
+    $id_hemxxmh = "(".$id_hemxxmh_str.")";
 
     try{
         $db->transaction();
@@ -209,7 +216,6 @@
         //CEK JIKA ADA KARYAWAN AKTIF
         if (!empty($rs_hemxxmh)){
             
-            $id_hemxxmh = $rs_hemxxmh['r_id_hemxxmh'];
             $qi_htsprrd_new = $db
                 ->raw()
                 ->bind(':tanggal', $tanggal)
