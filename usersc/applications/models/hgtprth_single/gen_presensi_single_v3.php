@@ -850,7 +850,7 @@
                                 cl.jam,
                                 cl.tanggal
                             FROM htsprtd cl
-                            WHERE cl.tanggal = :tanggal AND cl.nama IN ("makan", "makan manual")
+                            WHERE cl.tanggal BETWEEN :tanggal AND DATE_ADD(:tanggal, INTERVAL 1 DAY) AND cl.nama IN ("makan", "makan manual")
                         ) AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                             AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
