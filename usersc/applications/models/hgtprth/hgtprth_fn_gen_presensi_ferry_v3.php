@@ -511,7 +511,7 @@
                                     htlgrmh.kode AS htlgrmh_kode
                                 FROM htlxxrh
                                 LEFT JOIN htlxxmh ON htlxxmh.id = htlxxrh.id_htlxxmh
-                                INNER JOIN htlgrmh ON htlgrmh.id = htlxxmh.id_htlgrmh
+                                LEFT JOIN htlgrmh ON htlgrmh.id = htlxxmh.id_htlgrmh
                                 WHERE htlxxrh.tanggal = :tanggal
                                     AND htlxxrh.jenis = 1
                                     AND htlxxrh.id_hemxxmh IN '.$id_hemxxmh.'
@@ -533,7 +533,7 @@
                                     htlxxrh.is_approve
                                 FROM htlxxrh
                                 INNER JOIN htpxxmh ON htpxxmh.id = htlxxrh.id_htlxxmh
-                                INNER JOIN htlgrmh ON htlgrmh.id = htpxxmh.id_htlgrmh
+                                LEFT JOIN htlgrmh ON htlgrmh.id = htpxxmh.id_htlgrmh
                                 WHERE htlxxrh.is_active = 1
                                     AND htlxxrh.tanggal = :tanggal
                                     AND (
@@ -559,7 +559,7 @@
                                     htlxxrh.is_approve
                                 FROM htlxxrh
                                 INNER JOIN htpxxmh ON htpxxmh.id = htlxxrh.id_htlxxmh
-                                INNER JOIN htlgrmh ON htlgrmh.id = htpxxmh.id_htlgrmh
+                                LEFT JOIN htlgrmh ON htlgrmh.id = htpxxmh.id_htlgrmh
                                 WHERE htlxxrh.is_active = 1
                                     AND htlxxrh.tanggal = :tanggal
                                     AND (
@@ -587,7 +587,7 @@
                                     htlxxrh.is_approve
                                 FROM htlxxrh
                                 INNER JOIN htpxxmh ON htpxxmh.id = htlxxrh.id_htlxxmh
-                                INNER JOIN htlgrmh ON htlgrmh.id = htpxxmh.id_htlgrmh
+                                LEFT JOIN htlgrmh ON htlgrmh.id = htpxxmh.id_htlgrmh
                                 WHERE htlxxrh.is_active = 1
                                     AND htlxxrh.tanggal = :tanggal
                                     AND (
