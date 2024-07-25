@@ -1108,6 +1108,7 @@
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
+				tblhemxxmh.ajax.reload(null,false);
 				tblhemjbrd.ajax.reload(null,false);
 			} );
 			

@@ -152,6 +152,12 @@
 				->set('tanggal_akhir',$tanggal_akhir_kontrak)
 				->set('id_hemxxmh',$id)
 				->exec();
+
+			$qu_hemjbmh = $editor->db()
+				->query('update', 'hemjbmh')
+				->set('tanggal_keluar',null)
+				->where('id_hemxxmh',$id)
+				->exec();
 		})
 		->on('preEdit',function( $editor, $id, $values ) {
 			// script diletakkan disini
