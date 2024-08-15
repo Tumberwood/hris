@@ -532,11 +532,11 @@
 			->set('tanggal_akhir',$tanggal_selesai)
 			->exec();
 
-			// $qu_hemxxmh = $db
-			// 	->query('update', 'hemjbmh')
-			// 	->set('tanggal_keluar', $tanggal_selesai)
-			// 	->where('id_hemxxmh', $id_hemxxmh )
-			// 	->exec();
+			$qu_hemxxmh = $db
+				->query('update', 'hemjbmh')
+				->set('tanggal_keluar', $tanggal_selesai)
+				->where('id_hemxxmh', $id_hemxxmh )
+				->exec();
 		}
 
 	}else {
