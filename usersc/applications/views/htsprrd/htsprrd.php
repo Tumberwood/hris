@@ -53,6 +53,24 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalQ">
+	<div class="modal-dialog">
+		<div class="modal-content animated bounceInRight">
+			<div class="modal-header">
+				<h4 class="modal-title">Advanced Filter</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<!-- pane8 -->
+			<div class="modal-body">
+				<div id="sb"></div> 
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="row">
 	<div class="col">
 		<div class="ibox ">
@@ -742,10 +760,12 @@
 					layout: 'columns-4'
 				},
 				dom:
-					"<'row'<'col-lg-4 col-md-4 col-sm-12 col-xs-12'l><'col-lg-8 col-md-8 col-sm-12 col-xs-12'f>>" +
-					"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'B>>" +
-					"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'tr>>" +
-					"<'row'<'col-lg-5 col-md-5 col-sm-12 col-xs-12'i><'col-lg-7 col-md-7 col-sm-12 col-xs-12'p>>",
+				"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'P>>" +
+				"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'Q>>" +
+				"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'l>>" +
+				"<'row'<'col-lg-6 col-md-12 col-sm-12 col-xs-12'B><'col-lg-6 col-md-6 col-sm-12 col-xs-12'f>>" +
+				"<'row'<'col-lg-12 col-md-12 col-sm-12 col-xs-12'tr>>" +
+				"<'row'<'col-lg-5 col-md-5 col-sm-12 col-xs-12'i><'col-lg-7 col-md-7 col-sm-12 col-xs-12'p>>",
 				columnDefs:[
 					{
 						searchPanes:{
@@ -1066,6 +1086,15 @@
 								}
 							});
 						}
+					},
+					{ 
+						text: '<i class="fa fa-filter" aria-hidden="true"></i>',  
+						name: 'btnFilterAdvanced',
+						className: 'btn btn-primary',
+						titleAttr: 'Advanced Filter',
+						action: function ( e, dt, node, config ) {
+							$('#modalQ').modal('show'); 
+						}
 					}
 				],
 				rowCallback: function( row, data, index ) {
@@ -1118,6 +1147,7 @@
 			tblhtsprrd.button('btnPresensiOK:name').disable();
 
 			tblhtsprrd.searchPanes.container().appendTo( '#searchPanes1' );
+			tblhtsprrd.searchBuilder.container().appendTo( '#sb' );
 
 			$('.nav-tabs a').on('shown.bs.tab', function (e) {
 				var activeTabId = $(e.target).attr('href').substring(1);
@@ -1129,6 +1159,8 @@
 					tblhtsprrd.searchPanes.container().detach();
 				}
 			});
+
+			tblhtsprrd.button('btnFilterAdvanced:name').disable();
 
 			tblhtsprrd.on( 'select', function( e, dt, type, indexes ) {
 				updateSelectedData();
@@ -2456,6 +2488,7 @@
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
 					$('.collapse-link').prop('disabled', false);
+					tblhtsprrd.button('btnFilterAdvanced:name').enable();
 				}
 			} );
 			tblhtsprrd_kmj.button('btnSetApprovePresensi:name').disable();
