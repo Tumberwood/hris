@@ -798,6 +798,31 @@
 						}
 					}
 					// END of validasi htoemtd.id_htotpmh 
+					jam_awal = edthtoemtd.field('htoemtd.jam_awal').val();
+					jam_akhir = edthtoemtd.field('htoemtd.jam_akhir').val();
+
+					get_htsxxmh();
+					if (id_htotpmh == 1) {
+						//kalau bukan sabtu, maka tidak ada validasi ini
+						if (dayname != 'Saturday') {
+							if(jam_awal+":00" > jam_awal_jadwal){
+								edthtoemtd.field('htoemtd.jam_awal').error( 'Jam Awal Lembur Tidak Boleh Melebihi ' +jam_awal_jadwal+ '!' );
+							}
+							if(jam_akhir+":00" > jam_awal_jadwal){
+								edthtoemtd.field('htoemtd.jam_akhir').error( 'Jam Akhir Lembur Tidak Boleh Melebihi ' +jam_awal_jadwal+ '!' );
+							}
+						}
+					} else if (id_htotpmh == 2) {
+						if (dayname != 'Saturday') {
+							if(jam_awal+":00" < jam_akhir_jadwal){
+								edthtoemtd.field('htoemtd.jam_awal').error( 'Jam Awal Lembur Tidak Boleh Kurang dari ' +jam_akhir_jadwal+ '!' );
+							}
+							if(jam_akhir+":00" < jam_akhir_jadwal){
+								edthtoemtd.field('htoemtd.jam_akhir').error( 'Jam Akhir Lembur Tidak Boleh Kurang dari ' +jam_akhir_jadwal+ '!' );
+							}
+						}
+					}
+
 
 					// BEGIN of validasi htoemtd.id_hemxxmh 
 					id_hemxxmh = edthtoemtd.field('htoemtd.id_hemxxmh').val();

@@ -8,12 +8,21 @@
                 url: "../../models/htoxxth/htoemtd_fn_htsxxmh.php",
                 dataType: 'json',
                 type: 'POST',
+                async: false,
                 data: {
                     tanggal: tanggal,
                     id_hemxxmh: id_hemxxmh
                 },
                 success: function ( json ) {
+                    jam_awal_jadwal = '';
+                    jam_akhir_jadwal = '';
+                    dayname = '';
+
                     if(json.data.rs_htsxxmh.id > 0){
+                        jam_awal_jadwal = json.data.rs_htsxxmh.jam_awal;
+                        jam_akhir_jadwal = json.data.rs_htsxxmh.jam_akhir;
+                        dayname = json.data.rs_htsxxmh.dayname;
+                        // console.log(dayname);
                         edthtoemtd.field('jadwal').val(json.data.rs_htsxxmh.kode + ' (' + json.data.rs_htsxxmh.jam_awal + ' - ' + json.data.rs_htsxxmh.jam_akhir + ')');
                     }else{
                         edthtoemtd.field('jadwal').val('');

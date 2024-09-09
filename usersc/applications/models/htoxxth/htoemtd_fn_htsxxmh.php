@@ -16,18 +16,26 @@
     if($_POST['tanggal'] != '' && $_POST['id_hemxxmh'] > 0){
         $tanggal = new Carbon($_POST['tanggal']);
         $qs_htsxxmh = $db
-            ->query('select', 'htssctd')
-            ->get([
-                'htsxxmh.id as id',
-                'htsxxmh.kode as kode',
-                'htsxxmh.jam_awal as jam_awal',
-                'htsxxmh.jam_akhir as jam_akhir'
-            ])
-            ->join('htsxxmh','htsxxmh.id = htssctd.id_htsxxmh','LEFT' )
-            ->where('htssctd.is_active', 1)
-            ->where('htssctd.id_hemxxmh', $_POST['id_hemxxmh'] )
-            ->where('htssctd.tanggal', $tanggal->format('Y-m-d') )
-            ->exec();
+            ->raw()
+            ->bind(':id_hemxxmh', $_POST['id_hemxxmh'] )
+            ->bind(':tanggal', $tanggal->format('Y-m-d') )
+            ->exec('SELECT 
+                        htsxxmh.id AS id,
+                        htsxxmh.kode AS kode,
+                        htsxxmh.jam_awal AS jam_awal,
+                        htsxxmh.jam_akhir AS jam_akhir,
+                        DAYNAME(htssctd.tanggal) AS dayname
+                    FROM 
+                        htssctd
+                    LEFT JOIN 
+                        htsxxmh ON htsxxmh.id = htssctd.id_htsxxmh
+                    WHERE 
+                        htssctd.is_active = 1
+                        AND htssctd.id_hemxxmh = :id_hemxxmh
+                        AND htssctd.tanggal = :tanggal;
+        
+            '
+            );
         $rs_htsxxmh = $qs_htsxxmh->fetch();
         $data = array(
             'rs_htsxxmh' => $rs_htsxxmh
