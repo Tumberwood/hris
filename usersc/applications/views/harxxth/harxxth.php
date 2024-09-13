@@ -104,7 +104,7 @@
 <!-- BEGIN datatables here -->
 <script type="text/javascript">
 		// ------------- default variable, do not erase
-		var edtharxxth, tblharxxth, show_inactive_status_harxxth = 0, id_harxxth;
+		var edtharxxth, tblharxxth, show_inactive_status_harxxth = 0, id_harxxth = 0;
 		// ------------- end of default variable
 
 		var id_hemxxmh_old = 0, id_hovxxmh_awal_old = 0, id_hovxxmh_akhir_old = 0, id_hodxxmh_awal_old = 0, id_hodxxmh_akhir_old = 0, id_hosxxmh_awal_old = 0, id_hosxxmh_akhir_old = 0, id_hevxxmh_awal_old = 0, id_hevxxmh_akhir_old = 0, id_hetxxmh_awal_old = 0, id_hetxxmh_akhir_old = 0;

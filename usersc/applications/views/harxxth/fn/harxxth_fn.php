@@ -6,7 +6,8 @@
             dataType: 'json',
             type: 'POST',
             data: {
-                id_hemxxmh: id_hemxxmh
+                id_hemxxmh: id_hemxxmh,
+                id_harxxth: id_harxxth,
             },
             success: function ( json ) {
                 edtharxxth.field('hovxxmh_awal_nama').val(json.data.rs_hemxxmh.hovxxmh_awal_nama);
@@ -21,20 +22,20 @@
                 id_hevxxmh = json.data.rs_hemxxmh.id_hevxxmh_awal;
                 id_hetxxmh = json.data.rs_hemxxmh.id_hetxxmh_awal;
 
-                if(id_hovxxmh_akhir_old == 0){
-                    edtharxxth.field('harxxth.id_hovxxmh_akhir').val(id_hovxxmh);
+                if(id_harxxth == 0){
+                    edtharxxth.field('harxxth.id_hovxxmh_awal').val(id_hovxxmh);
                 }
-                if(id_hodxxmh_akhir_old == 0){
-                    edtharxxth.field('harxxth.id_hodxxmh_akhir').val(id_hodxxmh);
+                if(id_harxxth == 0){
+                    edtharxxth.field('harxxth.id_hodxxmh_awal').val(id_hodxxmh);
                 }
-                if(id_hosxxmh_akhir_old == 0){
-                    edtharxxth.field('harxxth.id_hosxxmh_akhir').val(id_hosxxmh);
+                if(id_harxxth == 0){
+                    edtharxxth.field('harxxth.id_hosxxmh_awal').val(id_hosxxmh);
                 }
-                if(id_hevxxmh_akhir_old == 0){
-                    edtharxxth.field('harxxth.id_hevxxmh_akhir').val(id_hevxxmh);
+                if(id_harxxth == 0){
+                    edtharxxth.field('harxxth.id_hevxxmh_awal').val(id_hevxxmh);
                 }
-                if(id_hetxxmh_akhir_old == 0){
-                    edtharxxth.field('harxxth.id_hetxxmh_akhir').val(id_hetxxmh);
+                if(id_harxxth == 0){
+                    edtharxxth.field('harxxth.id_hetxxmh_awal').val(id_hetxxmh);
                 }
             }
         } );
