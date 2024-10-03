@@ -18,13 +18,44 @@
 			global $secret_key;
 			global $db;
 		
+			function getusername_header() {
+				$username_header = null;
+			
+				// Check for the existence of indices before accessing them
+				if (function_exists('apache_request_headers')) {
+					$headers = apache_request_headers();
+					if (isset($headers['username'])) {
+						$username_header = $headers['username'];
+					}
+				}
+				// Debugging information
+				//  echo "apache_request_headers: " . print_r(apache_request_headers(), true) . "<br><br>";
+
+				return $username_header;
+			}
+			
+			function getpassword_header() {
+				$password_header = null;
+			
+				// Check for the existence of indices before accessing them
+				if (function_exists('apache_request_headers')) {
+					$headers = apache_request_headers();
+					if (isset($headers['password'])) {
+						$password_header = $headers['password'];
+					}
+				}
+				// Debugging information
+				//  echo "apache_request_headers: " . print_r(apache_request_headers(), true) . "<br><br>";
+
+				return $password_header;
+			}
+			
 			if (!empty($_SERVER['PHP_AUTH_USER'])) {
 				$username_auth = $_SERVER['PHP_AUTH_USER'];
 				$password_auth = $_SERVER['PHP_AUTH_PW'];
 			} else if (function_exists('apache_request_headers')) {
-				$headers = apache_request_headers();
-				$username_auth = $headers['username'];
-				$password_auth = $headers['password'];
+				$username_auth = getusername_header();
+				$password_auth = getpassword_header();
 			} else {
 				$username_auth = '';
 				$password_auth = '';
