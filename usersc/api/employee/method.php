@@ -33,25 +33,8 @@
 
 				return $username_header;
 			}
-			
-			function getpassword_header() {
-				$password_header = null;
-			
-				// Check for the existence of indices before accessing them
-				if (function_exists('apache_request_headers')) {
-					$headers = apache_request_headers();
-					if (isset($headers['password'])) {
-						$password_header = $headers['password'];
-					}
-				}
-				// Debugging information
-				//  echo "apache_request_headers: " . print_r(apache_request_headers(), true) . "<br><br>";
-
-				return $password_header;
-			}
-			
 			$username_auth = getusername_header();
-			$password_auth = getpassword_header();
+			echo $username_auth;
 			
 			$remember = false;
 
