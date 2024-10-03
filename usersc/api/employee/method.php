@@ -50,20 +50,9 @@
 				return $password_header;
 			}
 			
-			if (!empty($_SERVER['PHP_AUTH_USER'])) {
-				$username_auth = $_SERVER['PHP_AUTH_USER'];
-				$password_auth = $_SERVER['PHP_AUTH_PW'];
-				echo 1;
-			} else if (function_exists('apache_request_headers')) {
-				$username_auth = getusername_header();
-				$password_auth = getpassword_header();
-				echo 2;
-			} else {
-				$username_auth = '';
-				$password_auth = '';
-				echo 3;
-			}
-
+			$username_auth = getusername_header();
+			$password_auth = getpassword_header();
+			
 			$remember = false;
 
 			try {
