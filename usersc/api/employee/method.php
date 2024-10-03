@@ -36,10 +36,10 @@
 				return $authorizationHeader;
 			}
 
-			$token = getAuthorizationHeader();
+			// $token = getAuthorizationHeader();
 			
 			// Remove the "Basic " prefix
-			$base64Credentials = strstr($token, ' ');
+			// $base64Credentials = strstr($token, ' ');
 
 			// Decode the base64-encoded credentials
 			// $decodedCredentials = base64_decode(trim($base64Credentials));
@@ -48,11 +48,11 @@
 			// list($username, $password) = explode(':', $decodedCredentials, 2);
 			$remember = false;
 
-			if (!$token) {
-				http_response_code(401);
-				echo json_encode(array("message" => "Unauthorized"));
-				exit();
-			}
+			// if (!$token) {
+			// 	http_response_code(401);
+			// 	echo json_encode(array("message" => "Unauthorized"));
+			// 	exit();
+			// }
 		
 
 			// echo $password;
