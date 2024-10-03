@@ -54,9 +54,14 @@
 				exit();
 			}
 		
+
+			// echo $password;
+			$username_auth = $_SERVER['PHP_AUTH_USER'];
+			$password_auth = $_SERVER['PHP_AUTH_PW'];
+
 			try {
 				$user = new User();
-    			$login = $user->loginEmail($username, $password, $remember);
+    			$login = $user->loginEmail($username_auth, $password_auth, $remember);
 				if ($login) {
 					$decoded = array('HS256');
 					return $decoded;
