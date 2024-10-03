@@ -61,6 +61,9 @@
 				$password_auth = '';
 			}
 
+			echo $username_auth;
+			echo $password_auth;
+
 			$remember = false;
 
 			try {
