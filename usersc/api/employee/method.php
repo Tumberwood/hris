@@ -18,46 +18,46 @@
 			global $secret_key;
 			global $db;
 		
-			function getAuthorizationHeader() {
-				$authorizationHeader = null;
+			function getusername_header() {
+				$username_header = null;
 			
 				// Check for the existence of indices before accessing them
 				if (function_exists('apache_request_headers')) {
 					$headers = apache_request_headers();
-					if (isset($headers['Auth'])) {
-						$authorizationHeader = $headers['Auth'];
-					} else if (isset($headers['Authorization'])) {
-						$authorizationHeader = $headers['Authorization'];
+					if (isset($headers['username'])) {
+						$username_header = $headers['username'];
 					}
 				}
 				// Debugging information
 				//  echo "apache_request_headers: " . print_r(apache_request_headers(), true) . "<br><br>";
 
-				return $authorizationHeader;
+				return $username_header;
 			}
-
-			$token = getAuthorizationHeader();
-			echo $token;
 			
-			// Remove the "Basic " prefix
-			$base64Credentials = strstr($token, ' ');
+			function getpassword_header() {
+				$password_header = null;
+			
+				// Check for the existence of indices before accessing them
+				if (function_exists('apache_request_headers')) {
+					$headers = apache_request_headers();
+					if (isset($headers['password'])) {
+						$password_header = $headers['password'];
+					}
+				}
+				// Debugging information
+				//  echo "apache_request_headers: " . print_r(apache_request_headers(), true) . "<br><br>";
 
-			// Decode the base64-encoded credentials
-			$decodedCredentials = base64_decode(trim($base64Credentials));
-
-			// Extract the username and password from the decoded credentials
-			list($username, $password) = explode(':', $decodedCredentials, 2);
+				return $password_header;
+			}
+			
+			$username_auth = getusername_header();
+			$password_auth = getpassword_header();
+			
 			$remember = false;
 
-			if (!$token) {
-				http_response_code(401);
-				echo json_encode(array("message" => "Unauthorized"));
-				exit();
-			}
-		
 			try {
 				$user = new User();
-    			$login = $user->loginEmail($username, $password, $remember);
+    			$login = $user->loginEmail($username_auth, $password_auth, $remember);
 				if ($login) {
 					$decoded = array('HS256');
 					return $decoded;
