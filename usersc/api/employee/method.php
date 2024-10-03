@@ -24,6 +24,7 @@
 				// Check for the existence of indices before accessing them
 				if (function_exists('apache_request_headers')) {
 					$headers = apache_request_headers();
+					print_r($headers);
 					echo 1;
 					if (isset($headers['username'])) {
 						echo 2;
