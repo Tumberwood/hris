@@ -42,10 +42,10 @@
 			$base64Credentials = strstr($token, ' ');
 
 			// Decode the base64-encoded credentials
-			$decodedCredentials = base64_decode(trim($base64Credentials));
+			// $decodedCredentials = base64_decode(trim($base64Credentials));
 
-			// Extract the username and password from the decoded credentials
-			list($username, $password) = explode(':', $decodedCredentials, 2);
+			// // Extract the username and password from the decoded credentials
+			// list($username, $password) = explode(':', $decodedCredentials, 2);
 			$remember = false;
 
 			if (!$token) {
