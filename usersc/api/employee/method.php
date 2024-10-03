@@ -24,13 +24,8 @@
 				// Check for the existence of indices before accessing them
 				if (function_exists('apache_request_headers')) {
 					$headers = apache_request_headers();
-					print_r($headers);
-					echo 1;
-					if (isset($headers['username'])) {
-						echo 2;
-						$username_header = $headers['username'];
-					} else {
-						echo 3;
+					if (isset($headers['Username'])) {
+						$username_header = $headers['Username'];
 					}
 				}
 				// Debugging information
@@ -38,8 +33,25 @@
 
 				return $username_header;
 			}
+			
+			function getpassword_header() {
+				$password_header = null;
+			
+				// Check for the existence of indices before accessing them
+				if (function_exists('apache_request_headers')) {
+					$headers = apache_request_headers();
+					if (isset($headers['Password'])) {
+						$password_header = $headers['Password'];
+					}
+				}
+				// Debugging information
+				//  echo "apache_request_headers: " . print_r(apache_request_headers(), true) . "<br><br>";
+
+				return $password_header;
+			}
+			
 			$username_auth = getusername_header();
-			echo $username_auth;
+			$password_auth = getpassword_header();
 			
 			$remember = false;
 
