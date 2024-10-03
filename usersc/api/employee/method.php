@@ -18,46 +18,19 @@
 			global $secret_key;
 			global $db;
 		
-			function getAuthorizationHeader() {
-				$authorizationHeader = null;
-			
-				// Check for the existence of indices before accessing them
-				if (function_exists('apache_request_headers')) {
-					$headers = apache_request_headers();
-					if (isset($headers['Auth'])) {
-						$authorizationHeader = $headers['Auth'];
-					} else if (isset($headers['Authorization'])) {
-						$authorizationHeader = $headers['Authorization'];
-					}
-				}
-				// Debugging information
-				//  echo "apache_request_headers: " . print_r(apache_request_headers(), true) . "<br><br>";
-
-				return $authorizationHeader;
+			if (!empty($_SERVER['PHP_AUTH_USER'])) {
+				$username_auth = $_SERVER['PHP_AUTH_USER'];
+				$password_auth = $_SERVER['PHP_AUTH_PW'];
+			} else if (function_exists('apache_request_headers')) {
+				$headers = apache_request_headers();
+				$username_auth = $headers['username'];
+				$password_auth = $headers['password'];
+			} else {
+				$username_auth = '';
+				$password_auth = '';
 			}
 
-			// $token = getAuthorizationHeader();
-			
-			// Remove the "Basic " prefix
-			// $base64Credentials = strstr($token, ' ');
-
-			// Decode the base64-encoded credentials
-			// $decodedCredentials = base64_decode(trim($base64Credentials));
-
-			// // Extract the username and password from the decoded credentials
-			// list($username, $password) = explode(':', $decodedCredentials, 2);
 			$remember = false;
-
-			// if (!$token) {
-			// 	http_response_code(401);
-			// 	echo json_encode(array("message" => "Unauthorized"));
-			// 	exit();
-			// }
-		
-
-			// echo $password;
-			$username_auth = $_SERVER['PHP_AUTH_USER'];
-			$password_auth = $_SERVER['PHP_AUTH_PW'];
 
 			try {
 				$user = new User();
