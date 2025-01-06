@@ -25,11 +25,22 @@
         // BEGIN ambil data htoemtd
 
         if ($status == "approve") {
-            $qu_ = $db
-                ->query('update', 'htoxxth')
-                ->set('is_approve',1)
-                ->where('tanggal',$end_date)
-                ->exec();
+            $qu_approve = $db
+                ->raw()
+                ->bind(':end_date', $end_date)
+                ->exec('UPDATE htoxxth a
+                        LEFT JOIN (
+                            SELECT
+                                z.id_htoxxth,
+                                COUNT(z.id) c_id
+                            FROM htoemtd z
+                            LEFT JOIN htoxxth h ON h.id = z.id_htoxxth
+                            WHERE z.is_active = 1 AND h.tanggal = :end_date
+                            GROUP BY z.id_htoxxth
+                        ) b ON b.id_htoxxth = a.id
+                        SET a.is_approve = 1
+                        WHERE a.tanggal = :end_date AND b.c_id > 0
+            ');
     
             $qs_htoemtd = $db
                 ->raw()
