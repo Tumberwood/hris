@@ -92,7 +92,7 @@
                             if (is_holiday == 1) {
                                 // console.log('Add');
                             } else {
-                                edthtoemtd.field('htoemtd.id_htotpmh').error( 'Lembur Libur Tidak Bisa dipilih karena Shift Pegawai ini bukan OFF dan tanggal bukan public holiday!' );
+                                edthtoemtd.field('htoemtd.id_htotpmh').error( 'Lembur Libur Tidak Bisa dipilih karena Shift Pegawai ini bukan OFF dan tanggal bukan public holiday ataupun Cuti Bersama!' );
                             }
                         }
                     }

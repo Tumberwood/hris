@@ -46,9 +46,19 @@
         ->exec();
     $rs_holiday = $qs_holiday->fetch();
 
+    $qs_cuti_bersama = $db
+        ->query('select', 'htlgnth')
+        ->get([
+            'id'
+        ])
+        ->where('tanggal', $tanggal )
+        ->where('is_active', 1 )
+        ->exec();
+    $rs_cuti_bersama = $qs_cuti_bersama->fetch();
+
     $jadwal = $rs_jadwal['id_htsxxmh'];
 
-    if (!empty($rs_holiday)) {
+    if (!empty($rs_holiday) || !empty($rs_cuti_bersama)) {
         $is_holiday = 1;
     } else {
         $is_holiday = 0;
