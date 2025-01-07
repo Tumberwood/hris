@@ -56,9 +56,20 @@
         ->exec();
     $rs_cuti_bersama = $qs_cuti_bersama->fetch();
 
+    $qs_absensi = $db
+        ->raw()
+        ->bind(':tanggal', $tanggal)
+        ->bind(':id_hemxxmh', $id_hemxxmh)
+        ->exec('SELECT
+                    a.id
+                FROM htlxxrh a
+                WHERE a.tanggal = :tanggal AND a.id_htlxxmh = 2 AND a.id_hemxxmh = :id_hemxxmh
+    ');
+    $rs_absensi = $qs_absensi->fetch();
+
     $jadwal = $rs_jadwal['id_htsxxmh'];
 
-    if (!empty($rs_holiday) || !empty($rs_cuti_bersama)) {
+    if (!empty($rs_holiday) || !empty($rs_cuti_bersama) || !empty($rs_absensi) ) {
         $is_holiday = 1;
     } else {
         $is_holiday = 0;
