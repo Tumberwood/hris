@@ -42,20 +42,22 @@
         for($i = 1;$i < count($sheetData);$i++){
             // Str pad 4 digit dengan 0 sebagai default,
             //jadi jika 0 tidak terbaca di excel, maka bisa di akali dengan str pad
-            $kode = str_pad($sheetData[$i]['0'], 4, '0', STR_PAD_LEFT);
-
-            $dt = explode(" ", $sheetData[$i]['2']);
-            $str_tanggal = $dt[0];
-            $tahun = substr($str_tanggal, 6, 4);
-            $bulan = substr($str_tanggal, 3, 2);
-            $tgl = substr($str_tanggal, 0, 2);
-            $tanggal = $tahun . '-' . $bulan . '-' . $tgl;
-            $jam = $dt[1];
-
-            if ($i == 1) {
-                $arr_kode = 'SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" AS excel_value ';
-            } else {
-                $arr_kode .= 'UNION ALL SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" ';
+            if ($sheetData[$i]['0'] != '') {
+                $kode = str_pad($sheetData[$i]['0'], 4, '0', STR_PAD_LEFT);
+    
+                $dt = explode(" ", $sheetData[$i]['2']);
+                $str_tanggal = $dt[0];
+                $tahun = substr($str_tanggal, 6, 4);
+                $bulan = substr($str_tanggal, 3, 2);
+                $tgl = substr($str_tanggal, 0, 2);
+                $tanggal = $tahun . '-' . $bulan . '-' . $tgl;
+                $jam = $dt[1];
+    
+                if ($i == 1) {
+                    $arr_kode = 'SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" AS excel_value ';
+                } else {
+                    $arr_kode .= 'UNION ALL SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" ';
+                }
             }
         }
         
