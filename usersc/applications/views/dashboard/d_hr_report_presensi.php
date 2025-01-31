@@ -589,15 +589,12 @@
 									{ targets: '_all', className: 'text-right' } // Apply text-right class to all columns
 									,{
 										targets: [10,11],
+										className: 'text-center',
 										render: function (data){
 											if (data == 0){
-												return 'draft';
+												return '<i class="fa fa-remove text-danger"></i>';
 											}else if(data == 1){
 												return '<i class="fa fa-check text-navy"></i>';
-											}else if(data == 2){
-												return '<i class="fa fa-undo text-muted"></i>';
-											}else if(data == -9){
-												return '<i class="fa fa-remove text-danger"></i>';
 											}
 										}
 									},
