@@ -1326,56 +1326,116 @@
         // pegawai yang mendapat flag is_pot_cuti di schedule dan tidak ada ceklok maka dibuat cek = 0 dan diberikan flag_is_pot_upah dan pot premi,
         // Jika terdapat flag is_pot_cuti di schedule dan ada ceklok salah satu maka cek = 1 
         //Jika ada kedua ceklok maka, akan cek tidak akan dirubah atau sesuai dengan cek asli dari generate presensi.
+        
+        //UPDATE QUERY 31 JAN 2025
         $qu_pot_upah = $db
             ->raw()
             ->bind(':tanggal', $tanggal)
             ->exec('UPDATE htsprrd AS a
-                    INNER JOIN htssctd AS b 
-                        ON b.id_hemxxmh = a.id_hemxxmh 
-                        AND b.tanggal = a.tanggal
+                    LEFT JOIN (
+                        SELECT id_hemxxmh, tanggal
+                        FROM htssctd
+                        WHERE tanggal = :tanggal AND is_active = 1 AND is_pot_hk = 1
+                    ) AS b 
+                    ON b.id_hemxxmh = a.id_hemxxmh AND b.tanggal = a.tanggal
                     SET 
-                        cek = IF(
-                            a.clock_in IS NULL AND a.clock_out IS NULL, 
-                            0, 
-                            IF(
-                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
-                                a.cek, 
-                                1
-                            )
-                        ),
-                        a.htlxxrh_kode = IF(
-                            a.clock_in IS NULL AND a.clock_out IS NULL, 
-                            "Cuti Bersama - Potong Upah", 
-                            IF(
-                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
-                                a.htlxxrh_kode, 
-                                "Cuti Bersama - Potong Upah"
-                            )
-                        ),
-                        a.is_pot_upah = IF(
-                            a.clock_in IS NULL AND a.clock_out IS NULL, 
-                            1, 
-                            IF(
-                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
-                                a.cek, 
-                                1
-                            )
-                        ),
-                        a.is_pot_premi = IF(
-                            a.clock_in IS NULL AND a.clock_out IS NULL, 
-                            1, 
-                            IF(
-                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
-                                a.cek, 
-                                1
-                            )
-                        )
+                        a.cek = CASE 
+                            WHEN b.id_hemxxmh IS NOT NULL THEN 
+                                CASE 
+                                    WHEN a.clock_in IS NULL AND a.clock_out IS NULL THEN 0
+                                    WHEN a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL THEN a.cek
+                                    ELSE 1
+                                END 
+                            ELSE a.cek
+                        END,
+                        
+                        a.htlxxrh_kode = CASE 
+                            WHEN b.id_hemxxmh IS NOT NULL THEN 
+                                CASE 
+                                    WHEN a.clock_in IS NULL AND a.clock_out IS NULL THEN "Cuti Bersama - Potong Upah"
+                                    WHEN a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL THEN a.htlxxrh_kode
+                                    ELSE "Cuti Bersama - Potong Upah"
+                                END 
+                            ELSE a.htlxxrh_kode
+                        END,
+                        
+                        a.is_pot_upah = CASE 
+                            WHEN b.id_hemxxmh IS NOT NULL THEN 
+                                CASE 
+                                    WHEN a.clock_in IS NULL AND a.clock_out IS NULL THEN 1
+                                    WHEN a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL THEN 0
+                                    ELSE 1
+                                END 
+                            ELSE a.is_pot_upah
+                        END,
+                        
+                        a.is_pot_premi = CASE 
+                            WHEN b.id_hemxxmh IS NOT NULL THEN 
+                                CASE 
+                                    WHEN a.clock_in IS NULL AND a.clock_out IS NULL THEN 1
+                                    WHEN a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL THEN 0
+                                    ELSE 1
+                                END 
+                            ELSE a.is_pot_premi
+                        END
                     WHERE 
-                        a.tanggal = :tanggal
-                        AND b.is_active = 1 
-                        AND b.is_pot_hk = 1;
+                        a.tanggal = :tanggal;
+            
             '
         );
+
+        //QUERY LAMA EXECUTE
+        // $qu_pot_upah = $db
+        //     ->raw()
+        //     ->bind(':tanggal', $tanggal)
+        //     ->exec('UPDATE htsprrd AS a
+        //             INNER JOIN htssctd AS b 
+        //                 ON b.id_hemxxmh = a.id_hemxxmh 
+        //                 AND b.tanggal = a.tanggal
+        //             SET 
+        //                 cek = IF(
+        //                     a.clock_in IS NULL AND a.clock_out IS NULL, 
+        //                     0, 
+        //                     IF(
+        //                         a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+        //                         a.cek, 
+        //                         1
+        //                     )
+        //                 ),
+        //                 a.htlxxrh_kode = IF(
+        //                     a.clock_in IS NULL AND a.clock_out IS NULL, 
+        //                     "Cuti Bersama - Potong Upah", 
+        //                     IF(
+        //                         a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+        //                         a.htlxxrh_kode, 
+        //                         "Cuti Bersama - Potong Upah"
+        //                     )
+        //                 ),
+        //                 a.is_pot_upah = IF(
+        //                     a.clock_in IS NULL AND a.clock_out IS NULL, 
+        //                     1, 
+        //                     IF(
+        //                         a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+        //                         a.cek, 
+        //                         1
+        //                     )
+        //                 ),
+        //                 a.is_pot_premi = IF(
+        //                     a.clock_in IS NULL AND a.clock_out IS NULL, 
+        //                     1, 
+        //                     IF(
+        //                         a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+        //                         a.cek, 
+        //                         1
+        //                     )
+        //                 )
+        //             WHERE 
+        //                 a.tanggal = :tanggal
+        //                 AND b.is_active = 1 
+        //                 AND b.is_pot_hk = 1;
+        //     '
+        // );
+        
         // di commit per karyawan
         $qu_hgtprth = $db
             ->query('update', 'hgtprth')
