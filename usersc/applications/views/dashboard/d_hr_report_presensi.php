@@ -553,6 +553,10 @@
 										str5 += '<th class="text-center">TI</th>';
 									} else if (colObj5.name == 'makan') {
 										str5 += '<th class="text-center">Makan</th>';
+									} else if (colObj5.name == 'is_pot_upah') {
+										str5 += '<th class="text-center">Pot Upah</th>';
+									} else if (colObj5.name == 'is_pot_premi') {
+										str5 += '<th class="text-center">Pot Premi</th>';
 									} else if (colObj5.name == 'lembur') {
 										str5 += '<th class="text-center">Lembur</th>';
 									} else if (colObj5.name == 'lembur15') {
