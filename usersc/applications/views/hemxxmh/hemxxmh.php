@@ -842,12 +842,13 @@
 			edthemxxmh.dependent( 'hemjbmh.id_hesxxmh', function ( val, data, callback ) {
 				id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
 				tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
+				console.log(tanggal_keluar_old);
 				if (id_hesxxmh == 1 || id_hesxxmh  == 5 || id_hesxxmh  == 4) {
 					edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
 					if (tanggal_keluar_old == null) {
 						edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
 					} else {
-						edthemxxmh.field('hemjbmh.tanggal_keluar').val();
+						edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_keluar_old);
 					}
 				} else {
 					edthemxxmh.field('hemjbmh.tanggal_keluar').show();
@@ -865,7 +866,7 @@
 					if (tanggal_keluar_old == null) {
 						edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
 					} else {
-						edthemxxmh.field('hemjbmh.tanggal_keluar').val();
+						edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_keluar_old);
 					}
 				} else {
 					edthemxxmh.field('hemjbmh.tanggal_keluar').show();
