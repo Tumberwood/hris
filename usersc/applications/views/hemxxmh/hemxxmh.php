@@ -312,7 +312,7 @@
 		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0, id_hevxxmh_old = 0, id_heyxxmh_old = 0, id_hesxxmh_old = 0;
 		var id_hedlvmh_old = 0;
 		var id_gtxpkmh_old = 0;
-		var id_heyxxmd_old = 0;
+		var id_heyxxmd_old = 0, tanggal_keluar_old = null;
 
 		$(document).ready(function() {
 
@@ -844,7 +844,11 @@
 				tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
 				if (id_hesxxmh == 1 || id_hesxxmh  == 5 || id_hesxxmh  == 4) {
 					edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
-					edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
+					if (tanggal_keluar_old == null) {
+						edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
+					} else {
+						edthemxxmh.field('hemjbmh.tanggal_keluar').val();
+					}
 				} else {
 					edthemxxmh.field('hemjbmh.tanggal_keluar').show();
 					tanggal_akhir = moment(tanggal_masuk).add('month', 6).format('DD MMM YYYY');
@@ -858,7 +862,11 @@
 				tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
 				if (id_hesxxmh == 1 || id_hesxxmh  == 5 || id_hesxxmh  == 4) {
 					edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
-					edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
+					if (tanggal_keluar_old == null) {
+						edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
+					} else {
+						edthemxxmh.field('hemjbmh.tanggal_keluar').val();
+					}
 				} else {
 					edthemxxmh.field('hemjbmh.tanggal_keluar').show();
 					tanggal_akhir = moment(tanggal_masuk).add('month', 6).format('DD MMM YYYY');
@@ -1241,6 +1249,7 @@
 				id_heyxxmh_old   = data_hemjbmh.id_heyxxmh;
 				id_heyxxmd_old   = data_hemjbmh.id_heyxxmd;
 				id_hesxxmh_old   = data_hemjbmh.id_hesxxmh;
+				tanggal_keluar_old   = data_hemjbmh.tanggal_keluar;
 
 				data_hemdcmh = tblhemxxmh.row( { selected: true } ).data().hemdcmh;
 				id_gtxpkmh_old   = data_hemdcmh.id_gtxpkmh;
@@ -1273,7 +1282,7 @@
 				id_hemxxmh = 0;
 				id_heyxxmd_old = 0;
 				id_gtxpkmh_old = 0;
-				id_hovxxmh_old   = 0, id_hodxxmh_old   = 0, id_hosxxmh_old   = 0, id_hevxxmh_old   = 0, id_hetxxmh_old   = 0, id_heyxxmh_old   = 0, id_hesxxmh_old   = 0;
+				id_hovxxmh_old   = 0, id_hodxxmh_old   = 0, id_hosxxmh_old   = 0, id_hevxxmh_old   = 0, id_hetxxmh_old   = 0, id_heyxxmh_old   = 0, id_hesxxmh_old   = 0, tanggal_keluar_old = null;
 
 				// atur hak akses
 				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth, tblhemjbrd];
