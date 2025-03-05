@@ -103,6 +103,19 @@
 				<h5>Detail</h5>
 			</div>
 			<div class="ibox-content">
+				<div class="row">
+					<div class="col">
+						<div class="ibox collapsed" id="iboxfilter">
+							<div class="ibox-title p-xs">
+								<h5 class="text-navy">Filter</h5>&nbsp
+								<button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+							</div>
+							<div class="ibox-content p-xs">
+								<div class="p-xs" id="searchPanes1"></div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="table-responsive">
                     <table id="tblhtsprrd_htoxxrd_d" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
@@ -391,6 +404,15 @@
 
 			//start datatables
 			tblhtsprrd_htoxxrd_d = $('#tblhtsprrd_htoxxrd_d').DataTable( {
+				searchPanes:{
+					layout: 'columns-1',
+				},
+				dom: 
+					"<P>"+
+					"<lf>"+
+					"<B>"+
+					"<rt>"+
+					"<'row'<'col-sm-4'i><'col-sm-8'p>>",
 				ajax: {
 					url: "../../models/htsprrd_htoxxrd_h/htsprrd_htoxxrd_d.php",
 					type: 'POST',
@@ -441,6 +463,9 @@
 					?>
 					// END breaking generate button
 				],
+				initComplete: function() {
+					this.api().searchPanes.rebuildPane();
+				},
 				rowCallback: function(row, data) {
 					if (data.is_tidak_sesuai == 1) {
 						$(row).addClass('text-danger');
@@ -460,9 +485,23 @@
 					$('#tidak_sesuai').html(numFormat(tidak_sesuai));
 				},
 				columnDefs: [
-					{ targets: [4, 5, 6, 7, 8, 9,10,11], className: "text-right" }
+					{ targets: [4, 5, 6, 7, 8, 9,10,11], className: "text-right" },
+					{
+						searchPanes:{
+							show: true,
+						},
+						targets: [12]
+					},
+					{
+						searchPanes:{
+							show: false,
+						},
+						targets: '_all'
+					}
 				]
 			} );
+			
+			tblhtsprrd_htoxxrd_d.searchPanes.container().appendTo( '#searchPanes1' );
 
 // --------- end _detail --------------- //		
 			
