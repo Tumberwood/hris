@@ -126,11 +126,34 @@
 		$pivotData = [];
 	}
 	
-
 	$data = [
 		"message" => "Upload berhasil!",
 		"type_message" => "success",
 		"lembur" => $pivotData  
 	];
-	require_once( "../../../../usersc/helpers/fn_ajax_results.php" );
+
+    // BEGIN results akhir
+	$is_debug = true;
+    if($is_debug == true){
+        $results = array(
+            "debug" => $debug,
+            "data" => $data,
+            "results" => $rs_opt,
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+    }else{
+        $results = array(
+            "data" => $data,
+            "results" => $rs_opt,
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+    }
+    // END results akhir
+
+    echo json_encode($results);
+
 ?>
