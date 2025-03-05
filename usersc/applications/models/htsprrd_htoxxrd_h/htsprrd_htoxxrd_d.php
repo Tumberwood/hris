@@ -28,12 +28,21 @@
 	
 		$start_date = $rs_htsprrd_htoxxrd_h['start_date'];
 		$end_date = $rs_htsprrd_htoxxrd_h['end_date'];
+
+		$user = $_SESSION['user'];
+        if ($user > 100) {
+            $w_id_heyxxmh_session = ' AND id_heyxxmh IN (' . $_SESSION['str_arr_ha_heyxxmh'] . ')';
+        } else {
+            $w_id_heyxxmh_session = ' AND id_heyxxmh NOT IN (-1)';
+        }
 		
 		$qs_detail_upload = $db
 			->raw()
 			->bind(':id_htsprrd_htoxxrd_h', $id_htsprrd_htoxxrd_h)
 			->exec('SELECT
 						a.id,
+						b.id_heyxxmh,
+						c.nama type,
 						a.id_hemxxmh,
 						id_htsprrd_htoxxrd_h,
 						a.kode,
@@ -44,9 +53,13 @@
 						a.lembur4,
 						a.makan
 					FROM htsprrd_htoxxrd_d a
+					LEFT JOIN hemjbmh b ON b.id_hemxxmh = a.id_hemxxmh
+					LEFT JOIN heyxxmh c ON c.id = b.id_heyxxmh
 					WHERE a.id_htsprrd_htoxxrd_h = :id_htsprrd_htoxxrd_h
-		');
+		'.$w_id_heyxxmh_session);
 		$dataRows = $qs_detail_upload->fetchAll();
+
+		// echo $w_id_heyxxmh_session;
 		
 		$qs_data_sql = $db
 			->raw()
@@ -87,6 +100,8 @@
 			
 			return [
 				"id"					=> $row['id'],
+				"id_heyxxmh"			=> $row['id_heyxxmh'],
+				"type"					=> $row['type'],
 				"id_htsprrd_htoxxrd_h"	=> $row['id_htsprrd_htoxxrd_h'],
 				"kode"        			=> $kode,
 				"nama"        			=> $row['nama'],
