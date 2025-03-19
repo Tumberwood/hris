@@ -191,7 +191,7 @@
 					a.nama as mesin
 				FROM htsprtd AS a
 				LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
-				WHERE a.tanggal BETWEEN :start_date AND CURDATE() AND b.id = :id_hemxxmh AND a.nama = "istirahat" AND a.is_active = 1
+				WHERE a.tanggal BETWEEN :start_date AND CURDATE() AND b.id = :id_hemxxmh AND a.nama IN ("istirahat", "istirahat manual") AND a.is_active = 1
 				ORDER BY concat(a.tanggal, " " , a.jam) ASC
 				LIMIT 5;
 				'
