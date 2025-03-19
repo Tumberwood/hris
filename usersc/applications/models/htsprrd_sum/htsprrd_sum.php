@@ -24,6 +24,13 @@
 	
 	$start_date = $awal->format('Y-m-d');
 	$end_date 	= $akhir->format('Y-m-d');
+	
+	$user = $_SESSION['user'];
+	if ($user > 100) {
+		$w_id_heyxxmh_session = ' AND id_heyxxmh IN (' . $_SESSION['str_arr_ha_heyxxmh'] . ')';
+	} else {
+		$w_id_heyxxmh_session = ' AND id_heyxxmh NOT IN (-1)';
+	}
 
 	$qs_rekap_presensi = $db
 		->raw()
@@ -32,6 +39,7 @@
 		->exec('WITH qs_rekap_presensi AS (
 					SELECT DISTINCT
 						a.kode_finger,
+						c.id_heyxxmh,
 						CONCAT(b.kode, " - ", b.nama) AS hemxxmh_data,
 						DATEDIFF(:end_date, :start_date) + 1 AS HR,
 						d.nama AS hodxxmh_nama,
@@ -56,77 +64,77 @@
 					LEFT JOIN hodxxmh AS d ON d.id = c.id_hodxxmh
 					LEFT JOIN hetxxmh AS e ON e.id = c.id_hetxxmh
 						
-						-- Cek Status IN
-						LEFT JOIN (
+					-- Cek Status IN
+					LEFT JOIN (
+						SELECT
+							id_hemxxmh,
+							hk_in,
+							st_off,
+							st_nj,
+							hl_in,
+							ct_in,
+							cb_in,
+							sd_in,
+							kk_in,
+							al_in,
+							ip_in,
+							lain_in,
+							ak_in
+						FROM (
 							SELECT
-								id_hemxxmh,
-								hk_in,
-								st_off,
-								st_nj,
-								hl_in,
-								ct_in,
-								cb_in,
-								sd_in,
-								kk_in,
-								al_in,
-								ip_in,
-								lain_in,
-								ak_in
-							FROM (
-								SELECT
-									prr.id_hemxxmh,
-										SUM(if(prr.status_presensi_in = "HK", 0.5,0)) AS hk_in,
-										SUM(if(prr.status_presensi_in = "OFF", 1,0)) AS st_off,
-										SUM(if(prr.status_presensi_in = "NJ", 1,0)) AS st_nj,
-										SUM(if(absen.id = 20, 0.5,0)) AS hl_in,
-										SUM(if(absen.id = 1, 0.5,0)) AS ct_in,
-										SUM(if(absen.id = 2, 0.5,0)) AS cb_in,
-										SUM(if(absen.id = 3, 0.5,0)) AS sd_in,
-										SUM(if(absen.id = 19, 0.5,0)) AS kk_in,
-										SUM(if(absen.id = 5, 0.5,0)) AS al_in,
-										SUM(if(absen.id = 6, 0.5,0)) AS ip_in,
-										SUM(if(absen.id NOT IN (20,1,2,3,19,5,6), 0.5,0)) AS lain_in,
-										SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_in
-								FROM htsprrd AS prr
-								LEFT JOIN htlxxmh AS absen ON absen.kode = prr.status_presensi_in
-								WHERE tanggal BETWEEN :start_date AND :end_date
-								GROUP BY id_hemxxmh
-							) lembur_sum_table
-						) st_in ON st_in.id_hemxxmh = a.id_hemxxmh
-						
-						-- Cek Status IN
-						LEFT JOIN (
+								prr.id_hemxxmh,
+									SUM(if(prr.status_presensi_in = "HK", 0.5,0)) AS hk_in,
+									SUM(if(prr.status_presensi_in = "OFF", 1,0)) AS st_off,
+									SUM(if(prr.status_presensi_in = "NJ", 1,0)) AS st_nj,
+									SUM(if(absen.id = 20, 0.5,0)) AS hl_in,
+									SUM(if(absen.id = 1, 0.5,0)) AS ct_in,
+									SUM(if(absen.id = 2, 0.5,0)) AS cb_in,
+									SUM(if(absen.id = 3, 0.5,0)) AS sd_in,
+									SUM(if(absen.id = 19, 0.5,0)) AS kk_in,
+									SUM(if(absen.id = 5, 0.5,0)) AS al_in,
+									SUM(if(absen.id = 6, 0.5,0)) AS ip_in,
+									SUM(if(absen.id NOT IN (20,1,2,3,19,5,6), 0.5,0)) AS lain_in,
+									SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_in
+							FROM htsprrd AS prr
+							LEFT JOIN htlxxmh AS absen ON absen.kode = prr.status_presensi_in
+							WHERE tanggal BETWEEN :start_date AND :end_date
+							GROUP BY id_hemxxmh
+						) lembur_sum_table
+					) st_in ON st_in.id_hemxxmh = a.id_hemxxmh
+					
+					-- Cek Status IN
+					LEFT JOIN (
+						SELECT
+							id_hemxxmh,
+							hk_out,
+							hl_out,
+							ct_out,
+							cb_out,
+							sd_out,
+							kk_out,
+							al_out,
+							ip_out,
+							lain_out,
+							ak_out
+						FROM (
 							SELECT
-								id_hemxxmh,
-								hk_out,
-								hl_out,
-								ct_out,
-								cb_out,
-								sd_out,
-								kk_out,
-								al_out,
-								ip_out,
-								lain_out,
-								ak_out
-							FROM (
-								SELECT
-									prr.id_hemxxmh,
-										SUM(if(prr.status_presensi_out = "HK", 0.5,0)) AS hk_out,
-										SUM(if(absen.id = 20, 0.5,0)) AS hl_out,
-										SUM(if(absen.id = 1, 0.5,0)) AS ct_out,
-										SUM(if(absen.id = 2, 0.5,0)) AS cb_out,
-										SUM(if(absen.id = 3, 0.5,0)) AS sd_out,
-										SUM(if(absen.id = 19, 0.5,0)) AS kk_out,
-										SUM(if(absen.id = 5, 0.5,0)) AS al_out,
-										SUM(if(absen.id = 6, 0.5,0)) AS ip_out,
-										SUM(if(absen.id NOT IN (20,1,2,3,19,5,6), 0.5,0)) AS lain_out,
-										SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_out
-								FROM htsprrd AS prr
-								LEFT JOIN htlxxmh AS absen ON absen.kode = prr.status_presensi_out
-								WHERE tanggal BETWEEN :start_date AND :end_date
-								GROUP BY id_hemxxmh
-							) lembur_sum_table
-						) st_out ON st_out.id_hemxxmh = a.id_hemxxmh
+								prr.id_hemxxmh,
+									SUM(if(prr.status_presensi_out = "HK", 0.5,0)) AS hk_out,
+									SUM(if(absen.id = 20, 0.5,0)) AS hl_out,
+									SUM(if(absen.id = 1, 0.5,0)) AS ct_out,
+									SUM(if(absen.id = 2, 0.5,0)) AS cb_out,
+									SUM(if(absen.id = 3, 0.5,0)) AS sd_out,
+									SUM(if(absen.id = 19, 0.5,0)) AS kk_out,
+									SUM(if(absen.id = 5, 0.5,0)) AS al_out,
+									SUM(if(absen.id = 6, 0.5,0)) AS ip_out,
+									SUM(if(absen.id NOT IN (20,1,2,3,19,5,6), 0.5,0)) AS lain_out,
+									SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_out
+							FROM htsprrd AS prr
+							LEFT JOIN htlxxmh AS absen ON absen.kode = prr.status_presensi_out
+							WHERE tanggal BETWEEN :start_date AND :end_date
+							GROUP BY id_hemxxmh
+						) lembur_sum_table
+					) st_out ON st_out.id_hemxxmh = a.id_hemxxmh
 				)
 				SELECT
 					kode_finger,
@@ -147,7 +155,8 @@
 					absen_khusus,
 					lain
 				FROM qs_rekap_presensi
-				'
+				WHERE 1
+				'.$w_id_heyxxmh_session
 				);
 	$rs_rekap_presensi = $qs_rekap_presensi->fetchAll();
 
