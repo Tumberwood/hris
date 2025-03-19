@@ -1202,7 +1202,7 @@
 						type: "select",
 						placeholder : "Select",
 						options: [
-							// { "label": "Istirahat", "value": "istirahat" },
+							{ "label": "Istirahat Manual", "value": "istirahat Manual" },
 							// { "label": "Makan", "value": "makan" },
 							{ "label": "Makan Manual", "value": "makan manual" },
 							{ "label": "Outsourcing", "value": "os" },
