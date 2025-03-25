@@ -1141,33 +1141,39 @@
                                         )
                                     )
                                 ) AS lembur15,
-
+        
                                 IF(id_hesxxmh = 3, 
                                     0,
-                                    IF(durasi_lembur_libur_jam > 0,
-                                        IF(durasi_lembur_final BETWEEN 1 AND 7 OR durasi_lembur_final >= 7, 
-                                            if(durasi_lembur_final > 7, 
-                                                7, 
-                                                durasi_lembur_final - 1
-                                            ), 
-                                            0
+                                    IF(durasi_lembur_libur_jam > 0, -- cek apakah ini lembur libur
+                                        IF(durasi_lembur_final > 7,  -- cek durasi_lembur_final apakah > 7
+                                            7, -- kalau ya, maka harus 7 jam untuk lembur2 batasnya. Sisanya masuk lembur3
+                                            durasi_lembur_final -- jika kurang dari 7, maka tampilkan apa adanya
                                         ),
-                                        IF(id_hemxxmh = 67,
+                                        IF(id_hemxxmh = 67, -- ini supir pribadi
                                             IF(durasi_lembur_final > 2, durasi_lembur_final - 2, 0),
-                                            IF(durasi_lembur_final > 1 AND durasi_lembur_final <= 8, durasi_lembur_final - 1, 0)
+                                            IF(durasi_lembur_final > 1, -- jika lembur biasa > 1, maka jam berikutnya masuk ke lembur2
+                                                if(durasi_lembur_final > 8, -- cek apakah lembih dari 8 jam total lembur?
+                                                    7,  -- kalau lebih dari 8 jam untuk lembur2 bukan Libur, maka batas di 7 jam yang diambil
+                                                    durasi_lembur_final - 1
+                                                )
+                                                , 0
+                                            )
                                         )
                                     )
                                 ) AS lembur2,
-
+        
                                 IF(id_hesxxmh = 3, 
                                     0,
-                                    IF(durasi_lembur_libur_jam > 0,
-                                        IF(durasi_lembur_final >= 7, 
-                                            durasi_lembur_final - 7,
-                                            0
+                                    IF(durasi_lembur_libur_jam > 0, -- cek apakah lembur libur
+                                        IF(durasi_lembur_final > 7, -- jika lembur libur > 7 maka masuk lembur3
+                                            durasi_lembur_final - 7, -- jika lembur > 7 maka akan -7, karena 7 jam pertama ikut lembur2
+                                            0 -- kalau kurang dari 7 maka 0, karena lembur3 harus > 7.
                                         ),
-                                        IF(id_hemxxmh = 67,
+                                        IF(id_hemxxmh = 67, 
                                             0,
+                                            -- ini lembur normal, lembur3 itu diatas 8 jam, 
+                                            -- jika lembur normal 9 jam, maka
+                                            -- lembur15: 1, lembur2: 7, lembur3: 1
                                             IF(durasi_lembur_final > 8, durasi_lembur_final - 8, 0)
                                         )
                                     )
