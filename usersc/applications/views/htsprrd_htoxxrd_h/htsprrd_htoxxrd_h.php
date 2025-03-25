@@ -19,7 +19,7 @@
 		<div class="modal-content animated bounceInRight">
 			<form class="form-horizontal" id="frmUploadMaster" enctype="multipart/form-data">
 				<div class="modal-header">
-					<h4 class="modal-title">Upload Master Item</h4>
+					<h4 class="modal-title">Upload Excel</h4>
 				</div>
 				<div class="modal-body">
 					<div class="form-group row">
@@ -348,7 +348,7 @@
 						name: 'btnUpload',
 						text: '<i class="fa fa-file-excel-o"></i>',
 						className: 'btn btn-primary',
-						titleAttr: 'Upload Master Item',
+						titleAttr: 'Upload Excel',
 						action: function ( e, dt, node, config ) {
 							$('#modalUpload').modal('toggle');
 						}
