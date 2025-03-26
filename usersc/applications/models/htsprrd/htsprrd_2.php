@@ -110,6 +110,8 @@
 			Field::inst( 'htsprrd.jam_akhir_lembur_istirahat3' ),
 			Field::inst( 'htsprrd.durasi_lembur_istirahat3' ),
 			Field::inst( 'htsprrd.durasi_lembur_total_jam' ),
+			Field::inst( 'htsprrd.break_in' ),
+			Field::inst( 'htsprrd.break_out' ),
 			
 			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'hemjbmh.id_heyxxmd' ),

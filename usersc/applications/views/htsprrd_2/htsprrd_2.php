@@ -108,6 +108,8 @@
 												<th rowspan=2>Jadwal</th>
 												<th rowspan=2>Clock In</th>
 												<th rowspan=2>Clock Out</th>
+												<th rowspan=2>Break In</th>
+												<th rowspan=2>Break Out</th>
 												<th rowspan=2>Cek CI</th>
 												<th rowspan=2>Cek CO</th>
 												
@@ -477,6 +479,8 @@
 					{ data: "htsprrd.st_jadwal" }, //8
 					{ data: "htsprrd.clock_in" },
 					{ data: "htsprrd.clock_out" },
+					{ data: "htsprrd.break_in" },
+					{ data: "htsprrd.break_out" },
 					{ data: "htsprrd.st_clock_in" },
 					{ data: "htsprrd.st_clock_out" },//12
 					{ data: "htsprrd.status_presensi_in" },
@@ -699,20 +703,20 @@
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					
 					// s_pot_jam = api.column( 16 ).data().sum();
-					all_makan = api.column( 17 ).data().sum();
-					all_lb = api.column( 24 ).data().sum();
-					all_aw = api.column( 25 ).data().sum();
-					all_ak = api.column( 26 ).data().sum();
-					all_i1 = api.column( 27 ).data().sum();
-					all_i2 = api.column( 28 ).data().sum();
-					all_i3 = api.column( 29 ).data().sum();
-					all_tl = api.column( 30 ).data().sum();
+					all_makan = api.column(19).data().sum();
+					all_lb = api.column(26).data().sum();
+					all_aw = api.column(27).data().sum();
+					all_ak = api.column(28).data().sum();
+					all_i1 = api.column(29).data().sum();
+					all_i2 = api.column(30).data().sum();
+					all_i3 = api.column(31).data().sum();
+					all_tl = api.column(32).data().sum();
 
-					all_pot_ti = api.column( 31 ).data().sum();
-					all_pot_overtime = api.column( 32 ).data().sum();
-					all_overtime = api.column( 33 ).data().sum();
-					all_pot_hk = api.column( 34 ).data().sum();
-					all_pot_jam = api.column( 35 ).data().sum();
+					all_pot_ti = api.column(33).data().sum();
+					all_pot_overtime = api.column(34).data().sum();
+					all_overtime = api.column(35).data().sum();
+					all_pot_hk = api.column(36).data().sum();
+					all_pot_jam = api.column(37).data().sum();
 
 					$( '#all_makan' ).html( numFormat(all_makan) );
 					$( '#all_lb' ).html( numFormat(all_lb) );
