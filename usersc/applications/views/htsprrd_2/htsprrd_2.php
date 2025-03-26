@@ -177,6 +177,8 @@
 												<th></th>
 												<th></th>
 												<th></th>
+												<th></th>
+												<th></th>
 												
 												<th id="all_lb"></th>
 												<th id="all_aw"></th>
