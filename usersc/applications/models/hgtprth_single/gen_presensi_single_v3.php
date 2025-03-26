@@ -476,7 +476,7 @@
                     LEFT JOIN (
                         SELECT
                             a.id,
-                            MIN(CONCAT(c.tanggal, " ", c.jam)) AS break_out
+                            MAX(CONCAT(c.tanggal, " ", c.jam)) AS break_out
                         FROM htssctd AS a
                         INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                         INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
