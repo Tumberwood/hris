@@ -430,7 +430,7 @@
                         INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                         INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
-                            AND c.nama IN ("os", "out", "staff", "pmi")
+                            AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3")
                             AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND a.tanggaljam_awal_t2
                         AND b.id = :id_hemxxmh                                                        
                         GROUP BY a.id
@@ -447,7 +447,7 @@
                         INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                         INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
-                            AND c.nama IN ("os", "out", "staff", "pmi")
+                            AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3")
                             AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_akhir_t1 AND a.tanggaljam_akhir_t2
                             AND a.id_hemxxmh = :id_hemxxmh
                         GROUP BY a.id
@@ -497,7 +497,7 @@
                         INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                         INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                            AND c.nama IN ("os", "out", "staff", "pmi")
+                            AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3")
                             AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(:tanggal, " 09:00:00") AND DATE_ADD(CONCAT(:tanggal, " 04:00:00"), INTERVAL 1 DAY)
                             AND b.id = :id_hemxxmh
                         GROUP BY a.id
@@ -678,7 +678,7 @@
                                     INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                     WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                        AND c.nama IN ("os", "out", "staff", "pmi", "istirahat", "istirahat manual")
+                                        AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual")
                                         AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
                                         AND a.id_hemxxmh = :id_hemxxmh
                                     GROUP BY a.id
@@ -757,7 +757,7 @@
                                     INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                     WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                        AND c.nama IN ("os", "out", "staff", "pmi", "istirahat", "istirahat manual")
+                                        AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual")
                                         AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
                                         AND a.id_hemxxmh = :id_hemxxmh
                                     GROUP BY a.id

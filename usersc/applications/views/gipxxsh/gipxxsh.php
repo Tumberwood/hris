@@ -73,6 +73,22 @@
 							</div>
 						</div>
 					</div>
+					<div class="form-group row">
+						<label class="col-lg-2 col-form-label">File Checkclock <b>PMI Gedung 3</b></label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input type="file" name="filename" class="form-control" id="inputfilethimportcheckclock_pmi_gedung3">
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-lg-2 col-form-label">File Checkclock <b>Outsourcing Gedung 3</b></label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input type="file" name="filename" class="form-control" id="inputfilethimportcheckclock_os_gedung3">
+							</div>
+						</div>
+					</div>
 
 					<span class="input-group-append"> 
 						<button type="submit" id="submit_ceklok" class="btn btn-primary">Import</button>
@@ -348,6 +364,88 @@
 										'</div>'
 								});
 								$("#inputfilethimportcheckclock_makan_manual").val('');
+								notifyprogress.close();
+								$('#submit_ceklok').show();
+							},
+							error: function (xhr, Status, err){
+								// console.log('x');
+							}
+						} );
+					}
+					
+					//pmi_gedung3
+					var fd_pmi_gedung3 = new FormData();
+					var pmi_gedung3 = $('#inputfilethimportcheckclock_pmi_gedung3')[0].files[0];
+					// console.log(pmi_gedung3);
+					fd_pmi_gedung3.append('filename',pmi_gedung3);
+					
+					if (pmi_gedung3 != undefined) {
+						fd_pmi_gedung3.append('filename',pmi_gedung3);
+			
+						$.ajax( {
+							url: "../../models/gipxxsh/gipxxsh_fn_checkclock_pmi_gedung3.php",
+							type: 'POST',
+							dataType: 'json',
+							data: fd_pmi_gedung3,
+							async: false,
+							contentType: false,
+							processData: false,
+							success: function ( json ) {
+								
+								$.notify({
+									message: json.data.message
+								},{
+									type: json.data.type_message,
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
+								});
+								$("#inputfilethimportcheckclock_pmi_gedung3").val('');
+								notifyprogress.close();
+								$('#submit_ceklok').show();
+							},
+							error: function (xhr, Status, err){
+								// console.log('x');
+							}
+						} );
+					}
+					
+					//os_gedung3
+					var fd_os_gedung3 = new FormData();
+					var os_gedung3 = $('#inputfilethimportcheckclock_os_gedung3')[0].files[0];
+					// console.log(os_gedung3);
+					fd_os_gedung3.append('filename',os_gedung3);
+					
+					if (os_gedung3 != undefined) {
+						fd_os_gedung3.append('filename',os_gedung3);
+			
+						$.ajax( {
+							url: "../../models/gipxxsh/gipxxsh_fn_checkclock_os_gedung3.php",
+							type: 'POST',
+							dataType: 'json',
+							data: fd_os_gedung3,
+							async: false,
+							contentType: false,
+							processData: false,
+							success: function ( json ) {
+								
+								$.notify({
+									message: json.data.message
+								},{
+									type: json.data.type_message,
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
+								});
+								$("#inputfilethimportcheckclock_os_gedung3").val('');
 								notifyprogress.close();
 								$('#submit_ceklok').show();
 							},
