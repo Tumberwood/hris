@@ -110,8 +110,24 @@
 			Field::inst( 'htsprrd.jam_akhir_lembur_istirahat3' ),
 			Field::inst( 'htsprrd.durasi_lembur_istirahat3' ),
 			Field::inst( 'htsprrd.durasi_lembur_total_jam' ),
-			Field::inst( 'htsprrd.break_in' ),
-			Field::inst( 'htsprrd.break_out' ),
+			Field::inst( 'htsprrd.break_in')
+				->getFormatter( 'Format::datetime', array(
+					'from' => 'Y-m-d H:i:s',
+					'to' =>   'd M Y H:i:s'
+				) )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y H:i:s',
+					'to' =>   'Y-m-d H:i:s'
+				) ),
+			Field::inst( 'htsprrd.break_out')
+				->getFormatter( 'Format::datetime', array(
+					'from' => 'Y-m-d H:i:s',
+					'to' =>   'd M Y H:i:s'
+				) )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y H:i:s',
+					'to' =>   'Y-m-d H:i:s'
+				) ),
 			
 			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'hemjbmh.id_heyxxmd' ),
