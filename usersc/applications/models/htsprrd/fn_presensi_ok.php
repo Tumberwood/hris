@@ -235,7 +235,7 @@ use
                         END AS hasil_ceklok
 
                     FROM  htsprtd AS ceklok
-                    WHERE ceklok.kode = :kode_finger AND ceklok.tanggal = :tanggal AND ceklok.nama IN  ("os", "out", "staff", "pmi")
+                    WHERE ceklok.kode = :kode_finger AND ceklok.tanggal = :tanggal AND ceklok.nama IN  ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3")
                     GROUP BY ceklok.id
                     ORDER BY ceklok.id DESC
                     '
@@ -257,7 +257,7 @@ use
                         END AS hasil_ceklok
 
                     FROM  htsprtd AS ceklok
-                    WHERE ceklok.kode = :kode_finger AND ceklok.tanggal = :tanggal AND ceklok.nama IN  ("os", "out", "staff", "pmi")
+                    WHERE ceklok.kode = :kode_finger AND ceklok.tanggal = :tanggal AND ceklok.nama IN  ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3")
                     GROUP BY ceklok.id
                     ORDER BY ceklok.id DESC
                     '
