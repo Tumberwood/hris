@@ -96,7 +96,9 @@
                     rp_lembur4,
                     lembur4_final,
                     nominal_lembur_jam,
-                    grup_hk
+                    grup_hk,
+                    break_in,
+                    break_out
                 )
                 SELECT
                     id_hemxxmh,
@@ -161,7 +163,9 @@
                     rp_lembur4,
                     lembur4_final,
                     nominal_lembur_jam,
-                    grup_hk
+                    grup_hk,
+                    break_in,
+                    break_out
                 FROM htsprrd
                 WHERE tanggal = :tanggal AND 
                     id_hemxxmh IN (
@@ -279,7 +283,9 @@
                             rp_lembur3,
                             lembur3_final,
                             nominal_lembur_jam,
-                            grup_hk
+                            grup_hk,
+                            break_in,
+                            break_out
                         )
                         WITH presensi AS (
                             SELECT
@@ -428,7 +434,9 @@
                                 jadwal.tanggaljam_akhir_t1,
                                 jadwal.tanggaljam_akhir_t2, 
                                 IF(a.is_pot_makan = 1 AND ceklok_makan > 0, ceklok_makan, 0) AS is_makan,
-                                pot_jam_keluar_istirahat
+                                pot_jam_keluar_istirahat,
+                                break_in,
+                                break_out
 
                             FROM hemxxmh AS a
                             INNER JOIN hemjbmh AS b ON b.id_hemxxmh = a.id
@@ -481,6 +489,38 @@
                                 ORDER BY ceklok_out DESC
 
                             ) AS cek_out ON cek_out.id = jadwal.id
+                            
+                            -- ceklok Istirahat AWAL , semua mesin dengan range istirahat sesuai jadwal.
+                            LEFT JOIN (
+                                SELECT
+                                    a.id,
+                                    MIN(CONCAT(c.tanggal, " ", c.jam)) AS break_in
+                                FROM htssctd AS a
+                                INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
+                                INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
+                                WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
+                                    AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+                                AND b.id = :id_hemxxmh                                                        
+                                GROUP BY a.id
+                                ORDER BY break_in
+
+                            ) AS break_awal ON break_awal.id = jadwal.id
+                            
+                            -- ceklok Istirahat AKHIR , semua mesin dengan range istirahat sesuai jadwal.
+                            LEFT JOIN (
+                                SELECT
+                                    a.id,
+                                    MAX(CONCAT(c.tanggal, " ", c.jam)) AS break_out
+                                FROM htssctd AS a
+                                INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
+                                INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
+                                WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
+                                    AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+                                AND b.id = :id_hemxxmh                                                        
+                                GROUP BY a.id
+                                ORDER BY break_out
+
+                            ) AS break_akhir ON break_akhir.id = jadwal.id
                             
                             -- ceklok luar range
                             LEFT JOIN (
@@ -1270,7 +1310,9 @@
                             lembur3_final,
 
                             nominal_lembur_jam,
-                            grup_hk
+                            grup_hk,
+                            break_in,
+                            break_out
                         
                         FROM hitung_lembur_final
                     '
