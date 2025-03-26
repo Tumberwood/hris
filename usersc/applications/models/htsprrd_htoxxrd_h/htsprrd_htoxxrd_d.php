@@ -31,9 +31,9 @@
 
 		$user = $_SESSION['user'];
         if ($user > 100) {
-            $w_id_heyxxmh_session = ' AND id_heyxxmh IN (' . $_SESSION['str_arr_ha_heyxxmh'] . ')';
+            $w_id_heyxxmh_session = ' AND b.id_heyxxmh IN (' . $_SESSION['str_arr_ha_heyxxmh'] . ')';
         } else {
-            $w_id_heyxxmh_session = ' AND id_heyxxmh NOT IN (-1)';
+            $w_id_heyxxmh_session = ' AND b.id_heyxxmh NOT IN (-1)';
         }
 		
 		$qs_detail_upload = $db
@@ -42,7 +42,7 @@
 			->exec('SELECT
 						a.id,
 						b.id_heyxxmh,
-						c.nama type,
+						d.nama status,
 						a.id_hemxxmh,
 						id_htsprrd_htoxxrd_h,
 						a.kode,
@@ -55,6 +55,7 @@
 					FROM htsprrd_htoxxrd_d a
 					LEFT JOIN hemjbmh b ON b.id_hemxxmh = a.id_hemxxmh
 					LEFT JOIN heyxxmh c ON c.id = b.id_heyxxmh
+					LEFT JOIN heyxxmd d ON d.id = b.id_heyxxmd
 					WHERE a.id_htsprrd_htoxxrd_h = :id_htsprrd_htoxxrd_h
 		'.$w_id_heyxxmh_session);
 		$dataRows = $qs_detail_upload->fetchAll();
@@ -101,7 +102,7 @@
 			return [
 				"id"					=> $row['id'],
 				"id_heyxxmh"			=> $row['id_heyxxmh'],
-				"type"					=> $row['type'],
+				"status"					=> $row['status'],
 				"id_htsprrd_htoxxrd_h"	=> $row['id_htsprrd_htoxxrd_h'],
 				"kode"        			=> $kode,
 				"nama"        			=> $row['nama'],

@@ -124,6 +124,7 @@
 								<th rowspan="2">id_htsprrd_htoxxrd_h</th>
 								<th rowspan="2">NIP</th>
 								<th rowspan="2">Nama</th>
+								<th rowspan="2">Status</th>
 								<th class="text-center" colspan="4">HRIS</th>
 								<th class="text-center" colspan="4">Excel</th>
 								<th rowspan="2">Sesuai</th>
@@ -405,7 +406,7 @@
 			//start datatables
 			tblhtsprrd_htoxxrd_d = $('#tblhtsprrd_htoxxrd_d').DataTable( {
 				searchPanes:{
-					layout: 'columns-1',
+					layout: 'columns-2',
 				},
 				dom: 
 					"<P>"+
@@ -428,6 +429,7 @@
 					{ data: "id_htsprrd_htoxxrd_h",visible:false },
 					{ data: "kode" },
 					{ data: "nama" },
+					{ data: "status" },
 					{ data: "lembur15_db" },
 					{ data: "lembur2_db" },
 					{ data: "lembur3_db" },
@@ -475,7 +477,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 
-					for (var i = 4; i <= 11; i++) {
+					for (var i = 5; i <= 12; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
@@ -485,12 +487,12 @@
 					$('#tidak_sesuai').html(numFormat(tidak_sesuai));
 				},
 				columnDefs: [
-					{ targets: [4, 5, 6, 7, 8, 9,10,11], className: "text-right" },
+					{ targets: [5, 6, 7, 8, 9,10,11,12], className: "text-right" },
 					{
 						searchPanes:{
 							show: true,
 						},
-						targets: [12]
+						targets: [4,13]
 					},
 					{
 						searchPanes:{
