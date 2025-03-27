@@ -76,7 +76,7 @@
 					a.pot_jam AS potong,
 					ifnull(a.pot_ti,0) AS ti,
 					a.is_makan AS makan,
-					a.durasi_lembur_total_jam as lembur,
+					a.durasi_lembur_final as lembur,
 					a.lembur15,
 					a.lembur2,
 					a.lembur3,
