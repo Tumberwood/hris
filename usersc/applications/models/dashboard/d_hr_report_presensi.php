@@ -76,30 +76,24 @@
 					a.pot_jam AS potong,
 					ifnull(a.pot_ti,0) AS ti,
 					a.is_makan AS makan,
-					a.durasi_lembur_final as lembur,
+					a.durasi_lembur_total_jam as lembur,
 					a.lembur15,
 					a.lembur2,
 					a.lembur3,
 					a.lembur4,
 					a.is_pot_upah,
 					a.is_pot_premi,
-					-- if(a.st_jadwal = "OFF", 0,(IF(jumlah_grup = 4, TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)), TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)) - 1))) AS jam_wajib,
-					-- if(a.st_jadwal = "OFF" OR a.status_presensi_in = "AL", 0,(IF(jumlah_grup = 4, TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)), TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)) - 1)) - a.pot_hk) AS jam_kerja,
+					-- if(a.st_jadwal = "OFF", 0,(IF(jumlah_grup = 4, TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)), TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)) - 1))) AS jam_wajib,
+					-- if(a.st_jadwal = "OFF" OR a.status_presensi_in = "AL", 0,(IF(jumlah_grup = 4, TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)), TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)) - 1)) - a.pot_hk) AS jam_kerja,
 					if(a.st_jadwal = "OFF", 0,
-						(IF(jumlah_grup = 4, 
-							TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir), 
-							TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir) - 1
-						)
+						TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir) - 1
 						)
 					) AS jam_wajib,
 
 						if(a.st_jadwal = "OFF" OR a.status_presensi_in = "AL", 0,
-						(IF(jumlah_grup = 4, 
-							TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir), 
-							TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir) - 1
+							TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir - 1
 						) 
-					) - a.pot_hk) AS jam_kerja
-
+					) - a.pot_hk) AS jam_kerja,
 					CASE
 						WHEN a.htlxxrh_kode = "" THEN IFNULL(b.keterangan, "")
 						ELSE CONCAT(a.htlxxrh_kode, " , ", IFNULL(b.keterangan, ""))
