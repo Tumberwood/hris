@@ -1311,6 +1311,7 @@
         $qu_satpam = $db
             ->raw()
             ->bind(':tanggal', $tanggal)
+            ->bind(':id_hemxxmh', $id_hemxxmh)
             ->exec(' UPDATE htsprrd AS a
                     INNER JOIN hemxxmh AS h ON h.id = a.id_hemxxmh
                     INNER JOIN hemjbmh AS b ON b.id_hemxxmh = a.id_hemxxmh
@@ -1333,7 +1334,7 @@
                         a.cek = 0,
                         a.status_presensi_in = "OFF",
                         a.status_presensi_out = "OFF"
-                    WHERE a.tanggal = :tanggal AND b.id_hetxxmh IN (99, 48) AND b.id_heyxxmd <> 4 AND a.status_presensi_in = "AL" AND (is_holiday IS NOT NULL OR is_cuti IS NOT null)
+                    WHERE a.id_hemxxmh = :id_hemxxmh AND a.tanggal = :tanggal AND b.id_hetxxmh IN (99, 48) AND b.id_heyxxmd <> 4 AND a.status_presensi_in = "AL" AND (is_holiday IS NOT NULL OR is_cuti IS NOT null)
                     '
         );
 
@@ -1344,6 +1345,7 @@
         $qu_pot_upah = $db
             ->raw()
             ->bind(':tanggal', $tanggal)
+            ->bind(':id_hemxxmh', $id_hemxxmh)
             ->exec('UPDATE htsprrd AS a
                     INNER JOIN htssctd AS b 
                         ON b.id_hemxxmh = a.id_hemxxmh 
@@ -1386,7 +1388,8 @@
                             )
                         )
                     WHERE 
-                        a.tanggal = :tanggal
+                        a.id_hemxxmh = :id_hemxxmh 
+                        AND a.tanggal = :tanggal
                         AND b.is_active = 1 
                         AND b.is_pot_hk = 1;
             '
