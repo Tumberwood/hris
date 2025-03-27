@@ -90,8 +90,8 @@
 					) AS jam_wajib,
 
 					if(a.st_jadwal = "OFF" OR a.status_presensi_in = "AL", 0,
-						TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir - 1
-					) - IFNULL(a.pot_hk,0)) AS jam_kerja,
+						(TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir) - 1) - IFNULL(a.pot_hk,0)
+					) AS jam_kerja,
 					CASE
 						WHEN a.htlxxrh_kode = "" THEN IFNULL(b.keterangan, "")
 						ELSE CONCAT(a.htlxxrh_kode, " , ", IFNULL(b.keterangan, ""))
