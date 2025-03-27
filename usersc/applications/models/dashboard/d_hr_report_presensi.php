@@ -160,7 +160,11 @@
 				LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
 				LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
 				LEFT JOIN hetxxmh AS d ON d.id = c.id_hetxxmh
-				WHERE a.tanggal BETWEEN :start_date AND DATE_ADD(:start_date, INTERVAL 2 DAY) AND b.id = :id_hemxxmh AND a.nama NOT IN ("makan", "istirahat", "makan manual") AND a.is_active = 1
+				LEFT JOIN htssctd AS e ON e.id_hemxxmh = b.id AND e.tanggal = a.tanggal
+				WHERE 
+				e.is_active = 1
+				AND CONCAT(a.tanggal, " ", a.jam) not BETWEEN e.tanggaljam_awal_istirahat AND e.tanggaljam_akhir_istirahat
+				AND a.tanggal BETWEEN :start_date AND DATE_ADD(:start_date, INTERVAL 2 DAY) AND b.id = :id_hemxxmh AND a.nama NOT IN ("makan", "istirahat", "makan manual") AND a.is_active = 1
 				ORDER BY concat(a.tanggal, " " , a.jam) ASC
 				;
 				'
@@ -191,16 +195,24 @@
 		->bind(':start_date', $start_date)
 		->bind(':id_hemxxmh', $id_hemxxmh)
 		->exec('SELECT DISTINCT
-				concat(b.kode, " - ", b.nama) as nama,
+					concat(b.kode, " - ", b.nama, " - ", d.nama) as nama,
 					a.id_hemxxmh,
 					a.jam,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") as tanggal,
 					a.nama as mesin
 				FROM htsprtd AS a
 				LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
-				WHERE a.tanggal BETWEEN :start_date AND CURDATE() AND b.id = :id_hemxxmh AND a.nama IN ("istirahat", "istirahat manual") AND a.is_active = 1
+				LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
+				LEFT JOIN hetxxmh AS d ON d.id = c.id_hetxxmh
+				LEFT JOIN htssctd AS e ON e.id_hemxxmh = b.id AND e.tanggal = a.tanggal
+				WHERE 
+				e.is_active = 1
+				AND CONCAT(a.tanggal, " ", a.jam) BETWEEN e.tanggaljam_awal_istirahat AND e.tanggaljam_akhir_istirahat
+				AND a.tanggal BETWEEN :start_date AND DATE_ADD(:start_date, INTERVAL 2 DAY) AND b.id = :id_hemxxmh
+				AND a.is_active = 1
 				ORDER BY concat(a.tanggal, " " , a.jam) ASC
-				LIMIT 5;
+				LIMIT 7
+				;
 				'
 				);
 	$rs_istirahat = $qs_istirahat->fetchAll();
