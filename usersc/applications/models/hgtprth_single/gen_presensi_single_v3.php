@@ -738,10 +738,7 @@
                                     CASE
                                         -- apabila 4 grup sudah ada finger makan atau inputan makan manual, maka tidak boleh ada finger keluar di mesin PMI, KBM, atau Istirahat. Jika diketahui ada makan dan ada finger keluar (meskipun <30 menit), maka akan dipotong 1 jam.
                                         WHEN jb.jumlah_grup = 2 AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 AND ceklok_istirahat IS NOT NULL THEN 1
-                                    	
-                                        -- KALAU LIBUR TAPI ADA CHECKLOCK ISIRAHAT, MAKA ITU akan dipotong 0.5
-                                        WHEN jb.jumlah_grup = 2 AND jam_awal = "00:00:00" AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 0.5
-
+                         
                                         -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
                                         WHEN jb.jumlah_grup = 2 AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
                                         ELSE 0
