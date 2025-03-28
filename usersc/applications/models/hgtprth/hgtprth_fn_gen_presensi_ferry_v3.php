@@ -500,7 +500,7 @@
                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
                                     AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
-                                AND b.id = :id_hemxxmh                                                        
+                                AND b.id = '.$id_hemxxmh.'                                                        
                                 GROUP BY a.id
                                 ORDER BY break_in
 
@@ -516,7 +516,7 @@
                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
                                     AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
-                                AND b.id = :id_hemxxmh                                                        
+                                AND b.id = '.$id_hemxxmh.'                                                        
                                 GROUP BY a.id
                                 ORDER BY break_out
 
