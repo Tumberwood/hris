@@ -130,6 +130,7 @@
 						<div id="tabel_makan"></div>
 					</div>
 				</div>
+				<div id="tabel_cek_finger"></div>
 				<div class="row">
 					<div class="col-md-6">
 						<button id="prevButton" class="btn btn-primary">Previous</button>
@@ -734,6 +735,61 @@
 							scrollCollapse: true,
 							data: json.data4,
 							columns: json.columns4,
+							buttons: buttons,
+							rowCallback: function (row, data, index) {
+
+							}
+						});
+
+						
+						var str9 = `
+						<h3>Tabel Cek Finger</h3>
+						<table id="tblhtsprrd9" class="table table-striped table-bordered">`
+						;
+						
+						if ($.fn.dataTable.isDataTable('#tblhtsprrd9')) {
+							$('#tblhtsprrd9').DataTable().clear();
+							$('#tblhtsprrd9').DataTable().destroy();
+							$('#tblhtsprrd9 tbody').empty();
+							$('#tblhtsprrd9 thead').empty();
+						}
+						str9 += '<thead>';
+							str9 += '<tr>';
+							$.each(json.columns9, function (k, colObj9) {
+								// BEGIN render column name
+								if (colObj9.name == 'kode') {
+									str9 += '<th class="text-center">NIP</th>';
+								} else if (colObj9.name == 'nama') {
+									str9 += '<th class="text-center">Nama</th>';
+								} else if (colObj9.name == 'dept') {
+									str9 += '<th class="text-center">Departemen</th>';
+								} else if (colObj9.name == 'jabatan') {
+									str9 += '<th class="text-center">Jabatan</th>';
+								} else if (colObj9.name == 'ceklok_in') {
+									str9 += '<th class="text-center">Check In Hadir</th>';
+								} else if (colObj9.name == 'ceklok_out') {
+									str9 += '<th class="text-center">Check Out Hadir</th>';
+								} else if (colObj9.name == 'break_in_gedung3') {
+									str9 += '<th class="text-center">Break In Gedung 3</th>';
+								} else if (colObj9.name == 'break_out_gedung3') {
+									str9 += '<th class="text-center">Break Out Gedung 3</th>';
+								} else if (colObj9.name == 'break_in_luar_gedung3') {
+									str9 += '<th class="text-center">Break In 2</th>';
+								} else if (colObj9.name == 'break_out_luar_gedung3') {
+									str9 += '<th class="text-center">Break Out 2</th>';
+								}
+							});
+							str9 += '</tr>';
+							// END header baris 9
+						str9 = str9 + '</thead>';
+
+						$('#tabel_cek_finger').html(str9);
+
+						$('#tblhtsprrd9').DataTable({
+							lengthChange: false,
+							responsive: false,
+							data: json.data9,
+							columns: json.columns9,
 							buttons: buttons,
 							rowCallback: function (row, data, index) {
 
