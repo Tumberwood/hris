@@ -194,7 +194,7 @@
 						label: "Mesin <sup class='text-danger'>*<sup>",
 						name: "htsprtd.nama",
 						type: "select",
-						placeholder : "Select",
+						def: "Makan Manual",
 						options: [
 							// { "label": "Istirahat", "value": "istirahat" },
 							// { "label": "Makan", "value": "makan" },
