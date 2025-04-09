@@ -430,7 +430,7 @@
 					{ 
 					data: "kode",
 						render: function(data, type, row) {
-							return '<a href="../htsprrd_overtime_jam/htsprrd_overtime_jam.php?id_hemxxmh=' + row.id_hemxxmh + 
+							return '<a target="_blank" href="../htsprrd_overtime_jam/htsprrd_overtime_jam.php?id_hemxxmh=' + row.id_hemxxmh + 
 								'&start_date=' + row.start_date + 
 								'&end_date=' + row.end_date + '">' + data + '</a>';
 						}
@@ -438,7 +438,7 @@
 					{ 
 					data: "nama",
 						render: function(data, type, row) {
-							return '<a href="../htsprrd_overtime_jam/htsprrd_overtime_jam.php?id_hemxxmh=' + row.id_hemxxmh + 
+							return '<a target="_blank" href="../htsprrd_overtime_jam/htsprrd_overtime_jam.php?id_hemxxmh=' + row.id_hemxxmh + 
 								'&start_date=' + row.start_date + 
 								'&end_date=' + row.end_date + '">' + data + '</a>';
 						}
