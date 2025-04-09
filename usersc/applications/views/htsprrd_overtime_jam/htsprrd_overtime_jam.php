@@ -176,12 +176,7 @@
 		// ------------- end of default variable
 
 		var id_hem_get = <?php echo $id_hemxxmh ?>;
-
-		if (id_hem_get > 0) {
-			var id_hemxxmh_old = id_hem_get;
-		} else {
-			var id_hemxxmh_old = 0;
-		}
+		var id_hemxxmh_old = 0;
 
 		var id_hemxxmh = 0;
 		var tanggal_awal = "<?php echo $awal ?>";
@@ -229,8 +224,22 @@
 						return query;
 				},
 				processResults: function (data, params) {
+					var options = data.results.map(function (result) {
+						return {
+							id: result.id,
+							text: result.text
+						};
+					});
+
+					//add by ferry agar auto select 07 sep 23
+					if (params.page && params.page === 1) {
+						$('#select_hemxxmh').empty().select2({ data: options });
+					} else {
+						$('#select_hemxxmh').append(new Option(options[0].text, options[0].id, false, false)).trigger('change');
+					}
+
 					return {
-						results: data.results,
+						results: options,
 						pagination: {
 							more: true
 						}
@@ -259,9 +268,17 @@
 				}
 			}
 
+			id_hemxxmh_old = id_hem_get;
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 			
+
+			$('#select_hemxxmh').select2('open');
+
+			setTimeout(function() {
+				$('#select_hemxxmh').select2('close');
+			}, 5);
+
 			//start datatables
 			tblhtsprrd = $('#tblhtsprrd').DataTable( {
 				searchPanes:{
