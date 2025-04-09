@@ -154,7 +154,7 @@
 								<th></th> 
 							</tr>
 							<tr>
-								<th colspan="12">Total Tidak Sesuai</th>
+								<th colspan="13">Total Tidak Sesuai</th>
 								<th id="tidak_sesuai" class="bg-success"></th> 
 								<!-- <th></th> 
 								<th></th> 
@@ -427,8 +427,23 @@
 				columns: [
 					{ data: "id",visible:false },
 					{ data: "id_htsprrd_htoxxrd_h",visible:false },
-					{ data: "kode" },
-					{ data: "nama" },
+					{ 
+					data: "kode",
+						render: function(data, type, row) {
+							return '<a href="../htsprrd_overtime_jam/htsprrd_overtime_jam.php?id_hemxxmh=' + row.id_hemxxmh + 
+								'&start_date=' + row.start_date + 
+								'&end_date=' + row.end_date + '">' + data + '</a>';
+						}
+					},
+					{ 
+					data: "nama",
+						render: function(data, type, row) {
+							return '<a href="../htsprrd_overtime_jam/htsprrd_overtime_jam.php?id_hemxxmh=' + row.id_hemxxmh + 
+								'&start_date=' + row.start_date + 
+								'&end_date=' + row.end_date + '">' + data + '</a>';
+						}
+					},
+
 					{ data: "status" },
 					{ data: "lembur15_db" },
 					{ data: "lembur2_db" },
@@ -483,7 +498,7 @@
 						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
 						$('#total_' + columnIndex).html(numFormat(sum_all));
 					}
-					var tidak_sesuai = api.column(12).data().sum();
+					var tidak_sesuai = api.column(13).data().sum();
 					$('#tidak_sesuai').html(numFormat(tidak_sesuai));
 				},
 				columnDefs: [

@@ -87,7 +87,7 @@
 			$sqlData[$row['kode']] = $row;
 		}
 	
-		$pivotData = array_map(function ($row) use ($sqlData) {
+		$pivotData = array_map(function ($row) use ($sqlData, $start_date, $end_date) {
 			$kode = $row['kode'];
 			$sqlRow = $sqlData[$kode] ?? ["sum_lembur15" => 0, "sum_lembur2" => 0, "sum_lembur3" => 0, "sum_lembur4" => 0, "sum_makan" => 0];
 			$total_xl = $row['lembur15'] + $row['lembur2'] + $row['lembur3'] + $row['lembur4'];
@@ -102,6 +102,9 @@
 			return [
 				"id"					=> $row['id'],
 				"id_heyxxmh"			=> $row['id_heyxxmh'],
+				"id_hemxxmh"			=> $row['id_hemxxmh'],
+				"start_date"			=> $start_date,
+				"end_date"			=> $end_date,
 				"status"					=> $row['status'],
 				"id_htsprrd_htoxxrd_h"	=> $row['id_htsprrd_htoxxrd_h'],
 				"kode"        			=> $kode,

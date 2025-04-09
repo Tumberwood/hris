@@ -9,6 +9,24 @@
 <?php
 	$nama_tabel    = 'htsprrd';
 	$nama_tabels_d = [];
+
+	if (isset($_GET['id_hemxxmh'])){
+		$id_hemxxmh		= ($_GET['id_hemxxmh']);
+	} else {
+		$id_hemxxmh = null;
+	}
+	
+	if (isset($_GET['start_date'])){
+		$awal		= ($_GET['start_date']);
+	} else {
+		$awal = null;
+	}
+	
+	if (isset($_GET['end_date'])){
+		$akhir		= ($_GET['end_date']);
+	} else {
+		$akhir = null;
+	}
 ?>
 
 <!-- begin content here -->
@@ -157,9 +175,19 @@
 		var tblhtsprrd, show_inactive_status_htsprrd = 0;
 		// ------------- end of default variable
 
-		var id_hemxxmh = 0;
-		var id_hemxxmh_old = 0;
+		var id_hem_get = <?php echo $id_hemxxmh ?>;
 
+		if (id_hem_get != '') {
+			var id_hemxxmh_old = id_hem_get;
+		} else {
+			var id_hemxxmh_old = 0;
+		}
+
+		var id_hemxxmh = 0;
+		var tanggal_awal = "<?php echo $awal ?>";
+		var tanggal_akhir = "<?php echo $akhir ?>";
+
+		console.log(tanggal_awal);
 		// BEGIN datepicker init
 		$('#periode').datepicker({
 			setDate: new Date(),
@@ -169,8 +197,20 @@
 			format: "dd M yyyy",
 			minViewMode: 'month' 
 		});
-		$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
-		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		// $('#start_date').datepicker('setDate', tanggal_hariini_dmy);
+		// $('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		
+		if (tanggal_awal === '') {
+			$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
+		} else {
+			$('#start_date').datepicker('setDate', new Date(tanggal_awal));
+		}
+		
+		if (tanggal_akhir === '') {
+			$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		} else {
+			$('#end_date').datepicker('setDate', new Date(tanggal_akhir));
+		}
         // END datepicker init
 
         // BEGIN select2 init
@@ -208,6 +248,17 @@
         // END select2 init
 		
 		$(document).ready(function() {
+			
+			if ($('#select_hemxxmh').val() > 0) {
+				id_hemxxmh = $('#select_hemxxmh').val();
+			} else {
+				if (id_hem_get != 0) {
+					id_hemxxmh = id_hem_get;
+				} else {
+					id_hemxxmh = $('#select_hemxxmh').val();
+				}
+			}
+			
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 			
@@ -408,7 +459,17 @@
 				submitHandler: function(frmhtsprrd) {
 					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
 					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
-					id_hemxxmh = $('#select_hemxxmh').val();
+					if ($('#select_hemxxmh').val() > 0) {
+						id_hemxxmh = $('#select_hemxxmh').val();
+					} else {
+						if (id_hem_get != 0) {
+							id_hemxxmh = id_hem_get;
+						} else {
+							id_hemxxmh = $('#select_hemxxmh').val();
+						}
+					}
+
+					console.log(id_hemxxmh);
 					
 					notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
