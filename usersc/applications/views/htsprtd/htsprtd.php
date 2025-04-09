@@ -155,7 +155,7 @@
 
 			edthtsprtd = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/htsprtd/htsprtd.php",
+					url: "../../models/htsprtd/htsprtd_multi.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_htsprtd = show_inactive_status_htsprtd;
@@ -211,7 +211,7 @@
 						opts: {
 							placeholder : "Select",
 							allowClear: true,
-							multiple: false,
+							multiple: true,
 							ajax: {
 								url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
 								dataType: 'json',
@@ -281,40 +281,40 @@
 				$(".modal-dialog").addClass("modal-lg");
 			});
 
-			edthtsprtd.dependent( 'htsprtd.nama', function ( val, data, callback ) {
-				nama = edthtsprtd.field('htsprtd.nama').val();
-				if (nama ==  "makan manual") {
-					jamMakanManual();
-					// edthtsprtd.field('htsprtd.jam').disable();
-				}else {
-            		edthtsprtd.field('htsprtd.jam').enable();
-				}
-				return {}
-			}, {event: 'keyup change'});
+			// edthtsprtd.dependent( 'htsprtd.nama', function ( val, data, callback ) {
+			// 	nama = edthtsprtd.field('htsprtd.nama').val();
+			// 	if (nama ==  "makan manual") {
+			// 		jamMakanManual();
+			// 		// edthtsprtd.field('htsprtd.jam').disable();
+			// 	}else {
+            // 		edthtsprtd.field('htsprtd.jam').enable();
+			// 	}
+			// 	return {}
+			// }, {event: 'keyup change'});
 
-			edthtsprtd.dependent( 'htsprtd.id_hemxxmh', function ( val, data, callback ) {
-				nama = edthtsprtd.field('htsprtd.nama').val();
-				if (nama ==  "makan manual") {
-					jamMakanManual();
-					// edthtsprtd.field('htsprtd.jam').disable();
-				}else {
-            		edthtsprtd.field('htsprtd.jam').enable();
-					edthtsprtd.field('htsprtd.jam').val('');
-				}
-				return {}
-			}, {event: 'keyup change'});
+			// edthtsprtd.dependent( 'htsprtd.id_hemxxmh', function ( val, data, callback ) {
+			// 	nama = edthtsprtd.field('htsprtd.nama').val();
+			// 	if (nama ==  "makan manual") {
+			// 		jamMakanManual();
+			// 		// edthtsprtd.field('htsprtd.jam').disable();
+			// 	}else {
+            // 		edthtsprtd.field('htsprtd.jam').enable();
+			// 		edthtsprtd.field('htsprtd.jam').val('');
+			// 	}
+			// 	return {}
+			// }, {event: 'keyup change'});
 
-			edthtsprtd.dependent( 'htsprtd.tanggal', function ( val, data, callback ) {
-				nama = edthtsprtd.field('htsprtd.nama').val();
-				if (nama ==  "makan manual") {
-					jamMakanManual();
-					// edthtsprtd.field('htsprtd.jam').disable();
-				}else {
-            		edthtsprtd.field('htsprtd.jam').enable();
-					edthtsprtd.field('htsprtd.jam').val('');
-				}
-				return {}
-			}, {event: 'keyup change'});
+			// edthtsprtd.dependent( 'htsprtd.tanggal', function ( val, data, callback ) {
+			// 	nama = edthtsprtd.field('htsprtd.nama').val();
+			// 	if (nama ==  "makan manual") {
+			// 		jamMakanManual();
+			// 		// edthtsprtd.field('htsprtd.jam').disable();
+			// 	}else {
+            // 		edthtsprtd.field('htsprtd.jam').enable();
+			// 		edthtsprtd.field('htsprtd.jam').val('');
+			// 	}
+			// 	return {}
+			// }, {event: 'keyup change'});
 
             edthtsprtd.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
@@ -344,7 +344,7 @@
 					// END of validasi htsprtd.tanggal
 
 					jam = edthtsprtd.field('htsprtd.jam').val();
-					unikMakan(jam);
+					// unikMakan(jam);
 					if (nama != "makan manual") {
 						// BEGIN of validasi htsprtd.jam
 						if ( ! edthtsprtd.field('htsprtd.jam').isMultiValue() ) {
@@ -377,9 +377,9 @@
 			edthtsprtd.on('initSubmit', function(e, action) {
 				// update kode finger
 				if (action != 'remove') {
-					id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
-					htsprtd_get_hemxxmh_kode();
-					edthtsprtd.field('htsprtd.kode').val(kode_finger);
+					// id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
+					// htsprtd_get_hemxxmh_kode();
+					// edthtsprtd.field('htsprtd.kode').val(kode_finger);
 
 					finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
 					edthtsprtd.field('finish_on').val(finish_on);
