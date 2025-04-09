@@ -177,7 +177,7 @@
 
 		var id_hem_get = <?php echo $id_hemxxmh ?>;
 
-		if (id_hem_get != '') {
+		if (id_hem_get > 0) {
 			var id_hemxxmh_old = id_hem_get;
 		} else {
 			var id_hemxxmh_old = 0;
