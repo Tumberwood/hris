@@ -13,7 +13,7 @@
 	if (isset($_GET['id_hemxxmh'])){
 		$id_hemxxmh		= ($_GET['id_hemxxmh']);
 	} else {
-		$id_hemxxmh = null;
+		$id_hemxxmh = 0;
 	}
 	
 	if (isset($_GET['start_date'])){
@@ -258,7 +258,7 @@
 					id_hemxxmh = $('#select_hemxxmh').val();
 				}
 			}
-			
+
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 			
