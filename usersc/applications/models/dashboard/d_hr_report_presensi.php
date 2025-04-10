@@ -160,7 +160,21 @@
 				LEFT JOIN htsprtd AS a ON a.kode = b.kode_finger 
 				WHERE 
 				e.is_active = 1
-				AND CONCAT(a.tanggal, " ", a.jam) NOT BETWEEN e.tanggaljam_awal_istirahat AND e.tanggaljam_akhir_istirahat
+				-- AND CONCAT(a.tanggal, " ", a.jam) NOT BETWEEN e.tanggaljam_awal_istirahat AND e.tanggaljam_akhir_istirahat
+				AND a.id NOT IN (
+					SELECT DISTINCT
+						a.id
+					FROM htssctd AS e
+					LEFT JOIN hemxxmh AS b ON b.id = e.id_hemxxmh
+					LEFT JOIN htsprtd AS a ON a.kode = b.kode_finger 
+					WHERE 
+					e.is_active = 1
+					AND CONCAT(a.tanggal, " ", a.jam) BETWEEN e.tanggaljam_awal_istirahat AND e.tanggaljam_akhir_istirahat
+					AND a.tanggal BETWEEN :start_date AND DATE_ADD(:start_date, INTERVAL 2 DAY) 
+					AND b.id = :id_hemxxmh
+					AND a.is_active = 1
+					ORDER BY concat(a.tanggal, " " , a.jam) ASC
+				)
 				AND a.tanggal BETWEEN :start_date AND DATE_ADD(:start_date, INTERVAL 2 DAY) 
 				AND a.nama NOT IN ("makan", "makan manual") 
 				AND b.id = :id_hemxxmh
