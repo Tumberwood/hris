@@ -252,6 +252,88 @@
 				}
 			}
 			console.log(tanggal_old);
+			
+			var buttons = [
+				{
+					extend: 'collection',
+					text: '<i class="fa fa-wrench"></i>',
+					className: 'btn btn-white',
+					autoClose: true,
+					buttons: [
+						{ extend: "copy", text: '<i class="fa fa-copy">&nbsp &nbsp Copy</i>', className: '', titleAttr: 'Copy' },
+						{ extend: "excel", text: '<i class="fa fa-file-excel-o">&nbsp &nbsp Excel</i>', className: '', titleAttr: 'Export to Excel' }
+					]
+				}
+			];
+			
+			console.log('tanggal_old = '+tanggal_old);
+			console.log('start_date = '+start_date);
+			if (tanggal_old != start_date) {
+				$.ajax( {
+					url: "../../models/dashboard/d_hr_report_presensi_cek_finger.php",
+					dataType: 'json',
+					type: 'POST',
+					data: {
+						start_date: start_date
+					},
+					success: function ( json ) {
+						console.log(json);
+						var str9 = `
+							<h3>Tabel Cek Finger</h3>
+							<table id="tblhtsprrd9" class="table table-striped table-bordered">`
+						;
+						
+						if ($.fn.dataTable.isDataTable('#tblhtsprrd9')) {
+							$('#tblhtsprrd9').DataTable().clear();
+							$('#tblhtsprrd9').DataTable().destroy();
+							$('#tblhtsprrd9 tbody').empty();
+							$('#tblhtsprrd9 thead').empty();
+						}
+						str9 += '<thead>';
+							str9 += '<tr>';
+							$.each(json.columns9, function (k, colObj9) {
+								// BEGIN render column name
+								if (colObj9.name == 'kode') {
+									str9 += '<th class="text-center">NIP</th>';
+								} else if (colObj9.name == 'nama') {
+									str9 += '<th class="text-center">Nama</th>';
+								} else if (colObj9.name == 'dept') {
+									str9 += '<th class="text-center">Departemen</th>';
+								} else if (colObj9.name == 'jabatan') {
+									str9 += '<th class="text-center">Jabatan</th>';
+								} else if (colObj9.name == 'ceklok_in') {
+									str9 += '<th class="text-center">Check In Hadir</th>';
+								} else if (colObj9.name == 'ceklok_out') {
+									str9 += '<th class="text-center">Check Out Hadir</th>';
+								} else if (colObj9.name == 'break_in_gedung3') {
+									str9 += '<th class="text-center">Break In Gedung 3</th>';
+								} else if (colObj9.name == 'break_out_gedung3') {
+									str9 += '<th class="text-center">Break Out Gedung 3</th>';
+								} else if (colObj9.name == 'break_in_luar_gedung3') {
+									str9 += '<th class="text-center">Break In 2</th>';
+								} else if (colObj9.name == 'break_out_luar_gedung3') {
+									str9 += '<th class="text-center">Break Out 2</th>';
+								}
+							});
+							str9 += '</tr>';
+							// END header baris 9
+						str9 = str9 + '</thead>';
+
+						$('#tabel_cek_finger').html(str9);
+
+						$('#tblhtsprrd9').DataTable({
+							lengthChange: false,
+							responsive: false,
+							data: json.data9,
+							columns: json.columns9,
+							buttons: buttons,
+							rowCallback: function (row, data, index) {
+
+							}
+						});
+					}
+				} );
+			}
 
 			$.ajax( {
 				url: "../../models/dashboard/d_hr_report_presensi.php",
@@ -288,19 +370,6 @@
 						// console.log('id_hemxxmh'+id_hemxxmh);
 						
 						var button_add = [
-							{
-								extend: 'collection',
-								text: '<i class="fa fa-wrench"></i>',
-								className: 'btn btn-white',
-								autoClose: true,
-								buttons: [
-									{ extend: "copy", text: '<i class="fa fa-copy">&nbsp &nbsp Copy</i>', className: '', titleAttr: 'Copy' },
-									{ extend: "excel", text: '<i class="fa fa-file-excel-o">&nbsp &nbsp Excel</i>', className: '', titleAttr: 'Export to Excel' }
-								]
-							}
-						];
-						
-						var buttons = [
 							{
 								extend: 'collection',
 								text: '<i class="fa fa-wrench"></i>',
@@ -739,61 +808,6 @@
 							scrollCollapse: true,
 							data: json.data4,
 							columns: json.columns4,
-							buttons: buttons,
-							rowCallback: function (row, data, index) {
-
-							}
-						});
-
-						
-						var str9 = `
-						<h3>Tabel Cek Finger</h3>
-						<table id="tblhtsprrd9" class="table table-striped table-bordered">`
-						;
-						
-						if ($.fn.dataTable.isDataTable('#tblhtsprrd9')) {
-							$('#tblhtsprrd9').DataTable().clear();
-							$('#tblhtsprrd9').DataTable().destroy();
-							$('#tblhtsprrd9 tbody').empty();
-							$('#tblhtsprrd9 thead').empty();
-						}
-						str9 += '<thead>';
-							str9 += '<tr>';
-							$.each(json.columns9, function (k, colObj9) {
-								// BEGIN render column name
-								if (colObj9.name == 'kode') {
-									str9 += '<th class="text-center">NIP</th>';
-								} else if (colObj9.name == 'nama') {
-									str9 += '<th class="text-center">Nama</th>';
-								} else if (colObj9.name == 'dept') {
-									str9 += '<th class="text-center">Departemen</th>';
-								} else if (colObj9.name == 'jabatan') {
-									str9 += '<th class="text-center">Jabatan</th>';
-								} else if (colObj9.name == 'ceklok_in') {
-									str9 += '<th class="text-center">Check In Hadir</th>';
-								} else if (colObj9.name == 'ceklok_out') {
-									str9 += '<th class="text-center">Check Out Hadir</th>';
-								} else if (colObj9.name == 'break_in_gedung3') {
-									str9 += '<th class="text-center">Break In Gedung 3</th>';
-								} else if (colObj9.name == 'break_out_gedung3') {
-									str9 += '<th class="text-center">Break Out Gedung 3</th>';
-								} else if (colObj9.name == 'break_in_luar_gedung3') {
-									str9 += '<th class="text-center">Break In 2</th>';
-								} else if (colObj9.name == 'break_out_luar_gedung3') {
-									str9 += '<th class="text-center">Break Out 2</th>';
-								}
-							});
-							str9 += '</tr>';
-							// END header baris 9
-						str9 = str9 + '</thead>';
-
-						$('#tabel_cek_finger').html(str9);
-
-						$('#tblhtsprrd9').DataTable({
-							lengthChange: false,
-							responsive: false,
-							data: json.data9,
-							columns: json.columns9,
 							buttons: buttons,
 							rowCallback: function (row, data, index) {
 
