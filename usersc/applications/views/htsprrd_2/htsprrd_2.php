@@ -169,10 +169,10 @@
 												<th></th>
 												<th></th>
 												<th></th>
+												<th></th>
+												<th></th>
 												<th>Total</th>
 												<th id="all_makan"></th>
-												<th></th>
-												<th></th>
 												<th></th>
 												<th></th>
 												<th></th>
