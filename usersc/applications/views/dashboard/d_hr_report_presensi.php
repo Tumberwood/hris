@@ -176,7 +176,7 @@
 		var id_hem_get = <?php echo $id_hemxxmh ?>;
 		var tanggal_get = "<?php echo $awal ?>";
 		var id_htsxxmh_old = 0;
-		var id_hemxxmh_filter = 0;
+		var id_hemxxmh_filter = 0, tanggal_old = '';
 		
 		// BEGIN datepicker init
 		$('#periode').datepicker({
@@ -251,18 +251,22 @@
 					id_hemxxmh = $('#select_hemxxmh').val();
 				}
 			}
+			console.log(tanggal_old);
 
 			$.ajax( {
 				url: "../../models/dashboard/d_hr_report_presensi.php",
 				dataType: 'json',
 				type: 'POST',
 				data: {
+					tanggal_old: tanggal_old,
 					start_date: start_date,
 					counter: counter,
 					id_hemxxmh: id_hemxxmh
 				},
 				success: function ( json ) {
 					if (json.data7 && Object.keys(json.data7).length > 0) {
+						tanggal_old = start_date;
+						console.log(tanggal_old);
 						$('#edit_jadwal').empty();
 						$('#jadwal').empty();
 						
