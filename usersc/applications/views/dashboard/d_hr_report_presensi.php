@@ -280,7 +280,7 @@
 						console.log(json);
 						var str9 = `
 							<h3>Tabel Cek Finger</h3>
-							<table id="tblhtsprrd9" class="table table-striped table-bordered">`
+							<table id="tblhtsprrd9" class="table table-striped table-bordered" width="100%">`
 						;
 						
 						if ($.fn.dataTable.isDataTable('#tblhtsprrd9')) {
