@@ -499,7 +499,7 @@
                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
-                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
                                 AND b.id IN '.$id_hemxxmh.'                                                        
                                 GROUP BY a.id
                                 ORDER BY break_in
@@ -515,7 +515,7 @@
                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
-                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
                                 AND b.id IN '.$id_hemxxmh.'                                                        
                                 GROUP BY a.id
                                 ORDER BY break_out
@@ -696,6 +696,9 @@
                                             CASE
                                             -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
                                             -- disetting jika menit_toleransi_ti dari settingan itu null, maka belum tanggalnya
+
+                                                -- 22 Mar 2025, 0077 istirahat > 1 jam maka dipotong 1jam
+                                                WHEN is_istirahat = 2 AND 60 > ifnull(menit_toleransi_ti, 0) THEN 1
                                                 WHEN is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_ti, 0) THEN 0.5
                                                 ELSE 0
                                             END AS potongan_ti_jam
@@ -713,7 +716,7 @@
                                             INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                             WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                                 AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual")
-                                                AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+                                                AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
                                                 AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                             GROUP BY a.id
                                             ORDER BY ceklok_istirahat
@@ -794,7 +797,7 @@
                                             INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                             WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                                 AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual")
-                                                AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+                                                AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
                                                 AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                             GROUP BY a.id
                                             ORDER BY ceklok_istirahat
@@ -914,7 +917,7 @@
                             LEFT JOIN (
                                 SELECT
                                     a.id,
-                                    IF(TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat, 1, 0) ceklok_makan,
+                                    IF(TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR), 1, 0) ceklok_makan,
                                     c.nama,
                                     c.kode,
                                     c.jam
@@ -930,7 +933,7 @@
                                     WHERE cl.tanggal BETWEEN :tanggal AND DATE_ADD(:tanggal, INTERVAL 1 DAY) AND cl.nama IN ("makan", "makan manual")
                                 ) AS c ON c.kode = b.kode_finger
                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
                                     AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                 GROUP BY a.id
                             ) AS cek_makan ON cek_makan.id = jadwal.id

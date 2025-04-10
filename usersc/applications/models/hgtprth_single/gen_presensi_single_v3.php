@@ -660,8 +660,10 @@
                                     if(is_istirahat = 2, 1, 0)  AS is_pot_ti,
                                     if(is_istirahat = 2, durasi_break_menit, 0)  AS durasi_break_menit,
                                     CASE
-                                    -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
-                                    -- disetting jika menit_toleransi_ti dari settingan itu null, maka belum tanggalnya
+                                        -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
+                                        -- disetting jika menit_toleransi_ti dari settingan itu null, maka belum tanggalnya
+
+                                        -- 22 Mar 2025, 0077 istirahat > 1 jam maka dipotong 1jam
                                         WHEN is_istirahat = 2 AND 60 > ifnull(menit_toleransi_ti, 0) THEN 1
                                         WHEN is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_ti, 0) THEN 0.5
                                         ELSE 0
