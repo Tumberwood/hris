@@ -162,7 +162,7 @@
 				e.is_active = 1
 				AND CONCAT(a.tanggal, " ", a.jam) NOT BETWEEN e.tanggaljam_awal_istirahat AND e.tanggaljam_akhir_istirahat
 				AND a.tanggal BETWEEN :start_date AND DATE_ADD(:start_date, INTERVAL 2 DAY) 
-				AND a.nama IN ("makan", "makan manual") 
+				AND a.nama NOT IN ("makan", "makan manual") 
 				AND b.id = :id_hemxxmh
 				AND a.is_active = 1
 				ORDER BY concat(a.tanggal, " " , a.jam) ASC
