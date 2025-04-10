@@ -165,7 +165,7 @@
 				AND b.id = :id_hemxxmh
 				AND a.is_active = 1
 				ORDER BY concat(a.tanggal, " " , a.jam) ASC
-				LIMIT 7
+				LIMIT 10
 				;
 				'
 				);
