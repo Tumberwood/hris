@@ -425,13 +425,13 @@
                     LEFT JOIN (
                         SELECT
                             a.id,
-                            MIN(TIMESTAMP(c.tanggal, c.jam)) AS ceklok_in
+                            MIN(CONCAT(c.tanggal, " ", c.jam)) AS ceklok_in
                         FROM htssctd AS a
                         INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                         INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
                             AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3")
-                            AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_t1 AND a.tanggaljam_awal_t2
+                            AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND a.tanggaljam_awal_t2
                         AND b.id = :id_hemxxmh                                                        
                         GROUP BY a.id
                         ORDER BY ceklok_in
@@ -442,13 +442,13 @@
                     LEFT JOIN (
                         SELECT DISTINCT
                             a.id,
-                            MAX(TIMESTAMP(c.tanggal, c.jam)) AS ceklok_out
+                            MAX(CONCAT(c.tanggal, " ", c.jam)) AS ceklok_out
                         FROM htssctd AS a
                         INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                         INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
                             AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3")
-                            AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_akhir_t1 AND a.tanggaljam_akhir_t2
+                            AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_akhir_t1 AND a.tanggaljam_akhir_t2
                             AND a.id_hemxxmh = :id_hemxxmh
                         GROUP BY a.id
                         ORDER BY ceklok_out DESC
@@ -460,12 +460,12 @@
                     LEFT JOIN (
                         SELECT
                             a.id,
-                            MIN(TIMESTAMP(c.tanggal, c.jam)) AS break_in
+                            MIN(CONCAT(c.tanggal, " ", c.jam)) AS break_in
                         FROM htssctd AS a
                         INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                         INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
-                            AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+                            AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
                         AND b.id = :id_hemxxmh                                                        
                         GROUP BY a.id
                         ORDER BY break_in
@@ -476,12 +476,12 @@
                     LEFT JOIN (
                         SELECT
                             a.id,
-                            MAX(TIMESTAMP(c.tanggal, c.jam)) AS break_out
+                            MAX(CONCAT(c.tanggal, " ", c.jam)) AS break_out
                         FROM htssctd AS a
                         INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                         INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
-                            AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+                            AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
                         AND b.id = :id_hemxxmh                                                        
                         GROUP BY a.id
                         ORDER BY break_out
@@ -492,13 +492,13 @@
                     LEFT JOIN (
                         SELECT DISTINCT
                             a.id,
-                            MAX(TIMESTAMP(c.tanggal, c.jam)) AS ceklok_luar
+                            MAX(CONCAT(c.tanggal, " ", c.jam)) AS ceklok_luar
                         FROM htssctd AS a
                         INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                         INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                             AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3")
-                            AND TIMESTAMP(c.tanggal, c.jam) BETWEEN CONCAT(:tanggal, " 09:00:00") AND DATE_ADD(CONCAT(:tanggal, " 04:00:00"), INTERVAL 1 DAY)
+                            AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(:tanggal, " 09:00:00") AND DATE_ADD(CONCAT(:tanggal, " 04:00:00"), INTERVAL 1 DAY)
                             AND b.id = :id_hemxxmh
                         GROUP BY a.id
                         ORDER BY ceklok_luar
@@ -679,7 +679,7 @@
                                     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                     WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                         AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual")
-                                        AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+                                        AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
                                         AND a.id_hemxxmh = :id_hemxxmh
                                     GROUP BY a.id
                                     ORDER BY ceklok_istirahat
@@ -754,21 +754,13 @@
                                         a.id AS id_jadwal,
                                         a.tanggal,
                                         concat(c.tanggal," ",c.jam) AS ceklok_istirahat,
-                                        TIMESTAMPDIFF(
-                                            MINUTE
-                                            ,MIN(CONCAT(c.tanggal," ",c.jam)),	
-                                            MAX(CONCAT(c.tanggal," ",c.jam))
-
-                                            -- case finger 22 Maret 2025 peg 0077,
-                                            -- tidak terdeteksi istirahat 1jam lebih karena finger istirahat terakhir tidak dalam range istirahat
-                                            -- sebaiknya range diubah untuk max finger?
-                                        ) as durasi_break_menit
+                                        TIMESTAMPDIFF(MINUTE,MIN(CONCAT(c.tanggal," ",c.jam)),	MAX(CONCAT(c.tanggal," ",c.jam))) as durasi_break_menit
                                     FROM htssctd AS a
                                     INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                     WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                         AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual")
-                                        AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+                                        AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
                                         AND a.id_hemxxmh = :id_hemxxmh
                                     GROUP BY a.id
                                     ORDER BY ceklok_istirahat
@@ -785,7 +777,7 @@
                                     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                     WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                         AND c.nama IN ("makan", "makan manual")
-                                        AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
+                                        AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
                                         AND a.id_hemxxmh = :id_hemxxmh
                                     GROUP BY a.id
 
@@ -889,7 +881,7 @@
                         SELECT
                             a.id,
                             -- COUNT(c.kode) ceklok_makan,
-                            IF(TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat, 1, 0) ceklok_makan,
+                            IF(CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat, 1, 0) ceklok_makan,
                             c.nama,
                             c.kode,
                             c.jam
@@ -905,8 +897,8 @@
                             WHERE cl.tanggal BETWEEN :tanggal AND DATE_ADD(:tanggal, INTERVAL 1 DAY) AND cl.nama IN ("makan", "makan manual")
                         ) AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                            -- AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
-                            AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+                            -- AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
+                            AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
                             AND a.id_hemxxmh = :id_hemxxmh
                         GROUP BY a.id
                     ) AS cek_makan ON cek_makan.id = jadwal.id
