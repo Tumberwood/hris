@@ -754,7 +754,15 @@
                                         a.id AS id_jadwal,
                                         a.tanggal,
                                         concat(c.tanggal," ",c.jam) AS ceklok_istirahat,
-                                        TIMESTAMPDIFF(MINUTE,MIN(CONCAT(c.tanggal," ",c.jam)),	MAX(CONCAT(c.tanggal," ",c.jam))) as durasi_break_menit
+                                        TIMESTAMPDIFF(
+                                            MINUTE
+                                            ,MIN(CONCAT(c.tanggal," ",c.jam)),	
+                                            MAX(CONCAT(c.tanggal," ",c.jam))
+
+                                            -- case finger 22 Maret 2025 peg 0077,
+                                            -- tidak terdeteksi istirahat 1jam lebih karena finger istirahat terakhir tidak dalam range istirahat
+                                            -- sebaiknya range diubah untuk max finger?
+                                        ) as durasi_break_menit
                                     FROM htssctd AS a
                                     INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
