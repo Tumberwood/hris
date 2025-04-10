@@ -662,6 +662,7 @@
                                     CASE
                                     -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
                                     -- disetting jika menit_toleransi_ti dari settingan itu null, maka belum tanggalnya
+                                        WHEN is_istirahat = 2 AND 60 > ifnull(menit_toleransi_ti, 0) THEN 1
                                         WHEN is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_ti, 0) THEN 0.5
                                         ELSE 0
                                     END AS potongan_ti_jam
