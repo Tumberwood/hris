@@ -114,7 +114,6 @@
 				INNER JOIN hetxxmh jab ON jab.id = jb.id_hetxxmh
 				WHERE a.tanggal = :start_date AND a.is_active = 1
 					AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND a.tanggaljam_akhir_t2
-					AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3") 
 				GROUP BY a.id
 				'
 				);
