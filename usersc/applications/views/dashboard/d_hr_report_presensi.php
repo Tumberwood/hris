@@ -266,8 +266,8 @@
 				}
 			];
 			
-			console.log('tanggal_old = '+tanggal_old);
-			console.log('start_date = '+start_date);
+			// console.log('tanggal_old = '+tanggal_old);
+			// console.log('start_date = '+start_date);
 			if (tanggal_old != start_date) {
 				$.ajax( {
 					url: "../../models/dashboard/d_hr_report_presensi_cek_finger.php",
@@ -277,7 +277,7 @@
 						start_date: start_date
 					},
 					success: function ( json ) {
-						console.log(json);
+						// console.log(json);
 						var str9 = `
 							<h3>Tabel Cek Finger</h3>
 							<table id="tblhtsprrd9" class="table table-striped table-bordered" width="100%">`
@@ -348,7 +348,7 @@
 				success: function ( json ) {
 					if (json.data7 && Object.keys(json.data7).length > 0) {
 						tanggal_old = start_date;
-						console.log(tanggal_old);
+						// console.log(tanggal_old);
 						$('#edit_jadwal').empty();
 						$('#jadwal').empty();
 						
