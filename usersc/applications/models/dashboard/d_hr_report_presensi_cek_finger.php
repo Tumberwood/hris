@@ -54,7 +54,7 @@
 					DATE_FORMAT(
 						MIN(
 						CASE 
-								WHEN  CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+								WHEN  CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
 									AND c.nama IN ("PMI-Gedung-3", "OS-Gedung-3")
 								THEN CONCAT(c.tanggal, " ", c.jam)
 								ELSE NULL
@@ -67,7 +67,7 @@
 					DATE_FORMAT(
 						MAX(
 						CASE 
-								WHEN  CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+								WHEN  CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
 									AND c.nama IN ("PMI-Gedung-3", "OS-Gedung-3")
 								THEN CONCAT(c.tanggal, " ", c.jam)
 								ELSE NULL
@@ -79,7 +79,7 @@
 					DATE_FORMAT(
 						MIN(
 						CASE 
-								WHEN  CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+								WHEN  CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
 									AND c.nama NOT IN ("PMI-Gedung-3", "OS-Gedung-3")
 								THEN CONCAT(c.tanggal, " ", c.jam)
 								ELSE NULL
@@ -92,7 +92,7 @@
 					DATE_FORMAT(
 						MAX(
 						CASE 
-								WHEN  CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND a.tanggaljam_akhir_istirahat
+								WHEN  CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
 									AND c.nama NOT IN ("PMI-Gedung-3", "OS-Gedung-3")
 								THEN CONCAT(c.tanggal, " ", c.jam)
 								ELSE NULL
