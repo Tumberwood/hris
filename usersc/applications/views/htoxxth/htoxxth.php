@@ -150,7 +150,7 @@
 		is_need_approval = 1;
 		var kode_hto = "<?php echo $kode_hto ?>";
 
-		console.log(kode_hto);
+		// console.log(kode_hto);
 		// sementara di 0 kan
 		// is_need_generate_kode = 1;
 
