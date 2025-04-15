@@ -21,13 +21,13 @@
          */
 
         if($is_istirahat == 0){
-            $subminutes = 0;
+            $menit = 0;
         }elseif($is_istirahat == 1){
-            $subminutes = 60;
+            $menit = 60;
         }elseif($is_istirahat == 2){
-            $subminutes = 30; //ditambah menit sesuai dengan is_istirahat yang dipilih
+            $menit = 30; //ditambah menit sesuai dengan is_istirahat yang dipilih
         } else {
-            $subminutes = 120;
+            $menit = 120;
         }
 
         $jam_awal	= new Carbon($values['htoemtd']['jam_awal']);
@@ -42,7 +42,7 @@
 
         //revisi 15 Apr 2025
         //ditambah menit sesuai dengan is_istirahat yang dipilih
-        $durasi_menit = $jam_akhir_final->diffInMinutes($jam_awal) + $subminutes;
+        $durasi_menit = $jam_akhir_final->diffInMinutes($jam_awal) + $menit;
 
     }elseif($id_htotpmh == 5 || $id_htotpmh == 6 || $id_htotpmh == 7){
         /* jika lembur istirahat shift */
