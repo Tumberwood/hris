@@ -95,6 +95,9 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
+								<editor-field name="hemjbmh.id_holxxmd_2"></editor-field>
+							</div>
+							<div class="col-lg-6">
 								<editor-field name="hemdcmh.id_gtxpkmh"></editor-field>
 							</div>
 						</div>
@@ -311,7 +314,7 @@
 
 		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0, id_hevxxmh_old = 0, id_heyxxmh_old = 0, id_hesxxmh_old = 0;
 		var id_hedlvmh_old = 0;
-		var id_gtxpkmh_old = 0;
+		var id_gtxpkmh_old = 0, id_holxxmd_2_old = 0;
 		var id_heyxxmd_old = 0, tanggal_keluar_old = null;
 
 		$(document).ready(function() {
@@ -645,6 +648,43 @@
 									var query = {
 										id_hesxxmh: 0,
 										id_hesxxmh_old: id_hesxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "Area Kerja <sup class='text-danger'>*<sup>",
+						name: "hemjbmh.id_holxxmd_2",
+						type: "select2",
+						fieldInfo: "Master Area Kerja",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/holxxmd_2/holxxmd_2_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_holxxmd_2_old: id_holxxmd_2_old,
 										search: params.term || '',
 										page: params.page || 1
 									}
@@ -1081,6 +1121,20 @@
 					}
 					// END of validasi hemjbmh.id_hesxxmh 
 
+					// BEGIN of validasi hemjbmh.id_holxxmd_2 
+					id_holxxmd_2 = edthemxxmh.field('hemjbmh.id_holxxmd_2').val();
+					if(!id_holxxmd_2 || id_holxxmd_2 == ''){
+						edthemxxmh.field('hemjbmh.id_holxxmd_2').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemjbmh.id_holxxmd_2 
+
+					// BEGIN of validasi hemdcmh.id_gtxpkmh 
+					id_gtxpkmh = edthemxxmh.field('hemdcmh.id_gtxpkmh').val();
+					if(!id_gtxpkmh || id_gtxpkmh == ''){
+						edthemxxmh.field('hemdcmh.id_gtxpkmh').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemdcmh.id_gtxpkmh 
+
 					// BEGIN of validasi hemjbmh.tanggal_masuk 
 					tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
 					if(!tanggal_masuk || tanggal_masuk == ''){
@@ -1250,6 +1304,7 @@
 				id_heyxxmh_old   = data_hemjbmh.id_heyxxmh;
 				id_heyxxmd_old   = data_hemjbmh.id_heyxxmd;
 				id_hesxxmh_old   = data_hemjbmh.id_hesxxmh;
+				id_holxxmd_2_old   = data_hemjbmh.id_holxxmd_2;
 				tanggal_keluar_old   = data_hemjbmh.tanggal_keluar;
 
 				data_hemdcmh = tblhemxxmh.row( { selected: true } ).data().hemdcmh;
@@ -1284,6 +1339,7 @@
 				id_heyxxmd_old = 0;
 				id_gtxpkmh_old = 0;
 				id_hovxxmh_old   = 0, id_hodxxmh_old   = 0, id_hosxxmh_old   = 0, id_hevxxmh_old   = 0, id_hetxxmh_old   = 0, id_heyxxmh_old   = 0, id_hesxxmh_old   = 0, tanggal_keluar_old = null;
+				id_holxxmd_2_old   = 0;
 
 				// atur hak akses
 				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth, tblhemjbrd];

@@ -38,6 +38,8 @@
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemjbmh.id_heyxxmd' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_holxxmd_2' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemxxmh.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);
