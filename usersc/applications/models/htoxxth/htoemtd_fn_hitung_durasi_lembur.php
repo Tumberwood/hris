@@ -25,7 +25,7 @@
         }elseif($is_istirahat == 1){
             $subminutes = 60;
         }elseif($is_istirahat == 2){
-            $subminutes = 30;
+            $subminutes = 30; //ditambah menit sesuai dengan is_istirahat yang dipilih
         } else {
             $subminutes = 120;
         }
@@ -40,7 +40,7 @@
             $jam_akhir_final = $jam_akhir;
         }
 
-        $durasi_menit = $jam_akhir_final->diffInMinutes($jam_awal) - $subminutes;
+        $durasi_menit = $jam_akhir_final->diffInMinutes($jam_awal) + $subminutes;
 
     }elseif($id_htotpmh == 5 || $id_htotpmh == 6 || $id_htotpmh == 7){
         /* jika lembur istirahat shift */
