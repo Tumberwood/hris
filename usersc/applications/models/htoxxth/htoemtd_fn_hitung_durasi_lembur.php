@@ -40,6 +40,8 @@
             $jam_akhir_final = $jam_akhir;
         }
 
+        //revisi 15 Apr 2025
+        //ditambah menit sesuai dengan is_istirahat yang dipilih
         $durasi_menit = $jam_akhir_final->diffInMinutes($jam_awal) + $subminutes;
 
     }elseif($id_htotpmh == 5 || $id_htotpmh == 6 || $id_htotpmh == 7){
