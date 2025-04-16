@@ -196,9 +196,9 @@
 						type: "select",
 						def: "Makan Manual",
 						options: [
-							// { "label": "Istirahat", "value": "istirahat" },
 							// { "label": "Makan", "value": "makan" },
 							{ "label": "Makan Manual", "value": "makan manual" },
+							{ "label": "Istirahat Manual", "value": "istirahat manual" },
 							{ "label": "Outsourcing", "value": "os" },
 							{ "label": "PMI", "value": "pmi" },
 							{ "label": "Staff", "value": "staff" }

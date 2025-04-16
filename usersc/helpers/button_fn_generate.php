@@ -12,7 +12,7 @@
                     extend: 'collection',
                     name: 'btnSetName',
                     text: '<span class="fa fa-wrench">',
-                    className: 'btn btn-xs btn-outline',
+                    className: 'btn  btn-outline',
                     autoClose: true,
                     buttons: [
                         berisi button-button yang ada
@@ -84,7 +84,7 @@
             extend: 'collection',
             name: 'btnSetTools',
             text: '<span class="fa fa-wrench"></span>',
-            className: 'btn btn-xs btn-warning',
+            className: 'btn  btn-warning',
             autoClose: true,
             buttons: [
 <?php     
@@ -99,7 +99,7 @@
                         {
                             text: '<span class="fa fa-adjust" id="bf_active_status">&nbsp &nbsp Show / Hide Document</span>',
                             name: 'btnShowHide', 
-                            className: 'btn btn-xs',
+                            className: 'btn ',
                             titleAttr: 'Show / Hide Inactive Document',
                             action: function ( e, dt, node, config, tbl_details ) {
                                 
@@ -129,7 +129,7 @@
                             extend: "excel",
                             name: 'btnExcel', 
                             text: '<span class="fa fa-file-excel-o">&nbsp &nbsp Excel</span>', 
-                            className: 'btn btn-xs btn-outline',
+                            className: 'btn  btn-outline',
                             titleAttr: 'Export to Excel'
                         },
 <?php
@@ -144,7 +144,7 @@
                             extend: "pdf", 
                             name: 'btnPdf', 
                             text: '<span class="fa fa-file-pdf-o">&nbsp &nbsp pdf</span>', 
-                            className: 'btn btn-xs btn-outline',
+                            className: 'btn  btn-outline',
                             titleAttr: 'Export to pdf'
                         },
 <?php
@@ -159,7 +159,7 @@
                             extend: "copy", 
                             name: 'btnCopy',
                             text: '<span class="fa fa-copy">&nbsp &nbsp Copy</span>', 
-                            className: 'btn btn-xs btn-outline',
+                            className: 'btn  btn-outline',
                             titleAttr: 'Copy'
                         },
 <?php
@@ -174,7 +174,7 @@
                             extend: 'colvis',
                             text: '<span class="fa fa-eye-slash" id="bf_active_status">&nbsp &nbsp Show / Hide Column</span>',
                             name: 'btnColVis',
-                            className: 'btn btn-xs btn-outline',
+                            className: 'btn  btn-outline',
                             titleAttr: 'Show / Hide Column',
                             columns: colvisCount,
                             columnText: function ( dt, idx, title ) {
@@ -208,7 +208,7 @@
             extend: 'collection',
             name: 'btnSetTools',
             text: 'Action',
-            className: 'btn btn-xs btn-outline',
+            className: 'btn  btn-outline',
             autoClose: true,
             buttons: [
 <?php
@@ -225,7 +225,7 @@
                             name: 'btnCreate', 
                             editor: <?php echo $edt;?>, 
                             text: '<span class="fa fa-plus">&nbsp &nbsp Add New</span>', 
-                            className: 'btn btn-xs btn-outline', 
+                            className: 'btn  btn-outline', 
                             titleAttr: 'Add New',
                             key: {
                                 key: 'n',
@@ -246,7 +246,7 @@
                             name: 'btnEdit', 
                             editor: <?php echo $edt;?>,
                             text: '<span class="fa fa-edit">&nbsp &nbsp Edit</span>', 
-                            className: 'btn btn-xs btn-outline',
+                            className: 'btn  btn-outline',
                             titleAttr: 'Edit',
                             key: {
                                 key: 'e',
@@ -267,7 +267,7 @@
                             name: 'btnRemove',
                             editor: <?php echo $edt;?>, 
                             text: '<span class="fa fa-trash">&nbsp &nbsp Delete</span>', 
-                            className: 'btn btn-xs btn-danger',
+                            className: 'btn  btn-danger',
                             titleAttr: 'Remove',
                             key: {
                                 key: 'd',
@@ -287,7 +287,7 @@
                             extend: "selected",
                             name: 'BtnView',
                             text: '<span class="fa fa-window-maximize">&nbsp &nbsp View Data</span>', 
-                            className: 'btn btn-xs btn-outline',
+                            className: 'btn  btn-outline',
                             titleAttr: 'View Data',
                             action: function(e, dt, node, config) {
                                 <?php echo $edt;?>.edit(<?php echo $table;?>.row({
@@ -311,7 +311,7 @@
                             extend: "selected",
                             name: 'BtnLog',
                             text: '<span class="fa fa-dedent">&nbsp &nbsp View Log</span>', 
-                            className: 'btn btn-xs btn-outline',
+                            className: 'btn  btn-outline',
                             titleAttr: 'View Data Log',
                             action: function(e, dt, node, config) {
                                 e.preventDefault();
@@ -348,7 +348,7 @@
                         { 
                             text: '<span class="fa fa-trash" id="btnNonAktif">&nbsp &nbsp Delete</span>', 
                             name: 'btnNonAktif',
-                            className: 'btn btn-xs btn-danger',
+                            className: 'btn  btn-danger',
                             titleAttr: 'Remove',
                             action: function ( e, dt, node, config ) {
                                 if(is_active == 1){
@@ -401,7 +401,7 @@
                         { 
                             text: '<span class="fa fa-trash" id="btnNonAktif">&nbsp &nbsp Delete</span>', 
                             name: 'btnNonAktif',
-                            className: 'btn btn-xs btn-danger',
+                            className: 'btn  btn-danger',
                             titleAttr: 'Remove',
                             action: function ( e, dt, node, config ) {
                                 var rows = <?php echo $table;?>.rows( {selected: true} ).indexes();
@@ -461,7 +461,7 @@
                         { 
                             text: '<span class="fa fa-trash" id="btnNonAktifOnly">&nbsp &nbsp Delete</span>', 
                             name: 'btnNonAktifOnly',
-                            className: 'btn btn-xs btn-danger',
+                            className: 'btn  btn-danger',
                             titleAttr: 'Remove',
                             action: function ( e, dt, node, config ) {
                                 var rows          = <?php echo $table;?>.rows( {selected: true} ).indexes();
@@ -502,7 +502,7 @@
                     extend: 'collection',
                     name: 'btnSetApprove',
                     text: 'Approval',
-                    className: 'btn btn-xs btn-outline',
+                    className: 'btn  btn-outline',
                     autoClose: true,
                     buttons: [
 <?php
@@ -516,7 +516,7 @@
                                 { 
                                     text: '<span class="fa fa-check">&nbsp &nbsp Approve</span>', 
                                     name: 'btnApprove',
-                                    className: 'btn btn-xs btn-primary',
+                                    className: 'btn  btn-primary',
                                     titleAttr: 'Approve',
                                     action: function ( e, dt, node, config ) {
 
@@ -629,7 +629,7 @@
                                 { 
                                     text: '<span class="fa fa-undo">&nbsp &nbsp Cancel Approve</span>', 
                                     name: 'btnCancelApprove',
-                                    className: 'btn btn-xs btn-outline',
+                                    className: 'btn  btn-outline',
                                     titleAttr: 'Cancel Approve',
                                     action: function ( e, dt, node, config ) {
 
@@ -742,7 +742,7 @@
                                 {
                                     text: '<span class="fa fa-remove">&nbsp &nbsp Void</span>', 
                                     name: 'btnVoid',
-                                    className: 'btn btn-xs btn-danger',
+                                    className: 'btn  btn-danger',
                                     titleAttr: 'Void',
                                     action: function ( e, dt, node, config ) {
                                         if (confirm("Apakah anda yakin ingin melakukan Void pada data ini?")) {

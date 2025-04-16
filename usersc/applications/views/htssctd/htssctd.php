@@ -235,7 +235,7 @@
 						format: 'DD MMM YYYY'
 					},	
 					{
-						label: "Shift",
+						label: "Shift <sup class='text-danger'>*<sup>",
 						name: "htssctd.id_htsxxmh",
 						type: "select2",
 						opts: {
@@ -486,6 +486,15 @@
             edthtssctd.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					
+					// BEGIN of validasi htssctd.id_htsxxmh
+					if ( ! edthtssctd.field('htssctd.id_htsxxmh').isMultiValue() ) {
+						id_htsxxmh = edthtssctd.field('htssctd.id_htsxxmh').val();
+						if(!id_htsxxmh || id_htsxxmh == ''){
+							edthtssctd.field('htssctd.id_htsxxmh').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htssctd.id_htsxxmh
+					
 					// BEGIN of validasi htssctd.id_hemxxmh
 					if ( ! edthtssctd.field('htssctd.id_hemxxmh').isMultiValue() ) {
 						id_hemxxmh = edthtssctd.field('htssctd.id_hemxxmh').val();
@@ -521,6 +530,32 @@
 						}
 					}
 					// END of validasi htssctd.tanggaljam_akhir_istirahat
+
+					//Unik nama, tanggal, shift
+					// BEGIN of cek unik htssctd.id_hemxxmh
+					if(action == 'create'){
+						id_htssctd = 0;
+					}
+					
+					
+					$.ajax( {
+						url: '../../../helpers/validate_fn_unique.php',
+						dataType: 'json',
+						type: 'POST',
+						async: false,
+						data: {
+							table_name       : 'htssctd',
+							nama_field       : 'tanggal,id_hemxxmh,id_htsxxmh',
+							nama_field_value : '"' + moment(tanggal).format('YYYY-MM-DD') + '",'+id_hemxxmh+','+id_htsxxmh,
+							id_transaksi     : id_htssctd
+						},
+						success: function ( json ) {
+							if(json.data.count > 1){
+								edthtssctd.field('htssctd.id_hemxxmh').error( 'Data tidak boleh kembar!' );
+							}
+						}
+					} );
+					// END of cek unik htssctd.id_hemxxmh
 					
 				}
 				
