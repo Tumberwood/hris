@@ -33,4 +33,10 @@
     div.quill-wrapper div.toolbar {
         border-bottom: 1px solid #ccc;
     }
+	
+	/* Membuat kolom freeze tidak transparan */
+	.dtfc-fixed-left {
+		background-color: white !important;
+		z-index: 1;
+	}
 </style>

@@ -29,15 +29,6 @@
 	}
 ?>
 
-
-<style>
-	/* Membuat kolom freeze tidak transparan */
-	.dtfc-fixed-left {
-		background-color: white !important;
-		z-index: 1;
-	}
-</style>
-
 <!-- begin content here -->
 
 <div class="row">
