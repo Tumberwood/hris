@@ -698,7 +698,7 @@
                                             -- disetting jika menit_toleransi_ti dari settingan itu null, maka belum tanggalnya
 
                                                 -- 22 Mar 2025, 0077 istirahat > 1 jam maka dipotong 1jam
-                                                WHEN is_istirahat = 2 AND 60 > ifnull(menit_toleransi_ti, 0) THEN 1
+                                                WHEN is_istirahat = 2 AND durasi_break_menit > 60 THEN 1
                                                 WHEN is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_ti, 0) THEN 0.5
                                                 ELSE 0
                                             END AS potongan_ti_jam
