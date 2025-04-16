@@ -25,7 +25,7 @@
         }elseif($is_istirahat == 1){
             $menit = -60;
         }elseif($is_istirahat == 2){
-            $menit = 30; //ditambah menit sesuai dengan is_istirahat yang dipilih
+            $menit = -30; //ditambah menit sesuai dengan is_istirahat yang dipilih
         } else {
             $menit = -120;
         }
