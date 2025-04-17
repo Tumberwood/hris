@@ -25,6 +25,10 @@
 			Field::inst( 'htsprtd.id_hemxxmh' ),
 			Field::inst( 'htsprtd.kode' ),
 			Field::inst( 'htsprtd.nama' )
+				->getFormatter( function ( $val ) {
+					// Ubah ke uppercase saat mengambil nilai dari database (get)
+					return strtoupper($val);
+				} )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);
 				} ),

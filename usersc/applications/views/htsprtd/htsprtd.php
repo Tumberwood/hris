@@ -97,7 +97,7 @@
 		var id_hemxxmh_old_select = 0;
 		//UPDATE BY FERRY , BUG FILTER 14 SEP 2023
 		var select_hemxxmh = 0;
-		var kode_finger,jam_old = '';
+		var kode_finger,jam_old = '', mesin = '';
 
 		id_heyxxmh = "<?php echo $_SESSION['str_arr_ha_heyxxmh']; ?>";
 
@@ -191,19 +191,42 @@
 						name: "htsprtd.kode",
                         type: "hidden"
 					},
+					
 					{
 						label: "Mesin <sup class='text-danger'>*<sup>",
 						name: "htsprtd.nama",
-						type: "select",
-						def: "Makan Manual",
-						options: [
-							// { "label": "Makan", "value": "makan" },
-							{ "label": "Makan Manual", "value": "makan manual" },
-							{ "label": "Istirahat Manual", "value": "istirahat manual" },
-							{ "label": "Outsourcing", "value": "os" },
-							{ "label": "PMI", "value": "pmi" },
-							{ "label": "Staff", "value": "staff" }
-						]
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hmsxxmh/hmsxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										mesin: mesin,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
 					},
 					{
 						label: "Employee <sup class='text-danger'>*<sup>",
@@ -284,9 +307,8 @@
 
 			edthtsprtd.dependent( 'htsprtd.nama', function ( val, data, callback ) {
 				nama = edthtsprtd.field('htsprtd.nama').val();
-				if (nama ==  "makan manual") {
+				if (nama ==  "MAKAN MANUAL") {
 					jamMakanManual();
-					// edthtsprtd.field('htsprtd.jam').disable();
 				}else {
             		edthtsprtd.field('htsprtd.jam').enable();
 				}
@@ -295,24 +317,21 @@
 
 			edthtsprtd.dependent( 'htsprtd.id_hemxxmh', function ( val, data, callback ) {
 				nama = edthtsprtd.field('htsprtd.nama').val();
-				if (nama ==  "makan manual") {
+				if (nama ==  "MAKAN MANUAL") {
 					jamMakanManual();
-					// edthtsprtd.field('htsprtd.jam').disable();
 				}else {
+					console.log(2);
             		edthtsprtd.field('htsprtd.jam').enable();
-					edthtsprtd.field('htsprtd.jam').val('');
 				}
 				return {}
 			}, {event: 'keyup change'});
 
 			edthtsprtd.dependent( 'htsprtd.tanggal', function ( val, data, callback ) {
 				nama = edthtsprtd.field('htsprtd.nama').val();
-				if (nama ==  "makan manual") {
+				if (nama ==  "MAKAN MANUAL") {
 					jamMakanManual();
-					// edthtsprtd.field('htsprtd.jam').disable();
 				}else {
             		edthtsprtd.field('htsprtd.jam').enable();
-					edthtsprtd.field('htsprtd.jam').val('');
 				}
 				return {}
 			}, {event: 'keyup change'});
@@ -321,6 +340,7 @@
 				if(action != 'remove'){
 					// BEGIN of validasi htsprtd.nama
 					nama = edthtsprtd.field('htsprtd.nama').val();
+					// nama = nama.toLowerCase();
 					if(!nama || nama == ''){
 						edthtsprtd.field('htsprtd.nama').error( 'Wajib diisi!' );
 					}
@@ -346,7 +366,7 @@
 
 					jam = edthtsprtd.field('htsprtd.jam').val();
 					// unikMakan(jam);
-					if (nama != "makan manual") {
+					if (nama != "MAKAN MANUAL") {
 						// BEGIN of validasi htsprtd.jam
 						if ( ! edthtsprtd.field('htsprtd.jam').isMultiValue() ) {
 							if(!jam || jam == ''){
@@ -433,17 +453,53 @@
 					{
 						label: "Mesin <sup class='text-danger'>*<sup>",
 						name: "htsprtd.nama",
-						type: "select",
-						def: "Makan Manual",
-						options: [
-							// { "label": "Makan", "value": "makan" },
-							{ "label": "Makan Manual", "value": "makan manual" },
-							{ "label": "Istirahat Manual", "value": "istirahat manual" },
-							{ "label": "Outsourcing", "value": "os" },
-							{ "label": "PMI", "value": "pmi" },
-							{ "label": "Staff", "value": "staff" }
-						]
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hmsxxmh/hmsxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										mesin: mesin,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
 					},
+					// {
+					// 	label: "Mesin <sup class='text-danger'>*<sup>",
+					// 	name: "htsprtd.nama",
+					// 	type: "select",
+					// 	def: "Makan Manual",
+					// 	options: [
+					// 		// { "label": "Makan", "value": "makan" },
+					// 		{ "label": "Makan Manual", "value": "makan manual" },
+					// 		{ "label": "Istirahat Manual", "value": "istirahat manual" },
+					// 		{ "label": "Outsourcing", "value": "os" },
+					// 		{ "label": "PMI", "value": "pmi" },
+					// 		{ "label": "Staff", "value": "staff" }
+					// 	]
+					// },
 					{
 						label: "Employee <sup class='text-danger'>*<sup>",
 						name: "htsprtd.id_hemxxmh",
@@ -550,7 +606,7 @@
 
 					jam = edthtsprtd_multi.field('htsprtd.jam').val();
 					// unikMakan(jam);
-					if (nama != "makan manual") {
+					if (nama != "MAKAN MANUAL") {
 						// BEGIN of validasi htsprtd.jam
 						if ( ! edthtsprtd_multi.field('htsprtd.jam').isMultiValue() ) {
 							if(!jam || jam == ''){
@@ -694,7 +750,7 @@
 			tblhtsprtd.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
 				id_htsprtd = '';
-				jam_old = '';
+				jam_old = '', mesin = '';
 				id_hemxxmh_old = 0;
 
 				// atur hak akses
