@@ -683,7 +683,11 @@
                                         INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                         INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                            AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual")
+                                            AND (
+                                                (a.tanggal < :tanggal AND c.nama IN ("istirahat", "istirahat manual"))
+                                                OR
+                                                (a.tanggal >= :tanggal AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual"))
+                                            )
                                             AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
                                             AND a.id_hemxxmh = :id_hemxxmh
                                         GROUP BY a.id
@@ -710,24 +714,6 @@
                                     ORDER BY ceklok_istirahat
                                     LIMIT 1
                                 ) AS cek_istirahat ON cek_istirahat.id_hemxxmh = hto.id_hemxxmh
-
-                                -- LEFT JOIN (
-                                --     SELECT DISTINCT
-                                --         a.id_hemxxmh,
-                                --         a.id AS id_jadwal,
-                                --         concat(c.tanggal," ",c.jam) AS ceklok_istirahat,
-                                --         TIMESTAMPDIFF(MINUTE,MIN(CONCAT(c.tanggal," ",c.jam)),	MAX(CONCAT(c.tanggal," ",c.jam))) as durasi_break_menit
-                                --     FROM htssctd AS a
-                                --     INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
-                                --     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
-                                --     WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                --         AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual")
-                                --         AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
-                                --         AND a.id_hemxxmh = :id_hemxxmh
-                                --     GROUP BY a.id
-                                --     ORDER BY ceklok_istirahat
-
-                                -- ) AS cek_istirahat ON cek_istirahat.id_hemxxmh = hto.id_hemxxmh
 
                                 -- menit_toleransi_ti settingan
                                 LEFT JOIN (
@@ -802,7 +788,11 @@
                                     INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                     WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                        AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual")
+                                        AND (
+                                            (a.tanggal < :tanggal AND c.nama IN ("istirahat", "istirahat manual"))
+                                            OR
+                                            (a.tanggal >= :tanggal AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual"))
+                                        )
                                         AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
                                         AND a.id_hemxxmh = :id_hemxxmh
                                     GROUP BY a.id
