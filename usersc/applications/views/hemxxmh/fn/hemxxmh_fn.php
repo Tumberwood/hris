@@ -42,9 +42,13 @@
                         edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
                         edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
                     } else {
-                        edthemxxmh.field('hemjbmh.tanggal_keluar').show();
-                        tanggal_akhir = moment(tanggal_masuk).add('month', 6).format('DD MMM YYYY');
-                        edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_akhir);
+                        if (id_hesxxmh != 3) {
+                            edthemxxmh.field('hemjbmh.tanggal_keluar').show();
+                            tanggal_akhir = moment(tanggal_masuk).add('month', 6).format('DD MMM YYYY');
+                            edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_akhir);
+                        } else {
+                            edthemxxmh.field('hemjbmh.tanggal_keluar').val();
+                        }
                     }
                 }
             }
