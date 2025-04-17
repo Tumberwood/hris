@@ -89,6 +89,7 @@
 <script type="text/javascript">
 		// ------------- default variable, do not erase
 		var edthtsprtd, tblhtsprtd, show_inactive_status_htsprtd = 0, id_htsprtd;
+		var edthtsprtd_multi;
 		// ------------- end of default variable
 
 		var id_hemxxmh = 0;
@@ -96,7 +97,7 @@
 		var id_hemxxmh_old_select = 0;
 		//UPDATE BY FERRY , BUG FILTER 14 SEP 2023
 		var select_hemxxmh = 0;
-		var kode_finger;
+		var kode_finger,jam_old = '';
 
 		id_heyxxmh = "<?php echo $_SESSION['str_arr_ha_heyxxmh']; ?>";
 
@@ -390,6 +391,204 @@
 				
 				tblhtsprtd.ajax.reload(null, false);
 			});
+
+			//edthtsprtd_multi_multi
+			edthtsprtd_multi = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/htsprtd/htsprtd_multi.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_htsprtd = show_inactive_status_htsprtd;
+						d.start_date = start_date;
+						d.end_date = end_date;
+						d.select_hemxxmh = select_hemxxmh;
+					}
+				},
+				table: "#tblhtsprtd",
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "htsprtd",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "htsprtd.is_active",
+                        type: "hidden",
+						def: 1
+					},	
+					{
+						label: "htsprtd.kode",
+						name: "htsprtd.kode",
+                        type: "hidden"
+					},
+					{
+						label: "Mesin <sup class='text-danger'>*<sup>",
+						name: "htsprtd.nama",
+						type: "select",
+						def: "Makan Manual",
+						options: [
+							// { "label": "Makan", "value": "makan" },
+							{ "label": "Makan Manual", "value": "makan manual" },
+							{ "label": "Istirahat Manual", "value": "istirahat manual" },
+							{ "label": "Outsourcing", "value": "os" },
+							{ "label": "PMI", "value": "pmi" },
+							{ "label": "Staff", "value": "staff" }
+						]
+					},
+					{
+						label: "Employee <sup class='text-danger'>*<sup>",
+						name: "htsprtd.id_hemxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: true,
+							ajax: {
+								url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hemxxmh_old: id_hemxxmh_old,
+										id_heyxxmh: id_heyxxmh,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "Tanggal <sup class='text-danger'>*<sup>",
+						name: "htsprtd.tanggal",
+						type: "datetime",
+						def: function () { 
+							return moment($('#end_date').val()).format('DD MMM YYYY'); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},
+					{
+						label: "Jam <sup class='text-danger'>*<sup>",
+						name: "htsprtd.jam",
+						type: "datetime",
+						format: 'HH:mm'
+					},
+					{
+						label: "Keterangan <sup class='text-danger'>*<sup>",
+						name: "htsprtd.keterangan",
+						type: "textarea"
+					}
+				]
+			} );
+
+			edthtsprtd_multi.on( 'preOpen', function( e, mode, action ) {
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthtsprtd_multi.field('start_on').val(start_on);
+				
+				if(action == 'create'){
+					tblhtsprtd.rows().deselect();
+				}
+			});
+
+			edthtsprtd_multi.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+			});
+
+            edthtsprtd_multi.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+					// BEGIN of validasi htsprtd.nama
+					nama = edthtsprtd_multi.field('htsprtd.nama').val();
+					if(!nama || nama == ''){
+						edthtsprtd_multi.field('htsprtd.nama').error( 'Wajib diisi!' );
+					}
+					// END of validasi htsprtd.nama
+
+					// BEGIN of validasi htsprtd.id_hemxxmh
+					id_hemxxmh = edthtsprtd_multi.field('htsprtd.id_hemxxmh').val();
+					if ( ! edthtsprtd_multi.field('htsprtd.id_hemxxmh').isMultiValue() ) {
+						if(!id_hemxxmh || id_hemxxmh == ''){
+							edthtsprtd_multi.field('htsprtd.id_hemxxmh').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htsprtd.id_hemxxmh
+
+					// BEGIN of validasi htsprtd.tanggal
+					if ( ! edthtsprtd_multi.field('htsprtd.tanggal').isMultiValue() ) {
+						tanggal = edthtsprtd_multi.field('htsprtd.tanggal').val();
+						if(!tanggal || tanggal == ''){
+							edthtsprtd_multi.field('htsprtd.tanggal').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htsprtd.tanggal
+
+					jam = edthtsprtd_multi.field('htsprtd.jam').val();
+					// unikMakan(jam);
+					if (nama != "makan manual") {
+						// BEGIN of validasi htsprtd.jam
+						if ( ! edthtsprtd_multi.field('htsprtd.jam').isMultiValue() ) {
+							if(!jam || jam == ''){
+								edthtsprtd_multi.field('htsprtd.jam').error( 'Wajib diisi!' );
+							}
+						}
+						// END of validasi htsprtd.jam
+					} else {
+						if (jam == '' || jam == null) {
+							edthtsprtd_multi.field('htsprtd.jam').error( 'Jam Kosong Karena Jadwal Belum Dibuat!' );
+						}
+					}
+
+					// BEGIN of validasi htsprtd.keterangan
+					if ( ! edthtsprtd_multi.field('htsprtd.keterangan').isMultiValue() ) {
+						keterangan = edthtsprtd_multi.field('htsprtd.keterangan').val();
+						if(!keterangan || keterangan == ''){
+							edthtsprtd_multi.field('htsprtd.keterangan').error( 'Wajib diisi!' );
+						}
+					}
+					// END of validasi htsprtd.keterangan
+				}
+				
+				if ( edthtsprtd_multi.inError() ) {
+					return false;
+				}
+			});
+			
+			edthtsprtd_multi.on('initSubmit', function(e, action) {
+				// update kode finger
+				if (action != 'remove') {
+				}
+			});
+
+			edthtsprtd_multi.on( 'postSubmit', function (e, json, data, action, xhr) {
+				
+				tblhtsprtd.ajax.reload(null, false);
+			});
 			
 			//start datatables
 			tblhtsprtd = $('#tblhtsprtd').DataTable( {
@@ -445,11 +644,19 @@
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
-						$arr_buttons_action 	= ['create', 'remove'];
+						$arr_buttons_action 	= ['create', 'edit','remove'];
 						$arr_buttons_approve 	= [];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					{ 
+						extend: 'create',
+						name: 'btnMulti', 
+						editor: edthtsprtd_multi, 
+						text: '<i class="fa fa-copy"></i>', 
+						className: 'btn btn-outline', 
+						titleAttr: 'Add Multi Pegawai'
+					},
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.htsprtd.is_active == 0 ) {
@@ -463,6 +670,8 @@
 			tblhtsprtd.on( 'select', function( e, dt, type, indexes ) {
 				data_htsprtd = tblhtsprtd.row( { selected: true } ).data().htsprtd;
 				mesin   = data_htsprtd.nama;
+				id_hemxxmh_old   = data_htsprtd.id_hemxxmh;
+				jam_old   = data_htsprtd.jam;
 				mesin = mesin.toUpperCase();
 				
 				//Hapus Sementara
@@ -471,6 +680,25 @@
 				// } else {
 				// 	tblhtsprtd.button('btnRemove:name').disable();
 				// }
+
+				// atur hak akses
+				CekSelectHeaderH(tblhtsprtd);
+
+				if (mesin == "MAKAN MANUAL" || mesin == "ISTIRAHAT MANUAL") {
+					tblhtsprtd.button('btnEdit:name').enable();
+				} else {
+					tblhtsprtd.button('btnEdit:name').disable();
+				}
+			} );
+			
+			tblhtsprtd.on( 'deselect', function () {
+				// reload dipanggil di function CekDeselectHeader
+				id_htsprtd = '';
+				jam_old = '';
+				id_hemxxmh_old = 0;
+
+				// atur hak akses
+				CekDeselectHeaderH(tblhtsprtd);
 			} );
 			
 			$("#frmhtsprtd").submit(function(e) {

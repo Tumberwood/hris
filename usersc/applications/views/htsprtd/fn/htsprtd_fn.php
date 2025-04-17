@@ -29,26 +29,28 @@
         var tanggal = moment(originalDate).format('YYYY-MM-DD');
         id_hemxxmh = edthtsprtd.field('htsprtd.id_hemxxmh').val();
 
-        $.ajax( {
-            url: "../../models/htsprtd/fn_jam_istirahat.php",
-            dataType: 'json',
-            async: false,
-            type: 'POST',
-            data: {
-                tanggal: tanggal,
-                id_hemxxmh: id_hemxxmh
-            },
-            success: function ( json ) {
-                jam = json.data.jam_istirahat.jam;
-                console.log(jam);
-                if (jam == undefined) {
-                    edthtsprtd.field('htsprtd.jam').val('');
-                } else {
-                    edthtsprtd.field('htsprtd.jam').val(jam);
-                }
+        if (jam_old == '') {
+            $.ajax( {
+                url: "../../models/htsprtd/fn_jam_istirahat.php",
+                dataType: 'json',
+                async: false,
+                type: 'POST',
+                data: {
+                    tanggal: tanggal,
+                    id_hemxxmh: id_hemxxmh
+                },
+                success: function ( json ) {
+                    jam = json.data.jam_istirahat.jam;
+                    console.log(jam);
+                    if (jam == undefined) {
+                        edthtsprtd.field('htsprtd.jam').val('');
+                    } else {
+                        edthtsprtd.field('htsprtd.jam').val(jam);
+                    }
 
-            }
-        } );
+                }
+            } );
+        }
     }
 
     function unikMakan(jam) {

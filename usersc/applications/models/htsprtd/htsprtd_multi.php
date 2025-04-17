@@ -66,7 +66,7 @@
 							SELECT 
 								id,
 								kode_finger,
-								:nama,
+								UPPER(:nama) AS nama,
 								:tanggal,
 								:jam,
 								:keterangan
