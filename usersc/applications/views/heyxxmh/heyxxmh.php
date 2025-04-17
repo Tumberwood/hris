@@ -88,16 +88,7 @@
 						label: "Keterangan",
 						name: "heyxxmh.keterangan",
 						type: "textarea"
-					},	{
-						label: "Uang Makan",
-						name: "heyxxmh.is_uangmakan",
-						type: "select",
-						placeholder : "Select",
-						options: [
-							{ "label": "Ya", "value": 1 },
-							{ "label": "Tidak", "value": 0 }
-						]
-					}
+					},
 				]
 			} );
 
