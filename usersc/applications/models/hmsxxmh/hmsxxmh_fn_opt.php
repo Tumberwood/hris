@@ -60,6 +60,7 @@
                 ->where('nama', '%' . $q . '%', 'LIKE' )
                 ;
         } )
+        ->order( 'is_defaultprogram desc')
         ->limit($resultCount)
         ->offset($offset)
         ->exec();

@@ -196,6 +196,7 @@
 						label: "Mesin <sup class='text-danger'>*<sup>",
 						name: "htsprtd.nama",
 						type: "select2",
+						id: "select_mesin",
 						opts: {
 							placeholder : "Select",
 							allowClear: true,
@@ -212,8 +213,22 @@
 										return query;
 								},
 								processResults: function (data, params) {
+									var options = data.results.map(function (result) {
+										return {
+											id: result.id,
+											text: result.text
+										};
+									});
+
+									//add by ferry agar auto select 07 sep 23
+									if (params.page && params.page === 1) {
+										$('#select_mesin').empty().select2({ data: options });
+									} else {
+										$('#select_mesin').append(new Option(options[0].text, options[0].id, false, false)).trigger('change');
+									}
+
 									return {
-										results: data.results,
+										results: options,
 										pagination: {
 											more: true
 										}
@@ -302,7 +317,13 @@
 			});
 
 			edthtsprtd.on("open", function (e, mode, action) {
-				$(".modal-dialog").addClass("modal-lg");
+				$(".modal-dialog").addClass("modal-lg");				
+
+				$('#select_mesin').select2('open');
+
+				setTimeout(function() {
+					$('#select_mesin').select2('close');
+				}, 5);
 			});
 
 			edthtsprtd.dependent( 'htsprtd.nama', function ( val, data, callback ) {
@@ -450,10 +471,12 @@
 						name: "htsprtd.kode",
                         type: "hidden"
 					},
+					
 					{
 						label: "Mesin <sup class='text-danger'>*<sup>",
 						name: "htsprtd.nama",
 						type: "select2",
+						id: "select_mesin",
 						opts: {
 							placeholder : "Select",
 							allowClear: true,
@@ -470,8 +493,22 @@
 										return query;
 								},
 								processResults: function (data, params) {
+									var options = data.results.map(function (result) {
+										return {
+											id: result.id,
+											text: result.text
+										};
+									});
+
+									//add by ferry agar auto select 07 sep 23
+									if (params.page && params.page === 1) {
+										$('#select_mesin').empty().select2({ data: options });
+									} else {
+										$('#select_mesin').append(new Option(options[0].text, options[0].id, false, false)).trigger('change');
+									}
+
 									return {
-										results: data.results,
+										results: options,
 										pagination: {
 											more: true
 										}
@@ -575,6 +612,12 @@
 
 			edthtsprtd_multi.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
+				
+				$('#select_mesin').select2('open');
+
+				setTimeout(function() {
+					$('#select_mesin').select2('close');
+				}, 5);
 			});
 
             edthtsprtd_multi.on( 'preSubmit', function (e, data, action) {
