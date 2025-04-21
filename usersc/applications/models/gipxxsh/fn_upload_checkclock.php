@@ -90,8 +90,6 @@
 
             $qs_tidak_kembar = $db
             ->raw()
-            ->bind(':tanggal', $tanggal)
-            ->bind(':nama', $nama)
             ->exec(' SELECT 
                         FOUND_ROWS() AS found_rows
                     ;
