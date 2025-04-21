@@ -101,6 +101,7 @@
 												<th rowspan=2>Link</th>
 												<th rowspan=2>Department</th>
 												<th rowspan=2>Jabatan</th>
+												<th rowspan=2>Area Kerja</th>
 												<th rowspan=2>Tanggal</th>
 												<th rowspan=2>Cek</th>
 												<th rowspan=2>Shift In</th>
@@ -153,6 +154,7 @@
 										</thead>
 										<tfoot>
 											<tr>
+												<th></th>
 												<th></th>
 												<th></th>
 												<th></th>
@@ -425,6 +427,9 @@
 					{ 
 						data: "hetxxmh.nama"
 						// ,visible:false 
+					},
+					{ 
+						data: "holxxmd_2.nama"
 					},
 					{ 
 						data: "htsprrd.tanggal"
@@ -703,22 +708,21 @@
 				footerCallback: function ( row, data, start, end, display ) {
 					var api       = this.api(), data;
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
-					
-					// s_pot_jam = api.column( 16 ).data().sum();
-					all_makan = api.column(19).data().sum();
-					all_lb = api.column(26).data().sum();
-					all_aw = api.column(27).data().sum();
-					all_ak = api.column(28).data().sum();
-					all_i1 = api.column(29).data().sum();
-					all_i2 = api.column(30).data().sum();
-					all_i3 = api.column(31).data().sum();
-					all_tl = api.column(32).data().sum();
 
-					all_pot_ti = api.column(33).data().sum();
-					all_pot_overtime = api.column(34).data().sum();
-					all_overtime = api.column(35).data().sum();
-					all_pot_hk = api.column(36).data().sum();
-					all_pot_jam = api.column(37).data().sum();
+					all_makan = api.column(20).data().sum();
+					all_lb = api.column(27).data().sum();
+					all_aw = api.column(28).data().sum();
+					all_ak = api.column(29).data().sum();
+					all_i1 = api.column(30).data().sum();
+					all_i2 = api.column(31).data().sum();
+					all_i3 = api.column(32).data().sum();
+					all_tl = api.column(33).data().sum();
+
+					all_pot_ti = api.column(34).data().sum();
+					all_pot_overtime = api.column(35).data().sum();
+					all_overtime = api.column(36).data().sum();
+					all_pot_hk = api.column(37).data().sum();
+					all_pot_jam = api.column(38).data().sum();
 
 					$( '#all_makan' ).html( numFormat(all_makan) );
 					$( '#all_lb' ).html( numFormat(all_lb) );
