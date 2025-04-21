@@ -89,6 +89,14 @@
 							</div>
 						</div>
 					</div>
+					<div class="form-group row">
+						<label class="col-lg-2 col-form-label">File Checkclock <b>Pondok Candra (POCAN)</b></label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input type="file" name="filename" class="form-control" id="inputfilethimportcheckclock_pocan">
+							</div>
+						</div>
+					</div>
 
 					<span class="input-group-append"> 
 						<button type="submit" id="submit_ceklok" class="btn btn-primary">Import</button>
@@ -446,6 +454,47 @@
 										'</div>'
 								});
 								$("#inputfilethimportcheckclock_os_gedung3").val('');
+								notifyprogress.close();
+								$('#submit_ceklok').show();
+							},
+							error: function (xhr, Status, err){
+								// console.log('x');
+							}
+						} );
+					}
+					
+					//pocan
+					var fd_pocan = new FormData();
+					var pocan = $('#inputfilethimportcheckclock_pocan')[0].files[0];
+					// console.log(pocan);
+					fd_pocan.append('filename',pocan);
+					
+					if (pocan != undefined) {
+						fd_pocan.append('filename',pocan);
+			
+						$.ajax( {
+							url: "../../models/gipxxsh/gipxxsh_fn_checkclock_pocan.php",
+							type: 'POST',
+							dataType: 'json',
+							data: fd_pocan,
+							async: false,
+							contentType: false,
+							processData: false,
+							success: function ( json ) {
+								
+								$.notify({
+									message: json.data.message
+								},{
+									type: json.data.type_message,
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
+								});
+								$("#inputfilethimportcheckclock_pocan").val('');
 								notifyprogress.close();
 								$('#submit_ceklok').show();
 							},
