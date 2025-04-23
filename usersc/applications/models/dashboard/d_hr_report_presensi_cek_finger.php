@@ -131,6 +131,7 @@
 		['data' => 'nama', 'name' => 'nama'],
 		['data' => 'dept', 'name' => 'dept'],
 		['data' => 'jabatan', 'name' => 'jabatan'],
+		['data' => 'area', 'name' => 'area'],
 		['data' => 'ceklok_in', 'name' => 'ceklok_in'],
 		['data' => 'ceklok_out', 'name' => 'ceklok_out'],
 		['data' => 'break_in_gedung3', 'name' => 'break_in_gedung3'],
