@@ -301,6 +301,8 @@
 									str9 += '<th class="text-center">Departemen</th>';
 								} else if (colObj9.name == 'jabatan') {
 									str9 += '<th class="text-center">Jabatan</th>';
+								} else if (colObj9.name == 'area') {
+									str9 += '<th class="text-center">Area</th>';
 								} else if (colObj9.name == 'ceklok_in') {
 									str9 += '<th class="text-center">Check In Hadir</th>';
 								} else if (colObj9.name == 'ceklok_out') {
