@@ -104,7 +104,7 @@
 				
 				FROM htssctd a
 				INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
-				INNER JOIN (
+				LEFT JOIN (
 					SELECT
 						*
 					FROM htsprtd
