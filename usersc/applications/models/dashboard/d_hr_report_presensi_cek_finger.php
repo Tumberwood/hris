@@ -113,7 +113,7 @@
 				INNER JOIN hemjbmh jb ON jb.id_hemxxmh = b.id
 				INNER JOIN hodxxmh dep ON dep.id = jb.id_hodxxmh
 				INNER JOIN hetxxmh jab ON jab.id = jb.id_hetxxmh
-				INNER JOIN holxxmd_2 area ON area.id = jb.id_holxxmd_2
+				LEFT JOIN holxxmd_2 area ON area.id = jb.id_holxxmd_2
 				WHERE a.tanggal = :start_date AND a.is_active = 1
 					AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND a.tanggaljam_akhir_t2
 				GROUP BY a.id
