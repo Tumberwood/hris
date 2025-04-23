@@ -161,6 +161,7 @@
                                 <th>Department</th>
                                 <th>Section</th>
                                 <th>Jabatan</th>
+                                <th>Area Kerja</th>
                                 <th>Tipe</th>
                                 <th>Sub Tipe</th>
                                 <th>Status</th>
@@ -1192,6 +1193,7 @@
 					{ data: "hodxxmh.nama" },
 					{ data: "hosxxmh.nama" },
 					{ data: "hetxxmh.nama" },
+					{ data: "holxxmd_2.nama" },
 					{ data: "heyxxmh.nama" },
 					{ data: "heyxxmd.nama" },
 					{ data: "hesxxmh.nama" },//10

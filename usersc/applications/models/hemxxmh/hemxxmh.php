@@ -105,7 +105,8 @@
 			Field::inst( 'hetxxmh.nama' ),
 			Field::inst( 'heyxxmh.nama' ),
 			Field::inst( 'heyxxmd.nama' ),
-			Field::inst( 'hesxxmh.nama' )
+			Field::inst( 'hesxxmh.nama' ),
+			Field::inst( 'holxxmd_2.nama' ),
 			// ,
 			// Field::inst( 'v_hemxxmh_htsptth.pola_shift' ),
 			// Field::inst( 'v_hemxxmh_htsptth.grup_ke' )
@@ -120,6 +121,7 @@
 		->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
 		->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
 		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
+		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
 		// ->leftJoin( 'v_hemxxmh_htsptth','v_hemxxmh_htsptth.id_hemxxmh','=','hemxxmh.id' )
 		;
 	
