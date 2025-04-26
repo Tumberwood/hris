@@ -48,22 +48,18 @@
     function tanggal_akhir_kontrak(){
         id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
         tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
-        tanggal_keluar = edthemxxmh.field('hemjbmh.tanggal_keluar').val();
         // console.log(tanggal_keluar_old);
         // console.log(id_hesxxmh);
-        // console.log('tanggal_keluar = '+tanggal_keluar);
-
-        if (tanggal_keluar_old != '') {
-            edthemxxmh.field('hemjbmh.tanggal_keluar').val();
-        } else {
-            if (id_hesxxmh == 1 || id_hesxxmh  == 5 || id_hesxxmh  == 4) {
-                edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
-                // if (tanggal_keluar_old == null) {
-                    edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
-                // } else {
-                //     edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_keluar_old);
-                // }
+        
+        if (id_hesxxmh == 1 || id_hesxxmh  == 5 || id_hesxxmh  == 4) {
+            edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
+            if (tanggal_keluar_old == null) {
+                edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
             } else {
+                edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_keluar_old);
+            }
+        } else {
+            if (tanggal_keluar_old == null) {
                 if (id_hesxxmh != 3) {
                     console.log(123);
                     edthemxxmh.field('hemjbmh.tanggal_keluar').show();
@@ -72,6 +68,8 @@
                 } else {
                     edthemxxmh.field('hemjbmh.tanggal_keluar').val();
                 }
+            } else {
+                edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_keluar_old);
             }
         }
     }
