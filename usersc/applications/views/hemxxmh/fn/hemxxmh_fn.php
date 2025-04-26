@@ -64,9 +64,6 @@
         console.log(id_hesxxmh);
         console.log('tanggal_keluar = '+tanggal_keluar);
 
-        19 Sep 2025
-        hemxxmh.php:885 2
-
         if (tanggal_keluar_old != '') {
             edthemxxmh.field('hemjbmh.tanggal_keluar').val();
         } else {
