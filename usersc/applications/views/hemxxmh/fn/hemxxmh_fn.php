@@ -71,7 +71,7 @@
                 // }
             } else {
                 if (id_hesxxmh != 3) {
-                    // console.log(123);
+                    console.log(123);
                     edthemxxmh.field('hemjbmh.tanggal_keluar').show();
                     tanggal_akhir = moment(tanggal_masuk).add('month', 6).format('DD MMM YYYY');
                     edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_akhir);
