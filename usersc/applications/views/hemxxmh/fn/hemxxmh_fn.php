@@ -59,8 +59,14 @@
     function tanggal_akhir_kontrak(){
         id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
         tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
+        tanggal_keluar = edthemxxmh.field('hemjbmh.tanggal_keluar').val();
         console.log(tanggal_keluar_old);
         console.log(id_hesxxmh);
+        console.log('tanggal_keluar = '+tanggal_keluar);
+
+        19 Sep 2025
+        hemxxmh.php:885 2
+
         if (tanggal_keluar_old != '') {
             edthemxxmh.field('hemjbmh.tanggal_keluar').val();
         } else {
