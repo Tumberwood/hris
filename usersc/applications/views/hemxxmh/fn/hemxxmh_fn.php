@@ -61,7 +61,9 @@
         tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
         console.log(tanggal_keluar_old);
         console.log(id_hesxxmh);
-        if (tanggal_keluar_old == null) {
+        if (tanggal_keluar_old != '') {
+            edthemxxmh.field('hemjbmh.tanggal_keluar').val();
+        } else {
             if (id_hesxxmh == 1 || id_hesxxmh  == 5 || id_hesxxmh  == 4) {
                 edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
                 // if (tanggal_keluar_old == null) {

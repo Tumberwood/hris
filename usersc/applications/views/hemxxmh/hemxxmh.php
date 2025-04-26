@@ -316,7 +316,7 @@
 		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0, id_hevxxmh_old = 0, id_heyxxmh_old = 0, id_hesxxmh_old = 0;
 		var id_hedlvmh_old = 0;
 		var id_gtxpkmh_old = 0, id_holxxmd_2_old = 0;
-		var id_heyxxmd_old = 0, tanggal_keluar_old = null;
+		var id_heyxxmd_old = 0, tanggal_keluar_old = '';
 
 		$(document).ready(function() {
 
