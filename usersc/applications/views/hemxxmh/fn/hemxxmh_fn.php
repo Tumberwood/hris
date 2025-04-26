@@ -59,23 +59,25 @@
     function tanggal_akhir_kontrak(){
         id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
         tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
-        console.log(tanggal_keluar_old);
-        console.log(id_hesxxmh);
-        if (id_hesxxmh == 1 || id_hesxxmh  == 5 || id_hesxxmh  == 4) {
-            edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
-            if (tanggal_keluar_old == null) {
-                edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
+        // console.log(tanggal_keluar_old);
+        // console.log(id_hesxxmh);
+        if (tanggal_keluar_old == null)
+            if (id_hesxxmh == 1 || id_hesxxmh  == 5 || id_hesxxmh  == 4) {
+                edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
+                // if (tanggal_keluar_old == null) {
+                    edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
+                // } else {
+                //     edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_keluar_old);
+                // }
             } else {
-                edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_keluar_old);
-            }
-        } else {
-            if (id_hesxxmh != 3) {
-                console.log(123);
-                edthemxxmh.field('hemjbmh.tanggal_keluar').show();
-                tanggal_akhir = moment(tanggal_masuk).add('month', 6).format('DD MMM YYYY');
-                edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_akhir);
-            } else {
-                edthemxxmh.field('hemjbmh.tanggal_keluar').val();
+                if (id_hesxxmh != 3) {
+                    // console.log(123);
+                    edthemxxmh.field('hemjbmh.tanggal_keluar').show();
+                    tanggal_akhir = moment(tanggal_masuk).add('month', 6).format('DD MMM YYYY');
+                    edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_akhir);
+                } else {
+                    edthemxxmh.field('hemjbmh.tanggal_keluar').val();
+                }
             }
         }
     }
