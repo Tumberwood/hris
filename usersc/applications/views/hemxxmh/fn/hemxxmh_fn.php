@@ -38,18 +38,7 @@
                     tanggal_akhir = moment(tgl_akhir).format('DD MMM YYYY');
                     edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_akhir);
                 } else {
-                    if (id_hesxxmh == 1 || id_hesxxmh  == 5 || id_hesxxmh  == 4) {
-                        edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
-                        edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
-                    } else {
-                        if (id_hesxxmh != 3) {
-                            edthemxxmh.field('hemjbmh.tanggal_keluar').show();
-                            tanggal_akhir = moment(tanggal_masuk).add('month', 6).format('DD MMM YYYY');
-                            edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_akhir);
-                        } else {
-                            edthemxxmh.field('hemjbmh.tanggal_keluar').val();
-                        }
-                    }
+                    edthemxxmh.field('hemjbmh.tanggal_keluar').val();
                 }
             }
         } );
@@ -60,9 +49,9 @@
         id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
         tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
         tanggal_keluar = edthemxxmh.field('hemjbmh.tanggal_keluar').val();
-        console.log(tanggal_keluar_old);
-        console.log(id_hesxxmh);
-        console.log('tanggal_keluar = '+tanggal_keluar);
+        // console.log(tanggal_keluar_old);
+        // console.log(id_hesxxmh);
+        // console.log('tanggal_keluar = '+tanggal_keluar);
 
         if (tanggal_keluar_old != '') {
             edthemxxmh.field('hemjbmh.tanggal_keluar').val();
