@@ -59,10 +59,9 @@
                 edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_keluar_old);
             }
         } else {
+            edthemxxmh.field('hemjbmh.tanggal_keluar').show();
             if (tanggal_keluar_old == null) {
                 if (id_hesxxmh != 3) {
-                    console.log(123);
-                    edthemxxmh.field('hemjbmh.tanggal_keluar').show();
                     tanggal_akhir = moment(tanggal_masuk).add('month', 6).format('DD MMM YYYY');
                     edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_akhir);
                 } else {
