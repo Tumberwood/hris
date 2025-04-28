@@ -21,9 +21,9 @@
     $id_hemxxmh = '(1710,1709,1708,1707,1706)';
 
     // Mulai dari 10 Mei 2024
-    $start = Carbon::create(2024, 8, 16);
+    $start = Carbon::create(2024, 9, 1);
     // Sampai akhir Mei 2024
-    $end = Carbon::create(2024, 8, 31); 
+    $end = Carbon::create(2024, 9, 15); 
     
     // Buat periode
     $periode = CarbonPeriod::create($start, $end);
