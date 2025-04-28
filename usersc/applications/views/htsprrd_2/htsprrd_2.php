@@ -284,7 +284,7 @@
 			placeholder: 'Ketik atau TekanTanda Panah Kanan',
 			allowClear: true,
 			ajax: {
-				url: "../../models/hemxxmh/hemxxmh_heyxxmd_fn_opt.php",
+				url: "../../models/hemxxmh/hemxxmh_heyxxmd_fn_opt_all.php",
 				dataType: 'json',
 				data: function (params) {
 					id_heyxxmd = $('#select_heyxxmd').val();
