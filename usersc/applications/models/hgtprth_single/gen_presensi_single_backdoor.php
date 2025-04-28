@@ -20,9 +20,9 @@
     $id_hemxxmh = 1709;
 
     // Mulai dari 10 Mei 2024
-    $start = Carbon::create(2024, 5, 10);
+    $start = Carbon::create(2024, 6, 1);
     // Sampai akhir Mei 2024
-    $end = Carbon::create(2024, 5, 31);
+    $end = Carbon::create(2024, 6, 10);
     
     // Buat periode
     $periode = CarbonPeriod::create($start, $end);
@@ -1166,6 +1166,59 @@
                     
                     FROM hitung_lembur_final
                 '
+        );
+
+        $qu_pot_upah = $db
+            ->raw()
+            ->bind(':tanggal', $tanggal)
+            ->bind(':id_hemxxmh', $id_hemxxmh)
+            ->exec('UPDATE htsprrd AS a
+                    INNER JOIN htssctd AS b 
+                        ON b.id_hemxxmh = a.id_hemxxmh 
+                        AND b.tanggal = a.tanggal
+                    SET 
+                        cek = IF(
+                            a.clock_in IS NULL AND a.clock_out IS NULL, 
+                            0, 
+                            IF(
+                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+                                a.cek, 
+                                1
+                            )
+                        ),
+                        a.htlxxrh_kode = IF(
+                            a.clock_in IS NULL AND a.clock_out IS NULL, 
+                            "Cuti Bersama - Potong Upah", 
+                            IF(
+                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+                                a.htlxxrh_kode, 
+                                "Cuti Bersama - Potong Upah"
+                            )
+                        ),
+                        a.is_pot_upah = IF(
+                            a.clock_in IS NULL AND a.clock_out IS NULL, 
+                            1, 
+                            IF(
+                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+                                a.cek, 
+                                1
+                            )
+                        ),
+                        a.is_pot_premi = IF(
+                            a.clock_in IS NULL AND a.clock_out IS NULL, 
+                            1, 
+                            IF(
+                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+                                a.cek, 
+                                1
+                            )
+                        )
+                    WHERE 
+                        a.id_hemxxmh = :id_hemxxmh 
+                        AND a.tanggal = :tanggal
+                        AND b.is_active = 1 
+                        AND b.is_pot_hk = 1;
+            '
         );
     }
 
