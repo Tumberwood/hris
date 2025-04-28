@@ -162,6 +162,37 @@
 				->exec();
 			$id_insert_hemx = $qi_hemxxmh->insertId();
 
+			//add id_hemxxmh yang baru ini di jadwal 3 grup agar bisa dibuatkan otomatis schedule
+			$qs_hgsemtd_v3 = $db
+				->raw()
+				->bind(':id_hemxxmh', $id_hemxxmh)
+				->bind(':id_insert_hemx', $id_insert_hemx)
+				->exec('INSERT INTO hgsemtd_v3(
+							id_hgsptth_v3,
+							id_htsptth_v3,
+							id_hemxxmh,
+							id_holxxmd,
+							id_htsxxmh,
+							nama,
+							shift,
+							jam
+						)
+						SELECT
+							b.id_hgsptth_v3,
+							b.id_htsptth_v3,
+							:id_insert_hemx,
+							b.id_holxxmd,
+							b.id_htsxxmh,
+							b.nama,
+							b.shift,
+							b.jam
+						FROM hgsptth_v3 a
+						LEFT JOIN hgsemtd_v3 b ON b.id_hgsptth_v3 = a.id
+						WHERE b.id_hemxxmh = :id_hemxxmh
+						ORDER BY a.tanggal_akhir DESC
+						LIMIT 3
+			');
+
 			//flag jika kontrak maka insert ke htpr_no_hemxxmh
 			if ($is_htpr_no_hemxxmh == 1) {
 				// 2 hari sebelum $tanggal_mulai
