@@ -166,7 +166,7 @@
 							allowClear: true,
 							multiple: false,
 							ajax: {
-								url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+								url: "../../models/hemxxmh/hemxxmh_fn_opt_all.php",
 								dataType: 'json',
 								data: function (params) {
 									var query = {
