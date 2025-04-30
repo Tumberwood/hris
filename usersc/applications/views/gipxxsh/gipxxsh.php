@@ -65,14 +65,14 @@
 							</div>
 						</div>
 					</div>
-					<!-- <div class="form-group row">
+					<div class="form-group row" style="display: none">
 						<label class="col-lg-2 col-form-label">File Checkclock Makan Manual</label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputfilethimportcheckclock_makan_manual">
 							</div>
 						</div>
-					</div> -->
+					</div>
 					<div class="form-group row">
 						<label class="col-lg-2 col-form-label">File Checkclock <b>PMI Gedung 3</b></label>
 						<div class="col-sm-4">
