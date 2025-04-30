@@ -31,7 +31,7 @@
 					DATE_FORMAT(
 						MIN(
 						CASE 
-								WHEN c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3") 
+								WHEN c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "pocan") 
 									AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND a.tanggaljam_awal_t2
 								THEN CONCAT(c.tanggal, " ", c.jam)
 								ELSE NULL
@@ -43,7 +43,7 @@
 					DATE_FORMAT(
 						MAX(
 						CASE 
-								WHEN c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3") 
+								WHEN c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "pocan") 
 									AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_akhir_t1 AND a.tanggaljam_akhir_t2
 								THEN CONCAT(c.tanggal, " ", c.jam)
 								ELSE NULL
