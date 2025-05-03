@@ -630,7 +630,7 @@
 									if (params.page && params.page === 1) {
 										$('#select2_tipe').empty().select2({ data: options });
 									} else {
-										$('#select2_tipe').append(new Option(options[1].text, options[1].id, false, false)).trigger('change');
+										$('#select2_tipe').append(new Option(options[0].text, options[0].id, false, false)).trigger('change');
 									}
 
 									return {

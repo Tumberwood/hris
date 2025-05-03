@@ -60,6 +60,7 @@
                 ->where('kode', '%' . $q . '%', 'LIKE' )
                 ->or_where('nama', '%' . $q . '%', 'LIKE' );
         } )
+        ->order('is_default desc')
         ->limit($resultCount)
         ->offset($offset)
         ->exec();
