@@ -22,13 +22,6 @@
     $tanggal_select = new Carbon($_POST['tanggal_select']); //gunakan carbon untuk ambil data tanggal
     $tanggal = $tanggal_select->format('Y-m-d'); //format jadi 2023-09-12
 
-    if ($tanggal < "2025-04-14") {
-        $where_mesin_istirahat = ' AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI")';
-    } else {
-        $where_mesin_istirahat = ' AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual"))';
-    }
-    
-
     // outsourcing or organik
     $id_heyxxmh     = $_POST['id_heyxxmh_select'];
     $timestamp     = $_POST['timestamp']; //tambah timestamp untuk view
@@ -724,7 +717,7 @@
                                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                                    '.$where_mesin_istirahat.'
+                                                    AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual")
                                                     AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
                                                     AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                                 GROUP BY a.id
@@ -826,7 +819,7 @@
                                             INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                             INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                             WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                                '.$where_mesin_istirahat.'
+                                                AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual")
                                                 AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
                                                 AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                             GROUP BY a.id
