@@ -333,7 +333,7 @@
 					{ 
 						data: null ,
 						render: function (data, type, row) {
-							var hemxxmh_data = row.htsprrd.hemxxmh_data;
+							var hemxxmh_data = row.hemxxmh_data;
 							var id_hemxxmh = row.htsprrd.id_hemxxmh;
 							var tanggal = row.htsprrd.tanggal;
 							var url = "../dashboard/d_hr_report_presensi.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
