@@ -331,8 +331,15 @@
 						// ,visible:false 
 					},
 					{ 
-						data: "hemxxmh_data"
-						// ,visible:false 
+						data: null ,
+						render: function (data, type, row) {
+							var hemxxmh_data = row.htsprrd.hemxxmh_data;
+							var id_hemxxmh = row.htsprrd.id_hemxxmh;
+							var tanggal = row.htsprrd.tanggal;
+							var url = "../dashboard/d_hr_report_presensi.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+							var link = '<a href="' + url + '" target="_blank">'+hemxxmh_data+'</a>';
+							return link;
+						}
 					},
 					{ 
 						data: "hodxxmh.nama"
