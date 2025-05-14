@@ -250,7 +250,8 @@
                     nominal_lembur_jam,
                     grup_hk,
                     break_in,
-                    break_out
+                    break_out,
+                    tanggaljam_awal_toleransi_lembur
                 )
                 WITH presensi AS (
                     SELECT
@@ -619,6 +620,7 @@
                     -- Overtime dan Pot TI
                     LEFT JOIN (
                         SELECT
+                            tanggaljam_awal_toleransi_lembur,
                             ot.id_hemxxmh,
                             is_pot_ti,
                             id_jadwal,
@@ -656,6 +658,7 @@
                         FROM(
                                 SELECT
                                     hto.*,
+                                    DATE_ADD(CONCAT(hto.tanggal, " ", hto.jam_awal), INTERVAL 5 MINUTE) tanggaljam_awal_toleransi_lembur,
                                     id_jadwal,
                                     if(is_istirahat = 2, 1, 0)  AS is_pot_ti,
                                     if(is_istirahat = 2, durasi_break_menit, 0)  AS durasi_break_menit,
@@ -1047,16 +1050,25 @@
                         END AS is_pot_upah,
 
                         -- hitung pot_late
-                        IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
-                            CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60),
-                            IF(jumlah_grup <> 4,
-                                IF(ceklok_in > if(day(tanggaljam_awal_istirahat) < day(tanggaljam_akhir) , date_add(tanggaljam_awal_istirahat, INTERVAL 1 DAY),  tanggaljam_awal_istirahat),
-                                    CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi_min1jam, carbon_ci) / 60),
+                        IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") = "",
+                            IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
+                                CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60),
+                                IF(jumlah_grup <> 4,
+                                    IF(ceklok_in > if(day(tanggaljam_awal_istirahat) < day(tanggaljam_akhir) , date_add(tanggaljam_awal_istirahat, INTERVAL 1 DAY),  tanggaljam_awal_istirahat),
+                                        CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi_min1jam, carbon_ci) / 60),
+                                        CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60)
+                                    ),
                                     CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60)
-                                ),
-                                CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60)
-                            )
+                                )
+                            ),
+                            0
                         ) AS pot_jam_late,
+
+                        -- kalau ada lembur, maka cek late lembur
+                        IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") != "",
+                            CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, carbon_ci) / 60),
+                            0
+                        ) AS pot_jam_late_lembur,
 
                         -- hitung pot_early
                         IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
@@ -1096,7 +1108,7 @@
                             ELSE 0
                         END AS cek,
 
-                        IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_early, 0) + IFNULL(pot_jam_izin,0) + IF(potongan_ti_jam > 0, potongan_ti_jam ,ifnull(pot_jam_keluar_istirahat,0)) AS total_pot_jam
+                        IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_late_lembur, 0) + IFNULL(pot_jam_early, 0) + IFNULL(pot_jam_izin,0) + IF(potongan_ti_jam > 0, potongan_ti_jam ,ifnull(pot_jam_keluar_istirahat,0)) AS total_pot_jam
                     FROM perhitungan
                 ),
                 hitung_pot_ti AS (
