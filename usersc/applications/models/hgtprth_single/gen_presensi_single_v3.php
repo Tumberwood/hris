@@ -250,8 +250,7 @@
                     nominal_lembur_jam,
                     grup_hk,
                     break_in,
-                    break_out,
-                    tanggaljam_awal_toleransi_lembur
+                    break_out
                 )
                 WITH presensi AS (
                     SELECT
@@ -402,7 +401,8 @@
                         IF(a.is_pot_makan = 1 AND ceklok_makan > 0, ceklok_makan, 0) AS is_makan,
                         pot_jam_keluar_istirahat,
                         break_in,
-                        break_out
+                        break_out,
+                        tanggaljam_awal_toleransi_lembur
 
                     FROM hemxxmh AS a
                     INNER JOIN hemjbmh AS b ON b.id_hemxxmh = a.id
