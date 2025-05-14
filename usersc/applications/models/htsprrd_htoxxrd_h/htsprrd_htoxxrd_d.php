@@ -68,7 +68,7 @@
 			->bind(':end_date', $end_date)
 			->exec('SELECT
 						a.id_hemxxmh,
-						b.kode,
+						TRIM(b.kode) AS kode,
 						b.nama,
 						SUM(IFNULL(lembur15,0)) AS sum_lembur15,
 						SUM(IFNULL(lembur2,0)) AS sum_lembur2,
