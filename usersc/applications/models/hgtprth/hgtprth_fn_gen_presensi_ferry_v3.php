@@ -1098,7 +1098,7 @@
         
                                 -- kalau ada lembur, maka cek late lembur
                                 IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") != "",
-                                    CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, carbon_ci) / 60),
+                                    CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, ceklok_in) / 60),
                                     0
                                 ) AS pot_jam_late_lembur,
 
