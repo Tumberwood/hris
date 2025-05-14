@@ -161,7 +161,7 @@
 				LEFT JOIN htsprtd AS a ON a.kode = b.kode_finger 
 				WHERE 
 				e.is_active = 1
-				-- AND CONCAT(a.tanggal, " ", a.jam) NOT BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
+				-- AND CONCAT(a.tanggal, " ", a.jam) NOT BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 				AND a.id NOT IN (
 					SELECT DISTINCT
 						a.id
@@ -170,7 +170,7 @@
 					LEFT JOIN htsprtd AS a ON a.kode = b.kode_finger 
 					WHERE 
 					e.is_active = 1
-					AND CONCAT(a.tanggal, " ", a.jam) BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
+					AND CONCAT(a.tanggal, " ", a.jam) BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 					AND a.tanggal BETWEEN :start_date AND DATE_ADD(:start_date, INTERVAL 2 DAY) 
 					AND b.id = :id_hemxxmh
 					AND a.is_active = 1
@@ -220,7 +220,7 @@
 				LEFT JOIN htsprtd AS a ON a.kode = b.kode_finger 
 				WHERE 
 				e.is_active = 1
-				AND CONCAT(a.tanggal, " ", a.jam) BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
+				AND CONCAT(a.tanggal, " ", a.jam) BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 				AND a.tanggal BETWEEN :start_date AND DATE_ADD(:start_date, INTERVAL 2 DAY) 
 				AND b.id = :id_hemxxmh
 				AND a.is_active = 1
