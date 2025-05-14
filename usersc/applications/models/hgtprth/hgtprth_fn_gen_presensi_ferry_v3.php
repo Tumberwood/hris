@@ -437,7 +437,9 @@
                                 pot_jam_keluar_istirahat,
                                 break_in,
                                 break_out,
-                                tanggaljam_awal_toleransi_lembur
+                                tanggaljam_awal_toleransi_lembur,
+                                jam_awal_lembur,
+                                jam_akhir_schedule
 
                             FROM hemxxmh AS a
                             INNER JOIN hemjbmh AS b ON b.id_hemxxmh = a.id
@@ -445,6 +447,7 @@
                                 SELECT
                                     jad.*,
                                     sft.kode AS kode_shift,
+	                                DATE_FORMAT(jad.tanggaljam_akhir, "%H:%i") jam_akhir_schedule,
                                     DATE_ADD(jad.tanggaljam_awal, INTERVAL 5 MINUTE) AS tanggaljam_akhir_toleransi, -- tolreansi awal 5 menit
                                     DATE_SUB(jad.tanggaljam_awal, INTERVAL 5 MINUTE) AS tanggaljam_awal_toleransi, -- toleransi akhir 5 menit
                                     DATE_ADD(jad.tanggaljam_awal, INTERVAL 65 MINUTE) AS tanggaljam_akhir_toleransi_min1jam, -- keperluan toleransi terlambat Late +1 jam 
@@ -655,6 +658,7 @@
                             LEFT JOIN (
                                 SELECT
                                     tanggaljam_awal_toleransi_lembur,
+                                    jam_awal_lembur,
                                     ot.id_hemxxmh,
                                     is_pot_ti,
                                     id_jadwal,
@@ -693,6 +697,7 @@
                                         SELECT
                                             hto.*,
                                             DATE_ADD(CONCAT(hto.tanggal, " ", hto.jam_awal), INTERVAL 5 MINUTE) tanggaljam_awal_toleransi_lembur,
+                                            DATE_FORMAT(hto.jam_awal, "%H:%i") jam_awal_lembur,
                                             id_jadwal,
                                             if(is_istirahat = 2, 1, 0)  AS is_pot_ti,
                                             if(is_istirahat = 2, durasi_break_menit, 0)  AS durasi_break_menit,
@@ -703,6 +708,7 @@
                                                 -- 22 Mar 2025, 0077 istirahat > 1 jam maka dipotong 1jam
                                                 WHEN is_istirahat = 2 AND durasi_break_menit > 60 THEN 1
                                                 WHEN is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_ti, 0) THEN 0.5
+                                                WHEN durasi_break_menit > 60 THEN 1
                                                 ELSE 0
                                             END AS potongan_ti_jam
                                         FROM htoxxrd as hto
@@ -1096,9 +1102,9 @@
                                     0
                                 ) AS pot_jam_late,
         
-                                -- kalau ada lembur, maka cek late lembur
-                                IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") != "",
-                                    CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, ceklok_in) / 60),
+                                -- kalau ada lembur, maka cek late lembur, pastikan bukan long shift lembur
+                                IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") != "" AND jam_awal_lembur != jam_akhir_schedule,
+                                    CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60),
                                     0
                                 ) AS pot_jam_late_lembur,
 
