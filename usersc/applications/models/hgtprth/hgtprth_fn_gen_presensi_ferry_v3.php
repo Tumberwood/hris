@@ -657,7 +657,7 @@
                             -- Overtime dan Pot TI
                             LEFT JOIN (
                                 SELECT
-                                    tanggaljam_awal_toleransi_lembur,
+                                    MAX(tanggaljam_awal_toleransi_lembur) tanggaljam_awal_toleransi_lembur,
                                     jam_awal_lembur,
                                     ot.id_hemxxmh,
                                     is_pot_ti,
@@ -666,33 +666,33 @@
                                     potongan_ti_jam,
                                     MAX(CASE WHEN ot.id_htotpmh = 1 THEN ot.jam_awal ELSE NULL END) AS jam_awal_lembur_awal,
                                     MAX(CASE WHEN ot.id_htotpmh = 1 THEN ot.jam_akhir ELSE NULL END) AS jam_akhir_lembur_awal,
-                                    MAX(CASE WHEN ot.id_htotpmh = 1 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_awal_jam,
-                                    MAX(CASE WHEN ot.id_htotpmh = 1 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_awal_menit,
-
+                                    SUM(CASE WHEN ot.id_htotpmh = 1 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_awal_jam,
+                                    SUM(CASE WHEN ot.id_htotpmh = 1 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_awal_menit,
+                        
                                     MAX(CASE WHEN ot.id_htotpmh = 2 THEN ot.jam_awal ELSE NULL END) AS jam_awal_lembur_akhir,
                                     MAX(CASE WHEN ot.id_htotpmh = 2 THEN ot.jam_akhir ELSE NULL END) AS jam_akhir_lembur_akhir,
-                                    MAX(CASE WHEN ot.id_htotpmh = 2 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_akhir_jam,
-                                    MAX(CASE WHEN ot.id_htotpmh = 2 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_akhir_menit,
-
+                                    SUM(CASE WHEN ot.id_htotpmh = 2 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_akhir_jam,
+                                    SUM(CASE WHEN ot.id_htotpmh = 2 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_akhir_menit,
+                        
                                     MAX(CASE WHEN ot.id_htotpmh = 4 THEN ot.jam_awal ELSE NULL END) AS jam_awal_lembur_libur,
                                     MAX(CASE WHEN ot.id_htotpmh = 4 THEN ot.jam_akhir ELSE NULL END) AS jam_akhir_lembur_libur,
-                                    MAX(CASE WHEN ot.id_htotpmh = 4 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_libur_jam,
-                                    MAX(CASE WHEN ot.id_htotpmh = 4 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_libur_menit,
-
+                                    SUM(CASE WHEN ot.id_htotpmh = 4 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_libur_jam,
+                                    SUM(CASE WHEN ot.id_htotpmh = 4 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_libur_menit,
+                        
                                     MAX(CASE WHEN ot.id_htotpmh = 5 THEN ot.jam_awal ELSE NULL END) AS jam_awal_lembur_istirahat1,
                                     MAX(CASE WHEN ot.id_htotpmh = 5 THEN ot.jam_akhir ELSE NULL END) AS jam_akhir_lembur_istirahat1,
-                                    MAX(CASE WHEN ot.id_htotpmh = 5 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_istirahat1_jam,
-                                    MAX(CASE WHEN ot.id_htotpmh = 5 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_istirahat1_menit,
-
+                                    SUM(CASE WHEN ot.id_htotpmh = 5 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_istirahat1_jam,
+                                    SUM(CASE WHEN ot.id_htotpmh = 5 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_istirahat1_menit,
+                        
                                     MAX(CASE WHEN ot.id_htotpmh = 6 THEN ot.jam_awal ELSE NULL END) AS jam_awal_lembur_istirahat2,
                                     MAX(CASE WHEN ot.id_htotpmh = 6 THEN ot.jam_akhir ELSE NULL END) AS jam_akhir_lembur_istirahat2,
-                                    MAX(CASE WHEN ot.id_htotpmh = 6 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_istirahat2_jam,
-                                    MAX(CASE WHEN ot.id_htotpmh = 6 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_istirahat2_menit,
-
+                                    SUM(CASE WHEN ot.id_htotpmh = 6 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_istirahat2_jam,
+                                    SUM(CASE WHEN ot.id_htotpmh = 6 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_istirahat2_menit,
+                        
                                     MAX(CASE WHEN ot.id_htotpmh = 7 THEN ot.jam_awal ELSE NULL END) AS jam_awal_lembur_istirahat3,
                                     MAX(CASE WHEN ot.id_htotpmh = 7 THEN ot.jam_akhir ELSE NULL END) AS jam_akhir_lembur_istirahat3,
-                                    MAX(CASE WHEN ot.id_htotpmh = 7 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_istirahat3_jam,
-                                    MAX(CASE WHEN ot.id_htotpmh = 7 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_istirahat3_menit
+                                    SUM(CASE WHEN ot.id_htotpmh = 7 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_istirahat3_jam,
+                                    SUM(CASE WHEN ot.id_htotpmh = 7 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_istirahat3_menit
                                 FROM(
                                         SELECT
                                             hto.*,
