@@ -22,6 +22,8 @@
 		->debug(true)
 		->fields(
 			Field::inst( 'hemxxmh.id' ),
+			Field::inst( 'hemxxmh.kode' ),
+			Field::inst( 'hemxxmh.nama' ),
 			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' ),
 			Field::inst( 'hemxxmh.is_active' ),
 			Field::inst( 'hemxxmh.created_by' )

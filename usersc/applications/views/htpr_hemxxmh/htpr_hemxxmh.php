@@ -22,6 +22,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>NIP</th>
                                 <th>Nama</th>
                                 <th>Department</th>
                                 <th>Level</th>
@@ -91,7 +92,8 @@
 				order: [[ 1, "desc" ]],
 				columns: [
 					{ data: "hemxxmh.id",visible:false },
-					{ data: "hemxxmh_data" },
+					{ data: "hemxxmh.kode" },
+					{ data: "hemxxmh.nama" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hevxxmh.nama" },
 					{ data: "hetxxmh.nama" }
