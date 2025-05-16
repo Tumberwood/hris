@@ -93,13 +93,13 @@
 			$total_xl = $row['lembur15'] + $row['lembur2'] + $row['lembur3'] + $row['lembur4'];
 			$total_db = $sqlRow['sum_lembur15'] + $sqlRow['sum_lembur2'] + $sqlRow['sum_lembur3'] + $sqlRow['sum_lembur4'];
 	
-			// if ($total_xl == $total_db) {
-			if (
-				$row['lembur15'] == $sqlRow['sum_lembur15'] &&
-				$row['lembur2'] == $sqlRow['sum_lembur2'] &&
-				$row['lembur3'] == $sqlRow['sum_lembur3'] &&
-				$row['lembur4'] == $sqlRow['sum_lembur4']
-			) {
+			if ($total_xl == $total_db) {
+			// if (
+			// 	$row['lembur15'] == $sqlRow['sum_lembur15'] &&
+			// 	$row['lembur2'] == $sqlRow['sum_lembur2'] &&
+			// 	$row['lembur3'] == $sqlRow['sum_lembur3'] &&
+			// 	$row['lembur4'] == $sqlRow['sum_lembur4']
+			// ) {
 				$is_tidak_sesuai = 0;
 			} else {
 				$is_tidak_sesuai = 1;
