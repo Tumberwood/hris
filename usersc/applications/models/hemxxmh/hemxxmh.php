@@ -42,8 +42,8 @@
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemxxmh.kode' )
 				->setFormatter( function ( $val ) {
-					return strtoupper($val);
-				} ),
+					return strtoupper(trim($val));
+			} ),
 			Field::inst( 'hemxxmh.nama' )
 				->setFormatter( function ( $val ) {
 					return ucwords($val);
