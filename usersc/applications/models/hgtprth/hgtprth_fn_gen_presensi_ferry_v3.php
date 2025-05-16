@@ -747,7 +747,7 @@
                                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                                 INNER JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
                                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                                    AND c.nama IN ("istirahat", "istirahat manual")
+                                                    AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI")
                                                     AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
                                                     AND CONCAT(d.tanggal, " ", d.jam_akhir) 
                                                     AND a.id_hemxxmh IN '.$id_hemxxmh.'
