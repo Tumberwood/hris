@@ -74,11 +74,167 @@
 		// ------------- default variable, do not erase
 		var edthemxxmh, tblhemxxmh, show_inactive_status_hemxxmh = 0, id_hemxxmh;
         var edthtpr_hemxxmh, tblhtpr_hemxxmh, show_inactive_status_htpr_hemxxmh = 0, id_htpr_hemxxmh;
+		
+		var edtgenerate_kbm;
 		// ------------- end of default variable
 
 		var id_hpcxxmh_old = 0;
 
 		$(document).ready(function() {
+			
+			edtgenerate_kbm = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/htpr_hemxxmh/generate_kbm.php",
+					type: 'POST',
+					data: function (d){
+					}
+				},
+				formOptions: {
+					main: {
+						focus: 3
+					}
+				},
+				table: "#tblhtpr_hemxxmh",
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "htpr_hemxxmh",
+						type: "hidden"
+					},	{
+						label: "id_hemxxmh",
+						name: "htpr_hemxxmh.id_hemxxmh",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "htpr_hemxxmh.is_active",
+                        type: "hidden",
+						def: 1
+					},	
+					{
+						label: "Komponen <sup class='text-danger'>*<sup>",
+						name: "htpr_hemxxmh.id_hpcxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hpcxxmh/hpcxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hpcxxmh_old: id_hpcxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "Nominal <sup class='text-danger'>*<sup>",
+						name: "htpr_hemxxmh.nominal"
+					},
+					{
+						label: "Tanggal Efektif <sup class='text-danger'>*<sup>",
+						name: "htpr_hemxxmh.tanggal_efektif",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},
+					{
+						label: "Keterangan",
+						name: "htpr_hemxxmh.keterangan",
+						type: "textarea"
+					}
+				]
+			} );
+			
+			edtgenerate_kbm.on( 'preOpen', function( e, mode, action ) {
+				edtgenerate_kbm.field('htpr_hemxxmh.id_hemxxmh').val(id_hemxxmh);
+				
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edtgenerate_kbm.field('start_on').val(start_on);
+				
+				if(action == 'create'){
+					tblhtpr_hemxxmh.rows().deselect();
+				}
+			});
+
+            edtgenerate_kbm.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+			});
+			
+			edtgenerate_kbm.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+					// BEGIN of validasi htpr_hemxxmh.id_hpcxxmh 
+					id_hpcxxmh = edtgenerate_kbm.field('htpr_hemxxmh.id_hpcxxmh').val();
+					if(!id_hpcxxmh || id_hpcxxmh == ''){
+						edtgenerate_kbm.field('htpr_hemxxmh.id_hpcxxmh').error( 'Wajib diisi!' );
+					}
+					// END of validasi htpr_hemxxmh.id_hpcxxmh 
+
+					// BEGIN of validasi htpr_hemxxmh.nominal 
+					nominal = edtgenerate_kbm.field('htpr_hemxxmh.nominal').val();
+					if(!nominal || nominal == ''){
+						edtgenerate_kbm.field('htpr_hemxxmh.nominal').error( 'Wajib diisi!' );
+					}
+					// END of validasi htpr_hemxxmh.nominal 
+
+					// BEGIN of validasi htpr_hemxxmh.tanggal_efektif 
+					tanggal_efektif = edtgenerate_kbm.field('htpr_hemxxmh.tanggal_efektif').val();
+					if(!tanggal_efektif || tanggal_efektif == ''){
+						edtgenerate_kbm.field('htpr_hemxxmh.tanggal_efektif').error( 'Wajib diisi!' );
+					}
+					// END of validasi htpr_hemxxmh.tanggal_efektif 
+				}
+				
+				if ( edtgenerate_kbm.inError() ) {
+					return false;
+				}
+			});
+
+			edtgenerate_kbm.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edtgenerate_kbm.field('finish_on').val(finish_on);
+			});
+
+			
+			edtgenerate_kbm.on( 'postSubmit', function (e, json, data, action, xhr) {
+				tblhemxxmh.ajax.reload(null,false);
+				tblhemxxmh.rows().deselect();
+				tblhtpr_hemxxmh.ajax.reload(null,false);
+			} );
 			
 			//start datatables
 			tblhemxxmh = $('#tblhemxxmh').DataTable( {
@@ -114,6 +270,14 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					{ 
+						extend: 'create',
+						name: 'btngenerate_kbm', 
+						editor: edtgenerate_kbm, 
+						text: '<i class="fa fa-google"> KBM</i>', 
+						className: 'btn btn-outline', 
+						titleAttr: 'Generate Komponen KBM'
+					},
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.hemxxmh.is_active == 0 ) {
@@ -151,7 +315,7 @@
 				tbl_details = [tblhtpr_hemxxmh];
 				CekDeselectHeaderHD(tblhemxxmh, tbl_details);
 			} );
-			
+
 // --------- start _detail --------------- //
 
 			//start datatables editor
