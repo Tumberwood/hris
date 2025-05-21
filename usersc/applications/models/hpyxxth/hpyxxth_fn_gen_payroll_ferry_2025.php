@@ -1766,6 +1766,7 @@
                         ) AS saldo_sisa_cuti on saldo_sisa_cuti.id_hemxxmh = a.id_hemxxmh 
                         
                         WHERE a.tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))
+                        AND hem.id is not null
                         AND a.id_hemxxmh NOT IN (
                             SELECT
                                 rd.id_hemxxmh
