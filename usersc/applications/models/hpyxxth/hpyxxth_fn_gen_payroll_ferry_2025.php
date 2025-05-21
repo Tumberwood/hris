@@ -202,23 +202,27 @@
                             report_pot_upah,
                             report_pot_jam,
                             if( c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal), 0, (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173)) )) AS nominal_lembur_jam,
-                            FLOOR(
-                                (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
-                                    sum_lembur15_final
-                                ) AS rp_lembur15,
-                            FLOOR(
-                                (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
-                                    sum_lembur2_final
-                                ) AS rp_lembur2,
-                            FLOOR(
-                                (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
-                                    sum_lembur3_final
-                                ) AS rp_lembur3,
-                            FLOOR(
-                                (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
-                                    sum_lembur4_final
-                                ) AS rp_lembur4,
-                    
+                            -- FLOOR(
+                            --     (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
+                            --         sum_lembur15_final
+                            --     ) AS rp_lembur15,
+                            -- FLOOR(
+                            --     (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
+                            --         sum_lembur2_final
+                            --     ) AS rp_lembur2,
+                            -- FLOOR(
+                            --     (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
+                            --         sum_lembur3_final
+                            --     ) AS rp_lembur3,
+                            -- FLOOR(
+                            --     (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
+                            --         sum_lembur4_final
+                            --     ) AS rp_lembur4,
+                            ifnull(sum_rp_lembur15, 0) rp_lembur15,
+                            ifnull(sum_rp_lembur2, 0) rp_lembur2,
+                            ifnull(sum_rp_lembur3, 0) rp_lembur3,
+                            ifnull(sum_rp_lembur4, 0) rp_lembur4,
+                                
                             c.id_hesxxmh as hesxx,
                             c.id_heyxxmd as id_heyxxmd,
                             c.grup_hk,
@@ -618,7 +622,12 @@
                                     sum_lembur15_final,
                                     sum_lembur2_final,
                                     sum_lembur3_final,
-                                    sum_lembur4_final
+                                    sum_lembur4_final,
+                                    -- RP
+                                    sum_rp_lembur15,		            
+                                    sum_rp_lembur2,		            
+                                    sum_rp_lembur3,		            
+                                    sum_rp_lembur4	
                                 FROM (
                                     SELECT
                                         prr.id_hemxxmh,
@@ -631,7 +640,13 @@
                                         SUM(IFNULL(prr.lembur15_final, 0)) AS sum_lembur15_final,		            
                                         SUM(IFNULL(prr.lembur2_final, 0)) AS sum_lembur2_final,
                                         SUM(IFNULL(prr.lembur3_final, 0)) AS sum_lembur3_final,
-                                        SUM(IFNULL(prr.lembur4_final, 0)) AS sum_lembur4_final
+                                        SUM(IFNULL(prr.lembur4_final, 0)) AS sum_lembur4_final,
+                                        
+                                        -- RP
+                                        SUM(IFNULL(prr.rp_lembur15, 0)) AS sum_rp_lembur15,		            
+                                        SUM(IFNULL(prr.rp_lembur2, 0)) AS sum_rp_lembur2,		            
+                                        SUM(IFNULL(prr.rp_lembur3, 0)) AS sum_rp_lembur3,		            
+                                        SUM(IFNULL(prr.rp_lembur4, 0)) AS sum_rp_lembur4		           
                                     FROM htsprrd AS prr
                                     LEFT JOIN hemjbmh as c on c.id_hemxxmh = prr.id_hemxxmh
                                     LEFT JOIN (
