@@ -242,8 +242,8 @@
                                         ),
                                         if(c.tanggal_keluar BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-01") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))), 
                                             if(ifnull(is_perubahan_hk,0) > 0, 
-                                                (hk_lama_report * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp))
-                                                +
+                                                -- (hk_lama_report * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp))
+                                                -- +
                                                 (hk_baru_jadwal * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
                                                 
                                                 keluar_report / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)

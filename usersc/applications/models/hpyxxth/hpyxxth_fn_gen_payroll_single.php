@@ -183,22 +183,26 @@
                             report_pot_upah,
                             report_pot_jam,
                             if( c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal), 0, (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173)) )) AS nominal_lembur_jam,
-                            FLOOR(
-                                (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
-                                    sum_lembur15_final
-                                ) AS rp_lembur15,
-                            FLOOR(
-                                (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
-                                    sum_lembur2_final
-                                ) AS rp_lembur2,
-                            FLOOR(
-                                (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
-                                    sum_lembur3_final
-                                ) AS rp_lembur3,
-                            FLOOR(
-                                (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
-                                    sum_lembur4_final
-                                ) AS rp_lembur4,
+                            -- FLOOR(
+                            --     (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
+                            --         sum_lembur15_final
+                            --     ) AS rp_lembur15,
+                            -- FLOOR(
+                            --     (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
+                            --         sum_lembur2_final
+                            --     ) AS rp_lembur2,
+                            -- FLOOR(
+                            --     (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
+                            --         sum_lembur3_final
+                            --     ) AS rp_lembur3,
+                            -- FLOOR(
+                            --     (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
+                            --         sum_lembur4_final
+                            --     ) AS rp_lembur4,
+                            ifnull(sum_rp_lembur15, 0) rp_lembur15,
+                            ifnull(sum_rp_lembur2, 0) rp_lembur2,
+                            ifnull(sum_rp_lembur3, 0) rp_lembur3,
+                            ifnull(sum_rp_lembur4, 0) rp_lembur4,
                     
                             c.id_hesxxmh as hesxx,
                             c.id_heyxxmd as id_heyxxmd,
@@ -219,8 +223,8 @@
                                         ),
                                         if(c.tanggal_keluar BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-01") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))), 
                                             if(ifnull(is_perubahan_hk,0) > 0, 
-                                                (hk_lama_report * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp))
-                                                +
+                                                -- (hk_lama_report * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp))
+                                                -- +
                                                 (hk_baru_jadwal * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)),
                                                 
                                                 keluar_report / if(c.grup_hk = 1, 21, 25) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)
@@ -402,7 +406,7 @@
                                     FROM htpr_hevgrmh_mk
                                     WHERE
                                         id_hpcxxmh = 31
-                                        AND tanggal_efektif < :tanggal_awal
+                                        AND tanggal_efektif < :tanggal_akhir
                                         AND is_active = 1
                                 ) AS masakerja ON masakerja.id_hevgrmh = job.id_hevgrmh
                                 WHERE if(masakerja.tahun_max > 0, job.masa_kerja_year BETWEEN tahun_min AND tahun_max, job.masa_kerja_year > masakerja.tahun_min)
@@ -425,7 +429,7 @@
                                     FROM htpr_hemxxmh
                                     WHERE
                                         htpr_hemxxmh.id_hpcxxmh = 1
-                                        AND tanggal_efektif < :tanggal_awal
+                                        AND tanggal_efektif < :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -447,7 +451,7 @@
                                     FROM htpr_hemxxmh
                                     WHERE
                                         htpr_hemxxmh.id_hpcxxmh = 102
-                                        AND tanggal_efektif < :tanggal_awal
+                                        AND tanggal_efektif < :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -469,7 +473,7 @@
                                     FROM htpr_hesxxmh
                                     WHERE
                                         htpr_hesxxmh.id_hpcxxmh = 36
-                                        AND tanggal_efektif < :tanggal_awal
+                                        AND tanggal_efektif < :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -491,7 +495,7 @@
                                     FROM htpr_hesxxmh
                                     WHERE
                                         htpr_hesxxmh.id_hpcxxmh = 34
-                                        AND tanggal_efektif < :tanggal_awal
+                                        AND tanggal_efektif < :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -513,7 +517,7 @@
                                     FROM htpr_hevxxmh
                                     WHERE
                                         htpr_hevxxmh.id_hpcxxmh = 32
-                                        AND tanggal_efektif < :tanggal_awal
+                                        AND tanggal_efektif < :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -535,7 +539,7 @@
                                     FROM htpr_hemxxmh
                                     WHERE
                                         htpr_hemxxmh.id_hpcxxmh = 32
-                                        AND tanggal_efektif < :tanggal_awal
+                                        AND tanggal_efektif < :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -557,7 +561,7 @@
                                     FROM htpr_hevxxmh
                                     WHERE
                                         htpr_hevxxmh.id_hpcxxmh = 33
-                                        AND tanggal_efektif < :tanggal_awal
+                                        AND tanggal_efektif < :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -599,7 +603,12 @@
                                     sum_lembur15_final,
                                     sum_lembur2_final,
                                     sum_lembur3_final,
-                                    sum_lembur4_final
+                                    sum_lembur4_final,
+                                    -- RP
+                                    sum_rp_lembur15,		            
+                                    sum_rp_lembur2,		            
+                                    sum_rp_lembur3,		            
+                                    sum_rp_lembur4	
                                 FROM (
                                     SELECT
                                         prr.id_hemxxmh,
@@ -612,7 +621,13 @@
                                         SUM(IFNULL(prr.lembur15_final, 0)) AS sum_lembur15_final,		            
                                         SUM(IFNULL(prr.lembur2_final, 0)) AS sum_lembur2_final,
                                         SUM(IFNULL(prr.lembur3_final, 0)) AS sum_lembur3_final,
-                                        SUM(IFNULL(prr.lembur4_final, 0)) AS sum_lembur4_final
+                                        SUM(IFNULL(prr.lembur4_final, 0)) AS sum_lembur4_final,
+                                        
+                                        -- RP
+                                        SUM(IFNULL(prr.rp_lembur15, 0)) AS sum_rp_lembur15,		            
+                                        SUM(IFNULL(prr.rp_lembur2, 0)) AS sum_rp_lembur2,		            
+                                        SUM(IFNULL(prr.rp_lembur3, 0)) AS sum_rp_lembur3,		            
+                                        SUM(IFNULL(prr.rp_lembur4, 0)) AS sum_rp_lembur4		           
                                     FROM htsprrd AS prr
                                     LEFT JOIN hemjbmh as c on c.id_hemxxmh = prr.id_hemxxmh
                                     LEFT JOIN (
@@ -628,7 +643,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = prr.id_hemxxmh
-                                    WHERE tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1, c.tanggal_keluar, :tanggal_akhir))
+                                    WHERE tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))
                                     GROUP BY id_hemxxmh
                                 ) lembur_sum_table
                             ) lembur_calc ON lembur_calc.id_hemxxmh = a.id_hemxxmh
@@ -1003,7 +1018,7 @@
                                     FROM htpr_hemxxmh
                                     WHERE
                                         htpr_hemxxmh.id_hpcxxmh = 2
-                                        AND tanggal_efektif < :tanggal_awal
+                                        AND tanggal_efektif < :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -1368,7 +1383,7 @@
                                     FROM htpr_hesxxmh
                                     WHERE
                                         htpr_hesxxmh.id_hpcxxmh = 1
-                                        AND tanggal_efektif < :tanggal_awal
+                                        AND tanggal_efektif < :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -1495,7 +1510,7 @@
                                     FROM htpr_hevxxmh
                                     WHERE
                                         htpr_hevxxmh.id_hpcxxmh = 32
-                                        AND tanggal_efektif < :tanggal_awal
+                                        AND tanggal_efektif < :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
