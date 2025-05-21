@@ -979,7 +979,7 @@
 							});
 
 							$.ajax( {
-								url: "../../models/hpyxxth/hpyxxth_fn_gen_payroll_ferry_fix.php",
+								url: "../../models/hpyxxth/hpyxxth_fn_gen_payroll_ferry_2025.php",
 								dataType: 'json',
 								type: 'POST',
 								data: {
