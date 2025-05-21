@@ -709,7 +709,6 @@
                                                 WHEN is_istirahat = 2 AND durasi_break_menit > 60 THEN 1
                                                 WHEN is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_ti, 0) THEN 0.5
                                                 WHEN durasi_break_menit > 60 THEN 1
-                                                WHEN durasi_break_menit > 30 THEN 0.5
                                                 ELSE 0
                                             END AS potongan_ti_jam
                                         FROM htoxxrd as hto
@@ -1089,7 +1088,7 @@
                                 END AS is_pot_upah,
 
                                 -- hitung pot_late
-                                IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") = "",
+                                IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") = "" OR st_clock_in = "LATE",
                                     IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
                                         CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60),
                                         IF(jumlah_grup <> 4,
