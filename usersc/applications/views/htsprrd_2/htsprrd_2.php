@@ -385,6 +385,9 @@
 						targets: "_all"
 					}
 				],
+				fixedColumns: {
+                    leftColumns: 1 // Freeze column 0 and 1
+                },
 				ajax: {
 					url: "../../models/htsprrd/htsprrd_2.php",
 					type: 'POST',
