@@ -15,6 +15,7 @@
     $nama_tabels_d[3] = 'hpyemtd_kmj';
     $nama_tabels_d[4] = 'hpyemtd_freelance';
     $nama_tabels_d[5] = 'hpyemtd_kbm_tr';
+    $nama_tabels_d[6] = 'hpyemtd_kontrak';
 ?>
 
 <!-- begin content here -->
@@ -49,7 +50,8 @@
 							<li><a class="nav-link active" data-toggle="tab" href="#tabhpyemtd"> All</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_reg"> KBM Reguler</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_tr"> KBM Pelatihan</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_karyawan"> Karyawan</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_karyawan"> Tetap</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kontrak"> Kontrak</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kmj"> KMJ</a></li>
 							<li id="tab_freelance"><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_freelance"> Freelance</a></li>
 						</ul>
@@ -500,6 +502,119 @@
 													<th id="karyawan_45"></th>
 													<th id="karyawan_46"></th>
 													<th id="karyawan_47"></th>
+												</tr>
+											</tfoot>
+										</table>
+									</div> <!-- end of table -->
+								</div>
+							</div>
+							<div role="tabpanel" id="tabhpyemtd_kontrak" class="tab-pane">
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table id="tblhpyemtd_kontrak" class="table table-striped table-bordered table-hover nowrap" width="100%">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>id_hpyxxth</th>
+													<th>NIK</th>
+													<th>Nama</th>
+													<th>Department</th>
+													<th>Jabatan</th>
+													<th>Tipe</th>
+													<th>Sub Tipe</th>
+													<th>Status</th>
+													<th>Level</th>
+													<th>Gaji Pokok</th>
+													<th>TJ. Jabatan</th>
+													<th>Var Cost</th>
+													<th>TJ. Masa Kerja</th>
+													<th>Premi Absen</th>
+													<th>JKK</th>
+													<th>JKM</th>
+													<th>Trm JKK JKM</th>
+													<th>Pendapatan Lain</th>
+													<th>Lembur 1,5</th>
+													<th>Rp Lembur 1,5</th>
+													<th>Lembur 2</th>
+													<th>Rp Lembur 2</th>
+													<th>Lembur 3</th>
+													<th>Rp Lembur 3</th>
+													<th>Total Lembur (Jam)</th>
+													<th>Total Lembur (Jam Final)</th>
+													<th>Total Lembur (Rp) </th>
+													<th>Lembur Susulan (Rp)</th>
+													<th>PPh21 Back </th>
+													<th>Kompensasi Rekontrak </th>
+													<th>Koreksi Lembur</th>
+													<th>Koreksi Perubahan Status</th>
+													<th>Sisa Cuti</th>
+													<th class="text-danger">Pot Makan</th>
+													<th class="text-danger">Pot JKK JKM</th>
+													<th class="text-danger">Pot JHT</th>
+													<th class="text-danger">Pot Upah Harian</th>
+													<th class="text-danger">Pot Upah Jam</th>
+													<th class="text-danger">Pot BPJS</th>
+													<th class="text-danger">Pot Pensiun</th>
+													<th class="text-danger">Pot Pinjaman</th>
+													<th class="text-danger">Pot Klaim</th>
+													<th class="text-danger">Pot Denda APD</th>
+													<th class="text-danger">Pot PPH21</th>
+													<th>Gaji Bersih</th>
+													<th>Bulat</th>
+													<th>Gaji Diterima</th>
+													
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th>Total</th>
+													<th></th>
+													<th id="kontrak_10"></th>
+													<th id="kontrak_11"></th>
+													<th id="kontrak_12"></th>
+													<th id="kontrak_13"></th>
+													<th id="kontrak_14"></th>
+													<th id="kontrak_15"></th>
+													<th id="kontrak_16"></th>
+													<th id="kontrak_17"></th>
+													<th id="kontrak_18"></th>
+													<th id="kontrak_19"></th>
+													<th id="kontrak_20"></th>
+													<th id="kontrak_21"></th>
+													<th id="kontrak_22"></th>
+													<th id="kontrak_23"></th>
+													<th id="kontrak_24"></th>
+													<th id="kontrak_25"></th>
+													<th id="kontrak_26"></th>
+													<th id="kontrak_27"></th>
+													<th id="kontrak_28"></th>
+													<th id="kontrak_29"></th>
+													<th id="kontrak_30"></th>
+													<th id="kontrak_31"></th>
+													<th id="kontrak_32"></th>
+													<th id="kontrak_33"></th>
+													<th id="kontrak_34"></th>
+													<th id="kontrak_35"></th>
+													<th id="kontrak_36"></th>
+													<th id="kontrak_37"></th>
+													<th id="kontrak_38"></th>
+													<th id="kontrak_39"></th>
+													<th id="kontrak_40"></th>
+													<th id="kontrak_41"></th>
+													<th id="kontrak_42"></th>
+													<th id="kontrak_43"></th>
+													<th id="kontrak_44"></th>
+													<th id="kontrak_45"></th>
+													<th id="kontrak_46"></th>
+													<th id="kontrak_47"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -1056,7 +1171,7 @@
 			
 			tblhpyxxth.on( 'init', function () {
 				// atur hak akses
-				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
+				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
 				CekInitHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
 				tblhpyxxth.button( 'btnGeneratePresensiNew:name' ).disable();
@@ -1064,6 +1179,7 @@
 				
 				tblhpyemtd_kbm_reg.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_karyawan.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_kontrak.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_kmj.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_freelance.button( 'btnPrint:name' ).disable();
 
@@ -1085,13 +1201,14 @@
 				id_heyxxmh_old = data_hpyxxth.id_heyxxmh;
 				
 				// atur hak akses
-				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
+				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
 				CekSelectHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).enable();
 				tblhpyxxth.button( 'btnGeneratePresensiNew:name' ).enable();
 				tblhpyxxth.button( 'btnGenPPh21:name' ).enable();
 				tblhpyemtd_kbm_reg.button( 'btnPrint:name' ).enable();
 				tblhpyemtd_karyawan.button( 'btnPrint:name' ).enable();
+				tblhpyemtd_kontrak.button( 'btnPrint:name' ).enable();
 				tblhpyemtd_kmj.button( 'btnPrint:name' ).enable();
 				tblhpyemtd_freelance.button( 'btnPrint:name' ).enable();
 			} );
@@ -1107,13 +1224,14 @@
 				id_heyxxmh_select = 0;
 
 				// atur hak akses
-				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
+				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
 				CekDeselectHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
 				tblhpyxxth.button( 'btnGeneratePresensiNew:name' ).disable();
 				tblhpyxxth.button( 'btnGenPPh21:name' ).disable();
 				tblhpyemtd_kbm_reg.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_karyawan.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_kontrak.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_kmj.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_freelance.button( 'btnPrint:name' ).disable();
 
@@ -2597,6 +2715,375 @@
 				
 				// atur hak akses
 				CekDeselectDetailHD(tblhpyxxth, tblhpyemtd_karyawan );
+			} );
+
+// --------- end _detail --------------- //		
+			
+// --------- start _detail --------------- //
+
+			//start datatables editor
+			edthpyemtd_kontrak = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/hpyxxth/hpyemtd_kontrak.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
+						d.id_hpyxxth = id_hpyxxth;
+					}
+				},
+				table: "#tblhpyemtd_kontrak",
+				formOptions: {
+					main: {
+						focus: 3
+					}
+				},
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "hpyemtd",
+						type: "hidden"
+					},	{
+						label: "id_hpyxxth",
+						name: "hpyemtd.id_hpyxxth",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "hpyemtd.is_active",
+                        type: "hidden",
+						def: 1
+					}, 	{
+						label: "Keterangan",
+						name: "hpyemtd.keterangan",
+						type: "textarea"
+					}
+				]
+			} );
+			
+			edthpyemtd_kontrak.on( 'preOpen', function( e, mode, action ) {
+				edthpyemtd_kontrak.field('hpyemtd.id_hpyxxth').val(id_hpyxxth);
+				
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthpyemtd_kontrak.field('start_on').val(start_on);
+				
+				if(action == 'create'){
+					tblhpyemtd_kontrak.rows().deselect();
+				}
+			});
+
+            edthpyemtd_kontrak.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+			});
+			
+			edthpyemtd_kontrak.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+					
+				}
+				
+				if ( edthpyemtd_kontrak.inError() ) {
+					return false;
+				}
+			});
+
+			edthpyemtd_kontrak.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthpyemtd_kontrak.field('finish_on').val(finish_on);
+			});
+
+			
+			edthpyemtd_kontrak.on( 'postSubmit', function (e, json, data, action, xhr) {
+				// event setelah Create atau Edit, dibedakan dari parameter action
+				// action : "create" | "edit"
+				// do something
+			} );
+			
+			//start datatables
+			tblhpyemtd_kontrak = $('#tblhpyemtd_kontrak').DataTable( {
+				ajax: {
+					url: "../../models/hpyxxth/hpyemtd_kontrak.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
+						d.id_hpyxxth = id_hpyxxth;
+					}
+				},
+				order: [[ 2, "asc" ]],
+				responsive: false,
+				// scrollX: true,
+				fixedColumns:   {
+					left: 1
+				},
+				columns: [
+					{ data: "hpyemtd.id",visible:false },
+					{ data: "hpyemtd.id_hpyxxth",visible:false },
+					{ data: "kode" },
+					{ data: "nama" },
+					{ data: "hodxxmh.nama" },
+					{ data: "hetxxmh.nama" },
+					{ data: "heyxxmh.nama" },
+					{ data: "heyxxmd.nama" },
+					{ data: "hesxxmh.nama" },
+					{ data: "hevxxmh.nama",visible:false },
+					{ 
+						data: "hpyemtd.gp",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.t_jab",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.var_cost",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.fix_cost",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.premi_abs",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.jkk",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.jkm",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.trm_jkkjkm",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pendapatan_lain",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.lembur15",
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.rp_lembur15",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.lembur2",
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.rp_lembur2",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.lembur3",
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.rp_lembur3",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.jam_lembur",
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.jam_lembur_final",
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.lemburbersih",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.overtime_susulan",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pph21_back",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.kompensasi_ak",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.koreksi_lembur",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.koreksi_status",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.sisa_cuti",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_makan",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_jkkjkm",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_jht",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_upah",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_jam",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_bpjs",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_psiun",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{
+						data: "hpyemtd.pot_pinjaman",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{
+						data: "hpyemtd.pot_klaim",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{
+						data: "hpyemtd.pot_denda_apd",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{
+						data: "hpyemtd.pot_pph21",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.gaji_bersih",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.bulat",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.gaji_terima",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					}
+				],
+				buttons: [
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_hpyemtd';
+						$table       = 'tblhpyemtd_kontrak';
+						$edt         = 'edthpyemtd_kontrak';
+						$show_status = '_hpyemtd';
+						$table_name  = $nama_tabels_d[6];
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
+						$arr_buttons_action 	= [];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+					,{
+						text: '<i class="fa fa-print"></i>',
+						name: 'btnPrint',
+						className: 'btn btn-outline',
+						titleAttr: 'Print Slip Gaji',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							var url = $(this).attr('href'); 
+							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=3', 'hpyxxth');
+						}
+					}
+				],
+				footerCallback: function ( row, data, start, end, display ) {
+					var api = this.api();
+					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
+
+					for (var i = 10; i <= 47; i++) {
+						var columnIndex = i;
+						var sum_all = api.column(columnIndex).data().sum();
+						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
+						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
+						$('#kontrak_' + columnIndex).html(numFormat(sum_all));
+
+						// console.log('Number of Pages: ' + api.page.info().pages);
+					}
+				}
+			} );
+
+			tblhpyemtd_kontrak.on( 'draw', function( e, settings ) { 
+				// atur hak akses
+				cek_c_detail= 1;
+				CekDrawDetailHD(tblhpyxxth, tblhpyemtd_kontrak, 'hpyemtd' );
+				CekDrawDetailHDFinal(tblhpyxxth);
+			} );
+
+			tblhpyemtd_kontrak.on( 'select', function( e, dt, type, indexes ) {
+				data_hpyemtd = tblhpyemtd_kontrak.row( { selected: true } ).data().hpyemtd;
+				id_hpyemtd   = data_hpyemtd.id;
+				id_transaksi_d    = id_hpyemtd; // dipakai untuk general
+				is_active_d       = data_hpyemtd.is_active;
+				
+				// atur hak akses
+				CekSelectDetailHD(tblhpyxxth, tblhpyemtd_kontrak );
+			} );
+
+			tblhpyemtd_kontrak.on( 'deselect', function() {
+				id_hpyemtd = '';
+				is_active_d = 0;
+				
+				// atur hak akses
+				CekDeselectDetailHD(tblhpyxxth, tblhpyemtd_kontrak );
 			} );
 
 // --------- end _detail --------------- //		

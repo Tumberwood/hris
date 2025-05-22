@@ -100,7 +100,7 @@
 			->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 			->where('hpyemtd.id_hpyxxth',$_POST['id_hpyxxth'])
 			->where('heyxxmd.id', 3)
-			->where('hesxxmh.id', 1) //tetap
+			->where('hesxxmh.id', 2) //kontrak
 			;
 		
 		// do not erase
