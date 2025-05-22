@@ -570,7 +570,7 @@
                                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                                     AND c.nama IN ("istirahat", "istirahat manual")
                                                     AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
-                                                    AND CONCAT(d.tanggal, " ", d.jam_akhir) 
+                                                    AND CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir)  
                                                     AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                                     AND a.id_htsxxmh = 1
                                                 GROUP BY a.id
