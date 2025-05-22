@@ -240,6 +240,42 @@
 						format: 'DD MMM YYYY'
 					},
 					{
+						label: "Karyawan <sup class='text-danger'>*<sup>",
+						name: "hpyxxth.id_hemxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hemxxmh_old: id_hemxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+									return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1
+							}
+						}
+					},
+					{
 						label: "Keterangan",
 						name: "hpyxxth.keterangan",
 						type: "textarea"
@@ -284,6 +320,10 @@
 					}
 					// END of validasi hpyxxth.tanggal_akhir
 
+					id_hemxxmh = edthpyxxth.field('hpyxxth.id_hemxxmh').val();
+					if(!id_hemxxmh || id_hemxxmh == ''){
+						edthpyxxth.field('hpyxxth.id_hemxxmh').error( 'Wajib diisi!' );
+					}
 				}
 				
 				if ( edthpyxxth.inError() ) {
@@ -300,6 +340,10 @@
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
+			} );
+				
+			edthpyxxth.on( 'close', function () {
+				edthpyxxth.enable();
 			} );
 			
 			//start datatables
@@ -337,13 +381,13 @@
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
-						$arr_buttons_action 	= ['create', 'edit'];
+						$arr_buttons_action 	= ['create', 'edit', 'view'];
 						$arr_buttons_approve 	= ['approve','cancel_approve','void'];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					{
 						text: '<i class="fa fa-google"></i>',
-						name: 'btnGeneratePresensi',
+						name: 'btnGeneratePayroll',
 						className: 'btn btn-xs btn-outline',
 						titleAttr: '',
 						action: function ( e, dt, node, config ) {
@@ -397,7 +441,7 @@
 				// atur hak akses
 				tbl_details = [tblhpyemtd];
 				CekInitHeaderHD(tblhpyxxth, tbl_details);
-				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
+				tblhpyxxth.button( 'btnGeneratePayroll:name' ).disable();
 				tblhpyxxth.button( 'btnGenPPh21:name' ).disable();
 				
 				// tblhpyemtd.button( 'btnPrint:name' ).disable();
@@ -425,7 +469,7 @@
 				// atur hak akses
 				tbl_details = [tblhpyemtd];
 				CekSelectHeaderHD(tblhpyxxth, tbl_details);
-				tblhpyxxth.button( 'btnGeneratePresensi:name' ).enable();
+				tblhpyxxth.button( 'btnGeneratePayroll:name' ).enable();
 				tblhpyxxth.button( 'btnGenPPh21:name' ).enable();
 				// tblhpyemtd_kbm_reg.button( 'btnPrint:name' ).enable();
 				// tblhpyemtd_karyawan.button( 'btnPrint:name' ).enable();
@@ -446,7 +490,7 @@
 				// atur hak akses
 				tbl_details = [tblhpyemtd];
 				CekDeselectHeaderHD(tblhpyxxth, tbl_details);
-				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
+				tblhpyxxth.button( 'btnGeneratePayroll:name' ).disable();
 				tblhpyxxth.button( 'btnGenPPh21:name' ).disable();
 				// tblhpyemtd_kbm_reg.button( 'btnPrint:name' ).disable();
 				// tblhpyemtd_karyawan.button( 'btnPrint:name' ).disable();

@@ -42,6 +42,9 @@
 			Field::inst( 'hpyxxth.last_edited_by' )
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
+			Field::inst( 'hpyxxth.is_single' )
+				->set( Field::SET_CREATE )
+				->setValue(1),
 			Field::inst( 'hpyxxth.is_approve' ),
 			Field::inst( 'hpyxxth.is_defaultprogram' ),
 			Field::inst( 'hpyxxth.tanggal_awal' )
