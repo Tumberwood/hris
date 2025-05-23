@@ -18,10 +18,10 @@
     // END definisi variable untuk fn_ajax_results.php
 
     // $id_hemxxmh = 1709;
-    $id_hemxxmh = '(202)';
+    $id_hemxxmh = '(1575)';
 
-    $start = Carbon::create(2025, 1, 21);
-    $end = Carbon::create(2025, 2, 20); 
+    $start = Carbon::create(2024, 12, 23);
+    $end = Carbon::create(2025, 1, 2); 
     
     // Buat periode
     $periode = CarbonPeriod::create($start, $end);
