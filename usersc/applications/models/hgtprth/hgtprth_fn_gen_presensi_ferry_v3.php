@@ -712,7 +712,7 @@
                                                 -- CASE  21 Feb 2025 - 13071090 - EKO TEGUH 
                                                 -- Jika shift 1 + jumat maka 90 menit batas max sebelum dipotong 1 jam, 
                                                 -- jika bukan shift 1 + jumat maka 60 menit
-                                                WHEN durasi_break_menit > IF(kode_shift LIKE "PAGI%" AND nama_hari = "friday", 90, 60) THEN 1
+                                                WHEN durasi_break_menit > 60 THEN 1
                                                 ELSE 0
                                             END AS potongan_ti_jam
                                         FROM htoxxrd as hto
@@ -723,15 +723,16 @@
                                             FROM (
                                                 SELECT DISTINCT
                                                     a.id_hemxxmh,
-                                                    shift.kode kode_shift,
-                                                    DAYNAME(a.tanggal) nama_hari,
                                                     a.id AS id_jadwal,
                                                     CONCAT(c.tanggal," ",c.jam) AS ceklok_istirahat,
-                                                    TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam))) AS durasi_break_menit
+                                                    IF( TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam))) > TIMESTAMPDIFF(MINUTE,a.tanggaljam_awal_istirahat, a.tanggaljam_akhir_istirahat),
+                                                        TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam))),
+                                                        0
+                                                    )
+                                                    AS durasi_break_menit
                                                 FROM htssctd AS a
                                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
-                                                INNER JOIN htsxxmh AS shift ON shift.id = a.id_htsxxmh
                                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                                     AND (
                                                         (a.tanggal < "2025-04-14" AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI"))
@@ -746,8 +747,6 @@
 
                                                 SELECT DISTINCT
                                                     a.id_hemxxmh,
-                                                    shift.kode kode_shift,
-                                                    DAYNAME(a.tanggal) nama_hari,
                                                     a.id AS id_jadwal,
                                                     CONCAT(d.tanggal, " ", d.jam_awal) AS ceklok_istirahat,
                                                     TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam))) AS durasi_break_menit
@@ -755,7 +754,6 @@
                                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                                 INNER JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
-                                                INNER JOIN htsxxmh AS shift ON shift.id = a.id_htsxxmh
                                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                                     AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI")
                                                     AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
