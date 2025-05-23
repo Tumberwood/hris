@@ -549,7 +549,8 @@
                                                     IF( TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam))) > TIMESTAMPDIFF(MINUTE,a.tanggaljam_awal_istirahat, a.tanggaljam_akhir_istirahat),
                                                         TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam))),
                                                         0
-                                                    )
+                                                    ) 
+                                                    AS durasi_break_menit
                                                 FROM htssctd AS a
                                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
@@ -562,6 +563,7 @@
                                                     AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
                                                     AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                                 GROUP BY a.id
+                                                HAVING durasi_break_menit > 0
 
                                                 UNION ALL
 

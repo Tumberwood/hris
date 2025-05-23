@@ -705,6 +705,7 @@
                                             AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                             AND a.id_hemxxmh = :id_hemxxmh
                                         GROUP BY a.id
+                                        HAVING durasi_break_menit > 0
 
                                         UNION ALL
 
