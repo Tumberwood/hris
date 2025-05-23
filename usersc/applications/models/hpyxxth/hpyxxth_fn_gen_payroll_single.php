@@ -264,9 +264,9 @@
                             
                             -- tunjangan jabatan
                             IFNULL( 
-                                if(c.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
+                                if(c.tanggal_masuk BETWEEN DATE_FORMAT(last_day(:tanggal_akhir), "%Y-%m-01") AND LAST_DAY(last_day(:tanggal_akhir)), 
                                     hari_kerja / if(c.grup_hk = 1, 21, 25) * ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0),
-                                    if(c.tanggal_keluar BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
+                                    if(c.tanggal_keluar BETWEEN DATE_FORMAT(last_day(:tanggal_akhir), "%Y-%m-01") AND LAST_DAY(last_day(:tanggal_akhir)), 
                                         keluar_report / if(c.grup_hk = 1, 21, 25) * ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0),
                                     ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0))
                                 ),
@@ -278,9 +278,9 @@
                             -- fix cost atau masa kerja
                             if(c.id_heyxxmh = 1, 
                                 IFNULL( 
-                                    if(c.tanggal_masuk BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
+                                    if(c.tanggal_masuk BETWEEN DATE_FORMAT(last_day(:tanggal_akhir), "%Y-%m-01") AND LAST_DAY(last_day(:tanggal_akhir)), 
                                         hari_kerja / if(c.grup_hk = 1, 21, 25) * nominal_mk,
-                                        if(c.tanggal_keluar BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND LAST_DAY(:tanggal_akhir), 
+                                        if(c.tanggal_keluar BETWEEN DATE_FORMAT(last_day(:tanggal_akhir), "%Y-%m-01") AND LAST_DAY(last_day(:tanggal_akhir)), 
                                             keluar_report / if(c.grup_hk = 1, 21, 25) * nominal_mk,
                                         nominal_mk)
                                     ),
@@ -604,7 +604,7 @@
                                         GROUP BY id_hemxxmh
                                     ) AS subquery
                                 ) resign ON resign.id_hemxxmh = a.id_hemxxmh
-                                WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                WHERE tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                 GROUP BY a.id_hemxxmh
                             ) lembur_sum_table ON lembur_sum_table.id_hemxxmh = a.id_hemxxmh
                             
@@ -744,7 +744,7 @@
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     LEFT JOIN hemxxmh AS hem ON hem.id = a.id_hemxxmh
-                                    WHERE a.tanggal = DATE_SUB(c.tanggal_keluar, INTERVAL 1 DAY) AND a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    WHERE a.tanggal = DATE_SUB(c.tanggal_keluar, INTERVAL 1 DAY) AND a.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                         AND is_pot_upah = 1 AND c.id_heyxxmd = 1 AND c.id_hesxxmh = 3
                                     GROUP BY a.id_hemxxmh
                                 ) report_pot_upah_min_satu
@@ -778,7 +778,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
-                                    WHERE if(c.tanggal_keluar IS NOT NULL,  a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND a.tanggal <> DATE_SUB(c.tanggal_keluar, INTERVAL 1 DAY), a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir)
+                                    WHERE if(c.tanggal_keluar IS NOT NULL,  a.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir) AND a.tanggal <> DATE_SUB(c.tanggal_keluar, INTERVAL 1 DAY), a.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir))
                                         AND is_pot_upah = 1 AND c.id_heyxxmd = 1 AND c.id_hesxxmh = 3
                                     GROUP BY a.id_hemxxmh
                                 ) report_pot_upah_spesial
@@ -810,7 +810,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
-                                    WHERE a.tanggal BETWEEN c.tanggal_masuk AND :tanggal_akhir
+                                    WHERE a.tanggal BETWEEN c.tanggal_masuk AND last_day(:tanggal_akhir)
                                         AND a.st_jadwal <> "OFF" -- sebelumnya st-clock in
                                     GROUP BY a.id_hemxxmh
                                 ) AS report
@@ -833,7 +833,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
-                                    WHERE tanggal BETWEEN DATE_ADD(:tanggal_akhir, INTERVAL 1 DAY) AND LAST_DAY(:tanggal_akhir) AND is_active = 1
+                                    WHERE tanggal BETWEEN DATE_ADD(last_day(:tanggal_akhir), INTERVAL 1 DAY) AND LAST_DAY(last_day(:tanggal_akhir)) AND is_active = 1
                                         AND id_htsxxmh <> 1
                                     GROUP BY id_hemxxmh
                                 ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh
@@ -955,7 +955,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
-                                    WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND DATE_SUB(c.tanggal_keluar, INTERVAL 1 DAY)
+                                    WHERE a.tanggal BETWEEN DATE_FORMAT(last_day(:tanggal_akhir), "%Y-%m-01") AND DATE_SUB(c.tanggal_keluar, INTERVAL 1 DAY)
                                         AND a.st_jadwal <> "OFF"
                                     GROUP BY a.id_hemxxmh
                                 ) AS report
@@ -991,7 +991,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = rd.id_hemxxmh
-                                    WHERE rd.tanggal BETWEEN date_add(c.tanggal_masuk, INTERVAL 1 DAY) AND LAST_DAY(:tanggal_akhir)
+                                    WHERE rd.tanggal BETWEEN date_add(c.tanggal_masuk, INTERVAL 1 DAY) AND LAST_DAY(last_day(:tanggal_akhir))
                                 AND rd.status_presensi_in = "HK"
                                     GROUP BY rd.id_hemxxmh
                                 ) AS prd ON prd.id_hemxxmh = b.id
@@ -1078,7 +1078,7 @@
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                         AND id_hpcxxmh = 105
                                         AND is_approve = 1
                                     GROUP BY id_hemxxmh
@@ -1110,7 +1110,7 @@
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                         AND id_hpcxxmh = 104
                                         AND is_approve = 1
                                     GROUP BY id_hemxxmh
@@ -1142,7 +1142,7 @@
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                         AND id_hpcxxmh = 103
                                         AND is_approve = 1
                                     GROUP BY id_hemxxmh
@@ -1174,7 +1174,7 @@
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                         AND id_hpcxxmh = 106
                                         AND is_approve = 1
                                     GROUP BY id_hemxxmh
@@ -1206,7 +1206,7 @@
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                         AND id_hpcxxmh = 11
                                         AND plus_min = "Pengurang"
                                         AND is_approve = 1
@@ -1239,7 +1239,7 @@
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                         AND id_hpcxxmh = 11
                                         AND plus_min = "Penambah"
                                         AND is_approve = 1
@@ -1271,7 +1271,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
-                                    WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    WHERE tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                     GROUP BY id_hemxxmh
                                 ) c_report_pot_jam
                             ) presensi_pot_jam ON presensi_pot_jam.id_hemxxmh = a.id_hemxxmh
@@ -1300,7 +1300,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = bpjs_kes.id_hemxxmh
-                                    WHERE bpjs_kes.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    WHERE bpjs_kes.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                     GROUP BY id_hemxxmh
                                 ) AS subquery
                             ) bpjs_kes_exclude ON bpjs_kes_exclude.id_hemxxmh = a.id_hemxxmh
@@ -1329,7 +1329,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = bpjs_tk.id_hemxxmh
-                                    WHERE bpjs_tk.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    WHERE bpjs_tk.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                     GROUP BY id_hemxxmh
                                 ) AS subquery
                             ) bpjs_tk_exclude ON bpjs_tk_exclude.id_hemxxmh = a.id_hemxxmh
@@ -1376,7 +1376,7 @@
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     WHERE
-                                        a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                        a.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                         AND id_hpcxxmh = 111
                                         AND is_approve = 1
                                     GROUP BY id_hemxxmh
@@ -1453,7 +1453,7 @@
                                                     GROUP BY id_hemxxmh
                                                 ) AS subquery
                                             ) resign ON resign.id_hemxxmh = jb.id_hemxxmh
-                                            WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                            WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                     GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) AS history ON history.id_hemxxmh = a.id_hemxxmh
@@ -1491,7 +1491,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = jb.id_hemxxmh
-                                    WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                     GROUP BY id_hemxxmh
                                     ) AS jbrd ON jbrd.id_hemxxmh = htsprrd.id_hemxxmh
                                     LEFT JOIN hemjbmh as c on c.id_hemxxmh = jbrd.id_hemxxmh
@@ -1508,7 +1508,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = jbrd.id_hemxxmh
-                                    WHERE pot_hk > 0 AND tanggal BETWEEN tgl_awal_lv_baru AND :tanggal_akhir AND is_active = 1
+                                    WHERE pot_hk > 0 AND tanggal BETWEEN tgl_awal_lv_baru AND last_day(:tanggal_akhir) AND is_active = 1
                                     GROUP BY id_hemxxmh
                                 ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh 
                                 LEFT JOIN (
@@ -1581,7 +1581,7 @@
                                                     GROUP BY id_hemxxmh
                                                 ) AS subquery
                                             ) resign ON resign.id_hemxxmh = jb.id_hemxxmh
-                                            WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                            WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                     GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) AS history ON history.id_hemxxmh = a.id_hemxxmh
@@ -1619,7 +1619,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = jb.id_hemxxmh
-                                    WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    WHERE keterangan like "Perubahan Level%" AND tanggal_awal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                     GROUP BY id_hemxxmh
                                     ) AS jbrd ON jbrd.id_hemxxmh = htsprrd.id_hemxxmh
                                     LEFT JOIN hemjbmh as c on c.id_hemxxmh = jbrd.id_hemxxmh
@@ -1636,7 +1636,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = jbrd.id_hemxxmh
-                                    WHERE is_pot_upah > 0 AND tanggal BETWEEN tgl_awal_lv_baru AND :tanggal_akhir AND is_active = 1
+                                    WHERE is_pot_upah > 0 AND tanggal BETWEEN tgl_awal_lv_baru AND last_day(:tanggal_akhir) AND is_active = 1
                                     GROUP BY id_hemxxmh
                                 ) AS jadwal ON jadwal.id_hemxxmh = report.id_hemxxmh 
                                 
@@ -1669,7 +1669,7 @@
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
                                     LEFT JOIN hemxxmh AS peg ON peg.id = a.id_hemxxmh
-                                    WHERE a.is_active = 1 AND a.is_approve = 1 AND a.tanggal_mulai BETWEEN :tanggal_awal AND :tanggal_akhir 
+                                    WHERE a.is_active = 1 AND a.is_approve = 1 AND a.tanggal_mulai BETWEEN :tanggal_awal AND last_day(:tanggal_akhir) 
                                 ) AS report
                             ) AS perubahan_status ON perubahan_status.nama_peg = hem.nama
                             
@@ -1777,7 +1777,7 @@
 
                             ) AS saldo_sisa_cuti on saldo_sisa_cuti.id_hemxxmh = a.id_hemxxmh 
                             
-                        WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                        WHERE a.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                         AND a.id_hemxxmh = :id_hemxxmh_select
                     )
                     SELECT
