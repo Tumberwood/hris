@@ -533,7 +533,7 @@
                                                 -- CASE  21 Feb 2025 - 13071090 - EKO TEGUH 
                                                 -- Jika shift 1 + jumat maka 90 menit batas max sebelum dipotong 1 jam, 
                                                 -- jika bukan shift 1 + jumat maka 60 menit
-                                                WHEN durasi_break_menit > IF(kode_shift LIKE "PAGI%" AND nama_hari = "friday", 90, 60) THEN 1
+                                                -- WHEN durasi_break_menit > 60 THEN 1
                                                 ELSE 0
                                             END AS potongan_ti_jam
                                         FROM htoxxrd as hto
@@ -546,10 +546,7 @@
                                                     a.id_hemxxmh,
                                                     a.id AS id_jadwal,
                                                     CONCAT(c.tanggal," ",c.jam) AS ceklok_istirahat,
-                                                    IF( TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam))) > TIMESTAMPDIFF(MINUTE,a.tanggaljam_awal_istirahat, a.tanggaljam_akhir_istirahat),
-                                                        TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam))),
-                                                        0
-                                                    ) 
+                                                    TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam)))
                                                     AS durasi_break_menit
                                                 FROM htssctd AS a
                                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh

@@ -712,7 +712,7 @@
                                                 -- CASE  21 Feb 2025 - 13071090 - EKO TEGUH 
                                                 -- Jika shift 1 + jumat maka 90 menit batas max sebelum dipotong 1 jam, 
                                                 -- jika bukan shift 1 + jumat maka 60 menit
-                                                WHEN durasi_break_menit > 60 THEN 1
+                                                -- WHEN durasi_break_menit > 60 THEN 1
                                                 ELSE 0
                                             END AS potongan_ti_jam
                                         FROM htoxxrd as hto
