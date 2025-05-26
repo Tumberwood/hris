@@ -90,8 +90,8 @@
 		$pivotData = array_map(function ($row) use ($sqlData, $start_date, $end_date) {
 			$kode = $row['kode'];
 			$sqlRow = $sqlData[$kode] ?? ["sum_lembur15" => 0, "sum_lembur2" => 0, "sum_lembur3" => 0, "sum_lembur4" => 0, "sum_makan" => 0];
-			$total_xl = $row['lembur15'] + $row['lembur2'] + $row['lembur3'] + $row['lembur4'];
-			$total_db = $sqlRow['sum_lembur15'] + $sqlRow['sum_lembur2'] + $sqlRow['sum_lembur3'] + $sqlRow['sum_lembur4'];
+			$total_xl = $row['lembur15'] + $row['lembur2'] + $row['lembur3'] + $row['lembur4'] + $row['makan'];
+			$total_db = $sqlRow['sum_lembur15'] + $sqlRow['sum_lembur2'] + $sqlRow['sum_lembur3'] + $sqlRow['sum_lembur4'] + $sqlRow['sum_makan'];
 	
 			if ($total_xl == $total_db) {
 			// if (

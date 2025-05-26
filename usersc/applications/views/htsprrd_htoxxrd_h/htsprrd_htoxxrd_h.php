@@ -125,8 +125,8 @@
 								<th rowspan="2">NIP</th>
 								<th rowspan="2">Nama</th>
 								<th rowspan="2">Status</th>
-								<th class="text-center" colspan="4">HRIS</th>
-								<th class="text-center" colspan="4">Excel</th>
+								<th class="text-center" colspan="5">HRIS</th>
+								<th class="text-center" colspan="5">Excel</th>
 								<th rowspan="2">Sesuai</th>
 							</tr>
 							<tr>
@@ -134,10 +134,12 @@
 								<th>Lembur 2</th>
 								<th>Lembur 3</th>
 								<th>Lembur 4</th>
+								<th>Makan</th>
 								<th>Lembur 1.5</th>
 								<th>Lembur 2</th>
 								<th>Lembur 3</th>
 								<th>Lembur 4</th>
+								<th>Makan</th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -151,10 +153,13 @@
 								<th id="total_9"></th>
 								<th id="total_10"></th>
 								<th id="total_11"></th>
+								<th id="total_12"></th>
+								<th id="total_13"></th>
+								<th id="total_14"></th>
 								<th></th> 
 							</tr>
 							<tr>
-								<th colspan="13">Total Tidak Sesuai</th>
+								<th colspan="15">Total Tidak Sesuai</th>
 								<th id="tidak_sesuai" class="bg-success"></th> 
 								<!-- <th></th> 
 								<th></th> 
@@ -449,10 +454,16 @@
 					{ data: "lembur2_db" },
 					{ data: "lembur3_db" },
 					{ data: "lembur4_db" },
+					{ 
+						data: "makan_db",
+						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+						class: "text-right"
+					},
 					{ data: "lembur15_xl" },
 					{ data: "lembur2_xl" },
 					{ data: "lembur3_xl" },
 					{ data: "lembur4_xl" },
+					{ data: "makan_xl" },
 					{
 						data: "is_tidak_sesuai",
 						render: function (data, type, row) {
@@ -492,17 +503,17 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 
-					for (var i = 5; i <= 12; i++) {
+					for (var i = 5; i <= 14; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
 						$('#total_' + columnIndex).html(numFormat(sum_all));
 					}
-					var tidak_sesuai = api.column(13).data().sum();
+					var tidak_sesuai = api.column(15).data().sum();
 					$('#tidak_sesuai').html(numFormat(tidak_sesuai));
 				},
 				columnDefs: [
-					{ targets: [5, 6, 7, 8, 9,10,11,12], className: "text-right" },
+					{ targets: [5, 6, 7, 8, 9,10,11,12,13,14], className: "text-right" },
 					{
 						searchPanes:{
 							show: true,
