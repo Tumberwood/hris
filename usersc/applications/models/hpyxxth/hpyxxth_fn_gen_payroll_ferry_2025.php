@@ -1761,12 +1761,14 @@
 								COALESCE(cb.c_cb, 0) AS c_cb,
 								IFNULL(c_rd, 0) AS c_rd,
 								ifnull(a.saldo,0) AS saldo,
-								SUM(
+								
+								-- SUM(
 									CASE
 										WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0) + IFNULL(c_rd,0))
 										ELSE 0
 									END
-								) AS sisa_saldo
+								-- ) 
+                                AS sisa_saldo
 							FROM htlxxrh AS a
 							-- employee
 							LEFT JOIN hemxxmh AS peg ON peg.id = a.id_hemxxmh
