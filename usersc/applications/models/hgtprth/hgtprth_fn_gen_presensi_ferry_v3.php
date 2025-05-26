@@ -962,26 +962,52 @@
                             -- ceklok makan
                             LEFT JOIN (
                                 SELECT
-                                    a.id,
-                                    IF(TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR), 1, 0) ceklok_makan,
-                                    c.nama,
-                                    c.kode,
-                                    c.jam
-                                FROM htssctd AS a
-                                INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
-                                LEFT JOIN (
+                                *
+                                FROM (
+                                    SELECT
+                                        a.id,
+                                        -- COUNT(c.kode) ceklok_makan,
+                                        IF(CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR), 1, 0) ceklok_makan,
+                                        c.nama,
+                                        c.kode,
+                                        c.jam
+                                    FROM htssctd AS a
+                                    INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
+                                    LEFT JOIN (
+                                        SELECT DISTINCT
+                                            cl.kode,
+                                            cl.nama,
+                                            cl.jam,
+                                            cl.tanggal
+                                        FROM htsprtd cl
+                                        WHERE cl.tanggal BETWEEN :tanggal AND DATE_ADD(:tanggal, INTERVAL 1 DAY) AND cl.nama IN ("makan", "makan manual")
+                                    ) AS c ON c.kode = b.kode_finger
+                                    WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
+                                        AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                                        AND a.id_hemxxmh IN '.$id_hemxxmh.'
+                                    GROUP BY a.id
+        
+                                    -- MAKAN
+                                    UNION ALL
+        
                                     SELECT DISTINCT
-                                        cl.kode,
-                                        cl.nama,
-                                        cl.jam,
-                                        cl.tanggal
-                                    FROM htsprtd cl
-                                    WHERE cl.tanggal BETWEEN :tanggal AND DATE_ADD(:tanggal, INTERVAL 1 DAY) AND cl.nama IN ("makan", "makan manual")
-                                ) AS c ON c.kode = b.kode_finger
-                                WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-                                    AND a.id_hemxxmh IN '.$id_hemxxmh.'
-                                GROUP BY a.id
+                                        a.id,
+                                        IF(c.jam is not null, 1, 0) ceklok_makan,
+                                        c.nama,
+                                        c.kode,
+                                        c.jam
+                                    FROM htssctd AS a
+                                    INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
+                                    INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
+                                    INNER JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
+                                    WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
+                                        AND c.nama IN ("makan", "makan manual")
+                                        AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
+                                        AND CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir) 
+                                        AND a.id_hemxxmh IN '.$id_hemxxmh.'
+                                        AND a.id_htsxxmh = 1
+                                    GROUP BY a.id
+                                ) union_makan
                             ) AS cek_makan ON cek_makan.id = jadwal.id
 
                             WHERE b.is_checkclock = 1 AND a.is_active = 1 AND b.id_hemxxmh IN '.$id_hemxxmh.' 
