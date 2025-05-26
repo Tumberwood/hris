@@ -324,7 +324,7 @@
                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
-                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
+                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                 AND b.id IN '.$id_hemxxmh.'                                                        
                                 GROUP BY a.id
                                 ORDER BY break_in
@@ -340,7 +340,7 @@
                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
-                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
+                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                 AND b.id IN '.$id_hemxxmh.'                                                        
                                 GROUP BY a.id
                                 ORDER BY break_out
@@ -557,7 +557,7 @@
                                                         OR
                                                         (a.tanggal >= "2025-04-14" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual"))
                                                     )
-                                                    AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
+                                                    AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                     AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                                 GROUP BY a.id
                                                 HAVING durasi_break_menit > 0
@@ -664,7 +664,7 @@
                                                     OR
                                                     (a.tanggal >= "2025-04-14" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual"))
                                                 )
-                                                AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
+                                                AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                 AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                             GROUP BY a.id
                                             ORDER BY ceklok_istirahat
@@ -784,7 +784,7 @@
                             LEFT JOIN (
                                 SELECT
                                     a.id,
-                                    IF(TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR), 1, 0) ceklok_makan,
+                                    IF(TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR), 1, 0) ceklok_makan,
                                     c.nama,
                                     c.kode,
                                     c.jam
@@ -800,7 +800,7 @@
                                     WHERE cl.tanggal BETWEEN :tanggal AND DATE_ADD(:tanggal, INTERVAL 1 DAY) AND cl.nama IN ("makan", "makan manual")
                                 ) AS c ON c.kode = b.kode_finger
                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
+                                    -- AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                     AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                 GROUP BY a.id
                             ) AS cek_makan ON cek_makan.id = jadwal.id
