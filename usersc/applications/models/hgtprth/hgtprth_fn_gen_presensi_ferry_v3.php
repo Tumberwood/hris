@@ -985,6 +985,7 @@
                                     WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                         AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                         AND a.id_hemxxmh IN '.$id_hemxxmh.'
+                                        AND a.id_htsxxmh <> 1
                                     GROUP BY a.id
         
                                     -- MAKAN
