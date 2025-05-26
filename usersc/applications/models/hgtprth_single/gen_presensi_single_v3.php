@@ -688,10 +688,7 @@
                                             a.id_hemxxmh,
                                             a.id AS id_jadwal,
                                             CONCAT(c.tanggal," ",c.jam) AS ceklok_istirahat,
-                                            IF( TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam))) > TIMESTAMPDIFF(MINUTE,a.tanggaljam_awal_istirahat, a.tanggaljam_akhir_istirahat),
-                                                TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam))),
-                                                0
-                                            )
+                                            TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam)))
                                             AS durasi_break_menit
                                         FROM htssctd AS a
                                         INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
