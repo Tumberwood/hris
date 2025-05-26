@@ -927,7 +927,8 @@
                         SELECT
                             a.id,
                             -- COUNT(c.kode) ceklok_makan,
-                            IF(CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR), 1, 0) ceklok_makan,
+                            if(c.jam IS NOT NULL , 1,0) ceklok_makan,
+                            -- IF(CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR), 1, 0) ceklok_makan,
                             c.nama,
                             c.kode,
                             c.jam

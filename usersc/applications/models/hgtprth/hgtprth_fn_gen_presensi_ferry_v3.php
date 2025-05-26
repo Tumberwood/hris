@@ -963,7 +963,8 @@
                             LEFT JOIN (
                                 SELECT
                                     a.id,
-                                    IF(TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR), 1, 0) ceklok_makan,
+                                    if(c.jam IS NOT NULL , 1,0) ceklok_makan,
+                                    -- IF(TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR), 1, 0) ceklok_makan,
                                     c.nama,
                                     c.kode,
                                     c.jam
