@@ -518,7 +518,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [4,13]
+						targets: [4,15]
 					},
 					{
 						searchPanes:{
