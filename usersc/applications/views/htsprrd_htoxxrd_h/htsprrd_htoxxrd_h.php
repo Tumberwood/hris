@@ -426,7 +426,10 @@
 						d.id_htsprrd_htoxxrd_h = id_htsprrd_htoxxrd_h;
 					},
 					dataSrc: 'data.lembur'
-				},
+				},,
+				fixedColumns: {
+                    leftColumns: 2 // Freeze column 0 and 1
+                },
 				responsive: false,
 				order: [[ 2, "asc" ]],
 				columns: [
