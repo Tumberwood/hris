@@ -927,8 +927,7 @@
                         SELECT
                             a.id,
                             -- COUNT(c.kode) ceklok_makan,
-                            if(c.jam IS NOT NULL , 1,0) ceklok_makan,
-                            -- IF(CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR), 1, 0) ceklok_makan,
+                            IF(CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR), 1, 0) ceklok_makan,
                             c.nama,
                             c.kode,
                             c.jam
@@ -945,7 +944,7 @@
                         ) AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                             -- AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
-                            -- AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                            AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                             AND a.id_hemxxmh = :id_hemxxmh
                         GROUP BY a.id
                     ) AS cek_makan ON cek_makan.id = jadwal.id
