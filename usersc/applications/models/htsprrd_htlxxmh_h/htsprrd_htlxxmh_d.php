@@ -51,7 +51,7 @@
 						s2,
 						s3,
 						it,
-						ip_pot,
+						ip_tdk_pot + ip_pot AS ip_pot,
 						lb
 					FROM htsprrd_htlxxmh_d a
 					LEFT JOIN hemjbmh b ON b.id_hemxxmh = a.id_hemxxmh
@@ -84,13 +84,29 @@
                             ELSE 0 END
 						) s3,
 						SUM(
+                            CASE WHEN a.status_presensi_in = "IP" THEN 1
+                            ELSE 0 END
+						) it, -- Izin pribadi
+
+						-- TL + PA + MK = ip_tdkpot  + ip_pot
+						SUM(
                             CASE WHEN a.status_presensi_in = "TL" THEN 1
                             ELSE 0 END
-						) it,
+						) 
+						+
 						SUM(
-                            CASE WHEN a.status_presensi_in = "ip" THEN 1
+                            CASE WHEN a.status_presensi_out = "PA" THEN 1
                             ELSE 0 END
-						) ip_pot,
+						) 
+						+
+						SUM(
+                            CASE 
+								WHEN a.status_presensi_out = "MK" THEN 1
+                            	WHEN a.status_presensi_in = "MK" THEN 1
+                            	ELSE 0 
+							END
+						) 
+						AS ip_pot,
 						SUM(
                             CASE WHEN a.status_presensi_in = "lb" THEN 1
                             ELSE 0 END
@@ -137,6 +153,8 @@
 				"s3_db"  				=> $sqlRow['s3'],   
 				"it_xl"  				=> $row['it'],
 				"it_db"  				=> $sqlRow['it'],   
+				"ip_pot_xl"  				=> $row['ip_pot'],
+				"ip_pot_db"  				=> $sqlRow['ip_pot'],   
 				"lb_xl"    				=> $row['lb'],
 				"lb_db"    				=> $sqlRow['lb'],     
 

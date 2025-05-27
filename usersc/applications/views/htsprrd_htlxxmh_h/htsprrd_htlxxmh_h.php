@@ -125,20 +125,22 @@
 								<th rowspan="2">NIP</th>
 								<th rowspan="2">Nama</th>
 								<th rowspan="2">Status</th>
-								<th class="text-center" colspan="5">HRIS</th>
-								<th class="text-center" colspan="5">Excel</th>
+								<th class="text-center" colspan="6">HRIS</th>
+								<th class="text-center" colspan="6">Excel</th>
 								<th rowspan="2">Sesuai</th>
 							</tr>
 							<tr>
 								<th>AL</th>
 								<th>SK (s2)</th>
 								<th>SDL (s3)</th>
-								<th>IT</th>
+								<th>IT (Izin Pribadi)</th>
+								<th>IP (TL + PA + MK)</th>
 								<th>LB</th>
 								<th>AL</th>
 								<th>SK (s2)</th>
 								<th>SDL (s3)</th>
 								<th>IT</th>
+								<th>IP (ip_tdkpot  + ip_pot)</th>
 								<th>LB</th>
 							</tr>
 						</thead>
@@ -156,10 +158,12 @@
 								<th id="total_12"></th>
 								<th id="total_13"></th>
 								<th id="total_14"></th>
+								<th id="total_15"></th>
+								<th id="total_16"></th>
 								<th></th> 
 							</tr>
 							<tr>
-								<th colspan="15">Total Tidak Sesuai</th>
+								<th colspan="17">Total Tidak Sesuai</th>
 								<th id="tidak_sesuai" class="bg-success"></th> 
 								<!-- <th></th> 
 								<th></th> 
@@ -457,15 +461,15 @@
 					{ data: "s2_db" },
 					{ data: "s3_db" },
 					{ data: "it_db" },
+					{ data: "ip_pot_db" },
 					{ 
-						data: "lb_db",
-						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
-						class: "text-right"
+						data: "lb_db"
 					},
 					{ data: "al_xl" },
 					{ data: "s2_xl" },
 					{ data: "s3_xl" },
 					{ data: "it_xl" },
+					{ data: "ip_pot_xl" },
 					{ data: "lb_xl" },
 					{
 						data: "is_tidak_sesuai",
@@ -512,12 +516,12 @@
 						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
 						$('#total_' + columnIndex).html(numFormat(sum_all));
 					}
-					var tidak_sesuai = api.column(15).data().sum();
+					var tidak_sesuai = api.column(17).data().sum();
 					$('#tidak_sesuai').html(numFormat(tidak_sesuai));
 				},
 				columnDefs: [
 					{ 
-						targets: [5, 6, 7, 8, 9,10,11,12,13,14], 
+						targets: [5, 6, 7, 8, 9,10,11,12,13,14,15,16], 
 						className: "text-right",
 						render: $.fn.dataTable.render.number(',', '.', 1, '', ''),
 					},
@@ -525,7 +529,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [4,15]
+						targets: [4,17]
 					},
 					{
 						searchPanes:{
