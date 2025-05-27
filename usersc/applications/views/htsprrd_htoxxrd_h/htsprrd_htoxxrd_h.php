@@ -300,6 +300,14 @@
 					if(!tanggal_akhir || tanggal_akhir == ''){
 						edthtsprrd_htoxxrd_h.field('htsprrd_htoxxrd_h.tanggal_akhir').error( 'Wajib diisi!' );
 					}
+					
+					let tglAwal = new Date(tanggal_awal);
+					let tglAkhir = new Date(tanggal_akhir);
+					
+					if (tglAwal > tglAkhir) {
+						edthtsprrd_htoxxrd_h.field('htsprrd_htoxxrd_h.tanggal_awal').error('Tanggal awal tidak boleh lebih besar dari tanggal akhir.');
+						edthtsprrd_htoxxrd_h.field('htsprrd_htoxxrd_h.tanggal_akhir').error('Tanggal akhir tidak boleh lebih kecil dari tanggal awal.');
+					}
 				}
 				
 				if ( edthtsprrd_htoxxrd_h.inError() ) {
