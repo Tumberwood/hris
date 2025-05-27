@@ -133,12 +133,12 @@
 								<th>AL</th>
 								<th>SK (s2)</th>
 								<th>SDL (s3)</th>
-								<th>IP</th>
+								<th>IT</th>
 								<th>LB</th>
 								<th>AL</th>
 								<th>SK (s2)</th>
 								<th>SDL (s3)</th>
-								<th>IP</th>
+								<th>IT</th>
 								<th>LB</th>
 							</tr>
 						</thead>
