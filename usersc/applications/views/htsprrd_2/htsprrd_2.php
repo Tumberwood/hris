@@ -9,6 +9,24 @@
 <?php
 	$nama_tabel    = 'htsprrd';
 	$nama_tabels_d = [];
+	
+	if (isset($_GET['id_hemxxmh'])){
+		$id_hemxxmh		= ($_GET['id_hemxxmh']);
+	} else {
+		$id_hemxxmh = 0;
+	}
+	
+	if (isset($_GET['start_date'])){
+		$awal		= ($_GET['start_date']);
+	} else {
+		$awal = null;
+	}
+	
+	if (isset($_GET['end_date'])){
+		$akhir		= ($_GET['end_date']);
+	} else {
+		$akhir = null;
+	}
 ?>
 
 <!-- begin content here -->
@@ -223,12 +241,16 @@
 		var tblhtsprrd, show_inactive_status_htsprrd = 0;
 		// ------------- end of default variable
 
+		var id_hem_get = <?php echo $id_hemxxmh ?>;
 		var id_hemxxmh = 0;
 		var id_hemxxmh_old = 0;
 		var id_heyxxmd = 0;
 		var id_heyxxmd_old = 0;
 		var user_id = <?php echo $_SESSION['user'] ?>;
 		var str_arr_ha_heyxxmh = <?php echo "'" . $_SESSION['str_arr_ha_heyxxmh'] . "'" ?>;
+		
+		var tanggal_awal = "<?php echo $awal ?>";
+		var tanggal_akhir = "<?php echo $akhir ?>";
 
 		// BEGIN datepicker init
 		$('#periode').datepicker({
@@ -239,10 +261,18 @@
 			format: "dd M yyyy",
 			minViewMode: 'month' 
 		});
-		// $('#start_date').datepicker('setDate', "15 Dec 2023");
-		// $('#end_date').datepicker('setDate', "15 Dec 2023");
-		$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
-		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+
+		if (tanggal_awal === '') {
+			$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
+		} else {
+			$('#start_date').datepicker('setDate', new Date(tanggal_awal));
+		}
+		
+		if (tanggal_akhir === '') {
+			$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		} else {
+			$('#end_date').datepicker('setDate', new Date(tanggal_akhir));
+		}
         // END datepicker init
 		
         // BEGIN select2 init
@@ -318,7 +348,18 @@
         // END select2 init
 		
 		$(document).ready(function() {
-			id_hemxxmh = $('#select_hemxxmh').val();
+			
+			if ($('#select_hemxxmh').val() > 0) {
+				id_hemxxmh = $('#select_hemxxmh').val();
+			} else {
+				if (id_hem_get != 0) {
+					id_hemxxmh = id_hem_get;
+				} else {
+					id_hemxxmh = $('#select_hemxxmh').val();
+				}
+			}
+
+			id_hemxxmh_old = id_hem_get;
 			id_heyxxmd = $('#select_heyxxmd').val();
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
@@ -841,7 +882,17 @@
 				submitHandler: function(frmhtsprrd) {
 					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
 					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
-					id_hemxxmh = $('#select_hemxxmh').val();
+					
+					if ($('#select_hemxxmh').val() > 0) {
+						id_hemxxmh = $('#select_hemxxmh').val();
+					} else {
+						if (id_hem_get != 0) {
+							id_hemxxmh = id_hem_get;
+						} else {
+							id_hemxxmh = $('#select_hemxxmh').val();
+						}
+					}
+					
 					id_heyxxmd = $('#select_heyxxmd').val();
 
 					console.log('id_heyxxmd ='+id_heyxxmd);
