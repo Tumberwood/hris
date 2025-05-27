@@ -1006,7 +1006,7 @@
                                         AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
                                         AND CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir) 
                                         AND a.id_hemxxmh IN '.$id_hemxxmh.'
-                                        AND a.id_htsxxmh = 1
+                                        AND TIME(a.tanggaljam_awal_istirahat) = "00:00:00"
                                     GROUP BY a.id
                                 ) union_makan
                             ) AS cek_makan ON cek_makan.id = jadwal.id
