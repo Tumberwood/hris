@@ -74,13 +74,13 @@
 													<th>Level</th>
 													<th>Gaji Pokok</th>
 													<th>TJ. Jabatan</th>
+													<th>Terima Lain</th>
 													<th>Var Cost</th>
-													<th>TJ. Masa Kerja</th>
+													<th>Fix Cost</th>
 													<th>Premi Absen</th>
 													<th>JKK</th>
 													<th>JKM</th>
 													<th>Trm JKK JKM</th>
-													<th>Pendapatan Lain</th>
 													<th>Lembur 1,5</th>
 													<th>Rp Lembur 1,5</th>
 													<th>Lembur 2</th>
@@ -90,15 +90,17 @@
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
 													<th>Total Lembur (Rp) </th>
-													<th>Lembur Susulan (Rp)</th>
+													<th>Lembur Susulan (Rp) </th>
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
 													<th>Koreksi Perubahan Status</th>
 													<th>Sisa Cuti</th>
 													<th class="text-danger">Pot Makan</th>
+													<th class="text-danger">Pot PPH21</th>
 													<th class="text-danger">Pot JKK JKM</th>
 													<th class="text-danger">Pot JHT</th>
+													<th class="text-danger">Pot Lain</th>
 													<th class="text-danger">Pot Upah Harian</th>
 													<th class="text-danger">Pot Upah Jam</th>
 													<th class="text-danger">Pot BPJS</th>
@@ -106,7 +108,6 @@
 													<th class="text-danger">Pot Pinjaman</th>
 													<th class="text-danger">Pot Klaim</th>
 													<th class="text-danger">Pot Denda APD</th>
-													<th class="text-danger">Pot PPH21</th>
 													<th>Gaji Bersih</th>
 													<th>Bulat</th>
 													<th>Gaji Diterima</th>
@@ -163,6 +164,7 @@
 													<th id="all_45"></th>
 													<th id="all_46"></th>
 													<th id="all_47"></th>
+													<th id="all_48"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -1362,6 +1364,11 @@
 						class: "text-right"
 					},
 					{ 
+						data: "hpyemtd.pendapatan_lain",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
 						data: "hpyemtd.var_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
@@ -1388,11 +1395,6 @@
 					},
 					{ 
 						data: "hpyemtd.trm_jkkjkm",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -1471,6 +1473,11 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
+					{
+						data: "hpyemtd.pot_pph21",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
 					{ 
 						data: "hpyemtd.pot_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
@@ -1478,6 +1485,11 @@
 					},
 					{ 
 						data: "hpyemtd.pot_jht",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -1513,11 +1525,6 @@
 					},
 					{
 						data: "hpyemtd.pot_denda_apd",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{
-						data: "hpyemtd.pot_pph21",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -1568,7 +1575,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 47; i++) {
+					for (var i = 10; i <= 48; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
