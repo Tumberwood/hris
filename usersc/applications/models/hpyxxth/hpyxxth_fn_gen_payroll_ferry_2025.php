@@ -177,6 +177,7 @@
                         pot_pinjaman,
                         pot_klaim,
                         pot_denda_apd,
+                        pot_lain,
                         pot_pph21,
                         gaji_bersih,
                         bulat,
@@ -355,6 +356,7 @@
                             IFNULL(nominal_pinjaman,0) AS pot_pinjaman,
                             IFNULL(nominal_klaim,0) AS pot_klaim,
                             IFNULL(nominal_denda_apd,0) AS pot_denda_apd,
+                            IFNULL(nominal_pot_lain,0) AS pot_lain,
                             IFNULL(nominal_pph21,0) AS pot_pph21,
                             hk_nik_lama,
                             IFNULL(nominal_pendapatan_lain,0) AS pendapatan_lain,
@@ -1402,6 +1404,25 @@
                                 ) AS subquery
                             ) koreksi_lembur ON koreksi_lembur.id_hemxxmh = a.id_hemxxmh
                             
+                            -- Potongan lain | 124	PTL	Potongan Lain
+                            LEFT JOIN (
+                                SELECT
+                                    id_hemxxmh,
+                                    IFNULL(nominal, 0) AS nominal_pot_lain
+                                FROM (
+                                    SELECT
+                                        a.id_hemxxmh,
+                                        SUM(nominal) as nominal
+                                    FROM hpy_piutang_d as a
+                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = a.id_hemxxmh
+                                    WHERE
+                                        a.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
+                                        AND id_hpcxxmh = 124
+                                        AND is_approve = 1
+                                    GROUP BY id_hemxxmh
+                                ) AS subquery
+                            ) pot_lain ON pot_lain.id_hemxxmh = a.id_hemxxmh
+                            
                             -- gaji pokok pelatihan
                             LEFT JOIN (
                                 SELECT
@@ -1839,7 +1860,7 @@
                             (
                                 (gp + susulan + sisa_cuti +  pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + lemburbersih + pph21_back + auto_kompensasi_ak + koreksi_lembur + koreksi_status)
                                 -
-                                (pot_jam + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + pot_upah+ pot_bpjs_fix+ pot_psiun)
+                                (pot_jam + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + pot_lain + pot_upah+ pot_bpjs_fix+ pot_psiun)
                             ) AS gaji_bersih,
 
                             (
@@ -1900,6 +1921,7 @@
                         pot_pinjaman,
                         pot_klaim,
                         pot_denda_apd,
+                        pot_lain,
                         bruto * (c.persen / 100) AS pot_pph21,
                         FLOOR(bruto - (bruto * (c.persen / 100) )) AS gaji_bersih,
                         FLOOR(
