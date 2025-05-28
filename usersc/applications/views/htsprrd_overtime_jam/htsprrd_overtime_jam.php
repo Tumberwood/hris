@@ -452,6 +452,15 @@
 				},
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
+					
+					//coding untuk search auto sesuai key
+
+					// if (id_hem_get > 0) {
+					// 	this.api().search("Makan").draw();
+
+					// 	// Juga set value input box search supaya kelihatan
+					// 	$('#tbltagihan_filter input').val("Makan");
+					// }
 				}
 			} );
 
