@@ -126,8 +126,8 @@
 		$pivotData = array_map(function ($row) use ($sqlData, $start_date, $end_date) {
 			$kode = $row['kode'];
 			$sqlRow = $sqlData[$kode] ?? ["al" => 0, "s2" => 0, "s3" => 0, "it" => 0, "lb" => 0];
-			$total_xl = $row['al'] + $row['s2'] + $row['s3'] + $row['it'] + $row['lb'];
-			$total_db = $sqlRow['al'] + $sqlRow['s2'] + $sqlRow['s3'] + $sqlRow['it'] + $sqlRow['lb'];
+			$total_xl = $row['al'] + $row['s2'] + $row['s3'] + $row['it'] + $row['ip_pot'] + $row['lb'];
+			$total_db = $sqlRow['al'] + $sqlRow['s2'] + $sqlRow['s3'] + $sqlRow['it'] + $sqlRow['ip_pot'] + $sqlRow['lb'];
 	
 			if ($total_xl == $total_db) {
 				$is_tidak_sesuai = 0;
