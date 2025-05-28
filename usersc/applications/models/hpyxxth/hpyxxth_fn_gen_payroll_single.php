@@ -213,7 +213,7 @@
                             -- gaji pokok
                             IFNULL( 
                                 if( c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal), 0,
-                                    if(c.tanggal_masuk BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-02") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))), 
+                                    if(c.tanggal_masuk BETWEEN DATE_FORMAT(last_day(:tanggal_akhir), "%Y-%m-02") AND LAST_DAY(last_day(:tanggal_akhir)), 
                                         if(ifnull(is_perubahan_hk,0) > 0,  
                                             if((hk_lama_report * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)) > if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp),
                                                 0,
@@ -229,7 +229,7 @@
                                             ,
                                             (hari_kerja / if(c.grup_hk = 1, 21, 25)) * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)
                                         ),
-                                        if(c.tanggal_keluar BETWEEN DATE_FORMAT(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir)), "%Y-%m-01") AND LAST_DAY(( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))), 
+                                        if(c.tanggal_keluar BETWEEN DATE_FORMAT(last_day(:tanggal_akhir), "%Y-%m-01") AND LAST_DAY(last_day(:tanggal_akhir)), 
                                             if(ifnull(is_perubahan_hk,0) > 0, 
                                                 if((hk_lama_report * if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp)) > if(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp),
                                                     0,
@@ -659,7 +659,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = prr.id_hemxxmh
-                                    WHERE tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))
+                                    WHERE tanggal BETWEEN :tanggal_awal AND (:tanggal_akhir)
                                     GROUP BY id_hemxxmh
                                 ) lembur_sum_table
                             ) lembur_calc ON lembur_calc.id_hemxxmh = a.id_hemxxmh
@@ -707,7 +707,7 @@
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
-                                    WHERE tanggal BETWEEN :tanggal_awal AND ( if(c.tanggal_keluar between :tanggal_akhir and last_day(:tanggal_akhir) and is_terminasi = 1 and c.id_heyxxmh = 1, c.tanggal_keluar, :tanggal_akhir))
+                                    WHERE tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                         AND is_pot_upah = 1
                                     GROUP BY id_hemxxmh
                                 ) c_report_pot_upah
