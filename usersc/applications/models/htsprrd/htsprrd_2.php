@@ -90,6 +90,8 @@
 			Field::inst( 'htsprrd.pot_hk' ),
 			Field::inst( 'htsprrd.durasi_lembur_final' ),
 			Field::inst( 'htsprrd.is_makan' ),
+			Field::inst( 'htsprrd.is_pot_upah' ),
+			Field::inst( 'htsprrd.is_pot_premi' ),
 
 			Field::inst( 'htsprrd.jam_awal_lembur_libur' ),
 			Field::inst( 'htsprrd.jam_akhir_lembur_libur' ),

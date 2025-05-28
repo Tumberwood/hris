@@ -236,37 +236,31 @@
 					{ data: "htlxxmh.nama" },
 					{ 
 						data: "htlxxmh.is_potongcuti" ,
-						render: function (data){
-							if (data == 0){
-								return '<i data-toggle="tooltip" data-placement="top" title="Tidak" class="fa fa-remove text-danger"></i>';
-							}else if(data == 1){
-								return '<i data-toggle="tooltip" data-placement="top" title="Ya" class="fa fa-check text-navy"></i>';
-							}else{
-								return '<i data-toggle="tooltip" data-placement="top" title="Invalid Data" class="fa fa-exclamation-triangle text-muted"></i>';
+						render: function (data, type, row) {
+							if (data == 1	) {
+								return `<span class="badge bg-primary">Ya</span>`;
+							} else {
+								return `<span class="badge bg-danger">Tidak</span>`;
 							}
 						}
 					},
 					{ 
 						data: "htlxxmh.is_potongupah" ,
-						render: function (data){
-							if (data == 0){
-								return '<i data-toggle="tooltip" data-placement="top" title="Tidak" class="fa fa-remove text-danger"></i>';
-							}else if(data == 1){
-								return '<i data-toggle="tooltip" data-placement="top" title="Ya" class="fa fa-check text-navy"></i>';
-							}else{
-								return '<i data-toggle="tooltip" data-placement="top" title="Invalid Data" class="fa fa-exclamation-triangle text-muted"></i>';
+						render: function (data, type, row) {
+							if (data == 1	) {
+								return `<span class="badge bg-primary">Ya</span>`;
+							} else {
+								return `<span class="badge bg-danger">Tidak</span>`;
 							}
 						}
 					},
 					{ 
 						data: "htlxxmh.is_cuti_khusus" ,
-						render: function (data){
-							if (data == 0){
-								return '<i data-toggle="tooltip" data-placement="top" title="Tidak" class="fa fa-remove text-danger"></i>';
-							}else if(data == 1){
-								return '<i data-toggle="tooltip" data-placement="top" title="Ya" class="fa fa-check text-navy"></i>';
-							}else{
-								return '<i data-toggle="tooltip" data-placement="top" title="Invalid Data" class="fa fa-exclamation-triangle text-muted"></i>';
+						render: function (data, type, row) {
+							if (data == 1	) {
+								return `<span class="badge bg-primary">Ya</span>`;
+							} else {
+								return `<span class="badge bg-danger">Tidak</span>`;
 							}
 						}
 					},

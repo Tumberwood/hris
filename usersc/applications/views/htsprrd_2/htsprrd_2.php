@@ -145,6 +145,8 @@
 												<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
 												<th class="text-center text-danger" colspan=3>Potongan Jam Overtime</th>
 												<th class="text-center text-danger" colspan=2>Potongan Jam</th>
+												<th rowspan=2>Pot Upah</th>
+												<th rowspan=2>Pot Premi</th>
 
 											</tr>
 											<tr>
@@ -601,7 +603,27 @@
 					{ 
 						data: "htsprrd.pot_jam",
 						class: "text-right"
-					}
+					},
+					{ 
+						data: "htsprrd.is_pot_upah",
+						render: function (data, type, row) {
+							if (data == 1	) {
+								return `<span class="badge bg-primary">Ya</span>`;
+							} else {
+								return `<span class="badge bg-danger">Tidak</span>`;
+							}
+						}
+					},
+					{ 
+						data: "htsprrd.is_pot_premi",
+						render: function (data, type, row) {
+							if (data == 1	) {
+								return `<span class="badge bg-primary">Ya</span>`;
+							} else {
+								return `<span class="badge bg-danger">Tidak</span>`;
+							}
+						}
+					},
 					
 				],
 				buttons: [	
