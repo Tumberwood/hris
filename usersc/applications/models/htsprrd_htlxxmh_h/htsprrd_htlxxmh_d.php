@@ -51,7 +51,7 @@
 						s2,
 						s3,
 						it,
-						IFNULL(ip_tdk_pot + ip_pot,0) AS ip_pot,
+						IFNULL(ip_tdk_pot,0) + IFNULL(ip_pot,0) AS ip_pot,
 						lb
 					FROM htsprrd_htlxxmh_d a
 					LEFT JOIN hemjbmh b ON b.id_hemxxmh = a.id_hemxxmh
