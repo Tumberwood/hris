@@ -606,7 +606,7 @@
                                         GROUP BY id_hemxxmh
                                     ) AS subquery
                                 ) resign ON resign.id_hemxxmh = a.id_hemxxmh
-                                WHERE tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
+                                WHERE tanggal BETWEEN :tanggal_awal AND (:tanggal_akhir)
                                 GROUP BY a.id_hemxxmh
                             ) lembur_sum_table ON lembur_sum_table.id_hemxxmh = a.id_hemxxmh
                             
