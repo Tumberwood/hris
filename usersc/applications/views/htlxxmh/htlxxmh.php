@@ -26,6 +26,7 @@
                                 <th>Nama</th>
                                 <th>Potong Cuti</th>
                                 <th>Potong Upah</th>
+                                <th>Potong Premi</th>
                                 <th>Cuti Khusus</th>
                                 <th>Keterangan</th>
                             </tr>
@@ -108,6 +109,16 @@
 					{
 						label: "Potong Upah",
 						name: "htlxxmh.is_potongupah",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Ya", "value": 1 },
+							{ "label": "Tidak", "value": 0 }
+						]
+					},
+					{
+						label: "Potong Premi",
+						name: "htlxxmh.is_potong_premi",
 						type: "select",
 						placeholder : "Select",
 						options: [
@@ -246,6 +257,16 @@
 					},
 					{ 
 						data: "htlxxmh.is_potongupah" ,
+						render: function (data, type, row) {
+							if (data == 1	) {
+								return `<span class="badge bg-primary">Ya</span>`;
+							} else {
+								return `<span class="badge bg-danger">Tidak</span>`;
+							}
+						}
+					},
+					{ 
+						data: "htlxxmh.is_potong_premi" ,
 						render: function (data, type, row) {
 							if (data == 1	) {
 								return `<span class="badge bg-primary">Ya</span>`;
