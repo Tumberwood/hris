@@ -1467,56 +1467,70 @@
         $qu_pot_upah = $db
             ->raw()
             ->bind(':tanggal', $tanggal)
+            ->bind(':id_hemxxmh', $id_hemxxmh)
             ->exec('UPDATE htsprrd AS a
-                    LEFT JOIN (
-                        SELECT id_hemxxmh, tanggal
-                        FROM htssctd
-                        WHERE tanggal = :tanggal AND is_active = 1 AND is_pot_hk = 1
-                    ) AS b 
-                    ON b.id_hemxxmh = a.id_hemxxmh AND b.tanggal = a.tanggal
+                    INNER JOIN htssctd AS b 
+                        ON b.id_hemxxmh = a.id_hemxxmh 
+                        AND b.tanggal = a.tanggal
                     SET 
-                        a.cek = CASE 
-                            WHEN b.id_hemxxmh IS NOT NULL THEN 
-                                CASE 
-                                    WHEN a.clock_in IS NULL AND a.clock_out IS NULL THEN 0
-                                    WHEN a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL THEN a.cek
-                                    ELSE 1
-                                END 
-                            ELSE a.cek
-                        END,
-                        
-                        a.htlxxrh_kode = CASE 
-                            WHEN b.id_hemxxmh IS NOT NULL THEN 
-                                CASE 
-                                    WHEN a.clock_in IS NULL AND a.clock_out IS NULL THEN "Cuti Bersama - Potong Upah"
-                                    WHEN a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL THEN a.htlxxrh_kode
-                                    ELSE "Cuti Bersama - Potong Upah"
-                                END 
-                            ELSE a.htlxxrh_kode
-                        END,
-                        
-                        a.is_pot_upah = CASE 
-                            WHEN b.id_hemxxmh IS NOT NULL THEN 
-                                CASE 
-                                    WHEN a.clock_in IS NULL AND a.clock_out IS NULL THEN 1
-                                    WHEN a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL THEN 0
-                                    ELSE 1
-                                END 
-                            ELSE a.is_pot_upah
-                        END,
-                        
-                        a.is_pot_premi = CASE 
-                            WHEN b.id_hemxxmh IS NOT NULL THEN 
-                                CASE 
-                                    WHEN a.clock_in IS NULL AND a.clock_out IS NULL THEN 1
-                                    WHEN a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL THEN 0
-                                    ELSE 1
-                                END 
-                            ELSE a.is_pot_premi
-                        END
+                        cek = IF(
+                            a.clock_in IS NULL AND a.clock_out IS NULL, 
+                            0, 
+                            IF(
+                                a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+                                a.cek, 
+                                1
+                            )
+                        ),
+                        a.htlxxrh_kode = 
+                        IF(
+                            a.durasi_lembur_final > 0,
+                            "Lembur di hari Cuti Bersama",
+                            IF(
+                                a.clock_in IS NULL AND a.clock_out IS NULL, 
+                                "Cuti Bersama - Potong Upah", 
+                                IF(
+                                    a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+                                    a.htlxxrh_kode, 
+                                    "Cuti Bersama - Potong Upah"
+                                )
+                            ),
+                        ),
+                        a.is_pot_upah = 
+                        IF(
+                        -- Jika Cuti bersama dan ada Lembur, harusnya tidak dipotong upah dan premi
+                        IF(
+                                a.durasi_lembur_final > 0,
+                                0, -- maka is_pot = 0
+                                a.clock_in IS NULL AND a.clock_out IS NULL, 
+                                1, 
+                                IF(
+                                    a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+                                    a.cek, 
+                                    1
+                                )
+                            )
+                        ),
+                        a.is_pot_premi = 
+                        IF(
+                            -- Jika Cuti bersama dan ada Lembur, harusnya tidak dipotong upah dan premi
+                            IF(
+                                a.durasi_lembur_final > 0,
+                                0, -- maka is_pot = 0
+                                a.clock_in IS NULL AND a.clock_out IS NULL, 
+                                1, 
+                                IF(
+                                    a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
+                                    a.cek, 
+                                    1
+                                )
+                            )
+                        )
                     WHERE 
-                        a.tanggal = :tanggal;
-            
+                        a.id_hemxxmh = :id_hemxxmh 
+                        AND a.tanggal = :tanggal
+                        AND b.is_active = 1 
+                        AND b.is_pot_hk = 1;
             '
         );
 
