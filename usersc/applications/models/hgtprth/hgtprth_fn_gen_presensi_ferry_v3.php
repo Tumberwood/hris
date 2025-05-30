@@ -1494,14 +1494,14 @@
                                     a.htlxxrh_kode, 
                                     "Cuti Bersama - Potong Upah"
                                 )
-                            ),
+                            )
                         ),
                         a.is_pot_upah = 
-                        IF(
                         -- Jika Cuti bersama dan ada Lembur, harusnya tidak dipotong upah dan premi
                         IF(
-                                a.durasi_lembur_final > 0,
-                                0, -- maka is_pot = 0
+                            a.durasi_lembur_final > 0,
+                            0, -- maka is_pot = 0
+                            IF(
                                 a.clock_in IS NULL AND a.clock_out IS NULL, 
                                 1, 
                                 IF(
@@ -1512,11 +1512,11 @@
                             )
                         ),
                         a.is_pot_premi = 
+                        -- Jika Cuti bersama dan ada Lembur, harusnya tidak dipotong upah dan premi
                         IF(
-                            -- Jika Cuti bersama dan ada Lembur, harusnya tidak dipotong upah dan premi
+                            a.durasi_lembur_final > 0,
+                            0, -- maka is_pot = 0
                             IF(
-                                a.durasi_lembur_final > 0,
-                                0, -- maka is_pot = 0
                                 a.clock_in IS NULL AND a.clock_out IS NULL, 
                                 1, 
                                 IF(
