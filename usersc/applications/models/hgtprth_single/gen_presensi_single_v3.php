@@ -1473,21 +1473,6 @@
                                     1
                                 )
                             )
-                        ),
-                        a.is_pot_premi = 
-                        -- Jika Cuti bersama dan ada Lembur, harusnya tidak dipotong upah dan premi
-                        IF(
-                            a.durasi_lembur_final > 0,
-                            0, -- maka is_pot = 0
-                            IF(
-                                a.clock_in IS NULL AND a.clock_out IS NULL, 
-                                1, 
-                                IF(
-                                    a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
-                                    a.cek, 
-                                    1
-                                )
-                            )
                         )
                     WHERE 
                         a.id_hemxxmh = :id_hemxxmh 
