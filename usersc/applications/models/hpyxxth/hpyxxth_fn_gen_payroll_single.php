@@ -2367,134 +2367,136 @@
                     WHERE b.is_single = 0 AND b.tanggal_awal = :tanggal_awal AND  b.tanggal_akhir = :tanggal_akhir AND a.id_hemxxmh = :id_hemxxmh_select
         ');
         $rs_payroll_d = $qs_payroll_d->fetch();
-        $id_payroll_detail = $rs_payroll_d['id_payroll_detail'];
-        $id_hpyxxth_tujuan = $rs_payroll_d['id_hpyxxth_tujuan'];
+        if (!empty($rs_payroll_d)) {
+            $id_payroll_detail = $rs_payroll_d['id_payroll_detail'];
+            $id_hpyxxth_tujuan = $rs_payroll_d['id_hpyxxth_tujuan'];
 
-        //delete payroll detail lama untuk karyawan terpilih dan periode terpilih sesuai header
-        $qd_hpyemtd = $db
-            ->query('delete', 'hpyemtd')
-            ->where('id',$id_payroll_detail)
-            ->exec();
+            //delete payroll detail lama untuk karyawan terpilih dan periode terpilih sesuai header
+            $qd_hpyemtd = $db
+                ->query('delete', 'hpyemtd')
+                ->where('id',$id_payroll_detail)
+                ->exec();
 
-        //DELETE PPH LAMA
-        $qd_hppphth = $db
-            ->query('delete', 'hppphth')
-            ->where('id_hpyemtd',$id_payroll_detail)
-            ->exec();
-        
-        //INSERT KE DETAIL TUJUAN, INI SEPERTI UPDATE DATA DETAIL PAYROLL PEGAWAI
-        $qs_hpyemtd_tujuan = $db
-            ->raw()
-            ->bind(':id_hpyxxth_tujuan', $id_hpyxxth_tujuan) //INI HEADER TUJUAN
-            ->bind(':id_payroll_single', $id_payroll_single) //INI LAST INSERT
-            ->exec('INSERT INTO hpyemtd (
-                        id_hpyxxth, 
-                        id_hemxxmh, 
-                        gp,
-                        t_jab,
-                        var_cost,
-                        fix_cost,
-                        premi_abs,
-                        jkk,
-                        jkm,
-                        trm_jkkjkm,
-                        
-                        lembur15,
-                        lembur2,
-                        lembur3,
-                        lembur4,
+            //DELETE PPH LAMA
+            $qd_hppphth = $db
+                ->query('delete', 'hppphth')
+                ->where('id_hpyemtd',$id_payroll_detail)
+                ->exec();
+            
+            //INSERT KE DETAIL TUJUAN, INI SEPERTI UPDATE DATA DETAIL PAYROLL PEGAWAI
+            $qs_hpyemtd_tujuan = $db
+                ->raw()
+                ->bind(':id_hpyxxth_tujuan', $id_hpyxxth_tujuan) //INI HEADER TUJUAN
+                ->bind(':id_payroll_single', $id_payroll_single) //INI LAST INSERT
+                ->exec('INSERT INTO hpyemtd (
+                            id_hpyxxth, 
+                            id_hemxxmh, 
+                            gp,
+                            t_jab,
+                            var_cost,
+                            fix_cost,
+                            premi_abs,
+                            jkk,
+                            jkm,
+                            trm_jkkjkm,
+                            
+                            lembur15,
+                            lembur2,
+                            lembur3,
+                            lembur4,
 
-                        lembur15_final,
-                        lembur2_final,
-                        lembur3_final,
-                        lembur4_final,
+                            lembur15_final,
+                            lembur2_final,
+                            lembur3_final,
+                            lembur4_final,
 
-                        rp_lembur15,
-                        rp_lembur2,
-                        rp_lembur3,
-                        rp_lembur4,
+                            rp_lembur15,
+                            rp_lembur2,
+                            rp_lembur3,
+                            rp_lembur4,
 
-                        jam_lembur,
-                        jam_lembur_final,
-                        lemburbersih,
-                        pph21_back,
-                        kompensasi_ak,
-                        koreksi_lembur,
-                        koreksi_status,
-                        pot_makan,
-                        pot_jkkjkm,
-                        pot_jht,
-                        pot_upah,
-                        pot_jam,
-                        pot_bpjs,
-                        pot_psiun,
-                        pot_pinjaman,
-                        pot_klaim,
-                        pot_denda_apd,
-                        pot_pph21,
-                        pot_lain,
-                        gaji_bersih,
-                        bulat,
-                        gaji_terima,
-                        pendapatan_lain,
-                        overtime_susulan,
-                        sisa_cuti
-                    )
-                    SELECT
-                        :id_hpyxxth_tujuan, 
-                        id_hemxxmh, 
-                        gp,
-                        t_jab,
-                        var_cost,
-                        fix_cost,
-                        premi_abs,
-                        jkk,
-                        jkm,
-                        trm_jkkjkm,
-                        
-                        lembur15,
-                        lembur2,
-                        lembur3,
-                        lembur4,
+                            jam_lembur,
+                            jam_lembur_final,
+                            lemburbersih,
+                            pph21_back,
+                            kompensasi_ak,
+                            koreksi_lembur,
+                            koreksi_status,
+                            pot_makan,
+                            pot_jkkjkm,
+                            pot_jht,
+                            pot_upah,
+                            pot_jam,
+                            pot_bpjs,
+                            pot_psiun,
+                            pot_pinjaman,
+                            pot_klaim,
+                            pot_denda_apd,
+                            pot_pph21,
+                            pot_lain,
+                            gaji_bersih,
+                            bulat,
+                            gaji_terima,
+                            pendapatan_lain,
+                            overtime_susulan,
+                            sisa_cuti
+                        )
+                        SELECT
+                            :id_hpyxxth_tujuan, 
+                            id_hemxxmh, 
+                            gp,
+                            t_jab,
+                            var_cost,
+                            fix_cost,
+                            premi_abs,
+                            jkk,
+                            jkm,
+                            trm_jkkjkm,
+                            
+                            lembur15,
+                            lembur2,
+                            lembur3,
+                            lembur4,
 
-                        lembur15_final,
-                        lembur2_final,
-                        lembur3_final,
-                        lembur4_final,
+                            lembur15_final,
+                            lembur2_final,
+                            lembur3_final,
+                            lembur4_final,
 
-                        rp_lembur15,
-                        rp_lembur2,
-                        rp_lembur3,
-                        rp_lembur4,
+                            rp_lembur15,
+                            rp_lembur2,
+                            rp_lembur3,
+                            rp_lembur4,
 
-                        jam_lembur,
-                        jam_lembur_final,
-                        lemburbersih,
-                        pph21_back,
-                        kompensasi_ak,
-                        koreksi_lembur,
-                        koreksi_status,
-                        pot_makan,
-                        pot_jkkjkm,
-                        pot_jht,
-                        pot_upah,
-                        pot_jam,
-                        pot_bpjs,
-                        pot_psiun,
-                        pot_pinjaman,
-                        pot_klaim,
-                        pot_denda_apd,
-                        pot_pph21,
-                        pot_lain,
-                        gaji_bersih,
-                        bulat,
-                        gaji_terima,
-                        pendapatan_lain,
-                        overtime_susulan,
-                        sisa_cuti
-                    FROM hpyemtd
-                    WHERE id = :id_payroll_single
-        ');
+                            jam_lembur,
+                            jam_lembur_final,
+                            lemburbersih,
+                            pph21_back,
+                            kompensasi_ak,
+                            koreksi_lembur,
+                            koreksi_status,
+                            pot_makan,
+                            pot_jkkjkm,
+                            pot_jht,
+                            pot_upah,
+                            pot_jam,
+                            pot_bpjs,
+                            pot_psiun,
+                            pot_pinjaman,
+                            pot_klaim,
+                            pot_denda_apd,
+                            pot_pph21,
+                            pot_lain,
+                            gaji_bersih,
+                            bulat,
+                            gaji_terima,
+                            pendapatan_lain,
+                            overtime_susulan,
+                            sisa_cuti
+                        FROM hpyemtd
+                        WHERE id = :id_payroll_single
+            ');
+        }
         
         $db->commit();
 
