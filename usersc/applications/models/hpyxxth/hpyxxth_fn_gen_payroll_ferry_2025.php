@@ -1865,20 +1865,19 @@
                                 (gp + susulan + sisa_cuti +  pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + lemburbersih + pph21_back + auto_kompensasi_ak + koreksi_lembur + koreksi_status)
                                 -
                                 (pot_jam + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + pot_lain + pot_upah+ pot_bpjs_fix+ pot_psiun)
-                            ) AS bruto
-                            -- ,
+                            ) AS bruto,
 
-                            -- (
-                            --     gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + pendapatan_lain + lemburbersih 
-                            --     + IFNULL(auto_kompensasi_ak, 0) + IFNULL(koreksi_lembur, 0) + IFNULL(koreksi_status, 0) 
-                            --     -- + IFNULL(thr, 0) 
-                            --     + IFNULL(sisa_cuti, 0)
-                            -- ) 
-                            -- - 
-                            -- (
-                            --     pot_jht + pot_upah+ pot_jam
-                            -- ) 
-                            -- AS bruto
+                            (
+                                gp + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + pendapatan_lain + lemburbersih 
+                                + IFNULL(auto_kompensasi_ak, 0) + IFNULL(koreksi_lembur, 0) + IFNULL(koreksi_status, 0) 
+                                -- + IFNULL(thr, 0) 
+                                + IFNULL(sisa_cuti, 0)
+                            ) 
+                            - 
+                            (
+                                pot_jht + pot_upah+ pot_jam
+                            ) 
+                            AS bruto
                             
                         FROM pay
                     )
