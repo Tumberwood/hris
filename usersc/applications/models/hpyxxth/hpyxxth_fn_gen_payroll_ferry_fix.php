@@ -1896,13 +1896,13 @@
         ');
                       
         // BEGIN GAJI POKOK
-        $qd_gp = $db
-            ->query('delete', 'hpyxxth')
-            ->where('tanggal_awal',$tanggal_awal)
-            ->where('tanggal_akhir',$tanggal_akhir)
-            ->where('is_single', 1)
-            // ->where('id_heyxxmh',$id_heyxxmh)
-        ->exec();
+        // $qd_gp = $db
+        //     ->query('delete', 'hpyxxth')
+        //     ->where('tanggal_awal',$tanggal_awal)
+        //     ->where('tanggal_akhir',$tanggal_akhir)
+        //     ->where('is_single', 1)
+        //     // ->where('id_heyxxmh',$id_heyxxmh)
+        // ->exec();
 
         // Insert Pegawai yang Resign pada periode payroll + 1 day s/d last day akhir payroll
         $qs_insert_exclude = $db
