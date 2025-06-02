@@ -65,7 +65,7 @@
 								Pegawai A diperpanjang kontraknya pada tanggal <strong>25 Jan 2025</strong>.
 
 								<br><br>
-								Meskipun periode payroll adalah dari <strong>23 Des 2024 sampai 22 Jan 2025</strong>, perhitungan proporsional tetap mengacu pada bulan kalender, yaitu:
+								Meskipun periode payroll adalah dari <strong>23 Des 2024 s/d 22 Jan 2025</strong>, perhitungan proporsional tetap mengacu pada bulan kalender, yaitu:
 
 								<br><strong>➡️ 1 Jan s/d 31 Jan 2025</strong>. Proporsional ini berlaku untuk NIK baru dan NIK lama yang melakukan perubahan status.
 
