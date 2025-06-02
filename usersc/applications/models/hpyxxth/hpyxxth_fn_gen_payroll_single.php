@@ -409,8 +409,8 @@
                                         hev.id_hevgrmh AS id_hevgrmh,
                                         IF(
                                             a.tanggal_keluar IS NULL,
-                                            TIMESTAMPDIFF(YEAR, a.tanggal_masuk, :tanggal_akhir),
-                                            TIMESTAMPDIFF(YEAR, a.tanggal_masuk, a.tanggal_keluar)
+                                            TIMESTAMPDIFF(MONTH, a.tanggal_masuk, "2025-01-22") / 12,
+                                            TIMESTAMPDIFF(MONTH, a.tanggal_masuk, a.tanggal_keluar) / 12
                                         ) AS masa_kerja_year
                                     FROM hemjbmh AS a
                                     LEFT JOIN hevxxmh AS hev ON hev.id = a.id_hevxxmh
