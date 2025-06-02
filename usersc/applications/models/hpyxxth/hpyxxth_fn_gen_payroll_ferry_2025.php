@@ -288,7 +288,11 @@
                                     hari_kerja / if(c.grup_hk = 1, 21, 25) * ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0),
                                     if(c.tanggal_keluar BETWEEN DATE_FORMAT(last_day(:tanggal_akhir), "%Y-%m-01") AND LAST_DAY(last_day(:tanggal_akhir)), 
                                         keluar_report / if(c.grup_hk = 1, 21, 25) * ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0),
-                                    ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0))
+                                        if(hem.nama IN ("AGUS PRIYO S", "JOKO PRASETYO", "NENDY PUTRATAMA", "PRAWOTO"),
+                                            IFNULL(nominal_jabatan, 0),
+                                            nominal_t_jab
+                                        )
+                                    )
                                 ),
                             0) AS t_jab,
                             
