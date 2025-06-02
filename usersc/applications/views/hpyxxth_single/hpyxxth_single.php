@@ -56,14 +56,20 @@
 								...dan kejadian tersebut terjadi <strong>antara tanggal 1 sampai akhir bulan dalam periode gajian</strong>.
 
 								<br><br>
-								<strong>Contoh:</strong> Pegawai A diperpanjang kontraknya pada tanggal 25 Januari 2025. Karena ini terjadi di bulan Januari, maka gajinya di bulan itu akan dihitung secara proporsional.
+								<strong>Contoh:</strong><br>
+								Pegawai A diperpanjang kontraknya pada tanggal <strong>25 Jan 2025</strong>.
+
+								<br><br>
+								Meskipun periode payroll adalah dari <strong>23 Des 2024 sampai 22 Jan 2025</strong>, perhitungan proporsional tetap mengacu pada bulan kalender, yaitu:
+
+								<br><strong>➡️ 1 Jan s/d 31 Jan 2025</strong>. Proporsional ini berlaku untuk NIK baru dan NIK lama yang melakukan perubahan status.
 
 								<br><br>
 								Komponen gaji yang dihitung secara proporsional:
 								<ul>
-								<li>Gaji Pokok</li>
-								<li>Tunjangan Jabatan</li>
-								<li>Fix Cost</li>
+									<li>Gaji Pokok</li>
+									<li>Tunjangan Jabatan</li>
+									<li>Fix Cost</li>
 								</ul>
 							</div>
 						</div>
