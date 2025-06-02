@@ -348,6 +348,7 @@
                                 CONCAT(absen.htlxxmh_kode, " [", absen.htlxxrh_kode, "] ") AS ket_absen,
                                 
                                 if(absen.is_potongupah = 1, 1, 0) is_pot_upah_absen,
+                                if(absen.is_potong_premi = 1, 1, 0) is_pot_premi_absen,
                                 jadwal.id_htsxxmh,
                                 is_potongupah,
 
@@ -551,6 +552,7 @@
                                     htlxxrh.is_approve AS is_approve,
                                     htlxxrh.saldo AS saldo,
                                     htlxxmh.is_potongupah AS is_potongupah,
+                                    htlxxmh.is_potong_premi AS is_potong_premi,
                                     htlxxmh.kode AS htlxxmh_kode,
                                     htlgrmh.kode AS htlgrmh_kode
                                 FROM htlxxrh
@@ -1105,7 +1107,7 @@
                                 
                                 -- POTONG PREMI
                                 CASE
-                                    WHEN is_pot_upah_absen = 1 THEN 1
+                                    WHEN is_pot_premi_absen = 1 THEN 1
                                     WHEN is_pot_premi_izin_in = 1 THEN 1
                                     WHEN is_pot_premi_izin_out = 1 THEN 1
                                     WHEN is_potong_premi_mid = 1 THEN 1
