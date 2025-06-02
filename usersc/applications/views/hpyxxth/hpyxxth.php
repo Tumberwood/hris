@@ -46,6 +46,32 @@
                         </thead>
                     </table>
 					<div class="tabs-container">
+						<div class="alert alert-warning">
+							<div class="d-flex justify-content-between align-items-start">
+								<strong>Informasi Proporsional Gaji</strong>
+								<button class="btn btn-sm btn-warning toggle-alert" type="button">−</button>
+							</div>
+							<div class="alert-content mt-2">
+								Gaji akan dihitung secara <strong>proporsional</strong> (dibagi sesuai jumlah hari kerja bukan OFF) untuk pegawai yang:
+								<ul>
+								<li>Baru masuk kerja</li>
+								<li>Berubah status (misalnya promosi)</li>
+								<li>Berhenti kerja (resign atau terminasi)</li>
+								</ul>
+								...dan kejadian tersebut terjadi <strong>antara tanggal 1 sampai akhir bulan dalam periode gajian</strong>.
+
+								<br><br>
+								<strong>Contoh:</strong> Pegawai A diperpanjang kontraknya pada tanggal 25 Januari 2025. Karena ini terjadi di bulan Januari, maka gajinya di bulan itu akan dihitung secara proporsional.
+
+								<br><br>
+								Komponen gaji yang dihitung secara proporsional:
+								<ul>
+								<li>Gaji Pokok</li>
+								<li>Tunjangan Jabatan</li>
+								<li>Fix Cost</li>
+								</ul>
+							</div>
+						</div>
 						<ul class="nav nav-tabs" role="tablist">
 							<li><a class="nav-link active" data-toggle="tab" href="#tabhpyemtd"> All</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_reg"> KBM Reguler</a></li>
@@ -886,6 +912,12 @@
 		
 
 		$(document).ready(function() {
+			$('.toggle-alert').click(function () {
+				var $content = $(this).closest('.alert').find('.alert-content');
+				$content.slideToggle(); // smooth hide/show
+				var current = $(this).text();
+				$(this).text(current === '−' ? '+' : '−');
+			});
 			
 			//start datatables editor
 			edthpyxxth = new $.fn.dataTable.Editor( {
