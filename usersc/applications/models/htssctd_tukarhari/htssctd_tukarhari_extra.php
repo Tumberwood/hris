@@ -44,7 +44,7 @@
 								AND a.id_htsxxmh <> 1 
 								AND a.is_active = 1
 								AND b.id_hosxxmh = :id_hosxxmh
-								(c.is_tukar <> -9 OR c.is_tukar IS NULL)
+								AND (c.is_tukar <> -9 OR c.is_tukar IS NULL)
 							;
 							'
 				);
@@ -97,7 +97,7 @@
 								AND a.id_htsxxmh <> 1 
 								AND a.is_active = 1
 								AND b.id_hosxxmh = :id_hosxxmh
-								(c.is_tukar <> -9 OR c.is_tukar IS NULL)
+								AND (c.is_tukar <> -9 OR c.is_tukar IS NULL)
 							;
 							'
 				);
