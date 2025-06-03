@@ -185,8 +185,8 @@
 	
 									CASE
 										WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir <= "12:00:00"
-										THEN CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", TIME(DATE_SUB(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE)))
-										ELSE CONCAT(:tanggal, " ", TIME(DATE_SUB(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_akhir_out MINUTE)))
+										THEN DATE_SUB(CONCAT(DATE_ADD(:tanggal, INTERVAL 1 DAY), " ", TIME(htsxxmh.jam_akhir)), INTERVAL htsxxmh.menit_toleransi_awal_out MINUTE)
+										ELSE CONCAT(:tanggal, " ", TIME(DATE_SUB(htsxxmh.jam_akhir, INTERVAL htsxxmh.menit_toleransi_awal_out MINUTE)))
 									END AS tanggaljam_akhir_t1,
 									CASE
 										WHEN htsxxmh.kode like "malam%" AND htsxxmh.jam_akhir <= "12:00:00"
