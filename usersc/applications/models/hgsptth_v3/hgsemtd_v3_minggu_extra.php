@@ -104,8 +104,8 @@
 
 							CASE
 								WHEN d.kode like "malam%" AND d.jam_akhir <= "12:00:00"
-								THEN CONCAT(DATE_ADD(c.minggu, INTERVAL 1 DAY), " ", TIME(DATE_SUB(d.jam_akhir, INTERVAL d.menit_toleransi_akhir_out MINUTE)))
-								ELSE CONCAT(c.minggu, " ", TIME(DATE_SUB(d.jam_akhir, INTERVAL d.menit_toleransi_akhir_out MINUTE)))
+								THEN DATE_SUB(CONCAT(DATE_ADD(c.minggu, INTERVAL 1 DAY), " ", TIME(d.jam_akhir)), INTERVAL d.menit_toleransi_awal_out MINUTE)
+								ELSE CONCAT(c.minggu, " ", TIME(DATE_SUB(d.jam_akhir, INTERVAL d.menit_toleransi_awal_out MINUTE)))
 							END AS tanggaljam_akhir_t1,
 							CASE
 								WHEN d.kode like "malam%" AND d.jam_akhir <= "12:00:00"
@@ -253,8 +253,8 @@
 
 								CASE
 									WHEN d.kode like "malam%" AND d.jam_akhir <= "12:00:00"
-									THEN CONCAT(DATE_ADD(c.minggu, INTERVAL 1 DAY), " ", TIME(DATE_SUB(d.jam_akhir, INTERVAL d.menit_toleransi_akhir_out MINUTE)))
-									ELSE CONCAT(c.minggu, " ", TIME(DATE_SUB(d.jam_akhir, INTERVAL d.menit_toleransi_akhir_out MINUTE)))
+									THEN DATE_SUB(CONCAT(DATE_ADD(c.minggu, INTERVAL 1 DAY), " ", TIME(d.jam_akhir)), INTERVAL d.menit_toleransi_awal_out MINUTE)
+									ELSE CONCAT(c.minggu, " ", TIME(DATE_SUB(d.jam_akhir, INTERVAL d.menit_toleransi_awal_out MINUTE)))
 								END AS tanggaljam_akhir_t1,
 								CASE
 									WHEN d.kode like "malam%" AND d.jam_akhir <= "12:00:00"
