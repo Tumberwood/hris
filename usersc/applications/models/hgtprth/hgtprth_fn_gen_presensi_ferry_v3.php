@@ -965,7 +965,7 @@
                             LEFT JOIN (
                                 SELECT
                                     id,
-                                    COUNT(DISTINCT tanggal_jam) AS ceklok_makan
+                                    COUNT(DISTINCT tanggal_jam_ceklok) AS ceklok_makan
                                 FROM (
                                     SELECT DISTINCT
                                         a.id,
