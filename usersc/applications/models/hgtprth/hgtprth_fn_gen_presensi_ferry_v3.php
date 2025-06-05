@@ -1003,6 +1003,7 @@
                                         -- AND TIME(a.tanggaljam_awal_istirahat) = "00:00:00"
                                     GROUP BY a.id
                                 ) union_makan
+                                GROUP BY id
                             ) AS cek_makan ON cek_makan.id = jadwal.id
 
                             WHERE b.is_checkclock = 1 AND a.is_active = 1 AND b.id_hemxxmh IN '.$id_hemxxmh.' 
