@@ -927,30 +927,22 @@
                     -- ceklok makan
                     LEFT JOIN (
                         SELECT
-                        *
+                            id,
+                            COUNT(DISTINCT tanggal_jam_ceklok) AS ceklok_makan
                         FROM (
-                            SELECT
+                            SELECT DISTINCT
                                 a.id,
-                                -- COUNT(c.kode) ceklok_makan,
-                                IF(CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR), 1, 0) ceklok_makan,
+                                CONCAT(c.tanggal, " ", c.jam) tanggal_jam_ceklok,
                                 c.nama,
                                 c.kode,
                                 c.jam
                             FROM htssctd AS a
                             INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
-                            LEFT JOIN (
-                                SELECT DISTINCT
-                                    cl.kode,
-                                    cl.nama,
-                                    cl.jam,
-                                    cl.tanggal
-                                FROM htsprtd cl
-                                WHERE cl.tanggal BETWEEN :tanggal AND DATE_ADD(:tanggal, INTERVAL 1 DAY) AND cl.nama IN ("makan", "makan manual")
-                            ) AS c ON c.kode = b.kode_finger
+                            INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                             WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                                AND c.nama IN ("makan", "makan manual")
+                                AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_t1 AND a.tanggaljam_akhir_t2
                                 AND a.id_hemxxmh = :id_hemxxmh
-                                AND a.id_htsxxmh <> 1
                             GROUP BY a.id
 
                             -- MAKAN
@@ -958,7 +950,7 @@
 
                             SELECT DISTINCT
                                 a.id,
-                                IF(c.jam is not null, 1, 0) ceklok_makan,
+                                CONCAT(c.tanggal, " ", c.jam) tanggal_jam_ceklok,
                                 c.nama,
                                 c.kode,
                                 c.jam
@@ -974,7 +966,6 @@
                                 -- AND TIME(a.tanggaljam_awal_istirahat) = "00:00:00"
                             GROUP BY a.id
                         ) union_makan
-                        GROUP BY id
                     ) AS cek_makan ON cek_makan.id = jadwal.id
 
                     WHERE b.is_checkclock = 1 AND a.is_active = 1 AND b.id_hemxxmh = :id_hemxxmh 
