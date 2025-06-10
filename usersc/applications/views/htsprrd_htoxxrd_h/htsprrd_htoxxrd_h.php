@@ -80,7 +80,7 @@
 
 <!-- Breakdown -->
 <div class="modal fade" id="modalBreakdown" tabindex="-1" role="dialog" aria-labelledby="myModal1Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       
       <div class="modal-header">
@@ -92,31 +92,37 @@
 
       <div class="modal-body">
 		<div class="table-responsive" id="proteksi">
-			<h3>Checkclock Makan</h3>
-			<table id="ceklok_makan" class="table table-striped table-bordered table-hover nowrap" width="100%">
-				<thead>
-					<tr>
-						<th>Tanggal</th>
-						<th>NIP</th>
-						<th>Nama</th>
-						<th>Mesin</th>
-						<th>Jam</th>
-						<th>keterangan</th>
-					</tr>
-				</thead>
-			</table>
-			<h3>Report Presensi</h3>
-			<table id="pot_makan" class="table table-striped table-bordered table-hover nowrap" width="100%">
-				<thead>
-					<tr>
-						<th>Tanggal</th>
-						<th>NIP</th>
-						<th>Nama</th>
-						<th>Jadwal</th>
-						<th>Potongan Makan</th>
-					</tr>
-				</thead>
-			</table>
+			<div class="row">
+				<div class="col-12 col-lg-6 col-md-6 col-sm-12">
+					<h3>Checkclock Makan</h3>
+					<table id="ceklok_makan" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						<thead>
+							<tr>
+								<th>Tanggal</th>
+								<th>NIP</th>
+								<th>Nama</th>
+								<th>Mesin</th>
+								<th>Jam</th>
+								<th>keterangan</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div class="col-12 col-lg-6 col-md-6 col-sm-12">
+					<h3>Report Presensi</h3>
+					<table id="pot_makan" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						<thead>
+							<tr>
+								<th>Tanggal</th>
+								<th>NIP</th>
+								<th>Nama</th>
+								<th>Jadwal</th>
+								<th>Pot Makan</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
 		</div>
       </div>
 
