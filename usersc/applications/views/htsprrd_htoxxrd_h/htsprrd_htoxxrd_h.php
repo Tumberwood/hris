@@ -553,7 +553,7 @@
 					?>
 					// END breaking generate button
 					,{
-						text: 'Breakdown Pot Makan',
+						text: '<i class="fa fa-list"></i> Pot Makan',
 						name: 'btnBreakdown',
 						className: 'btn btn-outline',
 						titleAttr: 'Breakdown Pot Makan',
