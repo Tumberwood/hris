@@ -106,7 +106,7 @@
 				</thead>
 			</table>
 			<br>
-			<h3>Potongan Makan Report Presensi</h3>
+			<h3>Report Presensi</h3>
 			<table id="pot_makan" class="table table-striped table-bordered table-hover nowrap" width="100%">
 				<thead>
 					<tr>
