@@ -103,7 +103,6 @@
 								<th>Nama</th>
 								<th>Mesin</th>
 								<th>Jam</th>
-								<th>keterangan</th>
 							</tr>
 						</thead>
 					</table>

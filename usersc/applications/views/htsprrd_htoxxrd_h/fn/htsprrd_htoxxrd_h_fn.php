@@ -43,7 +43,6 @@
                 { data: 'nama' },
                 { data: 'mesin' },
                 { data: 'jam' },
-                { data: 'keterangan' },
             ],
             destroy: true, // Reinitialize allowed
             responsive: false, // Enable responsive layout
