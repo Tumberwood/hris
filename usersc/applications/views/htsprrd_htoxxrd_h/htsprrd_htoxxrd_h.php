@@ -105,7 +105,6 @@
 					</tr>
 				</thead>
 			</table>
-			<br>
 			<h3>Report Presensi</h3>
 			<table id="pot_makan" class="table table-striped table-bordered table-hover nowrap" width="100%">
 				<thead>
@@ -113,6 +112,7 @@
 						<th>Tanggal</th>
 						<th>NIP</th>
 						<th>Nama</th>
+						<th>Jadwal</th>
 						<th>Potongan Makan</th>
 					</tr>
 				</thead>

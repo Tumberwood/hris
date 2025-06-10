@@ -77,6 +77,7 @@
                 { data: 'tanggal' },
                 { data: 'kode' },
                 { data: 'nama' },
+                { data: 'jadwal' },
                 { data: 'is_makan' },
             ],
             destroy: true, // Reinitialize allowed

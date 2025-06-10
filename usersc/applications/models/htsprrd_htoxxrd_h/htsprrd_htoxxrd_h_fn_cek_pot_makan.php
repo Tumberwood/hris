@@ -25,6 +25,7 @@
 		->exec('SELECT
 					b.kode,
 					b.nama,
+					a.st_jadwal jadwal,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
 					is_makan
 				FROM htsprrd a
