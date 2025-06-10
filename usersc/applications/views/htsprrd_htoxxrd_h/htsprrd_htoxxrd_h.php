@@ -78,6 +78,56 @@
     </div>
 </div>
 
+<!-- Breakdown -->
+<div class="modal fade" id="modalBreakdown" tabindex="-1" role="dialog" aria-labelledby="myModal1Label" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModal1Label">Breakdown Potongan Makan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+		<div class="table-responsive" id="proteksi">
+			<h3>Checkclock Makan</h3>
+			<table id="ceklok_makan" class="table table-striped table-bordered table-hover nowrap" width="100%">
+				<thead>
+					<tr>
+						<th>Tanggal</th>
+						<th>NIP</th>
+						<th>Nama</th>
+						<th>Mesin</th>
+						<th>Jam</th>
+						<th>keterangan</th>
+					</tr>
+				</thead>
+			</table>
+			<br>
+			<h3>Potongan Makan Report Presensi</h3>
+			<table id="pot_makan" class="table table-striped table-bordered table-hover nowrap" width="100%">
+				<thead>
+					<tr>
+						<th>Tanggal</th>
+						<th>NIP</th>
+						<th>Nama</th>
+						<th>Potongan Makan</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
@@ -412,6 +462,7 @@
 				tbl_details = [tblhtsprrd_htoxxrd_d];
 				CekDeselectHeaderHD(tblhtsprrd_htoxxrd_h, tbl_details);
 				tblhtsprrd_htoxxrd_h.button('btnUpload:name').disable();
+				tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').disable();
 			} );
 			
 // --------- start _detail --------------- //
@@ -501,6 +552,16 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					,{
+						text: 'Breakdown Pot Makan',
+						name: 'btnBreakdown',
+						className: 'btn btn-outline',
+						titleAttr: 'Breakdown Pot Makan',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							$('#modalBreakdown').modal('show');
+						}
+					}
 				],
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
@@ -541,6 +602,26 @@
 			} );
 			
 			tblhtsprrd_htoxxrd_d.searchPanes.container().appendTo( '#searchPanes1' );
+			tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').disable();
+			tblhtsprrd_htoxxrd_d.on( 'select', function( e, dt, type, indexes ) {
+				data_htsprrd_htoxxrd_d = tblhtsprrd_htoxxrd_d.row( { selected: true } ).data();
+				id_hemxxmh       = data_htsprrd_htoxxrd_d.id_hemxxmh;
+				start_date       = data_htsprrd_htoxxrd_d.start_date;
+				end_date       = data_htsprrd_htoxxrd_d.end_date;
+				kode       = data_htsprrd_htoxxrd_d.kode;
+				kode_finger = kode.slice(-4);
+				tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').enable();
+				breakdownMakan(id_hemxxmh, kode_finger, start_date, end_date);
+			} );
+			
+			tblhtsprrd_htoxxrd_d.on( 'deselect', function () {
+				// reload dipanggil di function CekDeselectHeader
+				id_hemxxmh = 0;
+				start_date = '';
+				end_date = '';
+				kode_finger = '';
+				tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').disable();
+			} );
 
 // --------- end _detail --------------- //		
 			
