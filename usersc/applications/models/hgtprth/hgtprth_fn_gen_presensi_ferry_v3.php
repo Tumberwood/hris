@@ -1318,7 +1318,7 @@
 
                             FROM hitung_lembur
                         )
-                        SELECT
+                        SELECT DISTINCT
                             id_hemxxmh,
                             keterangan,
                             kode_finger,
