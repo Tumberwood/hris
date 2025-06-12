@@ -12,6 +12,12 @@
     $nama_tabels_d[0] = 'htsprrd_htoxxrd_d';
 ?>
 
+<style>
+	.modal-xxl {
+		max-width: 95%; /* atau 1200px, 1400px sesuai kebutuhan */
+	}
+</style>
+
 <!-- begin content here -->
  
 <div class="modal" id="modalUpload" tabindex="-1" role="dialog" aria-hidden="true">
@@ -80,7 +86,7 @@
 
 <!-- Breakdown -->
 <div class="modal fade" id="modalBreakdown" tabindex="-1" role="dialog" aria-labelledby="myModal1Label" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
+  <div class="modal-dialog modal-xxl" role="document">
     <div class="modal-content">
       
       <div class="modal-header">
