@@ -14,7 +14,7 @@
 
 <style>
 	.modal-xxl {
-		max-width: 95%; /* atau 1200px, 1400px sesuai kebutuhan */
+		max-width: 90%; /* atau 1200px, 1400px sesuai kebutuhan */
 	}
 </style>
 
