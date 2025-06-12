@@ -675,8 +675,6 @@
                                         
                                         -- 22 Mar 2025, 0077 istirahat > 1 jam maka dipotong 1jam
                                         WHEN is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_ti, 0) THEN 0.5
-                                        
-                                        -- WHEN durasi_break_menit > 60 THEN 1
                                         ELSE 0
                                     END AS potongan_ti_jam
                                 FROM htoxxrd as hto
