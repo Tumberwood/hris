@@ -101,7 +101,7 @@
 			<div class="row">
 				<div class="col-12 col-lg-6 col-md-6 col-sm-12">
 					<h3>Checkclock Makan</h3>
-					<table id="ceklok_makan" class="table table-striped table-bordered table-hover" width="100%">
+					<table id="ceklok_makan" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
 							<tr>
 								<th>Tanggal</th>
