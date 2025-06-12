@@ -24,6 +24,7 @@
 		->bind(':end_date', $end_date)
 		->exec('SELECT
 					b.kode,
+					a.id_hemxxmh,
 					b.nama,
 					a.st_jadwal jadwal,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,

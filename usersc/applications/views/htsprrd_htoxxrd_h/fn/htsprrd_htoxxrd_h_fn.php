@@ -74,7 +74,13 @@
             },
             columns: [
                 { data: 'tanggal' },
-                { data: 'kode' },
+                {
+                    data: "kode",
+                    render: function(data, type, row) {
+                        return '<a target="_blank" href="../dashboard/d_hr_report_presensi.php?id_hemxxmh=' + row.id_hemxxmh + '&start_date=' + row.tanggal + '">' + data + '</a>';
+                    }
+
+                },
                 { data: 'nama' },
                 { data: 'jadwal' },
                 { data: 'is_makan' },
