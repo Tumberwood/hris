@@ -50,10 +50,10 @@
                     a.is_active = 1
                 AND a.tanggal = :tanggal
                 AND NOT (
-                    id_hetxxmh IN (99, 48) 
-                    OR id_heyxxmd = 1 
-                    OR (id_heyxxmd = 2 AND id_hesxxmh = 2) 
-                    OR (id_heyxxmd = 3 AND id_hesxxmh = 2)
+                    id_hetxxmh IN (99, 48) -- kecuali jabatan Petugas Satpam & Koordinator Satpam
+                    OR id_heyxxmd = 1  -- kecuali KBM
+                    OR (id_heyxxmd = 2 AND id_hesxxmh = 2)  -- staff dengan status kontrak
+                    OR (id_heyxxmd = 3 AND id_hesxxmh = 2) -- karyawan dengan status kontrak
                     OR id_htsxxmh = 1
                 );
             ');
