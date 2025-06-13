@@ -757,6 +757,7 @@
 					{
 						label: "Potong Makan <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.is_pot_makan",
+						fieldInfo: "Catering = Tidak dipotong makan.",
 						type: "select2",
 						def: 1,
 						options: [
