@@ -118,7 +118,7 @@
                     LEFT JOIN hgsemtd_v3 AS b ON b.id_hgsptth_v3 = a.id
                     LEFT JOIN hemxxmh c on c.id = b.id_hemxxmh
                     WHERE a.tanggal_awal = :dari_tanggal 
-                    AND c.id IS NOT null
+                    AND c.is_active = 1
                     AND a.is_active = 1 AND (b.id_htsxxmh = 1 OR b.shift = 5)
                 
             ');
