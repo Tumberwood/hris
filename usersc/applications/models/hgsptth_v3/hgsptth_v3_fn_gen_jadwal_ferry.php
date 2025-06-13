@@ -287,6 +287,7 @@
                     LEFT JOIN htsxxmh AS d ON d.id = a.id_htsxxmh
                     WHERE
                         b.id = :id_hgsptth_v3
+                        AND a.id_hemxxmh IS NOT NULL
                         AND a.nama = "sabtu" AND DAYOFWEEK(c.sabtu) = 7;
                     '
             );
@@ -399,6 +400,7 @@
                     LEFT JOIN htsxxmh AS d ON d.id = a.id_htsxxmh
                     WHERE
                         b.id = :id_hgsptth_v3
+                        AND a.id_hemxxmh IS NOT NULL
                         AND a.nama = "minggu" AND DAYOFWEEK(c.sabtu) = 1;
                     '
             );
@@ -511,6 +513,7 @@
                     LEFT JOIN htsxxmh AS d ON d.id = a.id_htsxxmh
                     WHERE
                         b.id = :id_hgsptth_v3 AND a.nama = "senjum"
+                        AND a.id_hemxxmh IS NOT NULL
                         AND DAYOFWEEK(c.sabtu) BETWEEN 2 AND 6;
                     '
             );
