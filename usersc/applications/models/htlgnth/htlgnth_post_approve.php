@@ -54,7 +54,7 @@
                     OR id_heyxxmd = 1  -- kecuali KBM
                     OR (id_heyxxmd = 2 AND id_hesxxmh = 2)  -- staff dengan status kontrak
                     OR (id_heyxxmd = 3 AND id_hesxxmh = 2) -- karyawan dengan status kontrak
-                    OR id_htsxxmh = 1
+                    OR id_htsxxmh = 1 -- off
                 );
             ');
 

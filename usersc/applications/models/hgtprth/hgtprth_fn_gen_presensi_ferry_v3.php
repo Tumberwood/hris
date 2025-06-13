@@ -1004,7 +1004,7 @@
                             ) AS cek_makan ON cek_makan.id = jadwal.id
 
                             WHERE b.is_checkclock = 1 AND a.is_active = 1 AND b.id_hemxxmh IN '.$id_hemxxmh.' 
-                            AND b.tanggal_masuk <= :tanggal AND (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= :tanggal)
+                            AND b.tanggal_masuk <= :tanggal AND (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= :tanggal )
                         ),
                         status_presensi AS (
                             SELECT
