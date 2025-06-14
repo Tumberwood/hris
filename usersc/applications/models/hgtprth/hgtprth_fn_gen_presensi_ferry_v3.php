@@ -730,6 +730,7 @@
                                                     )
                                                     AS durasi_break_menit
                                                 FROM htssctd AS a
+                                                INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
                                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
