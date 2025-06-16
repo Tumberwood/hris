@@ -835,6 +835,8 @@
 					if(action == 'create'){
 						id_htoemtd = 0;
 					}
+					tanggal_ymd = moment(tanggal).format('YYYY-MM-DD');
+					console.log(tanggal_ymd);
 					
 					$.ajax( {
 						url: '../../../helpers/validate_fn_unique.php',
@@ -842,9 +844,9 @@
 						type: 'POST',
 						async: false,
 						data: {
-							table_name: 'htoemtd',
-							nama_field: 'id_htoxxth,id_htotpmh,id_hemxxmh,id_htoxxth',
-							nama_field_value: id_htoxxth+','+id_htotpmh+','+id_hemxxmh+1,
+							table_name: 'htoemtd LEFT JOIN (select id as id_htoxxth,tanggal from htoxxth) htoxxth ON htoxxth.id_htoxxth = htoemtd.id_htoxxth',
+							nama_field: 'tanggal,id_htotpmh,id_hemxxmh',
+							nama_field_value: '"'+tanggal_ymd+'"'+','+id_htotpmh+','+id_hemxxmh,
 							id_transaksi: id_htoemtd
 						},
 						success: function ( json ) {
