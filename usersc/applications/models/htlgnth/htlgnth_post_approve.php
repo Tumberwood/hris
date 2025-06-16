@@ -177,6 +177,98 @@
                 ');
             //End flag is_pot_hk dan is_pot_cuti
             
+            // approve cuti bersama ditambahkan, LB untuk semua pegawai kontrak.
+            $qr_htsprrd = $db
+                ->raw()
+                ->bind(':tanggal', $rs_htlgnth["tanggal"])
+                ->exec('
+                    INSERT INTO htlxxrh
+                        (
+                            id_transaksi,
+                            id_htlgrmh,
+                            id_htlxxmh,
+                            id_hemxxmh,
+                            kode,
+                            tanggal,
+                            keterangan,
+                            jenis,
+                            htlxxmh_kode,
+                            htlgrmh_kode,
+                            jumlah,
+                            jam_awal,
+                            jam_akhir
+                        )
+                    SELECT
+                        ' . $_POST['id_transaksi_h'] . ',
+                        0,
+                        21,
+                        hem.id,
+                        "'.$rs_htlgnth["kode"].'",
+                        "'.$rs_htlgnth["tanggal"].'",
+                        "'.$rs_htlgnth["nama"].'",
+                        1,
+                        "LB",
+                        "LB",
+                        1,
+                        null,
+                        null
+                        FROM
+                            htssctd AS a
+                        LEFT JOIN hemxxmh AS hem ON hem.id = a.id_hemxxmh
+                        LEFT JOIN hemjbmh AS jb ON jb.id_hemxxmh = hem.id
+                        WHERE a.is_active = 1
+                            AND a.tanggal = :tanggal
+                            AND jb.id_hesxxmh = 2
+
+                ')
+            ;
+            
+            // jika freelance atau pelatihan, maka diinsertkan LR (Libur)
+            $qr_htsprrd = $db
+                ->raw()
+                ->bind(':tanggal', $rs_htlgnth["tanggal"])
+                ->exec('
+                    INSERT INTO htlxxrh
+                        (
+                            id_transaksi,
+                            id_htlgrmh,
+                            id_htlxxmh,
+                            id_hemxxmh,
+                            kode,
+                            tanggal,
+                            keterangan,
+                            jenis,
+                            htlxxmh_kode,
+                            htlgrmh_kode,
+                            jumlah,
+                            jam_awal,
+                            jam_akhir
+                        )
+                    SELECT
+                        ' . $_POST['id_transaksi_h'] . ',
+                        0,
+                        23,
+                        hem.id,
+                        "'.$rs_htlgnth["kode"].'",
+                        "'.$rs_htlgnth["tanggal"].'",
+                        "'.$rs_htlgnth["nama"].'",
+                        1,
+                        "LR",
+                        "LR",
+                        1,
+                        null,
+                        null
+                        FROM
+                            htssctd AS a
+                        LEFT JOIN hemxxmh AS hem ON hem.id = a.id_hemxxmh
+                        LEFT JOIN hemjbmh AS jb ON jb.id_hemxxmh = hem.id
+                        WHERE a.is_active = 1
+                            AND a.tanggal = :tanggal
+                            AND (jb.id_heyxxmd = 5 OR jb.id_hesxxmh = 3)
+
+                ')
+            ;
+            
             //INI TETAP DIINSERT
             $qr_htsprrd = $db
                 ->raw()
