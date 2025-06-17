@@ -545,8 +545,8 @@
 						async: false,
 						data: {
 							table_name       : 'htssctd',
-							nama_field       : 'tanggal,id_hemxxmh,id_htsxxmh',
-							nama_field_value : '"' + moment(tanggal).format('YYYY-MM-DD') + '",'+id_hemxxmh+','+id_htsxxmh,
+							nama_field       : 'tanggal,id_hemxxmh,id_htsxxmh,is_active',
+							nama_field_value : '"' + moment(tanggal).format('YYYY-MM-DD') + '",'+id_hemxxmh+','+id_htsxxmh+'1',
 							id_transaksi     : id_htssctd
 						},
 						success: function ( json ) {
