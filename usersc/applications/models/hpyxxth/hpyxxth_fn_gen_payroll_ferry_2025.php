@@ -613,7 +613,7 @@
                                             id_hemxxmh,
                                             COUNT(id) AS is_terminasi
                                         FROM hemjbrd
-                                        WHERE id_harxxmh IN (3, 4)
+                                        WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                         GROUP BY id_hemxxmh
                                     ) AS subquery
                                 ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -668,7 +668,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = prr.id_hemxxmh
@@ -716,7 +716,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -752,7 +752,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -787,7 +787,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -819,7 +819,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -842,7 +842,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -873,7 +873,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -964,7 +964,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -1000,7 +1000,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = rd.id_hemxxmh
@@ -1086,7 +1086,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -1118,7 +1118,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -1150,7 +1150,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -1182,7 +1182,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -1214,7 +1214,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -1247,7 +1247,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -1280,7 +1280,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -1309,7 +1309,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = bpjs_kes.id_hemxxmh
@@ -1338,7 +1338,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = bpjs_tk.id_hemxxmh
@@ -1359,7 +1359,7 @@
                                         id_hemxxmh,
                                         COUNT(id) AS is_terminasi
                                     FROM hemjbrd
-                                    WHERE id_harxxmh IN (3, 4)
+                                    WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                     GROUP BY id_hemxxmh
                                 ) AS subquery
                             ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -1384,7 +1384,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -1481,7 +1481,7 @@
                                                         id_hemxxmh,
                                                         COUNT(id) AS is_terminasi
                                                     FROM hemjbrd
-                                                    WHERE id_harxxmh IN (3, 4)
+                                                    WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                                     GROUP BY id_hemxxmh
                                                 ) AS subquery
                                             ) resign ON resign.id_hemxxmh = jb.id_hemxxmh
@@ -1519,7 +1519,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = jb.id_hemxxmh
@@ -1536,7 +1536,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = jbrd.id_hemxxmh
@@ -1609,7 +1609,7 @@
                                                         id_hemxxmh,
                                                         COUNT(id) AS is_terminasi
                                                     FROM hemjbrd
-                                                    WHERE id_harxxmh IN (3, 4)
+                                                    WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                                     GROUP BY id_hemxxmh
                                                 ) AS subquery
                                             ) resign ON resign.id_hemxxmh = jb.id_hemxxmh
@@ -1647,7 +1647,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = jb.id_hemxxmh
@@ -1664,7 +1664,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = jbrd.id_hemxxmh
@@ -1696,7 +1696,7 @@
                                                 id_hemxxmh,
                                                 COUNT(id) AS is_terminasi
                                             FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4)
+                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                                             GROUP BY id_hemxxmh
                                         ) AS subquery
                                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
@@ -1973,6 +1973,7 @@
             ->raw()
             ->bind(':id_hpyxxth', $id_hpyxxth)
             ->bind(':tanggal_awal', $tanggal_awal)
+            ->bind(':tanggal_akhir', $tanggal_akhir)
             ->exec('UPDATE hpyemtd AS a
                     LEFT JOIN hemjbmh AS b ON b.id_hemxxmh = a.id_hemxxmh
                     LEFT JOIN (
@@ -1984,7 +1985,7 @@
                                 id_hemxxmh,
                                 COUNT(id) AS is_terminasi
                             FROM hemjbrd
-                            WHERE id_harxxmh IN (3, 4)
+                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
                             GROUP BY id_hemxxmh
                         ) AS subquery
                     ) resign ON resign.id_hemxxmh = a.id_hemxxmh
