@@ -46,7 +46,7 @@
 								<strong>Informasi Proporsional Gaji</strong>
 								<button class="btn btn-sm btn-warning toggle-alert" type="button">−</button>
 							</div>
-							<div class="alert-content mt-2">
+							<div class="alert-content mt-2" style="display: none;">
 								Gaji akan dihitung secara <strong>proporsional</strong> (dibagi sesuai jumlah hari kerja bukan OFF) untuk pegawai yang:
 								<ul>
 								<li>Baru masuk kerja</li>
