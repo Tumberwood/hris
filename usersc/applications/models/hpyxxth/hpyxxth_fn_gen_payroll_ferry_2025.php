@@ -100,30 +100,18 @@
         //DELETE DETAIL PAYROLL LAMA
         $qd_detail_payroll = $db
             ->raw()
-            ->bind(':tanggal_awal', $tanggal_awal)
-            ->bind(':tanggal_akhir', $tanggal_akhir)
+            ->bind(':id_hpyxxth', $id_hpyxxth)
             ->exec('DELETE FROM hpyemtd
-                    WHERE id_hpyxxth IN (
-                        SELECT
-                            a.id
-                        FROM hpyxxth AS a
-                        WHERE a.tanggal_awal = :tanggal_awal AND a.tanggal_akhir = :tanggal_akhir
-                    )
+                    WHERE id_hpyxxth = :id_hpyxxth
             '
         );
         
         //DELETE DETAIL PPh21 LAMA
         $qd_detail_pph21 = $db
             ->raw()
-            ->bind(':tanggal_awal', $tanggal_awal)
-            ->bind(':tanggal_akhir', $tanggal_akhir)
+            ->bind(':id_hpyxxth', $id_hpyxxth)
             ->exec('DELETE FROM hppphth
-                    WHERE id_hpyxxth IN (
-                        SELECT
-                            a.id
-                        FROM hpyxxth AS a
-                        WHERE a.tanggal_awal = :tanggal_awal AND a.tanggal_akhir = :tanggal_akhir
-                    )
+                    WHERE id_hpyxxth = :id_hpyxxth
             '
         );
 
