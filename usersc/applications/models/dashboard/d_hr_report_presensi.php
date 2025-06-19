@@ -122,10 +122,13 @@
 		->bind(':id_hemxxmh', $id_hemxxmh)
 		->bind(':start_date', $start_date)
 		->exec('SELECT DISTINCT
-					concat(b.kode, " - ", b.nama, " - ", d.nama, " (" 
-					if(c.jumlah_grup = 1, 3, 4)
-					, " Grup)"
-					) as nama,
+					CONCAT(
+						b.kode, " - ", 
+						b.nama, " - ", 
+						d.nama, " (", 
+						IF(c.jumlah_grup = 1, 3, 4), 
+						" Grup)"
+					) AS namam
 					b.id AS id_hemxxmh,
 					e.nama AS dep,
 					f.nama AS os,
