@@ -1101,11 +1101,11 @@
                                 -- POTONG PREMI
                                 CASE
                                     WHEN is_pot_premi_absen = 1 THEN 1
+                                    WHEN st_clock_in = "LATE 1" AND is_pot_premi_izin_in = 1 THEN 0
                                     WHEN is_pot_premi_izin_in = 1 THEN 1
                                     WHEN is_pot_premi_izin_out = 1 THEN 1
                                     WHEN is_potong_premi_mid = 1 THEN 1
                                     WHEN id_hemxxmh = 67 THEN 1
-                                    WHEN st_clock_in = "LATE 1" AND is_pot_premi_izin_in = 1 THEN 0
                                     WHEN st_clock_in = "LATE" AND keterangan = "" THEN 1
                                     WHEN st_clock_out = "EARLY" AND keterangan = "" THEN 1
                                     WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND id_htsxxmh <> 1 AND ceklok_luar IS NULL THEN 1
