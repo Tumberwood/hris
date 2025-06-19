@@ -90,7 +90,7 @@
 
 						-- TL + PA + MK = ip_tdkpot  + ip_pot
 						SUM(
-                            CASE WHEN a.status_presensi_in = "TL" THEN 1
+                            CASE WHEN a.status_presensi_in = "TL" AND st_clock_in = "LATE" THEN 1
                             WHEN a.st_clock_in = "LATE" THEN 1
                             ELSE 0 END
 						) 
