@@ -128,7 +128,7 @@
 						d.nama, " (", 
 						IF(c.jumlah_grup = 1, 3, 4), 
 						" Grup)"
-					) AS namam
+					) AS nama,
 					b.id AS id_hemxxmh,
 					e.nama AS dep,
 					f.nama AS os,
