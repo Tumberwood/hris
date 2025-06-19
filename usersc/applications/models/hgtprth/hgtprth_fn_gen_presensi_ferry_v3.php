@@ -1467,7 +1467,6 @@
         $qu_pot_upah = $db
             ->raw()
             ->bind(':tanggal', $tanggal)
-            ->bind(':id_hemxxmh', $id_hemxxmh)
             ->exec('UPDATE htsprrd AS a
                     INNER JOIN htssctd AS b 
                         ON b.id_hemxxmh = a.id_hemxxmh 
@@ -1512,7 +1511,7 @@
                             )
                         )
                     WHERE 
-                        a.id_hemxxmh = :id_hemxxmh 
+                        a.id_hemxxmh IN '.$id_hemxxmh.'
                         AND a.tanggal = :tanggal
                         AND b.is_active = 1 
                         AND b.is_pot_hk = 1;
