@@ -490,7 +490,7 @@
 							$('#edit_jadwal').append(h3Element);
 						}
 
-						hari = moment(row.htssctd.tanggal, 'DD-MMM-YYYY').locale("id").format("dddd")
+						hari = moment(json.data7.tanggal, 'DD-MMM-YYYY').locale("id").format("dddd")
 						$('#tanggal').html(" : " + json.data7.tanggal + ' ('+hari+')');
 						
 
