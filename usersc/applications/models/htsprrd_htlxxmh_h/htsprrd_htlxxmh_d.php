@@ -108,6 +108,14 @@
                             	ELSE 0 
 							END
 						) 
+						+
+						-- pot_hk > 0
+						SUM(
+                            CASE 
+								WHEN a.pot_hk > 0 THEN 1
+                            	ELSE 0 
+							END
+						) 
 						AS ip_pot,
 						SUM(
                             CASE WHEN a.status_presensi_in = "lb" THEN 1
