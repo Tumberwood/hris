@@ -797,8 +797,12 @@
                                         a.id AS id_jadwal,
                                         a.tanggal,
                                         concat(c.tanggal," ",c.jam) AS ceklok_istirahat,
-                                        TIMESTAMPDIFF(MINUTE,MIN(CONCAT(c.tanggal," ",c.jam)),	MAX(CONCAT(c.tanggal," ",c.jam))) as durasi_break_menit
+                                        IF(DAYNAME(a.tanggal) = "Friday" AND jad.kode LIKE "%PAGI%" AND MAX(c.jam) < "13:00", 0, 
+                                            TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam)))
+                                        )
+                                        AS durasi_break_menit
                                     FROM htssctd AS a
+                                    INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
                                     INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                     WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
