@@ -491,7 +491,7 @@
 						}
 
 						hari = moment(row.htssctd.tanggal, 'DD-MMM-YYYY').locale("id").format("dddd")
-						$('#tanggal').html(" : " + json.data7.tanggal + '('+hari+')');
+						$('#tanggal').html(" : " + json.data7.tanggal + ' ('+hari+')');
 						
 
 						$('#dep').html(" : " + json.data7.dep);
