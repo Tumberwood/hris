@@ -824,8 +824,6 @@
                                                 WHEN jb.jumlah_grup = 2 AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
                                                 ELSE 0
                                             END AS pot_jam_keluar_istirahat
-                                            -- 0 as pot_jam_keluar_istirahat
-                                            0 as pot_jam_keluar_istirahat
                                         FROM hemxxmh as hem
                                         INNER JOIN hemjbmh as jb on jb.id_hemxxmh = hem.id
 
