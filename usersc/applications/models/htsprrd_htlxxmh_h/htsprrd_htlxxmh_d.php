@@ -92,14 +92,12 @@
 						SUM(
                             CASE WHEN a.status_presensi_in = "TL" AND st_clock_in = "LATE" THEN 1
                             WHEN a.st_clock_in = "LATE" THEN 1
-							WHEN a.pot_hk > 0 THEN 1
                             ELSE 0 END
 						) 
 						+
 						SUM(
                             CASE WHEN a.status_presensi_out = "PA" THEN 1
                             WHEN a.st_clock_out = "EARLY" THEN 1
-							WHEN a.pot_hk > 0 THEN 1
                             ELSE 0 END
 						) 
 						+
@@ -107,7 +105,6 @@
                             CASE 
 								WHEN a.status_presensi_out = "MK" THEN 1
                             	WHEN a.status_presensi_in = "MK" THEN 1
-								WHEN a.pot_hk > 0 THEN 1
                             	ELSE 0 
 							END
 						) 
