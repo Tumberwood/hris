@@ -816,14 +816,15 @@
                                             tanggal,
                                             ceklok_istirahat,
                                             ceklok_makan_case_keluar_istirahat,
-                                            -- CASE
+                                            CASE
                                             --     -- apabila 4 grup sudah ada finger makan atau inputan makan manual, maka tidak boleh ada finger keluar di mesin PMI, KBM, atau Istirahat. Jika diketahui ada makan dan ada finger keluar (meskipun <30 menit), maka akan dipotong 1 jam.
                                             --     WHEN jb.jumlah_grup = 2 AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 AND ceklok_istirahat IS NOT NULL THEN 1
                                  
                                             --     -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
-                                            --     WHEN jb.jumlah_grup = 2 AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
-                                            --     ELSE 0
-                                            -- END AS pot_jam_keluar_istirahat
+                                                WHEN jb.jumlah_grup = 2 AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
+                                                ELSE 0
+                                            END AS pot_jam_keluar_istirahat
+                                            -- 0 as pot_jam_keluar_istirahat
                                             0 as pot_jam_keluar_istirahat
                                         FROM hemxxmh as hem
                                         INNER JOIN hemjbmh as jb on jb.id_hemxxmh = hem.id
