@@ -105,6 +105,7 @@
                             CASE 
 								WHEN a.status_presensi_out = "MK" THEN 1
                             	WHEN a.status_presensi_in = "MK" THEN 1
+								WHEN a.pot_hk > 0 THEN 1
                             	ELSE 0 
 							END
 						) 
