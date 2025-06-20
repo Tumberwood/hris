@@ -144,6 +144,7 @@
                             j.id_hemxxmh,
                             j.id_heyxxmh,
                             j.id_hevxxmh,
+                            j.id_hetxxmh,
                             j.id_hosxxmh,
                             j.id_hodxxmh,
                             j.id_heyxxmd,
