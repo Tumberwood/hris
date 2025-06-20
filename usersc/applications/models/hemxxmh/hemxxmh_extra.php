@@ -125,6 +125,8 @@
 				->get(['id_hevxxmh'] )
 				->get(['id_hetxxmh'] )
 				->get(['tanggal_masuk'] )
+				->get(['jumlah_grup'] )
+				->get(['grup_hk'] )
 				->where('id_hemxxmh', $id )
 				->exec();
 			$rs_hemjbmh = $qs_hemjbmh->fetch();
@@ -149,6 +151,8 @@
 				->set('id_hetxxmh_awal',$rs_hemjbmh['id_hetxxmh'])
 				->set('id_hetxxmh_akhir',$rs_hemjbmh['id_hetxxmh'])
 				->set('tanggal_awal',$rs_hemjbmh['tanggal_masuk'])
+				->set('jumlah_grup',$rs_hemjbmh['jumlah_grup'])
+				->set('grup_hk',$rs_hemjbmh['grup_hk'])
 				->set('tanggal_akhir',$tanggal_akhir_kontrak)
 				->set('id_hemxxmh',$id)
 				->exec();
