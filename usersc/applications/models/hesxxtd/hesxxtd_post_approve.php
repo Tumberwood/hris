@@ -290,6 +290,8 @@
 			->set('id_hevxxmh_akhir',$rs_hemjbmh['id_hevxxmh'])
 			->set('id_hetxxmh_awal',$rs_hemjbmh['id_hetxxmh'])
 			->set('id_hetxxmh_akhir',$rs_hemjbmh['id_hetxxmh'])
+			->set('grup_hk',$rs_hemjbmh['grup_hk'])
+			->set('jumlah_grup',$rs_hemjbmh['jumlah_grup'])
 			->set('tanggal_awal',$tanggal_mulai)
 			->set('tanggal_akhir',$tanggal_selesai)
 			->exec();
