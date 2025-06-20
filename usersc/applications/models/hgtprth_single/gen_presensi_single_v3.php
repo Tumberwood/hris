@@ -97,7 +97,6 @@
                     rp_lembur4,
                     lembur4_final,
                     grup_hk,
-                    jumlah_grup,
                     nominal_lembur_jam,
                     break_in,
                     break_out
@@ -165,7 +164,6 @@
                     rp_lembur4,
                     lembur4_final,
                     grup_hk,
-                    jumlah_grup,
                     nominal_lembur_jam,
                     break_in,
                     break_out
