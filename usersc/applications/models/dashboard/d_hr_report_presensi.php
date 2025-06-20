@@ -146,7 +146,6 @@
                             j.id_hevxxmh,
                             j.id_hosxxmh,
                             j.id_heyxxmd,
-                            j.id_hevgrmh,
                             j.is_checkclock,
                             j.tanggal_masuk,
                             j.tanggal_keluar,
