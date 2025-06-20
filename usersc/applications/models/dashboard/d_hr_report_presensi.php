@@ -139,36 +139,36 @@
 					j.nama AS STATUS,
 					k.nama AS kelompok
 				FROM hemxxmh AS b
-                    INNER JOIN (
-                        SELECT
-                            j.id_hemxxmh,
-                            j.id_heyxxmh,
-                            j.id_hevxxmh,
-                            j.id_hetxxmh,
-                            j.id_hosxxmh,
-                            j.id_hodxxmh,
-                            j.id_heyxxmd,
-                            j.is_checkclock,
-                            j.tanggal_masuk,
-                            j.tanggal_keluar,
-                            IFNULL(history.id_hesxxmh, j.id_hesxxmh) id_hesxxmh,
-                            IFNULL(history.jumlah_grup, j.jumlah_grup) jumlah_grup,
-                            IFNULL(history.grup_hk, j.grup_hk) grup_hk
-                        FROM hemjbmh j
-                        LEFT JOIN (
-                            SELECT
-                                *
-                            FROM (
-                                SELECT
-                                    *,
-                                    ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
-                                FROM hemjbrd
-                                WHERE
-                                    tanggal_awal <= "2024-12-18"
-                            ) AS subquery
-                            WHERE row_num = 1
-                        ) history ON history.id_hemxxmh = j.id_hemxxmh
-                    ) c ON c.id_hemxxmh = b.id
+				INNER JOIN (
+					SELECT
+						j.id_hemxxmh,
+						j.id_heyxxmh,
+						j.id_hevxxmh,
+						j.id_hetxxmh,
+						j.id_hosxxmh,
+						j.id_hodxxmh,
+						j.id_heyxxmd,
+						j.is_checkclock,
+						j.tanggal_masuk,
+						j.tanggal_keluar,
+						IFNULL(history.id_hesxxmh, j.id_hesxxmh) id_hesxxmh,
+						IFNULL(history.jumlah_grup, j.jumlah_grup) jumlah_grup,
+						IFNULL(history.grup_hk, j.grup_hk) grup_hk
+					FROM hemjbmh j
+					LEFT JOIN (
+						SELECT
+							*
+						FROM (
+							SELECT
+								*,
+								ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
+							FROM hemjbrd
+							WHERE
+								tanggal_awal <= "2024-12-18"
+						) AS subquery
+						WHERE row_num = 1
+					) history ON history.id_hemxxmh = j.id_hemxxmh
+				) c ON c.id_hemxxmh = b.id
 				LEFT JOIN hetxxmh AS d ON d.id = c.id_hetxxmh
 				LEFT JOIN hodxxmh AS e ON e.id = c.id_hodxxmh
 				LEFT JOIN heyxxmh AS f ON f.id = c.id_heyxxmh
