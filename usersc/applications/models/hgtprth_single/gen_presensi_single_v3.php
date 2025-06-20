@@ -249,7 +249,6 @@
                     lembur3_final,
                     nominal_lembur_jam,
                     grup_hk,
-                    jumlah_grup,
                     break_in,
                     break_out
                 )
@@ -1418,7 +1417,6 @@
 
                     nominal_lembur_jam,
                     grup_hk,
-                    jumlah_grup,
                     break_in,
                     break_out
                 
