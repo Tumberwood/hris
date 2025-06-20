@@ -97,6 +97,7 @@
                     rp_lembur4,
                     lembur4_final,
                     grup_hk,
+                    jumlah_grup,
                     nominal_lembur_jam,
                     break_in,
                     break_out
@@ -164,6 +165,7 @@
                     rp_lembur4,
                     lembur4_final,
                     grup_hk,
+                    jumlah_grup,
                     nominal_lembur_jam,
                     break_in,
                     break_out
@@ -249,6 +251,7 @@
                     lembur3_final,
                     nominal_lembur_jam,
                     grup_hk,
+                    jumlah_grup,
                     break_in,
                     break_out
                 )
@@ -408,7 +411,33 @@
                         jam_akhir_schedule
 
                     FROM hemxxmh AS a
-                    INNER JOIN hemjbmh AS b ON b.id_hemxxmh = a.id
+                    INNER JOIN (
+                        SELECT
+                            j.id_hemxxmh,
+                            j.id_heyxxmh,
+                            j.id_hevxxmh,
+                            j.id_heyxxmd,
+                            j.is_checkclock,
+                            j.tanggal_masuk,
+                            j.tanggal_keluar,
+                            IFNULL(history.id_hesxxmh, j.id_hesxxmh) id_hesxxmh,
+                            IFNULL(history.jumlah_grup, j.jumlah_grup) jumlah_grup,
+                            IFNULL(history.grup_hk, j.grup_hk) grup_hk
+                        FROM hemjbmh j
+                        LEFT JOIN (
+                            SELECT
+                                *
+                            FROM (
+                                SELECT
+                                    *,
+                                    ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
+                                FROM hemjbrd
+                                WHERE
+                                    tanggal_awal <= "2024-12-18"
+                            ) AS subquery
+                            WHERE row_num = 1
+                        ) history ON history.id_hemxxmh = j.id_hemxxmh
+                    ) b ON b.id_hemxxmh = a.id
                     LEFT JOIN (
                         SELECT
                             jad.*,
@@ -787,7 +816,33 @@
                                         ELSE 0
                                     END AS pot_jam_keluar_istirahat
                                 FROM hemxxmh as hem
-                                INNER JOIN hemjbmh as jb on jb.id_hemxxmh = hem.id
+                                INNER JOIN (
+                                    SELECT
+                                        j.id_hemxxmh,
+                                        j.id_heyxxmh,
+                                        j.id_hevxxmh,
+                                        j.id_heyxxmd,
+                                        j.is_checkclock,
+                                        j.tanggal_masuk,
+                                        j.tanggal_keluar,
+                                        IFNULL(history.id_hesxxmh, j.id_hesxxmh) id_hesxxmh,
+                                        IFNULL(history.jumlah_grup, j.jumlah_grup) jumlah_grup,
+                                        IFNULL(history.grup_hk, j.grup_hk) grup_hk
+                                    FROM hemjbmh j
+                                    LEFT JOIN (
+                                        SELECT
+                                            *
+                                        FROM (
+                                            SELECT
+                                                *,
+                                                ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
+                                            FROM hemjbrd
+                                            WHERE
+                                                tanggal_awal <= "2024-12-18"
+                                        ) AS subquery
+                                        WHERE row_num = 1
+                                    ) history ON history.id_hemxxmh = j.id_hemxxmh
+                                ) jb ON jb.id_hemxxmh = hem.id
 
                                 -- ceklok ISTIRAHAT
                                 LEFT JOIN (
@@ -1365,6 +1420,7 @@
 
                     nominal_lembur_jam,
                     grup_hk,
+                    jumlah_grup,
                     break_in,
                     break_out
                 
