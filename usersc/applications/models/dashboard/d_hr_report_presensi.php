@@ -164,7 +164,7 @@
 								ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
 							FROM hemjbrd
 							WHERE
-								tanggal_awal <= ":start_date"
+								tanggal_awal <= :start_date
 						) AS subquery
 						WHERE row_num = 1
 					) history ON history.id_hemxxmh = j.id_hemxxmh
