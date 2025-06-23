@@ -30,7 +30,7 @@
 					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
 					is_makan
 				FROM htsprrd a
-				LEFT JOIN hemxxmh b on b.id = a.id_hemxxmh
+				INNER JOIN hemxxmh b on b.id = a.id_hemxxmh
 				WHERE a.tanggal BETWEEN :start_date AND :end_date 
 					AND a.is_makan > 0
 					AND b.id = :id_hemxxmh

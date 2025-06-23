@@ -34,7 +34,7 @@
 					a.lembur2,
 					a.lembur3	
 				FROM htsprrd a
-				LEFT JOIN hemxxmh b ON b.id = a.id_hemxxmh
+				INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
 				WHERE a.tanggal BETWEEN :start_date AND :end_date 
 				AND a.id_hemxxmh = :id_hemxxmh
 				AND a.durasi_lembur_total_jam > 0
