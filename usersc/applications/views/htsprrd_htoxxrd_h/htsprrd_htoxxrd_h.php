@@ -139,6 +139,61 @@
   </div>
 </div>
 
+<!-- Breakdown Lembur -->
+<div class="modal fade" id="modalBreakdownLembur" tabindex="-1" role="dialog" aria-labelledby="myModal1Label" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModal1Label">Breakdown Lembur</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+		<div class="table-responsive" id="proteksi">
+			<div class="row">
+				<div class="col-12 col-lg-12 col-md-12 col-sm-12">
+					<table id="lembur_presensi" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						<thead>
+							<tr>
+								<th>Tanggal</th>
+								<th>NIP</th>
+								<th>Nama</th>
+								<th>Lembur SPKL</th>
+								<th>Pot Jam</th>
+								<th>Lembur Final</th>
+								<th>Lembur 1,5</th>
+								<th>Lembur 2</th>
+								<th>Lembur 3</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th colspan="3">Total</th>
+								<th id="subtotal_3"></th>
+								<th id="subtotal_4"></th>
+								<th id="subtotal_5"></th>
+								<th id="subtotal_6"></th>
+								<th id="subtotal_7"></th>
+								<th id="subtotal_8"></th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
@@ -573,6 +628,16 @@
 							$('#modalBreakdown').modal('show');
 						}
 					}
+					,{
+						text: '<i class="fa fa-list"></i> Lembur',
+						name: 'btnBreakdownLembur',
+						className: 'btn btn-outline',
+						titleAttr: 'Breakdown Lembur',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							$('#modalBreakdownLembur').modal('show');
+						}
+					}
 				],
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
@@ -614,6 +679,8 @@
 			
 			tblhtsprrd_htoxxrd_d.searchPanes.container().appendTo( '#searchPanes1' );
 			tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').disable();
+			tblhtsprrd_htoxxrd_d.button('btnBreakdownLembur:name').disable();
+
 			tblhtsprrd_htoxxrd_d.on( 'select', function( e, dt, type, indexes ) {
 				data_htsprrd_htoxxrd_d = tblhtsprrd_htoxxrd_d.row( { selected: true } ).data();
 				id_hemxxmh       = data_htsprrd_htoxxrd_d.id_hemxxmh;
@@ -621,8 +688,11 @@
 				end_date       = data_htsprrd_htoxxrd_d.end_date;
 				kode       = data_htsprrd_htoxxrd_d.kode;
 				kode_finger = kode.slice(-4);
+
 				tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').enable();
+				tblhtsprrd_htoxxrd_d.button('btnBreakdownLembur:name').enable();
 				breakdownMakan(id_hemxxmh, kode_finger, start_date, end_date);
+				breakdownLembur(id_hemxxmh, start_date, end_date);
 			} );
 			
 			tblhtsprrd_htoxxrd_d.on( 'deselect', function () {
@@ -632,6 +702,7 @@
 				end_date = '';
 				kode_finger = '';
 				tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').disable();
+				tblhtsprrd_htoxxrd_d.button('btnBreakdownLembur:name').disable();
 			} );
 
 // --------- end _detail --------------- //		
