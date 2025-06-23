@@ -154,6 +154,11 @@
                     class: "text-right"
                 },
             ],
+            rowCallback: function( row, data, index ) {
+                if ( data.durasi_lembur_final == 0 ) {
+                    $('td', row).addClass('bg-warning');
+                }
+            },
             footerCallback: function ( row, data, start, end, display ) {
                 var api       = this.api(), data;
                 var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
