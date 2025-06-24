@@ -71,7 +71,7 @@
                             IF(c.grup_hk = 1, 21, 25) 
                         ) nominal,
                         ifnull(sisa_cuti,0) sisa_cuti,
-                        FLOOR(
+                        (
                             IF(MONTH(:tanggal_akhir) = 1, 
                                 (
                                     (IFNULL(IF(c.id_hesxxmh = 3, pot_gp_pelatihan, nominal_gp),0) + IFNULL(nominal_t_jab,0) + IF(c.id_heyxxmh = 1, IFNULL(nominal_mk,0),0) )
