@@ -23,7 +23,7 @@
                     peg.kode,
                     peg.nama,
                     a.nama,
-                    sum(saldo) sisa_saldo
+                    IFNULL(SUM(saldo),0) sisa_saldo
                 FROM htlxxrh a
                 INNER JOIN hemxxmh AS peg ON peg.id = a.id_hemxxmh
                 INNER JOIN hemjbmh AS jb ON jb.id_hemxxmh = peg.id
