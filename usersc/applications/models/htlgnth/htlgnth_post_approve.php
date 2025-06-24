@@ -117,6 +117,64 @@
                     AND keterangan = CONCAT("Cuti Bersama - ", :nama) 
                 ');
             // END insert pengaju
+
+            // Update Untuk mendapatkan flag
+            $qu_tanggal = $db
+                ->raw()
+                ->bind(':tanggal', $rs_htlgnth["tanggal"])
+                ->exec('UPDATE htssctd AS jad
+                        LEFT JOIN 
+                        (
+                            SELECT
+                                a.id_hemxxmh,
+                                :tanggal,
+                                SUM(
+                                    CASE
+                                        WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0) + IFNULL(c_rd,0))
+                                        ELSE 0
+                                    END
+                                ) AS sisa_saldo
+                            FROM htlxxrh AS a
+                            -- employee
+                            LEFT JOIN hemxxmh AS peg ON peg.id = a.id_hemxxmh
+                            LEFT JOIN hemjbmh AS jb ON jb.id_hemxxmh = peg.id
+                            -- Izin yang memotong Cuti
+                            LEFT JOIN (
+                                SELECT
+                                    rh.id_hemxxmh,
+                                    COUNT(rh.id) AS c_cb
+                                FROM htlxxrh AS rh
+                                LEFT JOIN htlxxmh AS mh ON mh.id = rh.id_htlxxmh
+                                WHERE YEAR(rh.tanggal) = YEAR(:tanggal) AND rh.jenis = 1 AND mh.is_potongcuti = 1
+                                GROUP BY rh.id_hemxxmh
+                            ) AS cb ON cb.id_hemxxmh = a.id_hemxxmh
+                            
+                            LEFT JOIN (
+                                SELECT
+                                    a.id AS id_presensi,
+                                    id_hemxxmh,
+                                    COUNT(a.id) AS c_rd
+                                FROM htsprrd AS a
+                                WHERE YEAR(a.tanggal) = YEAR(:tanggal) AND a.status_presensi_in = "AL"
+                                GROUP BY id_hemxxmh
+                            ) AS rd ON rd.id_hemxxmh = a.id_hemxxmh
+                            
+                            WHERE YEAR(a.tanggal) = YEAR(:tanggal) AND jb.is_checkclock = 1 AND a.nama = "saldo"
+                            GROUP BY a.id_hemxxmh
+                        ) AS sal ON sal.id_hemxxmh = jad.id_hemxxmh
+                        LEFT JOIN hemjbmh AS jb ON jb.id_hemxxmh = jad.id_hemxxmh
+                        SET 
+                            jad.is_pot_hk = 
+                                case 
+                                    when ifnull(sisa_saldo,0) = 0 AND jad.id_htsxxmh <> 1 AND id_hetxxmh NOT IN (99, 48) then 1
+                                    when ifnull(sisa_saldo,0) = 0 AND jad.keterangan LIKE "%cuti bersama%" then 1
+                                ELSE 0
+                                END ,
+                            jad.is_pot_cuti = if(IFNULL(sisa_saldo,0) > 0 AND jad.keterangan LIKE "%cuti bersama%", 1, 0)
+                        WHERE jad.tanggal = :tanggal
+                        AND jad.is_active = 1;
+                ');
+            //End flag is_pot_hk dan is_pot_cuti
             
             // approve cuti bersama ditambahkan, LB untuk semua pegawai kontrak.
             $qr_htsprrd = $db
@@ -247,14 +305,14 @@
                         -1,
                         null,
                         null
-                    FROM
-                        htssctd AS a
-                    LEFT JOIN hemxxmh AS hem ON hem.id = a.id_hemxxmh
-                    LEFT JOIN hemjbmh AS jb ON jb.id_hemxxmh = hem.id
-                    WHERE 
-                        a.is_active = 1
-                    AND a.tanggal = :tanggal
-                    AND a.is_pot_cuti = 1
+                        FROM
+                            htssctd AS a
+                        LEFT JOIN hemxxmh AS hem ON hem.id = a.id_hemxxmh
+                        LEFT JOIN hemjbmh AS jb ON jb.id_hemxxmh = hem.id
+                        WHERE 
+                            a.is_active = 1
+                        AND a.tanggal = :tanggal
+                        AND a.is_pot_cuti = 1
                 ');
             // BEGIN non aktif
 
