@@ -1156,49 +1156,49 @@
 							} );
 						}
 					},
-					{
-						text: 'PPh21',
-						name: 'btnGenPPh21',
-						className: 'btn btn-xs btn-outline',
-						titleAttr: '',
-						action: function ( e, dt, node, config ) {
-							e.preventDefault(); 
-							var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+					// {
+					// 	text: 'PPh21',
+					// 	name: 'btnGenPPh21',
+					// 	className: 'btn btn-xs btn-outline',
+					// 	titleAttr: '',
+					// 	action: function ( e, dt, node, config ) {
+					// 		e.preventDefault(); 
+					// 		var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
 
-							notifyprogress = $.notify({
-								message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
-							},{
-								z_index: 9999,
-								allow_dismiss: false,
-								type: 'info',
-								delay: 0
-							});
+					// 		notifyprogress = $.notify({
+					// 			message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
+					// 		},{
+					// 			z_index: 9999,
+					// 			allow_dismiss: false,
+					// 			type: 'info',
+					// 			delay: 0
+					// 		});
 
-							$.ajax( {
-								url: "../../models/hpyxxth/hpyxxth_fn_gen_pph21.php",
-								dataType: 'json',
-								type: 'POST',
-								data: {
-									id_hpyxxth		: id_hpyxxth,
-									tanggal_awal	: tanggal_awal_select,
-									tanggal_akhir	: tanggal_akhir_select,
-									timestamp		: timestamp
-								},
-								success: function ( json ) {
+					// 		$.ajax( {
+					// 			url: "../../models/hpyxxth/hpyxxth_fn_gen_pph21.php",
+					// 			dataType: 'json',
+					// 			type: 'POST',
+					// 			data: {
+					// 				id_hpyxxth		: id_hpyxxth,
+					// 				tanggal_awal	: tanggal_awal_select,
+					// 				tanggal_akhir	: tanggal_akhir_select,
+					// 				timestamp		: timestamp
+					// 			},
+					// 			success: function ( json ) {
 
-									$.notify({
-										message: json.data.message
-									},{
-										type: json.data.type_message
-									});
+					// 				$.notify({
+					// 					message: json.data.message
+					// 				},{
+					// 					type: json.data.type_message
+					// 				});
 
-									tblhpyxxth.ajax.reload(function ( json ) {
-										notifyprogress.close();
-									}, false);
-								}
-							} );
-						}
-					}
+					// 				tblhpyxxth.ajax.reload(function ( json ) {
+					// 					notifyprogress.close();
+					// 				}, false);
+					// 			}
+					// 		} );
+					// 	}
+					// }
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.hpyxxth.is_active == 0 ) {
