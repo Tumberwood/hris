@@ -1771,7 +1771,7 @@
                                     
                                     -- SUM(
                                         CASE
-                                            WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0) + IFNULL(c_rd,0))
+                                            WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0))
                                             ELSE 0
                                         END
                                     -- ) 
