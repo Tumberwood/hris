@@ -99,6 +99,7 @@
 						SUM(
                             CASE WHEN a.status_presensi_out = "PA" THEN 1
                             WHEN a.st_clock_out = "EARLY" THEN 1
+                            WHEN a.htlxxrh_kode LIKE "PA%" AND a.st_clock_out = "OK" THEN 1
                             ELSE 0 END
 						) 
 						+
