@@ -120,7 +120,10 @@
 									a.st_clock_in <> "LATE" AND
 									a.status_presensi_out <> "PA" AND
 									a.st_clock_out <> "EARLY" AND
-									a.pot_hk > 0 AND
+									a.pot_hk > 0 
+									-- AND
+									-- (a.htlxxrh_kode NOT LIKE "PA%" AND a.st_clock_out <> "OK" AND a.pot_hk > 0) AND
+									-- (a.htlxxrh_kode NOT LIKE "TL%" AND a.st_clock_in <> "OK" AND a.pot_hk > 0)
 									THEN 1
                             	ELSE 0 
 							END
