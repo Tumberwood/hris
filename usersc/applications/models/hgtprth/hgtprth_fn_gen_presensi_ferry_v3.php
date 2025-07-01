@@ -877,7 +877,7 @@
                                                         ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
                                                     FROM hemjbrd
                                                     WHERE
-                                                        tanggal_awal <= ":tanggal"
+                                                        tanggal_awal <= :tanggal
                                                 ) AS subquery
                                                 WHERE row_num = 1
                                             ) history ON history.id_hemxxmh = j.id_hemxxmh
@@ -899,7 +899,7 @@
                                             INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
                                             INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                             INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
-                                            WHERE a.tanggal = ":tanggal" AND a.is_active = 1 AND b.is_active = 1
+                                            WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                                 AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                 AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                             GROUP BY a.id
@@ -915,7 +915,7 @@
                                             FROM htssctd AS a
                                             INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                             INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
-                                            WHERE a.tanggal = ":tanggal" AND a.is_active = 1 AND b.is_active = 1
+                                            WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                                 AND c.nama IN ("makan", "makan manual")
                                                 AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
                                                 AND a.id_hemxxmh IN '.$id_hemxxmh.'
@@ -939,12 +939,12 @@
                                                 FROM htpr_ti
                                                 WHERE
                                                     htpr_ti.nama = "Toleransi Keluar Istirahat"
-                                                    AND tanggal_efektif <= ":tanggal"
+                                                    AND tanggal_efektif <= :tanggal
                                             ) AS subquery
                                             WHERE row_num = 1
                                         ) menit_toleransi_keluar_istirahat ON menit_toleransi_keluar_istirahat.is_active = 1
         
-                                        WHERE jd.tanggal = ":tanggal" AND hem.is_active = 1 AND jd.is_active = 1 AND jd.id_hemxxmh IN '.$id_hemxxmh.'
+                                        WHERE jd.tanggal = :tanggal AND hem.is_active = 1 AND jd.is_active = 1 AND jd.id_hemxxmh IN '.$id_hemxxmh.'
                                     )
                                     AS ot
                                 GROUP BY
