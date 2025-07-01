@@ -843,10 +843,13 @@
                                             ceklok_istirahat,
                                             ceklok_makan_case_keluar_istirahat,
                                             CASE
-                                            --     -- apabila 4 grup sudah ada finger makan atau inputan makan manual, maka tidak boleh ada finger keluar di mesin PMI, KBM, atau Istirahat. Jika diketahui ada makan dan ada finger keluar (meskipun <30 menit), maka akan dipotong 1 jam.
-                                            --     WHEN jb.jumlah_grup = 2 AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 AND ceklok_istirahat IS NOT NULL THEN 1
-                                 
-                                            --     -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
+                                                -- shift pendek tidak boleh ada ceklok makan
+                                                WHEN id_htsxxmh IN (5) AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 THEN 1
+                                
+                                                -- apabila 4 grup sudah ada finger makan atau inputan makan manual, maka tidak boleh ada finger keluar di mesin PMI, KBM, atau Istirahat. Jika diketahui ada makan dan ada finger keluar (meskipun <30 menit), maka akan dipotong 1 jam.
+                                                WHEN (jb.jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 AND ceklok_istirahat IS NOT NULL THEN 1
+                                
+                                                -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
                                                 WHEN (jb.jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
                                                 ELSE 0
                                             END AS pot_jam_keluar_istirahat
@@ -907,6 +910,7 @@
                                         -- ceklok makan
                                         LEFT JOIN (
                                             SELECT DISTINCT
+                                                id_htsxxmh,
                                                 a.id_hemxxmh,
                                                 COUNT(c.id) AS ceklok_makan_case_keluar_istirahat
                                             FROM htssctd AS a
