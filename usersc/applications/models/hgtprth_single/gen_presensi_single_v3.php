@@ -806,16 +806,17 @@
                                     ceklok_makan_case_keluar_istirahat,
                                     CASE
                                         -- shift pendek tidak boleh ada ceklok makan
-                                        WHEN id_htsxxmh IN  (select id from htsxxmh where id <> 1 and is_active = 1 and jam_awal_istirahat = "00:00:00") AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 THEN 1
+                                        WHEN id_htsxxmh IN (select id from htsxxmh where id <> 1 and is_active = 1 and jam_awal_istirahat = "00:00:00") AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 THEN 1
                         
-                                        -- apabila 4 grup sudah ada finger makan atau inputan makan manual, maka tidak boleh ada finger keluar di mesin PMI, KBM, atau Istirahat. Jika diketahui ada makan dan ada finger keluar (meskipun <30 menit), maka akan dipotong 1 jam.
+                                    --     -- apabila 4 grup sudah ada finger makan atau inputan makan manual, maka tidak boleh ada finger keluar di mesin PMI, KBM, atau Istirahat. Jika diketahui ada makan dan ada finger keluar (meskipun <30 menit), maka akan dipotong 1 jam.
                                         WHEN (jb.jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 AND ceklok_istirahat IS NOT NULL THEN 1
                          
-                                        -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
+                                    --     -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
                                         WHEN (jb.jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
                                         ELSE 0
                                     END AS pot_jam_keluar_istirahat
-                                FROM hemxxmh as hem
+                                FROM htssctd jd
+                                INNER JOIN hemxxmh as hem ON hem.id = jd.id_hemxxmh
                                 INNER JOIN (
                                     SELECT
                                         j.id_hemxxmh,
@@ -838,7 +839,7 @@
                                                 ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
                                             FROM hemjbrd
                                             WHERE
-                                                tanggal_awal <= :tanggal
+                                                tanggal_awal <= ":tanggal"
                                         ) AS subquery
                                         WHERE row_num = 1
                                     ) history ON history.id_hemxxmh = j.id_hemxxmh
@@ -850,7 +851,6 @@
                                         a.id_hemxxmh,
                                         a.jam_awal,
                                         a.id AS id_jadwal,
-                                        a.tanggal,
                                         a.keterangan ket_jadwal,
                                         concat(c.tanggal," ",c.jam) AS ceklok_istirahat,
                                         IF(DAYNAME(a.tanggal) = "Friday" AND jad.kode LIKE "%PAGI%" AND MAX(c.jam) < "13:00", 0, 
@@ -861,7 +861,7 @@
                                     INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
                                     INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
-                                    WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
+                                    WHERE a.tanggal = ":tanggal" AND a.is_active = 1 AND b.is_active = 1
                                         AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                         AND a.id_hemxxmh = :id_hemxxmh
                                     GROUP BY a.id
@@ -872,13 +872,12 @@
                                  -- ceklok makan
                                 LEFT JOIN (
                                     SELECT DISTINCT
-                                        id_htsxxmh,
                                         a.id_hemxxmh,
                                         COUNT(c.id) AS ceklok_makan_case_keluar_istirahat
                                     FROM htssctd AS a
                                     INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
-                                    WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
+                                    WHERE a.tanggal = ":tanggal" AND a.is_active = 1 AND b.is_active = 1
                                         AND c.nama IN ("makan", "makan manual")
                                         AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
                                         AND a.id_hemxxmh = :id_hemxxmh
@@ -902,12 +901,12 @@
                                         FROM htpr_ti
                                         WHERE
                                             htpr_ti.nama = "Toleransi Keluar Istirahat"
-                                            AND tanggal_efektif <= :tanggal
+                                            AND tanggal_efektif <= ":tanggal"
                                     ) AS subquery
                                     WHERE row_num = 1
                                 ) menit_toleransi_keluar_istirahat ON menit_toleransi_keluar_istirahat.is_active = 1
 
-                                WHERE cek_istirahat.tanggal = :tanggal AND hem.is_active = 1
+                                WHERE jd.tanggal = ":tanggal" AND hem.is_active = 1 AND jd.is_active = 1 AND jd.id_hemxxmh = :id_hemxxmh
                             )
                             AS ot
                         GROUP BY
