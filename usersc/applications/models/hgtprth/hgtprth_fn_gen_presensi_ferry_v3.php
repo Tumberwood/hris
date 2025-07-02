@@ -1174,19 +1174,22 @@
                                 END AS is_pot_upah,
 
                                 -- hitung pot_late
-                                IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") = "" OR st_clock_in = "LATE",
-                                    IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
-                                        CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60),
-                                        IF(jumlah_grup <> 4,
-                                            IF(ceklok_in > if(day(tanggaljam_awal_istirahat) < day(tanggaljam_akhir) , date_add(tanggaljam_awal_istirahat, INTERVAL 1 DAY),  tanggaljam_awal_istirahat),
-                                                CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi_min1jam, carbon_ci) / 60),
+                                IF(tanggal_jam_izin_awal_in IS NOT NULL AND is_potong_gaji_in = 0, 0, -- KALAU ADA IZIN TIDAK POT GAJI, MAKA 0
+                                    IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") = "" OR st_clock_in = "LATE",
+                                        IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
+                                            CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60),
+                                            IF(jumlah_grup <> 4,
+                                                IF(ceklok_in > if(day(tanggaljam_awal_istirahat) < day(tanggaljam_akhir) , date_add(tanggaljam_awal_istirahat, INTERVAL 1 DAY),  tanggaljam_awal_istirahat),
+                                                    CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi_min1jam, carbon_ci) / 60),
+                                                    CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60)
+                                                ),
                                                 CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60)
-                                            ),
-                                            CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60)
-                                        )
-                                    ),
-                                    0
-                                ) AS pot_jam_late,
+                                            )
+                                        ),
+                                        0
+                                    ) 
+                                )
+                                AS pot_jam_late,
         
                                 -- kalau ada lembur, maka cek late lembur, pastikan bukan long shift lembur
                                 IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") != "" AND jam_awal_lembur != jam_akhir_schedule,
@@ -1198,16 +1201,19 @@
                                 ) AS pot_jam_late_lembur,
 
                                 -- hitung pot_early
-                                IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
-                                    CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir) / 60),
-                                    IF(jumlah_grup <> 4,
-                                        IF(ceklok_out < if(day(tanggaljam_akhir_istirahat) < day(tanggaljam_akhir) , date_add(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),  tanggaljam_akhir_istirahat) ,
-                                            CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir_min1) / 60),
+                                IF(tanggal_jam_izin_akhir_out IS NOT NULL AND is_potong_gaji_out = 0, 0, -- KALAU ADA IZIN TIDAK POT GAJI, MAKA 0
+                                    IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
+                                        CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir) / 60),
+                                        IF(jumlah_grup <> 4,
+                                            IF(ceklok_out < if(day(tanggaljam_akhir_istirahat) < day(tanggaljam_akhir) , date_add(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),  tanggaljam_akhir_istirahat) ,
+                                                CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir_min1) / 60),
+                                                CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir) / 60)
+                                            ),
                                             CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir) / 60)
-                                        ),
-                                        CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir) / 60)
-                                    )
-                                ) AS pot_jam_early,
+                                        )
+                                    ) 
+                                )
+                                AS pot_jam_early,
 
                                 CEIL(TIMESTAMPDIFF(MINUTE, tanggal_jam_izin_awal_mid, carbon_mid) / 60) AS pot_jam_izin
                                 
