@@ -100,7 +100,7 @@
 	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
 			<div class="ibox-title">
-				<h5>Detail</h5>
+				<h5>tes</h5>
 			</div>
 			<div class="ibox-content">
 				<div class="row">
