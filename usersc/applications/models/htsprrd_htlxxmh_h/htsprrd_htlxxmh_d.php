@@ -91,14 +91,14 @@
 						-- TL + PA + MK = ip_tdkpot  + ip_pot
 						SUM(
                             CASE WHEN a.status_presensi_in = "TL" AND st_clock_in = "LATE" THEN 1
-                            WHEN a.st_clock_in = "LATE" AND status_presensi_in NOT LIKE "%DL%" THEN 1
+                            -- WHEN a.st_clock_in = "LATE" AND status_presensi_in NOT LIKE "%DL%" THEN 1
                             -- WHEN a.htlxxrh_kode LIKE "TL%" AND a.st_clock_in = "OK" THEN 1
                             ELSE 0 END
 						) 
 						+
 						SUM(
                             CASE WHEN a.status_presensi_out = "PA" THEN 1
-                            WHEN a.st_clock_out = "EARLY" AND status_presensi_out NOT LIKE "%DL%" THEN 1
+                            -- WHEN a.st_clock_out = "EARLY" AND status_presensi_out NOT LIKE "%DL%" THEN 1
                             -- WHEN a.htlxxrh_kode LIKE "PA%" AND a.st_clock_out = "OK" THEN 1
                             ELSE 0 END
 						) 
