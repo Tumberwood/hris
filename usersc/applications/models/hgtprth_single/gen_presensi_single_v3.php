@@ -890,8 +890,6 @@
                                     SELECT DISTINCT
                                         a.id_hemxxmh,
                                         a.jam_awal,
-                                        a.id AS id_jadwal,
-                                        a.keterangan ket_jadwal,
                                         concat(c.tanggal," ",c.jam) AS ceklok_istirahat,
                                         IF(DAYNAME(a.tanggal) = "Friday" AND jad.kode LIKE "%PAGI%" AND MAX(c.jam) < "13:00", 0, 
                                             TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam)))
