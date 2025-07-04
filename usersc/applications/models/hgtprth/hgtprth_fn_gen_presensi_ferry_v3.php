@@ -844,8 +844,7 @@
                                             ceklok_makan_case_keluar_istirahat,
                                             CASE
                                                 -- shift pendek tidak boleh ada ceklok makan dan istirahat
-                                                -- WHEN id_htsxxmh IN (select id from htsxxmh where id <> 1 and is_active = 1 and jam_awal_istirahat = "00:00:00") AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 THEN 1
-                                                WHEN id_htsxxmh IN (select id from htsxxmh where id <> 1 and is_active = 1 and jam_awal_istirahat = "00:00:00") AND IFNULL(durasi_break_menit, 0) > 0 THEN 1
+                                                WHEN id_htsxxmh IN (select id from htsxxmh where id <> 1 and is_active = 1 and jam_awal_istirahat = "00:00:00") AND IFNULL(durasi_istirahat_shift, 0) > 0 THEN 1
                                 
                                             --     -- apabila 4 grup sudah ada finger makan atau inputan makan manual, maka tidak boleh ada finger keluar di mesin PMI, KBM, atau Istirahat. Jika diketahui ada makan dan ada finger keluar (meskipun <30 menit), maka akan dipotong 1 jam.
                                                 WHEN (jb.jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 AND ceklok_istirahat IS NOT NULL THEN 1
@@ -923,6 +922,29 @@
                                             GROUP BY a.id
         
                                         ) AS cek_makan ON cek_makan.id_hemxxmh = hem.id
+
+                                        LEFT JOIN (
+                                            SELECT DISTINCT
+                                                a.id_hemxxmh,
+                                                a.jam_awal,
+                                                a.id AS id_jadwal,
+                                                a.keterangan ket_jadwal,
+                                                concat(c.tanggal," ",c.jam) AS ceklok_istirahat,
+                                                IF(DAYNAME(a.tanggal) = "Friday" AND jad.kode LIKE "%PAGI%" AND MAX(c.jam) < "13:00", 0, 
+                                                    TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam)))
+                                                )
+                                                AS durasi_istirahat_shift
+                                            FROM htssctd AS a
+                                            INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
+                                            INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
+                                            INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
+                                            WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
+                                                AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal AND DATE_ADD(a.tanggaljam_akhir, INTERVAL 1 HOUR)
+                                                AND a.id_hemxxmh IN '.$id_hemxxmh.'
+                                            GROUP BY a.id
+                                            ORDER BY ceklok_istirahat
+        
+                                        ) AS istirahat_shift ON istirahat_shift.id_hemxxmh = hem.id
                                         
                                         -- menit_toleransi_keluar_istirahat settingan
                                         LEFT JOIN (
