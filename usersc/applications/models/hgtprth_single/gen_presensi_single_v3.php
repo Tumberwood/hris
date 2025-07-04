@@ -812,7 +812,7 @@
                                         WHEN (jb.jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 AND (ceklok_istirahat IS NOT NULL AND durasi_break_menit > 0) THEN 1
                          
                                     --     -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
-                                        WHEN (jb.jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
+                                        WHEN (jb.jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND durasi_break_all_mesin > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
                                         ELSE 0
                                     END AS pot_jam_keluar_istirahat
                                 FROM htssctd jd
@@ -874,27 +874,39 @@
 
                                 ) AS cek_istirahat ON cek_istirahat.id_hemxxmh = hem.id
 
-                                 -- ceklok makan
+                                -- ceklok ISTIRAHAT ALL MESIN
                                 LEFT JOIN (
                                     SELECT DISTINCT
                                         a.id_hemxxmh,
-                                        COUNT(c.id) AS ceklok_makan_case_keluar_istirahat
+                                        a.jam_awal,
+                                        IF(DAYNAME(a.tanggal) = "Friday" AND jad.kode LIKE "%PAGI%" AND MAX(c.jam) < "13:00", 0, 
+                                            TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam)))
+                                        )
+                                        AS durasi_break_all_mesin
                                     FROM htssctd AS a
+                                    INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
                                     INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                     WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                        AND c.nama IN ("makan", "makan manual")
-                                        AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
+                                        AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                         AND a.id_hemxxmh = :id_hemxxmh
                                     GROUP BY a.id
 
-                                ) AS cek_makan ON cek_makan.id_hemxxmh = hem.id
+                                ) AS break_all_mesin ON break_all_mesin.id_hemxxmh = hem.id
 
                                 -- cek istirahat untuk shift 5 jam, range nya dari jam awal sampai jam akhir shift
                                 LEFT JOIN (
                                     SELECT DISTINCT
                                         a.id_hemxxmh,
-                                        COUNT(c.id) AS durasi_istirahat_shift
+                                        COUNT(c.id) AS durasi_istirahat_shift,
+                                        -- hitung hanya makan / makan manual
+                                        SUM(
+                                            CASE
+                                                WHEN c.nama IN ("makan", "makan manual")
+                                                THEN 1
+                                                ELSE 0
+                                            END
+                                        ) ceklok_makan_case_keluar_istirahat     
                                     FROM htssctd AS a
                                     INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
