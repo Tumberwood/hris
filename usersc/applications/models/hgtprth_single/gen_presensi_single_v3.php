@@ -890,7 +890,7 @@
                                     SELECT DISTINCT
                                         a.id_hemxxmh,
                                         a.jam_awal,
-                                        concat(c.tanggal," ",c.jam) AS ceklok_istirahat,
+                                        concat(c.tanggal," ",c.jam) AS ceklok_break,
                                         IF(DAYNAME(a.tanggal) = "Friday" AND jad.kode LIKE "%PAGI%" AND MAX(c.jam) < "13:00", 0, 
                                             TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam)))
                                         )
@@ -903,7 +903,7 @@
                                         AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal AND DATE_ADD(a.tanggaljam_akhir, INTERVAL 1 HOUR)
                                         AND a.id_hemxxmh = :id_hemxxmh
                                     GROUP BY a.id
-                                    ORDER BY ceklok_istirahat
+                                    ORDER BY ceklok_break
 
                                 ) AS istirahat_shift ON istirahat_shift.id_hemxxmh = hem.id
                                 
