@@ -92,6 +92,7 @@
 						SUM(
                             CASE WHEN a.status_presensi_in = "TL" AND st_clock_in = "LATE" THEN 1
                             WHEN a.st_clock_in = "LATE" AND status_presensi_in NOT LIKE "%DL%" THEN 1
+                            WHEN a.st_clock_in = "LATE" AND htlxxrh_kode IS NULL THEN 1
                             -- WHEN a.htlxxrh_kode LIKE "TL%" AND a.st_clock_in = "OK" THEN 1
                             ELSE 0 END
 						) 
@@ -99,6 +100,7 @@
 						SUM(
                             CASE WHEN a.status_presensi_out = "PA" THEN 1
                             WHEN a.st_clock_out = "EARLY" AND status_presensi_out NOT LIKE "%DL%" THEN 1
+                            WHEN a.st_clock_out = "EARLY" AND htlxxrh_kode IS NULL THEN 1
                             -- WHEN a.htlxxrh_kode LIKE "PA%" AND a.st_clock_out = "OK" THEN 1
                             ELSE 0 END
 						) 
@@ -117,8 +119,10 @@
 									AND NOT (
 										(a.status_presensi_in = "TL" AND st_clock_in = "LATE")
 										OR (a.st_clock_in = "LATE" AND a.status_presensi_in NOT LIKE "%DL%")
+										OR (a.st_clock_in = "LATE" AND htlxxrh_kode IS NULL)
 										OR (a.status_presensi_out = "PA")
 										OR (a.st_clock_out = "EARLY" AND a.status_presensi_out NOT LIKE "%DL%")
+										OR (a.st_clock_out = "EARLY" AND htlxxrh_kode IS NULL)
 										OR (a.status_presensi_in = "MK" OR a.status_presensi_out = "MK")
 									)
 								THEN 1
