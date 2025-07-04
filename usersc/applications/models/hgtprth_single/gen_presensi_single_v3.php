@@ -1151,7 +1151,7 @@
                         END AS is_pot_upah,
 
                         -- hitung pot_late
-                        IF(tanggal_jam_izin_awal_in IS NOT NULL AND is_potong_gaji_in = 0, 0, -- KALAU ADA IZIN TIDAK POT GAJI, MAKA 0
+                        IF( (tanggal_jam_izin_awal_in IS NOT NULL AND is_potong_gaji_in = 0) OR (kode_absen IS NOT NULL), 0, -- KALAU ADA IZIN TIDAK POT GAJI, MAKA 0
                             IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") = "" OR st_clock_in = "LATE",
                                 IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
                                     CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60),
@@ -1178,7 +1178,7 @@
                         ) AS pot_jam_late_lembur,
 
                         -- hitung pot_early
-                        IF(tanggal_jam_izin_akhir_out IS NOT NULL AND is_potong_gaji_out = 0, 0, -- KALAU ADA IZIN TIDAK POT GAJI, MAKA 0
+                        IF( (tanggal_jam_izin_akhir_out IS NOT NULL AND is_potong_gaji_out = 0) OR (kode_absen IS NOT NULL), 0, -- KALAU ADA IZIN TIDAK POT GAJI, MAKA 0
                             IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
                                 CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir) / 60),
                                 IF(jumlah_grup <> 4,
