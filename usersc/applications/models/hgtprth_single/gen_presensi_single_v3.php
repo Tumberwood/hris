@@ -893,7 +893,7 @@
                                     FROM htssctd AS a
                                     INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
-                                    WHERE a.tanggal = "2025-01-04" AND a.is_active = 1 AND b.is_active = 1
+                                    WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                         AND c.nama IN ("makan", "makan manual", "istirahat", "istirahat manual")
                                         AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
                                         AND a.id_hemxxmh = :id_hemxxmh
