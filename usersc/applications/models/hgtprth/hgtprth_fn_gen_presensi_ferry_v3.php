@@ -927,21 +927,15 @@
                                         LEFT JOIN (
                                             SELECT DISTINCT
                                                 a.id_hemxxmh,
-                                                a.jam_awal,
-                                                concat(c.tanggal," ",c.jam) AS ceklok_break,
-                                                IF(DAYNAME(a.tanggal) = "Friday" AND jad.kode LIKE "%PAGI%" AND MAX(c.jam) < "13:00", 0, 
-                                                    TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam)))
-                                                )
-                                                AS durasi_istirahat_shift
+                                                COUNT(c.id) AS durasi_istirahat_shift
                                             FROM htssctd AS a
-                                            INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
                                             INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                             INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
-                                            WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                                AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal AND DATE_ADD(a.tanggaljam_akhir, INTERVAL 1 HOUR)
+                                            WHERE a.tanggal = "2025-01-04" AND a.is_active = 1 AND b.is_active = 1
+                                                AND c.nama IN ("makan", "makan manual", "istirahat", "istirahat manual")
+                                                AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
                                                 AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                             GROUP BY a.id
-                                            ORDER BY ceklok_break
         
                                         ) AS istirahat_shift ON istirahat_shift.id_hemxxmh = hem.id
                                         
