@@ -98,7 +98,7 @@
 						) 
 						+
 						SUM(
-                            CASE WHEN a.status_presensi_out = "PA" THEN 1
+                            CASE WHEN a.status_presensi_out = "PA" AND pot_hk > 0 THEN 1
                             -- WHEN a.st_clock_out = "EARLY" AND status_presensi_out NOT LIKE "%DL%" THEN 1
                             WHEN a.st_clock_out = "EARLY" AND htlxxrh_kode = "" THEN 1
                             -- WHEN a.htlxxrh_kode LIKE "PA%" AND a.st_clock_out = "OK" THEN 1
