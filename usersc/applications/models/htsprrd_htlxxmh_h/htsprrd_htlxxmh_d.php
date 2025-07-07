@@ -117,7 +117,7 @@
 							CASE 
 								WHEN a.pot_hk > 0 
 									AND NOT (
-										(a.status_presensi_in = "TL" AND st_clock_in = "LATE" AND pot_hk > 0 )
+										(a.status_presensi_in = "TL" AND st_clock_in = "LATE")
 										-- OR (a.st_clock_in = "LATE" AND a.status_presensi_in NOT LIKE "%DL%")
 										OR (a.st_clock_in = "LATE" AND htlxxrh_kode = "")
 										OR (a.status_presensi_out = "PA")
