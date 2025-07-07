@@ -51,9 +51,7 @@
                 { data: 'htlxxrh_kode'},
             ],
             rowCallback: function( row, data, index ) {
-                if ( data.durasi_lembur_final == 0 ) {
-                    $('td', row).addClass('bg-warning');
-                }
+                
             },
             destroy: true, // Reinitialize allowed
             responsive: false, // Enable responsive layout
@@ -101,9 +99,7 @@
                 },
             ],
             rowCallback: function( row, data, index ) {
-                if ( data.durasi_lembur_final == 0 ) {
-                    $('td', row).addClass('bg-warning');
-                }
+                
             },
             destroy: true, // Reinitialize allowed
             responsive: false, // Enable responsive layout
@@ -118,7 +114,7 @@
         
         // Initialize DataTable
         $('#table_sdl').DataTable({
-            dom: 'lrtsdl' ,
+            dom: 'lrtip' ,
             ajax: {
                 url: "../../models/htsprrd_htlxxmh_h/htsprrd_htlxxmh_h_fn_cek_sdl.php",
                 type: 'POST',
@@ -144,9 +140,7 @@
                 { data: 'htlxxrh_kode'},
             ],
             rowCallback: function( row, data, index ) {
-                if ( data.durasi_lembur_final == 0 ) {
-                    $('td', row).addClass('bg-warning');
-                }
+                
             },
             destroy: true, // Reinitialize allowed
             responsive: false, // Enable responsive layout
@@ -161,7 +155,7 @@
         
         // Initialize DataTable
         $('#table_absen_sdl').DataTable({
-            dom: 'lrtsdl' ,
+            dom: 'lrtip' ,
             ajax: {
                 url: "../../models/htsprrd_htlxxmh_h/htsprrd_htlxxmh_h_fn_cek_sdl.php",
                 type: 'POST',
@@ -184,14 +178,11 @@
                     }
                 },
                 { data: 'nama'},
-                { data: 'status_presensi_in'},
-                { data: 'status_presensi_out'},
-                { data: 'htlxxrh_kode'},
+                { data: 'kode_absen'},
+                { data: 'keterangan'},
             ],
             rowCallback: function( row, data, index ) {
-                if ( data.durasi_lembur_final == 0 ) {
-                    $('td', row).addClass('bg-warning');
-                }
+                
             },
             destroy: true, // Reinitialize allowed
             responsive: false, // Enable responsive layout
