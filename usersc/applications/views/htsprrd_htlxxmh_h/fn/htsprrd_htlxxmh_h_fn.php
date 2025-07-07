@@ -166,7 +166,7 @@
                 },
                 dataSrc: function (json) {
                     // console.log(json); // Optional debugging
-                    return json.data.rs_table_absen_sdl || [];
+                    return json.data.rs_absen_sdl || [];
                 }
             },
             columns: [
