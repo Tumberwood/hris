@@ -141,8 +141,6 @@
                     }
                 },
                 { data: 'nama'},
-                { data: 'status_presensi_in'},
-                { data: 'status_presensi_out'},
                 { data: 'htlxxrh_kode'},
             ],
             rowCallback: function( row, data, index ) {
