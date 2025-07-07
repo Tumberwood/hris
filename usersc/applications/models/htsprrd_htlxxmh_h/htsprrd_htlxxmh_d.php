@@ -132,7 +132,7 @@
 						AS ip_pot,
 						SUM(
                             CASE WHEN a.status_presensi_in = "lb" THEN 1
-							CASE WHEN a.htlxxrh_kode LIKE "%Cuti Bersama%" AND a.is_pot_upah > 0 THEN 1
+								 WHEN a.htlxxrh_kode LIKE "%Cuti Bersama%" AND a.is_pot_upah > 0 THEN 1
                             ELSE 0 END
 						) lb
 					FROM htsprrd a
