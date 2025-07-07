@@ -170,9 +170,9 @@
 						  <thead>
 							<tr>
 							  <th>Tanggal</th>
+							  <th>Kode Absen</th>
 							  <th>NIP</th>
 							  <th>Nama</th>
-							  <th>Kode Absen</th>
 							  <th>Keterangan</th>
 							</tr>
 						  </thead>

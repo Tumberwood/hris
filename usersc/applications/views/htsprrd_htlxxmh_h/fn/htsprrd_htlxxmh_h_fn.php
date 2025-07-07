@@ -171,9 +171,16 @@
             },
             columns: [
                 { data: 'tanggal' },
-                { data: 'kode' },
+                { 
+                    data: 'kode_absen',
+                    render: function(data, type, row) {
+                        return '<a target="_blank" href="../htlxxrh/htlxxrh.php?id_hemxxmh=' + row.id_hemxxmh + '&start_date=' + row.tanggal + '">' + data + '</a>';
+                    }
+                },
+                {
+                    data: "kode",
+                },
                 { data: 'nama'},
-                { data: 'kode_absen'},
                 { data: 'keterangan'},
             ],
             rowCallback: function( row, data, index ) {
