@@ -149,6 +149,7 @@
           <div class="tab-pane fade" id="content-sdl" role="tabpanel">
 			  <div class="row">
 				  <div class="col-6">
+					  <h3>Report Presensi</h3>
 					  <div class="table-responsive">
 						<table id="table_sdl" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						  <thead>
@@ -163,6 +164,7 @@
 					  </div>
 				  </div>
 				  <div class="col-6">
+					  <h3>Absen SDL</h3>
 					  <div class="table-responsive">
 						<table id="table_absen_sdl" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						  <thead>
