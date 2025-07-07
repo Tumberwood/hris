@@ -77,6 +77,8 @@
                                 <th>Kode</th>
                                 <th>Nama</th>
                                 <th>Jenis</th>
+                                <th>Jam Awal</th>
+                                <th>Jam Akhir</th>
                                 <th>Keterangan</th>
                                 <th>Approval</th>
                             </tr>
