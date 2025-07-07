@@ -98,10 +98,10 @@
             <a class="nav-link active" id="tab-al" data-toggle="tab" href="#content-al" role="tab">AL</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="tab-ip" data-toggle="tab" href="#content-ip" role="tab">IP</a>
+            <a class="nav-link" id="tab-sdl" data-toggle="tab" href="#content-sdl" role="tab">SDL (s3)</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="tab-sdl" data-toggle="tab" href="#content-sdl" role="tab">SDL (s3)</a>
+            <a class="nav-link" id="tab-ip" data-toggle="tab" href="#content-ip" role="tab">IP</a>
           </li>
         </ul>
 
