@@ -106,6 +106,9 @@
           <li class="nav-item">
             <a class="nav-link" id="tab-ip" data-toggle="tab" href="#content-ip" role="tab">IP</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" id="tab-lb" data-toggle="tab" href="#content-lb" role="tab">LB</a>
+          </li>
         </ul>
 
         <!-- Tab Contents -->
@@ -207,6 +210,43 @@
 					  <h3>Absen it</h3>
 					  <div class="table-responsive">
 						<table id="table_absen_it" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						  <thead>
+							<tr>
+							  <th>Tanggal</th>
+							  <th>Kode Absen</th>
+							  <th>NIP</th>
+							  <th>Nama</th>
+							  <th>Keterangan</th>
+							</tr>
+						  </thead>
+						</table>
+					  </div>
+				  </div>
+			  </div>
+          </div>
+		  
+          <!-- lb Tab -->
+          <div class="tab-pane fade" id="content-lb" role="tabpanel">
+			  <div class="row">
+				  <div class="col-6">
+					  <h3>Report Presensi</h3>
+					  <div class="table-responsive">
+						<table id="table_lb" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						  <thead>
+							<tr>
+							  <th>Tanggal</th>
+							  <th>NIP</th>
+							  <th>Nama</th>
+							  <th>Keterangan</th>
+							</tr>
+						  </thead>
+						</table>
+					  </div>
+				  </div>
+				  <div class="col-6">
+					  <h3>Absen lb</h3>
+					  <div class="table-responsive">
+						<table id="table_absen_lb" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						  <thead>
 							<tr>
 							  <th>Tanggal</th>

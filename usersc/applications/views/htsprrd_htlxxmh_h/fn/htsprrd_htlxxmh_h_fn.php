@@ -276,5 +276,91 @@
             autoWidth: false, // Disable automatic column width adjustment
             lengthChange: true, // Allow users to select number of rows
         });
+
+        // lb
+        if ($.fn.DataTable.isDataTable('#table_lb')) {
+            $('#table_lb').DataTable().destroy();
+        }
+        
+        // Initialize DataTable
+        $('#table_lb').DataTable({
+            dom: 'lrtip' ,
+            ajax: {
+                url: "../../models/htsprrd_htlxxmh_h/htsprrd_htlxxmh_h_fn_cek_lb.php",
+                type: 'POST',
+                data: function (d) {
+                    d.id_hemxxmh = id_hemxxmh;
+                    d.start_date = start_date;
+                    d.end_date = end_date;
+                },
+                dataSrc: function (json) {
+                    // console.log(json); // Optional debugging
+                    return json.data.rs_table_lb || [];
+                }
+            },
+            columns: [
+                { data: 'tanggal' },
+                {
+                    data: "kode",
+                    render: function(data, type, row) {
+                        return '<a target="_blank" href="../dashboard/d_hr_report_presensi.php?id_hemxxmh=' + row.id_hemxxmh + '&start_date=' + row.tanggal + '">' + data + '</a>';
+                    }
+                },
+                { data: 'nama'},
+                { data: 'htlxxrh_kode'},
+            ],
+            rowCallback: function( row, data, index ) {
+                
+            },
+            destroy: true, // Reinitialize allowed
+            responsive: false, // Enable responsive layout
+            autoWidth: false, // Disable automatic column width adjustment
+            lengthChange: true, // Allow users to select number of rows
+        });
+
+        // lb
+        if ($.fn.DataTable.isDataTable('#table_absen_lb')) {
+            $('#table_absen_lb').DataTable().destroy();
+        }
+        
+        // Initialize DataTable
+        $('#table_absen_lb').DataTable({
+            dom: 'lrtip' ,
+            ajax: {
+                url: "../../models/htsprrd_htlxxmh_h/htsprrd_htlxxmh_h_fn_cek_lb.php",
+                type: 'POST',
+                data: function (d) {
+                    d.id_hemxxmh = id_hemxxmh;
+                    d.start_date = start_date;
+                    d.end_date = end_date;
+                },
+                dataSrc: function (json) {
+                    // console.log(json); // Optional debugging
+                    return json.data.rs_absen_lb || [];
+                }
+            },
+            columns: [
+                { data: 'tanggal' },
+                { 
+                    data: 'kode_absen',
+                    render: function(data, type, row) {
+                        return '<a target="_blank" href="../htlxxrh/htlxxrh.php?id_hemxxmh=' + row.id_hemxxmh + '&start_date=' + row.tanggal + '">' + data + '</a>';
+                    }
+                },
+                {
+                    data: "kode",
+                },
+                { data: 'nama'},
+                { data: 'keterangan'},
+            ],
+            rowCallback: function( row, data, index ) {
+                
+            },
+            destroy: true, // Reinitialize allowed
+            responsive: false, // Enable responsive layout
+            autoWidth: false, // Disable automatic column width adjustment
+            lengthChange: true, // Allow users to select number of rows
+        });
+
     }
 </script>
