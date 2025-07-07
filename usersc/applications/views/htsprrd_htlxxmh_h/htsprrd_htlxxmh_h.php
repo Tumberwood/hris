@@ -694,7 +694,7 @@
 					?>
 					// END breaking generate button
 					,{
-						text: '<i class="fa fa-list"></i>',
+						text: '<i class="fa fa-list">Detail</i>',
 						name: 'btnBreakdown',
 						className: 'btn btn-outline',
 						titleAttr: 'Breakdown ',
