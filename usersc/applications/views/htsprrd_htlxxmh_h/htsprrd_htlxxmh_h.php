@@ -78,6 +78,82 @@
     </div>
 </div>
 
+<!-- Breakdown Lembur Modal dengan Tabs -->
+<div class="modal fade" id="modalBreakdown" tabindex="-1" role="dialog" aria-labelledby="myModal1Label" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModal1Label">Breakdown Absensi</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-3" id="lemburTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="tab-al" data-toggle="tab" href="#content-al" role="tab">AL</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="tab-ip" data-toggle="tab" href="#content-ip" role="tab">IP</a>
+          </li>
+        </ul>
+
+        <!-- Tab Contents -->
+        <div class="tab-content" id="lemburTabContent">
+
+          <!-- AL Tab -->
+          <div class="tab-pane fade show active" id="content-al" role="tabpanel">
+            <div class="table-responsive">
+              <table id="table_al" class="table table-striped table-bordered table-hover nowrap" width="100%">
+                <thead>
+                  <tr>
+                    <th>Tanggal</th>
+                    <th>NIP</th>
+                    <th>Nama</th>
+                    <th>Status In</th>
+                    <th>Status Out</th>
+                    <th>Keterangan</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+
+          <!-- IP Tab -->
+          <div class="tab-pane fade" id="content-ip" role="tabpanel">
+            <div class="table-responsive">
+              <table id="table_ip" class="table table-striped table-bordered table-hover nowrap" width="100%">
+                <thead>
+                  <tr>
+                    <th>Tanggal</th>
+                    <th>NIP</th>
+                    <th>Nama</th>
+                    <th>Status In</th>
+                    <th>Status Out</th>
+                    <th>Keterangan</th>
+                    <th>Pot HK</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+
+        </div> <!-- End Tab Contents -->
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
@@ -165,14 +241,6 @@
 							<tr>
 								<th colspan="17">Total Tidak Sesuai</th>
 								<th id="tidak_sesuai" class="bg-success"></th> 
-								<!-- <th></th> 
-								<th></th> 
-								<th></th> 
-								<th></th> 
-								<th></th> 
-								<th></th> 
-								<th></th> 
-								<th></th>  -->
 							</tr>
 						</tfoot>
                     </table>
@@ -505,6 +573,16 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					,{
+						text: '<i class="fa fa-list"></i>',
+						name: 'btnBreakdown',
+						className: 'btn btn-outline',
+						titleAttr: 'Breakdown ',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							$('#modalBreakdown').modal('show');
+						}
+					}
 				],
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
@@ -549,7 +627,28 @@
 			} );
 			
 			tblhtsprrd_htlxxmh_d.searchPanes.container().appendTo( '#searchPanes1' );
+			tblhtsprrd_htlxxmh_d.button('btnBreakdown:name').disable();
 
+			tblhtsprrd_htlxxmh_d.on( 'select', function( e, dt, type, indexes ) {
+				data_htsprrd_htlxxmh_d = tblhtsprrd_htlxxmh_d.row( { selected: true } ).data();
+				id_hemxxmh       = data_htsprrd_htlxxmh_d.id_hemxxmh;
+				start_date       = data_htsprrd_htlxxmh_d.start_date;
+				end_date       = data_htsprrd_htlxxmh_d.end_date;
+				kode       = data_htsprrd_htlxxmh_d.kode;
+				kode_finger = kode.slice(-4);
+
+				tblhtsprrd_htlxxmh_d.button('btnBreakdown:name').enable();
+				breakdown(id_hemxxmh, start_date, end_date);
+			} );
+			
+			tblhtsprrd_htlxxmh_d.on( 'deselect', function () {
+				// reload dipanggil di function CekDeselectHeader
+				id_hemxxmh = 0;
+				start_date = '';
+				end_date = '';
+				kode_finger = '';
+				tblhtsprrd_htlxxmh_d.button('btnBreakdown:name').disable();
+			} );
 // --------- end _detail --------------- //		
 			
 			$("#frmFilter").submit(function(e) {
