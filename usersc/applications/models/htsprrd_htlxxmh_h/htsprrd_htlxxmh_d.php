@@ -132,6 +132,7 @@
 						AS ip_pot,
 						SUM(
                             CASE WHEN a.status_presensi_in = "lb" THEN 1
+                            CASE WHEN a.keterangan LIKE "lb%" THEN 1
                             ELSE 0 END
 						) lb
 					FROM htsprrd a
