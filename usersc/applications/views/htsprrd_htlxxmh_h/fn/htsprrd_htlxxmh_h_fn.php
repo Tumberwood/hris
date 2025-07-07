@@ -110,5 +110,95 @@
             autoWidth: false, // Disable automatic column width adjustment
             lengthChange: true, // Allow users to select number of rows
         });
+
+        // sdl
+        if ($.fn.DataTable.isDataTable('#table_sdl')) {
+            $('#table_sdl').DataTable().destroy();
+        }
+        
+        // Initialize DataTable
+        $('#table_sdl').DataTable({
+            dom: 'lrtsdl' ,
+            ajax: {
+                url: "../../models/htsprrd_htlxxmh_h/htsprrd_htlxxmh_h_fn_cek_sdl.php",
+                type: 'POST',
+                data: function (d) {
+                    d.id_hemxxmh = id_hemxxmh;
+                    d.start_date = start_date;
+                    d.end_date = end_date;
+                },
+                dataSrc: function (json) {
+                    // console.log(json); // Optional debugging
+                    return json.data.rs_table_sdl || [];
+                }
+            },
+            columns: [
+                { data: 'tanggal' },
+                {
+                    data: "kode",
+                    render: function(data, type, row) {
+                        return '<a target="_blank" href="../dashboard/d_hr_report_presensi.php?id_hemxxmh=' + row.id_hemxxmh + '&start_date=' + row.tanggal + '">' + data + '</a>';
+                    }
+                },
+                { data: 'nama'},
+                { data: 'status_presensi_in'},
+                { data: 'status_presensi_out'},
+                { data: 'htlxxrh_kode'},
+            ],
+            rowCallback: function( row, data, index ) {
+                if ( data.durasi_lembur_final == 0 ) {
+                    $('td', row).addClass('bg-warning');
+                }
+            },
+            destroy: true, // Reinitialize allowed
+            responsive: false, // Enable responsive layout
+            autoWidth: false, // Disable automatic column width adjustment
+            lengthChange: true, // Allow users to select number of rows
+        });
+
+        // sdl
+        if ($.fn.DataTable.isDataTable('#table_absen_sdl')) {
+            $('#table_absen_sdl').DataTable().destroy();
+        }
+        
+        // Initialize DataTable
+        $('#table_absen_sdl').DataTable({
+            dom: 'lrtsdl' ,
+            ajax: {
+                url: "../../models/htsprrd_htlxxmh_h/htsprrd_htlxxmh_h_fn_cek_sdl.php",
+                type: 'POST',
+                data: function (d) {
+                    d.id_hemxxmh = id_hemxxmh;
+                    d.start_date = start_date;
+                    d.end_date = end_date;
+                },
+                dataSrc: function (json) {
+                    // console.log(json); // Optional debugging
+                    return json.data.rs_table_absen_sdl || [];
+                }
+            },
+            columns: [
+                { data: 'tanggal' },
+                {
+                    data: "kode",
+                    render: function(data, type, row) {
+                        return '<a target="_blank" href="../dashboard/d_hr_report_presensi.php?id_hemxxmh=' + row.id_hemxxmh + '&start_date=' + row.tanggal + '">' + data + '</a>';
+                    }
+                },
+                { data: 'nama'},
+                { data: 'status_presensi_in'},
+                { data: 'status_presensi_out'},
+                { data: 'htlxxrh_kode'},
+            ],
+            rowCallback: function( row, data, index ) {
+                if ( data.durasi_lembur_final == 0 ) {
+                    $('td', row).addClass('bg-warning');
+                }
+            },
+            destroy: true, // Reinitialize allowed
+            responsive: false, // Enable responsive layout
+            autoWidth: false, // Disable automatic column width adjustment
+            lengthChange: true, // Allow users to select number of rows
+        });
     }
 </script>
