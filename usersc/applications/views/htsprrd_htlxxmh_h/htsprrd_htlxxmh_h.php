@@ -101,6 +101,9 @@
             <a class="nav-link" id="tab-sdl" data-toggle="tab" href="#content-sdl" role="tab">SDL (s3)</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" id="tab-it" data-toggle="tab" href="#content-it" role="tab">IT (Izin Pribadi)</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" id="tab-ip" data-toggle="tab" href="#content-ip" role="tab">IP</a>
           </li>
         </ul>
@@ -145,7 +148,7 @@
             </div>
           </div>
 
-          <!-- IP Tab -->
+          <!-- SDL Tab -->
           <div class="tab-pane fade" id="content-sdl" role="tabpanel">
 			  <div class="row">
 				  <div class="col-6">
@@ -167,6 +170,43 @@
 					  <h3>Absen SDL</h3>
 					  <div class="table-responsive">
 						<table id="table_absen_sdl" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						  <thead>
+							<tr>
+							  <th>Tanggal</th>
+							  <th>Kode Absen</th>
+							  <th>NIP</th>
+							  <th>Nama</th>
+							  <th>Keterangan</th>
+							</tr>
+						  </thead>
+						</table>
+					  </div>
+				  </div>
+			  </div>
+          </div>
+
+          <!-- it Tab -->
+          <div class="tab-pane fade" id="content-it" role="tabpanel">
+			  <div class="row">
+				  <div class="col-6">
+					  <h3>Report Presensi</h3>
+					  <div class="table-responsive">
+						<table id="table_it" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						  <thead>
+							<tr>
+							  <th>Tanggal</th>
+							  <th>NIP</th>
+							  <th>Nama</th>
+							  <th>Keterangan</th>
+							</tr>
+						  </thead>
+						</table>
+					  </div>
+				  </div>
+				  <div class="col-6">
+					  <h3>Absen it</h3>
+					  <div class="table-responsive">
+						<table id="table_absen_it" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						  <thead>
 							<tr>
 							  <th>Tanggal</th>
