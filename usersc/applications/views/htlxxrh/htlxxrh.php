@@ -236,6 +236,8 @@
 					{ data: "kode" },
 					{ data: "hemxxmh_nama" },
 					{ data: "htlxxmh_nama" },
+					{ data: "jam_awal" },
+					{ data: "jam_akhir" },
 					{ data: "keterangan" },
 					{ 
 						data: "is_approve",
