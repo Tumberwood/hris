@@ -60,6 +60,7 @@
 				WHERE a.tanggal BETWEEN :start_date AND :end_date
 				AND a.is_active = 1 AND a.id_hemxxmh = :id_hemxxmh
 				AND (htlxxmh_kode = "lb")
+				GROUP BY a.id_hemxxmh, a.tanggal, a.htlxxmh_kode
 				ORDER BY a.id_hemxxmh, a.tanggal;
 	
 	');
