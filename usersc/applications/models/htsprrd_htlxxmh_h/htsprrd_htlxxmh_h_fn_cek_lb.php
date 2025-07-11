@@ -54,7 +54,7 @@
 					TRIM(b.kode) AS kode,
 					b.nama,
 					a.kode kode_absen,
-					a.keterangan
+					a.htlxxmh_kode keterangan
 				FROM htlxxrh a
 				LEFT JOIN hemxxmh b ON b.id = a.id_hemxxmh
 				WHERE a.tanggal BETWEEN :start_date AND :end_date
