@@ -218,6 +218,7 @@
                         WHERE a.is_active = 1
                             AND a.tanggal = :tanggal
                             AND jb.id_hesxxmh = 2
+                            AND a.id_htsxxmh <> 1
 
                 ')
             ;
@@ -264,6 +265,7 @@
                         WHERE a.is_active = 1
                             AND a.tanggal = :tanggal
                             AND (jb.id_heyxxmd = 5 OR jb.id_hesxxmh = 3)
+                            AND a.id_htsxxmh <> 1
 
                 ')
             ;
