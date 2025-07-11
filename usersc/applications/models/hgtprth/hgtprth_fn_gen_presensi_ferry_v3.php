@@ -1181,6 +1181,7 @@
                                     WHEN kode_izin_out IS NOT NULL AND keterangan <> "" AND id_htsxxmh <> 1 THEN kode_kondite
                                     WHEN kode_izin_out IS NULL AND id_htsxxmh <> 1 AND st_clock_out <> "OK" THEN "Belum Ada Izin"
                                     WHEN kode_izin_out IS NULL AND kode_absen IS NULL AND id_htsxxmh <> 1 AND st_clock_out = "OK" THEN "HK"
+                                    WHEN kode_izin_out IS NULL AND kode_absen IS NULL AND st_clock_out = "OK" THEN "HK"
                                     ELSE NULL
                                 END AS status_presensi_out,
                                 
