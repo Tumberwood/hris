@@ -495,9 +495,9 @@
 					}
 					// END of validasi htssctd.id_htsxxmh
 					
+					id_hemxxmh = edthtssctd.field('htssctd.id_hemxxmh').val();
 					// BEGIN of validasi htssctd.id_hemxxmh
 					if ( ! edthtssctd.field('htssctd.id_hemxxmh').isMultiValue() ) {
-						id_hemxxmh = edthtssctd.field('htssctd.id_hemxxmh').val();
 						if(!id_hemxxmh || id_hemxxmh == ''){
 							edthtssctd.field('htssctd.id_hemxxmh').error( 'Wajib diisi!' );
 						}
