@@ -886,7 +886,7 @@
                                             ) history ON history.id_hemxxmh = j.id_hemxxmh
                                         ) jb ON jb.id_hemxxmh = hem.id
 
-                                        LEFT JOIN htoxxrd ot ON ot.id_hemxxmh = jd.id_hemxxmh AND ot.tanggal = jd.tanggal AND jd.id_htotpmh = 2
+                                        LEFT JOIN htoxxrd ot ON ot.id_hemxxmh = jd.id_hemxxmh AND ot.tanggal = jd.tanggal AND ot.id_htotpmh = 2
         
                                         -- ceklok ISTIRAHAT
                                         LEFT JOIN (
