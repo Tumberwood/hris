@@ -805,6 +805,9 @@
                                     ceklok_istirahat,
                                     ceklok_makan_case_keluar_istirahat,
                                     CASE
+                                            -- Jika ada Overtime Akhir, shift pendek boleh ada ceklok makan dan istirahat
+                                            WHEN id_htsxxmh IN (select id from htsxxmh where id <> 1 and is_active = 1 and jam_awal_istirahat = "00:00:00") AND IFNULL(durasi_istirahat_shift, 0) > 0 AND IFNULL(ot.durasi_lembur_jam,0) > 0 THEN 0
+                                            
                                         -- shift pendek tidak boleh ada ceklok makan dan istirahat
                                         WHEN id_htsxxmh IN (select id from htsxxmh where id <> 1 and is_active = 1 and jam_awal_istirahat = "00:00:00") AND IFNULL(durasi_istirahat_shift, 0) > 0 THEN 1
                         
