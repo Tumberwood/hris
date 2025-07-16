@@ -839,7 +839,7 @@
                                             hem.*,
                                             jumlah_grup,
                                             id_jadwal,
-                                            tanggal,
+                                            jd.tanggal,
                                             ceklok_istirahat,
                                             ceklok_makan_case_keluar_istirahat,
                                             CASE
