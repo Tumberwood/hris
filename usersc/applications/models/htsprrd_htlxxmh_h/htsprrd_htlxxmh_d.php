@@ -153,7 +153,15 @@
 			$total_xl = $row['al'] + $row['s2'] + $row['s3'] + $row['it'] + $row['ip_pot'] + $row['lb'];
 			$total_db = $sqlRow['al'] + $sqlRow['s2'] + $sqlRow['s3'] + $sqlRow['it'] + $sqlRow['ip_pot'] + $sqlRow['lb'];
 	
-			if ($total_xl == $total_db) {
+			// if ($total_xl == $total_db) {
+			if (
+				$row['al'] == $sqlRow['al'] &&
+				$row['s2'] == $sqlRow['s2'] &&
+				$row['s3'] == $sqlRow['s3'] &&
+				$row['it'] == $sqlRow['it'] &&
+				$row['ip_pot'] == $sqlRow['ip_pot'] &&
+				$row['lb'] == $sqlRow['lb']
+			) {	
 				$is_tidak_sesuai = 0;
 			} else {
 				$is_tidak_sesuai = 1;
