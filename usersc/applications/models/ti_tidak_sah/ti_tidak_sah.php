@@ -38,7 +38,7 @@
 					DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i" ) AS masuk,
 					DATE_FORMAT(a.break_in, "%d %b %Y %H:%i" ) break_in,
 					DATE_FORMAT(a.break_out, "%d %b %Y %H:%i" ) break_out,
-					is_makan,
+					makan is_makan,
 					DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i" ) AS pulang,
 					
 					-- Tambahkan durasi istirahat (dalam menit)
@@ -61,6 +61,18 @@
 				INNER JOIN hodxxmh d ON d.id = c.id_hodxxmh
 				INNER JOIN hetxxmh e ON e.id = c.id_hetxxmh
 				LEFT JOIN holxxmd_2 f ON f.id = c.id_holxxmd_2
+
+				LEFT JOIN (
+					SELECT
+						b.id id_hemxxmh,
+						a.tanggal,
+						CONCAT(a.tanggal, " ", a.jam) ceklok,
+						DATE_FORMAT( CONCAT(a.tanggal, " ", a.jam) , "%d %b %Y %H:%i") makan
+					FROM htsprtd a
+					LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
+					WHERE a.tanggal BETWEEN "2024-12-18" AND DATE_ADD("2025-01-20", INTERVAL 1 DAY) AND a.nama IN ("MAKAN", "MAKAN MANUAL")
+					GROUP BY b.id, a.tanggal
+				) mk on mk.ceklok BETWEEN a.clock_in AND a.clock_out AND mk.id_hemxxmh = a.id_hemxxmh
 
 				WHERE 
 					a.tanggal BETWEEN :start_date AND :end_date
