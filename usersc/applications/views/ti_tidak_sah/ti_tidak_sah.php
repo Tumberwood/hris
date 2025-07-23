@@ -260,7 +260,7 @@
 					{ data: "masuk" },
 					{ data: "break_in" },
 					{ data: "break_out" },
-					{ data: "is_makan" },
+					{ data: "makan" },
 					{ data: "pulang" },
 					{ data: "kategori" },
 				],

@@ -38,7 +38,8 @@
 					DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i" ) AS masuk,
 					DATE_FORMAT(a.break_in, "%d %b %Y %H:%i" ) break_in,
 					DATE_FORMAT(a.break_out, "%d %b %Y %H:%i" ) break_out,
-					makan is_makan,
+					makan,
+					is_makan,
 					DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i" ) AS pulang,
 					
 					-- Tambahkan durasi istirahat (dalam menit)
