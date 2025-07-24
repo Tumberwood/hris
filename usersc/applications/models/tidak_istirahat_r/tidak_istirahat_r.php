@@ -78,17 +78,16 @@
 					INNER JOIN hetxxmh e ON e.id = c.id_hetxxmh
 					LEFT JOIN holxxmd_2 f ON f.id = c.id_holxxmd_2
 					INNER JOIN htsxxmh h ON h.kode = a.st_jadwal
-				
-				
+
 					WHERE 
 						a.tanggal BETWEEN :start_date AND :end_date
 						AND a.durasi_lembur_total_jam = 0
 						AND a.st_jadwal <> "OFF"
 						'.$where.'
 					HAVING (
-					break_in IS NULL
-					OR 
-					(break_in IS NULL AND is_makan = 0)
+						break_in IS NULL
+						OR 
+						(break_in IS NULL AND is_makan = 0)
 					)
 					ORDER BY a.tanggal
 				)
