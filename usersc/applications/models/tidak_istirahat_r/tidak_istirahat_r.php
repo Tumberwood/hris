@@ -25,41 +25,77 @@
 		->raw()
 		->bind(':start_date', $start_date)
 		->bind(':end_date', $end_date)
-		->exec('SELECT
-					a.id,
-					a.id_hemxxmh,
-					b.kode AS nik,
-					b.nama,
-					d.nama AS dep,
-					e.nama AS jab,
-					f.nama AS area,
-					DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
-					a.st_jadwal,
-					DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i" ) AS masuk,
-					DATE_FORMAT(a.break_in, "%d %b %Y %H:%i" ) break_in,
-					DATE_FORMAT(a.break_out, "%d %b %Y %H:%i" ) break_out,
-					is_makan,
-					makan,
-					DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i" ) AS pulang,
+		->exec('WITH report AS (
+					SELECT
+						a.id,
+						a.id_hemxxmh,
+						b.kode AS nik,
+						b.nama,
+						d.nama AS dep,
+						e.nama AS jab,
+						f.nama AS area,
+						DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
+						CONCAT(
+							CASE
+								WHEN DATE_ADD(h.jam_akhir, INTERVAL h.menit_toleransi_akhir_out MINUTE) >= "24:00:00" 
+									OR h.kode like "malam%" AND h.jam_akhir <= "12:00:00" THEN DATE_ADD(a.tanggal, INTERVAL 1 DAY)
+								ELSE a.tanggal
+							END,
+							" ",
+							TIME(
+								CASE
+									WHEN DATE_ADD(h.jam_akhir, INTERVAL h.menit_toleransi_akhir_out MINUTE) >= "24:00:00" THEN
+										TIMEDIFF(DATE_ADD(h.jam_akhir, INTERVAL h.menit_toleransi_akhir_out MINUTE), "24:00:00")
+									ELSE
+										DATE_ADD(h.jam_akhir, INTERVAL h.menit_toleransi_akhir_out MINUTE)
+								END
+							)
+						) AS tanggaljam_akhir_t2,
+						a.st_jadwal,
+						clock_in,
+						DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i" ) AS masuk,
+						DATE_FORMAT(a.break_in, "%d %b %Y %H:%i" ) break_in,
+						DATE_FORMAT(a.break_out, "%d %b %Y %H:%i" ) break_out,
+						is_makan,
+						-- makan,
+						DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i" ) AS pulang,
 				
-					TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) AS durasi_istirahat_menit,
+						TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) AS durasi_istirahat_menit,
 				
-					CASE
-						WHEN break_in IS NULL AND is_makan = 0 then "Tidak Istirahat dan Makan"
-						WHEN break_in IS NULL then "Tidak Istirahat"
-						ELSE "Tidak Masuk Kategori"
-					END AS kategori,
-					a.durasi_lembur_total_jam,
-					a.pot_ti,
-					a.durasi_lembur_final
+						CASE
+							WHEN break_in IS NULL AND is_makan = 0 then "Tidak Istirahat dan Makan"
+							WHEN break_in IS NULL then "Tidak Istirahat"
+							ELSE "Tidak Masuk Kategori"
+						END AS kategori,
+						a.durasi_lembur_total_jam,
+						a.pot_ti,
+						a.durasi_lembur_final
 				
-				FROM htsprrd a
-				INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
-				INNER JOIN hemjbmh c on c.id_hemxxmh = a.id_hemxxmh
-				INNER JOIN hodxxmh d ON d.id = c.id_hodxxmh
-				INNER JOIN hetxxmh e ON e.id = c.id_hetxxmh
-				LEFT JOIN holxxmd_2 f ON f.id = c.id_holxxmd_2
+					FROM htsprrd a
+					INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
+					INNER JOIN hemjbmh c on c.id_hemxxmh = a.id_hemxxmh
+					INNER JOIN hodxxmh d ON d.id = c.id_hodxxmh
+					INNER JOIN hetxxmh e ON e.id = c.id_hetxxmh
+					LEFT JOIN holxxmd_2 f ON f.id = c.id_holxxmd_2
+					INNER JOIN htsxxmh h ON h.kode = a.st_jadwal
 				
+				
+					WHERE 
+						a.tanggal BETWEEN :start_date AND :end_date
+						AND a.durasi_lembur_total_jam = 0
+						AND a.st_jadwal <> "OFF"
+						'.$where.'
+					HAVING (
+					break_in IS NULL
+					OR 
+					(break_in IS NULL AND is_makan = 0)
+					)
+					ORDER BY a.tanggal
+				)
+				SELECT
+					report.*,
+					mk.makan
+				FROM report
 				LEFT JOIN (
 					SELECT
 						b.id id_hemxxmh,
@@ -71,20 +107,7 @@
 					WHERE a.tanggal BETWEEN :start_date AND DATE_ADD(:end_date, INTERVAL 1 DAY)
 						AND a.nama IN ("MAKAN", "MAKAN MANUAL")
 					GROUP BY b.id, a.tanggal
-				) mk ON mk.ceklok BETWEEN a.clock_in AND a.clock_out AND mk.id_hemxxmh = a.id_hemxxmh
-				
-				WHERE 
-					a.tanggal BETWEEN :start_date AND :end_date
-					AND a.durasi_lembur_total_jam = 0
-					AND a.st_jadwal <> "OFF"
-				'.$where.'
-				HAVING (
-				break_in IS NULL
-				OR 
-				(break_in IS NULL AND is_makan = 0)
-				)
-				ORDER BY a.tanggal
-		
+				) mk ON mk.ceklok BETWEEN report.clock_in AND DATE_SUB(report.tanggaljam_akhir_t2, INTERVAL 60 MINUTE) AND mk.id_hemxxmh = report.id_hemxxmh
 				' 
 				);
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
