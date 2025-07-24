@@ -108,14 +108,14 @@
 					a.tanggal BETWEEN :start_date AND :end_date
 					AND a.pot_jam > 0
 					AND jumlah_grup = 2
-					
+					'. $where .'
 				HAVING (
 				durasi_istirahat_menit > 30 
 				OR 
 				(durasi_istirahat_menit BETWEEN 1 AND 30 AND IFNULL(is_makan, 0) = 1)
 				)
 				ORDER BY a.tanggal
-				' . $where
+				' 
 				);
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
 
