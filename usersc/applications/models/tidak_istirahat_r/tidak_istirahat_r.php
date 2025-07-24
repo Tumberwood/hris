@@ -76,6 +76,7 @@
 				WHERE 
 					a.tanggal BETWEEN :start_date AND :end_date
 					AND a.durasi_lembur_total_jam = 0
+					AND a.st_jadwal <> "OFF"
 				'.$where.'
 				HAVING (
 				break_in IS NULL
