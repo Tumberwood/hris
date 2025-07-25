@@ -63,7 +63,7 @@
 					TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) AS durasi_istirahat_menit,
 				
 					CASE
-						WHEN jumlah_grup = 2 AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30 THEN "4 Grup, Istirahat > 30 Menit"
+						-- WHEN jumlah_grup = 2 AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30 THEN "4 Grup, Istirahat > 30 Menit"
 						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 60 THEN "Istirahat > 60 Menit"
 						-- WHEN id_hodxxmh = 9 AND st_jadwal LIKE "%06:00%" THEN "QC"
 						
