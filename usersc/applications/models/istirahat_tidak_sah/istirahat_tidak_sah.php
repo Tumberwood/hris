@@ -114,7 +114,8 @@
 					SELECT
 						b.id id_hemxxmh,
 						a.tanggal,
-						CONCAT(a.tanggal, " ", a.jam) ceklok,
+            			a.nama AS mesin,
+						CONCAT(a.tanggal, " ", a.jam) AS ceklok,
 						DATE_FORMAT(CONCAT(a.tanggal, " ", a.jam), "%d %b %Y %H:%i") as makan,
 						CONCAT(a.tanggal, " ", a.jam) makan_ymd
 					FROM htsprtd a
