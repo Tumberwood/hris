@@ -63,8 +63,8 @@
 					TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) AS durasi_istirahat_menit,
 				
 					CASE
-						WHEN jumlah_grup = 2 AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30 THEN "4 Grup, Istirahat > 30 Menit"
-						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 60 THEN "Istirahat > 60 Menit"
+						WHEN jumlah_grup = 2 AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30 AND IF(mesin = "MAKAN MANUAL", break_in <> makan_ymd, 1) THEN "4 Grup > 30 Menit"
+						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 60 AND IF(mesin = "MAKAN MANUAL", break_in <> makan_ymd, 1) THEN "Istirahat > 60 Menit"
 						-- WHEN id_hodxxmh = 9 AND st_jadwal LIKE "%06:00%" THEN "QC"
 						
 						-- Yang break_in atau break_out di luar rentang istirahat
@@ -115,7 +115,8 @@
 						b.id id_hemxxmh,
 						a.tanggal,
 						CONCAT(a.tanggal, " ", a.jam) ceklok,
-						DATE_FORMAT(CONCAT(a.tanggal, " ", a.jam), "%d %b %Y %H:%i") makan
+						DATE_FORMAT(CONCAT(a.tanggal, " ", a.jam), "%d %b %Y %H:%i") as makan,
+						CONCAT(a.tanggal, " ", a.jam) makan_ymd
 					FROM htsprtd a
 					LEFT JOIN hemxxmh b ON b.kode_finger = a.kode
 					WHERE a.tanggal BETWEEN :start_date AND DATE_ADD(:end_date, INTERVAL 1 DAY)
