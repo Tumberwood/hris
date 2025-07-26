@@ -497,7 +497,8 @@
                         INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
                             AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-                        AND b.id = :id_hemxxmh                                                        
+                            AND b.id = :id_hemxxmh
+                            AND c.nama NOT IN ("MAKAN MANUAL")
                         GROUP BY a.id
                         ORDER BY break_in
 
