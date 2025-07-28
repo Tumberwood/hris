@@ -94,7 +94,7 @@
 						MAX(
 						CASE 
 								WHEN  CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 2 HOUR)
-									AND c.nama NOT IN ("PMI-Gedung-3", "OS-Gedung-3")
+									AND c.nama NOT IN ("PMI-Gedung-3", "OS-Gedung-3", "MAKAN MANUAL")
 								THEN CONCAT(c.tanggal, " ", c.jam)
 								ELSE NULL
 							END
