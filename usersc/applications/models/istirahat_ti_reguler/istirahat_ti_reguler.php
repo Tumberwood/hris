@@ -65,7 +65,23 @@
 					CASE
 						WHEN c.jumlah_grup = 2 AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30 AND IF(mesin = "MAKAN MANUAL", break_in <> makan_ymd, 1) THEN "4 Grup > 30 Menit"
 						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 60 AND IF(mesin = "MAKAN MANUAL", break_in <> makan_ymd, 1) THEN "Istirahat > 60 Menit"
-						-- WHEN id_hodxxmh = 9 AND st_jadwal LIKE "%06:00%" THEN "QC"
+						
+                        -- QC SHIFT 1
+                        WHEN id_hodxxmh = 9 AND st_jadwal LIKE "%06:00-%" AND 
+                        (
+							a.break_in BETWEEN jad.tanggaljam_awal_istirahat AND DATE_SUB(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+							OR
+							a.break_out BETWEEN jad.tanggaljam_awal_istirahat AND DATE_SUB(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+						)
+                        THEN "Aman"
+
+						WHEN id_hodxxmh = 9 AND st_jadwal LIKE "%06:00-%" AND 
+                        (
+							a.break_in NOT BETWEEN jad.tanggaljam_awal_istirahat AND DATE_SUB(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+							OR
+							a.break_out NOT BETWEEN jad.tanggaljam_awal_istirahat AND DATE_SUB(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+						)
+                        THEN "QC - Shift 1, Istirahat Reguler Tidak Sesuai"
 						
 						-- SHIFT 1 ADA LEMBUR TI
 						when ot.is_istirahat = 2 AND a.st_jadwal LIKE "%PAGI%" AND  
