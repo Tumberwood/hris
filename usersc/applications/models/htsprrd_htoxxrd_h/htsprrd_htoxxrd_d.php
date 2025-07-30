@@ -98,7 +98,8 @@
 				$row['lembur15'] == $sqlRow['sum_lembur15'] &&
 				$row['lembur2'] == $sqlRow['sum_lembur2'] &&
 				$row['lembur3'] == $sqlRow['sum_lembur3'] &&
-				$row['lembur4'] == $sqlRow['sum_lembur4']
+				$row['lembur4'] == $sqlRow['sum_lembur4'] &&
+				$row['sum_makan'] == $sqlRow['sum_makan']
 			) {
 				$is_tidak_sesuai = 0;
 			} else {
