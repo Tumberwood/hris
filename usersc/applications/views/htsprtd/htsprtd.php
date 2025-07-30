@@ -66,6 +66,7 @@
                                 <th>ID Checkclock</th>
                                 <th>Nama</th>
 								<th>Department</th>
+								<th>Jabatan</th>
                                 <th>Mesin</th>
                                 <th>Jam</th>
                                 <th>Keterangan</th>
@@ -705,7 +706,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [1,3,4,5]
+						targets: [1,4,5,6]
 					},
 					{
 						searchPanes:{
@@ -731,6 +732,7 @@
 					{ data: "htsprtd.kode" },
 					{ data: "hemxxmh_data" },
 					{ data: "hodxxmh.nama" },
+					{ data: "hetxxmh.nama" },
 					{ data: "htsprtd.nama" },
 					{ data: "htsprtd.jam" },
 					{ data: "htsprtd.keterangan" }
