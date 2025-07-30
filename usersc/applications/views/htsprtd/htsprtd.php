@@ -705,13 +705,13 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [1,2,3,4]
+						targets: [1,3,4,5]
 					},
 					{
 						searchPanes:{
 							show: false,
 						},
-						targets: [0,5,6]
+						targets: '_all'
 					}
 				],
 				ajax: {
