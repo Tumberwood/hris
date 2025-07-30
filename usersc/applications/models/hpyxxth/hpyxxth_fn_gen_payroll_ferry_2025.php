@@ -190,23 +190,7 @@
                             a.id_hemxxmh,
                             report_pot_upah,
                             report_pot_jam,
-                            if( c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal), 0, (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(nominal_t_jab,0)) / 173)) )) AS nominal_lembur_jam,
-                            -- FLOOR(
-                            --     (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
-                            --         sum_lembur15_final
-                            --     ) AS rp_lembur15,
-                            -- FLOOR(
-                            --     (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
-                            --         sum_lembur2_final
-                            --     ) AS rp_lembur2,
-                            -- FLOOR(
-                            --     (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
-                            --         sum_lembur3_final
-                            --     ) AS rp_lembur3,
-                            -- FLOOR(
-                            --     (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0)) / 173))) *
-                            --         sum_lembur4_final
-                            --     ) AS rp_lembur4,
+                            if( c.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal), 0, (FLOOR(if( c.id_hesxxmh = 3, ifnull(nominal_lembur_mati,0), (ifnull(nominal_gp,0) + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0))) / 173)) )) AS nominal_lembur_jam,
                             ifnull(sum_rp_lembur15, 0) rp_lembur15,
                             ifnull(sum_rp_lembur2, 0) rp_lembur2,
                             ifnull(sum_rp_lembur3, 0) rp_lembur3,
@@ -216,7 +200,7 @@
                             c.id_heyxxmd as id_heyxxmd,
                             c.grup_hk,
                             (ifnull(nominal_gp,0) + ifnull(if(c.id_hesxxmh = 1, nominal_t_jab, ifnull(nominal_jabatan, 0)),0)) AS pengali,
-                            (ifnull(if(c.id_hesxxmh = 3, gp_pelatihan, nominal_gp),0) + ifnull(nominal_t_jab,0) + ifnull(nominal_var_cost,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) AS pengali_jam,
+                            (ifnull(if(c.id_hesxxmh = 3, gp_pelatihan, nominal_gp),0) + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) + ifnull(nominal_var_cost,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) AS pengali_jam,
                             keluar_report,
                             -- gaji pokok
                             IFNULL( 
@@ -273,12 +257,12 @@
                             -- tunjangan jabatan
                             IFNULL( 
                                 if(c.tanggal_masuk BETWEEN DATE_FORMAT(last_day(:tanggal_akhir), "%Y-%m-01") AND LAST_DAY(last_day(:tanggal_akhir)), 
-                                    hari_kerja / if(c.grup_hk = 1, 21, 25) * ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0),
+                                    hari_kerja / if(c.grup_hk = 1, 21, 25) * ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) , if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0),
                                     if(c.tanggal_keluar BETWEEN DATE_FORMAT(last_day(:tanggal_akhir), "%Y-%m-01") AND LAST_DAY(last_day(:tanggal_akhir)), 
-                                        keluar_report / if(c.grup_hk = 1, 21, 25) * ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), nominal_t_jab, if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0),
+                                        keluar_report / if(c.grup_hk = 1, 21, 25) * ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) , if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0),
                                         if(hem.nama IN ("AGUS PRIYO S", "JOKO PRASETYO", "NENDY PUTRATAMA", "PRAWOTO"),
                                             IFNULL(nominal_jabatan, 0),
-                                            nominal_t_jab
+                                            IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0))
                                         )
                                     )
                                 ),
@@ -380,7 +364,7 @@
                             IFNULL(pot_upah_spesial,0) AS pot_upah_spesial,
                             ROUND(
                                 if(pot_upah_min_satu > 0, 
-                                    (pot_upah_min_satu * (ifnull(if(c.id_hesxxmh = 3, gp_pelatihan, nominal_gp),0) + ifnull(nominal_t_jab,0) + ifnull(nominal_var_cost,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) / IF(c.grup_hk = 1, 21, 25))
+                                    (pot_upah_min_satu * (ifnull(if(c.id_hesxxmh = 3, gp_pelatihan, nominal_gp),0) + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) + ifnull(nominal_var_cost,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) / IF(c.grup_hk = 1, 21, 25))
                                     +
                                     (IFNULL(pot_upah_spesial,0) * IF(c.grup_hk = 1, 83509, 70148)),
                                     0
@@ -390,10 +374,10 @@
                             jadwal_bulan_lalu,
                             a.is_approve,
                             ifnull(susulan, 0) as susulan,
-                            (ifnull(if(c.id_hesxxmh = 3, gp_pelatihan, nominal_gp),0) + ifnull(nominal_t_jab,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) * (ifnull(masa_kontrak, 0) / 12) AS auto_kompensasi_ak,
+                            (ifnull(if(c.id_hesxxmh = 3, gp_pelatihan, nominal_gp),0) + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) * (ifnull(masa_kontrak, 0) / 12) AS auto_kompensasi_ak,
                             if(MONTH(:tanggal_akhir) = 1, 
 								(
-									(ifnull(if(c.id_hesxxmh = 3, gp_pelatihan, nominal_gp),0) + ifnull(nominal_t_jab,0) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) )
+									(ifnull(if(c.id_hesxxmh = 3, gp_pelatihan, nominal_gp),0) + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) )
 									/ IF(c.grup_hk = 1, 21, 25) 
 								) * ifnull(sisa_saldo, 0)
 								, 0
