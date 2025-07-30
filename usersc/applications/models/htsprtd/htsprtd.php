@@ -72,11 +72,12 @@
 					'to' =>   'H:i:s'
 				) ),
 
-			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' )
+			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' ),
+			Field::inst( 'hodxxmh.nama' ),
 		)
-		->leftJoin( 'hemxxmh as peg','peg.id','=','htsprtd.id_hemxxmh' )
-		->leftJoin('hemjbmh','hemjbmh.id_hemxxmh','=','peg.id','LEFT' )
 		->leftJoin( 'hemxxmh','hemxxmh.kode_finger','=','htsprtd.kode' )
+		->leftJoin('hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id','LEFT' )
+		->leftJoin( 'hodxxmh','hodxxmh.id','=','hemjbmh.id_hodxxmh' )
 		;
 	
 	// do not erase

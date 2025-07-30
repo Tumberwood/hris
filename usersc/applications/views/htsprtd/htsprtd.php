@@ -65,6 +65,7 @@
                                 <th>Tanggal</th>
                                 <th>ID Checkclock</th>
                                 <th>Nama</th>
+								<th>Department</th>
                                 <th>Mesin</th>
                                 <th>Jam</th>
                                 <th>Keterangan</th>
@@ -729,6 +730,7 @@
 					{ data: "htsprtd.tanggal" },
 					{ data: "htsprtd.kode" },
 					{ data: "hemxxmh_data" },
+					{ data: "hodxxmh.nama" },
 					{ data: "htsprtd.nama" },
 					{ data: "htsprtd.jam" },
 					{ data: "htsprtd.keterangan" }
