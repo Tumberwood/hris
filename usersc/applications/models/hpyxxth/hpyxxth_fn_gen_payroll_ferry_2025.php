@@ -687,7 +687,7 @@
                                         id_hemxxmh,
                                         COUNT(id) AS report_pot_premi
                                     FROM htsprrd
-                                    WHERE tanggal BETWEEN :tanggal_awal AND (:tanggal_akhir)
+                                    WHERE tanggal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND LAST_DAY(:tanggal_awal)
                                         AND is_pot_premi = 1
                                     GROUP BY id_hemxxmh
                                 ) c_report_pot_premi
