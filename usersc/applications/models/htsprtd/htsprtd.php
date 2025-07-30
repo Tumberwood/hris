@@ -77,7 +77,7 @@
 			Field::inst( 'hetxxmh.nama' ),
 		)
 		->leftJoin( 'hemxxmh','hemxxmh.kode_finger','=','htsprtd.kode' )
-		->leftJoin('hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id','LEFT' )
+		->leftJoin('hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
 		->leftJoin( 'hodxxmh','hodxxmh.id','=','hemjbmh.id_hodxxmh' )
 		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
 		;
