@@ -1899,21 +1899,21 @@
                         pot_klaim,
                         pot_denda_apd,
                         pot_lain,
-                        bruto * (c.persen / 100) AS pot_pph21,
-                        FLOOR(bruto - (bruto * (c.persen / 100) )) AS gaji_bersih,
+                        bruto * (IFNULL(c.persen,0) / 100) AS pot_pph21,
+                        FLOOR(bruto - (bruto * (IFNULL(c.persen,0) / 100) )) AS gaji_bersih,
                         FLOOR(
                             (
-                                bruto - (bruto * (c.persen / 100) )
+                                bruto - (bruto * (IFNULL(c.persen,0) / 100) )
                             ) % 100
                         ) AS bulat,
                         FLOOR(
                             (
-                                bruto - (bruto * (c.persen / 100) )
+                                bruto - (bruto * (IFNULL(c.persen,0) / 100) )
                             )
                                 -
                             (
                                 (
-                                    bruto - (bruto * (c.persen / 100) )
+                                    bruto - (bruto * (IFNULL(c.persen,0) / 100) )
                                 ) % 100
                             )
                         ) AS gaji_terima,
