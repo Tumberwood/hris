@@ -15,7 +15,7 @@
 	$start_date = $_POST['start_date'];
 
 	if ($_POST['id_hemxxmh'] > 0) {
-		$where = ' AND id_hemxxmh = ' . $_POST['id_hemxxmh'];
+		$where = ' AND id = ' . $_POST['id_hemxxmh'];
 	} else {
 		$where = '';
 	}
@@ -24,7 +24,7 @@
 		->raw()
 		->bind(':start_date', $start_date)
 		->exec('SELECT
-					a.id id_hemxxmh,
+					a.id,
 					a.kode nik,
 					a.nama,
 					d.nama AS dep,
