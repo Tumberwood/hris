@@ -14,11 +14,17 @@
 	
 	$start_date = $_POST['start_date'];
 
+	if ($_POST['id_hemxxmh'] > 0) {
+		$where = ' AND id_hemxxmh = ' . $_POST['id_hemxxmh'];
+	} else {
+		$where = '';
+	}
+
 	$qs_htsprrd = $db
 		->raw()
 		->bind(':start_date', $start_date)
 		->exec('SELECT
-					a.id,
+					a.id id_hemxxmh,
 					a.kode nik,
 					a.nama,
 					d.nama AS dep,
@@ -83,7 +89,7 @@
 				) lembur_mati ON lembur_mati.id_hesxxmh = c.id_hesxxmh
 				WHERE a.is_active = 1
 				HAVING komp_gaji IS NOT null
-				'
+				' . $where
 				);
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
 
