@@ -76,6 +76,18 @@
 								<th>Status</th>
 								<th>Type</th>
 								<th>Komp. Gaji</th>
+								<th>Komp. T.Jab</th>
+								<th>Komp. Var Cost</th>
+								<th>Komp. Fix Cost</th>
+								<th>Komp. Premi</th>
+								<th>Nominal Lembur / Jam</th>
+								<th>Komp. Gaji BPJS</th>
+								<th>% JKK</th>
+								<th>% JKM</th>
+								<th>% JHT</th>
+								<th>% JP</th>
+								<th>% BPJS Kes</th>
+								<th>Komp. Pot Makan</th>
 							</tr>
 						</thead>
                     </table>
@@ -208,6 +220,9 @@
 						targets: '_all'
 					}
 				],
+				fixedColumns: {
+                    leftColumns: 1 // Freeze column 0 and 1
+                },
 				ajax: {
 					url: "../../models/report_komp_gaji/report_komp_gaji.php",
 					type: 'POST',
@@ -230,6 +245,66 @@
 					{ data: "tipe" },
 					{ 
 						data: "komp_gaji",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "komp_t_jab",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "var_cost",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "fix_cost",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "premi",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "nominal_lembur_jam",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "gaji_bpjs",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "persen_jkk",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "persen_jkm",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "persen_jht_karyawan",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "persen_jp_karyawan",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "bpjs_kes",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "pot_uang_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
