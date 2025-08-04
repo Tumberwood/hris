@@ -734,7 +734,7 @@
 					{ data: "hemxxmh_data" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hetxxmh.nama" },
-					{ data: "heyxxmh.nama" },
+					{ data: "heyxxmd.nama" },
 					{ data: "htsprtd.nama" },
 					{ data: "htsprtd.jam" },
 					{ data: "htsprtd.keterangan" }
