@@ -695,7 +695,7 @@
 			//start datatables
 			tblhtsprtd = $('#tblhtsprtd').DataTable( {
 				searchPanes:{
-					layout: 'columns-4',
+					layout: 'columns-5',
 				},
 				dom:
 					"<'row'<'col-lg-4 col-md-4 col-sm-12 col-xs-12'l><'col-lg-8 col-md-8 col-sm-12 col-xs-12'f>>" +
@@ -707,7 +707,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [1,4,5,6]
+						targets: [1,4,5,6,7]
 					},
 					{
 						searchPanes:{
