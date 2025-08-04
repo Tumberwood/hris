@@ -67,6 +67,7 @@
                                 <th>Nama</th>
 								<th>Department</th>
 								<th>Jabatan</th>
+								<th>Type</th>
                                 <th>Mesin</th>
                                 <th>Jam</th>
                                 <th>Keterangan</th>
@@ -733,6 +734,7 @@
 					{ data: "hemxxmh_data" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hetxxmh.nama" },
+					{ data: "heyxxmh.nama" },
 					{ data: "htsprtd.nama" },
 					{ data: "htsprtd.jam" },
 					{ data: "htsprtd.keterangan" }
