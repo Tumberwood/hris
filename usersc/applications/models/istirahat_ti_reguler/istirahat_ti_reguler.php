@@ -150,6 +150,7 @@
 					END AS kategori,
 					a.durasi_lembur_total_jam,
 					a.pot_ti,
+					hey.nama type,
 					a.durasi_lembur_final
 				
 				FROM htsprrd a
@@ -175,6 +176,7 @@
 					LEFT JOIN history h ON h.id_hemxxmh = j.id_hemxxmh
 				) c ON c.id_hemxxmh = b.id AND (c.tanggal_masuk IS NULL OR a.tanggal >= c.tanggal_masuk)
 				
+				INNER JOIN heyxxmd hey ON hey.id = c.id_heyxxmd
 				INNER JOIN hodxxmh d ON d.id = c.id_hodxxmh
 				INNER JOIN hetxxmh e ON e.id = c.id_hetxxmh
 				LEFT JOIN holxxmd_2 f ON f.id = c.id_holxxmd_2

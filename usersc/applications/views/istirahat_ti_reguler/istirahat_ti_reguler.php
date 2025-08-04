@@ -78,6 +78,7 @@
 								<th>Department</th>
 								<th>Jabatan</th>
 								<th>Area Kerja</th>
+								<th>Type</th>
 								<th>Tanggal</th>
 								<th>Jadwal</th>
 								<th>Jam Masuk</th>
@@ -255,6 +256,7 @@
 					{ data: "dep" },
 					{ data: "jab" },
 					{ data: "area" },
+					{ data: "type" },
 					{ data: "tanggal" },
 					{ data: "st_jadwal" },
 					{ data: "masuk" },
