@@ -112,7 +112,7 @@
 						then "Shift 2 Lembur TI, Istirahat TI Tidak Sesuai"
 						
 						-- SHIFT 2 TIDAK ADA LEMBUR TI
-						when ot.id is null AND (a.st_jadwal LIKE "%SIANG%" OR a.st_jadwal LIKE "%SORE%") AND  
+						when ot.id is null AND (a.st_jadwal LIKE "%SIANG%" OR a.st_jadwal LIKE "%SORE%") AND jad.keterangan NOT LIKE "%TJ%" AND  
 						(
 							a.break_in NOT BETWEEN DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR) AND DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 							OR
@@ -121,7 +121,7 @@
 						then "Shift 2, Istirahat Reguler Tidak Sesuai"
 						
 						-- SHIFt 3 ADA LEMBUR TI
-						when ot.is_istirahat = 2 AND a.st_jadwal LIKE "%MALAM%" AND  
+						when ot.is_istirahat = 2 AND a.st_jadwal LIKE "%MALAM%" AND 
 						(
 							a.break_in NOT BETWEEN DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 1 HOUR) AND jad.tanggaljam_akhir_istirahat
 							OR
@@ -139,7 +139,8 @@
 						then "Shift 3, Istirahat Reguler Tidak Sesuai"
 						
 						-- Yang break_in atau break_out di luar rentang istirahat
-						WHEN g.jam_awal_istirahat <> "00:00:00" AND (
+						WHEN g.jam_awal_istirahat <> "00:00:00" AND jad.keterangan NOT LIKE "%TJ%" AND   
+                        (
 							a.break_in NOT BETWEEN jad.tanggaljam_awal_istirahat AND DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 							OR
 							a.break_out NOT BETWEEN jad.tanggaljam_awal_istirahat AND DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
