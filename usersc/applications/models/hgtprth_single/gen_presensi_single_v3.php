@@ -871,8 +871,8 @@
                                         AND (
                                                 (a.tanggal < "2025-04-14" AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI"))
                                                 OR
-                                                    (a.tanggal >= "2025-04-14" AND c.nama IN ("os", "out", "staff", "PMI", -- "PMI-Gedung-3", 
-                                                    "OS-Gedung-3", "istirahat", "istirahat manual"))
+                                                    (a.tanggal >= "2025-04-14" AND c.nama IN ("os", "out", "staff", "PMI", -- "PMI-Gedung-3", "OS-Gedung-3", 
+                                                    "istirahat", "istirahat manual"))
                                             )
                                         AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                         AND a.id_hemxxmh = :id_hemxxmh
