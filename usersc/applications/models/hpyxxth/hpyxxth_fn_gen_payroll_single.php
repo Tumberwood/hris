@@ -1826,8 +1826,8 @@
                         pot_lain,
                         floor(koreksi_status) as koreksi_status,
                         FLOOR(pot_makan) AS pot_makan,
-                        FLOOR(pot_jkkjkm) AS pot_jkkjkm,
-                        FLOOR(pot_jht) AS pot_jht,
+                        ROUND(pot_jkkjkm) AS pot_jkkjkm,
+                        ROUND(pot_jht) AS pot_jht,
                         FLOOR(
                             pot_gp + 
                             if(alpha_min_satu > 0, alpha_min_satu,
