@@ -762,9 +762,9 @@
                                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                                     AND (
-                                                        (a.tanggal < "2025-04-14" AND c.nama IN ("istirahat", "istirahat manual, "makan"", "os", "out", "staff", "PMI"))
+                                                        (a.tanggal < "2025-04-14" AND c.nama IN ("istirahat", "istirahat manual","makan", "os", "out", "staff", "PMI"))
                                                         OR
-                                                        (a.tanggal >= "2025-04-14" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual, "makan""))
+                                                        (a.tanggal >= "2025-04-14" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual","makan"))
                                                     )
                                                     AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                     AND a.id_hemxxmh IN '.$id_hemxxmh.'
