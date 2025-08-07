@@ -968,7 +968,7 @@
                             FROM htpr_hesxxmh
                             WHERE
                                 htpr_hesxxmh.id_hpcxxmh = 36
-                                AND tanggal_efektif < :tanggal
+                                AND tanggal_efektif <= :tanggal
                         ) AS subquery
                         WHERE row_num = 1
                     ) lembur_mati ON lembur_mati.id_hesxxmh = b.id_hesxxmh
@@ -991,7 +991,7 @@
                             INNER JOIN hemjbmh AS c ON c.id_hevxxmh = b.id
                             WHERE
                                 a.id_hpcxxmh = 32
-                                AND tanggal_efektif < :tanggal
+                                AND tanggal_efektif <= :tanggal
                         ) AS subquery
                         WHERE row_num = 1
                     ) t_jabatan ON t_jabatan.id_hevxxmh = b.id_hevxxmh
@@ -1012,7 +1012,7 @@
                             FROM htpr_hemxxmh
                             WHERE
                                 htpr_hemxxmh.id_hpcxxmh = 32
-                                AND tanggal_efektif < :tanggal
+                                AND tanggal_efektif <= :tanggal
                                 AND is_active = 1
                         ) AS subquery
                         WHERE row_num = 1
@@ -1034,7 +1034,7 @@
                             FROM htpr_hemxxmh
                             WHERE
                                 htpr_hemxxmh.id_hpcxxmh = 1
-                                AND tanggal_efektif < :tanggal
+                                AND tanggal_efektif <= :tanggal
                         ) AS subquery
                         WHERE row_num = 1
                     ) tbl_htpr_hemxxmh ON tbl_htpr_hemxxmh.id_hemxxmh = a.id
