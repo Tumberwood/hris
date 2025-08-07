@@ -1305,7 +1305,8 @@
                                     ELSE 0
                                 END AS cek,
 
-                                IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_late_lembur, 0) + IFNULL(pot_jam_early, 0) + IFNULL(pot_jam_izin,0) + IF(potongan_ti_jam > 0, potongan_ti_jam ,ifnull(pot_jam_keluar_istirahat,0)) AS total_pot_jam
+                                -- IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_late_lembur, 0) + IFNULL(pot_jam_early, 0) + IFNULL(pot_jam_izin,0) + IF(potongan_ti_jam > 0, potongan_ti_jam ,ifnull(pot_jam_keluar_istirahat,0)) AS total_pot_jam
+                                IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_late_lembur, 0) + IFNULL(pot_jam_early, 0) + IFNULL(pot_jam_izin,0) + IF(potongan_ti_jam > 0 AND IFNULL(pot_jam_late_lembur, 0) = 0, potongan_ti_jam ,ifnull(pot_jam_keluar_istirahat,0)) AS total_pot_jam
                             FROM perhitungan
                         ),
                         hitung_pot_ti AS (
