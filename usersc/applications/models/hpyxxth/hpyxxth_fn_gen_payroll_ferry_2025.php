@@ -419,7 +419,7 @@
                                     FROM htpr_hevgrmh_mk
                                     WHERE
                                         id_hpcxxmh = 31
-                                        AND tanggal_efektif < :tanggal_akhir
+                                        AND tanggal_efektif <= :tanggal_akhir
                                         AND is_active = 1
                                 ) AS masakerja ON masakerja.id_hevgrmh = job.id_hevgrmh
                                 WHERE if(masakerja.tahun_max > 0, job.masa_kerja_year BETWEEN tahun_min AND tahun_max, job.masa_kerja_year > masakerja.tahun_min)
@@ -442,7 +442,7 @@
                                     FROM htpr_hemxxmh
                                     WHERE
                                         htpr_hemxxmh.id_hpcxxmh = 1
-                                        AND tanggal_efektif < :tanggal_akhir
+                                        AND tanggal_efektif <= :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -464,7 +464,7 @@
                                     FROM htpr_hemxxmh
                                     WHERE
                                         htpr_hemxxmh.id_hpcxxmh = 102
-                                        AND tanggal_efektif < :tanggal_akhir
+                                        AND tanggal_efektif <= :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -486,7 +486,7 @@
                                     FROM htpr_hesxxmh
                                     WHERE
                                         htpr_hesxxmh.id_hpcxxmh = 36
-                                        AND tanggal_efektif < :tanggal_akhir
+                                        AND tanggal_efektif <= :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -508,7 +508,7 @@
                                     FROM htpr_hesxxmh
                                     WHERE
                                         htpr_hesxxmh.id_hpcxxmh = 34
-                                        AND tanggal_efektif < :tanggal_akhir
+                                        AND tanggal_efektif <= :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -530,7 +530,7 @@
                                     FROM htpr_hevxxmh
                                     WHERE
                                         htpr_hevxxmh.id_hpcxxmh = 32
-                                        AND tanggal_efektif < :tanggal_akhir
+                                        AND tanggal_efektif <= :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -552,7 +552,7 @@
                                     FROM htpr_hemxxmh
                                     WHERE
                                         htpr_hemxxmh.id_hpcxxmh = 32
-                                        AND tanggal_efektif < :tanggal_akhir
+                                        AND tanggal_efektif <= :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -574,7 +574,7 @@
                                     FROM htpr_hevxxmh
                                     WHERE
                                         htpr_hevxxmh.id_hpcxxmh = 33
-                                        AND tanggal_efektif < :tanggal_akhir
+                                        AND tanggal_efektif <= :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -1185,7 +1185,7 @@
                                     FROM htpr_hemxxmh
                                     WHERE
                                         htpr_hemxxmh.id_hpcxxmh = 2
-                                        AND tanggal_efektif < :tanggal_akhir
+                                        AND tanggal_efektif <= :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -1569,7 +1569,7 @@
                                     FROM htpr_hesxxmh
                                     WHERE
                                         htpr_hesxxmh.id_hpcxxmh = 1
-                                        AND tanggal_efektif < :tanggal_akhir
+                                        AND tanggal_efektif <= :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -1696,7 +1696,7 @@
                                     FROM htpr_hevxxmh
                                     WHERE
                                         htpr_hevxxmh.id_hpcxxmh = 32
-                                        AND tanggal_efektif < :tanggal_akhir
+                                        AND tanggal_efektif <= :tanggal_akhir
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
