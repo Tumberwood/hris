@@ -1197,6 +1197,7 @@
                                     WHEN kode_izin_in IS NULL AND id_htsxxmh <> 1 AND st_clock_in NOT IN ("OK", "Late 1") THEN "Belum Ada Izin"
                                     WHEN kode_izin_in IS NULL AND kode_absen IS NULL AND id_htsxxmh <> 1 AND st_clock_in = "OK" THEN "HK"
                                     WHEN kode_izin_in IS NULL AND st_clock_in = "Late 1" THEN "TL 1"
+                                    WHEN id_htsxxmh = 1 THEN "OFF"
                                     ELSE NULL
                                 END AS status_presensi_in,
                                 
@@ -1211,6 +1212,7 @@
                                     WHEN kode_izin_out IS NULL AND id_htsxxmh <> 1 AND st_clock_out <> "OK" THEN "Belum Ada Izin"
                                     WHEN kode_izin_out IS NULL AND kode_absen IS NULL AND id_htsxxmh <> 1 AND st_clock_out = "OK" THEN "HK"
                                     WHEN kode_izin_out IS NULL AND kode_absen IS NULL AND st_clock_out = "OK" THEN "HK"
+                                    WHEN id_htsxxmh = 1 THEN "OFF"
                                     ELSE NULL
                                 END AS status_presensi_out,
                                 
