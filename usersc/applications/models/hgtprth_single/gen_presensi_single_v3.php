@@ -913,7 +913,16 @@
                                                 THEN 1
                                                 ELSE 0
                                             END
-                                        ) ceklok_makan_case_keluar_istirahat     
+                                        ) ceklok_makan_case_keluar_istirahat,
+                                        (
+                                            SELECT DISTINCT
+                                                COUNT(cek.id) c_id
+                                            FROM htsprtd cek
+                                            WHERE cek.is_active = 1 AND cek.kode = b.kode_finger
+                                                AND cek.tanggal = a.tanggal AND cek.jam = c.jam
+                                                AND cek.nama NOT IN ("makan", "makan manual", "istirahat", "istirahat manual")
+                                        ) cek_salah_ceklok -- case (kemungkinan salah mesin, saat mau pulang) Bu Cia 8 Aug 2025
+                                            
                                     FROM htssctd AS a
                                     INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                     INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
@@ -922,6 +931,7 @@
                                         AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
                                         AND a.id_hemxxmh = :id_hemxxmh
                                     GROUP BY a.id
+                                    HAVING cek_salah_ceklok = 0
                                 ) AS istirahat_shift ON istirahat_shift.id_hemxxmh = hem.id
                                 
                                 -- menit_toleransi_keluar_istirahat settingan
