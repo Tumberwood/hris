@@ -698,7 +698,7 @@
                                     if(is_istirahat = 2, durasi_break_menit, 0)  AS durasi_break_menit,
                                     CASE
                                         -- [16.06, 12/6/2025] +62 895-6326-78236: Iya pak. Karena jam istirahat normal kan 1 jam. Otomatis jika>1 jam, meskipun tdk ada lembur juga tetap dipotong 1jam.
-                                        WHEN durasi_break_menit > 60 THEN 1
+                                        WHEN durasi_break_menit > 65 THEN 1 -- diubah jadi 65 menit, bu Cia (08 Agustus 2025)
                                         
                                         -- 22 Mar 2025, 0077 istirahat > 1 jam maka dipotong 1jam
                                         WHEN is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_ti, 0) THEN 0.5

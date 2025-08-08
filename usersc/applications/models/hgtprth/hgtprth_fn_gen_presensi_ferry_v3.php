@@ -732,13 +732,12 @@
                                             if(is_istirahat = 2, durasi_break_menit, 0)  AS durasi_break_menit,
                                             CASE
                                                 -- [16.06, 12/6/2025] +62 895-6326-78236: Iya pak. Karena jam istirahat normal kan 1 jam. Otomatis jika>1 jam, meskipun tdk ada lembur juga tetap dipotong 1jam.
-                                                WHEN durasi_break_menit > 60 THEN 1
+                                                WHEN durasi_break_menit > 65 THEN 1 -- diubah jadi 65 menit, bu Cia (08 Agustus 2025)
                                                 WHEN is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_ti, 0) THEN 0.5
                                                 
                                                 -- CASE  21 Feb 2025 - 13071090 - EKO TEGUH 
                                                 -- Jika shift 1 + jumat maka 90 menit batas max sebelum dipotong 1 jam, 
                                                 -- jika bukan shift 1 + jumat maka 60 menit
-                                                -- WHEN durasi_break_menit > 60 THEN 1
                                                 ELSE 0
                                             END AS potongan_ti_jam
                                         FROM htoxxrd as hto
