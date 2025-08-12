@@ -1270,7 +1270,10 @@
                                 IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") != "" AND jam_awal_lembur != jam_akhir_schedule,
                                     IF(CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60) > 7,
                                         0,
-                                        CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60)
+                                        IF(CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60) < 0,
+                                            0,
+                                            CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60)
+                                        )
                                     ),
                                     0
                                 ) AS pot_jam_late_lembur,
