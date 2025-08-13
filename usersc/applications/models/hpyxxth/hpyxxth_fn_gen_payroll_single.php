@@ -1428,22 +1428,10 @@
                                 FROM (
                                     SELECT
                                         COUNT(bpjs_kes.id) AS c_bpjs_kes,
-                                        bpjs_kes.id_hemxxmh
+                                        b.id id_hemxxmh
                                     FROM bpjs_kes_exclude AS bpjs_kes
-                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = bpjs_kes.id_hemxxmh
-                                    LEFT JOIN (
-                                        SELECT
-                                            id_hemxxmh,
-                                            IFNULL(is_terminasi, 0) AS is_terminasi
-                                        FROM (
-                                            SELECT
-                                                id_hemxxmh,
-                                                COUNT(id) AS is_terminasi
-                                            FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
-                                            GROUP BY id_hemxxmh
-                                        ) AS subquery
-                                    ) resign ON resign.id_hemxxmh = bpjs_kes.id_hemxxmh
+                                    INNER JOIN hesxxtd b ON b.id_hemxxmh = bpjs_kes.id_hemxxmh
+                                    INNER JOIN hemxxmh c ON c.kode = b.nik_baru
                                     WHERE bpjs_kes.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                     GROUP BY id_hemxxmh
                                 ) AS subquery
@@ -1457,22 +1445,10 @@
                                 FROM (
                                     SELECT
                                         COUNT(bpjs_tk.id) AS c_bpjs_tk,
-                                        bpjs_tk.id_hemxxmh
+                                        b.id id_hemxxmh
                                     FROM bpjs_tk_exclude AS bpjs_tk
-                                    LEFT JOIN hemjbmh as c on c.id_hemxxmh = bpjs_tk.id_hemxxmh
-                                    LEFT JOIN (
-                                        SELECT
-                                            id_hemxxmh,
-                                            IFNULL(is_terminasi, 0) AS is_terminasi
-                                        FROM (
-                                            SELECT
-                                                id_hemxxmh,
-                                                COUNT(id) AS is_terminasi
-                                            FROM hemjbrd
-                                            WHERE id_harxxmh IN (3, 4) AND tanggal_akhir BETWEEN :tanggal_awal AND :tanggal_akhir
-                                            GROUP BY id_hemxxmh
-                                        ) AS subquery
-                                    ) resign ON resign.id_hemxxmh = bpjs_tk.id_hemxxmh
+                                    INNER JOIN hesxxtd b ON b.id_hemxxmh = bpjs_tk.id_hemxxmh
+                                    INNER JOIN hemxxmh c ON c.kode = b.nik_baru
                                     WHERE bpjs_tk.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                     GROUP BY id_hemxxmh
                                 ) AS subquery
