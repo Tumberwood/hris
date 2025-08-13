@@ -761,9 +761,9 @@
                                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                                     AND (
-                                                        (a.tanggal < "2025-04-14" AND c.nama IN ("istirahat", "istirahat manual","makan", "os", "out", "staff", "PMI"))
+                                                        (a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI"))
                                                         OR
-                                                        (a.tanggal >= "2025-04-14" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual","makan"))
+                                                        (a.tanggal BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan"))
                                                     )
                                                     AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                     AND a.id_hemxxmh IN '.$id_hemxxmh.'
@@ -853,7 +853,7 @@
                                                 WHEN (jb.jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 AND (ceklok_istirahat IS NOT NULL AND durasi_break_menit > 0) THEN 1
                                 
                                                 -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
-                                                WHEN (jb.jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND durasi_break_all_mesin > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
+                                                WHEN (jb.jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
                                                 ELSE 0
                                             END AS pot_jam_keluar_istirahat
                                         FROM htssctd jd
@@ -906,11 +906,10 @@
                                             INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                             WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                                 AND (
-                                                        (a.tanggal < "2025-04-14" AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI"))
-                                                        OR
-                                                        (a.tanggal >= "2025-04-14" AND c.nama IN ("os", "out", "staff", "PMI", -- "PMI-Gedung-3", "OS-Gedung-3", 
-                                                        "istirahat", "istirahat manual"))
-                                                    )
+                                                    (a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI"))
+                                                    OR
+                                                    (a.tanggal BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan"))
+                                                )
                                                 AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                 AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                             GROUP BY a.id
