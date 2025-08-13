@@ -168,7 +168,7 @@
 												<th class="text-danger">Pot TI</th>
 												<th class="text-danger">Pot Overtime</th>
 												<th>Overtime Final</th>
-												<th class="text-danger">Pot Hari Kerja</th>
+												<th class="text-danger">Pot Jam Kerja</th>
 												<th class="text-danger">Pot Total</th>
 											</tr>
 										</thead>
