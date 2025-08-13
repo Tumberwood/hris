@@ -1428,7 +1428,7 @@
                                 FROM (
                                     SELECT
                                         COUNT(bpjs_kes.id) AS c_bpjs_kes,
-                                        b.id id_hemxxmh
+                                        c.id id_hemxxmh
                                     FROM bpjs_kes_exclude AS bpjs_kes
                                     INNER JOIN hesxxtd b ON b.id_hemxxmh = bpjs_kes.id_hemxxmh
                                     INNER JOIN hemxxmh c ON c.kode = b.nik_baru
@@ -1445,7 +1445,7 @@
                                 FROM (
                                     SELECT
                                         COUNT(bpjs_tk.id) AS c_bpjs_tk,
-                                        b.id id_hemxxmh
+                                        c.id id_hemxxmh
                                     FROM bpjs_tk_exclude AS bpjs_tk
                                     INNER JOIN hesxxtd b ON b.id_hemxxmh = bpjs_tk.id_hemxxmh
                                     INNER JOIN hemxxmh c ON c.kode = b.nik_baru
