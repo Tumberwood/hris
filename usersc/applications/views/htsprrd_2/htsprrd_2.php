@@ -144,7 +144,8 @@
 												<th colspan=2>Lembur Akhir</th>
 												<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
 												<th class="text-center text-danger" colspan=3>Potongan Jam Overtime</th>
-												<th class="text-center text-danger" colspan=2>Potongan Jam</th>
+												<th class="text-danger" rowspan=2>Pot Jam Kerja</th>
+												<th class="text-danger" rowspan=2>Pot Total</th>
 												<th rowspan=2>Pot Upah</th>
 												<th rowspan=2>Pot Premi</th>
 
@@ -168,8 +169,6 @@
 												<th class="text-danger">Pot TI</th>
 												<th class="text-danger">Pot Overtime</th>
 												<th>Overtime Final</th>
-												<th class="text-danger">Pot Jam Kerja</th>
-												<th class="text-danger">Pot Total</th>
 											</tr>
 										</thead>
 										<tfoot>
