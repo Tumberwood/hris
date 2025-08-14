@@ -1456,14 +1456,6 @@
                         )
                         SELECT DISTINCT
                             id_hemxxmh,
-                            id_htsxxmh,
-                            pot_jam_late,
-                            pot_jam_late_lembur,
-                            pot_jam_early,
-                            pot_jam_izin,
-                            potongan_ti_jam,
-                            pot_jam_keluar_istirahat,
-
                             keterangan,
                             kode_finger,
                             ifnull(tanggal, :tanggal) AS tanggal,
