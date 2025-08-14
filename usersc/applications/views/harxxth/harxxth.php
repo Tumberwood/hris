@@ -73,6 +73,15 @@
 								</div>
 							</div>
 
+							<div class="row">
+								<div class="col-lg-6">
+									<editor-field name="holxxmd_2_awal_nama"></editor-field>
+								</div>
+								<div class="col-lg-6">
+									<editor-field name="harxxth.id_holxxmd_2_akhir"></editor-field>
+								</div>
+							</div>
+
 						</div>
 					</div>
                     <table id="tblharxxth" class="table table-striped table-bordered table-hover nowrap" width="100%">
@@ -108,6 +117,7 @@
 		// ------------- end of default variable
 
 		var id_hemxxmh_old = 0, id_hovxxmh_awal_old = 0, id_hovxxmh_akhir_old = 0, id_hodxxmh_awal_old = 0, id_hodxxmh_akhir_old = 0, id_hosxxmh_awal_old = 0, id_hosxxmh_akhir_old = 0, id_hevxxmh_awal_old = 0, id_hevxxmh_akhir_old = 0, id_hetxxmh_awal_old = 0, id_hetxxmh_akhir_old = 0;
+		var id_holxxmd_2_awal_old = 0, id_holxxmd_2_akhir_old = 0;
 		
 		var is_need_approval = 1;
 
@@ -236,7 +246,6 @@
 								dataType: 'json',
 								data: function (params) {
 									var query = {
-										id_hovxxmh: id_hovxxmh,
 										id_hovxxmh_old: id_hovxxmh_akhir_old,
 										search: params.term || '',
 										page: params.page || 1
@@ -330,7 +339,6 @@
 								dataType: 'json',
 								data: function (params) {
 									var query = {
-										id_hosxxmh: id_hosxxmh,
 										id_hosxxmh_old: id_hosxxmh_akhir_old,
 										search: params.term || '',
 										page: params.page || 1
@@ -377,7 +385,6 @@
 								dataType: 'json',
 								data: function (params) {
 									var query = {
-										id_hevxxmh: id_hevxxmh,
 										id_hevxxmh_old: id_hevxxmh_akhir_old,
 										search: params.term || '',
 										page: params.page || 1
@@ -401,6 +408,7 @@
 							},
 						}
 					},
+					
 					{
 						label: "harxxth.id_hetxxmh_awal",
 						name: "harxxth.id_hetxxmh_awal",
@@ -424,8 +432,54 @@
 								dataType: 'json',
 								data: function (params) {
 									var query = {
-										id_hetxxmh: id_hetxxmh,
 										id_hetxxmh_old: id_hetxxmh_akhir_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+
+					{
+						label: "harxxth.id_holxxmd_2_awal",
+						name: "harxxth.id_holxxmd_2_awal",
+						// type: "hidden"
+					},
+					{
+						label: "Area Kerja Awal",
+						name: "holxxmd_2_awal_nama",
+						type: "readonly"
+					},
+					{
+						label: "Area Kerja Akhir",
+						name: "harxxth.id_holxxmd_2_akhir",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/holxxmd_2/holxxmd_2_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_holxxmd_2_old: id_holxxmd_2_akhir_old,
 										search: params.term || '',
 										page: params.page || 1
 									}
@@ -515,6 +569,10 @@
 				tblharxxth.ajax.reload(null,false);
 			} );
 
+			edtharxxth.on( 'close', function (e, json, data, action, xhr) {
+				edtharxxth.enable();
+			} );
+
 			//start datatables
 			tblharxxth = $('#tblharxxth').DataTable( {
 				ajax: {
@@ -558,7 +616,7 @@
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
-						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_h'];
+						$arr_buttons_action 	= ['create', 'edit', 'view','nonaktif_h'];
 						$arr_buttons_approve 	= ['approve','cancel_approve'];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
@@ -602,6 +660,9 @@
 				id_hetxxmh_awal_old = harxxth_data.id_hetxxmh_awal;
 				id_hetxxmh_akhir_old = harxxth_data.id_hetxxmh_akhir;
 
+				id_holxxmd_2_awal_old = harxxth_data.id_holxxmd_2_awal;
+				id_holxxmd_2_akhir_old = harxxth_data.id_holxxmd_2_akhir;
+
 				// atur hak akses
 				CekSelectHeaderH(tblharxxth);
 			} );
@@ -609,7 +670,7 @@
 			tblharxxth.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
 				id_harxxth = 0;
-
+				id_holxxmd_2_awal_old = 0, id_holxxmd_2_akhir_old = 0;
 				id_hemxxmh_old = 0, id_hovxxmh_awal_old = 0, id_hovxxmh_akhir_old = 0, id_hodxxmh_awal_old = 0, id_hodxxmh_akhir_old = 0, id_hosxxmh_awal_old = 0, id_hosxxmh_akhir_old = 0, id_hevxxmh_awal_old = 0, id_hevxxmh_akhir_old = 0, id_hetxxmh_awal_old = 0, id_hetxxmh_akhir_old = 0;
 
 				// atur hak akses

@@ -45,12 +45,14 @@
 						id_hosxxmh_akhir,
 						id_hevxxmh_akhir,
 						id_hetxxmh_akhir,
+						id_holxxmd_2_akhir,
 					
 						id_hovxxmh_awal,
 						id_hodxxmh_awal,
 						id_hosxxmh_awal,
 						id_hevxxmh_awal,
 						id_hetxxmh_awal,
+						id_holxxmd_2_awal,
 						tanggal_awal,
 						kode,
 						is_rotasi,
@@ -63,30 +65,32 @@
 						b.id_hosxxmh_akhir,
 						b.id_hevxxmh_akhir,
 						b.id_hetxxmh_akhir,
+						b.id_holxxmd_2_akhir,
+
 						a.id_hovxxmh,
 						a.id_hodxxmh,
 						a.id_hosxxmh,
 						a.id_hevxxmh,
 						a.id_hetxxmh,
+						a.id_holxxmd_2,
 						b.tanggal_efektif,
 						b.kode,
 						1,
-						IF(b.id_hovxxmh_akhir <> a.id_hovxxmh,
-						CONCAT("Perubahan Divisi ", hov.nama , " Menjadi ", hov_new.nama),
-						IF(b.id_hodxxmh_akhir <> a.id_hodxxmh,
-							CONCAT("Perubahan Department ", hod.nama , " Menjadi ", hod_new.nama),
-							IF(b.id_hosxxmh_akhir <> a.id_hosxxmh,
-								CONCAT("Perubahan Section ", hos.nama , " Menjadi ", hos_new.nama),
-								IF(b.id_hevxxmh_akhir <> a.id_hevxxmh,
-									CONCAT("Perubahan Level ", hev.nama , " Menjadi ", hev_new.nama),
-									IF(b.id_hetxxmh_akhir <> a.id_hetxxmh,
-										CONCAT("Perubahan Jabatan ", het.nama , " Menjadi ", het_new.nama),
-										"" 
-									)
-								)
-							)
-						)
-					) AS ket
+						CASE
+							WHEN IF(id_hovxxmh_akhir <> 0, id_hovxxmh_akhir, a.id_hovxxmh) <> a.id_hovxxmh
+								THEN CONCAT("Perubahan Divisi ", hov.nama, " Menjadi ", hov_new.nama)
+							WHEN IF(id_hodxxmh_akhir <> 0, id_hodxxmh_akhir, a.id_hodxxmh) <> a.id_hodxxmh
+								THEN CONCAT("Perubahan Department ", hod.nama, " Menjadi ", hod_new.nama)
+							WHEN IF(id_hosxxmh_akhir <> 0, id_hosxxmh_akhir, a.id_hosxxmh) <> a.id_hosxxmh
+								THEN CONCAT("Perubahan Section ", hos.nama, " Menjadi ", hos_new.nama)
+							WHEN IF(id_hevxxmh_akhir <> 0, id_hevxxmh_akhir, a.id_hevxxmh) <> a.id_hevxxmh
+								THEN CONCAT("Perubahan Level ", hev.nama, " Menjadi ", hev_new.nama)
+							WHEN IF(id_hetxxmh_akhir <> 0, id_hetxxmh_akhir, a.id_hetxxmh) <> a.id_hetxxmh
+								THEN CONCAT("Perubahan Jabatan ", het.nama, " Menjadi ", het_new.nama)
+							WHEN IF(id_holxxmd_2_akhir <> 0, id_holxxmd_2_akhir, a.id_holxxmd_2) <> a.id_holxxmd_2
+								THEN CONCAT("Perubahan Area Kerja ", area.nama, " Menjadi ", area_new.nama)
+							ELSE "Tidak ada perubahan"
+						END AS ket
 					FROM hemjbmh AS a
 					LEFT JOIN harxxth AS b ON b.id_hemxxmh = a.id_hemxxmh
 					LEFT JOIN hovxxmh AS hov ON hov.id = a.id_hovxxmh
@@ -99,6 +103,8 @@
 					LEFT JOIN hevxxmh AS hev_new ON hev_new.id = b.id_hevxxmh_akhir
 					LEFT JOIN hetxxmh AS het ON het.id = a.id_hetxxmh
 					LEFT JOIN hetxxmh AS het_new ON het_new.id = b.id_hetxxmh_akhir
+					LEFT JOIN holxxmd_2 AS area ON area.id = a.id_holxxmd_2
+					LEFT JOIN holxxmd_2 AS area_new ON area_new.id = b.id_holxxmd_2_akhir
 					WHERE b.id = :id;
 					'
 					);
@@ -109,11 +115,12 @@
 			->exec('UPDATE hemjbmh AS a
 					LEFT JOIN harxxth AS b ON b.id_hemxxmh = a.id_hemxxmh 
 					SET 
-						a.id_hovxxmh = b.id_hovxxmh_akhir,
-						a.id_hodxxmh = b.id_hodxxmh_akhir,
-						a.id_hosxxmh = b.id_hosxxmh_akhir,
-						a.id_hevxxmh = b.id_hevxxmh_akhir,
-						a.id_hetxxmh = b.id_hetxxmh_akhir
+						a.id_hovxxmh = IF(id_hovxxmh_akhir = 0, a.id_hovxxmh, b.id_hovxxmh_akhir),
+						a.id_hodxxmh = IF(id_hodxxmh_akhir = 0, a.id_hodxxmh, b.id_hodxxmh_akhir),
+						a.id_hosxxmh = IF(id_hosxxmh_akhir = 0, a.id_hosxxmh, b.id_hosxxmh_akhir),
+						a.id_hevxxmh = IF(id_hevxxmh_akhir = 0, a.id_hevxxmh, b.id_hevxxmh_akhir),
+						a.id_hetxxmh = IF(id_hetxxmh_akhir = 0, a.id_hetxxmh, b.id_hetxxmh_akhir),
+						a.id_holxxmd_2 = IF(id_holxxmd_2_akhir = 0, a.id_holxxmd_2, b.id_holxxmd_2_akhir)
 					WHERE b.id = :id;
 					'
 					);
@@ -131,7 +138,8 @@
 						a.id_hodxxmh = c.id_hodxxmh_awal,
 						a.id_hosxxmh = c.id_hosxxmh_awal,
 						a.id_hevxxmh = c.id_hevxxmh_awal,
-						a.id_hetxxmh = c.id_hetxxmh_awal
+						a.id_hetxxmh = c.id_hetxxmh_awal,
+						a.id_holxxmd_2 = c.id_holxxmd_2_awal
 					WHERE b.id = :id;
 					'
 					);

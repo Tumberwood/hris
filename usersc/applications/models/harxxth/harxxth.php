@@ -40,10 +40,17 @@
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'harxxth.id_hevxxmh_akhir' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
+
 			Field::inst( 'harxxth.id_hetxxmh_awal' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'harxxth.id_hetxxmh_akhir' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
+				
+			Field::inst( 'harxxth.id_holxxmd_2_awal' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'harxxth.id_holxxmd_2_akhir' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+
 			Field::inst( 'harxxth.id_files_dokumen' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'harxxth.kode' )
