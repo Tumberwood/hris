@@ -65,7 +65,7 @@
 					CASE
 						WHEN DAYNAME(a.tanggal) = "Friday" AND a.st_jadwal LIKE "%PAGI%" THEN "AMAN"
 						WHEN c.jumlah_grup = 2 AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30 AND IF(mesin = "MAKAN MANUAL", break_in <> makan_ymd, 1) THEN "4 Grup > 30 Menit"
-						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 60 AND IF(mesin = "MAKAN MANUAL", break_in <> makan_ymd, 1) THEN "Istirahat > 60 Menit"
+						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 60 AND IF(mesin = "MAKAN MANUAL", break_in <> makan_ymd, 1) AND a.pot_jam > 0 THEN "Istirahat > 60 Menit"
 						
                         -- QC SHIFT 1
                         WHEN id_hodxxmh = 9 AND st_jadwal LIKE "%06:00-%" AND 
