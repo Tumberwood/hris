@@ -498,7 +498,12 @@
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
                             AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                             AND b.id IN (:id_hemxxmh)
-                            AND c.nama NOT IN ("MAKAN MANUAL")
+                            AND (
+                                (a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("istirahat", "Makan", "istirahat manual", "os", "out", "staff", "PMI"))
+                                OR
+                                (a.tanggal BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "Makan", "istirahat manual", "makan"))
+                            )
+                            -- AND c.nama NOT IN ("MAKAN MANUAL")
                         GROUP BY a.id
                         ORDER BY break_in
 
@@ -514,7 +519,12 @@
                         INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
                             AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-                        AND b.id IN (:id_hemxxmh)                                                        
+                            AND b.id IN (:id_hemxxmh) 
+                            AND (
+                                (a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("istirahat", "Makan", "istirahat manual", "os", "out", "staff", "PMI"))
+                                OR
+                                (a.tanggal BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "Makan", "istirahat manual", "makan"))
+                            )                                                       
                         GROUP BY a.id
                         ORDER BY break_out
 
