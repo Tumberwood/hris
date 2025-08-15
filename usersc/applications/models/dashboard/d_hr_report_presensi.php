@@ -149,7 +149,8 @@
 					i.nama AS lev,
 					DATE_FORMAT(:start_date, "%d %b %Y") AS tanggal,
 					j.nama AS STATUS,
-					k.nama AS kelompok
+					k.nama AS kelompok,
+					l.nama AS area_kerja
 				FROM hemxxmh AS b
 				INNER JOIN (
 					SELECT
@@ -160,6 +161,7 @@
 						j.id_hosxxmh,
 						j.id_hodxxmh,
 						j.id_heyxxmd,
+						j.id_holxxmd_2,
 						j.is_checkclock,
 						j.tanggal_masuk,
 						j.tanggal_keluar,
@@ -189,6 +191,7 @@
 				LEFT JOIN hevxxmh AS i ON i.id = c.id_hevxxmh
 				LEFT JOIN hosxxmh AS j ON j.id = c.id_hosxxmh
 				LEFT JOIN hevgrmh AS k ON k.id = i.id_hevgrmh
+				LEFT JOIN holxxmd_2 AS l ON l.id = c.id_holxxmd_2
 				WHERE b.id = :id_hemxxmh
 				'
 				);

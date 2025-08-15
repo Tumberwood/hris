@@ -95,11 +95,13 @@
                        <h4>Department</h4> 
                        <h4>Sub Tipe</h4> 
                        <h4>Kelompok</h4> 
+                       <h4>Area Kerja</h4> 
                     </div>
                     <div class="col-md-2">
                         <h4 id="dep"></h4>
                         <h4 id="kmj"></h4>
                         <h4 id="kelompok"></h4>
+                        <h4 id="area_kerja"></h4>
                     </div>
                     <div class="col-md-1.5">
                        <h4>Status</h4> 
@@ -497,6 +499,7 @@
 						$('#dep').html(" : " + json.data7.dep);
 						$('#kmj').html(" : " + json.data7.kmj);
 						$('#kelompok').html(" : " + json.data7.kelompok);
+						$('#area_kerja').html(" : " + json.data7.area_kerja);
 						$('#stat').html(" : " + json.data7.stat);
 						$('#STATUS').html(" : " + json.data7.STATUS);
 						$('#lev').html(" : " + json.data7.lev);
