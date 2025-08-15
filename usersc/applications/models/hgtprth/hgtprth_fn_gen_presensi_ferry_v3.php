@@ -800,11 +800,27 @@
                                                 INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
                                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
+                                                LEFT JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
+                                                INNER JOIN hemjbmh AS hj ON hj.id_hemxxmh = a.id_hemxxmh
                                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                                    AND (
-                                                        (a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI"))
-                                                        OR
-                                                        (a.tanggal BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan"))
+                                                    AND 
+                                                    (
+                                                        (
+                                                            a.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
+                                                            AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
+                                                        )
+                                                        OR 
+                                                        (
+                                                            a.tanggal > "2025-07-27"
+                                                            AND d.is_istirahat = 2
+                                                            AND id_holxxmd_2 = 1
+                                                            AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
+                                                        )
+                                                        OR 
+                                                        (
+                                                            a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27"
+                                                            AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI", "makan")
+                                                        )
                                                     )
                                                     AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                     AND a.id_hemxxmh IN '.$id_hemxxmh.'
