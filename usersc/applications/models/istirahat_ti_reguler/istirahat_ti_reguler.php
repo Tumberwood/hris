@@ -31,7 +31,7 @@
 						SELECT hemjbrd.*,
 							ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
 						FROM hemjbrd
-						INNER JOIN hemxxmh ON hemxxmh.id = hemjbrd.id_hemxxmh
+						LEFT JOIN hemxxmh ON hemxxmh.id = hemjbrd.id_hemxxmh
 						WHERE tanggal_awal <= :end_date AND hemxxmh.is_active = 1
 					) AS sub
 					WHERE row_num = 1
@@ -208,12 +208,12 @@
 					LEFT JOIN history h ON h.id_hemxxmh = j.id_hemxxmh
 				) c ON c.id_hemxxmh = b.id AND (c.tanggal_masuk IS NULL OR a.tanggal >= c.tanggal_masuk)
 				
-				INNER JOIN heyxxmd hey ON hey.id = c.id_heyxxmd
-				INNER JOIN hodxxmh d ON d.id = c.id_hodxxmh
-				INNER JOIN hetxxmh e ON e.id = c.id_hetxxmh
+				LEFT JOIN heyxxmd hey ON hey.id = c.id_heyxxmd
+				LEFT JOIN hodxxmh d ON d.id = c.id_hodxxmh
+				LEFT JOIN hetxxmh e ON e.id = c.id_hetxxmh
 				LEFT JOIN holxxmd_2 f ON f.id = c.id_holxxmd_2
-				INNER JOIN htsxxmh g on g.kode = a.st_jadwal
-				INNER JOIN htssctd jad on jad.id_hemxxmh = a.id_hemxxmh AND jad.tanggal = a.tanggal AND jad.is_active = 1
+				LEFT JOIN htsxxmh g on g.kode = a.st_jadwal
+				LEFT JOIN htssctd jad on jad.id_hemxxmh = a.id_hemxxmh AND jad.tanggal = a.tanggal AND jad.is_active = 1
 				LEFT JOIN htoxxrd ot ON ot.tanggal = a.tanggal AND ot.id_hemxxmh = a.id_hemxxmh
 				LEFT JOIN (
 					SELECT
