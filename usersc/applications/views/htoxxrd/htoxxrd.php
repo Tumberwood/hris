@@ -315,9 +315,9 @@
 					},
 					{ data: "htoxxrd.tanggal" },
 					{ data: "hemxxmh_data" },
-					{ data: "heyxxmh.nama" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hobxxmh.nama" },
+					{ data: "heyxxmh.nama" },
 					{ data: "htotpmh.nama" },
 					{ 
 						data: "htoxxrd.is_istirahat" ,
