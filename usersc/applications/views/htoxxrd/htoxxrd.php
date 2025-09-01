@@ -77,8 +77,8 @@
 								<th>Tanggal</th>
 								<th>Karyawan</th>
 								<th>Departemen</th>
-								<th>Jabatan</th>
 								<th>Bagian</th>
+								<th>Jabatan</th>
 								<th>Jenis</th>
 								<th>Tipe</th>
 								<th>Istirahat</th>
@@ -319,8 +319,8 @@
 					{ data: "htoxxrd.tanggal" },
 					{ data: "hemxxmh_data" },
 					{ data: "hodxxmh.nama" },
-					{ data: "hetxxmh.nama" },
 					{ data: "hobxxmh.nama" },
+					{ data: "hetxxmh.nama" },
 					{ data: "heyxxmh.nama" },
 					{ data: "htotpmh.nama" },
 					{ 
