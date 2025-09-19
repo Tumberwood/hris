@@ -20,6 +20,11 @@
 	$end_date   = $_POST['end_date'];
 	$dept   = $_POST['dept'];
 	$izin   = $_POST['izin'];
+    
+    $where = ''; 
+    if (isset($_POST['id_heyxxmh']) && ($_POST['id_heyxxmh'] > 0 ) ) {
+        $where = ' AND id_heyxxmh =' . $_POST['id_heyxxmh']; 
+    } 
 
     $qs_hemxxmh = $db
     ->raw()
@@ -43,6 +48,7 @@
             INNER JOIN hemjbmh AS jb on jb.id_hemxxmh = peg.id
             LEFT JOIN hodxxmh AS dep on dep.id = jb.id_hodxxmh
             WHERE a.jenis = 2 
+                '.$where.'
                 AND a.is_active = 1 
                 AND a.tanggal BETWEEN :start_date AND :end_date and dep.nama = :dept AND izin.nama = :izin
             ORDER BY izin.id ASC

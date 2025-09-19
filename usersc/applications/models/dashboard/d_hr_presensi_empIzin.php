@@ -19,6 +19,11 @@
 	$start_date = $_POST['start_date'];
 	$end_date   = $_POST['end_date'];
 
+    $where = ''; 
+    if (isset($_POST['id_heyxxmh']) && ($_POST['id_heyxxmh'] > 0 ) ) {
+        $where = ' AND id_heyxxmh =' . $_POST['id_heyxxmh']; 
+    } 
+    
     $qs_hemxxmh = $db
     ->raw()
     ->bind(':start_date', $start_date)
@@ -29,8 +34,10 @@
                 COUNT(peg.id) AS c_izin
             FROM htlxxrh AS a
             LEFT JOIN hemxxmh AS peg ON peg.id = a.id_hemxxmh
+            INNER JOIN hemjbmh AS jb on jb.id_hemxxmh = peg.id
             LEFT JOIN htpxxmh AS izin ON izin.id = a.id_htlxxmh
             WHERE a.jenis = 2 
+                '.$where.'
                 AND a.is_active = 1 
                 AND a.tanggal BETWEEN :start_date AND :end_date
             GROUP BY izin.id
@@ -80,6 +87,7 @@
                 LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = peg.id
                 LEFT JOIN hodxxmh AS dep ON dep.id = job.id_hodxxmh
                 WHERE a.jenis = 2 
+                    '.$where.'
                     AND a.id_htlxxmh = :izin
                     AND a.tanggal BETWEEN :start_date AND :end_date
                 GROUP BY dep.id
