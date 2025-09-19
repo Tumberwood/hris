@@ -128,9 +128,55 @@
 				<div class="row">
 					<div class="col-lg-6">
 						<div class="" id="chartEmpIzin"></div>
+                  
+                        <h3>Table Izin</h3>
+                        <div class="ibox ">
+                            <div class="ibox-content">
+                                <div class="table-responsive">
+                                    <table id="tblhtlxxrh" class="table table-striped table-bordered table-hover nowrap" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Tanggal</th>
+                                                <th>Kode</th>
+                                                <th>Nama</th>
+                                                <th>Departemen</th>
+                                                <th>Jenis</th>
+                                                <th>Jam Awal</th>
+                                                <th>Jam Akhir</th>
+                                                <th>Keterangan</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 					</div>
 					<div class="col-lg-6">
 						<div class="" id="chartEmpAbsen"></div>
+
+                        <h3>Table Absen</h3>
+                        <div class="ibox ">
+                            <div class="ibox-content">
+                                <div class="table-responsive">
+                                    <table id="tblhtlxxrh_absen" class="table table-striped table-bordered table-hover nowrap" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Tanggal</th>
+                                                <th>Kode</th>
+                                                <th>Nama</th>
+                                                <th>Departemen</th>
+                                                <th>Jenis</th>
+                                                <th>Jam Awal</th>
+                                                <th>Jam Akhir</th>
+                                                <th>Keterangan</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -200,11 +246,6 @@
                 }
             });
 
-			// boxEmpGender();
-			// chartEmpType();
-			// chartEmpStatus();
-			// chartEmpLevel();
-			// chartEmpDept();
 			chartEmpIzin();
 			chartEmpAbsen();
 						

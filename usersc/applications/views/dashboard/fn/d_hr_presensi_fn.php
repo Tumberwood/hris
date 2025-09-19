@@ -20,321 +20,29 @@
             verticalAlign: 'bottom'
         }
     })
-    // END highchart generate options
-
-    // function boxEmpGender (){
-    //     $.ajax( {
-    //         url: "../../models/dashboard/d_hr_profile_empGender.php",
-    //         dataType: 'json',
-    //         type: 'POST',
-    //         data: {
-    //             // tanggal_akhir: tanggal_akhir
-    //         },
-    //         success: function ( json ) {
-    //             c_laki = json.data.hemxxmh_gender[0]['c_gender'];
-    //             c_perempuan = json.data.hemxxmh_gender[1]['c_gender'];
-    //             c_total = c_laki  + c_perempuan;
-
-    //             p_laki = (c_laki / c_total * 100).toFixed(2);
-    //             p_perempuan = (c_perempuan / c_total * 100).toFixed(2) ;
-                
-    //             $("#c_laki").html(c_laki);
-    //             $("#c_perempuan").html(c_perempuan);
-
-    //             $("#p_laki").html(p_laki + "%");
-    //             $("#p_perempuan").html(p_perempuan + "%");
-
-    //         }
-    //     } );
-    // };
-
-    // function chartEmpType() {
-    //     var optionschartEmpType = {
-    //         chart: {
-    //             type: "pie",
-    //             height: 300
-    //         },
-    //         title: {
-    //             text: 'Karyawan per Tipe',
-    //             align: 'left'
-    //         },
-    //         // subtitle: {
-    //         //     text:
-    //         //         ''
-    //         //     align: 'left'
-    //         // },
-    //         xAxis: {
-    //             categories: [],
-    //             crosshair: true,
-    //             accessibility: {
-    //                 description: ''
-    //             }
-    //         },
-    //         yAxis: {
-    //             min: 0,
-    //             title: {
-    //                 text: 'Jumlah'
-    //             }
-    //         },
-    //         tooltip: {
-    //             // valueSuffix: ' orang',
-    //             pointFormat: '{series.name}: <br>{point.y:,.0f} <br>({point.percentage:.1f}%) '
-    //         },
-    //         plotOptions: {
-    //             pie: {
-    //                 size:'100%',
-    //                 allowPointSelect: true,
-    //                 cursor: true,
-    //                 innerSize: "60%",
-    //                 dataLabels: {
-    //                     enabled: true,
-    //                     style: {
-    //                         fontWeight: "bold",
-    //                         textOutline: "",
-    //                         color: "black"
-    //                     },
-    //                     distance: -20
-    //                 }
-    //             }
-    //         },
-    //         series: [
-    //             {
-    //                 name: "Jumlah",
-    //                 turboThreshold: 0
-    //             }
-    //         ]
-    //     };
-
-    //     $.ajax( {
-    //         url: "../../models/dashboard/d_hr_profile_empType.php",
-    //         dataType: 'json',
-    //         type: 'POST',
-    //         async: false,
-    //         data: {
-                
-    //         },
-    //         success: function ( json ) {
-    //             optionschartEmpType.series[0].data = json.data.d_hr_profile_empType;
-	// 		    Highcharts.chart('chartEmpType', optionschartEmpType);
-    //         }
-    //     } );
-        
-    // }
-
-    // function chartEmpStatus() {
-    //     var optionschartEmpStatus = {
-    //         chart: {
-    //             type: "pie",
-    //             height: 300
-    //         },
-    //         title: {
-    //             text: 'Karyawan per Status',
-    //             align: 'left'
-    //         },
-    //         // subtitle: {
-    //         //     text:
-    //         //         ''
-    //         //     align: 'left'
-    //         // },
-    //         xAxis: {
-    //             categories: [],
-    //             crosshair: true,
-    //             accessibility: {
-    //                 description: ''
-    //             }
-    //         },
-    //         yAxis: {
-    //             min: 0,
-    //             title: {
-    //                 text: 'Jumlah'
-    //             }
-    //         },
-    //         tooltip: {
-    //             // valueSuffix: ' orang',
-    //             pointFormat: '{series.name}: <br>{point.y:,.0f} <br>({point.percentage:.1f}%) '
-    //         },
-    //         plotOptions: {
-    //             pie: {
-    //                 size:'100%',
-    //                 allowPointSelect: true,
-    //                 cursor: true,
-    //                 innerSize: "60%",
-    //                 dataLabels: {
-    //                     enabled: true,
-    //                     style: {
-    //                         fontWeight: "bold",
-    //                         textOutline: "",
-    //                         color: "black"
-    //                     },
-    //                     distance: -20
-    //                 }
-    //             }
-    //         },
-    //         series: [
-    //             {
-    //                 name: "Jumlah",
-    //                 turboThreshold: 0
-    //             }
-    //         ]
-    //     };
-
-    //     $.ajax( {
-    //         url: "../../models/dashboard/d_hr_profile_empStatus.php",
-    //         dataType: 'json',
-    //         type: 'POST',
-    //         async: false,
-    //         data: {
-                
-    //         },
-    //         success: function ( json ) {
-    //             optionschartEmpStatus.series[0].data = json.data.d_hr_profile_empStatus;
-	// 		    Highcharts.chart('chartEmpStatus', optionschartEmpStatus);
-    //         }
-    //     } );
-        
-    // }
-
-    // function chartEmpLevel() {
-    //     var optionschartEmpLevel = {
-    //         chart: {
-    //             type: 'bar',
-    //             height: 300
-    //         },
-    //         title: {
-    //             text: 'Karyawan per Level',
-    //             align: 'left'
-    //         },
-    //         // subtitle: {
-    //         //     text:
-    //         //         ''
-    //         //     align: 'left'
-    //         // },
-    //         xAxis: {
-    //             categories: [],
-    //             crosshair: true,
-    //             accessibility: {
-    //                 description: ''
-    //             }
-    //         },
-    //         yAxis: {
-    //             min: 0,
-    //             title: {
-    //                 text: 'Jumlah'
-    //             }
-    //         },
-    //         tooltip: {
-    //             valueSuffix: ' orang'
-    //         },
-    //         plotOptions: {
-    //             column: {
-    //                 pointPadding: 0.2,
-    //                 borderWidth: 0
-    //             },
-    //             series: {
-    //                 dataLabels: {
-    //                     enabled: true
-    //                 }
-    //             }
-    //         },
-    //         series: []
-    //     };
-
-    //     $.ajax( {
-    //         url: "../../models/dashboard/d_hr_profile_empLevel.php",
-    //         dataType: 'json',
-    //         type: 'POST',
-    //         async: false,
-    //         data: {
-                
-    //         },
-    //         success: function ( json ) {
-    //             optionschartEmpLevel.xAxis.categories = json.data.results_emp_level[0]['data'];
-    //             optionschartEmpLevel.series[0] = json.data.results_emp_level[1];
-    //             Highcharts.chart('chartEmpLevel', optionschartEmpLevel);
-    //         }
-    //     } );
-        
-    // }
-
-    // function chartEmpDept() {
-    //     var optionschartEmpDept = {
-    //         chart: {
-    //             type: 'column',
-    //             // marginBottom: 75,
-    //             // spacingBottom: 50
-    //         },
-    //         title: {
-    //             text: 'Karyawan per Department',
-    //             align: 'left'
-    //         },
-    //         // subtitle: {
-    //         //     text:
-    //         //         ''
-    //         //     align: 'left'
-    //         // },
-    //         xAxis: {
-    //             categories: [],
-    //             crosshair: true,
-    //             accessibility: {
-    //                 description: ''
-    //             }
-    //         },
-    //         yAxis: {
-    //             min: 0,
-    //             title: {
-    //                 text: 'Jumlah'
-    //             }
-    //         },
-    //         tooltip: {
-    //             valueSuffix: ' orang'
-    //         },
-    //         plotOptions: {
-    //             column: {
-    //                 pointPadding: 0.2,
-    //                 borderWidth: 0
-    //             },
-    //             series: {
-    //                 dataLabels: {
-    //                     enabled: true
-    //                 }
-    //             }
-    //         },
-    //         series: []
-    //     };
-
-    //     $.ajax( {
-    //         url: "../../models/dashboard/d_hr_profile_empDept.php",
-    //         dataType: 'json',
-    //         type: 'POST',
-    //         async: false,
-    //         data: {
-                
-    //         },
-    //         success: function ( json ) {
-    //             optionschartEmpDept.xAxis.categories = json.data.results_empdept[0]['data'];
-    //             optionschartEmpDept.series[0] = json.data.results_empdept[1];
-    //             optionschartEmpDept.series[1] = json.data.results_empdept[2];
-    //             Highcharts.chart('chartEmpDept', optionschartEmpDept);
-    //         }
-    //     } );
-        
-    // }
-
+    
     function chartEmpIzin() {
+        var izin = 0;
+        var dept = 0;
+
         var optionschartEmpIzin = {
             chart: {
                 type: 'column',
-                //  marginTop: 10, 
+                events: {
+                    drilldown: function (e) {
+                        console.log("Drilldown ke:", e.point.name);
+                        tableIzin(0, 0, start_date, end_date);
+                    },
+                    drillup: function (e) {
+                        console.log("Kembali dari drilldown");
+                        tableIzin(0, 0, start_date, end_date);
+                    }
+                }
             },
             title: {
                 text: 'Karyawan Izin',
                 align: 'left'
             },
-            // subtitle: {
-            //     text:
-            //         ''
-            //     align: 'left'
-            // },
             xAxis: {
                 type: 'category',
                 crosshair: true,
@@ -349,7 +57,7 @@
                 }
             },
             legend: {
-                enabled: false 
+                enabled: false
             },
             tooltip: {
                 valueSuffix: ' orang'
@@ -360,24 +68,39 @@
                     borderWidth: 0
                 },
                 series: {
+                    cursor: 'pointer',
                     dataLabels: {
                         enabled: true
+                    },
+                    point: {
+                        events: {
+                            click: function (e) {
+                                if (this.series.chart.drilldownLevels.length > 0) {
+                                    console.log("Total orang di", this.name, ":", this.y);
+
+                                    izin = this.series.userOptions.id || this.series.userOptions.name;
+                                    dept = e.point.name;
+
+                                    console.log("Departemen:", dept, " | Izin:", izin);
+
+                                    tableIzin(izin, dept, start_date, end_date);
+                                }
+                            }
+                        }
                     }
                 }
             },
             series: [],
-            //ADD BY FERRY 26 AUG 23
-            //tambahkan drilldown cukup seperti dibawah ini, TIDAK PERLU menambahkan series didalamnya.
             drilldown: {
                 breadcrumbs: {
                     position: {
                         align: 'right'
                     }
-                },
+                }
             }
         };
 
-        $.ajax( {
+        $.ajax({
             url: "../../models/dashboard/d_hr_presensi_empIzin.php",
             dataType: 'json',
             type: 'POST',
@@ -386,46 +109,84 @@
                 start_date: start_date,
                 end_date: end_date
             },
-            success: function ( json ) {
+            success: function (json) {
                 optionschartEmpIzin.series[0] = json.data.results_emp_izin[1];
-              
-                console.log(optionschartEmpIzin.series[0]);
 
-                //isi drilldown dengan variable dari json yang isinya adalah series dan data
+                // isi drilldown dengan data dari json
                 optionschartEmpIzin.drilldown = json.data.results_emp_izin[2];
-                console.log(optionschartEmpIzin.drilldown); 
-                console.log(optionschartEmpIzin); 
+
                 Highcharts.chart('chartEmpIzin', optionschartEmpIzin);
             }
-        } );
-        
+        });
+    }
+
+    function tableIzin(izin, dept, start_date, end_date) {
+        $.ajax({
+            url: "../../models/dashboard/d_hr_presensi_table_izin.php",
+            dataType: 'json',
+            type: 'POST',
+            data: {
+                izin: izin,
+                dept: dept,
+                start_date: start_date,
+                end_date: end_date
+            },
+            success: function (json) {
+                // kalau table sudah ada → reset dulu
+                if ($.fn.dataTable.isDataTable('#tblhtlxxrh')) {
+                    $('#tblhtlxxrh').DataTable().clear().destroy();
+                    $('#tblhtlxxrh tbody').empty();
+                }
+
+                // build DataTable baru
+                $('#tblhtlxxrh').DataTable({
+                    data: json.data.result, // dari fn_ajax_results.php otomatis "data"
+                    columns: [
+                        { data: "id",visible: false },         // pastikan query SELECT punya id (kalau perlu tambahin a.id di PHP)
+                        { data: "tanggal" },
+                        { data: "kode" },
+                        { data: "nama" },
+                        { data: "departemen" },
+                        { data: "jenis" },
+                        { data: "jam_awal" },
+                        { data: "jam_akhir" },
+                        { data: "keterangan" },
+                    ],
+                    destroy: true,
+                    responsive: false,
+                    scrollX: true
+                });
+            }
+        });
     }
     
     function chartEmpAbsen() {
+        var absen = 0;
+        var dept = 0;
+
         var optionschartEmpAbsen = {
             chart: {
                 type: 'column',
-                //  marginTop: 10, 
+                events: {
+                    drilldown: function (e) {
+                        console.log("Drilldown ke:", e.point.name);
+                        tableAbsen(0, 0, start_date, end_date);
+                    },
+                    drillup: function (e) {
+                        console.log("Kembali dari drilldown");
+                        tableAbsen(0, 0, start_date, end_date);
+                    }
+                }
             },
             title: {
                 text: 'Karyawan Absen',
                 align: 'left'
             },
-            // subtitle: {
-            //     text:
-            //         ''
-            //     align: 'left'
-            // },
             xAxis: {
                 type: 'category',
                 crosshair: true,
                 accessibility: {
                     description: ''
-                },
-                labels: {
-                    style: {
-                        whiteSpace: 'nowrap' // fix wrap label biar tidak kebawah add by ferry 25-aug-23
-                    }
                 }
             },
             yAxis: {
@@ -435,7 +196,7 @@
                 }
             },
             legend: {
-                enabled: false 
+                enabled: false
             },
             tooltip: {
                 valueSuffix: ' orang'
@@ -446,24 +207,39 @@
                     borderWidth: 0
                 },
                 series: {
+                    cursor: 'pointer',
                     dataLabels: {
                         enabled: true
+                    },
+                    point: {
+                        events: {
+                            click: function (e) {
+                                if (this.series.chart.drilldownLevels.length > 0) {
+                                    console.log("Total orang di", this.name, ":", this.y);
+
+                                    absen = this.series.userOptions.id || this.series.userOptions.name;
+                                    dept = e.point.name;
+
+                                    console.log("Departemen:", dept, " | Absen:", absen);
+
+                                    tableAbsen(absen, dept, start_date, end_date);
+                                }
+                            }
+                        }
                     }
                 }
             },
             series: [],
-            //ADD BY FERRY 26 AUG 23
-            //tambahkan drilldown cukup seperti dibawah ini, TIDAK PERLU menambahkan series didalamnya.
             drilldown: {
                 breadcrumbs: {
                     position: {
                         align: 'right'
                     }
-                },
+                }
             }
         };
 
-        $.ajax( {
+        $.ajax({
             url: "../../models/dashboard/d_hr_presensi_empAbsen.php",
             dataType: 'json',
             type: 'POST',
@@ -472,21 +248,54 @@
                 start_date: start_date,
                 end_date: end_date
             },
-            success: function ( json ) {
+            success: function (json) {
                 optionschartEmpAbsen.series[0] = json.data.results_emp_absen[1];
-              
-                console.log(optionschartEmpAbsen.series[0]);
 
-                //isi drilldown dengan variable dari json yang isinya adalah series dan data
+                // isi drilldown dengan data dari json
                 optionschartEmpAbsen.drilldown = json.data.results_emp_absen[2];
-                console.log(optionschartEmpAbsen.drilldown); 
-                console.log(optionschartEmpAbsen); 
+
                 Highcharts.chart('chartEmpAbsen', optionschartEmpAbsen);
             }
-        } );
-        
+        });
     }
 
-    
+    function tableAbsen(absen, dept, start_date, end_date) {
+        $.ajax({
+            url: "../../models/dashboard/d_hr_presensi_table_absen.php",
+            dataType: 'json',
+            type: 'POST',
+            data: {
+                absen: absen,
+                dept: dept,
+                start_date: start_date,
+                end_date: end_date
+            },
+            success: function (json) {
+                // kalau table sudah ada → reset dulu
+                if ($.fn.dataTable.isDataTable('#tblhtlxxrh_absen')) {
+                    $('#tblhtlxxrh_absen').DataTable().clear().destroy();
+                    $('#tblhtlxxrh_absen tbody').empty();
+                }
 
+                // build DataTable baru
+                $('#tblhtlxxrh_absen').DataTable({
+                    data: json.data.result, // dari fn_ajax_results.php otomatis "data"
+                    columns: [
+                        { data: "id",visible: false },         // pastikan query SELECT punya id (kalau perlu tambahin a.id di PHP)
+                        { data: "tanggal" },
+                        { data: "kode" },
+                        { data: "nama" },
+                        { data: "departemen" },
+                        { data: "jenis" },
+                        { data: "jam_awal" },
+                        { data: "jam_akhir" },
+                        { data: "keterangan" },
+                    ],
+                    destroy: true,
+                    responsive: false,
+                    scrollX: true
+                });
+            }
+        });
+    }
 </script>

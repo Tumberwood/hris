@@ -80,11 +80,11 @@
                             ELSE 0 END
 						) s2,
 						SUM(
-                            CASE WHEN a.status_presensi_in = "sdl" THEN 1
+                            CASE WHEN a.status_presensi_in = "sdl" THEN 1 -- s3
                             ELSE 0 END
 						) s3,
 						SUM(
-                            CASE WHEN a.status_presensi_in = "IP" THEN 1
+                            CASE WHEN a.status_presensi_in = "IP" THEN 1 -- it
                             ELSE 0 END
 						) it, -- Izin pribadi
 
@@ -98,7 +98,7 @@
 						) 
 						+
 						SUM(
-                            CASE WHEN a.status_presensi_out = "PA" THEN 1
+                            CASE WHEN a.status_presensi_out = "PA" THEN 1 -- IP
                             -- WHEN a.st_clock_out = "EARLY" AND status_presensi_out NOT LIKE "%DL%" THEN 1
                             WHEN a.st_clock_out = "EARLY" AND htlxxrh_kode = "" THEN 1
                             -- WHEN a.htlxxrh_kode LIKE "PA%" AND a.st_clock_out = "OK" THEN 1
