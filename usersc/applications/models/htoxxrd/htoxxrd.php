@@ -67,7 +67,7 @@
 			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' ),
 			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'hetxxmh.nama' ),
-			Field::inst( 'hobxxmh.nama' ),
+			Field::inst( 'hosxxmh.nama' ),
 			Field::inst( 'heyxxmh.nama' ),
 			Field::inst( 'htotpmh.nama' )
 
@@ -78,7 +78,7 @@
 		->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
 		->leftJoin( 'hodxxmh','hodxxmh.id','=','hemjbmh.id_hodxxmh' )
 		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
-		->leftJoin( 'hobxxmh','hobxxmh.id','=','hemjbmh.id_hobxxmh' )
+		->leftJoin( 'hosxxmh','hosxxmh.id','=','hemjbmh.id_hosxxmh' )
 		->where( 'htoxxrd.tanggal', $start_date, '>=' )
 		->where( 'htoxxrd.tanggal', $end_date, '<=' );
 	

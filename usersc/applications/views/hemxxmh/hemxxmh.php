@@ -159,7 +159,7 @@
                                 <th>No KTP</th>
                                 <th>Nama</th>
                                 <th>Department</th>
-                                <th>Section</th>
+                                <th>Bagian</th>
                                 <th>Jabatan</th>
                                 <th>Area Kerja</th>
                                 <th>Tipe</th>
@@ -450,7 +450,7 @@
 						}
 					},
 					{
-						label: "Section <sup class='text-danger'>*<sup>",
+						label: "Bagian <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_hosxxmh",
 						type: "select2",
 						opts: {

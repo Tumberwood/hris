@@ -319,7 +319,7 @@
 					{ data: "htoxxrd.tanggal" },
 					{ data: "hemxxmh_data" },
 					{ data: "hodxxmh.nama" },
-					{ data: "hobxxmh.nama" },
+					{ data: "hosxxmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "heyxxmh.nama" },
 					{ data: "htotpmh.nama" },
