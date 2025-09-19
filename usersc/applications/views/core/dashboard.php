@@ -13,7 +13,7 @@
 
 <!-- begin content here -->
 
-<div class="row">
+<!-- <div class="row">
 	<div class="col=lg-4 col-md-4 col-sm-12 col-xs-12">
 		<div class="profile-image">
 			<img src="../../../files/uploads/def_male.png" class="rounded-circle circle-border m-b-md" alt="profile">
@@ -72,6 +72,11 @@
 				<span class="label label-danger" id="c_skorsing">0</span>&nbsp Skorsing
 			</li>
 		</ul>
+	</div>
+</div> -->
+<div class="row">
+	<div class="col-12">
+		<h1>Big things are about to happen</h1>
 	</div>
 </div>
 
