@@ -103,7 +103,29 @@
 			</div>
 		</div>
 	</div>
-</div>chartEmpMK
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="ibox ">
+			<div class="ibox-content">
+				<h3>Table Bagian</h3>
+				<div class="table-responsive">
+					<table id="tblhtlxxrh" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						<thead>
+							<tr>
+								<th>Bagian</th>
+								<th>Jumlah Organik</th>
+								<th>Jumlah Outsourcing</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- BEGIN JS -->
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_load.php'; ?>
@@ -132,6 +154,36 @@
 			chartEmpDept();
 			chartEmpAge();
 			chartEmpMK();
+
+			
+			$.ajax({
+				url: "../../models/dashboard/d_hr_profile_bagian.php",
+				dataType: 'json',
+				type: 'POST',
+				data: {
+				},
+				success: function (json) {
+					// kalau table sudah ada → reset dulu
+					if ($.fn.dataTable.isDataTable('#tblhtlxxrh')) {
+						$('#tblhtlxxrh').DataTable().clear().destroy();
+						$('#tblhtlxxrh tbody').empty();
+					}
+
+					// build DataTable baru
+					$('#tblhtlxxrh').DataTable({
+						data: json.data.result, // dari fn_ajax_results.php otomatis "data"
+						columns: [
+							{ data: "bagian" },
+							{ data: "c_pmi", class: "text-right" },
+							{ data: "c_os", class: "text-right" },
+							{ data: "c_total", class: "text-right" },
+						],
+						destroy: true,
+						responsive: false,
+						scrollX: true
+					});
+				}
+			});
 						
 		} );// end of document.ready
 	
