@@ -14,6 +14,19 @@
 <!-- begin content here -->
 
 <div class="row">
+    <div class="col">
+        <div class="ibox collapsed" id="iboxfilter">
+            <div class="ibox-title">
+                <h5 class="text-navy">Filter</h5>&nbsp
+                <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+            </div>
+            <div class="ibox-content">
+                <div id="searchPanes1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-content">
@@ -467,6 +480,29 @@
 
 			//start datatables
 			tblhesxxtd = $('#tblhesxxtd').DataTable( {
+				searchPanes:{
+					layout: 'columns-4'
+				},
+				dom: 
+					"<P>"+
+					"<lf>"+
+					"<B>"+
+					"<rt>"+
+					"<'row'<'col-sm-4'i><'col-sm-8'p>>",
+				columnDefs:[
+					{
+						searchPanes:{
+							show: true,
+						},
+						targets: [1,2,4,5,6,7,8,9]
+					},
+					{
+						searchPanes:{
+							show: false,
+						},
+						targets: '_all'
+					}
+				],
 				ajax: {
 					url: "../../models/hesxxtd/hesxxtd.php",
 					type: 'POST',
@@ -508,8 +544,13 @@
 					if ( data.hesxxtd.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
+				},
+				initComplete: function() {
+					this.api().searchPanes.rebuildPane();
 				}
 			} );
+
+			tblhesxxtd.searchPanes.container().appendTo( '#searchPanes1' );
 			
 			tblhesxxtd.on( 'init', function () {
 				// atur hak akses
