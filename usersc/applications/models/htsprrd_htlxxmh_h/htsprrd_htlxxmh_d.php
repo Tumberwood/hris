@@ -80,7 +80,7 @@
                             ELSE 0 END
 						) s2,
 						SUM(
-                            CASE WHEN a.status_presensi_in = "sdl" THEN 1 -- s3
+                            CASE WHEN a.status_presensi_in IN ("SDL", "S3") THEN 1 -- s3
                             ELSE 0 END
 						) s3,
 						SUM(
