@@ -7,16 +7,10 @@
 ?>
 
 <?php
-	$nama_tabel       = 'htsprrd_htoxxrd_h';
+	$nama_tabel       = 'htsprrd_htlxxmh_h';
     $nama_tabels_d 	= [];
-    $nama_tabels_d[0] = 'htsprrd_htoxxrd_d';
+    $nama_tabels_d[0] = 'htsprrd_htlxxmh_d';
 ?>
-
-<style>
-	.modal-xxl {
-		max-width: 90%; /* atau 1200px, 900px sesuai kebutuhan */
-	}
-</style>
 
 <!-- begin content here -->
  
@@ -36,7 +30,7 @@
 							</div>
 						</div>
 						<div class="col-sm-4">
-							<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/Data Lembur & Makan Periode 18 12 2024 - 20 01 2025.xls');">
+							<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/Data Lembur & lb Periode 18 12 2024 - 20 01 2025.xls');">
 								<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 							</button>
 						</div>
@@ -84,106 +78,192 @@
     </div>
 </div>
 
-<!-- Breakdown -->
+<!-- Breakdown Lembur Modal dengan Tabs -->
 <div class="modal fade" id="modalBreakdown" tabindex="-1" role="dialog" aria-labelledby="myModal1Label" aria-hidden="true">
-  <div class="modal-dialog modal-xxl" role="document">
-    <div class="modal-content">
-      
-      <div class="modal-header">
-        <h5 class="modal-title" id="myModal1Label">Breakdown Potongan Makan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <div class="modal-body">
-		<div class="table-responsive" id="proteksi">
-			<div class="row">
-				<div class="col-12 col-lg-6 col-md-6 col-sm-12">
-					<h3>Checkclock Makan</h3>
-					<table id="ceklok_makan" class="table table-striped table-bordered table-hover nowrap" width="100%">
-						<thead>
-							<tr>
-								<th>Tanggal</th>
-								<th>NIP</th>
-								<th>Nama</th>
-								<th>Mesin</th>
-								<th>Jam</th>
-							</tr>
-						</thead>
-					</table>
-				</div>
-				<div class="col-12 col-lg-6 col-md-6 col-sm-12">
-					<h3>Report Presensi</h3>
-					<table id="pot_makan" class="table table-striped table-bordered table-hover nowrap" width="100%">
-						<thead>
-							<tr>
-								<th>Tanggal</th>
-								<th>NIP</th>
-								<th>Nama</th>
-								<th>Jadwal</th>
-								<th>Pot Makan</th>
-							</tr>
-						</thead>
-					</table>
-				</div>
-			</div>
-		</div>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- Breakdown Lembur -->
-<div class="modal fade" id="modalBreakdownLembur" tabindex="-1" role="dialog" aria-labelledby="myModal1Label" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
-      
+
       <div class="modal-header">
-        <h5 class="modal-title" id="myModal1Label">Breakdown Lembur</h5>
+        <h5 class="modal-title" id="myModal1Label">Breakdown Absensi</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
 
       <div class="modal-body">
-		<div class="table-responsive" id="proteksi">
-			<div class="row">
-				<div class="col-12 col-lg-12 col-md-12 col-sm-12">
-					<table id="lembur_presensi" class="table table-striped table-bordered table-hover nowrap" width="100%">
-						<thead>
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-3" id="lemburTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="tab-al" data-toggle="tab" href="#content-al" role="tab">AL</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="tab-sdl" data-toggle="tab" href="#content-sdl" role="tab">SDL (s3)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="tab-it" data-toggle="tab" href="#content-it" role="tab">IT (Izin Pribadi)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="tab-ip" data-toggle="tab" href="#content-ip" role="tab">IP</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="tab-lb" data-toggle="tab" href="#content-lb" role="tab">LB</a>
+          </li>
+        </ul>
+
+        <!-- Tab Contents -->
+        <div class="tab-content" id="lemburTabContent">
+
+          <!-- AL Tab -->
+          <div class="tab-pane fade show active" id="content-al" role="tabpanel">
+            <div class="table-responsive">
+              <table id="table_al" class="table table-striped table-bordered table-hover nowrap" width="100%">
+                <thead>
+                  <tr>
+                    <th>Tanggal</th>
+                    <th>NIP</th>
+                    <th>Nama</th>
+                    <th>Status In</th>
+                    <th>Status Out</th>
+                    <th>Keterangan</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+
+          <!-- IP Tab -->
+          <div class="tab-pane fade" id="content-ip" role="tabpanel">
+            <div class="table-responsive">
+              <table id="table_ip" class="table table-striped table-bordered table-hover nowrap" width="100%">
+                <thead>
+                  <tr>
+                    <th>Tanggal</th>
+                    <th>NIP</th>
+                    <th>Nama</th>
+                    <th>Status In</th>
+                    <th>Status Out</th>
+                    <th>Keterangan</th>
+                    <th>Pot HK</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+
+          <!-- SDL Tab -->
+          <div class="tab-pane fade" id="content-sdl" role="tabpanel">
+			  <div class="row">
+				  <div class="col-6">
+					  <h3>Report Presensi</h3>
+					  <div class="table-responsive">
+						<table id="table_sdl" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						  <thead>
 							<tr>
-								<th>Tanggal</th>
-								<th>NIP</th>
-								<th>Nama</th>
-								<th>Lembur SPKL</th>
-								<th>Pot Jam</th>
-								<th>Lembur Final</th>
-								<th>Lembur 1,5</th>
-								<th>Lembur 2</th>
-								<th>Lembur 3</th>
+							  <th>Tanggal</th>
+							  <th>NIP</th>
+							  <th>Nama</th>
+							  <th>Keterangan</th>
 							</tr>
-						</thead>
-						<tfoot>
+						  </thead>
+						</table>
+					  </div>
+				  </div>
+				  <div class="col-6">
+					  <h3>Absen SDL</h3>
+					  <div class="table-responsive">
+						<table id="table_absen_sdl" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						  <thead>
 							<tr>
-								<th colspan="3">Total</th>
-								<th id="subtotal_3"></th>
-								<th id="subtotal_4"></th>
-								<th id="subtotal_5"></th>
-								<th id="subtotal_6"></th>
-								<th id="subtotal_7"></th>
-								<th id="subtotal_8"></th>
+							  <th>Tanggal</th>
+							  <th>Kode Absen</th>
+							  <th>NIP</th>
+							  <th>Nama</th>
+							  <th>Keterangan</th>
 							</tr>
-						</tfoot>
-					</table>
-				</div>
-			</div>
-		</div>
+						  </thead>
+						</table>
+					  </div>
+				  </div>
+			  </div>
+          </div>
+
+          <!-- it Tab -->
+          <div class="tab-pane fade" id="content-it" role="tabpanel">
+			  <div class="row">
+				  <div class="col-6">
+					  <h3>Report Presensi</h3>
+					  <div class="table-responsive">
+						<table id="table_it" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						  <thead>
+							<tr>
+							  <th>Tanggal</th>
+							  <th>NIP</th>
+							  <th>Nama</th>
+							  <th>Keterangan</th>
+							</tr>
+						  </thead>
+						</table>
+					  </div>
+				  </div>
+				  <div class="col-6">
+					  <h3>Absen it</h3>
+					  <div class="table-responsive">
+						<table id="table_absen_it" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						  <thead>
+							<tr>
+							  <th>Tanggal</th>
+							  <th>Kode Absen</th>
+							  <th>NIP</th>
+							  <th>Nama</th>
+							  <th>Keterangan</th>
+							</tr>
+						  </thead>
+						</table>
+					  </div>
+				  </div>
+			  </div>
+          </div>
+		  
+          <!-- lb Tab -->
+          <div class="tab-pane fade" id="content-lb" role="tabpanel">
+			  <div class="row">
+				  <div class="col-6">
+					  <h3>Report Presensi</h3>
+					  <div class="table-responsive">
+						<table id="table_lb" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						  <thead>
+							<tr>
+							  <th>Tanggal</th>
+							  <th>NIP</th>
+							  <th>Nama</th>
+							  <th>Keterangan</th>
+							</tr>
+						  </thead>
+						</table>
+					  </div>
+				  </div>
+				  <div class="col-6">
+					  <h3>Absen lb</h3>
+					  <div class="table-responsive">
+						<table id="table_absen_lb" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						  <thead>
+							<tr>
+							  <th>Tanggal</th>
+							  <th>Kode Absen</th>
+							  <th>NIP</th>
+							  <th>Nama</th>
+							  <th>Keterangan</th>
+							</tr>
+						  </thead>
+						</table>
+					  </div>
+				  </div>
+			  </div>
+          </div>
+
+        </div> <!-- End Tab Contents -->
+
       </div>
 
       <div class="modal-footer">
@@ -199,7 +279,7 @@
 		<div class="ibox ">
 			<div class="ibox-content">
 				<div class="table-responsive">
-                    <table id="tblhtsprrd_htoxxrd_h" class="table table-striped table-bordered table-hover nowrap" width="100%">
+                    <table id="tblhtsprrd_htlxxmh_h" class="table table-striped table-bordered table-hover nowrap" width="100%">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -233,22 +313,19 @@
 					</div>
 				</div>
 				<div class="table-responsive">
-                    <table id="tblhtsprrd_htoxxrd_d" class="table table-striped table-bordered table-hover nowrap" width="100%">
+                    <table id="tblhtsprrd_htlxxmh_d" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
 							<tr>
-								<th rowspan="2">ID</th>
-								<th rowspan="2">id_htsprrd_htoxxrd_h</th>
-								<th rowspan="2">NIP</th>
-								<th rowspan="2">Nama</th>
-								<th rowspan="2">Status</th>
-								<th class="text-center" colspan="5">HRIS</th>
-							</tr>
-							<tr>
-								<th>Lembur 1.5</th>
-								<th>Lembur 2</th>
-								<th>Lembur 3</th>
-								<th>Lembur 4</th>
-								<th>Makan</th>
+								<th >ID</th>
+								<th >id_htsprrd_htlxxmh_h</th>
+								<th >NIP</th>
+								<th >Nama</th>
+								<th >Status</th>
+								<th>AL</th>
+								<th>S3</th>
+								<th>IT</th>
+								<th>LB</th>
+								<th >Total</th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -276,13 +353,13 @@
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_datatables_load.php'; ?>
 <script src="<?=$us_url_root?>usersc/helpers/hakaksescrud_hd_fn.js"></script>
 
-<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/htsprrd_htoxxrd_h/fn/htsprrd_htoxxrd_h_fn.php'; ?>
+<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/htsprrd_htlxxmh_h/fn/htsprrd_htlxxmh_h_fn.php'; ?>
 
 <!-- BEGIN datatables here -->
 <script type="text/javascript">
 		// ------------- default variable, do not erase
-		var edthtsprrd_htoxxrd_h, tblhtsprrd_htoxxrd_h, show_inactive_status_htsprrd_htoxxrd_h = 0, id_htsprrd_htoxxrd_h;
-        var edthtsprrd_htoxxrd_d, tblhtsprrd_htoxxrd_d, show_inactive_status_htsprrd_htoxxrd_d = 0, id_htsprrd_htoxxrd_d;
+		var edthtsprrd_htlxxmh_h, tblhtsprrd_htlxxmh_h, show_inactive_status_htsprrd_htlxxmh_h = 0, id_htsprrd_htlxxmh_h;
+        var edthtsprrd_htlxxmh_d, tblhtsprrd_htlxxmh_d, show_inactive_status_htsprrd_htlxxmh_d = 0, id_htsprrd_htlxxmh_d;
 		// ------------- end of default variable
 		
 		// BEGIN datepicker init
@@ -303,17 +380,17 @@
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 			
 			//start datatables editor
-			edthtsprrd_htoxxrd_h = new $.fn.dataTable.Editor( {
+			edthtsprrd_htlxxmh_h = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/htsprrd_htoxxrd_h/htsprrd_htoxxrd_h.php",
+					url: "../../models/htsprrd_htlxxmh_h/htsprrd_htlxxmh_h.php",
 					type: 'POST',
 					data: function (d){
 						d.start_date = start_date;
 						d.end_date = end_date;
-						d.show_inactive_status_htsprrd_htoxxrd_h = show_inactive_status_htsprrd_htoxxrd_h;
+						d.show_inactive_status_htsprrd_htlxxmh_h = show_inactive_status_htsprrd_htlxxmh_h;
 					}
 				},
-				table: "#tblhtsprrd_htoxxrd_h",
+				table: "#tblhtsprrd_htlxxmh_h",
 				fields: [ 
 					{
 						label: "start_on",
@@ -326,17 +403,17 @@
 					},	{
 						label: "nama_tabel",
 						name: "nama_tabel",
-						def: "htsprrd_htoxxrd_h",
+						def: "htsprrd_htlxxmh_h",
 						type: "hidden"
 					},	{
 						label: "Active Status",
-						name: "htsprrd_htoxxrd_h.is_active",
+						name: "htsprrd_htlxxmh_h.is_active",
                         type: "hidden",
 						def: 1
 					},	
 					{
 						label: "Tanggal Awal <sup class='text-danger'>*<sup>",  
-						name: "htsprrd_htoxxrd_h.tanggal_awal",
+						name: "htsprrd_htlxxmh_h.tanggal_awal",
 						type: "datetime",
 						def: function () { 
 							return new Date(); 
@@ -349,7 +426,7 @@
 					},
 					{
 						label: "Tanggal Akhir <sup class='text-danger'>*<sup>",
-						name: "htsprrd_htoxxrd_h.tanggal_akhir",
+						name: "htsprrd_htlxxmh_h.tanggal_akhir",
 						type: "datetime",
 						def: function () { 
 							return new Date(); 
@@ -362,86 +439,86 @@
 					},
 					{
 						label: "Keterangan",
-						name: "htsprrd_htoxxrd_h.keterangan",
+						name: "htsprrd_htlxxmh_h.keterangan",
 						type: "textarea"
 					}
 				]
 			} );
 			
-			edthtsprrd_htoxxrd_h.on( 'preOpen', function( e, mode, action ) {
+			edthtsprrd_htlxxmh_h.on( 'preOpen', function( e, mode, action ) {
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthtsprrd_htoxxrd_h.field('start_on').val(start_on);
+				edthtsprrd_htlxxmh_h.field('start_on').val(start_on);
 
 				if(action == 'create'){
-					tblhtsprrd_htoxxrd_h.rows().deselect();
+					tblhtsprrd_htlxxmh_h.rows().deselect();
 				}
 			});
 
-            edthtsprrd_htoxxrd_h.on("open", function (e, mode, action) {
+            edthtsprrd_htlxxmh_h.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
 			
-			edthtsprrd_htoxxrd_h.on( 'preSubmit', function (e, data, action) {
+			edthtsprrd_htlxxmh_h.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					tanggal_awal = edthtsprrd_htoxxrd_h.field('htsprrd_htoxxrd_h.tanggal_awal').val();
+					tanggal_awal = edthtsprrd_htlxxmh_h.field('htsprrd_htlxxmh_h.tanggal_awal').val();
 					if(!tanggal_awal || tanggal_awal == ''){
-						edthtsprrd_htoxxrd_h.field('htsprrd_htoxxrd_h.tanggal_awal').error( 'Wajib diisi!' );
+						edthtsprrd_htlxxmh_h.field('htsprrd_htlxxmh_h.tanggal_awal').error( 'Wajib diisi!' );
 					}
-					tanggal_akhir = edthtsprrd_htoxxrd_h.field('htsprrd_htoxxrd_h.tanggal_akhir').val();
+					tanggal_akhir = edthtsprrd_htlxxmh_h.field('htsprrd_htlxxmh_h.tanggal_akhir').val();
 					if(!tanggal_akhir || tanggal_akhir == ''){
-						edthtsprrd_htoxxrd_h.field('htsprrd_htoxxrd_h.tanggal_akhir').error( 'Wajib diisi!' );
+						edthtsprrd_htlxxmh_h.field('htsprrd_htlxxmh_h.tanggal_akhir').error( 'Wajib diisi!' );
 					}
 					
 					let tglAwal = new Date(tanggal_awal);
 					let tglAkhir = new Date(tanggal_akhir);
 					
 					if (tglAwal > tglAkhir) {
-						edthtsprrd_htoxxrd_h.field('htsprrd_htoxxrd_h.tanggal_awal').error('Tanggal awal tidak boleh lebih besar dari tanggal akhir.');
-						edthtsprrd_htoxxrd_h.field('htsprrd_htoxxrd_h.tanggal_akhir').error('Tanggal akhir tidak boleh lebih kecil dari tanggal awal.');
+						edthtsprrd_htlxxmh_h.field('htsprrd_htlxxmh_h.tanggal_awal').error('Tanggal awal tidak boleh lebih besar dari tanggal akhir.');
+						edthtsprrd_htlxxmh_h.field('htsprrd_htlxxmh_h.tanggal_akhir').error('Tanggal akhir tidak boleh lebih kecil dari tanggal awal.');
 					}
 				}
 				
-				if ( edthtsprrd_htoxxrd_h.inError() ) {
+				if ( edthtsprrd_htlxxmh_h.inError() ) {
 					return false;
 				}
 			});
 
-			edthtsprrd_htoxxrd_h.on('initSubmit', function(e, action) {
+			edthtsprrd_htlxxmh_h.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthtsprrd_htoxxrd_h.field('finish_on').val(finish_on);
+				edthtsprrd_htlxxmh_h.field('finish_on').val(finish_on);
 			});
 			
-			edthtsprrd_htoxxrd_h.on( 'postSubmit', function (e, json, data, action, xhr) {
+			edthtsprrd_htlxxmh_h.on( 'postSubmit', function (e, json, data, action, xhr) {
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
 			} );
 			
 			//start datatables
-			tblhtsprrd_htoxxrd_h = $('#tblhtsprrd_htoxxrd_h').DataTable( {
+			tblhtsprrd_htlxxmh_h = $('#tblhtsprrd_htlxxmh_h').DataTable( {
 				ajax: {
-					url: "../../models/htsprrd_htoxxrd_h/htsprrd_htoxxrd_h.php",
+					url: "../../models/htsprrd_htlxxmh_h/htsprrd_htlxxmh_h.php",
 					type: 'POST',
 					data: function (d){
 						d.start_date = start_date;
 						d.end_date = end_date;
-						d.show_inactive_status_htsprrd_htoxxrd_h = show_inactive_status_htsprrd_htoxxrd_h;
+						d.show_inactive_status_htsprrd_htlxxmh_h = show_inactive_status_htsprrd_htlxxmh_h;
 					}
 				},
 				order: [[ 1, "asc" ]],
 				columns: [
-					{ data: "htsprrd_htoxxrd_h.id",visible:false },
-					{ data: "htsprrd_htoxxrd_h.tanggal_awal" },
-					{ data: "htsprrd_htoxxrd_h.tanggal_akhir" },
+					{ data: "htsprrd_htlxxmh_h.id",visible:false },
+					{ data: "htsprrd_htlxxmh_h.tanggal_awal" },
+					{ data: "htsprrd_htlxxmh_h.tanggal_akhir" },
 				],
 				buttons: [
 
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_htsprrd_htoxxrd_h';
-						$table       = 'tblhtsprrd_htoxxrd_h';
-						$edt         = 'edthtsprrd_htoxxrd_h';
-						$show_status = '_htsprrd_htoxxrd_h';
+						$id_table    = 'id_htsprrd_htlxxmh_h';
+						$table       = 'tblhtsprrd_htlxxmh_h';
+						$edt         = 'edthtsprrd_htlxxmh_h';
+						$show_status = '_htsprrd_htlxxmh_h';
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
@@ -452,55 +529,54 @@
 					// END breaking generate button
 				],
 				rowCallback: function( row, data, index ) {
-					if ( data.htsprrd_htoxxrd_h.is_active == 0 ) {
+					if ( data.htsprrd_htlxxmh_h.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
 				}
 			} );
-			tblhtsprrd_htoxxrd_h.button('btnUpload:name').disable();
+			tblhtsprrd_htlxxmh_h.button('btnUpload:name').disable();
 			
-			tblhtsprrd_htoxxrd_h.on( 'init', function () {
+			tblhtsprrd_htlxxmh_h.on( 'init', function () {
 				// atur hak akses
-				tbl_details = [tblhtsprrd_htoxxrd_d];
-				CekInitHeaderHD(tblhtsprrd_htoxxrd_h, tbl_details);
+				tbl_details = [tblhtsprrd_htlxxmh_d];
+				CekInitHeaderHD(tblhtsprrd_htlxxmh_h, tbl_details);
 			} );
 			
-			tblhtsprrd_htoxxrd_h.on( 'select', function( e, dt, type, indexes ) {
-				data_htsprrd_htoxxrd_h = tblhtsprrd_htoxxrd_h.row( { selected: true } ).data().htsprrd_htoxxrd_h;
-				id_htsprrd_htoxxrd_h  = data_htsprrd_htoxxrd_h.id;
-				id_transaksi_h   = id_htsprrd_htoxxrd_h; // dipakai untuk general
-				is_approve       = data_htsprrd_htoxxrd_h.is_approve;
-				is_nextprocess   = data_htsprrd_htoxxrd_h.is_nextprocess;
-				is_jurnal        = data_htsprrd_htoxxrd_h.is_jurnal;
-				is_active        = data_htsprrd_htoxxrd_h.is_active;
+			tblhtsprrd_htlxxmh_h.on( 'select', function( e, dt, type, indexes ) {
+				data_htsprrd_htlxxmh_h = tblhtsprrd_htlxxmh_h.row( { selected: true } ).data().htsprrd_htlxxmh_h;
+				id_htsprrd_htlxxmh_h  = data_htsprrd_htlxxmh_h.id;
+				id_transaksi_h   = id_htsprrd_htlxxmh_h; // dipakai untuk general
+				is_approve       = data_htsprrd_htlxxmh_h.is_approve;
+				is_nextprocess   = data_htsprrd_htlxxmh_h.is_nextprocess;
+				is_jurnal        = data_htsprrd_htlxxmh_h.is_jurnal;
+				is_active        = data_htsprrd_htlxxmh_h.is_active;
 				
 				// atur hak akses
-				tbl_details = [tblhtsprrd_htoxxrd_d];
-				CekSelectHeaderHD(tblhtsprrd_htoxxrd_h, tbl_details);
+				tbl_details = [tblhtsprrd_htlxxmh_d];
+				CekSelectHeaderHD(tblhtsprrd_htlxxmh_h, tbl_details);
 				cekDetail();
 				
 				if (c_id > 0) {
-					tblhtsprrd_htoxxrd_h.button('btnUpload:name').disable();
+					tblhtsprrd_htlxxmh_h.button('btnUpload:name').disable();
 				} else {
-					tblhtsprrd_htoxxrd_h.button('btnUpload:name').enable();
+					tblhtsprrd_htlxxmh_h.button('btnUpload:name').enable();
 				}
 			} );
 			
-			tblhtsprrd_htoxxrd_h.on( 'deselect', function () {
+			tblhtsprrd_htlxxmh_h.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
-				id_htsprrd_htoxxrd_h = '';
+				id_htsprrd_htlxxmh_h = '';
 
 				// atur hak akses
-				tbl_details = [tblhtsprrd_htoxxrd_d];
-				CekDeselectHeaderHD(tblhtsprrd_htoxxrd_h, tbl_details);
-				tblhtsprrd_htoxxrd_h.button('btnUpload:name').disable();
-				tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').disable();
+				tbl_details = [tblhtsprrd_htlxxmh_d];
+				CekDeselectHeaderHD(tblhtsprrd_htlxxmh_h, tbl_details);
+				tblhtsprrd_htlxxmh_h.button('btnUpload:name').disable();
 			} );
 			
 // --------- start _detail --------------- //
 
 			//start datatables
-			tblhtsprrd_htoxxrd_d = $('#tblhtsprrd_htoxxrd_d').DataTable( {
+			tblhtsprrd_htlxxmh_d = $('#tblhtsprrd_htlxxmh_d').DataTable( {
 				searchPanes:{
 					layout: 'columns-2',
 				},
@@ -511,10 +587,10 @@
 					"<rt>"+
 					"<'row'<'col-sm-4'i><'col-sm-8'p>>",
 				ajax: {
-					url: "../../models/htsprrd_htoxxrd_h/htsprrd_htoxxrd_d.php",
+					url: "../../models/htsprrd_htlxxmh_h/htsprrd_htlxxmh_d.php",
 					type: 'POST',
 					data: function (d){
-						d.id_htsprrd_htoxxrd_h = id_htsprrd_htoxxrd_h;
+						d.id_htsprrd_htlxxmh_h = id_htsprrd_htlxxmh_h;
 					},
 					dataSrc: 'data.lembur'
 				},
@@ -525,11 +601,11 @@
 				order: [[ 2, "asc" ]],
 				columns: [
 					{ data: "id",visible:false },
-					{ data: "id_htsprrd_htoxxrd_h",visible:false },
+					{ data: "id_htsprrd_htlxxmh_h",visible:false },
 					{ 
 					data: "kode",
 						render: function(data, type, row) {
-							return '<a target="_blank" href="../htsprrd_overtime_jam/htsprrd_overtime_jam.php?id_hemxxmh=' + row.id_hemxxmh + 
+							return '<a target="_blank" href="../htsprrd_2/htsprrd_2.php?id_hemxxmh=' + row.id_hemxxmh + 
 								'&start_date=' + row.start_date + 
 								'&end_date=' + row.end_date + '">' + data + '</a>';
 						}
@@ -537,30 +613,26 @@
 					{ 
 					data: "nama",
 						render: function(data, type, row) {
-							return '<a target="_blank" href="../htsprrd_overtime_jam/htsprrd_overtime_jam.php?id_hemxxmh=' + row.id_hemxxmh + 
+							return '<a target="_blank" href="../htsprrd_2/htsprrd_2.php?id_hemxxmh=' + row.id_hemxxmh + 
 								'&start_date=' + row.start_date + 
 								'&end_date=' + row.end_date + '">' + data + '</a>';
 						}
 					},
 
 					{ data: "status" },
-					{ data: "lembur15_db" },
-					{ data: "lembur2_db" },
-					{ data: "lembur3_db" },
-					{ data: "lembur4_db" },
-					{ 
-						data: "makan_db",
-						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
-						class: "text-right"
-					},
+					{ data: "al_db" },
+					{ data: "s3_db" },
+					{ data: "it_db" },
+					{ data: "lb_db" },
+					{ data: "total_db" },
 				],
 				buttons: [
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_htsprrd_htoxxrd_d';
-						$table       = 'tblhtsprrd_htoxxrd_d';
-						$edt         = 'edthtsprrd_htoxxrd_d';
-						$show_status = '_htsprrd_htoxxrd_d';
+						$id_table    = 'id_htsprrd_htlxxmh_d';
+						$table       = 'tblhtsprrd_htlxxmh_d';
+						$edt         = 'edthtsprrd_htlxxmh_d';
+						$show_status = '_htsprrd_htlxxmh_d';
 						$table_name  = $nama_tabels_d[0];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
@@ -570,23 +642,13 @@
 					?>
 					// END breaking generate button
 					,{
-						text: '<i class="fa fa-list"></i> Pot Makan',
+						text: '<i class="fa fa-list"> Detail</i>',
 						name: 'btnBreakdown',
 						className: 'btn btn-outline',
-						titleAttr: 'Breakdown Pot Makan',
+						titleAttr: 'Breakdown ',
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
 							$('#modalBreakdown').modal('show');
-						}
-					}
-					,{
-						text: '<i class="fa fa-list"></i> Lembur',
-						name: 'btnBreakdownLembur',
-						className: 'btn btn-outline',
-						titleAttr: 'Breakdown Lembur',
-						action: function ( e, dt, node, config ) {
-							e.preventDefault(); 
-							$('#modalBreakdownLembur').modal('show');
 						}
 					}
 				],
@@ -602,22 +664,24 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 
-					for (var i = 5; i <= 9; i++) {
+					for (var i = 4; i <= 9; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
 						$('#total_' + columnIndex).html(numFormat(sum_all));
 					}
-					var tidak_sesuai = api.column(9).data().sum();
-					$('#tidak_sesuai').html(numFormat(tidak_sesuai));
 				},
 				columnDefs: [
-					{ targets: [5, 6, 7, 8, 9], className: "text-right" },
+					{ 
+						targets: [5, 6, 7, 8, 9], 
+						className: "text-right",
+						render: $.fn.dataTable.render.number(',', '.', 1, '', ''),
+					},
 					{
 						searchPanes:{
 							show: true,
 						},
-						targets: [4,9]
+						targets: [4]
 					},
 					{
 						searchPanes:{
@@ -628,34 +692,29 @@
 				]
 			} );
 			
-			tblhtsprrd_htoxxrd_d.searchPanes.container().appendTo( '#searchPanes1' );
-			tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').disable();
-			tblhtsprrd_htoxxrd_d.button('btnBreakdownLembur:name').disable();
+			tblhtsprrd_htlxxmh_d.searchPanes.container().appendTo( '#searchPanes1' );
+			tblhtsprrd_htlxxmh_d.button('btnBreakdown:name').disable();
 
-			tblhtsprrd_htoxxrd_d.on( 'select', function( e, dt, type, indexes ) {
-				data_htsprrd_htoxxrd_d = tblhtsprrd_htoxxrd_d.row( { selected: true } ).data();
-				id_hemxxmh       = data_htsprrd_htoxxrd_d.id_hemxxmh;
-				start_date       = data_htsprrd_htoxxrd_d.start_date;
-				end_date       = data_htsprrd_htoxxrd_d.end_date;
-				kode       = data_htsprrd_htoxxrd_d.kode;
+			tblhtsprrd_htlxxmh_d.on( 'select', function( e, dt, type, indexes ) {
+				data_htsprrd_htlxxmh_d = tblhtsprrd_htlxxmh_d.row( { selected: true } ).data();
+				id_hemxxmh       = data_htsprrd_htlxxmh_d.id_hemxxmh;
+				start_date       = data_htsprrd_htlxxmh_d.start_date;
+				end_date       = data_htsprrd_htlxxmh_d.end_date;
+				kode       = data_htsprrd_htlxxmh_d.kode;
 				kode_finger = kode.slice(-4);
 
-				tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').enable();
-				tblhtsprrd_htoxxrd_d.button('btnBreakdownLembur:name').enable();
-				breakdownMakan(id_hemxxmh, kode_finger, start_date, end_date);
-				breakdownLembur(id_hemxxmh, start_date, end_date);
+				tblhtsprrd_htlxxmh_d.button('btnBreakdown:name').enable();
+				breakdown(id_hemxxmh, start_date, end_date);
 			} );
 			
-			tblhtsprrd_htoxxrd_d.on( 'deselect', function () {
+			tblhtsprrd_htlxxmh_d.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
 				id_hemxxmh = 0;
 				start_date = '';
 				end_date = '';
 				kode_finger = '';
-				tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').disable();
-				tblhtsprrd_htoxxrd_d.button('btnBreakdownLembur:name').disable();
+				tblhtsprrd_htlxxmh_d.button('btnBreakdown:name').disable();
 			} );
-
 // --------- end _detail --------------- //		
 			
 			$("#frmFilter").submit(function(e) {
@@ -677,9 +736,9 @@
 						delay: 0
 					});
 
-					tblhtsprrd_htoxxrd_h.rows().deselect();
-					tblhtsprrd_htoxxrd_d.rows().deselect();
-					tblhtsprrd_htoxxrd_h.ajax.reload(function ( json ) {
+					tblhtsprrd_htlxxmh_h.rows().deselect();
+					tblhtsprrd_htlxxmh_d.rows().deselect();
+					tblhtsprrd_htlxxmh_h.ajax.reload(function ( json ) {
 						notifyprogress.close();
 					}, false);
 					return false; 
@@ -713,10 +772,10 @@
 					var item = $('#frmUploadItem')[0].files[0];
 					if (item != undefined) {
 						fd_item.append('filename',item);
-						fd_item.append('id_htsprrd_htoxxrd_h',id_htsprrd_htoxxrd_h);
+						fd_item.append('id_htsprrd_htlxxmh_h',id_htsprrd_htlxxmh_h);
 			
 						$.ajax( {
-							url: "../../models/htsprrd_htoxxrd_h/htsprrd_htoxxrd_h_fn_upload.php",
+							url: "../../models/htsprrd_htlxxmh_h/htsprrd_htlxxmh_h_fn_upload.php",
 							type: 'POST',
 							dataType: 'json',
 							data: fd_item,
@@ -732,8 +791,8 @@
 								});
 
 								$("#frmUploadItem").val('');
-								tblhtsprrd_htoxxrd_h.ajax.reload(null,false);
-								tblhtsprrd_htoxxrd_d.ajax.reload(null,false);
+								tblhtsprrd_htlxxmh_h.ajax.reload(null,false);
+								tblhtsprrd_htlxxmh_d.ajax.reload(null,false);
 								$('#modalUpload').modal('toggle'); 
 								$('#submitUpload').show();
 							},
