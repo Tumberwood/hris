@@ -84,7 +84,8 @@
                             ELSE 0 END
 						) s3,
 						SUM(
-                            CASE WHEN a.status_presensi_in = "IP" THEN 1 -- it
+							-- Pastikan bukan IP izin Baru (Izin Pulang),tapi IP Absen (Izin Pribadi)
+                            CASE WHEN (a.status_presensi_in = "IP" AND a.status_presensi_out = "IP") OR (a.status_presensi_in = "IT" AND a.status_presensi_out = "IT") THEN 1 -- it
                             ELSE 0 END
 						) it, -- Izin pribadi
 
@@ -98,7 +99,7 @@
 						) 
 						+
 						SUM(
-                            CASE WHEN a.status_presensi_out = "PA" THEN 1 -- IP
+                            CASE WHEN a.status_presensi_out = "PA" OR (a.status_presensi_in <> "IP" AND a.status_presensi_out = "IP") THEN 1 -- IP
                             -- WHEN a.st_clock_out = "EARLY" AND status_presensi_out NOT LIKE "%DL%" THEN 1
                             WHEN a.st_clock_out = "EARLY" AND htlxxrh_kode = "" THEN 1
                             -- WHEN a.htlxxrh_kode LIKE "PA%" AND a.st_clock_out = "OK" THEN 1
@@ -120,7 +121,7 @@
 										(a.status_presensi_in = "TL" AND st_clock_in = "LATE")
 										-- OR (a.st_clock_in = "LATE" AND a.status_presensi_in NOT LIKE "%DL%")
 										OR (a.st_clock_in = "LATE" AND htlxxrh_kode = "")
-										OR (a.status_presensi_out = "PA")
+										OR (a.status_presensi_out = "PA" OR (a.status_presensi_in <> "IP" AND a.status_presensi_out = "IP"))
 										-- OR (a.st_clock_out = "EARLY" AND a.status_presensi_out NOT LIKE "%DL%")
 										OR (a.st_clock_out = "EARLY" AND htlxxrh_kode = "")
 										OR (a.status_presensi_in = "MK" OR a.status_presensi_out = "MK")

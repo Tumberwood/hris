@@ -47,7 +47,7 @@
 						OR (a.st_clock_in = "LATE"  AND a.htlxxrh_kode = "")
 				
 						/* 3. Pulang Awal (PA) */
-						OR (a.status_presensi_out = "PA")
+						OR ( a.status_presensi_out = "PA" OR (a.status_presensi_in <> "IP" AND a.status_presensi_out = "IP") )
 				
 						/* 4. Early tanpa kode toleransi */
 						OR (a.st_clock_out = "EARLY" AND a.htlxxrh_kode = "")
@@ -61,7 +61,7 @@
 							AND NOT (
 								(a.status_presensi_in = "TL" AND a.st_clock_in = "LATE")
 								OR (a.st_clock_in  = "LATE"  AND a.htlxxrh_kode = "")
-								OR (a.status_presensi_out = "PA")
+								OR ( a.status_presensi_out = "PA" OR (a.status_presensi_in <> "IP" AND a.status_presensi_out = "IP") )
 								OR (a.st_clock_out = "EARLY" AND a.htlxxrh_kode = "")
 								OR (a.status_presensi_in = "MK" OR a.status_presensi_out = "MK")
 							)

@@ -37,7 +37,7 @@
 				LEFT JOIN hemxxmh b ON b.id = a.id_hemxxmh
 				WHERE a.tanggal BETWEEN :start_date AND :end_date
 				AND a.is_active = 1 AND a.id_hemxxmh = :id_hemxxmh
-				AND status_presensi_in = "IP"
+				AND (a.status_presensi_in = "IP" AND a.status_presensi_out = "IP") OR (a.status_presensi_in = "IT" AND a.status_presensi_out = "IT")
 				ORDER BY a.id_hemxxmh, a.tanggal;
 	
 	');
@@ -59,7 +59,8 @@
 				LEFT JOIN hemxxmh b ON b.id = a.id_hemxxmh
 				WHERE a.tanggal BETWEEN :start_date AND :end_date
 				AND a.is_active = 1 AND a.id_hemxxmh = :id_hemxxmh
-				AND htlxxmh_kode = "IP"
+				AND a.id_id_htlxxmh = 6 -- Izin Pribadi atau Izin Tidak Masuk
+				AND a.jenis = 1
 				ORDER BY a.id_hemxxmh, a.tanggal;
 	
 	');
