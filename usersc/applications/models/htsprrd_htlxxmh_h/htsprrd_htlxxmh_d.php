@@ -153,6 +153,7 @@
 			$sqlRow = $sqlData[$kode] ?? ["al" => 0, "s2" => 0, "s3" => 0, "it" => 0, "ip_pot" => 0, "lb" => 0];
 			$total_xl = $row['al'] + $row['s2'] + $row['s3'] + $row['it'] + $row['ip_pot'] + $row['lb'];
 			$total_db = $sqlRow['al'] + $sqlRow['s2'] + $sqlRow['s3'] + $sqlRow['it'] + $sqlRow['ip_pot'] + $sqlRow['lb'];
+			$total_kondite = $sqlRow['al'] + $sqlRow['s3'] + $sqlRow['it'] + $sqlRow['lb'];
 	
 			// if ($total_xl == $total_db) {
 			if (
@@ -193,7 +194,8 @@
 
 				"total_xl"    			=> $total_xl,
 				"total_db"    			=> $total_db,
-				"is_tidak_sesuai"    	=> $is_tidak_sesuai
+				"is_tidak_sesuai"    	=> $is_tidak_sesuai,
+				"total_kondite"    	=> $total_kondite,
 			];
 			
 		}, $dataRows);

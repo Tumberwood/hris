@@ -236,14 +236,11 @@
                     <table id="tblhtsprrd_htoxxrd_d" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
 							<tr>
-								<th rowspan="2">ID</th>
-								<th rowspan="2">id_htsprrd_htoxxrd_h</th>
-								<th rowspan="2">NIP</th>
-								<th rowspan="2">Nama</th>
-								<th rowspan="2">Status</th>
-								<th class="text-center" colspan="5">HRIS</th>
-							</tr>
-							<tr>
+								<th>ID</th>
+								<th>id_htsprrd_htoxxrd_h</th>
+								<th>NIP</th>
+								<th>Nama</th>
+								<th>Status</th>
 								<th>Lembur 1.5</th>
 								<th>Lembur 2</th>
 								<th>Lembur 3</th>

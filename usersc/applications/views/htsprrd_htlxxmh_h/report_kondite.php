@@ -624,7 +624,7 @@
 					{ data: "s3_db" },
 					{ data: "it_db" },
 					{ data: "lb_db" },
-					{ data: "total_db" },
+					{ data: "total_kondite" },
 				],
 				buttons: [
 					// BEGIN breaking generate button
