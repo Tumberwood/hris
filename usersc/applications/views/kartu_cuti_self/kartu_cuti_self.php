@@ -111,7 +111,7 @@
 		$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
         // END datepicker init
         
-		$(document).ready(function() {\
+		$(document).ready(function() {
 			start_date = moment($('#start_date').val()).format('YYYY');
 
 			//start datatables
