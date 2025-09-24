@@ -49,6 +49,11 @@
 			if ($sheetData[0][0] == "NRP") {
 				for ($i = 1; $i < count($sheetData); $i++) {
 					$kode      = strtoupper($sheetData[$i][0]);
+					
+					if (empty($kode)) {
+						break;
+					}
+
 					$tanggal_excel = new Carbon($sheetData[$i]['1']); //gunakan carbon untuk ambil data tanggal
 					$tanggal = $tanggal_excel->format('Y-m-d'); //format jadi 2023-09-12
 					$nominal  = strtoupper($sheetData[$i][2]);
