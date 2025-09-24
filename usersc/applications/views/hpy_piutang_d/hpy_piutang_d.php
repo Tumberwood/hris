@@ -47,6 +47,37 @@
     </div>
 </div>
 
+<div class="modal" id="modalUpload" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content animated bounceInRight">
+			<form class="form-horizontal" id="frmUploadMaster" enctype="multipart/form-data">
+				<div class="modal-header">
+					<h4 class="modal-title">Upload Excel</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<label class="col-lg-2 col-form-label">File Excel</label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input type="file" name="filename" class="form-control" id="frmUploadItem">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/upload_komponen.xlsx');">
+								<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+					<button class="btn btn-primary" type="submit" id="submitUpload">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 <div class="row">
 	<div class="col">
 		<div class="ibox ">
@@ -416,6 +447,15 @@
 						$arr_buttons_approve 	= ['approve'];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
+					{
+						name: 'btnUpload',
+						text: '<i class="fa fa-file-excel-o"></i>',
+						className: 'btn btn-primary',
+						titleAttr: 'Upload Excel',
+						action: function ( e, dt, node, config ) {
+							$('#modalUpload').modal('toggle');
+						}
+					}
 					// END breaking generate button
 				],
 				rowCallback: function( row, data, index ) {
@@ -487,6 +527,63 @@
 				}
 			});
 			
+			var frmUploadMaster = $("#frmUploadMaster").submit(function(e) {
+				e.preventDefault();
+				// $('#submit_ceklok').hide();
+			}).validate({
+				rules: {
+					filename: "required"
+				},
+				messages: {
+					filename: "Pilih file yang akan di-upload!"
+				},
+				submitHandler: function(form) { 
+					$('#submitUpload').hide();
+					let notifyprogress = $.notify({
+						message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
+					},{
+						allow_dismiss: false,
+						type: 'danger',
+						delay: 0,
+						element: 'body',
+					});
+
+					//item
+					var fd_item = new FormData();
+					var item = $('#frmUploadItem')[0].files[0];
+					if (item != undefined) {
+						fd_item.append('filename',item);
+						fd_item.append('id_hpy_piutang_d',id_hpy_piutang_d);
+			
+						$.ajax( {
+							url: "../../models/hpy_piutang_d/hpy_piutang_d_fn_upload.php",
+							type: 'POST',
+							dataType: 'json',
+							data: fd_item,
+							contentType: false,
+							processData: false,
+							success: function ( json ) {
+								notifyprogress.close();
+
+								$.notify({
+									message: json.data.message
+								},{
+									type: json.data.type_message
+								});
+
+								$("#frmUploadItem").val('');
+								tblhpy_piutang_d.ajax.reload(null,false);
+								$('#modalUpload').modal('toggle'); 
+								$('#submitUpload').show();
+							},
+							error: function (xhr, Status, err){
+								// console.log('x');
+							}
+						} );
+					}
+				}
+			});
+
 		} );// end of document.ready
 	
 	</script>
