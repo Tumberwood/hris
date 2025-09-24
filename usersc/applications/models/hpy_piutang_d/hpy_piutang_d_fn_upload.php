@@ -53,6 +53,7 @@
 					$tanggal = $tanggal_excel->format('Y-m-d'); //format jadi 2023-09-12
 					$nominal  = strtoupper($sheetData[$i][2]);
 					$komponen   = strtoupper($sheetData[$i][3]);
+					$penambah_pengurang   = ucwords($sheetData[$i][4]);
 					
 					$qs_hemxxmh = $db
 						->query('select', 'hemxxmh' )
