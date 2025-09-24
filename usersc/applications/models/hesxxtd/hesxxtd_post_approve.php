@@ -113,6 +113,7 @@
 				'hemjbmh.rekening_nama as rekening_nama',
 				'hemjbmh.bpjskes_no as bpjskes_no',
 				'hemjbmh.bpjstk_no as bpjstk_no',
+				'hemjbmh.id_holxxmd_2 as id_holxxmd_2',
 				'hemjbmh.grup_hk as grup_hk',
 				'hemjbmh.jumlah_grup as jumlah_grup'
 			] )
