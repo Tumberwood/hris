@@ -251,12 +251,14 @@
 			->exec('INSERT INTO hemdcmh
 					(
 						id_hemxxmh,
+						id_gtxpkmh,
 						ktp_no,
 						no_bpjs_tk,
 						no_bpjs_kes
 					)
 					SELECT
 					' . $id_insert_hemx . ',
+						a.id_gtxpkmh,
 						a.ktp_no,
 						a.no_bpjs_tk,
 						a.no_bpjs_kes

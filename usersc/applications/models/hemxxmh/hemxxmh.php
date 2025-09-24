@@ -98,6 +98,8 @@
 			Field::inst( 'hemdcmh.npwp_alamat' ),
 			Field::inst( 'hemdcmh.npwp_no' ),
 			Field::inst( 'hemdcmh.ktp_no' ),
+			Field::inst( 'hemdcmh.ktp_alamat' ),
+			Field::inst( 'hemdcmh.alamat' ),
 			Field::inst( 'hemdcmh.no_bpjs_tk' ),
 			Field::inst( 'hemdcmh.no_bpjs_kes' ),
 			Field::inst( 'hosxxmh.nama' ),
@@ -107,6 +109,20 @@
 			Field::inst( 'heyxxmd.nama' ),
 			Field::inst( 'hesxxmh.nama' ),
 			Field::inst( 'holxxmd_2.nama' ),
+
+			Field::inst( 'hemxxmh.gender' ),
+			Field::inst( 'hemxxmh.tanggal_lahir' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y',
+					'to' =>   'Y-m-d'
+				) ),
 			// ,
 			// Field::inst( 'v_hemxxmh_htsptth.pola_shift' ),
 			// Field::inst( 'v_hemxxmh_htsptth.grup_ke' )

@@ -140,6 +140,22 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
+								<editor-field name="hemxxmh.gender"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.tanggal_lahir"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.alamat"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.ktp_alamat"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
 								<editor-field name="hemxxmh.keterangan"></editor-field>
 							</div>
 							<div class="col-lg-6">
@@ -842,6 +858,35 @@
 						name: "hemdcmh.npwp_alamat",
 						type: "textarea"
 					},
+					{
+						label: "Gender <sup class='text-danger'>*<sup>",
+						name: "hemxxmh.gender",
+						type: "select2",
+						options: [
+							{ "label": "Laki-laki", "value": "Laki-laki" },
+							{ "label": "Perempuan", "value": "Perempuan" },
+						]
+					},
+					{
+						label: "Tanggal Lahir  <sup class='text-danger'>*<sup>",
+						name: "hemxxmh.tanggal_lahir",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},
+					{
+						label: "Alamat Domisili" ,
+						name: "hemdcmh.alamat",
+						type: "textarea"
+					},
+					{
+						label: "Alamat KTP " ,
+						name: "hemdcmh.ktp_alamat",
+						type: "textarea"
+					},
 				]
 			} );
 			
@@ -902,6 +947,16 @@
 			
 			edthemxxmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
+					gender = edthemxxmh.field('hemxxmh.gender').val();
+					if(!gender || gender == ''){
+						edthemxxmh.field('hemxxmh.gender').error( 'Wajib diisi!' );
+					}
+
+					tanggal_lahir = edthemxxmh.field('hemxxmh.tanggal_lahir').val();
+					if(!tanggal_lahir || tanggal_lahir == ''){
+						edthemxxmh.field('hemxxmh.tanggal_lahir').error( 'Wajib diisi!' );
+					}
+					
 					// BEGIN of validasi hemxxmh.kode 
 					kode = edthemxxmh.field('hemxxmh.kode').val();
 					if(!kode || kode == ''){
