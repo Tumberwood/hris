@@ -59,7 +59,7 @@
 				LEFT JOIN hemxxmh b ON b.id = a.id_hemxxmh
 				WHERE a.tanggal BETWEEN :start_date AND :end_date
 				AND a.is_active = 1 AND a.id_hemxxmh = :id_hemxxmh
-				AND a.id_id_htlxxmh = 18 -- SDL , S3
+				AND a.id_htlxxmh = 18 -- SDL , S3
 				AND a.jenis = 1
 				ORDER BY a.id_hemxxmh, a.tanggal;
 	
