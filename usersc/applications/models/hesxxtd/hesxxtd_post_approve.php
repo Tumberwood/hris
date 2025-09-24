@@ -82,6 +82,7 @@
 				'hemxxmh.tanggal_lahir as tanggal_lahir',
 				'hemxxmh.gender as gender',
 				'hemxxmh.agama as agama',
+				'hemxxmh.is_tukar as is_tukar',
 				'hemxxmh.is_pot_makan as is_pot_makan',
 				'hemxxmh.perkawinan as perkawinan'
 			] )
