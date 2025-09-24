@@ -44,6 +44,7 @@
                                 <th>Keputusan</th>
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Selesai</th>
+                                <th>Bulan Selesai</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -494,14 +495,14 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [1,2,4,5,6,7,8,9]
+						targets: [1,2,4,5,6,7,8,9,10]
 					},
 					{
 						searchPanes:{
 							show: false,
 						},
 						targets: '_all'
-					}
+					},
 				],
 				ajax: {
 					url: "../../models/hesxxtd/hesxxtd.php",
@@ -522,6 +523,15 @@
 					{ data: "hesxxtd.keputusan" },
 					{ data: "hesxxtd.tanggal_mulai" },
 					{ data: "hesxxtd.tanggal_selesai" },
+					{ 
+						data: "hesxxtd.tanggal_selesai",
+						render: function (data, type, row) {
+							if (!data) return "";
+							let date = new Date(data);
+							if (isNaN(date)) return data; // kalau bukan tanggal valid, tampilkan apa adanya
+							return date.toLocaleString('en-US', { month: 'short', year: 'numeric' }); 
+						}
+					},
 					{ data: "hesxxtd.keterangan" }
 				],
 				buttons: [
