@@ -29,6 +29,7 @@
         ->join('hevgrmh','hevgrmh.id = hevxxmh.id_hevgrmh','LEFT' )
         ->join('hemxxmh','hemxxmh.id = hemjbmh.id_hemxxmh','LEFT' )
         ->where( 'hemxxmh.is_active', 1)
+        ->where( 'hevgrmh.id', 0, '>')
         ->group_by('hevgrmh.id')
         ->order('hevgrmh.id')
         ->exec();

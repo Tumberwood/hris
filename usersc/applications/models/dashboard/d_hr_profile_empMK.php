@@ -25,11 +25,8 @@
             'TIMESTAMPDIFF(YEAR, hemjbmh.tanggal_masuk, CURDATE()) as masakerja',
             'COUNT(*) as c_masakerja'
         ] )
-        ->where( function ( $r ) {
-            $r
-                // ->where( 'hemjbmh.tanggal_keluar', '0000-00-00', '<>')
-                ->or_where( 'hemjbmh.tanggal_keluar', NULL, '<>');
-        } )
+        ->join('hemxxmh','hemxxmh.id = hemjbmh.id_hemxxmh','LEFT' )
+        ->where( 'hemxxmh.is_active', 1)
         ->group_by('masakerja')
         ->order('masakerja')
         ->exec();
