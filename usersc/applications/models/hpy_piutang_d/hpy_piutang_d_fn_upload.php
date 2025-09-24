@@ -53,7 +53,7 @@
 					$tanggal = $tanggal_excel->format('Y-m-d'); //format jadi 2023-09-12
 					$nominal  = strtoupper($sheetData[$i][2]);
 					$komponen   = strtoupper($sheetData[$i][3]);
-					$penambah_pengurang   = ucwords($sheetData[$i][4]);
+					$plus_min   = ucwords($sheetData[$i][4]);
 					
 					$qs_hemxxmh = $db
 						->query('select', 'hemxxmh' )
@@ -85,6 +85,8 @@
 						->set('id_hpcxxmh',$id_hpcxxmh)
 						->set('nominal',$nominal)
 						->set('tanggal',$tanggal)
+						->set('plus_min',$plus_min)
+						->set('is_approve',1)
 						->exec();
 				}
 
