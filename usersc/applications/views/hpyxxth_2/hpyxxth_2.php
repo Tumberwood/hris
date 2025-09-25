@@ -105,13 +105,13 @@
 													<th>Status</th>
 													<th>Level</th>
 													<th>Gaji Pokok</th>
+													<th>TJ. Insen</th>
 													<th>TJ. Jabatan</th>
+													<th>Uniform</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
 													<th>Premi Absen</th>
-													<th>JKK</th>
-													<th>JKM</th>
 													<th>Trm JKK JKM</th>
 													<th>Lembur 1,5</th>
 													<th>Rp Lembur 1,5</th>
@@ -218,13 +218,13 @@
 													<th>Status</th>
 													<th>Level</th>
 													<th>Gaji Pokok</th>
+													<th>TJ. Insen</th>
 													<th>TJ. Jabatan</th>
+													<th>Uniform</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
 													<th>Premi Absen</th>
-													<th>JKK</th>
-													<th>JKM</th>
 													<th>Trm JKK JKM</th>
 													<th>Lembur 1,5</th>
 													<th>Rp Lembur 1,5</th>
@@ -331,13 +331,13 @@
 													<th>Status</th>
 													<th>Level</th>
 													<th>Gaji Pokok</th>
+													<th>TJ. Insen</th>
 													<th>TJ. Jabatan</th>
+													<th>Uniform</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
 													<th>Premi Absen</th>
-													<th>JKK</th>
-													<th>JKM</th>
 													<th>Trm JKK JKM</th>
 													<th>Lembur 1,5</th>
 													<th>Rp Lembur 1,5</th>
@@ -444,13 +444,13 @@
 													<th>Status</th>
 													<th>Level</th>
 													<th>Gaji Pokok</th>
+													<th>TJ. Insen</th>
 													<th>TJ. Jabatan</th>
+													<th>Uniform</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
 													<th>Premi Absen</th>
-													<th>JKK</th>
-													<th>JKM</th>
 													<th>Trm JKK JKM</th>
 													<th>Lembur 1,5</th>
 													<th>Rp Lembur 1,5</th>
@@ -557,13 +557,13 @@
 													<th>Status</th>
 													<th>Level</th>
 													<th>Gaji Pokok</th>
+													<th>TJ. Insen</th>
 													<th>TJ. Jabatan</th>
+													<th>Uniform</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
 													<th>Premi Absen</th>
-													<th>JKK</th>
-													<th>JKM</th>
 													<th>Trm JKK JKM</th>
 													<th>Lembur 1,5</th>
 													<th>Rp Lembur 1,5</th>
@@ -670,13 +670,13 @@
 													<th>Status</th>
 													<th>Level</th>
 													<th>Gaji Pokok</th>
+													<th>TJ. Insen</th>
 													<th>TJ. Jabatan</th>
+													<th>Uniform</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
 													<th>Premi Absen</th>
-													<th>JKK</th>
-													<th>JKM</th>
 													<th>Trm JKK JKM</th>
 													<th>Lembur 1,5</th>
 													<th>Rp Lembur 1,5</th>
@@ -783,13 +783,13 @@
 													<th>Status</th>
 													<th>Level</th>
 													<th>Gaji Pokok</th>
+													<th>TJ. Insen</th>
 													<th>TJ. Jabatan</th>
+													<th>Uniform</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
 													<th>Premi Absen</th>
-													<th>JKK</th>
-													<th>JKM</th>
 													<th>Trm JKK JKM</th>
 													<th>Lembur 1,5</th>
 													<th>Rp Lembur 1,5</th>
@@ -1395,7 +1395,17 @@
 						class: "text-right"
 					},
 					{ 
+						data: "0",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
 						data: "hpyemtd_2.t_jab",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "0",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
@@ -1416,16 +1426,6 @@
 					},
 					{ 
 						data: "hpyemtd_2.premi_abs",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.jkk",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -1769,7 +1769,17 @@
 						class: "text-right"
 					},
 					{ 
+						data: "0",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
 						data: "hpyemtd_2.t_jab",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "0",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
@@ -1790,16 +1800,6 @@
 					},
 					{ 
 						data: "hpyemtd_2.premi_abs",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.jkk",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -2140,7 +2140,17 @@
 						class: "text-right"
 					},
 					{ 
+						data: "0",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
 						data: "hpyemtd_2.t_jab",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "0",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
@@ -2161,16 +2171,6 @@
 					},
 					{ 
 						data: "hpyemtd_2.premi_abs",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.jkk",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -2510,7 +2510,17 @@
 						class: "text-right"
 					},
 					{ 
+						data: "0",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
 						data: "hpyemtd_2.t_jab",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "0",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
@@ -2531,16 +2541,6 @@
 					},
 					{ 
 						data: "hpyemtd_2.premi_abs",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.jkk",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -2880,7 +2880,17 @@
 						class: "text-right"
 					},
 					{ 
+						data: "0",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
 						data: "hpyemtd_2.t_jab",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "0",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
@@ -2901,16 +2911,6 @@
 					},
 					{ 
 						data: "hpyemtd_2.premi_abs",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.jkk",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -3250,7 +3250,17 @@
 						class: "text-right"
 					},
 					{ 
+						data: "0",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
 						data: "hpyemtd_2.t_jab",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "0",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
@@ -3271,16 +3281,6 @@
 					},
 					{ 
 						data: "hpyemtd_2.premi_abs",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.jkk",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -3620,7 +3620,17 @@
 						class: "text-right"
 					},
 					{ 
+						data: "0",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
 						data: "hpyemtd_2.t_jab",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "0",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
@@ -3641,16 +3651,6 @@
 					},
 					{ 
 						data: "hpyemtd_2.premi_abs",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.jkk",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
