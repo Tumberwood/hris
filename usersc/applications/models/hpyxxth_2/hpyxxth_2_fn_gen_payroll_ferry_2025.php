@@ -105,15 +105,6 @@
                     WHERE id_hpyxxth_2 = :id_hpyxxth_2
             '
         );
-        
-        //DELETE DETAIL PPh21 LAMA
-        $qd_detail_pph21 = $db
-            ->raw()
-            ->bind(':id_hpyxxth_2', $id_hpyxxth_2)
-            ->exec('DELETE FROM hppphth
-                    WHERE id_hpyxxth_2 = :id_hpyxxth_2
-            '
-        );
 
         //Pembulatan FLOOR
         // INSERT PAYROLL DETAIL
