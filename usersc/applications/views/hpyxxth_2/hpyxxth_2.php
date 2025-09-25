@@ -1394,21 +1394,35 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "0",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+						},
 						class: "text-right"
 					},
+
 					{ 
 						data: "hpyemtd_2.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "0",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+						},
 						class: "text-right"
 					},
+
 					{ 
 						data: "hpyemtd_2.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
@@ -1768,21 +1782,35 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "0",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+						},
 						class: "text-right"
 					},
+
 					{ 
 						data: "hpyemtd_2.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "0",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+						},
 						class: "text-right"
 					},
+
 					{ 
 						data: "hpyemtd_2.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
@@ -2139,21 +2167,35 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "0",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+						},
 						class: "text-right"
 					},
+
 					{ 
 						data: "hpyemtd_2.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "0",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+						},
 						class: "text-right"
 					},
+
 					{ 
 						data: "hpyemtd_2.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
@@ -2509,21 +2551,35 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "0",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+						},
 						class: "text-right"
 					},
+
 					{ 
 						data: "hpyemtd_2.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "0",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+						},
 						class: "text-right"
 					},
+
 					{ 
 						data: "hpyemtd_2.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
@@ -2879,21 +2935,35 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "0",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+						},
 						class: "text-right"
 					},
+
 					{ 
 						data: "hpyemtd_2.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "0",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+						},
 						class: "text-right"
 					},
+
 					{ 
 						data: "hpyemtd_2.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
@@ -3249,21 +3319,35 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "0",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+						},
 						class: "text-right"
 					},
+
 					{ 
 						data: "hpyemtd_2.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "0",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+						},
 						class: "text-right"
 					},
+
 					{ 
 						data: "hpyemtd_2.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
@@ -3619,21 +3703,35 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "0",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+						},
 						class: "text-right"
 					},
+
 					{ 
 						data: "hpyemtd_2.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: "0",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+						},
 						class: "text-right"
 					},
+
 					{ 
 						data: "hpyemtd_2.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
