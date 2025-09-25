@@ -1375,7 +1375,7 @@
 				order: [[ 2, "asc" ]],
 				responsive: false,
 				fixedColumns:   {
-					left: 1
+					left: 2
 				},
 				// scrollX: true,
 				columns: [
@@ -1749,7 +1749,7 @@
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
-					left: 1
+					left: 2
 				},
 				
 				columns: [
@@ -2120,7 +2120,7 @@
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
-					left: 1
+					left: 2
 				},
 				
 				columns: [
@@ -2490,7 +2490,7 @@
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
-					left: 1
+					left: 2
 				},
 				
 				columns: [
@@ -2860,7 +2860,7 @@
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
-					left: 1
+					left: 2
 				},
 				
 				columns: [
@@ -3230,7 +3230,7 @@
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
-					left: 1
+					left: 2
 				},
 				
 				columns: [
@@ -3600,7 +3600,7 @@
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
-					left: 1
+					left: 2
 				},
 				
 				columns: [
