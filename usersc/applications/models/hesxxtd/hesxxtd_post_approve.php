@@ -215,28 +215,50 @@
 				}
 			}
 
-			if ($is_per_karyawan == 1) {
-				$qi_htpr = $db
-					->raw()
-					->bind(':id_insert_hemx', $id_insert_hemx)
-					->bind(':id_hemxxmh', $id_hemxxmh)
-					->exec(' INSERT INTO htpr_hemxxmh
-							(
-								id_hemxxmh,
-								id_hpcxxmh,
-								tanggal_efektif,
-								nominal
-							)
-							SELECT
-								:id_insert_hemx,
-								a.id_hpcxxmh,
-								a.tanggal_efektif,
-								a.nominal
-							FROM htpr_hemxxmh AS a
-							WHERE a.id_hemxxmh = :id_hemxxmh
-							'
-							);
-			}
+			// if ($is_per_karyawan == 1) {
+			// 	$qi_htpr = $db
+			// 		->raw()
+			// 		->bind(':id_insert_hemx', $id_insert_hemx)
+			// 		->bind(':id_hemxxmh', $id_hemxxmh)
+			// 		->exec(' INSERT INTO htpr_hemxxmh
+			// 				(
+			// 					id_hemxxmh,
+			// 					id_hpcxxmh,
+			// 					tanggal_efektif,
+			// 					nominal
+			// 				)
+			// 				SELECT
+			// 					:id_insert_hemx,
+			// 					a.id_hpcxxmh,
+			// 					a.tanggal_efektif,
+			// 					a.nominal
+			// 				FROM htpr_hemxxmh AS a
+			// 				WHERE a.id_hemxxmh = :id_hemxxmh
+			// 				'
+			// 				);
+			// }
+			
+			$qi_htpr = $db
+				->raw()
+				->bind(':id_insert_hemx', $id_insert_hemx)
+				->bind(':id_hemxxmh', $id_hemxxmh)
+				->exec(' INSERT INTO htpr_hemxxmh
+						(
+							id_hemxxmh,
+							id_hpcxxmh,
+							tanggal_efektif,
+							nominal
+						)
+						SELECT
+							:id_insert_hemx,
+							a.id_hpcxxmh,
+							a.tanggal_efektif,
+							a.nominal
+						FROM htpr_hemxxmh AS a
+						WHERE a.id_hemxxmh = :id_hemxxmh
+						'
+				)
+			;
 			
 			$qi_hemjbmh = $db
 			->query('insert', 'hemjbmh')
