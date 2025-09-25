@@ -132,6 +132,7 @@
 			if ($keputusan == 'Rekontrak') {
 				$id_hesxxmh = 2;
 				$is_kompensasi = 1;
+				$is_per_karyawan = 1;
 			} else if ($keputusan == 'Kontrak') {
 				if ($rs_flag_status['id_hesxxmh'] == 3) {
 					$flag_1hari = 1;

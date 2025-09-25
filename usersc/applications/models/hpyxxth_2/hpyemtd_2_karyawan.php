@@ -25,6 +25,7 @@
 			->debug(true)
 			->fields(
 				Field::inst( 'hpyemtd_2.id' ),
+				Field::inst( 'hpyemtd_2.jam_lembur_final' ),
 				Field::inst( 'hpyemtd_2.id_hpyxxth_2' ),
 				Field::inst( 'hpyemtd_2.id_hemxxmh' ),
 				Field::inst( 'hpyemtd_2.id_heyxxmh' ),
@@ -51,7 +52,6 @@
 				Field::inst( 'hpyemtd_2.rp_lembur2' ),
 				Field::inst( 'hpyemtd_2.rp_lembur3' ),
 				Field::inst( 'hpyemtd_2.jam_lembur' ),
-				Field::inst( 'hpyemtd_2.jam_lembur_final' ),
 				Field::inst( 'hpyemtd_2.lemburbersih' ),
 				Field::inst( 'hpyemtd_2.pot_makan' ),
 				Field::inst( 'hpyemtd_2.var_cost' ), 
@@ -99,7 +99,10 @@
 			->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
 			->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
 			->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
-			->where('hpyemtd_2.id_hpyxxth_2',$_POST['id_hpyxxth_2']);
+			->where('hpyemtd_2.id_hpyxxth_2',$_POST['id_hpyxxth_2'])
+			->where('heyxxmd.id', 3)
+			->where('hesxxmh.id', 1) //tetap
+			;
 		
 		// do not erase
 		// function show / hide inactive document

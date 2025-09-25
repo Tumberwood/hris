@@ -7,15 +7,15 @@
 ?>
 
 <?php
-	$nama_tabel       = 'hpyxxth';
+	$nama_tabel       = 'hpyxxth_2';
     $nama_tabels_d 	= [];
-    $nama_tabels_d[0] = 'hpyemtd';
-    $nama_tabels_d[1] = 'hpyemtd_kbm_reg';
-    $nama_tabels_d[2] = 'hpyemtd_karyawan';
-    $nama_tabels_d[3] = 'hpyemtd_kmj';
-    $nama_tabels_d[4] = 'hpyemtd_freelance';
-    $nama_tabels_d[5] = 'hpyemtd_kbm_tr';
-    $nama_tabels_d[6] = 'hpyemtd_kontrak';
+    $nama_tabels_d[0] = 'hpyemtd_2';
+    $nama_tabels_d[1] = 'hpyemtd_2_kbm_reg';
+    $nama_tabels_d[2] = 'hpyemtd_2_karyawan';
+    $nama_tabels_d[3] = 'hpyemtd_2_kmj';
+    $nama_tabels_d[4] = 'hpyemtd_2_freelance';
+    $nama_tabels_d[5] = 'hpyemtd_2_kbm_tr';
+    $nama_tabels_d[6] = 'hpyemtd_2_kontrak';
 ?>
 
 <!-- begin content here -->
@@ -33,7 +33,7 @@
 					</ul>
 				</div>
 				<div class="table-responsive">
-					<table id="tblhpyxxth" class="table table-striped table-bordered table-hover nowrap" width="100%">
+					<table id="tblhpyxxth_2" class="table table-striped table-bordered table-hover nowrap" width="100%">
                         <thead>
                             <tr>
 								<th>ID</th>
@@ -79,24 +79,24 @@
 							</div>
 						</div>
 						<ul class="nav nav-tabs" role="tablist">
-							<li><a class="nav-link active" data-toggle="tab" href="#tabhpyemtd"> All</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_reg"> KBM Reguler</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_tr"> KBM Pelatihan</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_karyawan"> Tetap</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kontrak"> Kontrak</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kmj"> KMJ</a></li>
-							<li id="tab_freelance"><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_freelance"> Freelance</a></li>
+							<li><a class="nav-link active" data-toggle="tab" href="#tabhpyemtd_2"> All</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_2_kbm_reg"> KBM Reguler</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_2_kbm_tr"> KBM Pelatihan</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_2_karyawan"> Tetap</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_2_kontrak"> Kontrak</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_2_kmj"> KMJ</a></li>
+							<li id="tab_freelance"><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_2_freelance"> Freelance</a></li>
 						</ul>
 						<div class="tab-content">
-							<div role="tabpanel" id="tabhpyemtd" class="tab-pane active">
+							<div role="tabpanel" id="tabhpyemtd_2" class="tab-pane active">
 								<div class="panel-body">
 									<div class="table-responsive">
-										<table id="tblhpyemtd" class="table table-striped table-bordered table-hover nowrap" width="100%">
+										<table id="tblhpyemtd_2" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
 												<tr>
 													<th>ID</th>
-													<th>id_hpyxxth</th>
-													<th>NIK</th>
+													<th>id_hpyxxth_2</th>
+													<th>NRP</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -201,15 +201,15 @@
 									</div> <!-- end of table -->
 								</div>
 							</div>
-							<div role="tabpanel" id="tabhpyemtd_kbm_reg" class="tab-pane">
+							<div role="tabpanel" id="tabhpyemtd_2_kbm_reg" class="tab-pane">
 								<div class="panel-body">
 									<div class="table-responsive">
-										<table id="tblhpyemtd_kbm_reg" class="table table-striped table-bordered table-hover nowrap" width="100%">
+										<table id="tblhpyemtd_2_kbm_reg" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
 												<tr>
 													<th>ID</th>
-													<th>id_hpyxxth</th>
-													<th>NIK</th>
+													<th>id_hpyxxth_2</th>
+													<th>NRP</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -314,15 +314,15 @@
 									</div> <!-- end of table -->
 								</div>
 							</div>
-							<div role="tabpanel" id="tabhpyemtd_kbm_tr" class="tab-pane">
+							<div role="tabpanel" id="tabhpyemtd_2_kbm_tr" class="tab-pane">
 								<div class="panel-body">
 									<div class="table-responsive">
-										<table id="tblhpyemtd_kbm_tr" class="table table-striped table-bordered table-hover nowrap" width="100%">
+										<table id="tblhpyemtd_2_kbm_tr" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
 												<tr>
 													<th>ID</th>
-													<th>id_hpyxxth</th>
-													<th>NIK</th>
+													<th>id_hpyxxth_2</th>
+													<th>NRP</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -427,15 +427,15 @@
 									</div> <!-- end of table -->
 								</div>
 							</div>
-							<div role="tabpanel" id="tabhpyemtd_karyawan" class="tab-pane">
+							<div role="tabpanel" id="tabhpyemtd_2_karyawan" class="tab-pane">
 								<div class="panel-body">
 									<div class="table-responsive">
-										<table id="tblhpyemtd_karyawan" class="table table-striped table-bordered table-hover nowrap" width="100%">
+										<table id="tblhpyemtd_2_karyawan" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
 												<tr>
 													<th>ID</th>
-													<th>id_hpyxxth</th>
-													<th>NIK</th>
+													<th>id_hpyxxth_2</th>
+													<th>NRP</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -540,15 +540,15 @@
 									</div> <!-- end of table -->
 								</div>
 							</div>
-							<div role="tabpanel" id="tabhpyemtd_kontrak" class="tab-pane">
+							<div role="tabpanel" id="tabhpyemtd_2_kontrak" class="tab-pane">
 								<div class="panel-body">
 									<div class="table-responsive">
-										<table id="tblhpyemtd_kontrak" class="table table-striped table-bordered table-hover nowrap" width="100%">
+										<table id="tblhpyemtd_2_kontrak" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
 												<tr>
 													<th>ID</th>
-													<th>id_hpyxxth</th>
-													<th>NIK</th>
+													<th>id_hpyxxth_2</th>
+													<th>NRP</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -653,15 +653,15 @@
 									</div> <!-- end of table -->
 								</div>
 							</div>
-							<div role="tabpanel" id="tabhpyemtd_kmj" class="tab-pane">
+							<div role="tabpanel" id="tabhpyemtd_2_kmj" class="tab-pane">
 								<div class="panel-body">
 									<div class="table-responsive">
-										<table id="tblhpyemtd_kmj" class="table table-striped table-bordered table-hover nowrap" width="100%">
+										<table id="tblhpyemtd_2_kmj" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
 												<tr>
 													<th>ID</th>
-													<th>id_hpyxxth</th>
-													<th>NIK</th>
+													<th>id_hpyxxth_2</th>
+													<th>NRP</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -766,15 +766,15 @@
 									</div> <!-- end of table -->
 								</div>
 							</div>
-							<div role="tabpanel" id="tabhpyemtd_freelance" class="tab-pane">
+							<div role="tabpanel" id="tabhpyemtd_2_freelance" class="tab-pane">
 								<div class="panel-body">
 									<div class="table-responsive">
-										<table id="tblhpyemtd_freelance" class="table table-striped table-bordered table-hover nowrap" width="100%">
+										<table id="tblhpyemtd_2_freelance" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
 												<tr>
 													<th>ID</th>
-													<th>id_hpyxxth</th>
-													<th>NIK</th>
+													<th>id_hpyxxth_2</th>
+													<th>NRP</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -894,13 +894,13 @@
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_datatables_load.php'; ?>
 <script src="<?=$us_url_root?>usersc/helpers/hakaksescrud_hd_fn.js"></script>
 
-<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/hpyxxth/fn/hpyxxth_fn.php'; ?>
+<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/hpyxxth_2/fn/hpyxxth_2_fn.php'; ?>
 
 <!-- BEGIN datatables here -->
 <script type="text/javascript">
 		// ------------- default variable, do not erase
-		var edthpyxxth, tblhpyxxth, show_inactive_status_hpyxxth = 0, id_hpyxxth;
-        var edthpyemtd_kbm_reg, tblhpyemtd_kbm_reg, show_inactive_status_hpyemtd = 0, id_hpyemtd;
+		var edthpyxxth_2, tblhpyxxth_2, show_inactive_status_hpyxxth_2 = 0, id_hpyxxth_2;
+        var edthpyemtd_2_kbm_reg, tblhpyemtd_2_kbm_reg, show_inactive_status_hpyemtd_2 = 0, id_hpyemtd_2;
 		// ------------- end of default variable
 		var id_heyxxmh_old = 0;
 		
@@ -914,15 +914,15 @@
 			});
 			
 			//start datatables editor
-			edthpyxxth = new $.fn.dataTable.Editor( {
+			edthpyxxth_2 = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyxxth.php",
+					url: "../../models/hpyxxth_2/hpyxxth_2.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyxxth = show_inactive_status_hpyxxth;
+						d.show_inactive_status_hpyxxth_2 = show_inactive_status_hpyxxth_2;
 					}
 				},
-				table: "#tblhpyxxth",
+				table: "#tblhpyxxth_2",
 				fields: [ 
 					{
 						label: "start_on",
@@ -935,17 +935,17 @@
 					},	{
 						label: "nama_tabel",
 						name: "nama_tabel",
-						def: "hpyxxth",
+						def: "hpyxxth_2",
 						type: "hidden"
 					},	{
 						label: "Active Status",
-						name: "hpyxxth.is_active",
+						name: "hpyxxth_2.is_active",
                         type: "hidden",
 						def: 1
 					},	
 					{
 						label: "Tanggal Awal <sup class='text-danger'>*<sup>",
-						name: "hpyxxth.tanggal_awal",
+						name: "hpyxxth_2.tanggal_awal",
 						type: "datetime",
 						def: function () { 
 							return new Date(); 
@@ -958,7 +958,7 @@
 					},	
 					{
 						label: "Tanggal Akhir <sup class='text-danger'>*<sup>",
-						name: "hpyxxth.tanggal_akhir",
+						name: "hpyxxth_2.tanggal_akhir",
 						type: "datetime",
 						def: function () { 
 							return new Date(); 
@@ -971,98 +971,98 @@
 					},
 					{
 						label: "Keterangan",
-						name: "hpyxxth.keterangan",
+						name: "hpyxxth_2.keterangan",
 						type: "textarea"
 					}
 				]
 			} );
 			
-			edthpyxxth.on( 'preOpen', function( e, mode, action ) {
+			edthpyxxth_2.on( 'preOpen', function( e, mode, action ) {
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyxxth.field('start_on').val(start_on);
+				edthpyxxth_2.field('start_on').val(start_on);
 
 				if(action == 'create'){
-					tblhpyxxth.rows().deselect();
+					tblhpyxxth_2.rows().deselect();
 				}
 			});
 
-            edthpyxxth.on("open", function (e, mode, action) {
+            edthpyxxth_2.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
 			
-			edthpyxxth.on( 'preSubmit', function (e, data, action) {
+			edthpyxxth_2.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					// BEGIN of validasi hpyxxth.tanggal_awal
-					if ( ! edthpyxxth.field('hpyxxth.tanggal_awal').isMultiValue() ) {
-						tanggal_awal = edthpyxxth.field('hpyxxth.tanggal_awal').val();
+					// BEGIN of validasi hpyxxth_2.tanggal_awal
+					if ( ! edthpyxxth_2.field('hpyxxth_2.tanggal_awal').isMultiValue() ) {
+						tanggal_awal = edthpyxxth_2.field('hpyxxth_2.tanggal_awal').val();
 						if(!tanggal_awal || tanggal_awal == ''){
-							edthpyxxth.field('hpyxxth.tanggal_awal').error( 'Wajib diisi!' );
+							edthpyxxth_2.field('hpyxxth_2.tanggal_awal').error( 'Wajib diisi!' );
 						}else{
 							tanggal_awal_ymd = moment(tanggal_awal).format('YYYY-MM-DD');
 						}
 					}
-					// END of validasi hpyxxth.tanggal_awal
+					// END of validasi hpyxxth_2.tanggal_awal
 
-					// BEGIN of validasi hpyxxth.tanggal_akhir
-					if ( ! edthpyxxth.field('hpyxxth.tanggal_akhir').isMultiValue() ) {
-						tanggal_akhir = edthpyxxth.field('hpyxxth.tanggal_akhir').val();
+					// BEGIN of validasi hpyxxth_2.tanggal_akhir
+					if ( ! edthpyxxth_2.field('hpyxxth_2.tanggal_akhir').isMultiValue() ) {
+						tanggal_akhir = edthpyxxth_2.field('hpyxxth_2.tanggal_akhir').val();
 						if(!tanggal_akhir || tanggal_akhir == ''){
-							edthpyxxth.field('hpyxxth.tanggal_akhir').error( 'Wajib diisi!' );
+							edthpyxxth_2.field('hpyxxth_2.tanggal_akhir').error( 'Wajib diisi!' );
 						}else{
 							tanggal_akhir_ymd = moment(tanggal_akhir).format('YYYY-MM-DD');
 						}
 					}
-					// END of validasi hpyxxth.tanggal_akhir
+					// END of validasi hpyxxth_2.tanggal_akhir
 
 				}
 				
-				if ( edthpyxxth.inError() ) {
+				if ( edthpyxxth_2.inError() ) {
 					return false;
 				}
 			});
 
-			edthpyxxth.on('initSubmit', function(e, action) {
+			edthpyxxth_2.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyxxth.field('finish_on').val(finish_on);
+				edthpyxxth_2.field('finish_on').val(finish_on);
 			});
 			
-			edthpyxxth.on( 'postSubmit', function (e, json, data, action, xhr) {
+			edthpyxxth_2.on( 'postSubmit', function (e, json, data, action, xhr) {
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
 			} );
 			
 			//start datatables
-			tblhpyxxth = $('#tblhpyxxth').DataTable( {
+			tblhpyxxth_2 = $('#tblhpyxxth_2').DataTable( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyxxth.php",
+					url: "../../models/hpyxxth_2/hpyxxth_2.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyxxth = show_inactive_status_hpyxxth;
+						d.show_inactive_status_hpyxxth_2 = show_inactive_status_hpyxxth_2;
 					}
 				},
 				order: [[ 1, "desc" ]],
 				columns: [
-					{ data: "hpyxxth.id",visible:false },
-					{ data: "hpyxxth.tanggal_awal",visible:false },
+					{ data: "hpyxxth_2.id",visible:false },
+					{ data: "hpyxxth_2.tanggal_awal",visible:false },
 					{ 
 						data: null ,
 						render: function (data, type, row) {
-							return row.hpyxxth.tanggal_awal + " - " + row.hpyxxth.tanggal_akhir;
+							return row.hpyxxth_2.tanggal_awal + " - " + row.hpyxxth_2.tanggal_akhir;
 					   	}
 					},
 					{ data: "heyxxmh.nama",visible:false },
-					{ data: "hpyxxth.keterangan" },
-					{ data: "hpyxxth.generated_on" }
+					{ data: "hpyxxth_2.keterangan" },
+					{ data: "hpyxxth_2.generated_on" }
 				],
 				buttons: [
 
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_hpyxxth';
-						$table       = 'tblhpyxxth';
-						$edt         = 'edthpyxxth';
-						$show_status = '_hpyxxth';
+						$id_table    = 'id_hpyxxth_2';
+						$table       = 'tblhpyxxth_2';
+						$edt         = 'edthpyxxth_2';
+						$show_status = '_hpyxxth_2';
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
@@ -1089,11 +1089,11 @@
 					// 		});
 
 					// 		$.ajax( {
-					// 			url: "../../models/hpyxxth/hpyxxth_fn_gen_payroll_ferry.php",
+					// 			url: "../../models/hpyxxth_2/hpyxxth_2_fn_gen_payroll_ferry.php",
 					// 			dataType: 'json',
 					// 			type: 'POST',
 					// 			data: {
-					// 				id_hpyxxth		: id_hpyxxth,
+					// 				id_hpyxxth_2		: id_hpyxxth_2,
 					// 				tanggal_awal	: tanggal_awal_select,
 					// 				tanggal_akhir	: tanggal_akhir_select,
 					// 				timestamp		: timestamp
@@ -1106,7 +1106,7 @@
 					// 					type: json.data.type_message
 					// 				});
 
-					// 				tblhpyxxth.ajax.reload(function ( json ) {
+					// 				tblhpyxxth_2.ajax.reload(function ( json ) {
 					// 					notifyprogress.close();
 					// 				}, false);
 					// 			}
@@ -1132,11 +1132,11 @@
 							});
 
 							$.ajax( {
-								url: "../../models/hpyxxth/hpyxxth_fn_gen_payroll_ferry_2025.php",
+								url: "../../models/hpyxxth_2/hpyxxth_2_fn_gen_payroll_ferry_2025.php",
 								dataType: 'json',
 								type: 'POST',
 								data: {
-									id_hpyxxth		: id_hpyxxth,
+									id_hpyxxth_2		: id_hpyxxth_2,
 									tanggal_awal	: tanggal_awal_select,
 									tanggal_akhir	: tanggal_akhir_select,
 									timestamp		: timestamp
@@ -1149,7 +1149,7 @@
 										type: json.data.type_message
 									});
 
-									tblhpyxxth.ajax.reload(function ( json ) {
+									tblhpyxxth_2.ajax.reload(function ( json ) {
 										notifyprogress.close();
 									}, false);
 								}
@@ -1175,11 +1175,11 @@
 					// 		});
 
 					// 		$.ajax( {
-					// 			url: "../../models/hpyxxth/hpyxxth_fn_gen_pph21.php",
+					// 			url: "../../models/hpyxxth_2/hpyxxth_2_fn_gen_pph21.php",
 					// 			dataType: 'json',
 					// 			type: 'POST',
 					// 			data: {
-					// 				id_hpyxxth		: id_hpyxxth,
+					// 				id_hpyxxth_2		: id_hpyxxth_2,
 					// 				tanggal_awal	: tanggal_awal_select,
 					// 				tanggal_akhir	: tanggal_akhir_select,
 					// 				timestamp		: timestamp
@@ -1192,7 +1192,7 @@
 					// 					type: json.data.type_message
 					// 				});
 
-					// 				tblhpyxxth.ajax.reload(function ( json ) {
+					// 				tblhpyxxth_2.ajax.reload(function ( json ) {
 					// 					notifyprogress.close();
 					// 				}, false);
 					// 			}
@@ -1201,59 +1201,59 @@
 					// }
 				],
 				rowCallback: function( row, data, index ) {
-					if ( data.hpyxxth.is_active == 0 ) {
+					if ( data.hpyxxth_2.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
 				}
 			} );
 			
-			tblhpyxxth.on( 'init', function () {
+			tblhpyxxth_2.on( 'init', function () {
 				// atur hak akses
-				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
-				CekInitHeaderHD(tblhpyxxth, tbl_details);
-				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
-				tblhpyxxth.button( 'btnGeneratePresensiNew:name' ).disable();
-				tblhpyxxth.button( 'btnGenPPh21:name' ).disable();
+				tbl_details = [tblhpyemtd_2, tblhpyemtd_2_kbm_reg, tblhpyemtd_2_karyawan, tblhpyemtd_2_kontrak, tblhpyemtd_2_kmj, tblhpyemtd_2_freelance, tblhpyemtd_2_kbm_tr];
+				CekInitHeaderHD(tblhpyxxth_2, tbl_details);
+				tblhpyxxth_2.button( 'btnGeneratePresensi:name' ).disable();
+				tblhpyxxth_2.button( 'btnGeneratePresensiNew:name' ).disable();
+				tblhpyxxth_2.button( 'btnGenPPh21:name' ).disable();
 				
-				tblhpyemtd_kbm_reg.button( 'btnPrint:name' ).disable();
-				tblhpyemtd_karyawan.button( 'btnPrint:name' ).disable();
-				tblhpyemtd_kontrak.button( 'btnPrint:name' ).disable();
-				tblhpyemtd_kmj.button( 'btnPrint:name' ).disable();
-				tblhpyemtd_freelance.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_2_kbm_reg.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_2_karyawan.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_2_kontrak.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_2_kmj.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_2_freelance.button( 'btnPrint:name' ).disable();
 
-				tblhpyemtd.button( 'btnPrintSingle:name' ).disable();
+				tblhpyemtd_2.button( 'btnPrintSingle:name' ).disable();
 			} );
 			
-			tblhpyxxth.on( 'select', function( e, dt, type, indexes ) {
-				data_hpyxxth = tblhpyxxth.row( { selected: true } ).data().hpyxxth;
-				id_hpyxxth  = data_hpyxxth.id;
-				id_transaksi_h   = id_hpyxxth; // dipakai untuk general
-				is_approve       = data_hpyxxth.is_approve;
-				is_nextprocess   = data_hpyxxth.is_nextprocess;
-				is_jurnal        = data_hpyxxth.is_jurnal;
-				is_active        = data_hpyxxth.is_active;
-				tanggal_awal_select        = data_hpyxxth.tanggal_awal;
-				tanggal_akhir_select        = data_hpyxxth.tanggal_akhir;
-				id_heyxxmh_select        = data_hpyxxth.id_heyxxmh;
+			tblhpyxxth_2.on( 'select', function( e, dt, type, indexes ) {
+				data_hpyxxth_2 = tblhpyxxth_2.row( { selected: true } ).data().hpyxxth_2;
+				id_hpyxxth_2  = data_hpyxxth_2.id;
+				id_transaksi_h   = id_hpyxxth_2; // dipakai untuk general
+				is_approve       = data_hpyxxth_2.is_approve;
+				is_nextprocess   = data_hpyxxth_2.is_nextprocess;
+				is_jurnal        = data_hpyxxth_2.is_jurnal;
+				is_active        = data_hpyxxth_2.is_active;
+				tanggal_awal_select        = data_hpyxxth_2.tanggal_awal;
+				tanggal_akhir_select        = data_hpyxxth_2.tanggal_akhir;
+				id_heyxxmh_select        = data_hpyxxth_2.id_heyxxmh;
 
-				id_heyxxmh_old = data_hpyxxth.id_heyxxmh;
+				id_heyxxmh_old = data_hpyxxth_2.id_heyxxmh;
 				
 				// atur hak akses
-				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
-				CekSelectHeaderHD(tblhpyxxth, tbl_details);
-				tblhpyxxth.button( 'btnGeneratePresensi:name' ).enable();
-				tblhpyxxth.button( 'btnGeneratePresensiNew:name' ).enable();
-				tblhpyxxth.button( 'btnGenPPh21:name' ).enable();
-				tblhpyemtd_kbm_reg.button( 'btnPrint:name' ).enable();
-				tblhpyemtd_karyawan.button( 'btnPrint:name' ).enable();
-				tblhpyemtd_kontrak.button( 'btnPrint:name' ).enable();
-				tblhpyemtd_kmj.button( 'btnPrint:name' ).enable();
-				tblhpyemtd_freelance.button( 'btnPrint:name' ).enable();
+				tbl_details = [tblhpyemtd_2, tblhpyemtd_2_kbm_reg, tblhpyemtd_2_karyawan, tblhpyemtd_2_kontrak, tblhpyemtd_2_kmj, tblhpyemtd_2_freelance, tblhpyemtd_2_kbm_tr];
+				CekSelectHeaderHD(tblhpyxxth_2, tbl_details);
+				tblhpyxxth_2.button( 'btnGeneratePresensi:name' ).enable();
+				tblhpyxxth_2.button( 'btnGeneratePresensiNew:name' ).enable();
+				tblhpyxxth_2.button( 'btnGenPPh21:name' ).enable();
+				tblhpyemtd_2_kbm_reg.button( 'btnPrint:name' ).enable();
+				tblhpyemtd_2_karyawan.button( 'btnPrint:name' ).enable();
+				tblhpyemtd_2_kontrak.button( 'btnPrint:name' ).enable();
+				tblhpyemtd_2_kmj.button( 'btnPrint:name' ).enable();
+				tblhpyemtd_2_freelance.button( 'btnPrint:name' ).enable();
 			} );
 			
-			tblhpyxxth.on( 'deselect', function () {
+			tblhpyxxth_2.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
-				id_hpyxxth = 0;
+				id_hpyxxth_2 = 0;
 				id_heyxxmh_old = 0;
 				id_heyxxmh = 0
 
@@ -1262,33 +1262,33 @@
 				id_heyxxmh_select = 0;
 
 				// atur hak akses
-				tbl_details = [tblhpyemtd, tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
-				CekDeselectHeaderHD(tblhpyxxth, tbl_details);
-				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
-				tblhpyxxth.button( 'btnGeneratePresensiNew:name' ).disable();
-				tblhpyxxth.button( 'btnGenPPh21:name' ).disable();
-				tblhpyemtd_kbm_reg.button( 'btnPrint:name' ).disable();
-				tblhpyemtd_karyawan.button( 'btnPrint:name' ).disable();
-				tblhpyemtd_kontrak.button( 'btnPrint:name' ).disable();
-				tblhpyemtd_kmj.button( 'btnPrint:name' ).disable();
-				tblhpyemtd_freelance.button( 'btnPrint:name' ).disable();
+				tbl_details = [tblhpyemtd_2, tblhpyemtd_2_kbm_reg, tblhpyemtd_2_karyawan, tblhpyemtd_2_kontrak, tblhpyemtd_2_kmj, tblhpyemtd_2_freelance, tblhpyemtd_2_kbm_tr];
+				CekDeselectHeaderHD(tblhpyxxth_2, tbl_details);
+				tblhpyxxth_2.button( 'btnGeneratePresensi:name' ).disable();
+				tblhpyxxth_2.button( 'btnGeneratePresensiNew:name' ).disable();
+				tblhpyxxth_2.button( 'btnGenPPh21:name' ).disable();
+				tblhpyemtd_2_kbm_reg.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_2_karyawan.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_2_kontrak.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_2_kmj.button( 'btnPrint:name' ).disable();
+				tblhpyemtd_2_freelance.button( 'btnPrint:name' ).disable();
 
-				tblhpyemtd.button( 'btnPrintSingle:name' ).disable();
+				tblhpyemtd_2.button( 'btnPrintSingle:name' ).disable();
 			} );
 			
 // --------- start _detail --------------- //
 
 			//start datatables editor
-			edthpyemtd = new $.fn.dataTable.Editor( {
+			edthpyemtd_2 = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd.php",
+					url: "../../models/hpyxxth_2/hpyemtd_2.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
-						d.id_hpyxxth = id_hpyxxth;
+						d.show_inactive_status_hpyemtd_2 = show_inactive_status_hpyemtd_2;
+						d.id_hpyxxth_2 = id_hpyxxth_2;
 					}
 				},
-				table: "#tblhpyemtd",
+				table: "#tblhpyemtd_2",
 				formOptions: {
 					main: {
 						focus: 3
@@ -1306,70 +1306,70 @@
 					},	{
 						label: "nama_tabel",
 						name: "nama_tabel",
-						def: "hpyemtd",
+						def: "hpyemtd_2",
 						type: "hidden"
 					},	{
-						label: "id_hpyxxth",
-						name: "hpyemtd.id_hpyxxth",
+						label: "id_hpyxxth_2",
+						name: "hpyemtd_2.id_hpyxxth_2",
 						type: "hidden"
 					},	{
 						label: "Active Status",
-						name: "hpyemtd.is_active",
+						name: "hpyemtd_2.is_active",
                         type: "hidden",
 						def: 1
 					}, 	{
 						label: "Keterangan",
-						name: "hpyemtd.keterangan",
+						name: "hpyemtd_2.keterangan",
 						type: "textarea"
 					}
 				]
 			} );
 			
-			edthpyemtd.on( 'preOpen', function( e, mode, action ) {
-				edthpyemtd.field('hpyemtd.id_hpyxxth').val(id_hpyxxth);
+			edthpyemtd_2.on( 'preOpen', function( e, mode, action ) {
+				edthpyemtd_2.field('hpyemtd_2.id_hpyxxth_2').val(id_hpyxxth_2);
 				
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyemtd.field('start_on').val(start_on);
+				edthpyemtd_2.field('start_on').val(start_on);
 				
 				if(action == 'create'){
-					tblhpyemtd.rows().deselect();
+					tblhpyemtd_2.rows().deselect();
 				}
 			});
 
-            edthpyemtd.on("open", function (e, mode, action) {
+            edthpyemtd_2.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
 			
-			edthpyemtd.on( 'preSubmit', function (e, data, action) {
+			edthpyemtd_2.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					
 				}
 				
-				if ( edthpyemtd.inError() ) {
+				if ( edthpyemtd_2.inError() ) {
 					return false;
 				}
 			});
 
-			edthpyemtd.on('initSubmit', function(e, action) {
+			edthpyemtd_2.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyemtd.field('finish_on').val(finish_on);
+				edthpyemtd_2.field('finish_on').val(finish_on);
 			});
 
 			
-			edthpyemtd.on( 'postSubmit', function (e, json, data, action, xhr) {
+			edthpyemtd_2.on( 'postSubmit', function (e, json, data, action, xhr) {
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
 			} );
 			
 			//start datatables
-			tblhpyemtd = $('#tblhpyemtd').DataTable( {
+			tblhpyemtd_2 = $('#tblhpyemtd_2').DataTable( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd.php",
+					url: "../../models/hpyxxth_2/hpyemtd_2.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
-						d.id_hpyxxth = id_hpyxxth;
+						d.show_inactive_status_hpyemtd_2 = show_inactive_status_hpyemtd_2;
+						d.id_hpyxxth_2 = id_hpyxxth_2;
 					}
 				},
 				order: [[ 2, "asc" ]],
@@ -1379,8 +1379,8 @@
 				},
 				// scrollX: true,
 				columns: [
-					{ data: "hpyemtd.id",visible:false },
-					{ data: "hpyemtd.id_hpyxxth",visible:false },
+					{ data: "hpyemtd_2.id",visible:false },
+					{ data: "hpyemtd_2.id_hpyxxth_2",visible:false },
 					{ data: "kode" },
 					{ data: "nama" },
 					{ data: "hodxxmh.nama" },
@@ -1390,187 +1390,187 @@
 					{ data: "hesxxmh.nama" },
 					{ data: "hevxxmh.nama",visible:false },
 					{ 
-						data: "hpyemtd.gp",
+						data: "hpyemtd_2.gp",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.t_jab",
+						data: "hpyemtd_2.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.pendapatan_lain",
+						data: "hpyemtd_2.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.var_cost",
+						data: "hpyemtd_2.var_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.fix_cost",
+						data: "hpyemtd_2.fix_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.premi_abs",
+						data: "hpyemtd_2.premi_abs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkk",
+						data: "hpyemtd_2.jkk",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkm",
+						data: "hpyemtd_2.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.trm_jkkjkm",
+						data: "hpyemtd_2.trm_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lembur15",
+						data: "hpyemtd_2.lembur15",
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.rp_lembur15",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.lembur2",
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.rp_lembur2",
+						data: "hpyemtd_2.rp_lembur15",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.lembur3",
+						data: "hpyemtd_2.lembur2",
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.rp_lembur3",
+						data: "hpyemtd_2.rp_lembur2",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.jam_lembur",
+						data: "hpyemtd_2.lembur3",
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd_2.rp_lembur3",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd_2.jam_lembur",
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jam_lembur_final",
+						data: "hpyemtd_2.jam_lembur_final",
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lemburbersih",
+						data: "hpyemtd_2.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.overtime_susulan",
+						data: "hpyemtd_2.overtime_susulan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pph21_back",
+						data: "hpyemtd_2.pph21_back",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.kompensasi_ak",
+						data: "hpyemtd_2.kompensasi_ak",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.koreksi_lembur",
+						data: "hpyemtd_2.koreksi_lembur",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.koreksi_status",
+						data: "hpyemtd_2.koreksi_status",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_makan",
+						data: "hpyemtd_2.pot_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_pph21",
+						data: "hpyemtd_2.pot_pph21",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jkkjkm",
+						data: "hpyemtd_2.pot_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jht",
+						data: "hpyemtd_2.pot_jht",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_lain",
+						data: "hpyemtd_2.pot_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_upah",
+						data: "hpyemtd_2.pot_upah",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jam",
+						data: "hpyemtd_2.pot_jam",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_bpjs",
+						data: "hpyemtd_2.pot_bpjs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_psiun",
+						data: "hpyemtd_2.pot_psiun",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_pinjaman",
+						data: "hpyemtd_2.pot_pinjaman",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_klaim",
+						data: "hpyemtd_2.pot_klaim",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_denda_apd",
+						data: "hpyemtd_2.pot_denda_apd",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.gaji_bersih",
+						data: "hpyemtd_2.gaji_bersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.bulat",
+						data: "hpyemtd_2.bulat",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.gaji_terima",
+						data: "hpyemtd_2.gaji_terima",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					}
@@ -1578,10 +1578,10 @@
 				buttons: [
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_hpyemtd';
-						$table       = 'tblhpyemtd';
-						$edt         = 'edthpyemtd';
-						$show_status = '_hpyemtd';
+						$id_table    = 'id_hpyemtd_2';
+						$table       = 'tblhpyemtd_2';
+						$edt         = 'edthpyemtd_2';
+						$show_status = '_hpyemtd_2';
 						$table_name  = $nama_tabels_d[0];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
@@ -1598,7 +1598,7 @@
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
 							var url = $(this).attr('href'); 
-							window.open('hpyxxth_print_single.php?id_hpyemtd=' + id_hpyemtd, 'hpyxxth');
+							window.open('hpyxxth_2_print_single.php?id_hpyemtd_2=' + id_hpyemtd_2, 'hpyxxth_2');
 						}
 					}
 				],
@@ -1618,33 +1618,33 @@
 				}
 			} );
 
-			tblhpyemtd.on( 'draw', function( e, settings ) { 
+			tblhpyemtd_2.on( 'draw', function( e, settings ) { 
 				// atur hak akses
 				cek_c_detail= 1;
-				CekDrawDetailHD(tblhpyxxth, tblhpyemtd, 'hpyemtd' );
-				CekDrawDetailHDFinal(tblhpyxxth);
+				CekDrawDetailHD(tblhpyxxth_2, tblhpyemtd_2, 'hpyemtd_2' );
+				CekDrawDetailHDFinal(tblhpyxxth_2);
 			} );
 
-			tblhpyemtd.on( 'select', function( e, dt, type, indexes ) {
-				data_hpyemtd = tblhpyemtd.row( { selected: true } ).data().hpyemtd;
-				id_hpyemtd   = data_hpyemtd.id;
-				id_transaksi_d    = id_hpyemtd; // dipakai untuk general
-				is_active_d       = data_hpyemtd.is_active;
-				id_hemxxmh       = data_hpyemtd.id_hemxxmh;
+			tblhpyemtd_2.on( 'select', function( e, dt, type, indexes ) {
+				data_hpyemtd_2 = tblhpyemtd_2.row( { selected: true } ).data().hpyemtd_2;
+				id_hpyemtd_2   = data_hpyemtd_2.id;
+				id_transaksi_d    = id_hpyemtd_2; // dipakai untuk general
+				is_active_d       = data_hpyemtd_2.is_active;
+				id_hemxxmh       = data_hpyemtd_2.id_hemxxmh;
 				
 				// atur hak akses
-				CekSelectDetailHD(tblhpyxxth, tblhpyemtd );
-				tblhpyemtd.button( 'btnPrintSingle:name' ).enable();
+				CekSelectDetailHD(tblhpyxxth_2, tblhpyemtd_2 );
+				tblhpyemtd_2.button( 'btnPrintSingle:name' ).enable();
 			} );
 
-			tblhpyemtd.on( 'deselect', function() {
-				id_hpyemtd = '';
+			tblhpyemtd_2.on( 'deselect', function() {
+				id_hpyemtd_2 = '';
 				is_active_d = 0;
 				id_hemxxmh = 0;
 				
 				// atur hak akses
-				CekDeselectDetailHD(tblhpyxxth, tblhpyemtd );
-				tblhpyemtd.button( 'btnPrintSingle:name' ).disable();
+				CekDeselectDetailHD(tblhpyxxth_2, tblhpyemtd_2 );
+				tblhpyemtd_2.button( 'btnPrintSingle:name' ).disable();
 			} );
 
 // --------- end _detail --------------- //		
@@ -1652,16 +1652,16 @@
 // --------- start _detail --------------- //
 
 			//start datatables editor
-			edthpyemtd_kbm_reg = new $.fn.dataTable.Editor( {
+			edthpyemtd_2_kbm_reg = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd_kbm_reg.php",
+					url: "../../models/hpyxxth_2/hpyemtd_2_kbm_reg.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
-						d.id_hpyxxth = id_hpyxxth;
+						d.show_inactive_status_hpyemtd_2 = show_inactive_status_hpyemtd_2;
+						d.id_hpyxxth_2 = id_hpyxxth_2;
 					}
 				},
-				table: "#tblhpyemtd_kbm_reg",
+				table: "#tblhpyemtd_2_kbm_reg",
 				formOptions: {
 					main: {
 						focus: 3
@@ -1679,70 +1679,70 @@
 					},	{
 						label: "nama_tabel",
 						name: "nama_tabel",
-						def: "hpyemtd",
+						def: "hpyemtd_2",
 						type: "hidden"
 					},	{
-						label: "id_hpyxxth",
-						name: "hpyemtd.id_hpyxxth",
+						label: "id_hpyxxth_2",
+						name: "hpyemtd_2.id_hpyxxth_2",
 						type: "hidden"
 					},	{
 						label: "Active Status",
-						name: "hpyemtd.is_active",
+						name: "hpyemtd_2.is_active",
                         type: "hidden",
 						def: 1
 					}, 	{
 						label: "Keterangan",
-						name: "hpyemtd.keterangan",
+						name: "hpyemtd_2.keterangan",
 						type: "textarea"
 					}
 				]
 			} );
 			
-			edthpyemtd_kbm_reg.on( 'preOpen', function( e, mode, action ) {
-				edthpyemtd_kbm_reg.field('hpyemtd.id_hpyxxth').val(id_hpyxxth);
+			edthpyemtd_2_kbm_reg.on( 'preOpen', function( e, mode, action ) {
+				edthpyemtd_2_kbm_reg.field('hpyemtd_2.id_hpyxxth_2').val(id_hpyxxth_2);
 				
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyemtd_kbm_reg.field('start_on').val(start_on);
+				edthpyemtd_2_kbm_reg.field('start_on').val(start_on);
 				
 				if(action == 'create'){
-					tblhpyemtd_kbm_reg.rows().deselect();
+					tblhpyemtd_2_kbm_reg.rows().deselect();
 				}
 			});
 
-            edthpyemtd_kbm_reg.on("open", function (e, mode, action) {
+            edthpyemtd_2_kbm_reg.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
 			
-			edthpyemtd_kbm_reg.on( 'preSubmit', function (e, data, action) {
+			edthpyemtd_2_kbm_reg.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					
 				}
 				
-				if ( edthpyemtd_kbm_reg.inError() ) {
+				if ( edthpyemtd_2_kbm_reg.inError() ) {
 					return false;
 				}
 			});
 
-			edthpyemtd_kbm_reg.on('initSubmit', function(e, action) {
+			edthpyemtd_2_kbm_reg.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyemtd_kbm_reg.field('finish_on').val(finish_on);
+				edthpyemtd_2_kbm_reg.field('finish_on').val(finish_on);
 			});
 
 			
-			edthpyemtd_kbm_reg.on( 'postSubmit', function (e, json, data, action, xhr) {
+			edthpyemtd_2_kbm_reg.on( 'postSubmit', function (e, json, data, action, xhr) {
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
 			} );
 			
 			//start datatables
-			tblhpyemtd_kbm_reg = $('#tblhpyemtd_kbm_reg').DataTable( {
+			tblhpyemtd_2_kbm_reg = $('#tblhpyemtd_2_kbm_reg').DataTable( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd_kbm_reg.php",
+					url: "../../models/hpyxxth_2/hpyemtd_2_kbm_reg.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
-						d.id_hpyxxth = id_hpyxxth;
+						d.show_inactive_status_hpyemtd_2 = show_inactive_status_hpyemtd_2;
+						d.id_hpyxxth_2 = id_hpyxxth_2;
 					}
 				},
 				order: [[ 2, "asc" ]],
@@ -1753,8 +1753,8 @@
 				},
 				
 				columns: [
-					{ data: "hpyemtd.id",visible:false },
-					{ data: "hpyemtd.id_hpyxxth",visible:false },
+					{ data: "hpyemtd_2.id",visible:false },
+					{ data: "hpyemtd_2.id_hpyxxth_2",visible:false },
 					{ data: "kode" },
 					{ data: "nama" },
 					{ data: "hodxxmh.nama" },
@@ -1764,187 +1764,187 @@
 					{ data: "hesxxmh.nama" },
 					{ data: "hevxxmh.nama",visible:false },
 					{ 
-						data: "hpyemtd.gp",
+						data: "hpyemtd_2.gp",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.t_jab",
+						data: "hpyemtd_2.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.pendapatan_lain",
+						data: "hpyemtd_2.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.var_cost",
+						data: "hpyemtd_2.var_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.fix_cost",
+						data: "hpyemtd_2.fix_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.premi_abs",
+						data: "hpyemtd_2.premi_abs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkk",
+						data: "hpyemtd_2.jkk",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkm",
+						data: "hpyemtd_2.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.trm_jkkjkm",
+						data: "hpyemtd_2.trm_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lembur15",
+						data: "hpyemtd_2.lembur15",
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.rp_lembur15",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.lembur2",
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.rp_lembur2",
+						data: "hpyemtd_2.rp_lembur15",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.lembur3",
+						data: "hpyemtd_2.lembur2",
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.rp_lembur3",
+						data: "hpyemtd_2.rp_lembur2",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.jam_lembur",
+						data: "hpyemtd_2.lembur3",
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd_2.rp_lembur3",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd_2.jam_lembur",
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jam_lembur_final",
+						data: "hpyemtd_2.jam_lembur_final",
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lemburbersih",
+						data: "hpyemtd_2.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.overtime_susulan",
+						data: "hpyemtd_2.overtime_susulan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pph21_back",
+						data: "hpyemtd_2.pph21_back",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.kompensasi_ak",
+						data: "hpyemtd_2.kompensasi_ak",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.koreksi_lembur",
+						data: "hpyemtd_2.koreksi_lembur",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.koreksi_status",
+						data: "hpyemtd_2.koreksi_status",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_makan",
+						data: "hpyemtd_2.pot_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_pph21",
+						data: "hpyemtd_2.pot_pph21",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jkkjkm",
+						data: "hpyemtd_2.pot_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jht",
+						data: "hpyemtd_2.pot_jht",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_lain",
+						data: "hpyemtd_2.pot_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_upah",
+						data: "hpyemtd_2.pot_upah",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jam",
+						data: "hpyemtd_2.pot_jam",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_bpjs",
+						data: "hpyemtd_2.pot_bpjs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_psiun",
+						data: "hpyemtd_2.pot_psiun",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_pinjaman",
+						data: "hpyemtd_2.pot_pinjaman",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_klaim",
+						data: "hpyemtd_2.pot_klaim",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_denda_apd",
+						data: "hpyemtd_2.pot_denda_apd",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.gaji_bersih",
+						data: "hpyemtd_2.gaji_bersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.bulat",
+						data: "hpyemtd_2.bulat",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.gaji_terima",
+						data: "hpyemtd_2.gaji_terima",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					}
@@ -1952,10 +1952,10 @@
 				buttons: [
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_hpyemtd';
-						$table       = 'tblhpyemtd_kbm_reg';
-						$edt         = 'edthpyemtd_kbm_reg';
-						$show_status = '_hpyemtd';
+						$id_table    = 'id_hpyemtd_2';
+						$table       = 'tblhpyemtd_2_kbm_reg';
+						$edt         = 'edthpyemtd_2_kbm_reg';
+						$show_status = '_hpyemtd_2';
 						$table_name  = $nama_tabels_d[1];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
@@ -1972,7 +1972,7 @@
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
 							var url = $(this).attr('href'); 
-							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=1&id_hesxxmh=4', 'hpyxxth');
+							window.open('hpyxxth_2_print.php?id_hpyxxth_2=' + id_hpyxxth_2 + '&id_heyxxmd=1&id_hesxxmh=4', 'hpyxxth_2');
 						}
 					}
 				],
@@ -1992,29 +1992,29 @@
 				}
 			} );
 
-			tblhpyemtd_kbm_reg.on( 'draw', function( e, settings ) { 
+			tblhpyemtd_2_kbm_reg.on( 'draw', function( e, settings ) { 
 				// atur hak akses
 				cek_c_detail= 1;
-				CekDrawDetailHD(tblhpyxxth, tblhpyemtd_kbm_reg, 'hpyemtd' );
-				CekDrawDetailHDFinal(tblhpyxxth);
+				CekDrawDetailHD(tblhpyxxth_2, tblhpyemtd_2_kbm_reg, 'hpyemtd_2' );
+				CekDrawDetailHDFinal(tblhpyxxth_2);
 			} );
 
-			tblhpyemtd_kbm_reg.on( 'select', function( e, dt, type, indexes ) {
-				data_hpyemtd = tblhpyemtd_kbm_reg.row( { selected: true } ).data().hpyemtd;
-				id_hpyemtd   = data_hpyemtd.id;
-				id_transaksi_d    = id_hpyemtd; // dipakai untuk general
-				is_active_d       = data_hpyemtd.is_active;
+			tblhpyemtd_2_kbm_reg.on( 'select', function( e, dt, type, indexes ) {
+				data_hpyemtd_2 = tblhpyemtd_2_kbm_reg.row( { selected: true } ).data().hpyemtd_2;
+				id_hpyemtd_2   = data_hpyemtd_2.id;
+				id_transaksi_d    = id_hpyemtd_2; // dipakai untuk general
+				is_active_d       = data_hpyemtd_2.is_active;
 				
 				// atur hak akses
-				CekSelectDetailHD(tblhpyxxth, tblhpyemtd_kbm_reg );
+				CekSelectDetailHD(tblhpyxxth_2, tblhpyemtd_2_kbm_reg );
 			} );
 
-			tblhpyemtd_kbm_reg.on( 'deselect', function() {
-				id_hpyemtd = '';
+			tblhpyemtd_2_kbm_reg.on( 'deselect', function() {
+				id_hpyemtd_2 = '';
 				is_active_d = 0;
 				
 				// atur hak akses
-				CekDeselectDetailHD(tblhpyxxth, tblhpyemtd_kbm_reg );
+				CekDeselectDetailHD(tblhpyxxth_2, tblhpyemtd_2_kbm_reg );
 			} );
 
 // --------- end _detail --------------- //		
@@ -2023,16 +2023,16 @@
 // --------- start _detail --------------- //
 
 			//start datatables editor
-			edthpyemtd_kbm_tr = new $.fn.dataTable.Editor( {
+			edthpyemtd_2_kbm_tr = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd_kbm_tr.php",
+					url: "../../models/hpyxxth_2/hpyemtd_2_kbm_tr.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
-						d.id_hpyxxth = id_hpyxxth;
+						d.show_inactive_status_hpyemtd_2 = show_inactive_status_hpyemtd_2;
+						d.id_hpyxxth_2 = id_hpyxxth_2;
 					}
 				},
-				table: "#tblhpyemtd_kbm_tr",
+				table: "#tblhpyemtd_2_kbm_tr",
 				formOptions: {
 					main: {
 						focus: 3
@@ -2050,70 +2050,70 @@
 					},	{
 						label: "nama_tabel",
 						name: "nama_tabel",
-						def: "hpyemtd",
+						def: "hpyemtd_2",
 						type: "hidden"
 					},	{
-						label: "id_hpyxxth",
-						name: "hpyemtd.id_hpyxxth",
+						label: "id_hpyxxth_2",
+						name: "hpyemtd_2.id_hpyxxth_2",
 						type: "hidden"
 					},	{
 						label: "Active Status",
-						name: "hpyemtd.is_active",
+						name: "hpyemtd_2.is_active",
                         type: "hidden",
 						def: 1
 					}, 	{
 						label: "Keterangan",
-						name: "hpyemtd.keterangan",
+						name: "hpyemtd_2.keterangan",
 						type: "textarea"
 					}
 				]
 			} );
 			
-			edthpyemtd_kbm_tr.on( 'preOpen', function( e, mode, action ) {
-				edthpyemtd_kbm_tr.field('hpyemtd.id_hpyxxth').val(id_hpyxxth);
+			edthpyemtd_2_kbm_tr.on( 'preOpen', function( e, mode, action ) {
+				edthpyemtd_2_kbm_tr.field('hpyemtd_2.id_hpyxxth_2').val(id_hpyxxth_2);
 				
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyemtd_kbm_tr.field('start_on').val(start_on);
+				edthpyemtd_2_kbm_tr.field('start_on').val(start_on);
 				
 				if(action == 'create'){
-					tblhpyemtd_kbm_tr.rows().deselect();
+					tblhpyemtd_2_kbm_tr.rows().deselect();
 				}
 			});
 
-            edthpyemtd_kbm_tr.on("open", function (e, mode, action) {
+            edthpyemtd_2_kbm_tr.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
 			
-			edthpyemtd_kbm_tr.on( 'preSubmit', function (e, data, action) {
+			edthpyemtd_2_kbm_tr.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					
 				}
 				
-				if ( edthpyemtd_kbm_tr.inError() ) {
+				if ( edthpyemtd_2_kbm_tr.inError() ) {
 					return false;
 				}
 			});
 
-			edthpyemtd_kbm_tr.on('initSubmit', function(e, action) {
+			edthpyemtd_2_kbm_tr.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyemtd_kbm_tr.field('finish_on').val(finish_on);
+				edthpyemtd_2_kbm_tr.field('finish_on').val(finish_on);
 			});
 
 			
-			edthpyemtd_kbm_tr.on( 'postSubmit', function (e, json, data, action, xhr) {
+			edthpyemtd_2_kbm_tr.on( 'postSubmit', function (e, json, data, action, xhr) {
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
 			} );
 			
 			//start datatables
-			tblhpyemtd_kbm_tr = $('#tblhpyemtd_kbm_tr').DataTable( {
+			tblhpyemtd_2_kbm_tr = $('#tblhpyemtd_2_kbm_tr').DataTable( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd_kbm_tr.php",
+					url: "../../models/hpyxxth_2/hpyemtd_2_kbm_tr.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
-						d.id_hpyxxth = id_hpyxxth;
+						d.show_inactive_status_hpyemtd_2 = show_inactive_status_hpyemtd_2;
+						d.id_hpyxxth_2 = id_hpyxxth_2;
 					}
 				},
 				order: [[ 2, "asc" ]],
@@ -2124,8 +2124,8 @@
 				},
 				
 				columns: [
-					{ data: "hpyemtd.id",visible:false },
-					{ data: "hpyemtd.id_hpyxxth",visible:false },
+					{ data: "hpyemtd_2.id",visible:false },
+					{ data: "hpyemtd_2.id_hpyxxth_2",visible:false },
 					{ data: "kode" },
 					{ data: "nama" },
 					{ data: "hodxxmh.nama" },
@@ -2135,187 +2135,187 @@
 					{ data: "hesxxmh.nama" },
 					{ data: "hevxxmh.nama",visible:false },
 					{ 
-						data: "hpyemtd.gp",
+						data: "hpyemtd_2.gp",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.t_jab",
+						data: "hpyemtd_2.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.pendapatan_lain",
+						data: "hpyemtd_2.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.var_cost",
+						data: "hpyemtd_2.var_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.fix_cost",
+						data: "hpyemtd_2.fix_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.premi_abs",
+						data: "hpyemtd_2.premi_abs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkk",
+						data: "hpyemtd_2.jkk",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkm",
+						data: "hpyemtd_2.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.trm_jkkjkm",
+						data: "hpyemtd_2.trm_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lembur15",
+						data: "hpyemtd_2.lembur15",
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.rp_lembur15",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.lembur2",
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.rp_lembur2",
+						data: "hpyemtd_2.rp_lembur15",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.lembur3",
+						data: "hpyemtd_2.lembur2",
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.rp_lembur3",
+						data: "hpyemtd_2.rp_lembur2",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.jam_lembur",
+						data: "hpyemtd_2.lembur3",
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd_2.rp_lembur3",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd_2.jam_lembur",
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jam_lembur_final",
+						data: "hpyemtd_2.jam_lembur_final",
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lemburbersih",
+						data: "hpyemtd_2.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.overtime_susulan",
+						data: "hpyemtd_2.overtime_susulan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pph21_back",
+						data: "hpyemtd_2.pph21_back",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.kompensasi_ak",
+						data: "hpyemtd_2.kompensasi_ak",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.koreksi_lembur",
+						data: "hpyemtd_2.koreksi_lembur",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.koreksi_status",
+						data: "hpyemtd_2.koreksi_status",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_makan",
+						data: "hpyemtd_2.pot_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_pph21",
+						data: "hpyemtd_2.pot_pph21",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jkkjkm",
+						data: "hpyemtd_2.pot_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jht",
+						data: "hpyemtd_2.pot_jht",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_lain",
+						data: "hpyemtd_2.pot_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_upah",
+						data: "hpyemtd_2.pot_upah",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jam",
+						data: "hpyemtd_2.pot_jam",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_bpjs",
+						data: "hpyemtd_2.pot_bpjs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_psiun",
+						data: "hpyemtd_2.pot_psiun",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_pinjaman",
+						data: "hpyemtd_2.pot_pinjaman",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_klaim",
+						data: "hpyemtd_2.pot_klaim",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_denda_apd",
+						data: "hpyemtd_2.pot_denda_apd",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.gaji_bersih",
+						data: "hpyemtd_2.gaji_bersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.bulat",
+						data: "hpyemtd_2.bulat",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.gaji_terima",
+						data: "hpyemtd_2.gaji_terima",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					}
@@ -2323,10 +2323,10 @@
 				buttons: [
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_hpyemtd';
-						$table       = 'tblhpyemtd_kbm_tr';
-						$edt         = 'edthpyemtd_kbm_tr';
-						$show_status = '_hpyemtd';
+						$id_table    = 'id_hpyemtd_2';
+						$table       = 'tblhpyemtd_2_kbm_tr';
+						$edt         = 'edthpyemtd_2_kbm_tr';
+						$show_status = '_hpyemtd_2';
 						$table_name  = $nama_tabels_d[5];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
@@ -2343,7 +2343,7 @@
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
 							var url = $(this).attr('href'); 
-							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=1&id_hesxxmh=3', 'hpyxxth');
+							window.open('hpyxxth_2_print.php?id_hpyxxth_2=' + id_hpyxxth_2 + '&id_heyxxmd=1&id_hesxxmh=3', 'hpyxxth_2');
 						}
 					}
 				],
@@ -2363,29 +2363,29 @@
 				}
 			} );
 
-			tblhpyemtd_kbm_tr.on( 'draw', function( e, settings ) { 
+			tblhpyemtd_2_kbm_tr.on( 'draw', function( e, settings ) { 
 				// atur hak akses
 				cek_c_detail= 1;
-				CekDrawDetailHD(tblhpyxxth, tblhpyemtd_kbm_tr, 'hpyemtd' );
-				CekDrawDetailHDFinal(tblhpyxxth);
+				CekDrawDetailHD(tblhpyxxth_2, tblhpyemtd_2_kbm_tr, 'hpyemtd_2' );
+				CekDrawDetailHDFinal(tblhpyxxth_2);
 			} );
 
-			tblhpyemtd_kbm_tr.on( 'select', function( e, dt, type, indexes ) {
-				data_hpyemtd = tblhpyemtd_kbm_tr.row( { selected: true } ).data().hpyemtd;
-				id_hpyemtd   = data_hpyemtd.id;
-				id_transaksi_d    = id_hpyemtd; // dipakai untuk general
-				is_active_d       = data_hpyemtd.is_active;
+			tblhpyemtd_2_kbm_tr.on( 'select', function( e, dt, type, indexes ) {
+				data_hpyemtd_2 = tblhpyemtd_2_kbm_tr.row( { selected: true } ).data().hpyemtd_2;
+				id_hpyemtd_2   = data_hpyemtd_2.id;
+				id_transaksi_d    = id_hpyemtd_2; // dipakai untuk general
+				is_active_d       = data_hpyemtd_2.is_active;
 				
 				// atur hak akses
-				CekSelectDetailHD(tblhpyxxth, tblhpyemtd_kbm_tr );
+				CekSelectDetailHD(tblhpyxxth_2, tblhpyemtd_2_kbm_tr );
 			} );
 
-			tblhpyemtd_kbm_tr.on( 'deselect', function() {
-				id_hpyemtd = '';
+			tblhpyemtd_2_kbm_tr.on( 'deselect', function() {
+				id_hpyemtd_2 = '';
 				is_active_d = 0;
 				
 				// atur hak akses
-				CekDeselectDetailHD(tblhpyxxth, tblhpyemtd_kbm_tr );
+				CekDeselectDetailHD(tblhpyxxth_2, tblhpyemtd_2_kbm_tr );
 			} );
 
 // --------- end _detail --------------- //		
@@ -2393,16 +2393,16 @@
 // --------- start _detail --------------- //
 
 			//start datatables editor
-			edthpyemtd_karyawan = new $.fn.dataTable.Editor( {
+			edthpyemtd_2_karyawan = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd_karyawan.php",
+					url: "../../models/hpyxxth_2/hpyemtd_2_karyawan.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
-						d.id_hpyxxth = id_hpyxxth;
+						d.show_inactive_status_hpyemtd_2 = show_inactive_status_hpyemtd_2;
+						d.id_hpyxxth_2 = id_hpyxxth_2;
 					}
 				},
-				table: "#tblhpyemtd_karyawan",
+				table: "#tblhpyemtd_2_karyawan",
 				formOptions: {
 					main: {
 						focus: 3
@@ -2420,70 +2420,70 @@
 					},	{
 						label: "nama_tabel",
 						name: "nama_tabel",
-						def: "hpyemtd",
+						def: "hpyemtd_2",
 						type: "hidden"
 					},	{
-						label: "id_hpyxxth",
-						name: "hpyemtd.id_hpyxxth",
+						label: "id_hpyxxth_2",
+						name: "hpyemtd_2.id_hpyxxth_2",
 						type: "hidden"
 					},	{
 						label: "Active Status",
-						name: "hpyemtd.is_active",
+						name: "hpyemtd_2.is_active",
                         type: "hidden",
 						def: 1
 					}, 	{
 						label: "Keterangan",
-						name: "hpyemtd.keterangan",
+						name: "hpyemtd_2.keterangan",
 						type: "textarea"
 					}
 				]
 			} );
 			
-			edthpyemtd_karyawan.on( 'preOpen', function( e, mode, action ) {
-				edthpyemtd_karyawan.field('hpyemtd.id_hpyxxth').val(id_hpyxxth);
+			edthpyemtd_2_karyawan.on( 'preOpen', function( e, mode, action ) {
+				edthpyemtd_2_karyawan.field('hpyemtd_2.id_hpyxxth_2').val(id_hpyxxth_2);
 				
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyemtd_karyawan.field('start_on').val(start_on);
+				edthpyemtd_2_karyawan.field('start_on').val(start_on);
 				
 				if(action == 'create'){
-					tblhpyemtd_karyawan.rows().deselect();
+					tblhpyemtd_2_karyawan.rows().deselect();
 				}
 			});
 
-            edthpyemtd_karyawan.on("open", function (e, mode, action) {
+            edthpyemtd_2_karyawan.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
 			
-			edthpyemtd_karyawan.on( 'preSubmit', function (e, data, action) {
+			edthpyemtd_2_karyawan.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					
 				}
 				
-				if ( edthpyemtd_karyawan.inError() ) {
+				if ( edthpyemtd_2_karyawan.inError() ) {
 					return false;
 				}
 			});
 
-			edthpyemtd_karyawan.on('initSubmit', function(e, action) {
+			edthpyemtd_2_karyawan.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyemtd_karyawan.field('finish_on').val(finish_on);
+				edthpyemtd_2_karyawan.field('finish_on').val(finish_on);
 			});
 
 			
-			edthpyemtd_karyawan.on( 'postSubmit', function (e, json, data, action, xhr) {
+			edthpyemtd_2_karyawan.on( 'postSubmit', function (e, json, data, action, xhr) {
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
 			} );
 			
 			//start datatables
-			tblhpyemtd_karyawan = $('#tblhpyemtd_karyawan').DataTable( {
+			tblhpyemtd_2_karyawan = $('#tblhpyemtd_2_karyawan').DataTable( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd_karyawan.php",
+					url: "../../models/hpyxxth_2/hpyemtd_2_karyawan.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
-						d.id_hpyxxth = id_hpyxxth;
+						d.show_inactive_status_hpyemtd_2 = show_inactive_status_hpyemtd_2;
+						d.id_hpyxxth_2 = id_hpyxxth_2;
 					}
 				},
 				order: [[ 2, "asc" ]],
@@ -2494,8 +2494,8 @@
 				},
 				
 				columns: [
-					{ data: "hpyemtd.id",visible:false },
-					{ data: "hpyemtd.id_hpyxxth",visible:false },
+					{ data: "hpyemtd_2.id",visible:false },
+					{ data: "hpyemtd_2.id_hpyxxth_2",visible:false },
 					{ data: "kode" },
 					{ data: "nama" },
 					{ data: "hodxxmh.nama" },
@@ -2505,187 +2505,187 @@
 					{ data: "hesxxmh.nama" },
 					{ data: "hevxxmh.nama",visible:false },
 					{ 
-						data: "hpyemtd.gp",
+						data: "hpyemtd_2.gp",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.t_jab",
+						data: "hpyemtd_2.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.pendapatan_lain",
+						data: "hpyemtd_2.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.var_cost",
+						data: "hpyemtd_2.var_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.fix_cost",
+						data: "hpyemtd_2.fix_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.premi_abs",
+						data: "hpyemtd_2.premi_abs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkk",
+						data: "hpyemtd_2.jkk",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkm",
+						data: "hpyemtd_2.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.trm_jkkjkm",
+						data: "hpyemtd_2.trm_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lembur15",
+						data: "hpyemtd_2.lembur15",
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.rp_lembur15",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.lembur2",
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.rp_lembur2",
+						data: "hpyemtd_2.rp_lembur15",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.lembur3",
+						data: "hpyemtd_2.lembur2",
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.rp_lembur3",
+						data: "hpyemtd_2.rp_lembur2",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.jam_lembur",
+						data: "hpyemtd_2.lembur3",
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd_2.rp_lembur3",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd_2.jam_lembur",
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jam_lembur_final",
+						data: "hpyemtd_2.jam_lembur_final",
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lemburbersih",
+						data: "hpyemtd_2.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.overtime_susulan",
+						data: "hpyemtd_2.overtime_susulan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pph21_back",
+						data: "hpyemtd_2.pph21_back",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.kompensasi_ak",
+						data: "hpyemtd_2.kompensasi_ak",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.koreksi_lembur",
+						data: "hpyemtd_2.koreksi_lembur",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.koreksi_status",
+						data: "hpyemtd_2.koreksi_status",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_makan",
+						data: "hpyemtd_2.pot_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_pph21",
+						data: "hpyemtd_2.pot_pph21",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jkkjkm",
+						data: "hpyemtd_2.pot_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jht",
+						data: "hpyemtd_2.pot_jht",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_lain",
+						data: "hpyemtd_2.pot_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_upah",
+						data: "hpyemtd_2.pot_upah",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jam",
+						data: "hpyemtd_2.pot_jam",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_bpjs",
+						data: "hpyemtd_2.pot_bpjs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_psiun",
+						data: "hpyemtd_2.pot_psiun",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_pinjaman",
+						data: "hpyemtd_2.pot_pinjaman",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_klaim",
+						data: "hpyemtd_2.pot_klaim",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_denda_apd",
+						data: "hpyemtd_2.pot_denda_apd",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.gaji_bersih",
+						data: "hpyemtd_2.gaji_bersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.bulat",
+						data: "hpyemtd_2.bulat",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.gaji_terima",
+						data: "hpyemtd_2.gaji_terima",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					}
@@ -2693,10 +2693,10 @@
 				buttons: [
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_hpyemtd';
-						$table       = 'tblhpyemtd_karyawan';
-						$edt         = 'edthpyemtd_karyawan';
-						$show_status = '_hpyemtd';
+						$id_table    = 'id_hpyemtd_2';
+						$table       = 'tblhpyemtd_2_karyawan';
+						$edt         = 'edthpyemtd_2_karyawan';
+						$show_status = '_hpyemtd_2';
 						$table_name  = $nama_tabels_d[2];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
@@ -2713,7 +2713,7 @@
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
 							var url = $(this).attr('href'); 
-							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=3', 'hpyxxth');
+							window.open('hpyxxth_2_print.php?id_hpyxxth_2=' + id_hpyxxth_2 + '&id_heyxxmd=3', 'hpyxxth_2');
 						}
 					}
 				],
@@ -2733,29 +2733,29 @@
 				}
 			} );
 
-			tblhpyemtd_karyawan.on( 'draw', function( e, settings ) { 
+			tblhpyemtd_2_karyawan.on( 'draw', function( e, settings ) { 
 				// atur hak akses
 				cek_c_detail= 1;
-				CekDrawDetailHD(tblhpyxxth, tblhpyemtd_karyawan, 'hpyemtd' );
-				CekDrawDetailHDFinal(tblhpyxxth);
+				CekDrawDetailHD(tblhpyxxth_2, tblhpyemtd_2_karyawan, 'hpyemtd_2' );
+				CekDrawDetailHDFinal(tblhpyxxth_2);
 			} );
 
-			tblhpyemtd_karyawan.on( 'select', function( e, dt, type, indexes ) {
-				data_hpyemtd = tblhpyemtd_karyawan.row( { selected: true } ).data().hpyemtd;
-				id_hpyemtd   = data_hpyemtd.id;
-				id_transaksi_d    = id_hpyemtd; // dipakai untuk general
-				is_active_d       = data_hpyemtd.is_active;
+			tblhpyemtd_2_karyawan.on( 'select', function( e, dt, type, indexes ) {
+				data_hpyemtd_2 = tblhpyemtd_2_karyawan.row( { selected: true } ).data().hpyemtd_2;
+				id_hpyemtd_2   = data_hpyemtd_2.id;
+				id_transaksi_d    = id_hpyemtd_2; // dipakai untuk general
+				is_active_d       = data_hpyemtd_2.is_active;
 				
 				// atur hak akses
-				CekSelectDetailHD(tblhpyxxth, tblhpyemtd_karyawan );
+				CekSelectDetailHD(tblhpyxxth_2, tblhpyemtd_2_karyawan );
 			} );
 
-			tblhpyemtd_karyawan.on( 'deselect', function() {
-				id_hpyemtd = '';
+			tblhpyemtd_2_karyawan.on( 'deselect', function() {
+				id_hpyemtd_2 = '';
 				is_active_d = 0;
 				
 				// atur hak akses
-				CekDeselectDetailHD(tblhpyxxth, tblhpyemtd_karyawan );
+				CekDeselectDetailHD(tblhpyxxth_2, tblhpyemtd_2_karyawan );
 			} );
 
 // --------- end _detail --------------- //		
@@ -2763,16 +2763,16 @@
 // --------- start _detail --------------- //
 
 			//start datatables editor
-			edthpyemtd_kontrak = new $.fn.dataTable.Editor( {
+			edthpyemtd_2_kontrak = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd_kontrak.php",
+					url: "../../models/hpyxxth_2/hpyemtd_2_kontrak.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
-						d.id_hpyxxth = id_hpyxxth;
+						d.show_inactive_status_hpyemtd_2 = show_inactive_status_hpyemtd_2;
+						d.id_hpyxxth_2 = id_hpyxxth_2;
 					}
 				},
-				table: "#tblhpyemtd_kontrak",
+				table: "#tblhpyemtd_2_kontrak",
 				formOptions: {
 					main: {
 						focus: 3
@@ -2790,70 +2790,70 @@
 					},	{
 						label: "nama_tabel",
 						name: "nama_tabel",
-						def: "hpyemtd",
+						def: "hpyemtd_2",
 						type: "hidden"
 					},	{
-						label: "id_hpyxxth",
-						name: "hpyemtd.id_hpyxxth",
+						label: "id_hpyxxth_2",
+						name: "hpyemtd_2.id_hpyxxth_2",
 						type: "hidden"
 					},	{
 						label: "Active Status",
-						name: "hpyemtd.is_active",
+						name: "hpyemtd_2.is_active",
                         type: "hidden",
 						def: 1
 					}, 	{
 						label: "Keterangan",
-						name: "hpyemtd.keterangan",
+						name: "hpyemtd_2.keterangan",
 						type: "textarea"
 					}
 				]
 			} );
 			
-			edthpyemtd_kontrak.on( 'preOpen', function( e, mode, action ) {
-				edthpyemtd_kontrak.field('hpyemtd.id_hpyxxth').val(id_hpyxxth);
+			edthpyemtd_2_kontrak.on( 'preOpen', function( e, mode, action ) {
+				edthpyemtd_2_kontrak.field('hpyemtd_2.id_hpyxxth_2').val(id_hpyxxth_2);
 				
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyemtd_kontrak.field('start_on').val(start_on);
+				edthpyemtd_2_kontrak.field('start_on').val(start_on);
 				
 				if(action == 'create'){
-					tblhpyemtd_kontrak.rows().deselect();
+					tblhpyemtd_2_kontrak.rows().deselect();
 				}
 			});
 
-            edthpyemtd_kontrak.on("open", function (e, mode, action) {
+            edthpyemtd_2_kontrak.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
 			
-			edthpyemtd_kontrak.on( 'preSubmit', function (e, data, action) {
+			edthpyemtd_2_kontrak.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					
 				}
 				
-				if ( edthpyemtd_kontrak.inError() ) {
+				if ( edthpyemtd_2_kontrak.inError() ) {
 					return false;
 				}
 			});
 
-			edthpyemtd_kontrak.on('initSubmit', function(e, action) {
+			edthpyemtd_2_kontrak.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyemtd_kontrak.field('finish_on').val(finish_on);
+				edthpyemtd_2_kontrak.field('finish_on').val(finish_on);
 			});
 
 			
-			edthpyemtd_kontrak.on( 'postSubmit', function (e, json, data, action, xhr) {
+			edthpyemtd_2_kontrak.on( 'postSubmit', function (e, json, data, action, xhr) {
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
 			} );
 			
 			//start datatables
-			tblhpyemtd_kontrak = $('#tblhpyemtd_kontrak').DataTable( {
+			tblhpyemtd_2_kontrak = $('#tblhpyemtd_2_kontrak').DataTable( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd_kontrak.php",
+					url: "../../models/hpyxxth_2/hpyemtd_2_kontrak.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
-						d.id_hpyxxth = id_hpyxxth;
+						d.show_inactive_status_hpyemtd_2 = show_inactive_status_hpyemtd_2;
+						d.id_hpyxxth_2 = id_hpyxxth_2;
 					}
 				},
 				order: [[ 2, "asc" ]],
@@ -2864,8 +2864,8 @@
 				},
 				
 				columns: [
-					{ data: "hpyemtd.id",visible:false },
-					{ data: "hpyemtd.id_hpyxxth",visible:false },
+					{ data: "hpyemtd_2.id",visible:false },
+					{ data: "hpyemtd_2.id_hpyxxth_2",visible:false },
 					{ data: "kode" },
 					{ data: "nama" },
 					{ data: "hodxxmh.nama" },
@@ -2875,187 +2875,187 @@
 					{ data: "hesxxmh.nama" },
 					{ data: "hevxxmh.nama",visible:false },
 					{ 
-						data: "hpyemtd.gp",
+						data: "hpyemtd_2.gp",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.t_jab",
+						data: "hpyemtd_2.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.pendapatan_lain",
+						data: "hpyemtd_2.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.var_cost",
+						data: "hpyemtd_2.var_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.fix_cost",
+						data: "hpyemtd_2.fix_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.premi_abs",
+						data: "hpyemtd_2.premi_abs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkk",
+						data: "hpyemtd_2.jkk",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkm",
+						data: "hpyemtd_2.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.trm_jkkjkm",
+						data: "hpyemtd_2.trm_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lembur15",
+						data: "hpyemtd_2.lembur15",
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.rp_lembur15",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.lembur2",
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.rp_lembur2",
+						data: "hpyemtd_2.rp_lembur15",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.lembur3",
+						data: "hpyemtd_2.lembur2",
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.rp_lembur3",
+						data: "hpyemtd_2.rp_lembur2",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.jam_lembur",
+						data: "hpyemtd_2.lembur3",
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd_2.rp_lembur3",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd_2.jam_lembur",
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jam_lembur_final",
+						data: "hpyemtd_2.jam_lembur_final",
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lemburbersih",
+						data: "hpyemtd_2.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.overtime_susulan",
+						data: "hpyemtd_2.overtime_susulan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pph21_back",
+						data: "hpyemtd_2.pph21_back",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.kompensasi_ak",
+						data: "hpyemtd_2.kompensasi_ak",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.koreksi_lembur",
+						data: "hpyemtd_2.koreksi_lembur",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.koreksi_status",
+						data: "hpyemtd_2.koreksi_status",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_makan",
+						data: "hpyemtd_2.pot_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_pph21",
+						data: "hpyemtd_2.pot_pph21",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jkkjkm",
+						data: "hpyemtd_2.pot_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jht",
+						data: "hpyemtd_2.pot_jht",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_lain",
+						data: "hpyemtd_2.pot_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_upah",
+						data: "hpyemtd_2.pot_upah",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jam",
+						data: "hpyemtd_2.pot_jam",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_bpjs",
+						data: "hpyemtd_2.pot_bpjs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_psiun",
+						data: "hpyemtd_2.pot_psiun",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_pinjaman",
+						data: "hpyemtd_2.pot_pinjaman",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_klaim",
+						data: "hpyemtd_2.pot_klaim",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_denda_apd",
+						data: "hpyemtd_2.pot_denda_apd",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.gaji_bersih",
+						data: "hpyemtd_2.gaji_bersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.bulat",
+						data: "hpyemtd_2.bulat",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.gaji_terima",
+						data: "hpyemtd_2.gaji_terima",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					}
@@ -3063,10 +3063,10 @@
 				buttons: [
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_hpyemtd';
-						$table       = 'tblhpyemtd_kontrak';
-						$edt         = 'edthpyemtd_kontrak';
-						$show_status = '_hpyemtd';
+						$id_table    = 'id_hpyemtd_2';
+						$table       = 'tblhpyemtd_2_kontrak';
+						$edt         = 'edthpyemtd_2_kontrak';
+						$show_status = '_hpyemtd_2';
 						$table_name  = $nama_tabels_d[6];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
@@ -3083,7 +3083,7 @@
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
 							var url = $(this).attr('href'); 
-							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=3', 'hpyxxth');
+							window.open('hpyxxth_2_print.php?id_hpyxxth_2=' + id_hpyxxth_2 + '&id_heyxxmd=3', 'hpyxxth_2');
 						}
 					}
 				],
@@ -3103,29 +3103,29 @@
 				}
 			} );
 
-			tblhpyemtd_kontrak.on( 'draw', function( e, settings ) { 
+			tblhpyemtd_2_kontrak.on( 'draw', function( e, settings ) { 
 				// atur hak akses
 				cek_c_detail= 1;
-				CekDrawDetailHD(tblhpyxxth, tblhpyemtd_kontrak, 'hpyemtd' );
-				CekDrawDetailHDFinal(tblhpyxxth);
+				CekDrawDetailHD(tblhpyxxth_2, tblhpyemtd_2_kontrak, 'hpyemtd_2' );
+				CekDrawDetailHDFinal(tblhpyxxth_2);
 			} );
 
-			tblhpyemtd_kontrak.on( 'select', function( e, dt, type, indexes ) {
-				data_hpyemtd = tblhpyemtd_kontrak.row( { selected: true } ).data().hpyemtd;
-				id_hpyemtd   = data_hpyemtd.id;
-				id_transaksi_d    = id_hpyemtd; // dipakai untuk general
-				is_active_d       = data_hpyemtd.is_active;
+			tblhpyemtd_2_kontrak.on( 'select', function( e, dt, type, indexes ) {
+				data_hpyemtd_2 = tblhpyemtd_2_kontrak.row( { selected: true } ).data().hpyemtd_2;
+				id_hpyemtd_2   = data_hpyemtd_2.id;
+				id_transaksi_d    = id_hpyemtd_2; // dipakai untuk general
+				is_active_d       = data_hpyemtd_2.is_active;
 				
 				// atur hak akses
-				CekSelectDetailHD(tblhpyxxth, tblhpyemtd_kontrak );
+				CekSelectDetailHD(tblhpyxxth_2, tblhpyemtd_2_kontrak );
 			} );
 
-			tblhpyemtd_kontrak.on( 'deselect', function() {
-				id_hpyemtd = '';
+			tblhpyemtd_2_kontrak.on( 'deselect', function() {
+				id_hpyemtd_2 = '';
 				is_active_d = 0;
 				
 				// atur hak akses
-				CekDeselectDetailHD(tblhpyxxth, tblhpyemtd_kontrak );
+				CekDeselectDetailHD(tblhpyxxth_2, tblhpyemtd_2_kontrak );
 			} );
 
 // --------- end _detail --------------- //		
@@ -3133,16 +3133,16 @@
 // --------- start _detail --------------- //
 
 			//start datatables editor
-			edthpyemtd_kmj = new $.fn.dataTable.Editor( {
+			edthpyemtd_2_kmj = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd_kmj.php",
+					url: "../../models/hpyxxth_2/hpyemtd_2_kmj.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
-						d.id_hpyxxth = id_hpyxxth;
+						d.show_inactive_status_hpyemtd_2 = show_inactive_status_hpyemtd_2;
+						d.id_hpyxxth_2 = id_hpyxxth_2;
 					}
 				},
-				table: "#tblhpyemtd_kmj",
+				table: "#tblhpyemtd_2_kmj",
 				formOptions: {
 					main: {
 						focus: 3
@@ -3160,70 +3160,70 @@
 					},	{
 						label: "nama_tabel",
 						name: "nama_tabel",
-						def: "hpyemtd",
+						def: "hpyemtd_2",
 						type: "hidden"
 					},	{
-						label: "id_hpyxxth",
-						name: "hpyemtd.id_hpyxxth",
+						label: "id_hpyxxth_2",
+						name: "hpyemtd_2.id_hpyxxth_2",
 						type: "hidden"
 					},	{
 						label: "Active Status",
-						name: "hpyemtd.is_active",
+						name: "hpyemtd_2.is_active",
                         type: "hidden",
 						def: 1
 					}, 	{
 						label: "Keterangan",
-						name: "hpyemtd.keterangan",
+						name: "hpyemtd_2.keterangan",
 						type: "textarea"
 					}
 				]
 			} );
 			
-			edthpyemtd_kmj.on( 'preOpen', function( e, mode, action ) {
-				edthpyemtd_kmj.field('hpyemtd.id_hpyxxth').val(id_hpyxxth);
+			edthpyemtd_2_kmj.on( 'preOpen', function( e, mode, action ) {
+				edthpyemtd_2_kmj.field('hpyemtd_2.id_hpyxxth_2').val(id_hpyxxth_2);
 				
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyemtd_kmj.field('start_on').val(start_on);
+				edthpyemtd_2_kmj.field('start_on').val(start_on);
 				
 				if(action == 'create'){
-					tblhpyemtd_kmj.rows().deselect();
+					tblhpyemtd_2_kmj.rows().deselect();
 				}
 			});
 
-            edthpyemtd_kmj.on("open", function (e, mode, action) {
+            edthpyemtd_2_kmj.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
 			
-			edthpyemtd_kmj.on( 'preSubmit', function (e, data, action) {
+			edthpyemtd_2_kmj.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					
 				}
 				
-				if ( edthpyemtd_kmj.inError() ) {
+				if ( edthpyemtd_2_kmj.inError() ) {
 					return false;
 				}
 			});
 
-			edthpyemtd_kmj.on('initSubmit', function(e, action) {
+			edthpyemtd_2_kmj.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyemtd_kmj.field('finish_on').val(finish_on);
+				edthpyemtd_2_kmj.field('finish_on').val(finish_on);
 			});
 
 			
-			edthpyemtd_kmj.on( 'postSubmit', function (e, json, data, action, xhr) {
+			edthpyemtd_2_kmj.on( 'postSubmit', function (e, json, data, action, xhr) {
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
 			} );
 			
 			//start datatables
-			tblhpyemtd_kmj = $('#tblhpyemtd_kmj').DataTable( {
+			tblhpyemtd_2_kmj = $('#tblhpyemtd_2_kmj').DataTable( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd_kmj.php",
+					url: "../../models/hpyxxth_2/hpyemtd_2_kmj.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
-						d.id_hpyxxth = id_hpyxxth;
+						d.show_inactive_status_hpyemtd_2 = show_inactive_status_hpyemtd_2;
+						d.id_hpyxxth_2 = id_hpyxxth_2;
 					}
 				},
 				order: [[ 2, "asc" ]],
@@ -3234,8 +3234,8 @@
 				},
 				
 				columns: [
-					{ data: "hpyemtd.id",visible:false },
-					{ data: "hpyemtd.id_hpyxxth",visible:false },
+					{ data: "hpyemtd_2.id",visible:false },
+					{ data: "hpyemtd_2.id_hpyxxth_2",visible:false },
 					{ data: "kode" },
 					{ data: "nama" },
 					{ data: "hodxxmh.nama" },
@@ -3245,187 +3245,187 @@
 					{ data: "hesxxmh.nama" },
 					{ data: "hevxxmh.nama",visible:false },
 					{ 
-						data: "hpyemtd.gp",
+						data: "hpyemtd_2.gp",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.t_jab",
+						data: "hpyemtd_2.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.pendapatan_lain",
+						data: "hpyemtd_2.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.var_cost",
+						data: "hpyemtd_2.var_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.fix_cost",
+						data: "hpyemtd_2.fix_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.premi_abs",
+						data: "hpyemtd_2.premi_abs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkk",
+						data: "hpyemtd_2.jkk",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkm",
+						data: "hpyemtd_2.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.trm_jkkjkm",
+						data: "hpyemtd_2.trm_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lembur15",
+						data: "hpyemtd_2.lembur15",
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.rp_lembur15",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.lembur2",
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.rp_lembur2",
+						data: "hpyemtd_2.rp_lembur15",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.lembur3",
+						data: "hpyemtd_2.lembur2",
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.rp_lembur3",
+						data: "hpyemtd_2.rp_lembur2",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.jam_lembur",
+						data: "hpyemtd_2.lembur3",
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd_2.rp_lembur3",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd_2.jam_lembur",
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jam_lembur_final",
+						data: "hpyemtd_2.jam_lembur_final",
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lemburbersih",
+						data: "hpyemtd_2.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.overtime_susulan",
+						data: "hpyemtd_2.overtime_susulan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pph21_back",
+						data: "hpyemtd_2.pph21_back",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.kompensasi_ak",
+						data: "hpyemtd_2.kompensasi_ak",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.koreksi_lembur",
+						data: "hpyemtd_2.koreksi_lembur",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.koreksi_status",
+						data: "hpyemtd_2.koreksi_status",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_makan",
+						data: "hpyemtd_2.pot_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_pph21",
+						data: "hpyemtd_2.pot_pph21",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jkkjkm",
+						data: "hpyemtd_2.pot_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jht",
+						data: "hpyemtd_2.pot_jht",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_lain",
+						data: "hpyemtd_2.pot_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_upah",
+						data: "hpyemtd_2.pot_upah",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jam",
+						data: "hpyemtd_2.pot_jam",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_bpjs",
+						data: "hpyemtd_2.pot_bpjs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_psiun",
+						data: "hpyemtd_2.pot_psiun",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_pinjaman",
+						data: "hpyemtd_2.pot_pinjaman",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_klaim",
+						data: "hpyemtd_2.pot_klaim",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_denda_apd",
+						data: "hpyemtd_2.pot_denda_apd",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.gaji_bersih",
+						data: "hpyemtd_2.gaji_bersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.bulat",
+						data: "hpyemtd_2.bulat",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.gaji_terima",
+						data: "hpyemtd_2.gaji_terima",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					}
@@ -3433,10 +3433,10 @@
 				buttons: [
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_hpyemtd';
-						$table       = 'tblhpyemtd_kmj';
-						$edt         = 'edthpyemtd_kmj';
-						$show_status = '_hpyemtd';
+						$id_table    = 'id_hpyemtd_2';
+						$table       = 'tblhpyemtd_2_kmj';
+						$edt         = 'edthpyemtd_2_kmj';
+						$show_status = '_hpyemtd_2';
 						$table_name  = $nama_tabels_d[3];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
@@ -3453,7 +3453,7 @@
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
 							var url = $(this).attr('href'); 
-							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=4', 'hpyxxth');
+							window.open('hpyxxth_2_print.php?id_hpyxxth_2=' + id_hpyxxth_2 + '&id_heyxxmd=4', 'hpyxxth_2');
 						}
 					}
 				],
@@ -3473,29 +3473,29 @@
 				}
 			} );
 
-			tblhpyemtd_kmj.on( 'draw', function( e, settings ) { 
+			tblhpyemtd_2_kmj.on( 'draw', function( e, settings ) { 
 				// atur hak akses
 				cek_c_detail= 1;
-				CekDrawDetailHD(tblhpyxxth, tblhpyemtd_kmj, 'hpyemtd' );
-				CekDrawDetailHDFinal(tblhpyxxth);
+				CekDrawDetailHD(tblhpyxxth_2, tblhpyemtd_2_kmj, 'hpyemtd_2' );
+				CekDrawDetailHDFinal(tblhpyxxth_2);
 			} );
 
-			tblhpyemtd_kmj.on( 'select', function( e, dt, type, indexes ) {
-				data_hpyemtd = tblhpyemtd_kmj.row( { selected: true } ).data().hpyemtd;
-				id_hpyemtd   = data_hpyemtd.id;
-				id_transaksi_d    = id_hpyemtd; // dipakai untuk general
-				is_active_d       = data_hpyemtd.is_active;
+			tblhpyemtd_2_kmj.on( 'select', function( e, dt, type, indexes ) {
+				data_hpyemtd_2 = tblhpyemtd_2_kmj.row( { selected: true } ).data().hpyemtd_2;
+				id_hpyemtd_2   = data_hpyemtd_2.id;
+				id_transaksi_d    = id_hpyemtd_2; // dipakai untuk general
+				is_active_d       = data_hpyemtd_2.is_active;
 				
 				// atur hak akses
-				CekSelectDetailHD(tblhpyxxth, tblhpyemtd_kmj );
+				CekSelectDetailHD(tblhpyxxth_2, tblhpyemtd_2_kmj );
 			} );
 
-			tblhpyemtd_kmj.on( 'deselect', function() {
-				id_hpyemtd = '';
+			tblhpyemtd_2_kmj.on( 'deselect', function() {
+				id_hpyemtd_2 = '';
 				is_active_d = 0;
 				
 				// atur hak akses
-				CekDeselectDetailHD(tblhpyxxth, tblhpyemtd_kmj );
+				CekDeselectDetailHD(tblhpyxxth_2, tblhpyemtd_2_kmj );
 			} );
 
 // --------- end _detail --------------- //		
@@ -3503,16 +3503,16 @@
 // --------- start _detail --------------- //
 
 			//start datatables editor
-			edthpyemtd_freelance = new $.fn.dataTable.Editor( {
+			edthpyemtd_2_freelance = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd_freelance.php",
+					url: "../../models/hpyxxth_2/hpyemtd_2_freelance.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
-						d.id_hpyxxth = id_hpyxxth;
+						d.show_inactive_status_hpyemtd_2 = show_inactive_status_hpyemtd_2;
+						d.id_hpyxxth_2 = id_hpyxxth_2;
 					}
 				},
-				table: "#tblhpyemtd_freelance",
+				table: "#tblhpyemtd_2_freelance",
 				formOptions: {
 					main: {
 						focus: 3
@@ -3530,70 +3530,70 @@
 					},	{
 						label: "nama_tabel",
 						name: "nama_tabel",
-						def: "hpyemtd",
+						def: "hpyemtd_2",
 						type: "hidden"
 					},	{
-						label: "id_hpyxxth",
-						name: "hpyemtd.id_hpyxxth",
+						label: "id_hpyxxth_2",
+						name: "hpyemtd_2.id_hpyxxth_2",
 						type: "hidden"
 					},	{
 						label: "Active Status",
-						name: "hpyemtd.is_active",
+						name: "hpyemtd_2.is_active",
                         type: "hidden",
 						def: 1
 					}, 	{
 						label: "Keterangan",
-						name: "hpyemtd.keterangan",
+						name: "hpyemtd_2.keterangan",
 						type: "textarea"
 					}
 				]
 			} );
 			
-			edthpyemtd_freelance.on( 'preOpen', function( e, mode, action ) {
-				edthpyemtd_freelance.field('hpyemtd.id_hpyxxth').val(id_hpyxxth);
+			edthpyemtd_2_freelance.on( 'preOpen', function( e, mode, action ) {
+				edthpyemtd_2_freelance.field('hpyemtd_2.id_hpyxxth_2').val(id_hpyxxth_2);
 				
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyemtd_freelance.field('start_on').val(start_on);
+				edthpyemtd_2_freelance.field('start_on').val(start_on);
 				
 				if(action == 'create'){
-					tblhpyemtd_freelance.rows().deselect();
+					tblhpyemtd_2_freelance.rows().deselect();
 				}
 			});
 
-            edthpyemtd_freelance.on("open", function (e, mode, action) {
+            edthpyemtd_2_freelance.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
 			
-			edthpyemtd_freelance.on( 'preSubmit', function (e, data, action) {
+			edthpyemtd_2_freelance.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					
 				}
 				
-				if ( edthpyemtd_freelance.inError() ) {
+				if ( edthpyemtd_2_freelance.inError() ) {
 					return false;
 				}
 			});
 
-			edthpyemtd_freelance.on('initSubmit', function(e, action) {
+			edthpyemtd_2_freelance.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthpyemtd_freelance.field('finish_on').val(finish_on);
+				edthpyemtd_2_freelance.field('finish_on').val(finish_on);
 			});
 
 			
-			edthpyemtd_freelance.on( 'postSubmit', function (e, json, data, action, xhr) {
+			edthpyemtd_2_freelance.on( 'postSubmit', function (e, json, data, action, xhr) {
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
 			} );
 			
 			//start datatables
-			tblhpyemtd_freelance = $('#tblhpyemtd_freelance').DataTable( {
+			tblhpyemtd_2_freelance = $('#tblhpyemtd_2_freelance').DataTable( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd_freelance.php",
+					url: "../../models/hpyxxth_2/hpyemtd_2_freelance.php",
 					type: 'POST',
 					data: function (d){
-						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
-						d.id_hpyxxth = id_hpyxxth;
+						d.show_inactive_status_hpyemtd_2 = show_inactive_status_hpyemtd_2;
+						d.id_hpyxxth_2 = id_hpyxxth_2;
 					}
 				},
 				order: [[ 2, "asc" ]],
@@ -3604,8 +3604,8 @@
 				},
 				
 				columns: [
-					{ data: "hpyemtd.id",visible:false },
-					{ data: "hpyemtd.id_hpyxxth",visible:false },
+					{ data: "hpyemtd_2.id",visible:false },
+					{ data: "hpyemtd_2.id_hpyxxth_2",visible:false },
 					{ data: "kode" },
 					{ data: "nama" },
 					{ data: "hodxxmh.nama" },
@@ -3615,187 +3615,187 @@
 					{ data: "hesxxmh.nama" },
 					{ data: "hevxxmh.nama",visible:false },
 					{ 
-						data: "hpyemtd.gp",
+						data: "hpyemtd_2.gp",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.t_jab",
+						data: "hpyemtd_2.t_jab",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.pendapatan_lain",
+						data: "hpyemtd_2.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.var_cost",
+						data: "hpyemtd_2.var_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.fix_cost",
+						data: "hpyemtd_2.fix_cost",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.premi_abs",
+						data: "hpyemtd_2.premi_abs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkk",
+						data: "hpyemtd_2.jkk",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkm",
+						data: "hpyemtd_2.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.trm_jkkjkm",
+						data: "hpyemtd_2.trm_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lembur15",
+						data: "hpyemtd_2.lembur15",
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.rp_lembur15",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.lembur2",
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.rp_lembur2",
+						data: "hpyemtd_2.rp_lembur15",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.lembur3",
+						data: "hpyemtd_2.lembur2",
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.rp_lembur3",
+						data: "hpyemtd_2.rp_lembur2",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
-						data: "hpyemtd.jam_lembur",
+						data: "hpyemtd_2.lembur3",
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd_2.rp_lembur3",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd_2.jam_lembur",
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jam_lembur_final",
+						data: "hpyemtd_2.jam_lembur_final",
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.lemburbersih",
+						data: "hpyemtd_2.lemburbersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.overtime_susulan",
+						data: "hpyemtd_2.overtime_susulan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pph21_back",
+						data: "hpyemtd_2.pph21_back",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.kompensasi_ak",
+						data: "hpyemtd_2.kompensasi_ak",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.koreksi_lembur",
+						data: "hpyemtd_2.koreksi_lembur",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.koreksi_status",
+						data: "hpyemtd_2.koreksi_status",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_makan",
+						data: "hpyemtd_2.pot_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_pph21",
+						data: "hpyemtd_2.pot_pph21",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jkkjkm",
+						data: "hpyemtd_2.pot_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jht",
+						data: "hpyemtd_2.pot_jht",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_lain",
+						data: "hpyemtd_2.pot_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_upah",
+						data: "hpyemtd_2.pot_upah",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jam",
+						data: "hpyemtd_2.pot_jam",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_bpjs",
+						data: "hpyemtd_2.pot_bpjs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_psiun",
+						data: "hpyemtd_2.pot_psiun",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_pinjaman",
+						data: "hpyemtd_2.pot_pinjaman",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_klaim",
+						data: "hpyemtd_2.pot_klaim",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{
-						data: "hpyemtd.pot_denda_apd",
+						data: "hpyemtd_2.pot_denda_apd",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.gaji_bersih",
+						data: "hpyemtd_2.gaji_bersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.bulat",
+						data: "hpyemtd_2.bulat",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.gaji_terima",
+						data: "hpyemtd_2.gaji_terima",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					}
@@ -3803,10 +3803,10 @@
 				buttons: [
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_hpyemtd';
-						$table       = 'tblhpyemtd_freelance';
-						$edt         = 'edthpyemtd_freelance';
-						$show_status = '_hpyemtd';
+						$id_table    = 'id_hpyemtd_2';
+						$table       = 'tblhpyemtd_2_freelance';
+						$edt         = 'edthpyemtd_2_freelance';
+						$show_status = '_hpyemtd_2';
 						$table_name  = $nama_tabels_d[4];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
@@ -3823,7 +3823,7 @@
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
 							var url = $(this).attr('href'); 
-							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=5', 'hpyxxth');
+							window.open('hpyxxth_2_print.php?id_hpyxxth_2=' + id_hpyxxth_2 + '&id_heyxxmd=5', 'hpyxxth_2');
 						}
 					}
 				],
@@ -3843,29 +3843,29 @@
 				}
 			} );
 
-			tblhpyemtd_freelance.on( 'draw', function( e, settings ) { 
+			tblhpyemtd_2_freelance.on( 'draw', function( e, settings ) { 
 				// atur hak akses
 				cek_c_detail= 1;
-				CekDrawDetailHD(tblhpyxxth, tblhpyemtd_freelance, 'hpyemtd' );
-				CekDrawDetailHDFinal(tblhpyxxth);
+				CekDrawDetailHD(tblhpyxxth_2, tblhpyemtd_2_freelance, 'hpyemtd_2' );
+				CekDrawDetailHDFinal(tblhpyxxth_2);
 			} );
 
-			tblhpyemtd_freelance.on( 'select', function( e, dt, type, indexes ) {
-				data_hpyemtd = tblhpyemtd_freelance.row( { selected: true } ).data().hpyemtd;
-				id_hpyemtd   = data_hpyemtd.id;
-				id_transaksi_d    = id_hpyemtd; // dipakai untuk general
-				is_active_d       = data_hpyemtd.is_active;
+			tblhpyemtd_2_freelance.on( 'select', function( e, dt, type, indexes ) {
+				data_hpyemtd_2 = tblhpyemtd_2_freelance.row( { selected: true } ).data().hpyemtd_2;
+				id_hpyemtd_2   = data_hpyemtd_2.id;
+				id_transaksi_d    = id_hpyemtd_2; // dipakai untuk general
+				is_active_d       = data_hpyemtd_2.is_active;
 				
 				// atur hak akses
-				CekSelectDetailHD(tblhpyxxth, tblhpyemtd_freelance );
+				CekSelectDetailHD(tblhpyxxth_2, tblhpyemtd_2_freelance );
 			} );
 
-			tblhpyemtd_freelance.on( 'deselect', function() {
-				id_hpyemtd = '';
+			tblhpyemtd_2_freelance.on( 'deselect', function() {
+				id_hpyemtd_2 = '';
 				is_active_d = 0;
 				
 				// atur hak akses
-				CekDeselectDetailHD(tblhpyxxth, tblhpyemtd_freelance );
+				CekDeselectDetailHD(tblhpyxxth_2, tblhpyemtd_2_freelance );
 			} );
 
 // --------- end _detail --------------- //		

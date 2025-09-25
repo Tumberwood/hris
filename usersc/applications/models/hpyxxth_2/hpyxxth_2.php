@@ -79,7 +79,8 @@
 				) ),
 			Field::inst( 'heyxxmh.nama' )
 		)
-		->leftJoin( 'heyxxmh','heyxxmh.id','=','hpyxxth_2.id_heyxxmh' );
+		->leftJoin( 'heyxxmh','heyxxmh.id','=','hpyxxth_2.id_heyxxmh' )
+		->where( 'hpyxxth_2.is_single', 0);
 	
 	// do not erase
 	// function show / hide inactive document
