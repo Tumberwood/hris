@@ -1401,7 +1401,7 @@
 							if (data === null || data === '' || parseFloat(data) === 0) {
 								return '0'; // tampil 0 saja
 							}
-							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+							
 						},
 						class: "text-right"
 					},
@@ -1418,7 +1418,7 @@
 							if (data === null || data === '' || parseFloat(data) === 0) {
 								return '0'; // tampil 0 saja
 							}
-							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+							
 						},
 						class: "text-right"
 					},
@@ -1789,7 +1789,7 @@
 							if (data === null || data === '' || parseFloat(data) === 0) {
 								return '0'; // tampil 0 saja
 							}
-							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+							
 						},
 						class: "text-right"
 					},
@@ -1806,7 +1806,7 @@
 							if (data === null || data === '' || parseFloat(data) === 0) {
 								return '0'; // tampil 0 saja
 							}
-							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+							
 						},
 						class: "text-right"
 					},
@@ -2174,7 +2174,7 @@
 							if (data === null || data === '' || parseFloat(data) === 0) {
 								return '0'; // tampil 0 saja
 							}
-							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+							
 						},
 						class: "text-right"
 					},
@@ -2191,7 +2191,7 @@
 							if (data === null || data === '' || parseFloat(data) === 0) {
 								return '0'; // tampil 0 saja
 							}
-							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+							
 						},
 						class: "text-right"
 					},
@@ -2558,7 +2558,7 @@
 							if (data === null || data === '' || parseFloat(data) === 0) {
 								return '0'; // tampil 0 saja
 							}
-							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+							
 						},
 						class: "text-right"
 					},
@@ -2575,7 +2575,7 @@
 							if (data === null || data === '' || parseFloat(data) === 0) {
 								return '0'; // tampil 0 saja
 							}
-							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+							
 						},
 						class: "text-right"
 					},
@@ -2942,7 +2942,7 @@
 							if (data === null || data === '' || parseFloat(data) === 0) {
 								return '0'; // tampil 0 saja
 							}
-							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+							
 						},
 						class: "text-right"
 					},
@@ -2959,7 +2959,7 @@
 							if (data === null || data === '' || parseFloat(data) === 0) {
 								return '0'; // tampil 0 saja
 							}
-							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+							
 						},
 						class: "text-right"
 					},
@@ -3326,7 +3326,7 @@
 							if (data === null || data === '' || parseFloat(data) === 0) {
 								return '0'; // tampil 0 saja
 							}
-							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+							
 						},
 						class: "text-right"
 					},
@@ -3343,7 +3343,7 @@
 							if (data === null || data === '' || parseFloat(data) === 0) {
 								return '0'; // tampil 0 saja
 							}
-							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+							
 						},
 						class: "text-right"
 					},
@@ -3710,7 +3710,7 @@
 							if (data === null || data === '' || parseFloat(data) === 0) {
 								return '0'; // tampil 0 saja
 							}
-							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+							
 						},
 						class: "text-right"
 					},
@@ -3727,7 +3727,7 @@
 							if (data === null || data === '' || parseFloat(data) === 0) {
 								return '0'; // tampil 0 saja
 							}
-							return $.fn.dataTable.render.number(',', '.', 2, '', '')(data, type, row);
+							
 						},
 						class: "text-right"
 					},
