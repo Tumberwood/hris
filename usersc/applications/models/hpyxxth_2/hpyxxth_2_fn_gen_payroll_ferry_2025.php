@@ -279,13 +279,13 @@
                             if(a.id_hemxxmh = 67, 0, if(c.id_heyxxmh = 1, IFNULL(if(report_pot_premi >= 1, 0, premiabs), 0), 0)) AS premi_abs,
                             
                             -- hitung jkk
-                            if(c.id_hesxxmh IN (1,2,5), if(skip_c_bpjs_tk > 0, 0, if(id_heyxxmd = 3,IFNULL((persen_jkk / 100) * gaji_bpjs,0),0)), 0) AS jkk, -- bro
+                            if(c.id_hesxxmh IN (1,2,5), if(IF(c.tanggal_keluar <= LAST_DAY(:tanggal_awal), 1, skip_c_bpjs_tk) > 0, 0, if(id_heyxxmd = 3,IFNULL((persen_jkk / 100) * gaji_bpjs,0),0)), 0) AS jkk, -- bro
                             
                             -- hitung jkm
-                            if(c.id_hesxxmh IN (1,2,5), if(skip_c_bpjs_tk > 0, 0, if(id_heyxxmd = 3,IFNULL((persen_jkm / 100) * gaji_bpjs,0),0)), 0) AS jkm, -- bro
+                            if(c.id_hesxxmh IN (1,2,5), if(IF(c.tanggal_keluar <= LAST_DAY(:tanggal_awal), 1, skip_c_bpjs_tk) > 0, 0, if(id_heyxxmd = 3,IFNULL((persen_jkm / 100) * gaji_bpjs,0),0)), 0) AS jkm, -- bro
                             
                             -- trm_jkkjkm == jkk + jkm
-                            if(c.id_hesxxmh IN (1,2,5), if(skip_c_bpjs_tk > 0, 0, if(id_heyxxmd = 3,IFNULL(((persen_jkk / 100) * gaji_bpjs) + ((persen_jkm / 100) * gaji_bpjs), 0),0)), 0) AS trm_jkkjkm, -- bro
+                            if(c.id_hesxxmh IN (1,2,5), if(IF(c.tanggal_keluar <= LAST_DAY(:tanggal_awal), 1, skip_c_bpjs_tk) > 0, 0, if(id_heyxxmd = 3,IFNULL(((persen_jkk / 100) * gaji_bpjs) + ((persen_jkm / 100) * gaji_bpjs), 0),0)), 0) AS trm_jkkjkm, -- bro
                             
                             -- mulai lembur
                             sum_lembur15 AS lembur15,
@@ -302,18 +302,18 @@
                             IFNULL(pot_makan * pot_uang_makan, 0) AS pot_makan,
                             
                             -- pot_jkkjkm == jkk + jkm (sama dengan pot_jkkjkm)
-                            if(c.id_hesxxmh IN (1,2,5), if(skip_c_bpjs_tk > 0, 0, if(id_heyxxmd = 3,IFNULL(((persen_jkk / 100) * gaji_bpjs) + ((persen_jkm / 100) * gaji_bpjs), 0),0)), 0) AS pot_jkkjkm, -- bro
+                            if(c.id_hesxxmh IN (1,2,5), if(IF(c.tanggal_keluar <= LAST_DAY(:tanggal_awal), 1, skip_c_bpjs_tk) > 0, 0, if(id_heyxxmd = 3,IFNULL(((persen_jkk / 100) * gaji_bpjs) + ((persen_jkm / 100) * gaji_bpjs), 0),0)), 0) AS pot_jkkjkm, -- bro
                             
                             -- hitung pot_jht
-                            if(c.id_hesxxmh IN (1,2,5), if(skip_c_bpjs_tk > 0, 0, if(id_heyxxmd = 3,IFNULL((persen_jht_karyawan / 100) * gaji_bpjs, 0),0)), 0) AS pot_jht, -- bro
+                            if(c.id_hesxxmh IN (1,2,5), if(IF(c.tanggal_keluar <= LAST_DAY(:tanggal_awal), 1, skip_c_bpjs_tk) > 0, 0, if(id_heyxxmd = 3,IFNULL((persen_jht_karyawan / 100) * gaji_bpjs, 0),0)), 0) AS pot_jht, -- bro
                             
                             -- hitung pot_bpjs
-                            if(c.id_hesxxmh IN (1,2,5), if(skip_c_bpjs_kes > 0, 0, if(id_heyxxmd = 3, IFNULL((persen_karyawan / 100) * gaji_bpjs, 0),0)), 0) AS pot_bpjs, -- bro
+                            if(c.id_hesxxmh IN (1,2,5), if(IF(c.tanggal_keluar <= LAST_DAY(:tanggal_awal), 1, skip_c_bpjs_kes) > 0, 0, if(id_heyxxmd = 3, IFNULL((persen_karyawan / 100) * gaji_bpjs, 0),0)), 0) AS pot_bpjs, -- bro
                             
                             -- hitung pot_psiun
                             
                             -- revisi khusus yang sub tipe == karyawan
-                            if(c.id_hesxxmh IN (1,2,5), if(skip_c_bpjs_tk > 0, 0, if(id_heyxxmd = 3,IFNULL((persen_jp_karyawan / 100) * gaji_bpjs, 0),0)), 0) AS pot_psiun, -- bro
+                            if(c.id_hesxxmh IN (1,2,5), if(IF(c.tanggal_keluar <= LAST_DAY(:tanggal_awal), 1, skip_c_bpjs_tk) > 0, 0, if(id_heyxxmd = 3,IFNULL((persen_jp_karyawan / 100) * gaji_bpjs, 0),0)), 0) AS pot_psiun, -- bro
                             
                             -- pph21 back
                             IFNULL(nominal_pph21_back,0) AS pph21_back,
