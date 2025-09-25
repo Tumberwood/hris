@@ -108,6 +108,7 @@
 													<th>TJ. Insen</th>
 													<th>TJ. Jabatan</th>
 													<th>Uniform</th>
+													<th>RP Free</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
@@ -126,7 +127,6 @@
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
-													<th>Koreksi Perubahan Status</th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot PPH21</th>
 													<th class="text-danger">Pot JKK JKM</th>
@@ -221,6 +221,7 @@
 													<th>TJ. Insen</th>
 													<th>TJ. Jabatan</th>
 													<th>Uniform</th>
+													<th>RP Free</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
@@ -239,7 +240,6 @@
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
-													<th>Koreksi Perubahan Status</th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot PPH21</th>
 													<th class="text-danger">Pot JKK JKM</th>
@@ -334,6 +334,7 @@
 													<th>TJ. Insen</th>
 													<th>TJ. Jabatan</th>
 													<th>Uniform</th>
+													<th>RP Free</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
@@ -352,7 +353,6 @@
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
-													<th>Koreksi Perubahan Status</th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot PPH21</th>
 													<th class="text-danger">Pot JKK JKM</th>
@@ -447,6 +447,7 @@
 													<th>TJ. Insen</th>
 													<th>TJ. Jabatan</th>
 													<th>Uniform</th>
+													<th>RP Free</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
@@ -465,7 +466,6 @@
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
-													<th>Koreksi Perubahan Status</th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot PPH21</th>
 													<th class="text-danger">Pot JKK JKM</th>
@@ -560,6 +560,7 @@
 													<th>TJ. Insen</th>
 													<th>TJ. Jabatan</th>
 													<th>Uniform</th>
+													<th>RP Free</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
@@ -578,7 +579,6 @@
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
-													<th>Koreksi Perubahan Status</th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot PPH21</th>
 													<th class="text-danger">Pot JKK JKM</th>
@@ -673,6 +673,7 @@
 													<th>TJ. Insen</th>
 													<th>TJ. Jabatan</th>
 													<th>Uniform</th>
+													<th>RP Free</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
@@ -691,7 +692,6 @@
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
-													<th>Koreksi Perubahan Status</th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot PPH21</th>
 													<th class="text-danger">Pot JKK JKM</th>
@@ -786,6 +786,7 @@
 													<th>TJ. Insen</th>
 													<th>TJ. Jabatan</th>
 													<th>Uniform</th>
+													<th>RP Free</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
@@ -804,7 +805,6 @@
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
-													<th>Koreksi Perubahan Status</th>
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot PPH21</th>
 													<th class="text-danger">Pot JKK JKM</th>
@@ -1422,6 +1422,17 @@
 						},
 						class: "text-right"
 					},
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							
+						},
+						class: "text-right"
+					},
 
 					{ 
 						data: "hpyemtd_2.pendapatan_lain",
@@ -1505,11 +1516,6 @@
 					},
 					{ 
 						data: "hpyemtd_2.koreksi_lembur",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.koreksi_status",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -1810,6 +1816,17 @@
 						},
 						class: "text-right"
 					},
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							
+						},
+						class: "text-right"
+					},
 
 					{ 
 						data: "hpyemtd_2.pendapatan_lain",
@@ -1893,11 +1910,6 @@
 					},
 					{ 
 						data: "hpyemtd_2.koreksi_lembur",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.koreksi_status",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -2195,6 +2207,17 @@
 						},
 						class: "text-right"
 					},
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							
+						},
+						class: "text-right"
+					},
 
 					{ 
 						data: "hpyemtd_2.pendapatan_lain",
@@ -2278,11 +2301,6 @@
 					},
 					{ 
 						data: "hpyemtd_2.koreksi_lembur",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.koreksi_status",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -2579,6 +2597,17 @@
 						},
 						class: "text-right"
 					},
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							
+						},
+						class: "text-right"
+					},
 
 					{ 
 						data: "hpyemtd_2.pendapatan_lain",
@@ -2662,11 +2691,6 @@
 					},
 					{ 
 						data: "hpyemtd_2.koreksi_lembur",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.koreksi_status",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -2963,6 +2987,17 @@
 						},
 						class: "text-right"
 					},
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							
+						},
+						class: "text-right"
+					},
 
 					{ 
 						data: "hpyemtd_2.pendapatan_lain",
@@ -3046,11 +3081,6 @@
 					},
 					{ 
 						data: "hpyemtd_2.koreksi_lembur",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.koreksi_status",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -3347,6 +3377,17 @@
 						},
 						class: "text-right"
 					},
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							
+						},
+						class: "text-right"
+					},
 
 					{ 
 						data: "hpyemtd_2.pendapatan_lain",
@@ -3430,11 +3471,6 @@
 					},
 					{ 
 						data: "hpyemtd_2.koreksi_lembur",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.koreksi_status",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -3731,6 +3767,17 @@
 						},
 						class: "text-right"
 					},
+					{
+						data: null,
+						defaultContent: 0, // kalau value null/undefined → isi 0
+						render: function (data, type, row) {
+							if (data === null || data === '' || parseFloat(data) === 0) {
+								return '0'; // tampil 0 saja
+							}
+							
+						},
+						class: "text-right"
+					},
 
 					{ 
 						data: "hpyemtd_2.pendapatan_lain",
@@ -3814,11 +3861,6 @@
 					},
 					{ 
 						data: "hpyemtd_2.koreksi_lembur",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd_2.koreksi_status",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
