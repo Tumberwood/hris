@@ -1424,10 +1424,8 @@
                                 FROM (
                                     SELECT
                                         COUNT(bpjs_kes.id) AS c_bpjs_kes,
-                                        c.id id_hemxxmh
+                                        bpjs_kes.id_hemxxmh
                                     FROM bpjs_kes_exclude AS bpjs_kes
-                                    INNER JOIN hesxxtd b ON b.id_hemxxmh = bpjs_kes.id_hemxxmh
-                                    INNER JOIN hemxxmh c ON c.kode = b.nik_baru
                                     WHERE bpjs_kes.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                     GROUP BY id_hemxxmh
                                 ) AS subquery
