@@ -36,11 +36,12 @@
                 ) AS lembur,
                 SUM(a.is_makan) makan,
                 SUM(a.pot_hk) ip,
-                    0 abnormal,
-                    0 selisih,
-                -SUM(a.pot_hk) + 0 + 0 total,
-                (nominal_gp / 173) pengali,
-                (-SUM(a.pot_hk) + 0 + 0) * (nominal_gp / 173) terima_lain
+                SUM( ABS(IFNULL(a.abnormal,0)) ) abnormal,
+                0 AS selisih,
+                (-SUM(a.pot_hk) + SUM(ABS(IFNULL(a.abnormal, 0)))) AS total,
+                (nominal_gp / 173) AS pengali,
+                (-SUM(a.pot_hk) + SUM(ABS(IFNULL(a.abnormal, 0)))) * (nominal_gp / 173) AS terima_lain
+
             FROM htsprrd a
             INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
 

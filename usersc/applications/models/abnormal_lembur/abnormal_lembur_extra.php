@@ -5,7 +5,9 @@
 		})
 		->on('postCreate',function( $editor, $id, $values, $row ) {
 			$selisih = $values['abnormal_lembur']['selisih'];
-			$tanggal = $values['abnormal_lembur']['tanggal'];
+			$tanggal_ymd = $values['abnormal_lembur']['tanggal'];
+			$tanggal = date('Y-m-d', strtotime($tanggal_ymd));
+
 			$id_hemxxmh = $values['abnormal_lembur']['id_hemxxmh'];
 
 			$qu_htsprrd = $editor->db()
@@ -21,7 +23,9 @@
 		})
 		->on('postEdit',function( $editor, $id, $values, $row ) {
 			$selisih = $values['abnormal_lembur']['selisih'];
-			$tanggal = $values['abnormal_lembur']['tanggal'];
+			$tanggal_ymd = $values['abnormal_lembur']['tanggal'];
+			$tanggal = date('Y-m-d', strtotime($tanggal_ymd));
+			
 			$id_hemxxmh = $values['abnormal_lembur']['id_hemxxmh'];
 
 			$qu_htsprrd = $editor->db()
