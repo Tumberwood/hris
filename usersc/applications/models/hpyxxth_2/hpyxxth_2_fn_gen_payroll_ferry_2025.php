@@ -162,7 +162,6 @@
                         bulat,
                         gaji_terima,
                         pendapatan_lain,
-                        overtime_susulan,
                         sisa_cuti,
                         bruto
                     )
@@ -364,7 +363,6 @@
                             id_harxxmh,
                             jadwal_bulan_lalu,
                             a.is_approve,
-                            ifnull(susulan, 0) as susulan,
                             (ifnull(if(c.id_hesxxmh = 3, gp_pelatihan, nominal_gp),0) + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) * (ifnull(masa_kontrak, 0) / 12) AS auto_kompensasi_ak,
                             if(MONTH(:tanggal_akhir) = 1, 
 								(
@@ -1845,16 +1843,6 @@
                             ) AS report
                         ) AS hk_awal_masuk_sebelumnya ON hk_awal_masuk_sebelumnya.id_hemxxmh = a.id_hemxxmh
 
-                        -- Overtime Susulan
-                        LEFT JOIN (
-                            SELECT
-                                SUM(a.rp_lembur_final) AS susulan,
-                                id_hemxxmh
-                            FROM htoxxrd_susulan AS a
-                            WHERE a.id_hpyxxth_2 = ' . $id_hpyxxth_2 . '
-                            GROUP BY a.id_hemxxmh
-                        ) AS overtime_susulan ON overtime_susulan.id_hemxxmh = a.id_hemxxmh
-                        
                         -- HITUNG OTOMATIS KOMPENSASI AKHIR KONTRAK 05 JAN 2024
                         LEFT JOIN (
                             SELECT
@@ -1955,7 +1943,7 @@
                         SELECT
                             *,
                             (
-                                (gp + susulan  +  pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + lemburbersih + pph21_back + auto_kompensasi_ak + koreksi_lembur + koreksi_status)
+                                (gp  +  pendapatan_lain + t_jab + var_cost + fix_cost + premi_abs + trm_jkkjkm + lemburbersih + pph21_back + auto_kompensasi_ak + koreksi_lembur + koreksi_status)
                                 -
                                 (pot_jam + pot_makan + pot_jkkjkm + pot_pph21 + pot_jht + pot_pinjaman + pot_klaim + pot_denda_apd + pot_lain + pot_upah+ pot_bpjs_fix+ pot_psiun)
                             ) AS bruto
@@ -2039,7 +2027,6 @@
                             )
                         ) AS gaji_terima,
                         pendapatan_lain,
-                        susulan,
                         sisa_cuti,
                         bruto
                     FROM payroll_fix
