@@ -363,7 +363,7 @@
                             id_harxxmh,
                             jadwal_bulan_lalu,
                             a.is_approve,
-                            (ifnull(if(c.id_hesxxmh = 3, gp_pelatihan, nominal_gp),0) + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) * (ifnull(masa_kontrak, 0) / 12) AS auto_kompensasi_ak,
+                            IF(c.tanggal_keluar <= LAST_DAY(:tanggal_awal), 0, (ifnull(if(c.id_hesxxmh = 3, gp_pelatihan, nominal_gp),0) + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) ) * (ifnull(masa_kontrak, 0) / 12) ) AS auto_kompensasi_ak,
                             if(MONTH(:tanggal_akhir) = 1, 
 								(
 									(ifnull(if(c.id_hesxxmh = 3, gp_pelatihan, nominal_gp),0) + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) + if(c.id_heyxxmh = 1, ifnull(nominal_mk,0),0) )
