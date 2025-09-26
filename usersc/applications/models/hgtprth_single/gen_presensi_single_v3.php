@@ -737,6 +737,7 @@
                                     DATE_ADD(CONCAT(hto.tanggal, " ", hto.jam_awal), INTERVAL 5 MINUTE) tanggaljam_awal_toleransi_lembur,
                                     DATE_FORMAT(hto.jam_awal, "%H:%i") jam_awal_lembur,
                                     id_jadwal,
+                                    mesin,
                                     if(is_istirahat = 2, 1, 0)  AS is_pot_ti,
                                     if(is_istirahat = 2, durasi_break_menit, 0)  AS durasi_break_menit,
                                     CASE
@@ -745,9 +746,15 @@
                                         
                                         -- 22 Mar 2025, 0077 istirahat > 1 jam maka dipotong 1jam
                                         WHEN is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_ti, 0) THEN 0.5
+
+                                        -- BARU: Jika pegawai Gedung 3 ada TI dan ceklok istirahatnya tidak dalam Gedung-3 maka dipotong 0.5
+                                        WHEN is_istirahat = 2 AND id_holxxmd_2 = 1 AND durasi_break_menit > 0 AND mesin NOT LIKE "%Gedung-3%" 
+                                        AND jb.id_hetxxmh <> 55
+                                        THEN 0.5
                                         ELSE 0
                                     END AS potongan_ti_jam
                                 FROM htoxxrd as hto
+                                LEFT JOIN hemjbmh jb on jb.id_hemxxmh = hto.id_hemxxmh
 
                                 -- ceklok ISTIRAHAT
                                 LEFT JOIN (
@@ -756,6 +763,7 @@
                                         SELECT DISTINCT
                                             a.id_hemxxmh,
                                             a.id AS id_jadwal,
+                                            GROUP_CONCAT(c.nama) mesin,
                                             CONCAT(c.tanggal," ",c.jam) AS ceklok_istirahat,
                                             IF(DAYNAME(a.tanggal) = "Friday" AND jad.kode LIKE "%PAGI%" AND MAX(c.jam) < "13:00", 0, 
                                                 TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam)))
@@ -765,28 +773,12 @@
                                         INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
                                         INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                         INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
-                                        LEFT JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
-                                        INNER JOIN hemjbmh AS hj ON hj.id_hemxxmh = a.id_hemxxmh
                                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                            AND 
-                                                (
-                                                    (
-                                                        a.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
-                                                        AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
-                                                    )
-                                                    OR 
-                                                    (
-                                                        a.tanggal > "2025-07-27"
-                                                        AND d.is_istirahat = 2
-                                                        AND id_holxxmd_2 = 1
-                                                        AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
-                                                    )
-                                                    OR 
-                                                    (
-                                                        a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27"
-                                                        AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI", "makan")
-                                                    )
-                                                )
+                                            AND (
+                                                (a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI"))
+                                                OR
+                                                (a.tanggal BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan"))
+                                            )
                                             AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                             AND a.id_hemxxmh IN (:id_hemxxmh)
                                         GROUP BY a.id
@@ -797,14 +789,36 @@
                                         SELECT DISTINCT
                                             a.id_hemxxmh,
                                             a.id AS id_jadwal,
+                                            GROUP_CONCAT(c.nama) mesin,
                                             CONCAT(d.tanggal, " ", d.jam_awal) AS ceklok_istirahat,
                                             TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam))) AS durasi_break_menit
                                         FROM htssctd AS a
                                         INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                         INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                         INNER JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
+                                        INNER JOIN hemjbmh AS hj on hj.id_hemxxmh = a.id_hemxxmh
                                         WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                            AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI")
+                                            -- AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI")
+                                            AND 
+                                            (
+                                                (
+                                                    a.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
+                                                    AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
+                                                )
+                                                OR 
+                                                (
+                                                    a.tanggal > "2025-07-27"
+                                                    AND d.is_istirahat = 2
+                                                    AND id_holxxmd_2 = 1
+                                                    AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
+                                                )
+                                                OR 
+                                                (
+                                                    a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27"
+                                                    AND NOT (a.tanggal > "2025-07-27" AND d.is_istirahat = 2 AND id_holxxmd_2 = 1)
+                                                    AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI")
+                                                )
+                                            )
                                             AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
                                             AND CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir) 
                                             AND a.id_hemxxmh IN (:id_hemxxmh)
