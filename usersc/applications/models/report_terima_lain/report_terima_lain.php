@@ -40,7 +40,19 @@
                 0 AS selisih,
                 (-SUM(a.pot_hk) + SUM(ABS(IFNULL(a.abnormal, 0)))) AS total,
                 ( ( IFNULL(nominal_gp,0) + + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0) )) / 173) AS pengali,
-                (-SUM(a.pot_hk) + SUM(ABS(IFNULL(a.abnormal, 0)))) * ( ( IFNULL(nominal_gp,0) + + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0) )) / 173) AS terima_lain
+                
+                (-SUM(a.pot_hk) + SUM(ABS(IFNULL(a.abnormal, 0)))) 
+                * ( ( IFNULL(nominal_gp,0) 
+                    + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) 
+                ) / 173) AS terima_lain,
+
+                TRUNCATE(
+                    (-SUM(a.pot_hk) + SUM(ABS(IFNULL(a.abnormal, 0)))) 
+                    * ( ( IFNULL(nominal_gp,0) 
+                        + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) 
+                    ) / 173),
+                    0
+                ) AS terima_lain_round_down
 
             FROM htsprrd a
             INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh

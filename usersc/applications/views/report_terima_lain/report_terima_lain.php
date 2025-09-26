@@ -62,10 +62,11 @@
                                 <th>Total Makan</th>
                                 <th>IP</th>
                                 <th>Abnormal</th>
-                                <th>Selisih</th>
+                                <th>Selisih Lembur</th>
                                 <th>Total</th>
                                 <th>Pengali Jam</th>
                                 <th>Terima Lain</th>
+                                <th>Terima Lain (Round Down)</th>
                             </tr>
                         </thead>
                     </table>
@@ -161,6 +162,11 @@
 					},
 					{ 
 						data: "terima_lain",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "terima_lain_round_down",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
