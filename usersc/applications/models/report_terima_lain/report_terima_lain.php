@@ -39,11 +39,12 @@
                 SUM( ABS(IFNULL(a.abnormal,0)) ) abnormal,
                 0 AS selisih,
                 (-SUM(a.pot_hk) + SUM(ABS(IFNULL(a.abnormal, 0)))) AS total,
-                (nominal_gp / 173) AS pengali,
-                (-SUM(a.pot_hk) + SUM(ABS(IFNULL(a.abnormal, 0)))) * (nominal_gp / 173) AS terima_lain
+                ( (nominal_gp + nominal_t_jab) / 173) AS pengali,
+                (-SUM(a.pot_hk) + SUM(ABS(IFNULL(a.abnormal, 0)))) * ( (nominal_gp + nominal_t_jab) / 173) AS terima_lain
 
             FROM htsprrd a
             INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
+            INNER JOIN hemjbmh c on c.id_hemxxmh = b.id
 
             -- gaji pokok
             LEFT JOIN (
@@ -65,8 +66,31 @@
                 ) AS subquery
                 WHERE row_num = 1
             ) tbl_htpr_hemxxmh ON tbl_htpr_hemxxmh.id_hemxxmh = b.id
-                                        
-            WHERE a.tanggal BETWEEN :start_date AND :end_date
+
+            -- t jabatan
+            LEFT JOIN (
+                SELECT
+                    id_hevxxmh,
+                    tanggal_efektif,
+                    nominal AS nominal_t_jab
+                FROM (
+                    SELECT
+                        a.id,
+                        a.id_hevxxmh,
+                        a.tanggal_efektif,
+                        a.nominal,
+                        ROW_NUMBER() OVER (PARTITION BY id_hevxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                    FROM htpr_hevxxmh AS a
+                    INNER JOIN hevxxmh AS b ON b.id = a.id_hevxxmh
+                    INNER JOIN hemjbmh AS c ON c.id_hevxxmh = b.id
+                    WHERE
+                        a.id_hpcxxmh = 32
+                        AND tanggal_efektif <= :start_date
+                ) AS subquery
+                WHERE row_num = 1
+            ) t_jabatan ON t_jabatan.id_hevxxmh = c.id_hevxxmh
+
+            WHERE a.tanggal BETWEEN :start_date AND :end_date AND c.id_heyxxmd = 1
             GROUP BY a.id_hemxxmh
             '
             );
