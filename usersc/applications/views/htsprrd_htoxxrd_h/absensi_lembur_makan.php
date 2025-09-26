@@ -214,9 +214,6 @@
 					// END breaking generate button
 				],
 				rowCallback: function( row, data, index ) {
-					if ( data.htsprrd.is_active == 0 ) {
-						$('td', row).addClass('text-danger');
-					}
 				},
 				footerCallback: function ( row, data, start, end, display ) {
 					var api = this.api();
