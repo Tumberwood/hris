@@ -48,6 +48,7 @@
 					-- Kategori berdasarkan istirahat dan jam kerja
 					CASE
 						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30 THEN "Istirahat > 30 menit"
+						WHEN a.pot_ti > 0 AND f.id = 1 AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) < 30 THEN "TI Gedung 3 Tidak Sah"
 						WHEN a.pot_jam > 0 then "Jam Kerja (durasi kerja < 7/8 jam)"
 						ELSE "Normal"
 					END AS kategori,
@@ -71,7 +72,7 @@
 						DATE_FORMAT( CONCAT(a.tanggal, " ", a.jam) , "%d %b %Y %H:%i") makan
 					FROM htsprtd a
 					LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
-					WHERE a.tanggal BETWEEN "2024-12-18" AND DATE_ADD("2025-01-20", INTERVAL 1 DAY) AND a.nama IN ("MAKAN", "MAKAN MANUAL")
+					WHERE a.tanggal BETWEEN :start_date AND DATE_ADD(:end_date, INTERVAL 1 DAY) AND a.nama IN ("MAKAN", "MAKAN MANUAL")
 					GROUP BY b.id, a.tanggal
 				) mk on mk.ceklok BETWEEN a.clock_in AND a.clock_out AND mk.id_hemxxmh = a.id_hemxxmh
 
