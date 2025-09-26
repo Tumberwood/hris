@@ -68,6 +68,8 @@ $(document).ready(function () {
     // Run menu of canvas
     $('body.canvas-menu .sidebar-collapse').slimScroll({
         height: '100%',
+        size: '12px',   // Request Om Frans
+        color: '#fff',  // Request Om Frans
         railOpacity: 0.9
     });
 
