@@ -39,8 +39,8 @@
                 SUM( ABS(IFNULL(a.abnormal,0)) ) abnormal,
                 0 AS selisih,
                 (-SUM(a.pot_hk) + SUM(ABS(IFNULL(a.abnormal, 0)))) AS total,
-                ( (nominal_gp + nominal_t_jab) / 173) AS pengali,
-                (-SUM(a.pot_hk) + SUM(ABS(IFNULL(a.abnormal, 0)))) * ( (nominal_gp + nominal_t_jab) / 173) AS terima_lain
+                ( ( IFNULL(nominal_gp,0) + IFNULL(nominal_t_jab,0)) / 173) AS pengali,
+                (-SUM(a.pot_hk) + SUM(ABS(IFNULL(a.abnormal, 0)))) * ( ( IFNULL(nominal_gp,0) + IFNULL(nominal_t_jab,0)) / 173) AS terima_lain
 
             FROM htsprrd a
             INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
