@@ -169,7 +169,7 @@
 					"<rt>"+
 					"<'row'<'col-sm-4'i><'col-sm-8'p>>",
 				ajax: {
-					url: "../../models/abnormal_lembur/abnormal_lembur.php",
+					url: "../../models/absensi_lembur_makan/absensi_lembur_makan.php",
 					type: 'POST',
 					data: function (d){
 						d.start_date = start_date;
