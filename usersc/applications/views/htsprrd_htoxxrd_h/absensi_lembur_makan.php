@@ -219,7 +219,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 
-					for (var i = 5; i <= 8; i++) {
+					for (var i = 4; i <= 8; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						var sum = api.column(columnIndex, { page: 'current' }).data().sum();

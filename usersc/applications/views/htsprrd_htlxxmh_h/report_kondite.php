@@ -7,43 +7,11 @@
 ?>
 
 <?php
-	$nama_tabel       = 'htsprrd_htlxxmh_h';
-    $nama_tabels_d 	= [];
-    $nama_tabels_d[0] = 'htsprrd_htlxxmh_d';
+	$nama_tabel    = 'htsprrd';
+	$nama_tabels_d = [];
 ?>
 
 <!-- begin content here -->
- 
-<div class="modal" id="modalUpload" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content animated bounceInRight">
-			<form class="form-horizontal" id="frmUploadMaster" enctype="multipart/form-data">
-				<div class="modal-header">
-					<h4 class="modal-title">Upload Excel</h4>
-				</div>
-				<div class="modal-body">
-					<div class="form-group row">
-						<label class="col-lg-2 col-form-label">File Excel</label>
-						<div class="col-sm-4">
-							<div class="input-group">
-								<input type="file" name="filename" class="form-control" id="frmUploadItem">
-							</div>
-						</div>
-						<div class="col-sm-4">
-							<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/Data Lembur & lb Periode 18 12 2024 - 20 01 2025.xls');">
-								<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
-							</button>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-					<button class="btn btn-primary" type="submit" id="submitUpload">Submit</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
 
 <div class="row">
     <div class="col">
@@ -53,9 +21,9 @@
                 <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
             </div>
             <div class="ibox-content">
-                <form class="form-horizontal" id="frmFilter">
+                <form class="form-horizontal" id="frmhtsprrd">
                     <div class="form-group row">
-						<label class="col-lg-2 col-form-label">Tanggal Awal</label>
+                        <label class="col-lg-2 col-form-label">Periode</label>
                         <div class="col-lg-5">
                             <div class="input-group input-daterange" id="periode">
                                 <input type="text" id="start_date" class="form-control">
@@ -73,254 +41,28 @@
                         </div>
                     </div>
                 </form>
+                <div id="searchPanes1"></div>
             </div>
         </div>
     </div>
-</div>
-
-<!-- Breakdown Lembur Modal dengan Tabs -->
-<div class="modal fade" id="modalBreakdown" tabindex="-1" role="dialog" aria-labelledby="myModal1Label" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title" id="myModal1Label">Breakdown Absensi</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <div class="modal-body">
-
-        <!-- Tabs -->
-        <ul class="nav nav-tabs mb-3" id="lemburTab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="tab-al" data-toggle="tab" href="#content-al" role="tab">AL</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="tab-sdl" data-toggle="tab" href="#content-sdl" role="tab">SDL (s3)</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="tab-it" data-toggle="tab" href="#content-it" role="tab">IT (Izin Pribadi)</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="tab-ip" data-toggle="tab" href="#content-ip" role="tab">IP</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="tab-lb" data-toggle="tab" href="#content-lb" role="tab">LB</a>
-          </li>
-        </ul>
-
-        <!-- Tab Contents -->
-        <div class="tab-content" id="lemburTabContent">
-
-          <!-- AL Tab -->
-          <div class="tab-pane fade show active" id="content-al" role="tabpanel">
-            <div class="table-responsive">
-              <table id="table_al" class="table table-striped table-bordered table-hover nowrap" width="100%">
-                <thead>
-                  <tr>
-                    <th>Tanggal</th>
-                    <th>NIP</th>
-                    <th>Nama</th>
-                    <th>Status In</th>
-                    <th>Status Out</th>
-                    <th>Keterangan</th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-          </div>
-
-          <!-- IP Tab -->
-          <div class="tab-pane fade" id="content-ip" role="tabpanel">
-            <div class="table-responsive">
-              <table id="table_ip" class="table table-striped table-bordered table-hover nowrap" width="100%">
-                <thead>
-                  <tr>
-                    <th>Tanggal</th>
-                    <th>NIP</th>
-                    <th>Nama</th>
-                    <th>Status In</th>
-                    <th>Status Out</th>
-                    <th>Keterangan</th>
-                    <th>Pot HK</th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-          </div>
-
-          <!-- SDL Tab -->
-          <div class="tab-pane fade" id="content-sdl" role="tabpanel">
-			  <div class="row">
-				  <div class="col-6">
-					  <h3>Report Presensi</h3>
-					  <div class="table-responsive">
-						<table id="table_sdl" class="table table-striped table-bordered table-hover nowrap" width="100%">
-						  <thead>
-							<tr>
-							  <th>Tanggal</th>
-							  <th>NIP</th>
-							  <th>Nama</th>
-							  <th>Keterangan</th>
-							</tr>
-						  </thead>
-						</table>
-					  </div>
-				  </div>
-				  <div class="col-6">
-					  <h3>Absen SDL</h3>
-					  <div class="table-responsive">
-						<table id="table_absen_sdl" class="table table-striped table-bordered table-hover nowrap" width="100%">
-						  <thead>
-							<tr>
-							  <th>Tanggal</th>
-							  <th>Kode Absen</th>
-							  <th>NIP</th>
-							  <th>Nama</th>
-							  <th>Keterangan</th>
-							</tr>
-						  </thead>
-						</table>
-					  </div>
-				  </div>
-			  </div>
-          </div>
-
-          <!-- it Tab -->
-          <div class="tab-pane fade" id="content-it" role="tabpanel">
-			  <div class="row">
-				  <div class="col-6">
-					  <h3>Report Presensi</h3>
-					  <div class="table-responsive">
-						<table id="table_it" class="table table-striped table-bordered table-hover nowrap" width="100%">
-						  <thead>
-							<tr>
-							  <th>Tanggal</th>
-							  <th>NIP</th>
-							  <th>Nama</th>
-							  <th>Keterangan</th>
-							</tr>
-						  </thead>
-						</table>
-					  </div>
-				  </div>
-				  <div class="col-6">
-					  <h3>Absen it</h3>
-					  <div class="table-responsive">
-						<table id="table_absen_it" class="table table-striped table-bordered table-hover nowrap" width="100%">
-						  <thead>
-							<tr>
-							  <th>Tanggal</th>
-							  <th>Kode Absen</th>
-							  <th>NIP</th>
-							  <th>Nama</th>
-							  <th>Keterangan</th>
-							</tr>
-						  </thead>
-						</table>
-					  </div>
-				  </div>
-			  </div>
-          </div>
-		  
-          <!-- lb Tab -->
-          <div class="tab-pane fade" id="content-lb" role="tabpanel">
-			  <div class="row">
-				  <div class="col-6">
-					  <h3>Report Presensi</h3>
-					  <div class="table-responsive">
-						<table id="table_lb" class="table table-striped table-bordered table-hover nowrap" width="100%">
-						  <thead>
-							<tr>
-							  <th>Tanggal</th>
-							  <th>NIP</th>
-							  <th>Nama</th>
-							  <th>Keterangan</th>
-							</tr>
-						  </thead>
-						</table>
-					  </div>
-				  </div>
-				  <div class="col-6">
-					  <h3>Absen lb</h3>
-					  <div class="table-responsive">
-						<table id="table_absen_lb" class="table table-striped table-bordered table-hover nowrap" width="100%">
-						  <thead>
-							<tr>
-							  <th>Tanggal</th>
-							  <th>Kode Absen</th>
-							  <th>NIP</th>
-							  <th>Nama</th>
-							  <th>Keterangan</th>
-							</tr>
-						  </thead>
-						</table>
-					  </div>
-				  </div>
-			  </div>
-          </div>
-
-        </div> <!-- End Tab Contents -->
-
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
 </div>
 
 <div class="row">
-    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-w-xs">
+	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-content">
-				<div class="table-responsive">
-                    <table id="tblhtsprrd_htlxxmh_h" class="table table-striped table-bordered table-hover nowrap" width="100%">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Tanggal Awal</th>
-                                <th>Tanggal Akhir</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 p-w-xs">
-		<div class="ibox ">
-			<div class="ibox-title">
-				<h5>Detail</h5>
-			</div>
-			<div class="ibox-content">
-				<div class="row">
-					<div class="col">
-						<div class="ibox collapsed" id="iboxfilter">
-							<div class="ibox-title p-xs">
-								<h5 class="text-navy">Filter</h5>&nbsp
-								<button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
-							</div>
-							<div class="ibox-content p-xs">
-								<div class="p-xs" id="searchPanes1"></div>
-							</div>
-						</div>
-					</div>
+				<div class="alert alert-info alert-dismissable">
+                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+					Apabila data presensi sudah final pada satu tanggal, mohon lakukan approval untuk mengunci data yang ada. Pastikan hanya memilih satu tanggal saja.
 				</div>
 				<div class="table-responsive">
-                    <table id="tblhtsprrd_htlxxmh_d" class="table table-striped table-bordered table-hover nowrap" width="100%">
+                    <table id="tblhtsprrd" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
 							<tr>
-								<th >ID</th>
-								<th >id_htsprrd_htlxxmh_h</th>
-								<th >NIP</th>
-								<th >Nama</th>
-								<th >Status</th>
+								<th>NIP</th>
+								<th>Nama</th>
+								<th>Sub Tipe</th>
+								<th>Status</th>
 								<th>AL</th>
 								<th>S3</th>
 								<th>IT</th>
@@ -330,13 +72,15 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<th colspan="4">Total</th>
+								<th>Total</th>
+								<th id="total_1"></th>
+								<th id="total_2"></th>
+								<th id="total_3"></th>
 								<th id="total_4"></th>
 								<th id="total_5"></th>
 								<th id="total_6"></th>
 								<th id="total_7"></th>
 								<th id="total_8"></th>
-								<th id="total_9"></th>
 							</tr>
 						</tfoot>
                     </table>
@@ -344,8 +88,7 @@
 			</div>
 		</div>
 	</div>
-
-</div> <!-- end of row -->
+</div>
 
 <!-- BEGIN JS -->
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_load.php'; ?>
@@ -353,15 +96,16 @@
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_datatables_load.php'; ?>
 <script src="<?=$us_url_root?>usersc/helpers/hakaksescrud_hd_fn.js"></script>
 
-<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/htsprrd_htlxxmh_h/fn/htsprrd_htlxxmh_h_fn.php'; ?>
-
+<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/htsprrd_overtime/fn/htsprrd_fn.php'; ?>
 <!-- BEGIN datatables here -->
 <script type="text/javascript">
 		// ------------- default variable, do not erase
-		var edthtsprrd_htlxxmh_h, tblhtsprrd_htlxxmh_h, show_inactive_status_htsprrd_htlxxmh_h = 0, id_htsprrd_htlxxmh_h;
-        var edthtsprrd_htlxxmh_d, tblhtsprrd_htlxxmh_d, show_inactive_status_htsprrd_htlxxmh_d = 0, id_htsprrd_htlxxmh_d;
+		var tblhtsprrd, show_inactive_status_htsprrd = 0;
 		// ------------- end of default variable
-		
+
+		var id_hemxxmh = 0;
+		var id_hemxxmh_old = 0;
+
 		// BEGIN datepicker init
 		$('#periode').datepicker({
 			setDate: new Date(),
@@ -371,212 +115,50 @@
 			format: "dd M yyyy",
 			minViewMode: 'month' 
 		});
-		$('#start_date').datepicker('setDate', awal_bulan_dmy);
+		$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
 		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
         // END datepicker init
 
+        // BEGIN select2 init
+        $("#select_hemxxmh").select2({
+			placeholder: 'Ketik atau TekanTanda Panah Kanan',
+			allowClear: true,
+			ajax: {
+				url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+				dataType: 'json',
+				data: function (params) {
+					var query = {
+						id_hemxxmh_old: id_hemxxmh_old,
+						search: params.term || '',
+						page: params.page || 1
+					}
+						return query;
+				},
+				processResults: function (data, params) {
+					return {
+						results: data.results,
+						pagination: {
+							more: true
+						}
+					};
+				},
+				cache: true,
+				minimumInputLength: 1,
+				maximum: 10,
+				delay: 500,
+				maximumSelectionLength: 5,
+				minimumResultsForSearch: -1,
+			}
+			
+		});
+        // END select2 init
+		
 		$(document).ready(function() {
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 			
-			//start datatables editor
-			edthtsprrd_htlxxmh_h = new $.fn.dataTable.Editor( {
-				ajax: {
-					url: "../../models/htsprrd_htlxxmh_h/htsprrd_htlxxmh_h.php",
-					type: 'POST',
-					data: function (d){
-						d.start_date = start_date;
-						d.end_date = end_date;
-						d.show_inactive_status_htsprrd_htlxxmh_h = show_inactive_status_htsprrd_htlxxmh_h;
-					}
-				},
-				table: "#tblhtsprrd_htlxxmh_h",
-				fields: [ 
-					{
-						label: "start_on",
-						name: "start_on",
-						type: "hidden"
-					},	{
-						label: "finish_on",
-						name: "finish_on",
-						type: "hidden"
-					},	{
-						label: "nama_tabel",
-						name: "nama_tabel",
-						def: "htsprrd_htlxxmh_h",
-						type: "hidden"
-					},	{
-						label: "Active Status",
-						name: "htsprrd_htlxxmh_h.is_active",
-                        type: "hidden",
-						def: 1
-					},	
-					{
-						label: "Tanggal Awal <sup class='text-danger'>*<sup>",  
-						name: "htsprrd_htlxxmh_h.tanggal_awal",
-						type: "datetime",
-						def: function () { 
-							return new Date(); 
-						},
-						opts:{
-							minDate: new Date('1900-01-01'),
-							firstDay: 0
-						},
-						format: 'DD MMM YYYY'
-					},
-					{
-						label: "Tanggal Akhir <sup class='text-danger'>*<sup>",
-						name: "htsprrd_htlxxmh_h.tanggal_akhir",
-						type: "datetime",
-						def: function () { 
-							return new Date(); 
-						},
-						opts:{
-							minDate: new Date('1900-01-01'),
-							firstDay: 0
-						},
-						format: 'DD MMM YYYY'
-					},
-					{
-						label: "Keterangan",
-						name: "htsprrd_htlxxmh_h.keterangan",
-						type: "textarea"
-					}
-				]
-			} );
-			
-			edthtsprrd_htlxxmh_h.on( 'preOpen', function( e, mode, action ) {
-				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthtsprrd_htlxxmh_h.field('start_on').val(start_on);
-
-				if(action == 'create'){
-					tblhtsprrd_htlxxmh_h.rows().deselect();
-				}
-			});
-
-            edthtsprrd_htlxxmh_h.on("open", function (e, mode, action) {
-				$(".modal-dialog").addClass("modal-lg");
-			});
-			
-			edthtsprrd_htlxxmh_h.on( 'preSubmit', function (e, data, action) {
-				if(action != 'remove'){
-					tanggal_awal = edthtsprrd_htlxxmh_h.field('htsprrd_htlxxmh_h.tanggal_awal').val();
-					if(!tanggal_awal || tanggal_awal == ''){
-						edthtsprrd_htlxxmh_h.field('htsprrd_htlxxmh_h.tanggal_awal').error( 'Wajib diisi!' );
-					}
-					tanggal_akhir = edthtsprrd_htlxxmh_h.field('htsprrd_htlxxmh_h.tanggal_akhir').val();
-					if(!tanggal_akhir || tanggal_akhir == ''){
-						edthtsprrd_htlxxmh_h.field('htsprrd_htlxxmh_h.tanggal_akhir').error( 'Wajib diisi!' );
-					}
-					
-					let tglAwal = new Date(tanggal_awal);
-					let tglAkhir = new Date(tanggal_akhir);
-					
-					if (tglAwal > tglAkhir) {
-						edthtsprrd_htlxxmh_h.field('htsprrd_htlxxmh_h.tanggal_awal').error('Tanggal awal tidak boleh lebih besar dari tanggal akhir.');
-						edthtsprrd_htlxxmh_h.field('htsprrd_htlxxmh_h.tanggal_akhir').error('Tanggal akhir tidak boleh lebih kecil dari tanggal awal.');
-					}
-				}
-				
-				if ( edthtsprrd_htlxxmh_h.inError() ) {
-					return false;
-				}
-			});
-
-			edthtsprrd_htlxxmh_h.on('initSubmit', function(e, action) {
-				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edthtsprrd_htlxxmh_h.field('finish_on').val(finish_on);
-			});
-			
-			edthtsprrd_htlxxmh_h.on( 'postSubmit', function (e, json, data, action, xhr) {
-				// event setelah Create atau Edit, dibedakan dari parameter action
-				// action : "create" | "edit"
-				// do something
-			} );
-			
 			//start datatables
-			tblhtsprrd_htlxxmh_h = $('#tblhtsprrd_htlxxmh_h').DataTable( {
-				ajax: {
-					url: "../../models/htsprrd_htlxxmh_h/htsprrd_htlxxmh_h.php",
-					type: 'POST',
-					data: function (d){
-						d.start_date = start_date;
-						d.end_date = end_date;
-						d.show_inactive_status_htsprrd_htlxxmh_h = show_inactive_status_htsprrd_htlxxmh_h;
-					}
-				},
-				order: [[ 1, "asc" ]],
-				columns: [
-					{ data: "htsprrd_htlxxmh_h.id",visible:false },
-					{ data: "htsprrd_htlxxmh_h.tanggal_awal" },
-					{ data: "htsprrd_htlxxmh_h.tanggal_akhir" },
-				],
-				buttons: [
-
-					// BEGIN breaking generate button
-					<?php
-						$id_table    = 'id_htsprrd_htlxxmh_h';
-						$table       = 'tblhtsprrd_htlxxmh_h';
-						$edt         = 'edthtsprrd_htlxxmh_h';
-						$show_status = '_htsprrd_htlxxmh_h';
-						$table_name  = $nama_tabel;
-
-						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
-						$arr_buttons_action 	= [];
-						$arr_buttons_approve 	= [];
-						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
-					?>
-					// END breaking generate button
-				],
-				rowCallback: function( row, data, index ) {
-					if ( data.htsprrd_htlxxmh_h.is_active == 0 ) {
-						$('td', row).addClass('text-danger');
-					}
-				}
-			} );
-			tblhtsprrd_htlxxmh_h.button('btnUpload:name').disable();
-			
-			tblhtsprrd_htlxxmh_h.on( 'init', function () {
-				// atur hak akses
-				tbl_details = [tblhtsprrd_htlxxmh_d];
-				CekInitHeaderHD(tblhtsprrd_htlxxmh_h, tbl_details);
-			} );
-			
-			tblhtsprrd_htlxxmh_h.on( 'select', function( e, dt, type, indexes ) {
-				data_htsprrd_htlxxmh_h = tblhtsprrd_htlxxmh_h.row( { selected: true } ).data().htsprrd_htlxxmh_h;
-				id_htsprrd_htlxxmh_h  = data_htsprrd_htlxxmh_h.id;
-				id_transaksi_h   = id_htsprrd_htlxxmh_h; // dipakai untuk general
-				is_approve       = data_htsprrd_htlxxmh_h.is_approve;
-				is_nextprocess   = data_htsprrd_htlxxmh_h.is_nextprocess;
-				is_jurnal        = data_htsprrd_htlxxmh_h.is_jurnal;
-				is_active        = data_htsprrd_htlxxmh_h.is_active;
-				
-				// atur hak akses
-				tbl_details = [tblhtsprrd_htlxxmh_d];
-				CekSelectHeaderHD(tblhtsprrd_htlxxmh_h, tbl_details);
-				cekDetail();
-				
-				if (c_id > 0) {
-					tblhtsprrd_htlxxmh_h.button('btnUpload:name').disable();
-				} else {
-					tblhtsprrd_htlxxmh_h.button('btnUpload:name').enable();
-				}
-			} );
-			
-			tblhtsprrd_htlxxmh_h.on( 'deselect', function () {
-				// reload dipanggil di function CekDeselectHeader
-				id_htsprrd_htlxxmh_h = '';
-
-				// atur hak akses
-				tbl_details = [tblhtsprrd_htlxxmh_d];
-				CekDeselectHeaderHD(tblhtsprrd_htlxxmh_h, tbl_details);
-				tblhtsprrd_htlxxmh_h.button('btnUpload:name').disable();
-			} );
-			
-// --------- start _detail --------------- //
-
-			//start datatables
-			tblhtsprrd_htlxxmh_d = $('#tblhtsprrd_htlxxmh_d').DataTable( {
+			tblhtsprrd = $('#tblhtsprrd').DataTable( {
 				searchPanes:{
 					layout: 'columns-2',
 				},
@@ -587,10 +169,11 @@
 					"<rt>"+
 					"<'row'<'col-sm-4'i><'col-sm-8'p>>",
 				ajax: {
-					url: "../../models/htsprrd_htlxxmh_h/htsprrd_htlxxmh_d.php",
+					url: "../../models/report_kondite/report_kondite.php",
 					type: 'POST',
 					data: function (d){
-						d.id_htsprrd_htlxxmh_h = id_htsprrd_htlxxmh_h;
+						d.start_date = start_date;
+						d.end_date = end_date;
 					},
 					dataSrc: 'data.lembur'
 				},
@@ -600,88 +183,54 @@
 				responsive: false,
 				order: [[ 2, "asc" ]],
 				columns: [
-					{ data: "id",visible:false },
-					{ data: "id_htsprrd_htlxxmh_h",visible:false },
-					{ 
-					data: "kode",
-						render: function(data, type, row) {
-							return '<a target="_blank" href="../htsprrd_2/htsprrd_2.php?id_hemxxmh=' + row.id_hemxxmh + 
-								'&start_date=' + row.start_date + 
-								'&end_date=' + row.end_date + '">' + data + '</a>';
-						}
-					},
-					{ 
-					data: "nama",
-						render: function(data, type, row) {
-							return '<a target="_blank" href="../htsprrd_2/htsprrd_2.php?id_hemxxmh=' + row.id_hemxxmh + 
-								'&start_date=' + row.start_date + 
-								'&end_date=' + row.end_date + '">' + data + '</a>';
-						}
-					},
-
+					{ data: "kode" },
+					{ data: "nama" },
+					{ data: "sub_tipe" },
 					{ data: "status" },
-					{ data: "al_db" },
-					{ data: "s3_db" },
-					{ data: "it_db" },
-					{ data: "lb_db" },
+					{ data: "al" },
+					{ data: "s3" },
+					{ data: "it" },
+					{ data: "lb" },
 					{ data: "total_kondite" },
 				],
-				buttons: [
+				buttons: [	
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_htsprrd_htlxxmh_d';
-						$table       = 'tblhtsprrd_htlxxmh_d';
-						$edt         = 'edthtsprrd_htlxxmh_d';
-						$show_status = '_htsprrd_htlxxmh_d';
-						$table_name  = $nama_tabels_d[0];
+						$id_table    = 'id_htsprrd';
+						$table       = 'tblhtsprrd';
+						$edt         = 'edthtsprrd';
+						$show_status = '_htsprrd';
+						$table_name  = $nama_tabel;
 
-						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
 						$arr_buttons_action 	= [];
 						$arr_buttons_approve 	= [];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
-					,{
-						text: '<i class="fa fa-list"> Detail</i>',
-						name: 'btnBreakdown',
-						className: 'btn btn-outline',
-						titleAttr: 'Breakdown ',
-						action: function ( e, dt, node, config ) {
-							e.preventDefault(); 
-							$('#modalBreakdown').modal('show');
-						}
-					}
 				],
-				initComplete: function() {
-					this.api().searchPanes.rebuildPane();
-				},
-				rowCallback: function(row, data) {
-					if (data.is_tidak_sesuai == 1) {
-						$(row).addClass('text-danger');
-					}
+				rowCallback: function( row, data, index ) {
 				},
 				footerCallback: function ( row, data, start, end, display ) {
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 
-					for (var i = 4; i <= 9; i++) {
+					for (var i = 4; i <= 8; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
 						$('#total_' + columnIndex).html(numFormat(sum_all));
 					}
+					var tidak_sesuai = api.column(8).data().sum();
+					$('#tidak_sesuai').html(numFormat(tidak_sesuai));
 				},
 				columnDefs: [
-					{ 
-						targets: [5, 6, 7, 8, 9], 
-						className: "text-right",
-						render: $.fn.dataTable.render.number(',', '.', 1, '', ''),
-					},
+					{ targets: [5, 6, 7, 8, 8], className: "text-right" },
 					{
 						searchPanes:{
 							show: true,
 						},
-						targets: [4]
+						targets: [2,3]
 					},
 					{
 						searchPanes:{
@@ -689,121 +238,62 @@
 						},
 						targets: '_all'
 					}
-				]
+				],
+				initComplete: function() {
+					this.api().searchPanes.rebuildPane();
+				}
 			} );
-			
-			tblhtsprrd_htlxxmh_d.searchPanes.container().appendTo( '#searchPanes1' );
-			tblhtsprrd_htlxxmh_d.button('btnBreakdown:name').disable();
 
-			tblhtsprrd_htlxxmh_d.on( 'select', function( e, dt, type, indexes ) {
-				data_htsprrd_htlxxmh_d = tblhtsprrd_htlxxmh_d.row( { selected: true } ).data();
-				id_hemxxmh       = data_htsprrd_htlxxmh_d.id_hemxxmh;
-				start_date       = data_htsprrd_htlxxmh_d.start_date;
-				end_date       = data_htsprrd_htlxxmh_d.end_date;
-				kode       = data_htsprrd_htlxxmh_d.kode;
-				kode_finger = kode.slice(-4);
+			tblhtsprrd.searchPanes.container().appendTo( '#searchPanes1' );
 
-				tblhtsprrd_htlxxmh_d.button('btnBreakdown:name').enable();
-				breakdown(id_hemxxmh, start_date, end_date);
+			tblhtsprrd.on( 'select', function( e, dt, type, indexes ) {
+				htsprrd_data    = tblhtsprrd.row( { selected: true } ).data().htsprrd;
+				id_htsprrd      = htsprrd_data.id;
+				status_presensi_in      = htsprrd_data.status_presensi_in;
+				status_presensi_out      = htsprrd_data.status_presensi_out;
+				st_clock_in      = htsprrd_data.st_clock_in;
+				st_clock_out      = htsprrd_data.st_clock_out;
+				id_hemxxmh_select      = htsprrd_data.id_hemxxmh;
+				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
+				tanggal      = htsprrd_data.tanggal;
+				cek      = htsprrd_data.cek;
+				htlxxrh_kode      = htsprrd_data.htlxxrh_kode;
+				
 			} );
 			
-			tblhtsprrd_htlxxmh_d.on( 'deselect', function () {
-				// reload dipanggil di function CekDeselectHeader
-				id_hemxxmh = 0;
-				start_date = '';
-				end_date = '';
-				kode_finger = '';
-				tblhtsprrd_htlxxmh_d.button('btnBreakdown:name').disable();
+			tblhtsprrd.on( 'deselect', function () {
+				tblhtsprrd.button('btncekNol:name').disable();
+				tblhtsprrd.button('btnPresensiOK:name').disable();
 			} );
-// --------- end _detail --------------- //		
-			
-			$("#frmFilter").submit(function(e) {
+				
+			$("#frmhtsprrd").submit(function(e) {
 				e.preventDefault();
 			}).validate({
 				rules: {
 					
 				},
-				submitHandler: function(frmFilter) {
+				submitHandler: function(frmhtsprrd) {
 					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
 					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
+					id_hemxxmh = $('#select_hemxxmh').val();
 					
 					notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
 					},{
-						z_index: 9999,
+						z_index: 8888,
 						allow_dismiss: false,
 						type: 'info',
 						delay: 0
 					});
 
-					tblhtsprrd_htlxxmh_h.rows().deselect();
-					tblhtsprrd_htlxxmh_d.rows().deselect();
-					tblhtsprrd_htlxxmh_h.ajax.reload(function ( json ) {
+					tblhtsprrd.ajax.reload(function ( json ) {
 						notifyprogress.close();
 					}, false);
 					return false; 
 				}
 			});
-
 			
-			var frmUploadMaster = $("#frmUploadMaster").submit(function(e) {
-				e.preventDefault();
-				// $('#submit_ceklok').hide();
-			}).validate({
-				rules: {
-					filename: "required"
-				},
-				messages: {
-					filename: "Pilih file yang akan di-upload!"
-				},
-				submitHandler: function(form) { 
-					$('#submitUpload').hide();
-					let notifyprogress = $.notify({
-						message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
-					},{
-						allow_dismiss: false,
-						type: 'danger',
-						delay: 0,
-						element: 'body',
-					});
-
-					//item
-					var fd_item = new FormData();
-					var item = $('#frmUploadItem')[0].files[0];
-					if (item != undefined) {
-						fd_item.append('filename',item);
-						fd_item.append('id_htsprrd_htlxxmh_h',id_htsprrd_htlxxmh_h);
 			
-						$.ajax( {
-							url: "../../models/htsprrd_htlxxmh_h/htsprrd_htlxxmh_h_fn_upload.php",
-							type: 'POST',
-							dataType: 'json',
-							data: fd_item,
-							contentType: false,
-							processData: false,
-							success: function ( json ) {
-								notifyprogress.close();
-
-								$.notify({
-									message: json.data.message
-								},{
-									type: json.data.type_message
-								});
-
-								$("#frmUploadItem").val('');
-								tblhtsprrd_htlxxmh_h.ajax.reload(null,false);
-								tblhtsprrd_htlxxmh_d.ajax.reload(null,false);
-								$('#modalUpload').modal('toggle'); 
-								$('#submitUpload').show();
-							},
-							error: function (xhr, Status, err){
-								// console.log('x');
-							}
-						} );
-					}
-				}
-			});
-
 		} );// end of document.ready
 	
 	</script>
