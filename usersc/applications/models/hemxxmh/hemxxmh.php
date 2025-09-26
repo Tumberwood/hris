@@ -40,6 +40,8 @@
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemjbmh.id_holxxmd_2' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemxxmh.id_gctxxmh_lahir' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemxxmh.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper(trim($val));

@@ -140,6 +140,27 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
+								<editor-field name="hemxxmh.gender"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.id_gctxxmh_lahir"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.tanggal_lahir"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.alamat"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.ktp_alamat"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
 								<editor-field name="hemxxmh.keterangan"></editor-field>
 							</div>
 							<div class="col-lg-6">
@@ -159,7 +180,7 @@
                                 <th>No KTP</th>
                                 <th>Nama</th>
                                 <th>Department</th>
-                                <th>Section</th>
+                                <th>Bagian</th>
                                 <th>Jabatan</th>
                                 <th>Area Kerja</th>
                                 <th>Tipe</th>
@@ -316,7 +337,7 @@
 		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0, id_hevxxmh_old = 0, id_heyxxmh_old = 0, id_hesxxmh_old = 0;
 		var id_hedlvmh_old = 0;
 		var id_gtxpkmh_old = 0, id_holxxmd_2_old = 0;
-		var id_heyxxmd_old = 0, tanggal_keluar_old = null;
+		var id_heyxxmd_old = 0, tanggal_keluar_old = null, id_gctxxmh_old = 0;
 
 		$(document).ready(function() {
 
@@ -450,7 +471,7 @@
 						}
 					},
 					{
-						label: "Section <sup class='text-danger'>*<sup>",
+						label: "Bagian <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_hosxxmh",
 						type: "select2",
 						opts: {
@@ -842,6 +863,71 @@
 						name: "hemdcmh.npwp_alamat",
 						type: "textarea"
 					},
+					{
+						label: "Gender <sup class='text-danger'>*<sup>",
+						name: "hemxxmh.gender",
+						type: "select2",
+						options: [
+							{ "label": "Laki-laki", "value": "Laki-laki" },
+							{ "label": "Perempuan", "value": "Perempuan" },
+						]
+					},
+					{
+						label: "Kota Lahir <sup class='text-danger'>*<sup>",
+						name: "hemxxmh.id_gctxxmh_lahir",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/core/gctxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_gctxxmh_old: id_gctxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+									return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1
+							}
+						}
+					},
+					{
+						label: "Tanggal Lahir  <sup class='text-danger'>*<sup>",
+						name: "hemxxmh.tanggal_lahir",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},
+					{
+						label: "Alamat Domisili" ,
+						name: "hemdcmh.alamat",
+						type: "textarea"
+					},
+					{
+						label: "Alamat KTP " ,
+						name: "hemdcmh.ktp_alamat",
+						type: "textarea"
+					},
 				]
 			} );
 			
@@ -902,6 +988,21 @@
 			
 			edthemxxmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
+					id_gctxxmh_lahir = edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').val();
+					if(!id_gctxxmh_lahir || id_gctxxmh_lahir == ''){
+						edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').error( 'Wajib diisi!' );
+					}
+					
+					gender = edthemxxmh.field('hemxxmh.gender').val();
+					if(!gender || gender == ''){
+						edthemxxmh.field('hemxxmh.gender').error( 'Wajib diisi!' );
+					}
+
+					tanggal_lahir = edthemxxmh.field('hemxxmh.tanggal_lahir').val();
+					if(!tanggal_lahir || tanggal_lahir == ''){
+						edthemxxmh.field('hemxxmh.tanggal_lahir').error( 'Wajib diisi!' );
+					}
+					
 					// BEGIN of validasi hemxxmh.kode 
 					kode = edthemxxmh.field('hemxxmh.kode').val();
 					if(!kode || kode == ''){
@@ -990,15 +1091,6 @@
 					no_bpjs_tk = edthemxxmh.field('hemdcmh.no_bpjs_tk').val();
 					if(!no_bpjs_tk || no_bpjs_tk == ''){
 						edthemxxmh.field('hemdcmh.no_bpjs_tk').error( 'Wajib diisi!' );
-					}
-					// validasi min atau max angka
-					if(no_bpjs_tk <= 0 ){
-						edthemxxmh.field('hemdcmh.no_bpjs_tk').error( 'Inputan harus > 0' );
-					}
-					
-					// validasi angka
-					if(isNaN(no_bpjs_tk) ){
-						edthemxxmh.field('hemdcmh.no_bpjs_tk').error( 'Inputan harus berupa Angka!' );
 					}
 					// END of validasi hemxxmh.no_bpjs_tk 
 
@@ -1276,6 +1368,7 @@
 				is_nextprocess   = data_hemxxmh.is_nextprocess;
 				is_jurnal        = data_hemxxmh.is_jurnal;
 				is_active        = data_hemxxmh.is_active;
+				id_gctxxmh_old        = data_hemxxmh.id_gctxxmh_lahir;
 
 				data_hemjbmh = tblhemxxmh.row( { selected: true } ).data().hemjbmh;
 				id_hovxxmh_old   = data_hemjbmh.id_hovxxmh;
@@ -1322,6 +1415,7 @@
 				id_gtxpkmh_old = 0;
 				id_hovxxmh_old   = 0, id_hodxxmh_old   = 0, id_hosxxmh_old   = 0, id_hevxxmh_old   = 0, id_hetxxmh_old   = 0, id_heyxxmh_old   = 0, id_hesxxmh_old   = 0, tanggal_keluar_old = null;
 				id_holxxmd_2_old   = 0;
+				id_gctxxmh_old   = 0;
 
 				// atur hak akses
 				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth, tblhemjbrd];
