@@ -10,7 +10,7 @@
 	$nama_tabel       = 'udpxxsh';
     $nama_tabels_d    = [];
     $nama_tabels_d[0] = 'udpbrsd';
-    $nama_tabels_d[1] = 'udpeysd';
+    $nama_tabels_d[1] = 'udp_heyxxmd';
     $nama_tabels_d[2] = 'ucudasd';
 ?>
 
@@ -50,7 +50,7 @@
                 <div class="tabs-container">
                     <ul class="nav nav-tabs" role="tablist">
                         <li><a class="nav-link active" data-toggle="tab" href="#tabudpbrsd">Cabang</a></li>
-                        <li><a class="nav-link" data-toggle="tab" href="#tabudpeysd"> Employee Type</a></li>
+                        <li><a class="nav-link" data-toggle="tab" href="#tabudp_heyxxmd"> Sub Tipe</a></li>
                         <li><a class="nav-link" data-toggle="tab" href="#tabucudasd"> CRUD</a></li>
                     </ul>
                     <div class="tab-content">
@@ -68,14 +68,14 @@
                                 </table>
                             </div>
                         </div>
-                        <div role="tabpanel" id="tabudpeysd" class="tab-pane">
+                        <div role="tabpanel" id="tabudp_heyxxmd" class="tab-pane">
                             <div class="panel-body">
-                                <table id="tbludpeysd" class="table table-striped table-bordered table-hover" width="100%">
+                                <table id="tbludp_heyxxmd" class="table table-striped table-bordered table-hover" width="100%">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
                                             <th>id_udpxxsh</th>
-                                            <th>Employee Type</th>
+                                            <th>Sub Tipe</th>
                                             <th>Keterangan</th>
                                         </tr>
                                     </thead>
@@ -121,14 +121,14 @@
 		// ------------- default variable, do not erase
 		var edtudpxxsh, tbludpxxsh, show_inactive_status = 0, id_udpxxsh;
 		var edtudpbrsd, tbludpbrsd, show_inactive_status_udpbrsd = 0, udpbrsd;
-		var edtudpeysd, tbludpeysd, show_inactive_status_udpeysd = 0, udpeysd;
+		var edtudp_heyxxmd, tbludp_heyxxmd, show_inactive_status_udp_heyxxmd = 0, udp_heyxxmd;
         var edtucudasd, tblucudasd, show_inactive_status_ucudasd = 0, ucudasd;
 		// ------------- end of default variable
 
         var id_users_old = 0;
         var id_users;
         var id_gbrxxmh_old = 0;
-        var id_heyxxmh_old = 0;
+        var id_heyxxmd_old = 0;
 		
 		$(document).ready(function() {
         
@@ -294,7 +294,7 @@
 
             tbludpxxsh.on( 'init', function () {
 				// atur hak akses
-				tbl_details = [tbludpbrsd, tbludpeysd, tblucudasd];
+				tbl_details = [tbludpbrsd, tbludp_heyxxmd, tblucudasd];
 				CekInitHeaderHD(tbludpxxsh, tbl_details);
 
                 tblucudasd.button( 'btnRefreshPages:name' ).disable();
@@ -313,7 +313,7 @@
                 id_users_old   = udpxxsh_data.id_users;
 				
 				// atur hak akses
-				tbl_details = [tbludpbrsd, tbludpeysd, tblucudasd];
+				tbl_details = [tbludpbrsd, tbludp_heyxxmd, tblucudasd];
 				CekSelectHeaderHD(tbludpxxsh, tbl_details);
 
                 tblucudasd.button( 'btnRefreshPages:name' ).enable();
@@ -327,7 +327,7 @@
                 id_users_old = 0;
 
 				// atur hak akses
-				tbl_details = [tbludpbrsd, tbludpeysd, tblucudasd];
+				tbl_details = [tbludpbrsd, tbludp_heyxxmd, tblucudasd];
 				CekDeselectHeaderHD(tbludpxxsh, tbl_details);
 
                 tblucudasd.button( 'btnRefreshPages:name' ).disable();
@@ -499,17 +499,17 @@
             
             // end detail cabang
 
-            // start detail employee type
-            edtudpeysd = new $.fn.dataTable.Editor( {
+            // start detail Sub Tipe
+            edtudp_heyxxmd = new $.fn.dataTable.Editor( {
                 ajax: {
-                    url: "../../models/core/udpeysd.php",
+                    url: "../../models/core/udp_heyxxmd.php",
                     type: 'POST',
                     data: function (d){
                         d.show_inactive_status = show_inactive_status;
                         d.id_udpxxsh = id_udpxxsh;
                     }
                 },
-                table: "#tbludpeysd",
+                table: "#tbludp_heyxxmd",
                 fields: [ 
                     {
                         label: "start_on",
@@ -522,26 +522,26 @@
 					},	{
                         label: "nama_tabel",
                         name: "nama_tabel",
-                        def: "udpeysd",
+                        def: "udp_heyxxmd",
                         type: "hidden"
                     },	{
                         label: "id_udpxxsh",
-                        name: "udpeysd.id_udpxxsh",
+                        name: "udp_heyxxmd.id_udpxxsh",
                         type: "hidden"
                     },	{
-                        label: "Employee Type",
-                        name: "udpeysd.id_heyxxmh",
+                        label: "Sub Tipe",
+                        name: "udp_heyxxmd.id_heyxxmd",
                         type: "select2",
                         opts: {
                             placeholder : "Select",
                             allowClear: true,
                             multiple: false,
                             ajax: {
-                                url: "../../models/heyxxmh/heyxxmh_fn_opt.php",
+                                url: "../../models/heyxxmd/heyxxmd_fn_opt.php",
                                 dataType: 'json',
                                 data: function (params) {
                                     var query = {
-                                        id_heyxxmh_old: id_heyxxmh_old,
+                                        id_heyxxmd_old: id_heyxxmd_old,
                                         search: params.term || '',
                                         page: params.page || 1
                                     }
@@ -565,31 +565,31 @@
                         }
                     }, 	{
                         label: "Keterangan",
-                        name: "udpeysd.keterangan",
+                        name: "udp_heyxxmd.keterangan",
                         type: "textarea"
                     }
                 ]
             } );
             
-            edtudpeysd.on( 'preOpen', function( e, mode, action ) {
-                edtudpeysd.field('udpeysd.id_udpxxsh').val(id_udpxxsh);
+            edtudp_heyxxmd.on( 'preOpen', function( e, mode, action ) {
+                edtudp_heyxxmd.field('udp_heyxxmd.id_udpxxsh').val(id_udpxxsh);
                 
                 start_on = moment().format('YYYY-MM-DD HH:mm:ss');
-                edtudpeysd.field('start_on').val(start_on);
+                edtudp_heyxxmd.field('start_on').val(start_on);
                 
                 if (action == 'create'){
-                    tbludpeysd.rows().deselect();
+                    tbludp_heyxxmd.rows().deselect();
                 }
             });
 
-            edtudpeysd.on('initSubmit', function(e, action) {
+            edtudp_heyxxmd.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edtudpeysd.field('finish_on').val(finish_on);
+				edtudp_heyxxmd.field('finish_on').val(finish_on);
 			});
             
-            tbludpeysd = $('#tbludpeysd').DataTable( {
+            tbludp_heyxxmd = $('#tbludp_heyxxmd').DataTable( {
                 ajax: {
-                    url: "../../models/core/udpeysd.php",
+                    url: "../../models/core/udp_heyxxmd.php",
                     type: 'POST',
                     data: function (d){
                         d.show_inactive_status = show_inactive_status;
@@ -598,18 +598,18 @@
                 },
                 order: [[ 1, "asc" ]],
                 columns: [
-                    { data: "udpeysd.id",visible:false },
-                    { data: "udpeysd.id_udpxxsh",visible:false },
-                    { data: "heyxxmh.nama" },
-                    { data: "udpeysd.keterangan" }
+                    { data: "udp_heyxxmd.id",visible:false },
+                    { data: "udp_heyxxmd.id_udpxxsh",visible:false },
+                    { data: "heyxxmd.nama" },
+                    { data: "udp_heyxxmd.keterangan" }
                 ],
                 buttons: [
                     // BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_udpeysd';
-						$table       = 'tbludpeysd';
-						$edt         = 'edtudpeysd';
-						$show_status = '_udpeysd';
+						$id_table    = 'id_udp_heyxxmd';
+						$table       = 'tbludp_heyxxmd';
+						$edt         = 'edtudp_heyxxmd';
+						$show_status = '_udp_heyxxmd';
 						$table_name  = $nama_tabels_d[0];
 
                         $arr_buttons_tools      = ['show_hide','copy','excel','colvis'];;
@@ -620,47 +620,47 @@
 					// END breaking generate button
                 ],
                 rowCallback: function( row, data, index ) {
-                    if ( data.udpeysd.is_active == 0 ) {
+                    if ( data.udp_heyxxmd.is_active == 0 ) {
                         $('td', row).addClass('text-danger');
                     }
                 }
             } );
 
-            tbludpeysd.on( 'draw', function( e, settings ) { 
+            tbludp_heyxxmd.on( 'draw', function( e, settings ) { 
 				// atur hak akses
 				cek_c_detail= 1;
-				CekDrawDetailHD(tbludpxxsh, tbludpeysd, 'udpeysd' );
+				CekDrawDetailHD(tbludpxxsh, tbludp_heyxxmd, 'udp_heyxxmd' );
 				CekDrawDetailHDFinal(tbludpxxsh);
 			} );
 
-			tbludpeysd.on( 'select', function( e, dt, type, indexes ) {
+			tbludp_heyxxmd.on( 'select', function( e, dt, type, indexes ) {
 				// shorting variable
-				udpeysd_data = tbludpeysd.row( { selected: true } ).data().udpeysd;
+				udp_heyxxmd_data = tbludp_heyxxmd.row( { selected: true } ).data().udp_heyxxmd;
 
 				// set variable on select
-				id_udpeysd        = udpeysd_data.id;
-				id_transaksi_d    = id_udpeysd; // dipakai untuk general
-				is_active_d       = udpeysd_data.is_active;
+				id_udp_heyxxmd        = udp_heyxxmd_data.id;
+				id_transaksi_d    = id_udp_heyxxmd; // dipakai untuk general
+				is_active_d       = udp_heyxxmd_data.is_active;
 
-                id_heyxxmh_old = udpeysd_data.id_heyxxmh; console.log(id_heyxxmh_old);
+                id_heyxxmd_old = udp_heyxxmd_data.id_heyxxmd; console.log(id_heyxxmd_old);
 
 				// atur hak akses
-				CekSelectDetailHD(tbludpxxsh, tbludpeysd );
+				CekSelectDetailHD(tbludpxxsh, tbludp_heyxxmd );
 			} );
 
-			tbludpeysd.on( 'deselect', function() {
+			tbludp_heyxxmd.on( 'deselect', function() {
 				// set variable on deselect
-				id_udpeysd  = 0;
+				id_udp_heyxxmd  = 0;
 				is_active_d = 0;
 
-                id_heyxxmh_old = 0;
+                id_heyxxmd_old = 0;
 				
 				// atur hak akses
-				CekDeselectDetailHD(tbludpxxsh, tbludpeysd );
+				CekDeselectDetailHD(tbludpxxsh, tbludp_heyxxmd );
 			} );
 
             
-            // end detail employee type
+            // end detail Sub Tipe
 
             // start detail crud
             edtucudasd = new $.fn.dataTable.Editor( {

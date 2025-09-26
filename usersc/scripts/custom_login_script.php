@@ -58,6 +58,7 @@ if($_SESSION['user'] < 101){
 
 	$_SESSION['id_hemxxmh'] = 1;
 	$_SESSION['str_arr_ha_heyxxmh'] = 0;
+	$_SESSION['str_arr_ha_heyxxmd'] = 0;
 	
 	Redirect::to($us_url_root.'usersc/applications/views/core/dashboard.php');
 
@@ -172,7 +173,31 @@ if($_SESSION['user'] < 101){
 		}
 		// END get hak akses heyxxmh
 
+		// BEGIN get SUB TIPE
+		$qs_heyxxmd = "
+			SELECT 
+				id_heyxxmd
+			FROM udpeysd a
+			WHERE 
+				a.is_active = 1 AND 
+				a.id_udpxxsh = " . $result_udpxxsh[0]->id;
+		$query_heyxxmd = $db->query($qs_heyxxmd);
+		$c_ha_heyxxmd = $query_heyxxmd->count();
 
+		if($c_ha_heyxxmd  > 0){
+			$rs_ha_heyxxmd = $query_heyxxmd->results();
+			
+			$arr_ha_heyxxmd=array();
+			foreach ($rs_ha_heyxxmd as $key => $value) {	
+				array_push($arr_ha_heyxxmd,$rs_ha_heyxxmd[$key]->id_heyxxmd);
+			}
+			$_SESSION['arr_ha_heyxxmd'] 		= $arr_ha_heyxxmd;
+			$_SESSION['str_arr_ha_heyxxmd'] 	= implode(",",$_SESSION['arr_ha_heyxxmd']);
+		}else{
+			$_SESSION['arr_ha_heyxxmd'] 		= [0];
+			$_SESSION['str_arr_ha_heyxxmd'] 	= (0);
+		}
+		// END get SUB TIPE
 
 		Redirect::to($us_url_root.'usersc/applications/views/core/dashboard.php');
 
