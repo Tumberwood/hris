@@ -195,7 +195,7 @@ if($_SESSION['user'] < 101){
 			$_SESSION['str_arr_ha_heyxxmd'] 	= implode(",",$_SESSION['arr_ha_heyxxmd']);
 		}else{
 			$_SESSION['arr_ha_heyxxmd'] 		= [0];
-			$_SESSION['str_arr_ha_heyxxmd'] 	= (0);
+			$_SESSION['str_arr_ha_heyxxmd'] 	= 0;
 		}
 		// END get SUB TIPE
 
