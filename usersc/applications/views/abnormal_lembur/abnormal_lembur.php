@@ -238,7 +238,7 @@
 					lembur_program = edtabnormal_lembur.field('abnormal_lembur.lembur_program').val();
 					lembur_seharusnya = edtabnormal_lembur.field('abnormal_lembur.lembur_seharusnya').val();
 
-					selisih = lembur_program -  lembur_seharusnya;
+					selisih = lembur_seharusnya - lembur_program;
 					edtabnormal_lembur.field('abnormal_lembur.selisih').val(selisih);
 				}
 				return {}
@@ -249,7 +249,7 @@
 					lembur_program = edtabnormal_lembur.field('abnormal_lembur.lembur_program').val();
 					lembur_seharusnya = edtabnormal_lembur.field('abnormal_lembur.lembur_seharusnya').val();
 
-					selisih = lembur_program -  lembur_seharusnya;
+					selisih = lembur_seharusnya - lembur_program;
 					edtabnormal_lembur.field('abnormal_lembur.selisih').val(selisih);
 				}
 				return {}
