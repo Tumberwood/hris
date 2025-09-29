@@ -776,6 +776,22 @@
                                             if(is_istirahat = 2, 1, 0)  AS is_pot_ti,
                                             if(is_istirahat = 2, durasi_break_menit, 0)  AS durasi_break_menit,
                                             CASE
+                                                -- TI Gedung 3 (SHIFT 2), untuk jabatan Koordinator Printing / Laminasi (Bagian dry / extru/solvent free) tidak kena potongan TI
+                                                WHEN 
+                                                    is_istirahat = 2 AND -- Lembur TI
+                                                    id_holxxmd_2 = 1 AND -- GEDUNG 3
+                                                    
+                                                    -- jabatan Koordinator Printing / Laminasi (Bagian dry / extru/solvent free)
+                                                    (   jb.id_hetxxmh = 55 OR
+                                                        bagian.nama LIKE "%dry%" OR
+                                                        bagian.nama LIKE "%extru%" OR
+                                                        bagian.nama LIKE "%solvent free%" 
+                                                    )
+                                                    AND durasi_break_menit > 0
+                                                    -- Shift 2
+                                                    AND (shift LIKE "SIANG%" OR shift LIKE "SORE%")
+                                                THEN 0
+
                                                 -- [16.06, 12/6/2025] +62 895-6326-78236: Iya pak. Karena jam istirahat normal kan 1 jam. Otomatis jika>1 jam, meskipun tdk ada lembur juga tetap dipotong 1jam.
                                                 WHEN durasi_break_menit > 65 THEN 1
                                                 
@@ -786,10 +802,12 @@
                                                 WHEN is_istirahat = 2 AND id_holxxmd_2 = 1 AND durasi_break_menit > 0 AND mesin NOT LIKE "%Gedung-3%" 
                                                 AND jb.id_hetxxmh <> 55
                                                 THEN 0.5
+
                                                 ELSE 0
                                             END AS potongan_ti_jam
                                         FROM htoxxrd as hto
                                         LEFT JOIN hemjbmh jb on jb.id_hemxxmh = hto.id_hemxxmh
+                                        LEFT JOIN hosxxmh bagian on bagian.id = jb.id_hosxxmh
         
                                         -- ceklok ISTIRAHAT
                                         LEFT JOIN (
@@ -799,6 +817,7 @@
                                                     a.id_hemxxmh,
                                                     a.id AS id_jadwal,
                                                     GROUP_CONCAT(c.nama) mesin,
+                                                    jad.kode shift,
                                                     CONCAT(c.tanggal," ",c.jam) AS ceklok_istirahat,
                                                     IF(DAYNAME(a.tanggal) = "Friday" AND jad.kode LIKE "%PAGI%" AND MAX(c.jam) < "13:00", 0, 
                                                         TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam)))
@@ -825,9 +844,11 @@
                                                     a.id_hemxxmh,
                                                     a.id AS id_jadwal,
                                                     GROUP_CONCAT(c.nama) mesin,
+                                                    jad.kode shift,
                                                     CONCAT(d.tanggal, " ", d.jam_awal) AS ceklok_istirahat,
                                                     TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam))) AS durasi_break_menit
                                                 FROM htssctd AS a
+                                                INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
                                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                                 INNER JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
