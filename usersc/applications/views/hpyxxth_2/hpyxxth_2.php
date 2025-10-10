@@ -25,11 +25,20 @@
 		<div class="ibox ">
 			<div class="ibox-content">
 				<div class="alert alert-info alert-dismissable">
-                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-					Sebelum melakukan Generate Payroll, pastikan sudah melakukan Approve data-data pada menu berikut ini!!!
-					<ul>
-						<li>Report Presensi</li>
-						<li>Payroll Lain-lain</li>
+					<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+					<strong>Perhatian!</strong><br>
+					Sebelum melakukan <b>Generate Payroll</b>, pastikan sudah melakukan <b>Approve</b> data-data pada menu berikut ini:
+					<ul style="margin-top: 10px;">
+						<li>
+						<a href="../htsprrd/htsprrd.php" class="text-primary" target="_blank">
+							<i class="fa fa-calendar-check-o"></i> Report Presensi
+						</a>
+						</li>
+						<li>
+						<a href="../hpy_piutang_d/hpy_piutang_d.php" class="text-primary" target="_blank">
+							<i class="fa fa-money"></i> Payroll Lain-lain
+						</a>
+						</li>
 					</ul>
 				</div>
 				<div class="table-responsive">
