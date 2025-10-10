@@ -20,6 +20,61 @@
 
 <!-- begin content here -->
 
+<!-- Breakdown -->
+<div class="modal fade" id="modalOutstandingApproval" tabindex="-1" role="dialog" aria-labelledby="myModal1Label" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title" id="myModal1Label">Outstanding Approval Report Presensi</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+		<div class="table-responsive" id="proteksi">
+			<div class="row">
+				<div class="col-12">
+					<h3>Report Presensi</h3>
+					<table id="report_presensi" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						<thead>
+							<tr>
+								<th>Tanggal</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<div class="col-12">
+					<h3>Payroll Lain-lain</h3>
+					<table id="payroll_lain" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						<thead>
+							<tr>
+                                <th>ID</th>
+                                <th>Nama</th>
+                                <th>Jenis</th>
+                                <th>Nominal</th>
+                                <th>Perhitungan</th>
+                                <th>Tanggal</th>
+                                <th>Keterangan</th>
+                                <th>Approval</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <div class="row">
 	<div class="col">
 		<div class="ibox ">
@@ -1123,125 +1178,134 @@
 					// 	}
 					// },
 					{
-	text: '<i class="fa fa-google"></i>',
-	name: 'btnGeneratePresensiNew',
-	className: 'btn btn-xs btn-outline',
-	titleAttr: '',
-	action: function (e, dt, node, config) {
-		e.preventDefault();
+						text: '<i class="fa fa-google"></i>',
+						name: 'btnGeneratePresensiNew',
+						className: 'btn btn-xs btn-outline',
+						titleAttr: '',
+						action: function (e, dt, node, config) {
+							e.preventDefault();
 
-		const timestampNow = moment().format('YYYY-MM-DD HH:mm:ss');
+							const timestampNow = moment().format('YYYY-MM-DD HH:mm:ss');
 
-		// === Langkah 1: tampilkan konfirmasi di tengah ===
-		let notifConfirm = $.notify({
-			message: `
-				<div style="text-align:center;">
-					<strong>Yakin ingin generate presensi baru?</strong><br>
-					Proses ini bisa memakan waktu beberapa saat.<br><br>
-					<button id="confirmYes" class="btn btn-xs btn-success">Ya</button>
-					<button id="confirmNo" class="btn btn-xs btn-danger">Batal</button>
-				</div>
-			`
-		}, {
-			z_index: 9999,
-			allow_dismiss: false,
-			type: 'warning',
-			delay: 0,
-			newest_on_top: true,
-			placement: {
-				from: "top",
-				align: "center"
-			},
-			offset: {
-				y: $(window).height() / 2 - 100, // posisi agak ke tengah vertikal
-				x: 0
-			},
-			template: `
-				<div data-notify="container" class="col-xs-11 col-sm-4 alert alert-{0}" role="alert"
-					style="text-align:center; margin:auto; position:fixed; left:0; right:0; top:{1}px; z-index:9999;">
-					<span data-notify="message">{2}</span>
-				</div>
-			`
-		});
+							// === Langkah 1: tampilkan konfirmasi di tengah ===
+							let notifConfirm = $.notify({
+								message: `
+									<div style="text-align:center;">
+										<strong>Yakin ingin generate presensi baru?</strong><br>
+										Proses ini bisa memakan waktu beberapa saat.<br><br>
+										<button id="confirmYes" class="btn btn-xs btn-success">Ya</button>
+										<button id="confirmNo" class="btn btn-xs btn-danger">Batal</button>
+									</div>
+								`
+							}, {
+								z_index: 9999,
+								allow_dismiss: false,
+								type: 'warning',
+								delay: 0,
+								newest_on_top: true,
+								placement: {
+									from: "top",
+									align: "center"
+								},
+								offset: {
+									y: $(window).height() / 2 - 100, // posisi agak ke tengah vertikal
+									x: 0
+								},
+								template: `
+									<div data-notify="container" class="col-xs-11 col-sm-4 alert alert-{0}" role="alert"
+										style="text-align:center; margin:auto; position:fixed; left:0; right:0; top:{1}px; z-index:9999;">
+										<span data-notify="message">{2}</span>
+									</div>
+								`
+							});
 
-		// === Langkah 2: handle tombol ===
-		$(document).off('click', '#confirmYes').on('click', '#confirmYes', function() {
-			notifConfirm.close();
+							// === Langkah 2: handle tombol ===
+							$(document).off('click', '#confirmYes').on('click', '#confirmYes', function() {
+								notifConfirm.close();
 
-			// tampilkan notifikasi proses
-			notifyprogress = $.notify({
-				message: `
-					<div style="text-align:center;">
-						<i class="fa fa-spinner fa-spin"></i> Processing...</br>
-						Jangan tutup halaman sampai notifikasi ini hilang!
-					</div>
-				`
-			}, {
-				z_index: 9999,
-				allow_dismiss: false,
-				type: 'info',
-				delay: 0,
-				placement: {
-					from: "top",
-					align: "center"
-				},
-				offset: { y: $(window).height() / 2 - 100, x: 0 },
-				template: `
-					<div data-notify="container" class="col-xs-11 col-sm-4 alert alert-{0}" role="alert"
-						style="text-align:center; margin:auto; position:fixed; left:0; right:0; top:{1}px; z-index:9999;">
-						<span data-notify="message">{2}</span>
-					</div>
-				`
-			});
+								// tampilkan notifikasi proses
+								notifyprogress = $.notify({
+									message: `
+										<div style="text-align:center;">
+											<i class="fa fa-spinner fa-spin"></i> Processing...</br>
+											Jangan tutup halaman sampai notifikasi ini hilang!
+										</div>
+									`
+								}, {
+									z_index: 9999,
+									allow_dismiss: false,
+									type: 'info',
+									delay: 0,
+									placement: {
+										from: "top",
+										align: "center"
+									},
+									offset: { y: $(window).height() / 2 - 100, x: 0 },
+									template: `
+										<div data-notify="container" class="col-xs-11 col-sm-4 alert alert-{0}" role="alert"
+											style="text-align:center; margin:auto; position:fixed; left:0; right:0; top:{1}px; z-index:9999;">
+											<span data-notify="message">{2}</span>
+										</div>
+									`
+								});
 
-			// === Jalankan AJAX ===
-			$.ajax({
-				url: "../../models/hpyxxth_2/hpyxxth_2_fn_gen_payroll_ferry_2025.php",
-				dataType: 'json',
-				type: 'POST',
-				data: {
-					id_hpyxxth_2: id_hpyxxth_2,
-					tanggal_awal: tanggal_awal_select,
-					tanggal_akhir: tanggal_akhir_select,
-					timestamp: timestampNow
-				},
-				success: function (json) {
-					notifyprogress.close();
+								// === Jalankan AJAX ===
+								$.ajax({
+									url: "../../models/hpyxxth_2/hpyxxth_2_fn_gen_payroll_ferry_2025.php",
+									dataType: 'json',
+									type: 'POST',
+									data: {
+										id_hpyxxth_2: id_hpyxxth_2,
+										tanggal_awal: tanggal_awal_select,
+										tanggal_akhir: tanggal_akhir_select,
+										timestamp: timestampNow
+									},
+									success: function (json) {
+										notifyprogress.close();
 
-					$.notify({
-						message: json.data.message
-					}, {
-						type: json.data.type_message,
-						z_index: 9999
-					});
+										$.notify({
+											message: json.data.message
+										}, {
+											type: json.data.type_message,
+											z_index: 9999
+										});
 
-					tblhpyxxth_2.ajax.reload(null, false);
-				},
-				error: function () {
-					notifyprogress.close();
-					$.notify({
-						message: 'Terjadi kesalahan saat memproses data.'
-					}, {
-						type: 'danger',
-						z_index: 9999
-					});
-				}
-			});
-		});
+										tblhpyxxth_2.ajax.reload(null, false);
+									},
+									error: function () {
+										notifyprogress.close();
+										$.notify({
+											message: 'Terjadi kesalahan saat memproses data.'
+										}, {
+											type: 'danger',
+											z_index: 9999
+										});
+									}
+								});
+							});
 
-		// === Tombol batal ===
-		$(document).off('click', '#confirmNo').on('click', '#confirmNo', function() {
-			notifConfirm.close();
-			$.notify({
-				message: 'Dibatalkan oleh pengguna.'
-			}, {
-				type: 'warning',
-				z_index: 9999
-			});
-		});
-	}
-}
-
+							// === Tombol batal ===
+							$(document).off('click', '#confirmNo').on('click', '#confirmNo', function() {
+								notifConfirm.close();
+								$.notify({
+									message: 'Dibatalkan oleh pengguna.'
+								}, {
+									type: 'warning',
+									z_index: 9999
+								});
+							});
+						}
+					},
+					{
+						text: 'Outstanding Approval',
+						name: 'btnOutstanding',
+						className: 'btn btn-outline',
+						titleAttr: 'Outstanding Approval',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							$('#modalOutstandingApproval').modal('show');
+						}
+					},
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.hpyxxth_2.is_active == 0 ) {
@@ -1265,6 +1329,7 @@
 				tblhpyemtd_2_freelance.button( 'btnPrint:name' ).disable();
 
 				tblhpyemtd_2.button( 'btnPrintSingle:name' ).disable();
+				tblhpyxxth_2.button( 'btnOutstanding:name' ).disable();
 			} );
 			
 			tblhpyxxth_2.on( 'select', function( e, dt, type, indexes ) {
@@ -1292,6 +1357,9 @@
 				tblhpyemtd_2_kontrak.button( 'btnPrint:name' ).enable();
 				tblhpyemtd_2_kmj.button( 'btnPrint:name' ).enable();
 				tblhpyemtd_2_freelance.button( 'btnPrint:name' ).enable();
+				
+				outstandingApproval(id_hpyxxth_2);
+				tblhpyxxth_2.button( 'btnOutstanding:name' ).enable();
 			} );
 			
 			tblhpyxxth_2.on( 'deselect', function () {
@@ -1317,6 +1385,7 @@
 				tblhpyemtd_2_freelance.button( 'btnPrint:name' ).disable();
 
 				tblhpyemtd_2.button( 'btnPrintSingle:name' ).disable();
+				tblhpyxxth_2.button( 'btnOutstanding:name' ).disable();
 			} );
 			
 // --------- start _detail --------------- //
