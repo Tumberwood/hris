@@ -1072,7 +1072,7 @@
 					?>
 					// {
 					// 	text: '<i class="fa fa-google"></i>',
-					// 	name: 'btnGeneratePresensi',
+					// 	name: 'btnGeneratePresensiNew',
 					// 	className: 'btn btn-xs btn-outline',
 					// 	titleAttr: '',
 					// 	action: function ( e, dt, node, config ) {
@@ -1089,7 +1089,7 @@
 					// 		});
 
 					// 		$.ajax( {
-					// 			url: "../../models/hpyxxth_2/hpyxxth_2_fn_gen_payroll_ferry.php",
+					// 			url: "../../models/hpyxxth_2/hpyxxth_2_fn_gen_payroll_ferry_2025.php",
 					// 			dataType: 'json',
 					// 			type: 'POST',
 					// 			data: {
@@ -1114,91 +1114,125 @@
 					// 	}
 					// },
 					{
-						text: '<i class="fa fa-google"></i>',
-						name: 'btnGeneratePresensiNew',
-						className: 'btn btn-xs btn-outline',
-						titleAttr: '',
-						action: function ( e, dt, node, config ) {
-							e.preventDefault(); 
-							var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+	text: '<i class="fa fa-google"></i>',
+	name: 'btnGeneratePresensiNew',
+	className: 'btn btn-xs btn-outline',
+	titleAttr: '',
+	action: function (e, dt, node, config) {
+		e.preventDefault();
 
-							notifyprogress = $.notify({
-								message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
-							},{
-								z_index: 9999,
-								allow_dismiss: false,
-								type: 'info',
-								delay: 0
-							});
+		const timestampNow = moment().format('YYYY-MM-DD HH:mm:ss');
 
-							$.ajax( {
-								url: "../../models/hpyxxth_2/hpyxxth_2_fn_gen_payroll_ferry_2025.php",
-								dataType: 'json',
-								type: 'POST',
-								data: {
-									id_hpyxxth_2		: id_hpyxxth_2,
-									tanggal_awal	: tanggal_awal_select,
-									tanggal_akhir	: tanggal_akhir_select,
-									timestamp		: timestamp
-								},
-								success: function ( json ) {
+		// === Langkah 1: tampilkan konfirmasi di tengah ===
+		let notifConfirm = $.notify({
+			message: `
+				<div style="text-align:center;">
+					<strong>Yakin ingin generate presensi baru?</strong><br>
+					Proses ini bisa memakan waktu beberapa saat.<br><br>
+					<button id="confirmYes" class="btn btn-xs btn-success">Ya</button>
+					<button id="confirmNo" class="btn btn-xs btn-danger">Batal</button>
+				</div>
+			`
+		}, {
+			z_index: 9999,
+			allow_dismiss: false,
+			type: 'warning',
+			delay: 0,
+			newest_on_top: true,
+			placement: {
+				from: "top",
+				align: "center"
+			},
+			offset: {
+				y: $(window).height() / 2 - 100, // posisi agak ke tengah vertikal
+				x: 0
+			},
+			template: `
+				<div data-notify="container" class="col-xs-11 col-sm-4 alert alert-{0}" role="alert"
+					style="text-align:center; margin:auto; position:fixed; left:0; right:0; top:{1}px; z-index:9999;">
+					<span data-notify="message">{2}</span>
+				</div>
+			`
+		});
 
-									$.notify({
-										message: json.data.message
-									},{
-										type: json.data.type_message
-									});
+		// === Langkah 2: handle tombol ===
+		$(document).off('click', '#confirmYes').on('click', '#confirmYes', function() {
+			notifConfirm.close();
 
-									tblhpyxxth_2.ajax.reload(function ( json ) {
-										notifyprogress.close();
-									}, false);
-								}
-							} );
-						}
-					},
-					// {
-					// 	text: 'PPh21',
-					// 	name: 'btnGenPPh21',
-					// 	className: 'btn btn-xs btn-outline',
-					// 	titleAttr: '',
-					// 	action: function ( e, dt, node, config ) {
-					// 		e.preventDefault(); 
-					// 		var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+			// tampilkan notifikasi proses
+			notifyprogress = $.notify({
+				message: `
+					<div style="text-align:center;">
+						<i class="fa fa-spinner fa-spin"></i> Processing...</br>
+						Jangan tutup halaman sampai notifikasi ini hilang!
+					</div>
+				`
+			}, {
+				z_index: 9999,
+				allow_dismiss: false,
+				type: 'info',
+				delay: 0,
+				placement: {
+					from: "top",
+					align: "center"
+				},
+				offset: { y: $(window).height() / 2 - 100, x: 0 },
+				template: `
+					<div data-notify="container" class="col-xs-11 col-sm-4 alert alert-{0}" role="alert"
+						style="text-align:center; margin:auto; position:fixed; left:0; right:0; top:{1}px; z-index:9999;">
+						<span data-notify="message">{2}</span>
+					</div>
+				`
+			});
 
-					// 		notifyprogress = $.notify({
-					// 			message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
-					// 		},{
-					// 			z_index: 9999,
-					// 			allow_dismiss: false,
-					// 			type: 'info',
-					// 			delay: 0
-					// 		});
+			// === Jalankan AJAX ===
+			$.ajax({
+				url: "../../models/hpyxxth_2/hpyxxth_2_fn_gen_payroll_ferry_2025.php",
+				dataType: 'json',
+				type: 'POST',
+				data: {
+					id_hpyxxth_2: id_hpyxxth_2,
+					tanggal_awal: tanggal_awal_select,
+					tanggal_akhir: tanggal_akhir_select,
+					timestamp: timestampNow
+				},
+				success: function (json) {
+					notifyprogress.close();
 
-					// 		$.ajax( {
-					// 			url: "../../models/hpyxxth_2/hpyxxth_2_fn_gen_pph21.php",
-					// 			dataType: 'json',
-					// 			type: 'POST',
-					// 			data: {
-					// 				id_hpyxxth_2		: id_hpyxxth_2,
-					// 				tanggal_awal	: tanggal_awal_select,
-					// 				tanggal_akhir	: tanggal_akhir_select,
-					// 				timestamp		: timestamp
-					// 			},
-					// 			success: function ( json ) {
+					$.notify({
+						message: json.data.message
+					}, {
+						type: json.data.type_message,
+						z_index: 9999
+					});
 
-					// 				$.notify({
-					// 					message: json.data.message
-					// 				},{
-					// 					type: json.data.type_message
-					// 				});
+					tblhpyxxth_2.ajax.reload(null, false);
+				},
+				error: function () {
+					notifyprogress.close();
+					$.notify({
+						message: 'Terjadi kesalahan saat memproses data.'
+					}, {
+						type: 'danger',
+						z_index: 9999
+					});
+				}
+			});
+		});
 
-					// 				tblhpyxxth_2.ajax.reload(function ( json ) {
-					// 					notifyprogress.close();
-					// 				}, false);
-					// 			}
-					// 		} );
-					// 	}
-					// }
+		// === Tombol batal ===
+		$(document).off('click', '#confirmNo').on('click', '#confirmNo', function() {
+			notifConfirm.close();
+			$.notify({
+				message: 'Dibatalkan oleh pengguna.'
+			}, {
+				type: 'warning',
+				z_index: 9999
+			});
+		});
+	}
+}
+
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.hpyxxth_2.is_active == 0 ) {
