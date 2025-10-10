@@ -25,6 +25,9 @@
                                 <th>Tgl Request</th>
                                 <th>Pekerjaan</th>
                                 <th>Keterangan</th>
+                                <th>Rencana Pengerjaan</th>
+                                <th>Estimasi Waktu</th>
+                                <th>Waktu Selesai</th>
                             </tr>
                         </thead>
                     </table>
@@ -188,6 +191,9 @@
 					{ data: "service_request.tglrequest" },
 					{ data: "pekerjaan_m.nama" },
 					{ data: "service_request.keterangan" },
+					{ data: "service_request.rencanapengerjaan" },
+					{ data: "service_request.estimasiwaktu" },
+					{ data: "service_request.waktuselesai" },
 				],
 				buttons: [
 					// BEGIN breaking generate button

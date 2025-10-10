@@ -50,10 +50,40 @@
 					'from' => 'd M Y H:i',
 					'to' =>   'Y-m-d H:i:s'
 				) ),
+			Field::inst( 'service_request.waktuselesai' )
+				->getFormatter( 'Format::datetime', array(
+					'from' => 'Y-m-d H:i:s',
+					'to' =>   'd M Y H:i'
+				) )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y H:i',
+					'to' =>   'Y-m-d H:i:s'
+				) ),
+			Field::inst( 'service_request.rencanapengerjaan' )
+				->getFormatter( 'Format::datetime', array(
+					'from' => 'Y-m-d H:i:s',
+					'to' =>   'd M Y H:i'
+				) )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y H:i',
+					'to' =>   'Y-m-d H:i:s'
+				) ),
+			Field::inst( 'service_request.estimasiwaktu' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '00:00:00' || $val === null){
+						echo '';
+					}else{
+						return date( 'H:i', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'H:i',
+					'to' =>   'H:i:s'
+				) ),
 			Field::inst( 'pekerjaan_m.nama' ),
 		)
 		->leftJoin( 'pekerjaan_m','pekerjaan_m.id','=','service_request.id_pekerjaan_m' )
-		->where( 'service_request.created_by', $_SESSION['user'])
+		->where( 'service_request.created_by', 1)
 		;
 	
 	// do not erase

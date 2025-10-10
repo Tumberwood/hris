@@ -882,7 +882,6 @@
                                                 GROUP BY a.id
                                             ) AS t
                                             ORDER BY ceklok_istirahat
-                                            LIMIT 1
                                         ) AS cek_istirahat ON cek_istirahat.id_hemxxmh = hto.id_hemxxmh
         
                                         -- menit_toleransi_ti settingan
