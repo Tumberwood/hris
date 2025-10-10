@@ -15,38 +15,33 @@
 		DataTables\Editor\Result;
 	
 	// ----------- do not erase
-	$show_inactive_status = $_POST['show_inactive_status_hpyxxth_2'];
+	$show_inactive_status = $_POST['show_inactive_status_periode_payroll'];
 	// -----------
 	
-	$editor = Editor::inst( $db, 'hpyxxth_2' )
+	$editor = Editor::inst( $db, 'periode_payroll' )
 		->debug(true)
 		->fields(
-			Field::inst( 'hpyxxth_2.id' ),
-			Field::inst( 'hpyxxth_2.id_heyxxmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hpyxxth_2.id_periode_payroll' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hpyxxth_2.kode' )
+			Field::inst( 'periode_payroll.id' ),
+			Field::inst( 'periode_payroll.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);
 				} ),
-			Field::inst( 'hpyxxth_2.nama' )
+			Field::inst( 'periode_payroll.nama' )
 				->setFormatter( function ( $val ) {
-					return ucwords($val);
+					return strtoupper($val);
 				} ),
-			Field::inst( 'hpyxxth_2.keterangan' ),
-			Field::inst( 'hpyxxth_2.is_active' ),
-			Field::inst( 'hpyxxth_2.created_by' )
+			Field::inst( 'periode_payroll.keterangan' ),
+			Field::inst( 'periode_payroll.is_active' ),
+			Field::inst( 'periode_payroll.created_by' )
 				->set( Field::SET_CREATE )
 				->setValue($_SESSION['user']),
-			Field::inst( 'hpyxxth_2.created_on' )
+			Field::inst( 'periode_payroll.created_on' )
 				->set( Field::SET_CREATE ),
-			Field::inst( 'hpyxxth_2.last_edited_by' )
+			Field::inst( 'periode_payroll.last_edited_by' )
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
-			Field::inst( 'hpyxxth_2.is_approve' ),
-			Field::inst( 'hpyxxth_2.is_defaultprogram' ),
-			Field::inst( 'hpyxxth_2.tanggal_awal' )
+			Field::inst( 'periode_payroll.is_approve' ),
+			Field::inst( 'periode_payroll.tanggal_awal' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === '0000-00-00' || $val === null){
 						echo '';
@@ -58,16 +53,7 @@
 					'from' => 'd M Y',
 					'to' =>   'Y-m-d'
 				) ),
-			
-			Field::inst( 'hpyxxth_2.generated_on' )
-				->getFormatter( function ( $val, $data, $opts ) {
-					if ($val === '0000-00-00 00:00:00' || $val === null){
-						echo '';
-					}else{
-						return date( 'd M Y H:i:s', strtotime( $val ) );
-					}
-				} ),
-			Field::inst( 'hpyxxth_2.tanggal_akhir' )
+			Field::inst( 'periode_payroll.tanggal_akhir' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === '0000-00-00' || $val === null){
 						echo '';
@@ -79,19 +65,19 @@
 					'from' => 'd M Y',
 					'to' =>   'Y-m-d'
 				) ),
-			Field::inst( 'heyxxmh.nama' )
-		)
-		->leftJoin( 'heyxxmh','heyxxmh.id','=','hpyxxth_2.id_heyxxmh' )
-		->where( 'hpyxxth_2.is_single', 0);
+			Field::inst( 'periode_payroll.is_defaultprogram' ),
+			Field::inst( 'periode_payroll.is_bonus' ),
+			Field::inst( 'periode_payroll.status' ),
+		);
 	
 	// do not erase
 	// function show / hide inactive document
 	if ($show_inactive_status == 0){
 		$editor
-			->where( 'hpyxxth_2.is_active', 1);
+			->where( 'periode_payroll.is_active', 1);
 	}
 	
-	include( "hpyxxth_2_extra.php" );
+	include( "periode_payroll_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
 	$editor

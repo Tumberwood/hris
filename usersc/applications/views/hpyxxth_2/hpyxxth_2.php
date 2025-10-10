@@ -966,7 +966,7 @@
 		var edthpyxxth_2, tblhpyxxth_2, show_inactive_status_hpyxxth_2 = 0, id_hpyxxth_2;
         var edthpyemtd_2_kbm_reg, tblhpyemtd_2_kbm_reg, show_inactive_status_hpyemtd_2 = 0, id_hpyemtd_2;
 		// ------------- end of default variable
-		var id_heyxxmh_old = 0;
+		var id_periode_payroll_old = 0;
 		
 
 		$(document).ready(function() {
@@ -1008,7 +1008,43 @@
 						def: 1
 					},	
 					{
-						label: "Tanggal Awal <sup class='text-danger'>*<sup>",
+						label: "Periode Cut Off Lembur <sup class='text-danger'>*<sup>",
+						name: "hpyxxth_2.id_periode_payroll",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/periode_payroll/periode_payroll_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_periode_payroll_old: id_periode_payroll_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+									return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1
+							}
+						}
+					},
+					{
+						label: "Tanggal Awal",
 						name: "hpyxxth_2.tanggal_awal",
 						type: "datetime",
 						def: function () { 
@@ -1021,7 +1057,7 @@
 						format: 'DD MMM YYYY'
 					},	
 					{
-						label: "Tanggal Akhir <sup class='text-danger'>*<sup>",
+						label: "Tanggal Akhir",
 						name: "hpyxxth_2.tanggal_akhir",
 						type: "datetime",
 						def: function () { 
@@ -1053,30 +1089,39 @@
             edthpyxxth_2.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
+
+			edthpyxxth_2.dependent( 'hpyxxth_2.id_periode_payroll', function ( val, data, callback ) {
+				if (val > 0) {
+					$.ajax({
+						url: "../../models/hpyxxth_2/autofill_periode_payroll.php",
+						type: "POST",
+						dataType: "json",
+						async: false,
+						data: {
+							id_periode_payroll: val 
+						},
+						success: function (json) {
+							tanggal_awal = json.data.tanggal_awal;
+							tanggal_akhir = json.data.tanggal_akhir;
+
+							edthpyxxth_2.field('hpyxxth_2.tanggal_awal').val(tanggal_awal);
+							edthpyxxth_2.field('hpyxxth_2.tanggal_akhir').val(tanggal_akhir);
+						},
+						error: function (xhr, status, error) {
+						}
+					});
+				} else {
+					
+				}
+				return {}
+			}, {event: 'keyup change'});
 			
 			edthpyxxth_2.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					// BEGIN of validasi hpyxxth_2.tanggal_awal
-					if ( ! edthpyxxth_2.field('hpyxxth_2.tanggal_awal').isMultiValue() ) {
-						tanggal_awal = edthpyxxth_2.field('hpyxxth_2.tanggal_awal').val();
-						if(!tanggal_awal || tanggal_awal == ''){
-							edthpyxxth_2.field('hpyxxth_2.tanggal_awal').error( 'Wajib diisi!' );
-						}else{
-							tanggal_awal_ymd = moment(tanggal_awal).format('YYYY-MM-DD');
-						}
+					id_periode_payroll = edthpyxxth_2.field('hpyxxth_2.id_periode_payroll').val();
+					if(!id_periode_payroll || id_periode_payroll == ''){
+						edthpyxxth_2.field('hpyxxth_2.id_periode_payroll').error( 'Wajib diisi!' );
 					}
-					// END of validasi hpyxxth_2.tanggal_awal
-
-					// BEGIN of validasi hpyxxth_2.tanggal_akhir
-					if ( ! edthpyxxth_2.field('hpyxxth_2.tanggal_akhir').isMultiValue() ) {
-						tanggal_akhir = edthpyxxth_2.field('hpyxxth_2.tanggal_akhir').val();
-						if(!tanggal_akhir || tanggal_akhir == ''){
-							edthpyxxth_2.field('hpyxxth_2.tanggal_akhir').error( 'Wajib diisi!' );
-						}else{
-							tanggal_akhir_ymd = moment(tanggal_akhir).format('YYYY-MM-DD');
-						}
-					}
-					// END of validasi hpyxxth_2.tanggal_akhir
 
 				}
 				
@@ -1344,7 +1389,7 @@
 				tanggal_akhir_select        = data_hpyxxth_2.tanggal_akhir;
 				id_heyxxmh_select        = data_hpyxxth_2.id_heyxxmh;
 
-				id_heyxxmh_old = data_hpyxxth_2.id_heyxxmh;
+				id_periode_payroll_old = data_hpyxxth_2.id_periode_payroll;
 				
 				// atur hak akses
 				tbl_details = [tblhpyemtd_2, tblhpyemtd_2_kbm_reg, tblhpyemtd_2_karyawan, tblhpyemtd_2_kontrak, tblhpyemtd_2_kmj, tblhpyemtd_2_freelance, tblhpyemtd_2_kbm_tr];
@@ -1365,7 +1410,7 @@
 			tblhpyxxth_2.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
 				id_hpyxxth_2 = 0;
-				id_heyxxmh_old = 0;
+				id_periode_payroll_old = 0;
 				id_heyxxmh = 0
 
 				tanggal_awal_select = null;
