@@ -153,7 +153,7 @@
 						def: "#"
 					}, {
 						label: "Icon Class",
-						name: "icon_class",
+						name: "menus.icon_class",
 						fieldInfo: "Be sure to add fa fa-fw before the shortcode to display properly"
 					}
 				]
