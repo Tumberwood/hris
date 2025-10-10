@@ -80,10 +80,10 @@
 						</div>
 						<ul class="nav nav-tabs" role="tablist">
 							<li><a class="nav-link active" data-toggle="tab" href="#tabhpyemtd_2"> All</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_2_kbm_reg"> KBM Reguler</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_2_kbm_tr"> KBM Pelatihan</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_2_karyawan"> Tetap</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_2_kontrak"> Kontrak</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_2_kbm_reg"> KBM Reguler</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_2_kbm_tr"> KBM Pelatihan</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_2_kmj"> KMJ</a></li>
 							<li id="tab_freelance"><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_2_freelance"> Freelance</a></li>
 						</ul>
