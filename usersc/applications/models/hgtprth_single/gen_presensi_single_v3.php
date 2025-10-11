@@ -505,16 +505,15 @@
                             AND 
                             (
                                 (
+                                    a.tanggal > "2025-07-27"
+                                    AND id_holxxmd_2 = 1
+                                    AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
+                                )
+                                (
                                     a.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
                                     AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
                                 )
                                 OR 
-                                (
-                                    a.tanggal > "2025-07-27"
-                                    AND d.is_istirahat = 2
-                                    AND id_holxxmd_2 = 1
-                                    AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
-                                )
                                 OR 
                                 (
                                     a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27"
@@ -543,14 +542,13 @@
                             AND 
                             (
                                 (
-                                    a.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
+                                    a.tanggal > "2025-07-27"
+                                    AND id_holxxmd_2 = 1
                                     AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
                                 )
                                 OR 
                                 (
-                                    a.tanggal > "2025-07-27"
-                                    AND d.is_istirahat = 2
-                                    AND id_holxxmd_2 = 1
+                                    a.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
                                     AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
                                 )
                                 OR 
