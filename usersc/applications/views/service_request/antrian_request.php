@@ -22,9 +22,11 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Requester</th>
                                 <th>Tgl Request</th>
                                 <th>Pekerjaan</th>
                                 <th>Keterangan</th>
+                                <th>Teknisi</th>
                                 <th>Rencana Pengerjaan</th>
                                 <th>Estimasi Waktu</th>
                                 <th>Waktu Selesai</th>
@@ -56,7 +58,7 @@
 			//start datatables editor
 			edtservice_request = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/service_request/service_request.php",
+					url: "../../models/service_request/antrian_request.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_service_request = show_inactive_status_service_request;
@@ -179,18 +181,20 @@
 			//start datatables
 			tblservice_request = $('#tblservice_request').DataTable( {
 				ajax: {
-					url: "../../models/service_request/service_request.php",
+					url: "../../models/service_request/antrian_request.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_service_request = show_inactive_status_service_request;
 					}
 				},
-				order: [[ 1, "desc" ]],
+				order: [[ 2, "desc" ]],
 				columns: [
 					{ data: "service_request.id",visible:false },
+					{ data: "pembuat" },
 					{ data: "service_request.tglrequest" },
 					{ data: "pekerjaan_m.nama" },
 					{ data: "service_request.keterangan" },
+					{ data: "teknisi" },
 					{ data: "service_request.rencanapengerjaan" },
 					{ data: "service_request.estimasiwaktu" },
 					{ data: "service_request.waktuselesai" },
@@ -205,7 +209,7 @@
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
-						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_h'];
+						$arr_buttons_action 	= [];
 						$arr_buttons_approve 	= [];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>

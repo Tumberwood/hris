@@ -81,9 +81,12 @@
 					'to' =>   'H:i:s'
 				) ),
 			Field::inst( 'pekerjaan_m.nama' ),
+			Field::inst( 'teknisi.fname as teknisi' ),
+			Field::inst( 'pembuat.fname as pembuat' ),
 		)
 		->leftJoin( 'pekerjaan_m','pekerjaan_m.id','=','service_request.id_pekerjaan_m' )
-		->where( 'service_request.created_by', $_SESSION['user'])
+		->leftJoin( 'users teknisi','teknisi.id','=','service_request.id_users_teknisi' )
+		->leftJoin( 'users pembuat','pembuat.id','=','service_request.created_by' )
 		;
 	
 	// do not erase
@@ -93,7 +96,6 @@
 			->where( 'service_request.is_active', 1);
 	}
 	
-	include( "service_request_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
 	$editor
