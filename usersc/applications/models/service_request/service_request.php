@@ -80,6 +80,7 @@
 					'from' => 'H:i',
 					'to' =>   'H:i:s'
 				) ),
+			Field::inst( 'service_request.rateservice' ),
 			Field::inst( 'pekerjaan_m.nama' ),
 		)
 		->leftJoin( 'pekerjaan_m','pekerjaan_m.id','=','service_request.id_pekerjaan_m' )
