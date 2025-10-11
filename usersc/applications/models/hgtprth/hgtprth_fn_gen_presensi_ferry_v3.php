@@ -993,8 +993,14 @@
                                             INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
                                             INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                             INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
+                                            INNER JOIN hemjbmh AS hj ON hj.id_hemxxmh = a.id_hemxxmh
                                             WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                                 AND (
+                                                        (
+                                                            a.tanggal > "2025-07-27"
+                                                            AND id_holxxmd_2 = 1
+                                                            AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
+                                                        )
                                                         (a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI"))
                                                         OR
                                                         (a.tanggal BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan"))
