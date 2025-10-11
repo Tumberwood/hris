@@ -1,0 +1,105 @@
+<?php
+	include( "../../../../users/init.php" );
+	include( "../../../../usersc/lib/DataTables.php" );
+	
+	use
+		DataTables\Editor,
+		DataTables\Editor\Field,
+		DataTables\Editor\Format,
+		DataTables\Editor\Mjoin,
+		DataTables\Editor\Options,
+		DataTables\Editor\Upload,
+		DataTables\Editor\Validate,
+		DataTables\Editor\ValidateOptions,
+		DataTables\Editor\Query,
+		DataTables\Editor\Result;
+	
+	// ----------- do not erase
+	$show_inactive_status = $_POST['show_inactive_status_service_request'];
+	// -----------
+	
+	$editor = Editor::inst( $db, 'service_request' )
+		->debug(true)
+		->fields(
+			Field::inst( 'service_request.id' ),
+			Field::inst( 'service_request.id_pekerjaan_m' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'service_request.kode' )
+				->setFormatter( function ( $val ) {
+					return strtoupper($val);
+				} ),
+			Field::inst( 'service_request.nama' )
+				->setFormatter( function ( $val ) {
+					return ucwords($val);
+				} ),
+			Field::inst( 'service_request.keterangan' ),
+			Field::inst( 'service_request.is_active' ),
+			Field::inst( 'service_request.created_by' )
+				->set( Field::SET_CREATE )
+				->setValue($_SESSION['user']),
+			Field::inst( 'service_request.created_on' )
+				->set( Field::SET_CREATE ),
+			Field::inst( 'service_request.is_approve' ),
+			Field::inst( 'service_request.is_defaultprogram' ),
+			Field::inst( 'service_request.tglrequest' )
+				->getFormatter( 'Format::datetime', array(
+					'from' => 'Y-m-d H:i:s',
+					'to' =>   'd M Y H:i'
+				) )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y H:i',
+					'to' =>   'Y-m-d H:i:s'
+				) ),
+			Field::inst( 'service_request.waktuselesai' )
+				->getFormatter( 'Format::datetime', array(
+					'from' => 'Y-m-d H:i:s',
+					'to' =>   'd M Y H:i'
+				) )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y H:i',
+					'to' =>   'Y-m-d H:i:s'
+				) ),
+			Field::inst( 'service_request.rencanapengerjaan' )
+				->getFormatter( 'Format::datetime', array(
+					'from' => 'Y-m-d H:i:s',
+					'to' =>   'd M Y H:i'
+				) )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y H:i',
+					'to' =>   'Y-m-d H:i:s'
+				) ),
+			Field::inst( 'service_request.estimasiwaktu' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '00:00:00' || $val === null){
+						echo '';
+					}else{
+						return date( 'H:i', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'H:i',
+					'to' =>   'H:i:s'
+				) ),
+			Field::inst( 'pekerjaan_m.nama' ),
+			Field::inst( 'teknisi.fname as teknisi' ),
+			Field::inst( 'pembuat.fname as pembuat' ),
+		)
+		->leftJoin( 'pekerjaan_m','pekerjaan_m.id','=','service_request.id_pekerjaan_m' )
+		->leftJoin( 'users teknisi','teknisi.id','=','service_request.id_users_teknisi' )
+		->leftJoin( 'users pembuat','pembuat.id','=','service_request.created_by' )
+		->where( 'service_request.id_users_teknisi', $_SESSION['user'])
+		;
+	
+	// do not erase
+	// function show / hide inactive document
+	if ($show_inactive_status == 0){
+		$editor
+			->where( 'service_request.is_active', 1);
+	}
+	
+	include( "../../../helpers/edt_log.php" );
+	
+	$editor
+		->process( $_POST )
+		->json();
+?>
