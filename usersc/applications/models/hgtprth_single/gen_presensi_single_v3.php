@@ -799,7 +799,7 @@
                                                     AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
                                                 )
                                                 OR
-                                                (a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI"))
+                                                (a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI", "makan"))
                                                 OR
                                                 (a.tanggal BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan"))
                                             )
