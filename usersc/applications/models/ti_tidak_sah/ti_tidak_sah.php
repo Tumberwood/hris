@@ -49,7 +49,8 @@
 					CASE
 						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30 THEN "Istirahat > 30 menit"
 						WHEN a.pot_ti > 0 AND f.id = 1 AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) < 30 THEN "TI Gedung 3 Tidak Sah"
-						WHEN a.pot_jam > 0 then "Jam Kerja (durasi kerja < 7/8 jam)"
+						-- WHEN a.pot_jam > 0 then "Jam Kerja (durasi kerja < 7/8 jam)"
+						WHEN a.pot_jam > 0 THEN "TI Gedung 3 Tidak Sah"
 						ELSE "Normal"
 					END AS kategori,
 
