@@ -769,7 +769,38 @@
                                         ELSE 0
                                     END AS potongan_ti_jam
                                 FROM htoxxrd as hto
-                                LEFT JOIN hemjbmh jb on jb.id_hemxxmh = hto.id_hemxxmh
+                                INNER JOIN (
+                                    SELECT
+                                        j.id_hetxxmh,
+                                        j.id_hemxxmh,
+                                        j.id_hosxxmh,
+                                        j.id_heyxxmh,
+                                        j.id_hevxxmh,
+                                        j.id_heyxxmd,
+                                        j.is_checkclock,
+                                        j.tanggal_masuk,
+                                        j.tanggal_keluar,
+                                        IFNULL(history.id_hesxxmh, j.id_hesxxmh) id_hesxxmh,
+                                        IFNULL(history.jumlah_grup, j.jumlah_grup) jumlah_grup,
+                                        IFNULL(history.grup_hk, j.grup_hk) grup_hk,
+                                        IFNULL(history.id_holxxmd_2_akhir, j.id_holxxmd_2) id_holxxmd_2
+                                    FROM hemjbmh j
+                                    LEFT JOIN (
+                                        SELECT
+                                            *
+                                        FROM (
+                                            SELECT
+                                                *,
+                                                ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
+                                            FROM hemjbrd
+                                            WHERE
+                                                tanggal_awal <= :tanggal
+                                        ) AS subquery
+                                        WHERE row_num = 1
+                                    ) history ON history.id_hemxxmh = j.id_hemxxmh
+                                ) jb ON jb.id_hemxxmh = hto.id_hemxxmh
+
+                                -- LEFT JOIN hemjbmh jb on jb.id_hemxxmh = hto.id_hemxxmh
                                 LEFT JOIN hosxxmh bagian on bagian.id = jb.id_hosxxmh
 
                                 -- ceklok ISTIRAHAT
