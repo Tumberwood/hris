@@ -161,7 +161,15 @@
 						j.id_hosxxmh,
 						j.id_hodxxmh,
 						j.id_heyxxmd,
-						j.id_holxxmd_2,
+						IF(
+							IFNULL(history.id_holxxmd_2_akhir, 0) > 0,
+							history.id_holxxmd_2_akhir,
+							IF(
+								IFNULL(history.id_holxxmd_2_awal, 0) > 0,
+								history.id_holxxmd_2_awal,
+								IFNULL(j.id_holxxmd_2, 0)
+							)
+						) AS id_holxxmd_2,
 						j.is_checkclock,
 						j.tanggal_masuk,
 						j.tanggal_keluar,
