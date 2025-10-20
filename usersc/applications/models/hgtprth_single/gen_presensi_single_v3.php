@@ -249,12 +249,14 @@
                     lembur3_final,
                     nominal_lembur_jam,
                     grup_hk,
+                    id_holxxmd_2,
                     break_in,
                     break_out
                 )
                 WITH presensi AS (
                     SELECT
                         b.id_hemxxmh,
+                        id_holxxmd_2,
                         a.kode AS nik,
                         a.nama AS peg,
                         is_pot_makan,
@@ -419,6 +421,15 @@
                             j.tanggal_keluar,
                             IFNULL(history.id_hesxxmh, j.id_hesxxmh) id_hesxxmh,
                             IFNULL(history.jumlah_grup, j.jumlah_grup) jumlah_grup,
+                            IF(
+                                IFNULL(history.id_holxxmd_2_akhir, 0) > 0,
+                                history.id_holxxmd_2_akhir,
+                                IF(
+                                    IFNULL(history.id_holxxmd_2_awal, 0) > 0,
+                                    history.id_holxxmd_2_awal,
+                                    IFNULL(j.id_holxxmd_2, 0)
+                                )
+                            ) AS id_holxxmd_2,
                             IFNULL(history.grup_hk, j.grup_hk) grup_hk
                         FROM hemjbmh j
                         LEFT JOIN (
@@ -1630,6 +1641,7 @@
 
                     nominal_lembur_jam,
                     grup_hk,
+                    id_holxxmd_2,
                     break_in,
                     break_out
                 
