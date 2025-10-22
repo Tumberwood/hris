@@ -108,7 +108,7 @@
 					a.tanggal BETWEEN :start_date AND :end_date
 					AND a.pot_jam > 0
 					AND jumlah_grup = 2
-					AND a.htlxxrh_kode = ''
+					AND a.htlxxrh_kode = ""
 					'. $where .'
 				HAVING (
 				durasi_istirahat_menit > 30 
