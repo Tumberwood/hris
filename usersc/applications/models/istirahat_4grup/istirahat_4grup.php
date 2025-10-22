@@ -56,6 +56,7 @@
 					TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) AS durasi_istirahat_menit,
 				
 					CASE
+						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 0 AND IFNULL(is_makan, 0) = 1 THEN "Istirahat + Makan"
 						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30 THEN "Istirahat > 30 menit"
 						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) <= 30 AND IFNULL(is_makan, 0) = 1 THEN "Istirahat ≤ 30 + Makan"
 						ELSE "Tidak Masuk Kategori"
