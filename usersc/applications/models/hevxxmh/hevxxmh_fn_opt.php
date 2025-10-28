@@ -28,12 +28,6 @@
         $id_hevxxmh_old = 0;
     }
 
-    if($_GET['id_hevxxmh'] > 0){
-        $id_hevxxmh = $_GET['id_hevxxmh'];
-    }else{
-        $id_hevxxmh = 0;
-    }
-
     // BEGIN query self.
     // Hanya dipanggil jika field ada nilai id nya
     if($id_hevxxmh_old > 0){
@@ -43,28 +37,13 @@
                 'id as id',
                 'nama as text'
             ])
+            ->where('id', $id_hevxxmh_old )
             ->limit(1)
             ->offset($offset)
-            ->where('id', $id_hevxxmh_old )
             ->exec();
         $rs_hevxxmh_self = $qs_hevxxmh_self->fetchAll();
-    }else{
-        // $rs_hevxxmh_self = [];
-        if($id_hevxxmh > 0){
-            $qs_hevxxmh_self = $db
-                ->query('select', 'hevxxmh')
-                ->get([
-                    'id as id',
-                    'nama as text'
-                ])
-                ->where('id', $id_hevxxmh )
-                ->limit(1)
-                ->offset($offset)
-                ->exec();
-            $rs_hevxxmh_self = $qs_hevxxmh_self->fetchAll();
-        }else{
-          $rs_hevxxmh_self = [];  
-        }
+    } else {
+        $rs_hevxxmh_self = [];  
     }
     // END query self
 
