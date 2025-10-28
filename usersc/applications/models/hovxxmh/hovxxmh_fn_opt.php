@@ -42,6 +42,8 @@
             ->offset($offset)
             ->exec();
         $rs_hovxxmh_self = $qs_hovxxmh_self->fetchAll();
+    } else {
+        $rs_hovxxmh_self = [];  
     }
     // END query self
 
