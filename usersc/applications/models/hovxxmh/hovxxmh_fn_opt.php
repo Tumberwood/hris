@@ -28,12 +28,6 @@
         $id_hovxxmh_old = 0;
     }
 
-    if($_GET['id_hovxxmh'] > 0){
-        $id_hovxxmh = $_GET['id_hovxxmh'];
-    }else{
-        $id_hovxxmh = 0;
-    }
-
     // BEGIN query self.
     // Hanya dipanggil jika field ada nilai id nya
     if($id_hovxxmh_old > 0){
@@ -48,23 +42,6 @@
             ->offset($offset)
             ->exec();
         $rs_hovxxmh_self = $qs_hovxxmh_self->fetchAll();
-    }else{
-        // $rs_hovxxmh_self = [];
-        if($id_hovxxmh > 0){
-            $qs_hovxxmh_self = $db
-                ->query('select', 'hovxxmh')
-                ->get([
-                    'id as id',
-                    'nama as text'
-                ])
-                ->where('id', $id_hovxxmh )
-                ->limit(1)
-                ->offset($offset)
-                ->exec();
-            $rs_hovxxmh_self = $qs_hovxxmh_self->fetchAll();
-        }else{
-          $rs_hovxxmh_self = [];  
-        }
     }
     // END query self
 
