@@ -1313,7 +1313,7 @@
 							}
 						}
 					},
-					{ data: "hemjbmh.gender" },
+					{ data: "hemxxmh.gender" },
 					{ 
 						data: "hemxxmh.is_active",
 						render: function (data){
