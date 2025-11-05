@@ -30,7 +30,7 @@
             'count(hemxxmh.id) as c_gender'
         ] )
         ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
-        ->where('hemxxmh.is_active', 1 )
+        // ->where('hemxxmh.is_active', 1 )
         ->where( function ( $r ) use ($tanggal_akhir) {
             $r
                 ->where( 'hemjbmh.tanggal_keluar', NULL)
