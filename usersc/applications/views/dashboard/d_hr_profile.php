@@ -35,7 +35,7 @@
 									<i class="fa fa-female fa-3x"></i>
 									</div>
 									<div class="col-4">
-										TOTAL
+										<h3>TOTAL</h3>
 									</div>
 								</div>
 								<div class="row">
