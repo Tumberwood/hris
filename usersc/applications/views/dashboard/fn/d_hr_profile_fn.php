@@ -259,17 +259,16 @@
                 type: 'column',
                 
                 events: {
-  render() {
-    const chart = this;
-    const total = chart.series.reduce((seriesSum, serie) => {
-      // pastikan serie.visible/serie.data ada jika perlu
-      return seriesSum + (serie.data || []).reduce((pSum, p) => pSum + (p.y || 0), 0);
-    }, 0);
+                    render() {
+                        const chart = this;
+                        const total = chart.series.reduce((seriesSum, serie) => {
+                        // pastikan serie.visible/serie.data ada jika perlu
+                        return seriesSum + (serie.data || []).reduce((pSum, p) => pSum + (p.y || 0), 0);
+                        }, 0);
 
-    $('#total_dept').html(`Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`);
-  }
-}
-
+                        $('#total_dept').html(`Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`);
+                    }
+                }
             },
             title: {
                 text: 'Karyawan per Department',
