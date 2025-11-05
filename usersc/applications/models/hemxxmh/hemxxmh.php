@@ -2,6 +2,7 @@
 	include( "../../../../users/init.php" );
 	include( "../../../../usersc/lib/DataTables.php" );
 	
+	use Carbon\Carbon;
 	use
 		DataTables\Editor,
 		DataTables\Editor\Field,
@@ -16,6 +17,8 @@
 	
 	// ----------- do not erase
 	$show_inactive_status = $_POST['show_inactive_status_hemxxmh'];
+	
+    $tanggal_akhir = new Carbon();
 	// -----------
 
 	$editor = Editor::inst( $db, 'hemxxmh' )
@@ -140,6 +143,12 @@
 		->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
 		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
+		
+        ->where( function ( $r ) use ($tanggal_akhir) {
+            $r
+                ->where( 'hemjbmh.tanggal_keluar', NULL)
+                ->or_where( 'hemjbmh.tanggal_keluar', $tanggal_akhir->format('Y-m-d') , '>=');
+        } )
 		// ->leftJoin( 'v_hemxxmh_htsptth','v_hemxxmh_htsptth.id_hemxxmh','=','hemxxmh.id' )
 		;
 	
