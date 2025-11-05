@@ -257,16 +257,19 @@
         var optionschartEmpDept = {
             chart: {
                 type: 'column',
+                
                 events: {
-                    render() {
-                        const chart = this;
-                        const total = chart.series[0].data.reduce((sum, p) => sum + p.y, 0);
-                        const text = `Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`;
+  render() {
+    const chart = this;
+    const total = chart.series.reduce((seriesSum, serie) => {
+      // pastikan serie.visible/serie.data ada jika perlu
+      return seriesSum + (serie.data || []).reduce((pSum, p) => pSum + (p.y || 0), 0);
+    }, 0);
 
-                        // update elemen HTML di bawah chart
-                        $('#total_dept').html(text);
-                    }
-                }
+    $('#total_dept').html(`Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`);
+  }
+}
+
             },
             title: {
                 text: 'Karyawan per Department',
