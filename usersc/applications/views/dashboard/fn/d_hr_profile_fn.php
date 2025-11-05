@@ -39,6 +39,7 @@
                 p_perempuan = (c_perempuan / c_total * 100).toFixed(2) ;
                 
                 $("#c_laki").html(c_laki);
+                $("#c_total").html(c_total);
                 $("#c_perempuan").html(c_perempuan);
 
                 $("#p_laki").html(p_laki + "%");

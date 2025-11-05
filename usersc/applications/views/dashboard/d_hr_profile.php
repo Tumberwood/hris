@@ -28,21 +28,27 @@
                             </div>
                             <div class="ibox-content">
 								<div class="row">
-									<div class="col-6">
+									<div class="col-4">
 										<i class="fa fa-male fa-3x"></i>
 									</div>
-									<div class="col-6">
+									<div class="col-4">
 									<i class="fa fa-female fa-3x"></i>
+									</div>
+									<div class="col-4">
+										TOTAL
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-6">
+									<div class="col-4">
 										<h2 class="font-bold m-b-xxs" id="c_laki"></h2>
 										<small class="font-bold text-success" id="p_laki"></small>
 									</div>
-									<div class="col-6">
+									<div class="col-4">
 										<h2 class="font-bold m-b-xxs" id="c_perempuan"></h2>
 										<small class="font-bold text-success" id="p_perempuan"></small>
+									</div>
+									<div class="col-4">
+										<h2 class="font-bold m-b-xxs" id="c_total"></h2>
 									</div>
 								</div>
                             </div>
