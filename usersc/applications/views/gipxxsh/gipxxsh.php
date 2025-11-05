@@ -65,7 +65,8 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group row" style="display: none">
+					<!-- <div class="form-group row" style="display: none"> -->
+					<div class="form-group row">
 						<label class="col-lg-2 col-form-label">File Checkclock Makan Manual</label>
 						<div class="col-sm-4">
 							<div class="input-group">
