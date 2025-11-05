@@ -58,6 +58,7 @@
                         <div class="ibox ">
                             <div class="ibox-content">
                                 <div id="chartEmpType"></div>
+								<h3 id="total_type" style="text-align:center;"></h3>
                             </div>
                         </div>
                     </div>
@@ -65,6 +66,7 @@
                         <div class="ibox ">
                             <div class="ibox-content">
 								<div id="chartEmpStatus"></div>
+								<h3 id="total_status"  style="text-align:center;"></h3>
                             </div>
                         </div>
                     </div>
@@ -72,6 +74,7 @@
                         <div class="ibox ">
                             <div class="ibox-content">
 								<div id="chartEmpLevel"></div>
+								<h3 id="total_level"  style="text-align:center;"></h3>
                             </div>
                         </div>
 					</div>
@@ -88,6 +91,7 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="" id="chartEmpDept"></div>
+						<h3 id="total_dept"  style="text-align:center;"></h3>
 					</div>
 				</div>
 			</div>

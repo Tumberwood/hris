@@ -53,39 +53,30 @@
         var optionschartEmpType = {
             chart: {
                 type: "pie",
-                height: 300
+                height: 300,
+                events: {
+                    render() {
+                        const chart = this;
+                        const total = chart.series[0].data.reduce((sum, p) => sum + p.y, 0);
+                        const text = `Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`;
+
+                        // update elemen HTML di bawah chart
+                        $('#total_type').html(text);
+                    }
+                }
             },
             title: {
                 text: 'Karyawan per Tipe',
                 align: 'left'
             },
-            // subtitle: {
-            //     text:
-            //         ''
-            //     align: 'left'
-            // },
-            xAxis: {
-                categories: [],
-                crosshair: true,
-                accessibility: {
-                    description: ''
-                }
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Jumlah'
-                }
-            },
             tooltip: {
-                // valueSuffix: ' orang',
                 pointFormat: '{series.name}: <br>{point.y:,.0f} <br>({point.percentage:.1f}%) '
             },
             plotOptions: {
                 pie: {
-                    size:'100%',
+                    size: '100%',
                     allowPointSelect: true,
-                    cursor: true,
+                    cursor: 'pointer',
                     innerSize: "60%",
                     dataLabels: {
                         enabled: true,
@@ -98,45 +89,45 @@
                     }
                 }
             },
-            series: [
-                {
-                    name: "Jumlah",
-                    turboThreshold: 0
-                }
-            ]
+            series: [{
+                name: "Jumlah",
+                turboThreshold: 0,
+                data: [] // diisi lewat ajax
+            }]
         };
 
-        $.ajax( {
+        $.ajax({
             url: "../../models/dashboard/d_hr_profile_empType.php",
             dataType: 'json',
             type: 'POST',
             async: false,
-            data: {
-                
-            },
-            success: function ( json ) {
+            success: function (json) {
                 optionschartEmpType.series[0].data = json.data.d_hr_profile_empType;
-			    Highcharts.chart('chartEmpType', optionschartEmpType);
+                Highcharts.chart('chartEmpType', optionschartEmpType);
             }
-        } );
-        
+        });
     }
 
     function chartEmpStatus() {
         var optionschartEmpStatus = {
             chart: {
                 type: "pie",
-                height: 300
+                height: 300,
+                events: {
+                    render() {
+                        const chart = this;
+                        const total = chart.series[0].data.reduce((sum, p) => sum + p.y, 0);
+                        const text = `Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`;
+
+                        // update elemen HTML di bawah chart
+                        $('#total_status').html(text);
+                    }
+                }
             },
             title: {
                 text: 'Karyawan per Status',
                 align: 'left'
             },
-            // subtitle: {
-            //     text:
-            //         ''
-            //     align: 'left'
-            // },
             xAxis: {
                 categories: [],
                 crosshair: true,
@@ -199,17 +190,22 @@
         var optionschartEmpLevel = {
             chart: {
                 type: 'bar',
-                height: 300
+                height: 300,
+                events: {
+                    render() {
+                        const chart = this;
+                        const total = chart.series[0].data.reduce((sum, p) => sum + p.y, 0);
+                        const text = `Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`;
+
+                        // update elemen HTML di bawah chart
+                        $('#total_level').html(text);
+                    }
+                }
             },
             title: {
                 text: 'Karyawan per Level',
                 align: 'left'
             },
-            // subtitle: {
-            //     text:
-            //         ''
-            //     align: 'left'
-            // },
             xAxis: {
                 categories: [],
                 crosshair: true,
@@ -261,8 +257,16 @@
         var optionschartEmpDept = {
             chart: {
                 type: 'column',
-                // marginBottom: 75,
-                // spacingBottom: 50
+                events: {
+                    render() {
+                        const chart = this;
+                        const total = chart.series[0].data.reduce((sum, p) => sum + p.y, 0);
+                        const text = `Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`;
+
+                        // update elemen HTML di bawah chart
+                        $('#total_dept').html(text);
+                    }
+                }
             },
             title: {
                 text: 'Karyawan per Department',

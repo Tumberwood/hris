@@ -20,15 +20,17 @@
     $tanggal_akhir = new Carbon();
 
     $qs_hemxxmh = $db
-        ->query('select', 'v_emp_dept' )
-        ->get([
-            'v_emp_dept.hodxxmh_nama as hodxxmh_nama',
-            'SUM(if(v_emp_dept.hemxxmh_gender="Laki-laki",v_emp_dept.c_gender_dept,0)) as c_age_laki',
-            'SUM(if(v_emp_dept.hemxxmh_gender="Perempuan",v_emp_dept.c_gender_dept,0)) as c_age_perempuan'
-        ] )
-        ->group_by('v_emp_dept.hodxxmh_nama')
-        ->order('v_emp_dept.hodxxmh_nama')
-        ->exec();
+            ->raw()
+            ->exec('SELECT
+                        c.nama hodxxmh_nama,
+                        SUM(case when a.gender = "Laki-laki" then 1 ELSE 0 END) c_age_laki,
+                        SUM(case when a.gender = "Perempuan" then 1 ELSE 0 END) c_age_perempuan
+                    FROM hemxxmh a
+                    LEFT JOIN hemjbmh b ON b.id_hemxxmh = a.id
+                    LEFT JOIN hodxxmh c ON c.id = b.id_hodxxmh
+                    WHERE (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= CURDATE() )
+                    GROUP BY b.id_hodxxmh
+        ');
     $rs_hemxxmh = $qs_hemxxmh->fetchAll();
 
     $category = array();

@@ -20,16 +20,21 @@
     $tanggal_akhir = new Carbon();
 
     $qs_hemxxmh = $db
-        ->query('select', 'hemjbmh' )
+        ->query('select', 'hemxxmh' )
         ->get([
             'hevgrmh.nama as hevgrmh_nama',
             'COUNT(*) as c_hevxxmh_nama'
         ] )
+        ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' ) 
         ->join('hevxxmh','hevxxmh.id = hemjbmh.id_hevxxmh','LEFT' )
         ->join('hevgrmh','hevgrmh.id = hevxxmh.id_hevgrmh','LEFT' )
-        ->join('hemxxmh','hemxxmh.id = hemjbmh.id_hemxxmh','LEFT' )
-        ->where( 'hemxxmh.is_active', 1)
-        ->where( 'hevgrmh.id', 0, '>')
+        ->where( function ( $r ) use ($tanggal_akhir) {
+            $r
+                ->where( 'hemjbmh.tanggal_keluar', NULL)
+                // ->or_where( 'hemjbmh.tanggal_keluar', '0000-00-00')
+                ->or_where( 'hemjbmh.tanggal_keluar', $tanggal_akhir->format('Y-m-d') , '>=');
+        } )
+        // ->where( 'hevgrmh.id', 0, '>')
         ->group_by('hevgrmh.id')
         ->order('hevgrmh.id')
         ->exec();
