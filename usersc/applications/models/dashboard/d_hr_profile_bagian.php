@@ -32,7 +32,7 @@
             FROM hemxxmh a
             LEFT JOIN hemjbmh b ON b.id_hemxxmh = a.id
             LEFT JOIN hosxxmh c ON c.id = b.id_hosxxmh
-            WHERE a.is_active = 1 AND c.is_active = 1
+            WHERE (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= CURDATE())
             GROUP BY c.id
             '
             );

@@ -126,6 +126,14 @@
 								<th>Total</th>
 							</tr>
 						</thead>
+						<tfoot>
+							<tr>
+								<th>Total</th>
+								<th></th>
+								<th></th>
+								<th class="text-right bg-primary" id="s_jam"></th>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>
@@ -186,7 +194,17 @@
 						],
 						destroy: true,
 						responsive: false,
-						scrollX: true
+						scrollX: true,
+						footerCallback: function ( row, data, start, end, display ) {
+							var api       = this.api(), data;
+							var numFormat1 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+							var numFormat0 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+							// hitung jumlah 
+							s_jam = api.column( 3 ).data().sum();
+							
+
+							$( '#s_jam' ).html( numFormat1(s_jam) );
+						}
 					});
 				}
 			});
