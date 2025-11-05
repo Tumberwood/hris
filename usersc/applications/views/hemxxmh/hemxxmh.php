@@ -189,6 +189,7 @@
                                 <th>Tanggal Join</th>
                                 <th>Tanggal Keluar</th>
                                 <th>Grup HK</th>
+                                <th>Gender</th>
                                 <th>Aktif</th>
                             </tr>
                         </thead>
@@ -1312,6 +1313,7 @@
 							}
 						}
 					},
+					{ data: "hemjbmh.gender" },
 					{ 
 						data: "hemxxmh.is_active",
 						render: function (data){
