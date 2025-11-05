@@ -105,9 +105,11 @@
 				<div class="row">
 					<div class="col-lg-6">
 						<div class="" id="chartEmpAge"></div>
+						<h3 id="total_age"  style="text-align:center;"></h3>
 					</div>
 					<div class="col-lg-6">
 						<div class="" id="chartEmpMK"></div>
+						<h3 id="total_mk"  style="text-align:center;"></h3>
 					</div>
 				</div>
 			</div>
@@ -133,9 +135,9 @@
 						<tfoot>
 							<tr>
 								<th>Total</th>
-								<th></th>
-								<th></th>
-								<th class="text-right bg-primary" id="s_jam"></th>
+								<th class="text-right bg-success" id="s_org"></th>
+								<th class="text-right bg-warning" id="s_outs"></th>
+								<th class="text-right bg-primary" id="s_total"></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -204,10 +206,14 @@
 							var numFormat1 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 							var numFormat0 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 							// hitung jumlah 
-							s_jam = api.column( 3 ).data().sum();
+							s_org = api.column( 1 ).data().sum();
+							s_outs = api.column( 2 ).data().sum();
+							s_total = api.column( 3 ).data().sum();
 							
 
-							$( '#s_jam' ).html( numFormat1(s_jam) );
+							$( '#s_org' ).html( numFormat1(s_org) );
+							$( '#s_outs' ).html( numFormat1(s_outs) );
+							$( '#s_total' ).html( numFormat1(s_total) );
 						}
 					});
 				}

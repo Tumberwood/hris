@@ -25,7 +25,13 @@
             'TIMESTAMPDIFF(YEAR, hemxxmh.tanggal_lahir, CURDATE()) as hemxxmh_age',
             'COUNT(*) as c_age'
         ] )
-        ->where('is_active',1)
+        ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
+        ->where( function ( $r ) use ($tanggal_akhir) {
+            $r
+                ->where( 'hemjbmh.tanggal_keluar', NULL)
+                // ->or_where( 'hemjbmh.tanggal_keluar', '0000-00-00')
+                ->or_where( 'hemjbmh.tanggal_keluar', $tanggal_akhir->format('Y-m-d') , '>=');
+        } )
         ->group_by('hemxxmh_age')
         ->order('hemxxmh_age')
         ->exec();

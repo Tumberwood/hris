@@ -20,13 +20,18 @@
     $tanggal_akhir = new Carbon();
 
     $qs_hemxxmh = $db
-        ->query('select', 'hemjbmh' )
+        ->query('select', 'hemxxmh' )
         ->get([
             'TIMESTAMPDIFF(YEAR, hemjbmh.tanggal_masuk, CURDATE()) as masakerja',
             'COUNT(*) as c_masakerja'
         ] )
-        ->join('hemxxmh','hemxxmh.id = hemjbmh.id_hemxxmh','LEFT' )
-        ->where( 'hemxxmh.is_active', 1)
+        ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
+        ->where( function ( $r ) use ($tanggal_akhir) {
+            $r
+                ->where( 'hemjbmh.tanggal_keluar', NULL)
+                // ->or_where( 'hemjbmh.tanggal_keluar', '0000-00-00')
+                ->or_where( 'hemjbmh.tanggal_keluar', $tanggal_akhir->format('Y-m-d') , '>=');
+        } )
         ->group_by('masakerja')
         ->order('masakerja')
         ->exec();

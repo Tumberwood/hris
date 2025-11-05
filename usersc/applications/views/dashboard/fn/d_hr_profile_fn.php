@@ -328,7 +328,17 @@
     function chartEmpAge() {
         var optionschartEmpAge = {
             chart: {
-                type: 'column'
+                type: 'column',
+                events: {
+                    render() {
+                        const chart = this;
+                        const total = chart.series[0].data.reduce((sum, p) => sum + p.y, 0);
+                        const text = `Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`;
+
+                        // update elemen HTML di bawah chart
+                        $('#total_age').html(text);
+                    }
+                }
             },
             title: {
                 text: 'Karyawan per Usia',
@@ -389,7 +399,17 @@
     function chartEmpMK() {
         var optionschartEmpMK = {
             chart: {
-                type: 'column'
+                type: 'column',
+                events: {
+                    render() {
+                        const chart = this;
+                        const total = chart.series[0].data.reduce((sum, p) => sum + p.y, 0);
+                        const text = `Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`;
+
+                        // update elemen HTML di bawah chart
+                        $('#total_mk').html(text);
+                    }
+                }
             },
             title: {
                 text: 'Karyawan per Masa Kerja',
