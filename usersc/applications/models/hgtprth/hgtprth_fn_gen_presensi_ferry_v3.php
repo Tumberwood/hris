@@ -840,7 +840,7 @@
                                                         ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
                                                     FROM hemjbrd
                                                     WHERE
-                                                        tanggal_awal <= "2025-10-13"
+                                                        tanggal_awal <= :tanggal
                                                 ) AS subquery
                                                 WHERE row_num = 1
                                             ) history ON history.id_hemxxmh = j.id_hemxxmh
