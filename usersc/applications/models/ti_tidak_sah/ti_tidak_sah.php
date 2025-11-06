@@ -63,7 +63,7 @@
 				INNER JOIN hemjbmh c ON c.id_hemxxmh = b.id
 				INNER JOIN hodxxmh d ON d.id = c.id_hodxxmh
 				INNER JOIN hetxxmh e ON e.id = c.id_hetxxmh
-				LEFT JOIN holxxmd_2 f ON f.id = c.id_holxxmd_2
+				LEFT JOIN holxxmd_2 f ON f.id = a.id_holxxmd_2
 
 				LEFT JOIN (
 					SELECT
