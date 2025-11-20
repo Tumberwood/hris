@@ -109,6 +109,7 @@
 					a.tanggal BETWEEN :start_date AND :end_date
 					AND a.pot_jam > 0
 					AND jumlah_grup = 2
+					AND a.is_pot_premi <> 1 -- yang potongan jam karena early, late dsb ini agar tidak masuk
 					AND a.htlxxrh_kode = ""
 					'. $where .'
 				HAVING (
