@@ -50,7 +50,8 @@
                 <div class="tabs-container">
                     <ul class="nav nav-tabs" role="tablist">
                         <li><a class="nav-link active" data-toggle="tab" href="#tabudpbrsd">Cabang</a></li>
-                        <li><a class="nav-link" data-toggle="tab" href="#tabudp_heyxxmd"> Sub Tipe</a></li>
+                        <li><a class="nav-link" data-toggle="tab" href="#tabudp_heyxxmd"> Tipe</a></li>
+                        <li><a class="nav-link" data-toggle="tab" href="#tabudpeysd"> Sub Tipe</a></li>
                         <li><a class="nav-link" data-toggle="tab" href="#tabucudasd"> CRUD</a></li>
                     </ul>
                     <div class="tab-content">
@@ -62,6 +63,20 @@
                                             <th>ID</th>
                                             <th>id_udpxxsh</th>
                                             <th>Cabang</th>
+                                            <th>Keterangan</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div role="tabpanel" id="tabudpeysd" class="tab-pane">
+                            <div class="panel-body">
+                                <table id="tbludpeysd" class="table table-striped table-bordered table-hover" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>id_udpxxsh</th>
+                                            <th>Tipe</th>
                                             <th>Keterangan</th>
                                         </tr>
                                     </thead>
@@ -123,12 +138,14 @@
 		var edtudpbrsd, tbludpbrsd, show_inactive_status_udpbrsd = 0, udpbrsd;
 		var edtudp_heyxxmd, tbludp_heyxxmd, show_inactive_status_udp_heyxxmd = 0, udp_heyxxmd;
         var edtucudasd, tblucudasd, show_inactive_status_ucudasd = 0, ucudasd;
+        var edtudpeysd, tbludpeysd, show_inactive_status_udpeysd = 0, udpeysd;
 		// ------------- end of default variable
 
         var id_users_old = 0;
         var id_users;
         var id_gbrxxmh_old = 0;
         var id_heyxxmd_old = 0;
+        var id_heyxxmh_old = 0;
 		
 		$(document).ready(function() {
         
@@ -294,7 +311,7 @@
 
             tbludpxxsh.on( 'init', function () {
 				// atur hak akses
-				tbl_details = [tbludpbrsd, tbludp_heyxxmd, tblucudasd];
+				tbl_details = [tbludpbrsd, tbludpeysd, tbludp_heyxxmd, tblucudasd];
 				CekInitHeaderHD(tbludpxxsh, tbl_details);
 
                 tblucudasd.button( 'btnRefreshPages:name' ).disable();
@@ -313,7 +330,7 @@
                 id_users_old   = udpxxsh_data.id_users;
 				
 				// atur hak akses
-				tbl_details = [tbludpbrsd, tbludp_heyxxmd, tblucudasd];
+				tbl_details = [tbludpbrsd, tbludpeysd, tbludp_heyxxmd, tblucudasd];
 				CekSelectHeaderHD(tbludpxxsh, tbl_details);
 
                 tblucudasd.button( 'btnRefreshPages:name' ).enable();
@@ -327,7 +344,7 @@
                 id_users_old = 0;
 
 				// atur hak akses
-				tbl_details = [tbludpbrsd, tbludp_heyxxmd, tblucudasd];
+				tbl_details = [tbludpbrsd, tbludpeysd, tbludp_heyxxmd, tblucudasd];
 				CekDeselectHeaderHD(tbludpxxsh, tbl_details);
 
                 tblucudasd.button( 'btnRefreshPages:name' ).disable();
@@ -498,6 +515,166 @@
 
             
             // end detail cabang
+
+            // start detail Sub Tipe
+            edtudpeysd = new $.fn.dataTable.Editor( {
+                ajax: {
+                    url: "../../models/core/udpeysd.php",
+                    type: 'POST',
+                    data: function (d){
+                        d.show_inactive_status = show_inactive_status;
+                        d.id_udpxxsh = id_udpxxsh;
+                    }
+                },
+                table: "#tbludpeysd",
+                fields: [ 
+                    {
+                        label: "start_on",
+                        name: "start_on",
+                        type: "hidden"
+                    },	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+                        label: "nama_tabel",
+                        name: "nama_tabel",
+                        def: "udpeysd",
+                        type: "hidden"
+                    },	{
+                        label: "id_udpxxsh",
+                        name: "udpeysd.id_udpxxsh",
+                        type: "hidden"
+                    },	{
+                        label: "Tipe",
+                        name: "udpeysd.id_heyxxmh",
+                        type: "select2",
+                        opts: {
+                            placeholder : "Select",
+                            allowClear: true,
+                            multiple: false,
+                            ajax: {
+                                url: "../../models/heyxxmh/heyxxmh_fn_opt.php",
+                                dataType: 'json',
+                                data: function (params) {
+                                    var query = {
+                                        id_heyxxmh_old: id_heyxxmh_old,
+                                        search: params.term || '',
+                                        page: params.page || 1
+                                    }
+                                        return query;
+                                },
+                                processResults: function (data, params) {
+                                    return {
+                                        results: data.results,
+                                        pagination: {
+                                            more: true
+                                        }
+                                    };
+                                },
+                                cache: true,
+                                minimumInputLength: 1,
+                                maximum: 10,
+                                delay: 500,
+                                maximumSelectionLength: 5,
+                                minimumResultsForSearch: -1,
+                            },
+                        }
+                    }, 	{
+                        label: "Keterangan",
+                        name: "udpeysd.keterangan",
+                        type: "textarea"
+                    }
+                ]
+            } );
+            
+            edtudpeysd.on( 'preOpen', function( e, mode, action ) {
+                edtudpeysd.field('udpeysd.id_udpxxsh').val(id_udpxxsh);
+                
+                start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+                edtudpeysd.field('start_on').val(start_on);
+                
+                if (action == 'create'){
+                    tbludpeysd.rows().deselect();
+                }
+            });
+
+            edtudpeysd.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edtudpeysd.field('finish_on').val(finish_on);
+			});
+            
+            tbludpeysd = $('#tbludpeysd').DataTable( {
+                ajax: {
+                    url: "../../models/core/udpeysd.php",
+                    type: 'POST',
+                    data: function (d){
+                        d.show_inactive_status = show_inactive_status;
+                        d.id_udpxxsh = id_udpxxsh;
+                    }
+                },
+                order: [[ 1, "asc" ]],
+                columns: [
+                    { data: "udpeysd.id",visible:false },
+                    { data: "udpeysd.id_udpxxsh",visible:false },
+                    { data: "heyxxmh.nama" },
+                    { data: "udpeysd.keterangan" }
+                ],
+                buttons: [
+                    // BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_udpeysd';
+						$table       = 'tbludpeysd';
+						$edt         = 'edtudpeysd';
+						$show_status = '_udpeysd';
+						$table_name  = $nama_tabels_d[0];
+
+                        $arr_buttons_tools      = ['show_hide','copy','excel','colvis'];;
+                        $arr_buttons_action     = ['create', 'edit', 'nonaktif_d'];
+                        $arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+                ],
+                rowCallback: function( row, data, index ) {
+                    if ( data.udpeysd.is_active == 0 ) {
+                        $('td', row).addClass('text-danger');
+                    }
+                }
+            } );
+
+            tbludpeysd.on( 'draw', function( e, settings ) { 
+				// atur hak akses
+				cek_c_detail= 1;
+				CekDrawDetailHD(tbludpxxsh, tbludpeysd, 'udpeysd' );
+				CekDrawDetailHDFinal(tbludpxxsh);
+			} );
+
+			tbludpeysd.on( 'select', function( e, dt, type, indexes ) {
+				// shorting variable
+				udpeysd_data = tbludpeysd.row( { selected: true } ).data().udpeysd;
+
+				// set variable on select
+				id_udpeysd        = udpeysd_data.id;
+				id_transaksi_d    = id_udpeysd; // dipakai untuk general
+				is_active_d       = udpeysd_data.is_active;
+
+                id_heyxxmh_old = udpeysd_data.id_heyxxmh; console.log(id_heyxxmh_old);
+
+				// atur hak akses
+				CekSelectDetailHD(tbludpxxsh, tbludpeysd );
+			} );
+
+			tbludpeysd.on( 'deselect', function() {
+				// set variable on deselect
+				id_udpeysd  = 0;
+				is_active_d = 0;
+
+                id_heyxxmh_old = 0;
+				
+				// atur hak akses
+				CekDeselectDetailHD(tbludpxxsh, tbludpeysd );
+			} );
 
             // start detail Sub Tipe
             edtudp_heyxxmd = new $.fn.dataTable.Editor( {
