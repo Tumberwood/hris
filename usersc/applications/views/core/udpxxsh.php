@@ -50,8 +50,8 @@
                 <div class="tabs-container">
                     <ul class="nav nav-tabs" role="tablist">
                         <li><a class="nav-link active" data-toggle="tab" href="#tabudpbrsd">Cabang</a></li>
-                        <li><a class="nav-link" data-toggle="tab" href="#tabudp_heyxxmd"> Tipe</a></li>
-                        <li><a class="nav-link" data-toggle="tab" href="#tabudpeysd"> Sub Tipe</a></li>
+                        <li><a class="nav-link" data-toggle="tab" href="#tabudpeysd"> Tipe</a></li>
+                        <li><a class="nav-link" data-toggle="tab" href="#tabudp_heyxxmd"> Sub Tipe</a></li>
                         <li><a class="nav-link" data-toggle="tab" href="#tabucudasd"> CRUD</a></li>
                     </ul>
                     <div class="tab-content">
