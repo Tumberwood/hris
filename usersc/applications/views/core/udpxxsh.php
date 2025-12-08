@@ -10,7 +10,7 @@
 	$nama_tabel       = 'udpxxsh';
     $nama_tabels_d    = [];
     $nama_tabels_d[0] = 'udpbrsd';
-    $nama_tabels_d[1] = 'udp_heyxxmh';
+    $nama_tabels_d[1] = 'udp_heyxxmd';
     $nama_tabels_d[2] = 'ucudasd';
 ?>
 
@@ -50,7 +50,7 @@
                 <div class="tabs-container">
                     <ul class="nav nav-tabs" role="tablist">
                         <li><a class="nav-link active" data-toggle="tab" href="#tabudpbrsd">Cabang</a></li>
-                        <li><a class="nav-link" data-toggle="tab" href="#tabudp_heyxxmh"> Sub Tipe</a></li>
+                        <li><a class="nav-link" data-toggle="tab" href="#tabudp_heyxxmd"> Sub Tipe</a></li>
                         <li><a class="nav-link" data-toggle="tab" href="#tabucudasd"> CRUD</a></li>
                     </ul>
                     <div class="tab-content">
@@ -68,9 +68,9 @@
                                 </table>
                             </div>
                         </div>
-                        <div role="tabpanel" id="tabudp_heyxxmh" class="tab-pane">
+                        <div role="tabpanel" id="tabudp_heyxxmd" class="tab-pane">
                             <div class="panel-body">
-                                <table id="tbludp_heyxxmh" class="table table-striped table-bordered table-hover" width="100%">
+                                <table id="tbludp_heyxxmd" class="table table-striped table-bordered table-hover" width="100%">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -121,14 +121,14 @@
 		// ------------- default variable, do not erase
 		var edtudpxxsh, tbludpxxsh, show_inactive_status = 0, id_udpxxsh;
 		var edtudpbrsd, tbludpbrsd, show_inactive_status_udpbrsd = 0, udpbrsd;
-		var edtudp_heyxxmh, tbludp_heyxxmh, show_inactive_status_udp_heyxxmh = 0, udp_heyxxmh;
+		var edtudp_heyxxmd, tbludp_heyxxmd, show_inactive_status_udp_heyxxmd = 0, udp_heyxxmd;
         var edtucudasd, tblucudasd, show_inactive_status_ucudasd = 0, ucudasd;
 		// ------------- end of default variable
 
         var id_users_old = 0;
         var id_users;
         var id_gbrxxmh_old = 0;
-        var id_heyxxmh_old = 0;
+        var id_heyxxmd_old = 0;
 		
 		$(document).ready(function() {
         
@@ -294,7 +294,7 @@
 
             tbludpxxsh.on( 'init', function () {
 				// atur hak akses
-				tbl_details = [tbludpbrsd, tbludp_heyxxmh, tblucudasd];
+				tbl_details = [tbludpbrsd, tbludp_heyxxmd, tblucudasd];
 				CekInitHeaderHD(tbludpxxsh, tbl_details);
 
                 tblucudasd.button( 'btnRefreshPages:name' ).disable();
@@ -313,7 +313,7 @@
                 id_users_old   = udpxxsh_data.id_users;
 				
 				// atur hak akses
-				tbl_details = [tbludpbrsd, tbludp_heyxxmh, tblucudasd];
+				tbl_details = [tbludpbrsd, tbludp_heyxxmd, tblucudasd];
 				CekSelectHeaderHD(tbludpxxsh, tbl_details);
 
                 tblucudasd.button( 'btnRefreshPages:name' ).enable();
@@ -327,7 +327,7 @@
                 id_users_old = 0;
 
 				// atur hak akses
-				tbl_details = [tbludpbrsd, tbludp_heyxxmh, tblucudasd];
+				tbl_details = [tbludpbrsd, tbludp_heyxxmd, tblucudasd];
 				CekDeselectHeaderHD(tbludpxxsh, tbl_details);
 
                 tblucudasd.button( 'btnRefreshPages:name' ).disable();
@@ -500,16 +500,16 @@
             // end detail cabang
 
             // start detail Sub Tipe
-            edtudp_heyxxmh = new $.fn.dataTable.Editor( {
+            edtudp_heyxxmd = new $.fn.dataTable.Editor( {
                 ajax: {
-                    url: "../../models/core/udp_heyxxmh.php",
+                    url: "../../models/core/udp_heyxxmd.php",
                     type: 'POST',
                     data: function (d){
                         d.show_inactive_status = show_inactive_status;
                         d.id_udpxxsh = id_udpxxsh;
                     }
                 },
-                table: "#tbludp_heyxxmh",
+                table: "#tbludp_heyxxmd",
                 fields: [ 
                     {
                         label: "start_on",
@@ -522,26 +522,26 @@
 					},	{
                         label: "nama_tabel",
                         name: "nama_tabel",
-                        def: "udp_heyxxmh",
+                        def: "udp_heyxxmd",
                         type: "hidden"
                     },	{
                         label: "id_udpxxsh",
-                        name: "udp_heyxxmh.id_udpxxsh",
+                        name: "udp_heyxxmd.id_udpxxsh",
                         type: "hidden"
                     },	{
                         label: "Sub Tipe",
-                        name: "udp_heyxxmh.id_heyxxmh",
+                        name: "udp_heyxxmd.id_heyxxmd",
                         type: "select2",
                         opts: {
                             placeholder : "Select",
                             allowClear: true,
                             multiple: false,
                             ajax: {
-                                url: "../../models/heyxxmh/heyxxmh_fn_opt.php",
+                                url: "../../models/heyxxmd/heyxxmd_fn_opt.php",
                                 dataType: 'json',
                                 data: function (params) {
                                     var query = {
-                                        id_heyxxmh_old: id_heyxxmh_old,
+                                        id_heyxxmd_old: id_heyxxmd_old,
                                         search: params.term || '',
                                         page: params.page || 1
                                     }
@@ -565,31 +565,31 @@
                         }
                     }, 	{
                         label: "Keterangan",
-                        name: "udp_heyxxmh.keterangan",
+                        name: "udp_heyxxmd.keterangan",
                         type: "textarea"
                     }
                 ]
             } );
             
-            edtudp_heyxxmh.on( 'preOpen', function( e, mode, action ) {
-                edtudp_heyxxmh.field('udp_heyxxmh.id_udpxxsh').val(id_udpxxsh);
+            edtudp_heyxxmd.on( 'preOpen', function( e, mode, action ) {
+                edtudp_heyxxmd.field('udp_heyxxmd.id_udpxxsh').val(id_udpxxsh);
                 
                 start_on = moment().format('YYYY-MM-DD HH:mm:ss');
-                edtudp_heyxxmh.field('start_on').val(start_on);
+                edtudp_heyxxmd.field('start_on').val(start_on);
                 
                 if (action == 'create'){
-                    tbludp_heyxxmh.rows().deselect();
+                    tbludp_heyxxmd.rows().deselect();
                 }
             });
 
-            edtudp_heyxxmh.on('initSubmit', function(e, action) {
+            edtudp_heyxxmd.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
-				edtudp_heyxxmh.field('finish_on').val(finish_on);
+				edtudp_heyxxmd.field('finish_on').val(finish_on);
 			});
             
-            tbludp_heyxxmh = $('#tbludp_heyxxmh').DataTable( {
+            tbludp_heyxxmd = $('#tbludp_heyxxmd').DataTable( {
                 ajax: {
-                    url: "../../models/core/udp_heyxxmh.php",
+                    url: "../../models/core/udp_heyxxmd.php",
                     type: 'POST',
                     data: function (d){
                         d.show_inactive_status = show_inactive_status;
@@ -598,18 +598,18 @@
                 },
                 order: [[ 1, "asc" ]],
                 columns: [
-                    { data: "udp_heyxxmh.id",visible:false },
-                    { data: "udp_heyxxmh.id_udpxxsh",visible:false },
-                    { data: "heyxxmh.nama" },
-                    { data: "udp_heyxxmh.keterangan" }
+                    { data: "udp_heyxxmd.id",visible:false },
+                    { data: "udp_heyxxmd.id_udpxxsh",visible:false },
+                    { data: "heyxxmd.nama" },
+                    { data: "udp_heyxxmd.keterangan" }
                 ],
                 buttons: [
                     // BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_udp_heyxxmh';
-						$table       = 'tbludp_heyxxmh';
-						$edt         = 'edtudp_heyxxmh';
-						$show_status = '_udp_heyxxmh';
+						$id_table    = 'id_udp_heyxxmd';
+						$table       = 'tbludp_heyxxmd';
+						$edt         = 'edtudp_heyxxmd';
+						$show_status = '_udp_heyxxmd';
 						$table_name  = $nama_tabels_d[0];
 
                         $arr_buttons_tools      = ['show_hide','copy','excel','colvis'];;
@@ -620,43 +620,43 @@
 					// END breaking generate button
                 ],
                 rowCallback: function( row, data, index ) {
-                    if ( data.udp_heyxxmh.is_active == 0 ) {
+                    if ( data.udp_heyxxmd.is_active == 0 ) {
                         $('td', row).addClass('text-danger');
                     }
                 }
             } );
 
-            tbludp_heyxxmh.on( 'draw', function( e, settings ) { 
+            tbludp_heyxxmd.on( 'draw', function( e, settings ) { 
 				// atur hak akses
 				cek_c_detail= 1;
-				CekDrawDetailHD(tbludpxxsh, tbludp_heyxxmh, 'udp_heyxxmh' );
+				CekDrawDetailHD(tbludpxxsh, tbludp_heyxxmd, 'udp_heyxxmd' );
 				CekDrawDetailHDFinal(tbludpxxsh);
 			} );
 
-			tbludp_heyxxmh.on( 'select', function( e, dt, type, indexes ) {
+			tbludp_heyxxmd.on( 'select', function( e, dt, type, indexes ) {
 				// shorting variable
-				udp_heyxxmh_data = tbludp_heyxxmh.row( { selected: true } ).data().udp_heyxxmh;
+				udp_heyxxmd_data = tbludp_heyxxmd.row( { selected: true } ).data().udp_heyxxmd;
 
 				// set variable on select
-				id_udp_heyxxmh        = udp_heyxxmh_data.id;
-				id_transaksi_d    = id_udp_heyxxmh; // dipakai untuk general
-				is_active_d       = udp_heyxxmh_data.is_active;
+				id_udp_heyxxmd        = udp_heyxxmd_data.id;
+				id_transaksi_d    = id_udp_heyxxmd; // dipakai untuk general
+				is_active_d       = udp_heyxxmd_data.is_active;
 
-                id_heyxxmh_old = udp_heyxxmh_data.id_heyxxmh; console.log(id_heyxxmh_old);
+                id_heyxxmd_old = udp_heyxxmd_data.id_heyxxmd; console.log(id_heyxxmd_old);
 
 				// atur hak akses
-				CekSelectDetailHD(tbludpxxsh, tbludp_heyxxmh );
+				CekSelectDetailHD(tbludpxxsh, tbludp_heyxxmd );
 			} );
 
-			tbludp_heyxxmh.on( 'deselect', function() {
+			tbludp_heyxxmd.on( 'deselect', function() {
 				// set variable on deselect
-				id_udp_heyxxmh  = 0;
+				id_udp_heyxxmd  = 0;
 				is_active_d = 0;
 
-                id_heyxxmh_old = 0;
+                id_heyxxmd_old = 0;
 				
 				// atur hak akses
-				CekDeselectDetailHD(tbludpxxsh, tbludp_heyxxmh );
+				CekDeselectDetailHD(tbludpxxsh, tbludp_heyxxmd );
 			} );
 
             
