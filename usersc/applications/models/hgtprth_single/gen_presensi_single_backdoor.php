@@ -18,10 +18,10 @@
     // END definisi variable untuk fn_ajax_results.php
 
     // $id_hemxxmh = 1709;
-    $id_hemxxmh = '(1575)';
+    $id_hemxxmh = '(1676)';
 
-    $start = Carbon::create(2025, 1, 5);
-    $end = Carbon::create(2025, 1, 5); 
+    $start = Carbon::create(2025, 8, 11);
+    $end = Carbon::create(2025, 12, 15); 
     
     // Buat periode
     $periode = CarbonPeriod::create($start, $end);
@@ -41,6 +41,7 @@
         $rs_htsprrd = $qs_htsprrd->fetch();
 
         if (empty($rs_htsprrd)) {
+            
             $qi_htsprrd_new = $db
                 ->raw()
                 ->bind(':tanggal', $tanggal)
@@ -105,12 +106,14 @@
                             lembur3_final,
                             nominal_lembur_jam,
                             grup_hk,
+                            id_holxxmd_2,
                             break_in,
                             break_out
                         )
                         WITH presensi AS (
                             SELECT
                                 b.id_hemxxmh,
+                                id_holxxmd_2,
                                 a.kode AS nik,
                                 a.nama AS peg,
                                 is_pot_makan,
@@ -248,7 +251,7 @@
                                 COALESCE(durasi_lembur_awal_jam, 0) + COALESCE(durasi_lembur_akhir_jam, 0) + COALESCE(durasi_lembur_libur_jam, 0) AS durasi_lembur_non_ti,
                                 COALESCE(durasi_lembur_awal_jam, 0) + COALESCE(durasi_lembur_akhir_jam, 0) + COALESCE(durasi_lembur_libur_jam, 0) + COALESCE(durasi_lembur_istirahat1_jam, 0) + COALESCE(durasi_lembur_istirahat2_jam, 0) + COALESCE(durasi_lembur_istirahat3_jam, 0) AS durasi_lembur_total_jam,
 
-                                (FLOOR(IF(b.id_hesxxmh = 3, COALESCE(nominal_lembur_mati, 0), (COALESCE(nominal_gp, 0) + COALESCE(nominal_t_jab, 0)) / 173))) AS nominal_lembur_jam,
+                                (FLOOR(IF(b.id_hesxxmh = 3, COALESCE(nominal_lembur_mati, 0), (COALESCE(nominal_gp, 0) + IF(b.id_heyxxmd = 1 AND b.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) ) / 173))) AS nominal_lembur_jam,
                                 jadwal.jam_awal AS shift_in,
                                 jadwal.jam_akhir AS shift_out,
                                 jadwal.tanggaljam_awal_t1,
@@ -264,12 +267,47 @@
                                 jam_akhir_schedule
 
                             FROM hemxxmh AS a
-                            INNER JOIN hemjbmh AS b ON b.id_hemxxmh = a.id
+                            INNER JOIN (
+                                SELECT
+                                    j.id_hemxxmh,
+                                    j.id_heyxxmh,
+                                    j.id_hevxxmh,
+                                    j.id_heyxxmd,
+                                    j.is_checkclock,
+                                    j.tanggal_masuk,
+                                    j.tanggal_keluar,
+                                    IFNULL(history.id_hesxxmh, j.id_hesxxmh) id_hesxxmh,
+                                    IFNULL(history.jumlah_grup, j.jumlah_grup) jumlah_grup,
+                                    IF(
+                                        IFNULL(history.id_holxxmd_2_akhir, 0) > 0,
+                                        history.id_holxxmd_2_akhir,
+                                        IF(
+                                            IFNULL(history.id_holxxmd_2_awal, 0) > 0,
+                                            history.id_holxxmd_2_awal,
+                                            IFNULL(j.id_holxxmd_2, 0)
+                                        )
+                                    ) AS id_holxxmd_2,
+                                    IFNULL(history.grup_hk, j.grup_hk) grup_hk
+                                FROM hemjbmh j
+                                LEFT JOIN (
+                                    SELECT
+                                        *
+                                    FROM (
+                                        SELECT
+                                            *,
+                                            ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
+                                        FROM hemjbrd
+                                        WHERE
+                                            tanggal_awal <= :tanggal
+                                    ) AS subquery
+                                    WHERE row_num = 1
+                                ) history ON history.id_hemxxmh = j.id_hemxxmh
+                            ) b ON b.id_hemxxmh = a.id
                             LEFT JOIN (
                                 SELECT
                                     jad.*,
                                     sft.kode AS kode_shift,
-	                                DATE_FORMAT(jad.tanggaljam_akhir, "%H:%i") jam_akhir_schedule,
+                                    DATE_FORMAT(jad.tanggaljam_akhir, "%H:%i") jam_akhir_schedule,
                                     DATE_ADD(jad.tanggaljam_awal, INTERVAL 5 MINUTE) AS tanggaljam_akhir_toleransi, -- tolreansi awal 5 menit
                                     DATE_SUB(jad.tanggaljam_awal, INTERVAL 5 MINUTE) AS tanggaljam_awal_toleransi, -- toleransi akhir 5 menit
                                     DATE_ADD(jad.tanggaljam_awal, INTERVAL 65 MINUTE) AS tanggaljam_akhir_toleransi_min1jam, -- keperluan toleransi terlambat Late +1 jam 
@@ -286,13 +324,13 @@
                             LEFT JOIN (
                                 SELECT
                                     a.id,
-                                    MIN(TIMESTAMP(c.tanggal, c.jam)) AS ceklok_in
+                                    MIN(CONCAT(c.tanggal, " ", c.jam)) AS ceklok_in
                                 FROM htssctd AS a
                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
                                     AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "pocan")
-                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_t1 AND a.tanggaljam_awal_t2
+                                    AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND a.tanggaljam_awal_t2
                                 AND b.id IN '.$id_hemxxmh.'                                                        
                                 GROUP BY a.id
                                 ORDER BY ceklok_in
@@ -303,62 +341,105 @@
                             LEFT JOIN (
                                 SELECT DISTINCT
                                     a.id,
-                                    MAX(TIMESTAMP(c.tanggal, c.jam)) AS ceklok_out
+                                    MAX(CONCAT(c.tanggal, " ", c.jam)) AS ceklok_out
                                 FROM htssctd AS a
                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
                                     AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "pocan")
-                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_akhir_t1 AND a.tanggaljam_akhir_t2
+                                    AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_akhir_t1 AND a.tanggaljam_akhir_t2
                                     AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                 GROUP BY a.id
                                 ORDER BY ceklok_out DESC
 
                             ) AS cek_out ON cek_out.id = jadwal.id
+
                             
                             -- ceklok Istirahat AWAL , semua mesin dengan range istirahat sesuai jadwal.
                             LEFT JOIN (
                                 SELECT
                                     a.id,
-                                    MIN(TIMESTAMP(c.tanggal, c.jam)) AS break_in
+                                    a.id_hemxxmh,
+                                    MIN(CONCAT(c.tanggal, " ", c.jam)) AS break_in,
+                                    c.nama
                                 FROM htssctd AS a
                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
+                                LEFT JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
+                                INNER JOIN hemjbmh AS hj ON hj.id_hemxxmh = a.id_hemxxmh
                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
-                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-                                AND b.id IN '.$id_hemxxmh.'                                                        
+                                    AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                                    AND b.id IN '.$id_hemxxmh.'
+                                    AND 
+                                    (
+                                        (
+                                            a.tanggal > "2025-07-27"
+                                            AND id_holxxmd_2 = 1
+                                            AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
+                                        )
+                                        OR 
+                                        (
+                                            a.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
+                                            AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
+                                        )
+                                        OR 
+                                        (
+                                            a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27"
+                                            AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI", "makan")
+                                        )
+                                    )
                                 GROUP BY a.id
                                 ORDER BY break_in
-
                             ) AS break_awal ON break_awal.id = jadwal.id
                             
                             -- ceklok Istirahat AKHIR , semua mesin dengan range istirahat sesuai jadwal.
                             LEFT JOIN (
-                                SELECT
+                                SELECT DISTINCT
                                     a.id,
-                                    MAX(TIMESTAMP(c.tanggal, c.jam)) AS break_out
+                                    a.id_hemxxmh,
+                                    MAX(CONCAT(c.tanggal, " ", c.jam)) AS break_out,
+                                    c.nama
                                 FROM htssctd AS a
                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
+                                LEFT JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
+                                INNER JOIN hemjbmh AS hj ON hj.id_hemxxmh = a.id_hemxxmh
                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1 
-                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-                                AND b.id IN '.$id_hemxxmh.'                                                        
+                                    AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                                    AND b.id IN '.$id_hemxxmh.'
+                                    AND 
+                                    (
+                                        (
+                                            a.tanggal > "2025-07-27"
+                                            AND id_holxxmd_2 = 1
+                                            AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
+                                        )
+                                        OR 
+                                        (
+                                            a.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
+                                            AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
+                                        )
+                                        OR 
+                                        (
+                                            a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27"
+                                            AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI", "makan")
+                                        )
+                                    )
                                 GROUP BY a.id
                                 ORDER BY break_out
-
                             ) AS break_akhir ON break_akhir.id = jadwal.id
                             
                             -- ceklok luar range
                             LEFT JOIN (
                                 SELECT DISTINCT
                                     a.id,
-                                    MAX(TIMESTAMP(c.tanggal, c.jam)) AS ceklok_luar
+                                    MAX(CONCAT(c.tanggal, " ", c.jam)) AS ceklok_luar
                                 FROM htssctd AS a
                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                     AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "pocan")
-                                    AND TIMESTAMP(c.tanggal, c.jam) BETWEEN CONCAT(:tanggal, " 09:00:00") AND DATE_ADD(CONCAT(:tanggal, " 04:00:00"), INTERVAL 1 DAY)
+                                    AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(:tanggal, " 09:00:00") AND DATE_ADD(CONCAT(:tanggal, " 04:00:00"), INTERVAL 1 DAY)
                                     AND b.id IN '.$id_hemxxmh.'
                                 GROUP BY a.id
                                 ORDER BY ceklok_luar
@@ -491,27 +572,27 @@
                                     MAX(CASE WHEN ot.id_htotpmh = 1 THEN ot.jam_akhir ELSE NULL END) AS jam_akhir_lembur_awal,
                                     SUM(CASE WHEN ot.id_htotpmh = 1 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_awal_jam,
                                     SUM(CASE WHEN ot.id_htotpmh = 1 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_awal_menit,
-                        
+
                                     MAX(CASE WHEN ot.id_htotpmh = 2 THEN ot.jam_awal ELSE NULL END) AS jam_awal_lembur_akhir,
                                     MAX(CASE WHEN ot.id_htotpmh = 2 THEN ot.jam_akhir ELSE NULL END) AS jam_akhir_lembur_akhir,
                                     SUM(CASE WHEN ot.id_htotpmh = 2 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_akhir_jam,
                                     SUM(CASE WHEN ot.id_htotpmh = 2 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_akhir_menit,
-                        
+
                                     MAX(CASE WHEN ot.id_htotpmh = 4 THEN ot.jam_awal ELSE NULL END) AS jam_awal_lembur_libur,
                                     MAX(CASE WHEN ot.id_htotpmh = 4 THEN ot.jam_akhir ELSE NULL END) AS jam_akhir_lembur_libur,
                                     SUM(CASE WHEN ot.id_htotpmh = 4 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_libur_jam,
                                     SUM(CASE WHEN ot.id_htotpmh = 4 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_libur_menit,
-                        
+
                                     MAX(CASE WHEN ot.id_htotpmh = 5 THEN ot.jam_awal ELSE NULL END) AS jam_awal_lembur_istirahat1,
                                     MAX(CASE WHEN ot.id_htotpmh = 5 THEN ot.jam_akhir ELSE NULL END) AS jam_akhir_lembur_istirahat1,
                                     SUM(CASE WHEN ot.id_htotpmh = 5 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_istirahat1_jam,
                                     SUM(CASE WHEN ot.id_htotpmh = 5 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_istirahat1_menit,
-                        
+
                                     MAX(CASE WHEN ot.id_htotpmh = 6 THEN ot.jam_awal ELSE NULL END) AS jam_awal_lembur_istirahat2,
                                     MAX(CASE WHEN ot.id_htotpmh = 6 THEN ot.jam_akhir ELSE NULL END) AS jam_akhir_lembur_istirahat2,
                                     SUM(CASE WHEN ot.id_htotpmh = 6 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_istirahat2_jam,
                                     SUM(CASE WHEN ot.id_htotpmh = 6 THEN ot.durasi_lembur_menit ELSE 0 END) AS durasi_lembur_istirahat2_menit,
-                        
+
                                     MAX(CASE WHEN ot.id_htotpmh = 7 THEN ot.jam_awal ELSE NULL END) AS jam_awal_lembur_istirahat3,
                                     MAX(CASE WHEN ot.id_htotpmh = 7 THEN ot.jam_akhir ELSE NULL END) AS jam_akhir_lembur_istirahat3,
                                     SUM(CASE WHEN ot.id_htotpmh = 7 THEN ot.durasi_lembur_jam ELSE 0 END) AS durasi_lembur_istirahat3_jam,
@@ -522,18 +603,74 @@
                                             DATE_ADD(CONCAT(hto.tanggal, " ", hto.jam_awal), INTERVAL 5 MINUTE) tanggaljam_awal_toleransi_lembur,
                                             DATE_FORMAT(hto.jam_awal, "%H:%i") jam_awal_lembur,
                                             id_jadwal,
+                                            mesin,
                                             if(is_istirahat = 2, 1, 0)  AS is_pot_ti,
                                             if(is_istirahat = 2, durasi_break_menit, 0)  AS durasi_break_menit,
                                             CASE
+                                                -- TI Gedung 3 (SHIFT 2), untuk jabatan Koordinator Printing / Laminasi (Bagian dry / extru/solvent free) tidak kena potongan TI
+                                                WHEN 
+                                                    is_istirahat = 2 AND -- Lembur TI
+                                                    id_holxxmd_2 = 1 AND -- GEDUNG 3
+                                                    
+                                                    -- jabatan Koordinator Printing / Laminasi (Bagian dry / extru/solvent free)
+                                                    (   jb.id_hetxxmh = 55 OR
+                                                        bagian.nama LIKE "%dry%" OR
+                                                        bagian.nama LIKE "%extru%" OR
+                                                        bagian.nama LIKE "%solvent free%" 
+                                                    )
+                                                    AND durasi_break_menit > 0
+                                                    -- Shift 2
+                                                    AND (shift LIKE "SIANG%" OR shift LIKE "SORE%")
+                                                THEN 0
+
                                                 -- [16.06, 12/6/2025] +62 895-6326-78236: Iya pak. Karena jam istirahat normal kan 1 jam. Otomatis jika>1 jam, meskipun tdk ada lembur juga tetap dipotong 1jam.
-                                                WHEN durasi_break_menit > 60 THEN 1
+                                                WHEN durasi_break_menit > 65 THEN 1
                                                 
                                                 -- 22 Mar 2025, 0077 istirahat > 1 jam maka dipotong 1jam
                                                 WHEN is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_ti, 0) THEN 0.5
+        
+                                                -- BARU: Jika pegawai Gedung 3 ada TI dan ceklok istirahatnya tidak dalam Gedung-3 maka dipotong 0.5
+                                                WHEN is_istirahat = 2 AND id_holxxmd_2 = 1 AND durasi_break_menit > 0 AND mesin NOT LIKE "%Gedung-3%" 
+                                                AND jb.id_hetxxmh <> 55
+                                                THEN 0.5
+
                                                 ELSE 0
                                             END AS potongan_ti_jam
                                         FROM htoxxrd as hto
+                                        INNER JOIN (
+                                            SELECT
+                                                j.id_hetxxmh,
+                                                j.id_hemxxmh,
+                                                j.id_hosxxmh,
+                                                j.id_heyxxmh,
+                                                j.id_hevxxmh,
+                                                j.id_heyxxmd,
+                                                j.is_checkclock,
+                                                j.tanggal_masuk,
+                                                j.tanggal_keluar,
+                                                IFNULL(history.id_hesxxmh, j.id_hesxxmh) id_hesxxmh,
+                                                IFNULL(history.jumlah_grup, j.jumlah_grup) jumlah_grup,
+                                                IFNULL(history.grup_hk, j.grup_hk) grup_hk,
+                                                IFNULL(history.id_holxxmd_2_akhir, j.id_holxxmd_2) id_holxxmd_2
+                                            FROM hemjbmh j
+                                            LEFT JOIN (
+                                                SELECT
+                                                    *
+                                                FROM (
+                                                    SELECT
+                                                        *,
+                                                        ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
+                                                    FROM hemjbrd
+                                                    WHERE
+                                                        tanggal_awal <= :tanggal
+                                                ) AS subquery
+                                                WHERE row_num = 1
+                                            ) history ON history.id_hemxxmh = j.id_hemxxmh
+                                        ) jb ON jb.id_hemxxmh = hto.id_hemxxmh
 
+                                        -- LEFT JOIN hemjbmh jb on jb.id_hemxxmh = hto.id_hemxxmh
+                                        LEFT JOIN hosxxmh bagian on bagian.id = jb.id_hosxxmh
+        
                                         -- ceklok ISTIRAHAT
                                         LEFT JOIN (
                                             SELECT *
@@ -541,46 +678,80 @@
                                                 SELECT DISTINCT
                                                     a.id_hemxxmh,
                                                     a.id AS id_jadwal,
+                                                    GROUP_CONCAT(c.nama) mesin,
+                                                    jad.kode shift,
                                                     CONCAT(c.tanggal," ",c.jam) AS ceklok_istirahat,
-                                                    TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam)))
+                                                    IF(DAYNAME(a.tanggal) = "Friday" AND jad.kode LIKE "%PAGI%" AND MAX(c.jam) < "13:00", 0, 
+                                                        TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam)))
+                                                    )
                                                     AS durasi_break_menit
                                                 FROM htssctd AS a
+                                                INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
                                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
+                                                INNER JOIN hemjbmh AS hj on hj.id_hemxxmh = a.id_hemxxmh
                                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                                     AND (
-                                                        (a.tanggal < "2025-04-14" AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI"))
+                                                        (
+                                                            a.tanggal > "2025-07-27"
+                                                            AND id_holxxmd_2 = 1
+                                                            AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
+                                                        )
                                                         OR
-                                                        (a.tanggal >= "2025-04-14" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual"))
+                                                        (a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI", "makan"))
+                                                        OR
+                                                        (a.tanggal BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan"))
                                                     )
                                                     AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                     AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                                 GROUP BY a.id
                                                 HAVING durasi_break_menit > 0
-
+        
                                                 UNION ALL
-
+        
                                                 SELECT DISTINCT
                                                     a.id_hemxxmh,
                                                     a.id AS id_jadwal,
+                                                    GROUP_CONCAT(c.nama) mesin,
+                                                    jad.kode shift,
                                                     CONCAT(d.tanggal, " ", d.jam_awal) AS ceklok_istirahat,
                                                     TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam))) AS durasi_break_menit
                                                 FROM htssctd AS a
+                                                INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
                                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                                 INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                                 INNER JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
+                                                INNER JOIN hemjbmh AS hj on hj.id_hemxxmh = a.id_hemxxmh
                                                 WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                                    AND c.nama IN ("istirahat", "istirahat manual")
+                                                    -- AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI")
+                                                    AND 
+                                                    (
+                                                        (
+                                                            a.tanggal > "2025-07-27"
+                                                            AND id_holxxmd_2 = 1
+                                                            AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
+                                                        )
+                                                        OR
+                                                        (
+                                                            a.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
+                                                            AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan")
+                                                        )
+                                                        OR 
+                                                        (
+                                                            a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27"
+                                                            AND NOT (a.tanggal > "2025-07-27" AND d.is_istirahat = 2 AND id_holxxmd_2 = 1)
+                                                            AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI")
+                                                        )
+                                                    )
                                                     AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
-                                                    AND CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir)  
+                                                    AND CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir) 
                                                     AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                                     AND a.id_htsxxmh = 1
                                                 GROUP BY a.id
                                             ) AS t
                                             ORDER BY ceklok_istirahat
-                                                
                                         ) AS cek_istirahat ON cek_istirahat.id_hemxxmh = hto.id_hemxxmh
-
+        
                                         -- menit_toleransi_ti settingan
                                         LEFT JOIN (
                                             SELECT
@@ -601,7 +772,7 @@
                                             ) AS subquery
                                             WHERE row_num = 1
                                         ) menit_toleransi_ti ON menit_toleransi_ti.is_active = 1
-
+        
                                         WHERE hto.tanggal = :tanggal AND hto.is_active = 1
                                         GROUP BY hto.id_htoemtd
                                     )
@@ -627,61 +798,136 @@
                                             hem.*,
                                             jumlah_grup,
                                             id_jadwal,
-                                            tanggal,
+                                            jd.tanggal,
                                             ceklok_istirahat,
                                             ceklok_makan_case_keluar_istirahat,
-                                            -- CASE
+                                            CASE
+                                                    -- Jika ada Overtime Akhir, shift pendek boleh ada ceklok makan dan istirahat
+                                                    WHEN id_htsxxmh IN (select id from htsxxmh where id <> 1 and is_active = 1 and jam_awal_istirahat = "00:00:00") AND IFNULL(durasi_istirahat_shift, 0) > 0 AND IFNULL(ot.durasi_lembur_jam,0) > 0 THEN 0
+                                                    
+                                                -- shift pendek tidak boleh ada ceklok makan dan istirahat
+                                                WHEN id_htsxxmh IN (select id from htsxxmh where id <> 1 and is_active = 1 and jam_awal_istirahat = "00:00:00") AND IFNULL(durasi_istirahat_shift, 0) > 0 THEN 1
+                                
                                             --     -- apabila 4 grup sudah ada finger makan atau inputan makan manual, maka tidak boleh ada finger keluar di mesin PMI, KBM, atau Istirahat. Jika diketahui ada makan dan ada finger keluar (meskipun <30 menit), maka akan dipotong 1 jam.
-                                            --     WHEN jb.jumlah_grup = 2 AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 AND ceklok_istirahat IS NOT NULL THEN 1
-                                 
+                                                WHEN (jb.jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND IFNULL(ceklok_makan_case_keluar_istirahat, 0) > 0 AND (ceklok_istirahat IS NOT NULL AND durasi_break_menit > 1) THEN 1
+                                
                                             --     -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
-                                            --     WHEN jb.jumlah_grup = 2 AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
-                                            --     ELSE 0
-                                            -- END AS pot_jam_keluar_istirahat
-                                            0 as pot_jam_keluar_istirahat
-                                        FROM hemxxmh as hem
-                                        INNER JOIN hemjbmh as jb on jb.id_hemxxmh = hem.id
+                                                WHEN (jb.jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
+                                                ELSE 0
+                                            END AS pot_jam_keluar_istirahat
+                                        FROM htssctd jd
+                                        INNER JOIN hemxxmh as hem ON hem.id = jd.id_hemxxmh
+                                        INNER JOIN (
+                                            SELECT
+                                                j.id_hemxxmh,
+                                                j.id_heyxxmh,
+                                                j.id_hevxxmh,
+                                                j.id_heyxxmd,
+                                                j.is_checkclock,
+                                                j.tanggal_masuk,
+                                                j.tanggal_keluar,
+                                                IFNULL(history.id_hesxxmh, j.id_hesxxmh) id_hesxxmh,
+                                                IFNULL(history.jumlah_grup, j.jumlah_grup) jumlah_grup,
+                                                IFNULL(history.grup_hk, j.grup_hk) grup_hk
+                                            FROM hemjbmh j
+                                            LEFT JOIN (
+                                                SELECT
+                                                    *
+                                                FROM (
+                                                    SELECT
+                                                        *,
+                                                        ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
+                                                    FROM hemjbrd
+                                                    WHERE
+                                                        tanggal_awal <= :tanggal
+                                                ) AS subquery
+                                                WHERE row_num = 1
+                                            ) history ON history.id_hemxxmh = j.id_hemxxmh
+                                        ) jb ON jb.id_hemxxmh = hem.id
 
+                                        LEFT JOIN htoxxrd ot ON ot.id_hemxxmh = jd.id_hemxxmh AND ot.tanggal = jd.tanggal AND ot.id_htotpmh = 2
+                
                                         -- ceklok ISTIRAHAT
                                         LEFT JOIN (
                                             SELECT DISTINCT
                                                 a.id_hemxxmh,
                                                 a.jam_awal,
                                                 a.id AS id_jadwal,
-                                                a.tanggal,
+                                                a.keterangan ket_jadwal,
                                                 concat(c.tanggal," ",c.jam) AS ceklok_istirahat,
-                                                TIMESTAMPDIFF(MINUTE,MIN(CONCAT(c.tanggal," ",c.jam)),	MAX(CONCAT(c.tanggal," ",c.jam))) as durasi_break_menit
+                                                IF(DAYNAME(a.tanggal) = "Friday" AND jad.kode LIKE "%PAGI%" AND MAX(c.jam) < "13:00", 0, 
+                                                    TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam)))
+                                                )
+                                                AS durasi_break_menit
                                             FROM htssctd AS a
+                                            INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
                                             INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                             INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
+                                            INNER JOIN hemjbmh AS hj ON hj.id_hemxxmh = a.id_hemxxmh
                                             WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
                                                 AND (
-                                                    (a.tanggal < "2025-04-14" AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI"))
-                                                    OR
-                                                    (a.tanggal >= "2025-04-14" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual"))
-                                                )
-                                                AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                                                        (
+                                                            a.tanggal > "2025-07-27"
+                                                            AND id_holxxmd_2 = 1
+                                                            AND c.nama IN ("os", "out", "staff", "PMI", "istirahat", "istirahat manual", "makan")
+                                                        )
+                                                        OR
+                                                        (a.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI"))
+                                                        OR
+                                                        (a.tanggal BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "istirahat", "istirahat manual", "makan"))
+                                                    )
+                                                AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                 AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                             GROUP BY a.id
                                             ORDER BY ceklok_istirahat
 
                                         ) AS cek_istirahat ON cek_istirahat.id_hemxxmh = hem.id
 
-                                        -- ceklok makan
+                                        -- ceklok ISTIRAHAT ALL MESIN
                                         LEFT JOIN (
                                             SELECT DISTINCT
                                                 a.id_hemxxmh,
-                                                COUNT(c.id) AS ceklok_makan_case_keluar_istirahat
+                                                a.jam_awal,
+                                                IF(DAYNAME(a.tanggal) = "Friday" AND jad.kode LIKE "%PAGI%" AND MAX(c.jam) < "13:00", 0, 
+                                                    TIMESTAMPDIFF(MINUTE, MIN(CONCAT(c.tanggal," ",c.jam)), MAX(CONCAT(c.tanggal," ",c.jam)))
+                                                )
+                                                AS durasi_break_all_mesin
                                             FROM htssctd AS a
+                                            INNER JOIN htsxxmh jad ON jad.id = a.id_htsxxmh
                                             INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                             INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
                                             WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
-                                                AND c.nama IN ("makan", "makan manual")
-                                                AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
+                                                AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_istirahat AND DATE_ADD(a.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                 AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                             GROUP BY a.id
 
-                                        ) AS cek_makan ON cek_makan.id_hemxxmh = hem.id
+                                        ) AS break_all_mesin ON break_all_mesin.id_hemxxmh = hem.id
+
+                                        -- cek istirahat untuk shift 5 jam, range nya dari jam awal sampai jam akhir shift
+                                        LEFT JOIN (
+                                            SELECT DISTINCT
+                                                a.id_hemxxmh,
+                                                IF(ifnull(d.id,0) > 0, 0, COUNT(c.id)) AS durasi_istirahat_shift,
+                                                -- hitung hanya makan / makan manual
+                                                SUM(
+                                                    CASE
+                                                        WHEN c.nama IN ("makan", "makan manual")
+                                                        THEN 1
+                                                        ELSE 0
+                                                    END
+                                                ) ceklok_makan_case_keluar_istirahat,
+                                                c.id,
+                                                ifnull(d.id,0) cek_salah_ceklok -- case (kemungkinan salah mesin, saat mau pulang) Bu Cia 8 Aug 2025
+                                            FROM htssctd AS a
+                                            INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
+                                            INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
+                                            LEFT JOIN htsprtd AS d on d.nama NOT IN ("makan", "makan manual", "istirahat", "istirahat manual") AND d.tanggal = c.tanggal AND d.jam = c.jam AND d.kode = c.kode
+                                            WHERE a.tanggal = :tanggal AND a.is_active = 1 AND b.is_active = 1
+                                                AND c.nama IN ("makan", "makan manual", "istirahat", "istirahat manual")
+                                                AND CONCAT(c.tanggal, " ", c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
+                                                AND a.id_hemxxmh IN '.$id_hemxxmh.'
+                                            GROUP BY a.id
+                                        ) AS istirahat_shift ON istirahat_shift.id_hemxxmh = hem.id
                                         
                                         -- menit_toleransi_keluar_istirahat settingan
                                         LEFT JOIN (
@@ -704,7 +950,7 @@
                                             WHERE row_num = 1
                                         ) menit_toleransi_keluar_istirahat ON menit_toleransi_keluar_istirahat.is_active = 1
 
-                                        WHERE cek_istirahat.tanggal = :tanggal AND hem.is_active = 1
+                                        WHERE jd.tanggal = :tanggal AND hem.is_active = 1 AND jd.is_active = 1 AND jd.id_hemxxmh IN '.$id_hemxxmh.'
                                     )
                                     AS ot
                                 GROUP BY
@@ -727,7 +973,7 @@
                                     FROM htpr_hesxxmh
                                     WHERE
                                         htpr_hesxxmh.id_hpcxxmh = 36
-                                        AND tanggal_efektif < :tanggal
+                                        AND tanggal_efektif <= :tanggal
                                 ) AS subquery
                                 WHERE row_num = 1
                             ) lembur_mati ON lembur_mati.id_hesxxmh = b.id_hesxxmh
@@ -750,11 +996,33 @@
                                     INNER JOIN hemjbmh AS c ON c.id_hevxxmh = b.id
                                     WHERE
                                         a.id_hpcxxmh = 32
-                                        AND tanggal_efektif < :tanggal
+                                        AND tanggal_efektif <= :tanggal
                                 ) AS subquery
                                 WHERE row_num = 1
                             ) t_jabatan ON t_jabatan.id_hevxxmh = b.id_hevxxmh
 
+                            -- nominal tunjangan jabatan di menu per karyawan
+                            LEFT JOIN (
+                                SELECT
+                                    id_hemxxmh,
+                                    tanggal_efektif,
+                                    IFNULL(nominal, 0) AS nominal_jabatan
+                                FROM (
+                                    SELECT
+                                        id,
+                                        id_hemxxmh,
+                                        tanggal_efektif,
+                                        nominal,
+                                        ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                                    FROM htpr_hemxxmh
+                                    WHERE
+                                        htpr_hemxxmh.id_hpcxxmh = 32
+                                        AND tanggal_efektif <= :tanggal
+                                        AND is_active = 1
+                                ) AS subquery
+                                WHERE row_num = 1
+                            ) tbl_jabatan ON tbl_jabatan.id_hemxxmh = a.id
+                            
                             -- gaji pokok
                             LEFT JOIN (
                                 SELECT
@@ -771,7 +1039,7 @@
                                     FROM htpr_hemxxmh
                                     WHERE
                                         htpr_hemxxmh.id_hpcxxmh = 1
-                                        AND tanggal_efektif < :tanggal
+                                        AND tanggal_efektif <= :tanggal
                                 ) AS subquery
                                 WHERE row_num = 1
                             ) tbl_htpr_hemxxmh ON tbl_htpr_hemxxmh.id_hemxxmh = a.id
@@ -796,10 +1064,10 @@
                                         AND TIMESTAMP(c.tanggal, c.jam) BETWEEN a.tanggaljam_awal_t1 AND DATE_SUB(a.tanggaljam_akhir_t2 , INTERVAL 60 MINUTE)
                                         AND a.id_hemxxmh IN '.$id_hemxxmh.'
                                     GROUP BY a.id
-        
+
                                     -- MAKAN
                                     UNION ALL
-        
+
                                     SELECT DISTINCT
                                         a.id,
                                         CONCAT(c.tanggal, " ", c.jam) tanggal_jam_ceklok,
@@ -896,6 +1164,7 @@
                                     WHEN kode_izin_in IS NULL AND id_htsxxmh <> 1 AND st_clock_in NOT IN ("OK", "Late 1") THEN "Belum Ada Izin"
                                     WHEN kode_izin_in IS NULL AND kode_absen IS NULL AND id_htsxxmh <> 1 AND st_clock_in = "OK" THEN "HK"
                                     WHEN kode_izin_in IS NULL AND st_clock_in = "Late 1" THEN "TL 1"
+                                    WHEN id_htsxxmh = 1 THEN "OFF"
                                     ELSE NULL
                                 END AS status_presensi_in,
                                 
@@ -909,16 +1178,21 @@
                                     WHEN kode_izin_out IS NOT NULL AND keterangan <> "" AND id_htsxxmh <> 1 THEN kode_kondite
                                     WHEN kode_izin_out IS NULL AND id_htsxxmh <> 1 AND st_clock_out <> "OK" THEN "Belum Ada Izin"
                                     WHEN kode_izin_out IS NULL AND kode_absen IS NULL AND id_htsxxmh <> 1 AND st_clock_out = "OK" THEN "HK"
+                                    WHEN kode_izin_out IS NULL AND kode_absen IS NULL AND st_clock_out = "OK" THEN "HK"
+                                    WHEN id_htsxxmh = 1 THEN "OFF"
                                     ELSE NULL
                                 END AS status_presensi_out,
                                 
                                 -- POTONG PREMI
                                 CASE
                                     WHEN is_pot_premi_absen = 1 THEN 1
+                                    WHEN st_clock_in = "LATE 1" AND is_pot_premi_izin_in = 1 THEN 0
                                     WHEN is_pot_premi_izin_in = 1 THEN 1
                                     WHEN is_pot_premi_izin_out = 1 THEN 1
                                     WHEN is_potong_premi_mid = 1 THEN 1
                                     WHEN id_hemxxmh = 67 THEN 1
+                                    WHEN st_clock_in = "LATE" AND keterangan = "" THEN 1
+                                    WHEN st_clock_out = "EARLY" AND keterangan = "" THEN 1
                                     WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND id_htsxxmh <> 1 AND ceklok_luar IS NULL THEN 1
                                     ELSE 0
                                 END AS is_pot_premi,
@@ -931,37 +1205,51 @@
                                 END AS is_pot_upah,
 
                                 -- hitung pot_late
-                                IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") = "",
-                                    IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
-                                        CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60),
-                                        IF(jumlah_grup <> 4,
-                                            IF(ceklok_in > if(day(tanggaljam_awal_istirahat) < day(tanggaljam_akhir) , date_add(tanggaljam_awal_istirahat, INTERVAL 1 DAY),  tanggaljam_awal_istirahat),
-                                                CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi_min1jam, carbon_ci) / 60),
-                                                CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60)
+                                IF(id_htsxxmh = 1, 0,
+                                    IF( (tanggal_jam_izin_awal_in IS NOT NULL AND is_potong_gaji_in = 0) OR (kode_absen IS NOT NULL), 0, -- KALAU ADA IZIN TIDAK POT GAJI, MAKA 0
+                                        IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") = "" OR st_clock_in = "LATE",
+                                            IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
+                                                CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60),
+                                                IF(jumlah_grup <> 4,
+                                                    IF(ceklok_in > if(day(tanggaljam_awal_istirahat) < day(tanggaljam_akhir) , date_add(tanggaljam_awal_istirahat, INTERVAL 1 DAY),  tanggaljam_awal_istirahat),
+                                                        CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi_min1jam, carbon_ci) / 60),
+                                                        CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60)
+                                                    ),
+                                                    CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60)
+                                                )
                                             ),
-                                            CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_akhir_toleransi, carbon_ci) / 60)
-                                        )
-                                    ),
-                                    0
-                                ) AS pot_jam_late,
-        
+                                            0
+                                        ) 
+                                    )
+                                )
+                                AS pot_jam_late,
+
                                 -- kalau ada lembur, maka cek late lembur, pastikan bukan long shift lembur
                                 IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") != "" AND jam_awal_lembur != jam_akhir_schedule,
-                                    CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60),
+                                    IF(CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60) > 7,
+                                        0,
+                                        IF(CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60) < 1,
+                                            0,
+                                            CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60)
+                                        )
+                                    ),
                                     0
                                 ) AS pot_jam_late_lembur,
 
                                 -- hitung pot_early
-                                IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
-                                    CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir) / 60),
-                                    IF(jumlah_grup <> 4,
-                                        IF(ceklok_out < if(day(tanggaljam_akhir_istirahat) < day(tanggaljam_akhir) , date_add(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),  tanggaljam_akhir_istirahat) ,
-                                            CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir_min1) / 60),
+                                IF( (tanggal_jam_izin_akhir_out IS NOT NULL AND is_potong_gaji_out = 0) OR (kode_absen IS NOT NULL), 0, -- KALAU ADA IZIN TIDAK POT GAJI, MAKA 0
+                                    IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
+                                        CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir) / 60),
+                                        IF(jumlah_grup <> 4,
+                                            IF(ceklok_out < if(day(tanggaljam_akhir_istirahat) < day(tanggaljam_akhir) , date_add(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),  tanggaljam_akhir_istirahat) ,
+                                                CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir_min1) / 60),
+                                                CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir) / 60)
+                                            ),
                                             CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir) / 60)
-                                        ),
-                                        CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir) / 60)
-                                    )
-                                ) AS pot_jam_early,
+                                        )
+                                    ) 
+                                )
+                                AS pot_jam_early,
 
                                 CEIL(TIMESTAMPDIFF(MINUTE, tanggal_jam_izin_awal_mid, carbon_mid) / 60) AS pot_jam_izin
                                 
@@ -989,7 +1277,8 @@
                                     ELSE 0
                                 END AS cek,
 
-                                IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_late_lembur, 0) + IFNULL(pot_jam_early, 0) + IFNULL(pot_jam_izin,0) + IF(potongan_ti_jam > 0, potongan_ti_jam ,ifnull(pot_jam_keluar_istirahat,0)) AS total_pot_jam
+                                -- IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_late_lembur, 0) + IFNULL(pot_jam_early, 0) + IFNULL(pot_jam_izin,0) + IF(potongan_ti_jam > 0, potongan_ti_jam ,ifnull(pot_jam_keluar_istirahat,0)) AS total_pot_jam
+                                IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_late_lembur, 0) + IFNULL(pot_jam_early, 0) + IFNULL(pot_jam_izin,0) + IF(potongan_ti_jam > 0 AND IFNULL(pot_jam_late_lembur, 0) = 0, potongan_ti_jam ,ifnull(pot_jam_keluar_istirahat,0)) AS total_pot_jam
                             FROM perhitungan
                         ),
                         hitung_pot_ti AS (
@@ -1078,7 +1367,7 @@
                                         )
                                     )
                                 ) AS lembur15,
-        
+
                                 IF(id_hesxxmh = 3, 
                                     0,
                                     IF(durasi_lembur_libur_jam > 0, -- cek apakah ini lembur libur
@@ -1098,7 +1387,7 @@
                                         )
                                     )
                                 ) AS lembur2,
-        
+
                                 IF(id_hesxxmh = 3, 
                                     0,
                                     IF(durasi_lembur_libur_jam > 0, -- cek apakah lembur libur
@@ -1133,7 +1422,7 @@
 
                             FROM hitung_lembur
                         )
-                        SELECT
+                        SELECT DISTINCT
                             id_hemxxmh,
                             keterangan,
                             kode_finger,
@@ -1208,6 +1497,7 @@
 
                             nominal_lembur_jam,
                             grup_hk,
+                            id_holxxmd_2,
                             break_in,
                             break_out
                         
