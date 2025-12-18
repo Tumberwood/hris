@@ -326,12 +326,39 @@
 			edthesxxtd.dependent( 'hesxxtd.id_hesxxmh', function ( val, data, callback ) {
 				edthesxxtd.field('hesxxtd.id_hemxxmh').val('');
 				edthesxxtd.field('hesxxtd.status_ke').val('');
+
+				id_hesxxmh = edthesxxtd.field('hesxxtd.id_hesxxmh').val();
+				keputusan = edthesxxtd.field('hesxxtd.keputusan').val();
+				
+				console.log('keputusan: '+keputusan);
+				console.log('id_hesxxmh: '+id_hesxxmh);
+			
+				if (keputusan == 'Tetap' || keputusan == 'Reguler') {
+					edthesxxtd.field('hesxxtd.tanggal_selesai').val(null);
+					edthesxxtd.field('hesxxtd.tanggal_selesai').hide();
+				} else {
+					tanggal_selesai = moment(val).add('month', 6).subtract(1, 'day').format('DD MMM YYYY');
+					edthesxxtd.field('hesxxtd.tanggal_selesai').val(tanggal_selesai);
+					edthesxxtd.field('hesxxtd.tanggal_selesai').show();
+				}
 				return {}
 			}, {event: 'keyup change'});
 
 			edthesxxtd.dependent( 'hesxxtd.tanggal_mulai', function ( val, data, callback ) {
-				tanggal_selesai = moment(val).add('month', 6).subtract(1, 'day').format('DD MMM YYYY');
-				edthesxxtd.field('hesxxtd.tanggal_selesai').val(tanggal_selesai);
+				id_hesxxmh = edthesxxtd.field('hesxxtd.id_hesxxmh').val();
+				keputusan = edthesxxtd.field('hesxxtd.keputusan').val();
+				
+				console.log('keputusan: '+keputusan);
+				console.log('id_hesxxmh: '+id_hesxxmh);
+			
+				if (keputusan == 'Tetap' || keputusan == 'Reguler') {
+					edthesxxtd.field('hesxxtd.tanggal_selesai').val(null);
+					edthesxxtd.field('hesxxtd.tanggal_selesai').hide();
+				} else {
+					tanggal_selesai = moment(val).add('month', 6).subtract(1, 'day').format('DD MMM YYYY');
+					edthesxxtd.field('hesxxtd.tanggal_selesai').val(tanggal_selesai);
+					edthesxxtd.field('hesxxtd.tanggal_selesai').show();
+				}
 				return {}
 			}, {event: 'keyup change'});
 			
@@ -343,6 +370,12 @@
 			}, {event: 'keyup change'});
 			
 			edthesxxtd.dependent( 'hesxxtd.keputusan', function ( val, data, callback ) {
+				id_hesxxmh = edthesxxtd.field('hesxxtd.id_hesxxmh').val();
+				keputusan = edthesxxtd.field('hesxxtd.keputusan').val();
+				
+				console.log('keputusan: '+keputusan);
+				console.log('id_hesxxmh: '+id_hesxxmh);
+
 				if (val == 'Tetap') {
 					edthesxxtd.field('hesxxtd.id_hesxxmh_tetap').show();
 				} else {
@@ -357,6 +390,7 @@
 					edthesxxtd.field('hesxxtd.nik_baru').hide();
 					
 				} else {
+
 					edthesxxtd.field('hesxxtd.tanggal_selesai').label("Tanggal Selesai")
 					edthesxxtd.field('hesxxtd.tanggal_mulai').show();
 					edthesxxtd.field('hesxxtd.tanggal_selesai').show();
@@ -364,6 +398,15 @@
 					edthesxxtd.field('hesxxtd.tanggal_selesai').val();
 					edthesxxtd.field('hesxxtd.nik_baru').val();
 					edthesxxtd.field('hesxxtd.nik_baru').show();
+					
+					if (keputusan == 'Tetap' || keputusan == 'Reguler') {
+						edthesxxtd.field('hesxxtd.tanggal_selesai').val(null);
+						edthesxxtd.field('hesxxtd.tanggal_selesai').hide();
+					} else {
+						tanggal_selesai = moment(val).add('month', 6).subtract(1, 'day').format('DD MMM YYYY');
+						edthesxxtd.field('hesxxtd.tanggal_selesai').val(tanggal_selesai);
+						edthesxxtd.field('hesxxtd.tanggal_selesai').show();
+					}
 					
 				}
 
