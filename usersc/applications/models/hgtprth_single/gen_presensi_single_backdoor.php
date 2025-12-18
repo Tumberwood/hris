@@ -21,8 +21,8 @@
     // $id_hemxxmh = '(1676)';
     $id_hemxxmh = '(1676,1682)';
 
-    $start = Carbon::create(2025, 11, 1);
-    $end = Carbon::create(2025, 11, 20); 
+    $start = Carbon::create(2025, 11, 21);
+    $end = Carbon::create(2025, 12, 14); 
     
     // Buat periode
     $periode = CarbonPeriod::create($start, $end);
