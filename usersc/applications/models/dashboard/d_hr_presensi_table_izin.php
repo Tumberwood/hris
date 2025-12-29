@@ -23,7 +23,7 @@
     
     $where = ''; 
     if (isset($_POST['id_heyxxmh']) && ($_POST['id_heyxxmh'] > 0 ) ) {
-        $where = ' AND id_heyxxmh =' . $_POST['id_heyxxmh']; 
+        $where = ' AND job.id_heyxxmh =' . $_POST['id_heyxxmh']; 
     } 
 
     $qs_hemxxmh = $db

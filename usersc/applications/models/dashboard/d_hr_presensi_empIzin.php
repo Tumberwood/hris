@@ -21,7 +21,7 @@
 
     $where = ''; 
     if (isset($_POST['id_heyxxmh']) && ($_POST['id_heyxxmh'] > 0 ) ) {
-        $where = ' AND id_heyxxmh =' . $_POST['id_heyxxmh']; 
+        $where = ' AND job.id_heyxxmh =' . $_POST['id_heyxxmh']; 
     } 
     
     $qs_hemxxmh = $db
@@ -44,6 +44,7 @@
                     a.id_hemxxmh,
                     a.htlxxrh_kode
                 FROM htsprrd a
+                LEFT JOIN hemjbmh job on job.id_hemxxmh = a.id_hemxxmh
                 WHERE a.tanggal BETWEEN :start_date AND :end_date
                 AND (
                     a.status_presensi_in IN ( SELECT kode FROM htpxxmh) 
