@@ -32,26 +32,52 @@
     ->bind(':izin', $izin)
     ->bind(':start_date', $start_date)
     ->bind(':end_date', $end_date)
-    ->exec(' SELECT
-                a.id,
-                date_format(a.tanggal, "%d %b %Y") tanggal,
-                a.kode,
-                peg.nama,
-                dep.nama departemen,
-                izin.nama AS jenis,
-                a.jam_awal,
-                a.jam_akhir,
-                a.keterangan
-            FROM htlxxrh AS a
-            LEFT JOIN hemxxmh AS peg ON peg.id = a.id_hemxxmh
-            LEFT JOIN htpxxmh AS izin ON izin.id = a.id_htlxxmh
-            INNER JOIN hemjbmh AS jb on jb.id_hemxxmh = peg.id
-            LEFT JOIN hodxxmh AS dep on dep.id = jb.id_hodxxmh
-            WHERE a.jenis = 2 
-                '.$where.'
-                AND a.is_active = 1 
-                AND a.tanggal BETWEEN :start_date AND :end_date and dep.nama = :dept AND izin.nama = :izin
-            ORDER BY izin.id ASC
+    ->exec(' WITH izin AS (
+                SELECT
+                    a.id id_report,
+                    date_format(a.tanggal, "%d %b %Y") tanggal,
+                    a.st_clock_in,
+                    a.status_presensi_in,
+                    a.status_presensi_out,
+                    DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i") AS clock_in,
+                    DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i") AS clock_out,
+                    case
+                        when a.st_clock_in = "LATE" AND  a.status_presensi_in = "Belum Ada Izin" then CONCAT(a.st_clock_in, " - ", a.status_presensi_in)
+                        WHEN a.htlxxrh_kode LIKE "%[I/%" THEN TRIM(SUBSTRING_INDEX(a.htlxxrh_kode, "[I/", 1))
+                        when a.status_presensi_in <> "HK" then a.status_presensi_in
+                        when a.status_presensi_out <> "HK" then a.status_presensi_out
+                        ELSE ""
+                    END kondite,
+                    a.id_hemxxmh,
+                    a.htlxxrh_kode,
+                    dep.nama departemen
+                FROM htsprrd a
+                LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
+            LEFT JOIN hodxxmh AS dep ON dep.id = job.id_hodxxmh
+                WHERE a.tanggal BETWEEN :start_date AND :end_date
+                AND (
+                    a.status_presensi_in IN ( SELECT kode FROM htpxxmh) 
+                    OR a.status_presensi_out IN ( SELECT kode FROM htpxxmh) 
+                    OR a.st_clock_in IN ("LATE")
+                    OR a.htlxxrh_kode LIKE "%[I/%"
+                )
+                HAVING kondite <> ""
+            )
+            SELECT
+                id_report id,
+                tanggal,
+                htlxxrh_kode kode,
+                h.nama,
+                departemen,
+                IFNULL(iz.nama, kondite) jenis,
+                clock_in jam_awal,
+                clock_out jam_akhir,
+                "" keterangan,
+                IFNULL(iz.id, -1) id_izin
+            FROM izin
+            LEFT JOIN htpxxmh iz ON iz.kode = izin.kondite
+            LEFT JOIN hemxxmh h ON h.id = izin.id_hemxxmh
+            HAVING departemen = :dept AND jenis = :izin
             '
             );
     $rs_hemxxmh = $qs_hemxxmh->fetchAll();

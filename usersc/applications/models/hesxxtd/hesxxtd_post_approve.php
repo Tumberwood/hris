@@ -267,6 +267,7 @@
 			->set($rs_hemjbmh)
 			->set('tanggal_masuk',$tanggal_mulai)
 			->set('tanggal_keluar',$tanggal_selesai)
+			->set('tanggal_akhir_kontrak',$tanggal_selesai)
 			->exec();
 
 			// insert ke hemdcmh
@@ -601,6 +602,7 @@
 			$qu_hemxxmh = $db
 				->query('update', 'hemjbmh')
 				->set('tanggal_keluar', $tanggal_selesai)
+				->set('tanggal_akhir_kontrak', $tanggal_selesai)
 				->where('id_hemxxmh', $id_hemxxmh )
 				->exec();
 		}
