@@ -61,6 +61,7 @@
                     OR a.st_clock_in IN ("LATE")
                     OR a.htlxxrh_kode LIKE "%[I/%"
                 )
+                '.$where.'
                 HAVING kondite <> ""
             )
             SELECT
