@@ -80,12 +80,12 @@
 						</div>
 						<ul class="nav nav-tabs" role="tablist">
 							<li><a class="nav-link active" data-toggle="tab" href="#tabhpyemtd"> All</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_reg"> KBM Reguler</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_tr"> KBM Pelatihan</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_karyawan"> Tetap</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kontrak"> Kontrak</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kmj"> KMJ</a></li>
-							<li id="tab_freelance"><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_freelance"> Freelance</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_reg"> KBM Reguler</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_tr"> KBM Pelatihan</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kmj" style="display: none"> KMJ</a></li>
+							<li id="tab_freelance"><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_freelance" style="display: none"> Freelance</a></li>
 						</ul>
 						<div class="tab-content">
 							<div role="tabpanel" id="tabhpyemtd" class="tab-pane active">
