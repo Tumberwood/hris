@@ -219,12 +219,12 @@
 													<th>Level</th>
 													<th>Gaji Pokok</th>
 													<th>TJ. Jabatan</th>
+													<th>Uniform</th>
+													<th>RP Free</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
 													<th>Premi Absen</th>
-													<th>JKK</th>
-													<th>JKM</th>
 													<th>Trm JKK JKM</th>
 													<th>Lembur 1,5</th>
 													<th>Rp Lembur 1,5</th>
@@ -232,26 +232,28 @@
 													<th>Rp Lembur 2</th>
 													<th>Lembur 3</th>
 													<th>Rp Lembur 3</th>
+
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
 													<th>Total Lembur (Rp) </th>
-													<th>Lembur Susulan (Rp) </th>
+
+													<!-- <th>Lembur Susulan (Rp) </th>
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
 													<th>Koreksi Lembur</th>
-													<th>Koreksi Perubahan Status</th>
+													<th>Koreksi Perubahan Status</th>  -->
+
 													<th class="text-danger">Pot Makan</th>
 													<th class="text-danger">Pot PPH21</th>
 													<th class="text-danger">Pot JKK JKM</th>
 													<th class="text-danger">Pot JHT</th>
-													<th class="text-danger">Pot Lain</th>
-													<th class="text-danger">Pot Upah Harian</th>
-													<th class="text-danger">Pot Upah Jam</th>
+													<th class="text-danger">Pot Jam (pot_lain2)</th>
+													<th class="text-danger">Pot Upah</th>
+													<!-- <th class="text-danger">Pot Jam</th> -->
 													<th class="text-danger">Pot BPJS</th>
 													<th class="text-danger">Pot Pensiun</th>
-													<th class="text-danger">Pot Pinjaman</th>
-													<th class="text-danger">Pot Klaim</th>
-													<th class="text-danger">Pot Denda APD</th>
+													<!-- <th class="text-danger">Pot Klaim</th>
+													<th class="text-danger">Pot Denda APD</th> -->
 													<th>Gaji Bersih</th>
 													<th>Bulat</th>
 													<th>Gaji Diterima</th>
@@ -270,44 +272,35 @@
 													<th></th>
 													<th>Total</th>
 													<th></th>
-													<th id="kbm_reg10"></th>
-													<th id="kbm_reg11"></th>
-													<th id="kbm_reg12"></th>
-													<th id="kbm_reg13"></th>
-													<th id="kbm_reg14"></th>
-													<th id="kbm_reg15"></th>
-													<th id="kbm_reg16"></th>
-													<th id="kbm_reg17"></th>
-													<th id="kbm_reg18"></th>
-													<th id="kbm_reg19"></th>
-													<th id="kbm_reg20"></th>
-													<th id="kbm_reg21"></th>
-													<th id="kbm_reg22"></th>
-													<th id="kbm_reg23"></th>
-													<th id="kbm_reg24"></th>
-													<th id="kbm_reg25"></th>
-													<th id="kbm_reg26"></th>
-													<th id="kbm_reg27"></th>
-													<th id="kbm_reg28"></th>
-													<th id="kbm_reg29"></th>
-													<th id="kbm_reg30"></th>
-													<th id="kbm_reg31"></th>
-													<th id="kbm_reg32"></th>
-													<th id="kbm_reg33"></th>
-													<th id="kbm_reg34"></th>
-													<th id="kbm_reg35"></th>
-													<th id="kbm_reg36"></th>
-													<th id="kbm_reg37"></th>
-													<th id="kbm_reg38"></th>
-													<th id="kbm_reg39"></th>
-													<th id="kbm_reg40"></th>
-													<th id="kbm_reg41"></th>
-													<th id="kbm_reg42"></th>
-													<th id="kbm_reg43"></th>
-													<th id="kbm_reg44"></th>
-													<th id="kbm_reg45"></th>
-													<th id="kbm_reg46"></th>
-													<th id="kbm_reg47"></th>
+													<th id="kbm_reg_10"></th>
+													<th id="kbm_reg_11"></th>
+													<th id="kbm_reg_12"></th>
+													<th id="kbm_reg_13"></th>
+													<th id="kbm_reg_14"></th>
+													<th id="kbm_reg_15"></th>
+													<th id="kbm_reg_16"></th>
+													<th id="kbm_reg_17"></th>
+													<th id="kbm_reg_18"></th>
+													<th id="kbm_reg_19"></th>
+													<th id="kbm_reg_20"></th>
+													<th id="kbm_reg_21"></th>
+													<th id="kbm_reg_22"></th>
+													<th id="kbm_reg_23"></th>
+													<th id="kbm_reg_24"></th>
+													<th id="kbm_reg_25"></th>
+													<th id="kbm_reg_26"></th>
+													<th id="kbm_reg_27"></th>
+													<th id="kbm_reg_28"></th>
+													<th id="kbm_reg_29"></th>
+													<th id="kbm_reg_30"></th>
+													<th id="kbm_reg_31"></th>
+													<th id="kbm_reg_32"></th>
+													<th id="kbm_reg_33"></th>
+													<th id="kbm_reg_34"></th>
+													<th id="kbm_reg_35"></th>
+													<th id="kbm_reg_36"></th>
+													<th id="kbm_reg_37"></th>
+													<th id="kbm_reg_38"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -1694,7 +1687,6 @@
 				fixedColumns:   {
 					left: 1
 				},
-				
 				columns: [
 					{ data: "hpyemtd.id",visible:false },
 					{ data: "hpyemtd.id_hpyxxth",visible:false },
@@ -1716,6 +1708,18 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
+					{
+						data: null,
+						render: function () {
+							return 0;
+						}
+					},
+					{
+						data: null,
+						render: function () {
+							return 0;
+						}
+					},
 					{ 
 						data: "hpyemtd.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
@@ -1733,16 +1737,6 @@
 					},
 					{ 
 						data: "hpyemtd.premi_abs",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.jkk",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -1791,31 +1785,31 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
-					{ 
-						data: "hpyemtd.overtime_susulan",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.pph21_back",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.kompensasi_ak",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.koreksi_lembur",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.koreksi_status",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
+					// { 
+					// 	data: "hpyemtd.overtime_susulan",
+					// 	render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					// 	class: "text-right "
+					// },
+					// { 
+					// 	data: "hpyemtd.pph21_back",
+					// 	render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					// 	class: "text-right "
+					// },
+					// { 
+					// 	data: "hpyemtd.kompensasi_ak",
+					// 	render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					// 	class: "text-right "
+					// },
+					// { 
+					// 	data: "hpyemtd.koreksi_lembur",
+					// 	render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					// 	class: "text-right "
+					// },
+					// { 
+					// 	data: "hpyemtd.koreksi_status",
+					// 	render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					// 	class: "text-right "
+					// },
 					{ 
 						data: "hpyemtd.pot_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
@@ -1836,8 +1830,8 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
-					{ 
-						data: "hpyemtd.pot_lain",
+					{
+						data: "hpyemtd.pot_pinjaman",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
@@ -1846,11 +1840,11 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
-					{ 
-						data: "hpyemtd.pot_jam",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
+					// { 
+					// 	data: "hpyemtd.pot_jam",
+					// 	render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					// 	class: "text-right "
+					// },
 					{ 
 						data: "hpyemtd.pot_bpjs",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
@@ -1861,21 +1855,16 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
-					{
-						data: "hpyemtd.pot_pinjaman",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{
-						data: "hpyemtd.pot_klaim",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{
-						data: "hpyemtd.pot_denda_apd",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
+					// {
+					// 	data: "hpyemtd.pot_klaim",
+					// 	render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					// 	class: "text-right "
+					// },
+					// {
+					// 	data: "hpyemtd.pot_denda_apd",
+					// 	render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+					// 	class: "text-right "
+					// },
 					{ 
 						data: "hpyemtd.gaji_bersih",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
@@ -1923,7 +1912,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 47; i++) {
+					for (var i = 10; i <= 38; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
