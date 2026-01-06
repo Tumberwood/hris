@@ -2472,10 +2472,10 @@
 						class: "text-right"
 					},
 					{ 
-						data: null,
+						data: 0,
 					},
 					{ 
-						data: null,
+						data: 0,
 					},
 					{ 
 						data: "hpyemtd.pendapatan_lain",
