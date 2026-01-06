@@ -445,12 +445,12 @@
 													<th>Level</th>
 													<th>Gaji Pokok</th>
 													<th>TJ. Jabatan</th>
+													<th>Uniform</th>
+													<th>RP Free</th>
 													<th>Terima Lain</th>
 													<th>Var Cost</th>
 													<th>Fix Cost</th>
 													<th>Premi Absen</th>
-													<th>JKK</th>
-													<th>JKM</th>
 													<th>Trm JKK JKM</th>
 													<th>Lembur 1,5</th>
 													<th>Rp Lembur 1,5</th>
@@ -2472,6 +2472,12 @@
 						class: "text-right"
 					},
 					{ 
+						data: null,
+					},
+					{ 
+						data: null,
+					},
+					{ 
 						data: "hpyemtd.pendapatan_lain",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
@@ -2488,16 +2494,6 @@
 					},
 					{ 
 						data: "hpyemtd.premi_abs",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.jkk",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.jkm",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right "
 					},
