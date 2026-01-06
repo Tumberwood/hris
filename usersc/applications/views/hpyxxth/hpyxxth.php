@@ -527,7 +527,6 @@
 													<th id="karyawan_36"></th>
 													<th id="karyawan_37"></th>
 													<th id="karyawan_38"></th>
-													<th id="karyawan_39"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -2669,7 +2668,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 39; i++) {
+					for (var i = 10; i <= 38; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
