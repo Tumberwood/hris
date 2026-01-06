@@ -151,6 +151,7 @@
                         pot_jam,
                         pot_bpjs,
                         pot_psiun,
+                        pot_pinjaman,
                         
                         gaji_bersih,
                         bulat,
@@ -718,6 +719,28 @@
                         WHERE pr.pot_hk > 0 AND pr.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                         GROUP BY pr.id_hemxxmh
                     ),
+                    piut_kyw AS (
+                        SELECT
+                            p.id_hemxxmh,
+                            nominal_pinjaman AS pot_pinjaman
+                        FROM pegawai p
+                        LEFT JOIN (
+                            SELECT
+                                id_hemxxmh,
+                                IFNULL(nominal, 0) AS nominal_pinjaman
+                            FROM (
+                                SELECT
+                                    a.id_hemxxmh,
+                                    SUM(nominal) as nominal
+                                FROM hpy_piutang_d as a
+                                WHERE
+                                    a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    AND id_hpcxxmh = 105
+                                    AND is_approve = 1
+                                GROUP BY id_hemxxmh
+                            ) AS subquery
+                        ) pinjaman ON pinjaman.id_hemxxmh = p.id_hemxxmh
+                    ),
                     payroll AS (
                         SELECT
                             :id_hpyxxth,
@@ -758,6 +781,7 @@
                             pot_jam,
                             pot_bpjs,
                             pot_psiun,
+                            pot_pinjaman,
 
                             -- GAJI BERSIH
                             FLOOR(
@@ -777,6 +801,9 @@
                                     + IFNULL(pot_psiun,0)
                                     + IFNULL(pu.pot_upah,0)
                                     + IFNULL(pot_jam,0)
+                                    + IFNULL(pot_pinjaman,0)
+                                    +
+                                    if (id_heyxxmd = 3 AND id_hesxxmh IN (1,2), IFNULL(pot_jam,0), 0)
                                 )
                             ) AS gaji_bersih
                         FROM presensi p
@@ -790,6 +817,7 @@
                         LEFT JOIN bpjs ON bpjs.id_hemxxmh = p.id_hemxxmh
                         LEFT JOIN pot_upah pu ON pu.id_hemxxmh = p.id_hemxxmh
                         LEFT JOIN pot_jam ON pot_jam.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN piut_kyw ON piut_kyw.id_hemxxmh = p.id_hemxxmh
                     )
                     SELECT
                         payroll.*,
