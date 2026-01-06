@@ -2471,11 +2471,17 @@
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
-					{ 
-						data: 0,
+					{
+						data: null,
+						render: function () {
+							return 0;
+						}
 					},
-					{ 
-						data: 0,
+					{
+						data: null,
+						render: function () {
+							return 0;
+						}
 					},
 					{ 
 						data: "hpyemtd.pendapatan_lain",
