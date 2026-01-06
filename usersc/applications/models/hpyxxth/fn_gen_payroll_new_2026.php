@@ -110,6 +110,7 @@
         // INSERT PAYROLL DETAIL
         $qr_gp = $db
             ->raw()
+            ->bind(':id_hpyxxth', $id_hpyxxth)
             ->bind(':tanggal_awal', $tanggal_awal)
             ->bind(':tanggal_akhir', $tanggal_akhir)
             ->exec('INSERT INTO hpyemtd (
@@ -130,17 +131,14 @@
                         lembur15,
                         lembur2,
                         lembur3,
-                        lembur4,
 
                         lembur15_final,
                         lembur2_final,
                         lembur3_final,
-                        lembur4_final,
 
                         rp_lembur15,
                         rp_lembur2,
                         rp_lembur3,
-                        rp_lembur4,
 
                         jam_lembur,
                         jam_lembur_final,
@@ -722,7 +720,7 @@
                     ),
                     payroll AS (
                         SELECT
-                            ' . $id_hpyxxth . ',
+                            :id_hpyxxth,
                             p.id_hemxxmh,
                             nrp,
                             nama,
