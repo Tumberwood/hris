@@ -118,9 +118,9 @@
 								}else if( colObj.name == 'hetxxmh_nama' ){
 									str = str + '<th>Jabatan</th>';
 								}else if( colObj.name == 'hr' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Periode Terpilih">HR</th>';
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Periode Terpilih">Hari Kerja</th>';
 								}else if( colObj.name == 'hk' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Kerja dimana Karyawan Masuk dan Valid">HK</th>';
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Kerja dimana Karyawan Masuk dan Valid">Hari Hadir</th>';
 								}else if( colObj.name == 'st_off' ){
 									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Jadwal Off">OFF</th>';
 								}else if( colObj.name == 'st_nj' ){
