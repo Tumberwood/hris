@@ -144,7 +144,7 @@
 		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
 		->where( 'hemjbmh.tanggal_keluar', $start_date, '>=' )
-		->where( 'hemjbmh.tanggal_masuk', $end_date, '<=' );
+		->where( 'hemjbmh.tanggal_keluar', $end_date, '<=' );
 	
 	// do not erase
 	// function show / hide inactive document
