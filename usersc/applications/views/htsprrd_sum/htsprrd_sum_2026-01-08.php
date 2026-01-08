@@ -103,78 +103,55 @@
 							$('#tblhtsprrd tbody').empty();
 							$('#tblhtsprrd thead').empty();
 						}
+
 						str = '<thead>';
-
-						/* =========================
-						BARIS HEADER KE-1
-						========================= */
-						str += '<tr>';
-
-						$.each(json.columns, function (k, colObj) {
-
-							// kolom normal (rowspan 2)
-							const normalCols = [
-								'kode_finger','hemxxmh_data','hodxxmh_nama','hetxxmh_nama',
-								'hr','hari_kerja_efektif','hk','persen',
-								'st_off','st_nj','hl','ct','cb','sd','kk','al','ip'
-							];
-
-							if (normalCols.includes(colObj.name)) {
-
-								let label = colObj.name;
-
-								const labels = {
-									kode_finger: 'Kode Finger',
-									hemxxmh_data: 'Karyawan',
-									hodxxmh_nama: 'Department',
-									hetxxmh_nama: 'Jabatan',
-									hr: 'Hari Kalender',
-									hari_kerja_efektif: 'Hari Kerja Efektif',
-									persen: 'Persen Kerja Efektif',
-									hk: 'Hari Hadir',
-									st_off: 'OFF',
-									st_nj: 'NJ',
-									hl: 'HL',
-									ct: 'CT',
-									cb: 'CB',
-									sd: 'SD',
-									kk: 'KK',
-									al: 'AL',
-									ip: 'IP'
-								};
-
-								str += `<th rowspan="2">${labels[colObj.name] ?? colObj.name}</th>`;
-							}
-
-							// GROUP HEADER
-							if (colObj.name === 'SK') {
-								str += '<th colspan="6" class="text-center">Absen Khusus</th>';
-							}
-
-							if (colObj.name === 'CK') {
-								str += '<th colspan="8" class="text-center">Absen Lain</th>';
-							}
-						});
-
-						str += '</tr>';
-
-						/* =========================
-						BARIS HEADER KE-2
-						========================= */
-						str += '<tr>';
-
-						const absenKhusus = ['SK','SPSI','DL','S3','LB','LR'];
-						const absenLain   = ['CK','KAK','KOT','PS','IMG','PKB','KKR','KM'];
-
-						$.each(json.columns, function (k, colObj) {
-
-							if (absenKhusus.includes(colObj.name) || absenLain.includes(colObj.name)) {
-								str += `<th>${colObj.name}</th>`;
-							}
-						});
-
-						str += '</tr>';
-						str += '</thead>';
+							// BEGIN header baris 1
+							str = str + '<tr>';
+							$.each(json.columns, function (k, colObj) {
+								// BEGIN render column name
+								if( colObj.name == 'kode_finger' ){
+									str = str + '<th>Kode Finger</th>';
+								}else if( colObj.name == 'hemxxmh_data' ){
+									str = str + '<th>Karyawan</th>';
+								}else if( colObj.name == 'hodxxmh_nama' ){
+									str = str + '<th>Department</th>';
+								}else if( colObj.name == 'hetxxmh_nama' ){
+									str = str + '<th>Jabatan</th>';
+								}else if( colObj.name == 'hr' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Periode Terpilih">Hari Kalender</th>';
+								}else if( colObj.name == 'hari_kerja_efektif' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Periode Terpilih">Hari Kerja Efektif</th>';
+								}else if( colObj.name == 'persen' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Periode Terpilih">Persen Kerja Efektif</th>';
+								}else if( colObj.name == 'hk' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Kerja dimana Karyawan Masuk dan Valid">Hari Hadir</th>';
+								}else if( colObj.name == 'st_off' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Jadwal Off">OFF</th>';
+								}else if( colObj.name == 'st_nj' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari yang belum dibuatkan Jadwal">NJ</th>';
+								}else if( colObj.name == 'hl' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Libur Nasional">HL</th>';
+								}else if( colObj.name == 'ct' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Cuti Tahunan">CT</th>';
+								}else if( colObj.name == 'cb' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Cuti Bersama">CB</th>';
+								}else if( colObj.name == 'sd' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Sakit Dengan Surat Dokter Resmi">SD</th>';
+								}else if( colObj.name == 'kk' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Kecelakaan Kerja">KK</th>';
+								}else if( colObj.name == 'al' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Alpa" class="text-danger">AL</th>';
+								}else if( colObj.name == 'ip' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Izin Pribadi">IP</th>';
+								}else if( colObj.name == 'absen_khusus' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Izin Khusus">Absen Khusus</th>';
+								}else if( colObj.name == 'lain' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Absen lain">Absen Lain</th>';
+								}
+							});
+							str = str + '</tr>';
+							// END header baris 1
+						str = str + '</thead>';
 
 						$('#tblhtsprrd').html(str);
 						

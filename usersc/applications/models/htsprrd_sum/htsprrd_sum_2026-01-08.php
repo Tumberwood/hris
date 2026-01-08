@@ -56,21 +56,6 @@
 						ip_in + ip_out AS ip,
 						lain_in + lain_out AS lain,
 						ak_in + ak_out AS absen_khusus,
-
-						SK_in + SK_out AS SK,
-						SPSI_in + SPSI_out AS SPSI,
-						DL_in + DL_out AS DL,
-						S3_in + S3_out AS S3,
-						LB_in + LB_out AS LB,
-						LR_in + LR_out AS LR,
-						CK_in + CK_out AS CK,
-						KAK_in + KAK_out AS KAK,
-						KOT_in + KOT_out AS KOT,
-						PS_in + PS_out AS PS,
-						IMG_in + IMG_out AS IMG,
-						PKB_in + PKB_out AS PKB,
-						KKR_in + KKR_out AS KKR,
-						KM_in + KM_out AS KM,
 						case 
 							when b.is_active = 1 then "active"
 							ELSE "nonaktif"
@@ -113,25 +98,8 @@
 								SUM(if(absen.id = 19, 0.5,0)) AS kk_in,
 								SUM(if(absen.id = 5, 0.5,0)) AS al_in,
 								SUM(if(absen.id = 6, 0.5,0)) AS ip_in,
-
-								SUM(if(prr.status_presensi_in = "SK", 0.5,0)) AS SK_in,
-								SUM(if(prr.status_presensi_in = "SPSI", 0.5,0)) AS SPSI_in,
-								SUM(if(prr.status_presensi_in = "DL", 0.5,0)) AS DL_in,
-								SUM(if(prr.status_presensi_in = "S3", 0.5,0)) AS S3_in,
-								SUM(if(prr.status_presensi_in = "LB", 0.5,0)) AS LB_in,
-								SUM(if(prr.status_presensi_in = "LR", 0.5,0)) AS LR_in,
-
-								SUM(if(prr.status_presensi_in = "CK", 0.5,0)) AS CK_in,
-								SUM(if(prr.status_presensi_in = "KAK", 0.5,0)) AS KAK_in,
-								SUM(if(prr.status_presensi_in = "KOT", 0.5,0)) AS KOT_in,
-								SUM(if(prr.status_presensi_in = "PS", 0.5,0)) AS PS_in,
-								SUM(if(prr.status_presensi_in = "IMG", 0.5,0)) AS IMG_in,
-								SUM(if(prr.status_presensi_in = "PKB", 0.5,0)) AS PKB_in,
-								SUM(if(prr.status_presensi_in = "KKR", 0.5,0)) AS KKR_in,
-								SUM(if(prr.status_presensi_in = "KM", 0.5,0)) AS KM_in
-
-								-- SUM(if(absen.id NOT IN (20,1,2,3,19,5,6) AND absen.is_cuti_khusus = 0, 0.5,0)) AS lain_in,
-								-- SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_in
+								SUM(if(absen.id NOT IN (20,1,2,3,19,5,6) AND absen.is_cuti_khusus = 0, 0.5,0)) AS lain_in,
+								SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_in
 							FROM htsprrd AS prr
 							LEFT JOIN htlxxmh AS absen ON absen.kode = prr.status_presensi_in
 							WHERE tanggal BETWEEN :start_date AND :end_date
@@ -166,25 +134,8 @@
 								SUM(if(absen.id = 19, 0.5,0)) AS kk_out,
 								SUM(if(absen.id = 5, 0.5,0)) AS al_out,
 								SUM(if(absen.id = 6, 0.5,0)) AS ip_out,
-								
-								SUM(if(prr.status_presensi_out = "SK", 0.5,0)) AS SK_out,
-								SUM(if(prr.status_presensi_out = "SPSI", 0.5,0)) AS SPSI_out,
-								SUM(if(prr.status_presensi_out = "DL", 0.5,0)) AS DL_out,
-								SUM(if(prr.status_presensi_out = "S3", 0.5,0)) AS S3_out,
-								SUM(if(prr.status_presensi_out = "LB", 0.5,0)) AS LB_out,
-								SUM(if(prr.status_presensi_out = "LR", 0.5,0)) AS LR_out,
-
-								SUM(if(prr.status_presensi_out = "CK", 0.5,0)) AS CK_out,
-								SUM(if(prr.status_presensi_out = "KAK", 0.5,0)) AS KAK_out,
-								SUM(if(prr.status_presensi_out = "KOT", 0.5,0)) AS KOT_out,
-								SUM(if(prr.status_presensi_out = "PS", 0.5,0)) AS PS_out,
-								SUM(if(prr.status_presensi_out = "IMG", 0.5,0)) AS IMG_out,
-								SUM(if(prr.status_presensi_out = "PKB", 0.5,0)) AS PKB_out,
-								SUM(if(prr.status_presensi_out = "KKR", 0.5,0)) AS KKR_out,
-								SUM(if(prr.status_presensi_out = "KM", 0.5,0)) AS KM_out
-
-								-- SUM(if(absen.id NOT IN (20,1,2,3,19,5,6) AND absen.is_cuti_khusus = 0, 0.5,0)) AS lain_out,
-								-- SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_out
+								SUM(if(absen.id NOT IN (20,1,2,3,19,5,6) AND absen.is_cuti_khusus = 0, 0.5,0)) AS lain_out,
+								SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_out
 							FROM htsprrd AS prr
 							LEFT JOIN htlxxmh AS absen ON absen.kode = prr.status_presensi_out
 							WHERE tanggal BETWEEN :start_date AND :end_date
@@ -254,26 +205,8 @@
 			['data' => 'kk', 'name' => 'kk'],
 			['data' => 'al', 'name' => 'al'],
 			['data' => 'ip', 'name' => 'ip'],
-			// ['data' => 'absen_khusus', 'name' => 'absen_khusus'],
-			// ['data' => 'lain', 'name' => 'lain'],
-			
-			//ini buat untuk colspan Absen khusus
-			['data' => 'SK',   'name' => 'SK'],
-			['data' => 'SPSI', 'name' => 'SPSI'],
-			['data' => 'DL',   'name' => 'DL'],
-			['data' => 'S3',   'name' => 'S3'],
-			['data' => 'LB',   'name' => 'LB'],
-			['data' => 'LR',   'name' => 'LR'],
-
-			//colspan Absen Lain
-			['data' => 'CK',   'name' => 'CK'],
-			['data' => 'KAK',  'name' => 'KAK'],
-			['data' => 'KOT',  'name' => 'KOT'],
-			['data' => 'PS',   'name' => 'PS'],
-			['data' => 'IMG',  'name' => 'IMG'],
-			['data' => 'PKB',  'name' => 'PKB'],
-			['data' => 'KKR',  'name' => 'KKR'],
-			['data' => 'KM',   'name' => 'KM'],
+			['data' => 'absen_khusus', 'name' => 'absen_khusus'],
+			['data' => 'lain', 'name' => 'lain']
 		];
 		
 	} else {
