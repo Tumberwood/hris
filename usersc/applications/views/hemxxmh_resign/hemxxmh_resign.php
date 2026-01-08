@@ -37,8 +37,8 @@
                         <label class="col-lg-2 col-form-label">Tanggal Keluar Terakhir</label>
                         <div class="col-lg-5">
                             <div class="input-group input-daterange" id="periode">
-                                <input type="text" id="start_date" class="form-control" style="display:none">
-                                <span class="input-group-addon"  style="display:none">to</span>
+                                <input type="text" id="start_date" class="form-control">
+                                <span class="input-group-addon" >to</span>
                                 <input type="text" id="end_date" class="form-control">
                                 <div class="input-group-addon">
                                     <span class="fa fa-calendar"></span>
