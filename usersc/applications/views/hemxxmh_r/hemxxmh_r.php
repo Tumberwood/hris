@@ -34,11 +34,11 @@
             <div class="ibox-content">
                 <form class="form-horizontal" id="frmhemxxmh">
                     <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">Periode</label>
+                        <label class="col-lg-2 col-form-label">Tanggal Keluar Terakhir</label>
                         <div class="col-lg-5">
                             <div class="input-group input-daterange" id="periode">
-                                <input type="text" id="start_date" class="form-control">
-                                <span class="input-group-addon">to</span>
+                                <input type="text" id="start_date" class="form-control" style="display:none">
+                                <span class="input-group-addon"  style="display:none">to</span>
                                 <input type="text" id="end_date" class="form-control">
                                 <div class="input-group-addon">
                                     <span class="fa fa-calendar"></span>
@@ -85,6 +85,7 @@
                                 <th>Sub Tipe</th>
                                 <th>Status</th>
                                 <th>Tanggal Join</th>
+                                <th>Tanggal Akhir Kontrak</th>
                                 <th>Tanggal Keluar</th>
                                 <th>Grup HK</th>
                                 <th>Aktif</th>
@@ -125,9 +126,14 @@
 			format: "dd M yyyy",
 			minViewMode: 'month' 
 		});
-		
+
+		var awal = moment()
+			.year(2000)
+			.startOf('month')
+			.format('DD MMM YYYY');
+
 		if (tanggal_get === '') {
-			$('#start_date').datepicker('setDate', awal_bulan_dmy);
+			$('#start_date').datepicker('setDate', awal);
 			$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
 		} else {
 			$('#start_date').datepicker('setDate', new Date(tanggal_get));
@@ -256,6 +262,7 @@
 					{ data: "heyxxmd.nama" },
 					{ data: "hesxxmh.nama" },//10
 					{ data: "hemjbmh.tanggal_masuk" },
+					{ data: "hemjbmh.tanggal_akhir_kontrak" },
 					{ data: "hemjbmh.tanggal_keluar" },
 					{ 
 						data: "hemjbmh.grup_hk",
@@ -275,11 +282,11 @@
 						data: "hemxxmh.is_active",
 						render: function (data){
 							if (data == 0){
-								return '<i class="fa fa-remove text-danger"></i>';
+								return '';
 							}else if(data == 1){
-								return '<i class="fa fa-check text-navy"></i>';
+								return 'Aktif';
 							}else if(data == -9){
-								return '<span class="text-danger">Data Error</span>';
+								return 'Nonaktif';
 							}
 						}
 					}

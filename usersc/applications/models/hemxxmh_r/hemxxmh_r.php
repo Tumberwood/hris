@@ -93,6 +93,18 @@
 					'from' => 'd M Y',
 					'to' =>   'Y-m-d'
 				) ),
+			Field::inst( 'hemjbmh.tanggal_akhir_kontrak' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y',
+					'to' =>   'Y-m-d'
+				) ),
 			Field::inst( 'hemjbmh.grup_hk' ),
 			Field::inst( 'hemjbmh.jumlah_grup' ),
 			Field::inst( 'hovxxmh.nama' ),
@@ -144,12 +156,12 @@
 		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
 		// ->where( 'hemjbmh.tanggal_keluar', $start_date, '>=' )
-		->where(function ($q) use ($start_date) {
+		->where(function ($q) use ($end_date) {
 			$q
-				->where(function ($r) use ($start_date) {
+				->where(function ($r) use ($end_date) {
 					$r
 						->where('hemjbmh.tanggal_keluar', null)
-						->or_where('hemjbmh.tanggal_keluar', $start_date, '>=');
+						->or_where('hemjbmh.tanggal_keluar', $end_date, '>=');
 				});
 		})
 
@@ -158,8 +170,8 @@
 	// do not erase
 	// function show / hide inactive document
 	if ($show_inactive_status == 0){
-		// $editor
-		// 	->where( 'hemxxmh.is_active', 1);
+		$editor
+			->where( 'hemxxmh.is_active', 1);
 	}
 	
 	if($_POST['id_hemxxmh'] > 0){
