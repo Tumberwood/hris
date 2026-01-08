@@ -55,8 +55,12 @@
 						al_in + al_out AS al,
 						ip_in + ip_out AS ip,
 						lain_in + lain_out AS lain,
-						ak_in + ak_out AS absen_khusus
-				
+						ak_in + ak_out AS absen_khusus,
+						case 
+							when b.is_active = 1 then "active"
+							ELSE "nonaktif"
+						END AS status_aktif,
+						hari_kerja_efektif
 						
 					FROM hemxxmh AS b
 					LEFT JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
@@ -138,6 +142,18 @@
 							GROUP BY id_hemxxmh
 						) lembur_sum_table
 					) st_out ON st_out.id_hemxxmh = b.id
+
+					LEFT JOIN (
+						SELECT
+							a.id_hemxxmh,
+							b.nama,
+							COUNT(a.id) hari_kerja_efektif
+						FROM htssctd a
+						LEFT JOIN hemxxmh b ON b.id = a.id_hemxxmh
+						LEFT JOIN hemjbmh c ON c.id_hemxxmh = b.id
+						WHERE a.tanggal BETWEEN :start_date AND :end_date AND a.id_htsxxmh <> 1
+						GROUP BY a.id_hemxxmh
+					) sc on sc.id_hemxxmh = b.id
 				)
 				SELECT
 					kode_finger,
@@ -145,7 +161,9 @@
 					hodxxmh_nama,
 					hetxxmh_nama,
 					hr,
+					hari_kerja_efektif,
 					hk,
+					hk /hari_kerja_efektif * 100 as persen,
 					st_off,
 					st_nj,
 					hl,
@@ -156,7 +174,8 @@
 					al,
 					ip,
 					absen_khusus,
-					lain
+					lain,
+					status_aktif
 				FROM qs_rekap_presensi
 				WHERE hk IS NOT null
 				'.$w_id_heyxxmh_session
@@ -174,7 +193,9 @@
 			['data' => 'hodxxmh_nama', 'name' => 'hodxxmh_nama'],
 			['data' => 'hetxxmh_nama', 'name' => 'hetxxmh_nama'],
 			['data' => 'hr', 'name' => 'hr'],
+			['data' => 'hari_kerja_efektif', 'name' => 'hari_kerja_efektif'],
 			['data' => 'hk', 'name' => 'hk'],
+			['data' => 'persen', 'name' => 'persen'],
 			['data' => 'st_off', 'name' => 'st_off'],
 			['data' => 'st_nj', 'name' => 'st_nj'],
 			['data' => 'hl', 'name' => 'hl'],

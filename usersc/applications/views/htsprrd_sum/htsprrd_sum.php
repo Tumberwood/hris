@@ -118,7 +118,11 @@
 								}else if( colObj.name == 'hetxxmh_nama' ){
 									str = str + '<th>Jabatan</th>';
 								}else if( colObj.name == 'hr' ){
-									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Periode Terpilih">Hari Kerja</th>';
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Periode Terpilih">Hari Kalender</th>';
+								}else if( colObj.name == 'hari_kerja_efektif' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Periode Terpilih">Hari Kerja Efektif</th>';
+								}else if( colObj.name == 'persen_efektif' ){
+									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Periode Terpilih">Persen Kerja Efektif</th>';
 								}else if( colObj.name == 'hk' ){
 									str = str + '<th data-toggle="tooltip" data-placement="top" title="Jumlah Hari Kerja dimana Karyawan Masuk dan Valid">Hari Hadir</th>';
 								}else if( colObj.name == 'st_off' ){
