@@ -54,8 +54,8 @@
 						kk_in + kk_out AS kk,
 						al_in + al_out AS al,
 						ip_in + ip_out AS ip,
-						-- lain_in + lain_out AS lain,
-						-- ak_in + ak_out AS absen_khusus,
+						lain_in + lain_out AS lain,
+						ak_in + ak_out AS absen_khusus,
 
 						SK_in + SK_out AS SK,
 						SPSI_in + SPSI_out AS SPSI,
@@ -128,10 +128,10 @@
 								SUM(if(prr.status_presensi_in = "IMG", 0.5,0)) AS IMG_in,
 								SUM(if(prr.status_presensi_in = "PKB", 0.5,0)) AS PKB_in,
 								SUM(if(prr.status_presensi_in = "KKR", 0.5,0)) AS KKR_in,
-								SUM(if(prr.status_presensi_in = "KM", 0.5,0)) AS KM_in
+								SUM(if(prr.status_presensi_in = "KM", 0.5,0)) AS KM_in,
 
-								-- SUM(if(absen.id NOT IN (20,1,2,3,19,5,6) AND absen.is_cuti_khusus = 0, 0.5,0)) AS lain_in,
-								-- SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_in
+								SUM(if(absen.id NOT IN (20,1,2,3,19,5,6) AND absen.is_cuti_khusus = 0, 0.5,0)) AS lain_in,
+								SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_in
 							FROM htsprrd AS prr
 							LEFT JOIN htlxxmh AS absen ON absen.kode = prr.status_presensi_in
 							WHERE tanggal BETWEEN :start_date AND :end_date
@@ -181,10 +181,10 @@
 								SUM(if(prr.status_presensi_out = "IMG", 0.5,0)) AS IMG_out,
 								SUM(if(prr.status_presensi_out = "PKB", 0.5,0)) AS PKB_out,
 								SUM(if(prr.status_presensi_out = "KKR", 0.5,0)) AS KKR_out,
-								SUM(if(prr.status_presensi_out = "KM", 0.5,0)) AS KM_out
+								SUM(if(prr.status_presensi_out = "KM", 0.5,0)) AS KM_out,
 
-								-- SUM(if(absen.id NOT IN (20,1,2,3,19,5,6) AND absen.is_cuti_khusus = 0, 0.5,0)) AS lain_out,
-								-- SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_out
+								SUM(if(absen.id NOT IN (20,1,2,3,19,5,6) AND absen.is_cuti_khusus = 0, 0.5,0)) AS lain_out,
+								SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_out
 							FROM htsprrd AS prr
 							LEFT JOIN htlxxmh AS absen ON absen.kode = prr.status_presensi_out
 							WHERE tanggal BETWEEN :start_date AND :end_date
