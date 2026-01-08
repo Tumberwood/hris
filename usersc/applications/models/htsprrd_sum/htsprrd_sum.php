@@ -228,7 +228,7 @@
 						FROM htssctd a
 						LEFT JOIN hemxxmh b ON b.id = a.id_hemxxmh
 						LEFT JOIN hemjbmh c ON c.id_hemxxmh = b.id
-						WHERE a.tanggal BETWEEN :start_date AND :end_date AND a.id_htsxxmh <> 1
+						WHERE a.tanggal BETWEEN :start_date AND :end_date AND a.id_htsxxmh <> 1 AND a.is_active = 1
 						GROUP BY a.id_hemxxmh
 					) sc on sc.id_hemxxmh = b.id
 				)
