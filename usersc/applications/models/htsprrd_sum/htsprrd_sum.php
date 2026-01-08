@@ -54,8 +54,8 @@
 						kk_in + kk_out AS kk,
 						al_in + al_out AS al,
 						ip_in + ip_out AS ip,
-						lain_in + lain_out AS lain,
-						ak_in + ak_out AS absen_khusus,
+						-- lain_in + lain_out AS lain,
+						-- ak_in + ak_out AS absen_khusus,
 
 						SK_in + SK_out AS SK,
 						SPSI_in + SPSI_out AS SPSI,
