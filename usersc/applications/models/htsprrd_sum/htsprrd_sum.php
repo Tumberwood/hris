@@ -98,7 +98,7 @@
 								SUM(if(absen.id = 19, 0.5,0)) AS kk_in,
 								SUM(if(absen.id = 5, 0.5,0)) AS al_in,
 								SUM(if(absen.id = 6, 0.5,0)) AS ip_in,
-								SUM(if(absen.id NOT IN (20,1,2,3,19,5,6), 0.5,0)) AS lain_in,
+								SUM(if(absen.id NOT IN (20,1,2,3,19,5,6) AND absen.is_cuti_khusus = 0, 0.5,0)) AS lain_in,
 								SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_in
 							FROM htsprrd AS prr
 							LEFT JOIN htlxxmh AS absen ON absen.kode = prr.status_presensi_in
@@ -134,7 +134,7 @@
 								SUM(if(absen.id = 19, 0.5,0)) AS kk_out,
 								SUM(if(absen.id = 5, 0.5,0)) AS al_out,
 								SUM(if(absen.id = 6, 0.5,0)) AS ip_out,
-								SUM(if(absen.id NOT IN (20,1,2,3,19,5,6), 0.5,0)) AS lain_out,
+								SUM(if(absen.id NOT IN (20,1,2,3,19,5,6) AND absen.is_cuti_khusus = 0, 0.5,0)) AS lain_out,
 								SUM(if(absen.is_cuti_khusus = 1, 0.5,0)) AS ak_out
 							FROM htsprrd AS prr
 							LEFT JOIN htlxxmh AS absen ON absen.kode = prr.status_presensi_out
