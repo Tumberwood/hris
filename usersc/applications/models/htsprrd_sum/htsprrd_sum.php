@@ -37,7 +37,7 @@
 		->bind(':start_date', $start_date)
 		->bind(':end_date', $end_date)
 		->exec('WITH qs_rekap_presensi AS (
-					SELECT DISTINCT
+					SELECT
 						b.kode_finger,
 						c.id_heyxxmh,
 						CONCAT(b.kode, " - ", b.nama) AS hemxxmh_data,
