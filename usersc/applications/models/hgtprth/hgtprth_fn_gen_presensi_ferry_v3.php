@@ -31,8 +31,8 @@
     // BEGIN delete old data
     $qd_htsprrd = $db
         ->query('delete', 'htsprrd_old')
-        ->where('htsprrd.tanggal',$tanggal)
-        ->where( 'htsprrd.id_hemxxmh', '(SELECT hemxxmh.id FROM hemxxmh LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = hemxxmh.id WHERE hemjbmh.id_heyxxmh = ' . $id_heyxxmh . ')', 'IN', false )
+        ->where('tanggal',$tanggal)
+        ->where( 'id_hemxxmh', '(SELECT hemxxmh.id FROM hemxxmh LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = hemxxmh.id WHERE hemjbmh.id_heyxxmh = ' . $id_heyxxmh . ')', 'IN', false )
         ->exec();
     // END delete old data
 
