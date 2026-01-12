@@ -1413,40 +1413,13 @@
             );
             $rs_htsprrd = $qs_htsprrd_new->fetchAll();
 
-            if (!empty($rs_htsprrd)) {
-                try {
-                    $db->transaction();
-
-                    foreach ($rs_htsprrd as $hr_presensi) {
-                        $qi_insert = $db
-                            ->query('insert', 'htsprrd')
-                            ->set($hr_presensi)  // semua key => value otomatis jadi field
-                            ->exec();
-                        // bisa ambil insertId jika perlu
-                        // $id_insert = $qi_insert->insertId();
-                    }
-
-                    $db->commit();
-
-                    $data = array(
-                        'message' => 'Insert ' . count($rs_htsprrd) . ' row berhasil.',
-                        'type_message' => 'success'
-                    );
-
-                } catch (Exception $e) {
-                    $db->rollback();
-                    $data = array(
-                        'message' => 'Data Gagal Dibuat',
-                        'type_message' => 'danger',
-                        'error' => $e->getMessage()
-                    );
-                }
-
-            } else {
-                $data = array(
-                    'message' => 'Tidak ada data untuk dimasukkan',
-                    'type_message' => 'warning'
-                );
+            foreach ($rs_htsprrd as $hr_presensi) {
+                $qi_insert = $db
+                    ->query('insert', 'htsprrd')
+                    ->set($hr_presensi)  // semua key => value otomatis jadi field
+                    ->exec();
+                // bisa ambil insertId jika perlu
+                // $id_insert = $qi_insert->insertId();
             }
         }
 
