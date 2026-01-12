@@ -1414,40 +1414,34 @@
             $rs_htsprrd = $qs_htsprrd_new->fetchAll();
 
             if (!empty($rs_htsprrd)) {
-                $fields = array_keys($rs_htsprrd[0]);
-                $placeholders = array_map(fn($f) => ':' . $f, $fields);
-
-                $sql_insert = "INSERT INTO htsprrd (" . implode(',', $fields) . ") VALUES (" . implode(',', $placeholders) . ")";
-                $stmt_insert = $pdo->prepare($sql_insert);
-
                 try {
-                    // Mulai transaction
-                    $pdo->beginTransaction();
+                    $db->beginTransaction();
 
                     foreach ($rs_htsprrd as $hr_presensi) {
-                        $params = [];
-                        foreach ($fields as $f) {
-                            $params[':' . $f] = $hr_presensi[$f] ?? null;
-                        }
-                        $stmt_insert->execute($params);
+                        $qi_insert = $db
+                            ->query('insert', 'htsprrd')
+                            ->set($hr_presensi)  // semua key => value otomatis jadi field
+                            ->exec();
+                        // bisa ambil insertId jika perlu
+                        // $id_insert = $qi_insert->insertId();
                     }
 
-                    // Commit transaction
-                    $pdo->commit();
+                    $db->commit();
 
                     $data = array(
                         'message' => 'Insert ' . count($rs_htsprrd) . ' row berhasil.',
                         'type_message' => 'success'
                     );
 
-                } catch (PDOException $e) {
-                    $pdo->rollBack();
+                } catch (Exception $e) {
+                    $db->rollback();
                     $data = array(
-                        'message' => 'Data Gagal Dibuat', 
+                        'message' => 'Data Gagal Dibuat',
                         'type_message' => 'danger',
-                        'error' => $e->getMessage() // ambil pesan error
+                        'error' => $e->getMessage()
                     );
                 }
+
             } else {
                 $data = array(
                     'message' => 'Tidak ada data untuk dimasukkan',
