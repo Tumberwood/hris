@@ -1293,7 +1293,7 @@
 
                         FROM hitung_lembur
                     )
-                    SELECT DISTINCT
+                    SELECT
                         id_hemxxmh,
                         keterangan,
                         kode_finger,
@@ -1301,7 +1301,7 @@
 
                         shift_in,
                         shift_out,
-                        kode_shift AS jadwal,
+                        kode_shift AS st_jadwal,
                         tanggaljam_awal_t1,
                         tanggaljam_awal,
                         tanggaljam_awal_t2,
@@ -1310,8 +1310,8 @@
                         tanggaljam_akhir,
                         tanggaljam_akhir_t2,
 
-                        ceklok_in,
-                        ceklok_out,
+                        ceklok_in AS clock_in,
+                        ceklok_out AS clock_out,
                         
                         if(kode_shift = "NJ", NULL, st_clock_in) AS st_clock_in,
                         if(kode_shift = "NJ", NULL, st_clock_out) AS st_clock_out,
@@ -1322,27 +1322,27 @@
                         keterangan AS htlxxrh_kode,
                         jam_awal_lembur_libur,
                         jam_akhir_lembur_libur,
-                        durasi_lembur_libur_jam,
+                        durasi_lembur_libur_jam AS durasi_lembur_libur,
 
                         jam_awal_lembur_awal,
                         jam_akhir_lembur_awal,
-                        durasi_lembur_awal_jam,
+                        durasi_lembur_awal_jam AS durasi_lembur_awal,
                         jam_awal_lembur_akhir,
                         jam_akhir_lembur_akhir,
-                        durasi_lembur_akhir_jam,
+                        durasi_lembur_akhir_jam AS durasi_lembur_akhir,
                         jam_awal_lembur_istirahat1,
                         jam_akhir_lembur_istirahat1,
-                        durasi_lembur_istirahat1_jam,
+                        durasi_lembur_istirahat1_jam AS durasi_lembur_istirahat1,
                         jam_awal_lembur_istirahat2,
                         jam_akhir_lembur_istirahat2,
-                        durasi_lembur_istirahat2_jam,
+                        durasi_lembur_istirahat2_jam AS durasi_lembur_istirahat2,
                         jam_awal_lembur_istirahat3,
                         jam_akhir_lembur_istirahat3,
-                        durasi_lembur_istirahat3_jam,
+                        durasi_lembur_istirahat3_jam AS durasi_lembur_istirahat3,
                         durasi_lembur_total_jam,
                         
-                        total_pot_jam,
-                        pot_non_ti,
+                        total_pot_jam AS pot_jam,
+                        pot_non_ti AS pot_overtime,
                         pot_hk,
                         pot_ti,
                         durasi_lembur_final,
