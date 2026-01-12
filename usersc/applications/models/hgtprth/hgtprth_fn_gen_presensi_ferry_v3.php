@@ -1415,7 +1415,7 @@
 
             if (!empty($rs_htsprrd)) {
                 try {
-                    $db->beginTransaction();
+                    $db->transaction();
 
                     foreach ($rs_htsprrd as $hr_presensi) {
                         $qi_insert = $db
