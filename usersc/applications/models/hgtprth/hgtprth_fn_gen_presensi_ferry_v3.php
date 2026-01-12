@@ -1346,8 +1346,8 @@
                             tanggaljam_akhir,
                             tanggaljam_akhir_t2,
 
-                            ceklok_in,
-                            ceklok_out,
+                            ceklok_in AS clock_in,
+                            ceklok_out AS clock_out,
                             
                             if(kode_shift = "NJ", NULL, st_clock_in) AS st_clock_in,
                             if(kode_shift = "NJ", NULL, st_clock_out) AS st_clock_out,
