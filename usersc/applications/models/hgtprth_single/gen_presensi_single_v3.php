@@ -184,76 +184,11 @@
         $db->transaction();
 
         
-        $qi_htsprrd_new = $db
+        $qs_htsprrd_new = $db
             ->raw()
             ->bind(':tanggal', $tanggal)
             ->bind(':id_hemxxmh', $id_hemxxmh)
-            ->exec(' INSERT INTO htsprrd (
-                        id_hemxxmh,
-                        keterangan,
-                        kode_finger,
-                        tanggal,
-                        shift_in,
-                        shift_out,
-                        st_jadwal,
-                        tanggaljam_awal_t1,
-                        tanggaljam_awal,
-                        tanggaljam_awal_t2,
-                        tanggaljam_akhir_t1,
-                        tanggaljam_akhir,
-                        tanggaljam_akhir_t2,
-                        clock_in,
-                        clock_out,
-                        st_clock_in,
-                        st_clock_out,
-                        status_presensi_in,
-                        status_presensi_out,
-                        htlxxrh_kode,
-                        jam_awal_lembur_libur,
-                        jam_akhir_lembur_libur,
-                        durasi_lembur_libur,
-                        jam_awal_lembur_awal,
-                        jam_akhir_lembur_awal,
-                        durasi_lembur_awal,
-                        jam_awal_lembur_akhir,
-                        jam_akhir_lembur_akhir,
-                        durasi_lembur_akhir,
-                        jam_awal_lembur_istirahat1,
-                        jam_akhir_lembur_istirahat1,
-                        durasi_lembur_istirahat1,
-                        jam_awal_lembur_istirahat2,
-                        jam_akhir_lembur_istirahat2,
-                        durasi_lembur_istirahat2,
-                        jam_awal_lembur_istirahat3,
-                        jam_akhir_lembur_istirahat3,
-                        durasi_lembur_istirahat3,
-                        durasi_lembur_total_jam,
-                        pot_jam,
-                        pot_overtime,
-                        pot_hk,
-                        pot_ti,
-                        durasi_lembur_final,
-                        pot_jam_final,
-                        is_makan,
-                        is_pot_premi,
-                        is_pot_upah,
-                        cek,
-                        lembur15,
-                        rp_lembur15,
-                        lembur15_final,
-                        lembur2,
-                        rp_lembur2,
-                        lembur2_final,
-                        lembur3,
-                        rp_lembur3,
-                        lembur3_final,
-                        nominal_lembur_jam,
-                        grup_hk,
-                        id_holxxmd_2,
-                        break_in,
-                        break_out
-                    )
-                    WITH presensi AS (
+            ->exec(' WITH presensi AS (
                         SELECT
                             b.id_hemxxmh,
                             id_holxxmd_2,
@@ -1441,6 +1376,16 @@
 
                 '
         );
+        $rs_htsprrd = $qs_htsprrd_new->fetchAll();
+
+        foreach ($rs_htsprrd as $hr_presensi) {
+            $qi_insert = $db
+                ->query('insert', 'htsprrd')
+                ->set($hr_presensi)  // semua key => value otomatis jadi field
+                ->exec();
+            // bisa ambil insertId jika perlu
+            // $id_insert = $qi_insert->insertId();
+        }
 
         // Khusus untuk karyawan a/n 09110415 MASKUR dan 12090891 SUGIONO 
         // ini jika hari Sabtu ada jadwal, tetapi mereka tidak masuk, ini statusnya tetap alpa, tetapi tidak memotong apa-apa 
