@@ -1457,14 +1457,14 @@
                             tanggal
                         FROM hthhdth AS ho
                         WHERE ho.tanggal = :tanggal
-                    ) AS holiday ON holiday.tanggal = a.tanggal
+                    ) AS holiday ON holiday.tanggal = :tanggal
                     LEFT JOIN (
                         SELECT
                             count(cu.id) AS is_cuti,
                             tanggal
                         FROM htlgnth AS cu
                         WHERE cu.tanggal = :tanggal
-                    ) AS cuti ON cuti.tanggal = a.tanggal
+                    ) AS cuti ON cuti.tanggal = :tanggal
                     
                     SET 
                         a.cek = 0,
