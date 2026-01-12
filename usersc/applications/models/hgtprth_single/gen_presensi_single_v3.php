@@ -509,7 +509,7 @@
                                 ) AS mesin,
 
                                 IFNULL(
-                                    IF(hari = "Friday" AND shift LIKE "%PAGI%" AND STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i") < CONCAT(:tanggal, " ", 13:00), 0, 
+                                    IF(hari = "Friday" AND shift LIKE "%PAGI%" AND STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i") < CONCAT(:tanggal, "  13:00"), 0, 
                                         TIMESTAMPDIFF(MINUTE, STR_TO_DATE(SUBSTRING_INDEX(concat_break_in,  "|",  1), "%Y-%m-%d %H:%i"), 
                                         STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i"))
                                     ),
@@ -518,7 +518,7 @@
                                 AS durasi_break_menit,
                                 IFNULL(
                                     IF(is_istirahat = 2,
-                                        IF(hari = "Friday" AND shift LIKE "%PAGI%" AND STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i") < CONCAT(:tanggal, " ", 13:00), 0, 
+                                        IF(hari = "Friday" AND shift LIKE "%PAGI%" AND STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i") < CONCAT(:tanggal, "  13:00"), 0, 
                                             TIMESTAMPDIFF(MINUTE, STR_TO_DATE(SUBSTRING_INDEX(concat_break_in,  "|",  1), "%Y-%m-%d %H:%i"), 
                                             STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i"))
                                         ),
