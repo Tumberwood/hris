@@ -1329,7 +1329,7 @@
 
                             FROM hitung_lembur
                         )
-                        SELECT DISTINCT
+                        SELECT
                             id_hemxxmh,
                             keterangan,
                             kode_finger,
@@ -1358,23 +1358,23 @@
                             keterangan AS htlxxrh_kode,
                             jam_awal_lembur_libur,
                             jam_akhir_lembur_libur,
-                            durasi_lembur_libur_jam,
+                            durasi_lembur_libur_jam AS durasi_lembur_libur,
 
                             jam_awal_lembur_awal,
                             jam_akhir_lembur_awal,
-                            durasi_lembur_awal_jam,
+                            durasi_lembur_awal_jam AS durasi_lembur_awal,
                             jam_awal_lembur_akhir,
                             jam_akhir_lembur_akhir,
                             durasi_lembur_akhir_jam,
                             jam_awal_lembur_istirahat1,
                             jam_akhir_lembur_istirahat1,
-                            durasi_lembur_istirahat1_jam,
+                            durasi_lembur_istirahat1_jam AS durasi_lembur_istirahat1,
                             jam_awal_lembur_istirahat2,
                             jam_akhir_lembur_istirahat2,
-                            durasi_lembur_istirahat2_jam,
+                            durasi_lembur_istirahat2_jam AS durasi_lembur_istirahat2,
                             jam_awal_lembur_istirahat3,
                             jam_akhir_lembur_istirahat3,
-                            durasi_lembur_istirahat3_jam,
+                            durasi_lembur_istirahat3_jam AS durasi_lembur_istirahat3,
                             durasi_lembur_total_jam,
                             
                             total_pot_jam AS pot_jam,
