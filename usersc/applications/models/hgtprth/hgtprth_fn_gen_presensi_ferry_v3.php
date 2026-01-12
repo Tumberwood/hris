@@ -220,76 +220,11 @@
         //CEK JIKA ADA KARYAWAN AKTIF
         if (!empty($rs_hemxxmh)){
             
-            $qi_htsprrd_new = $db
+            $qs_htsprrd_new = $db
                 ->raw()
                 ->bind(':tanggal', $tanggal)
                 ->bind(':id_heyxxmh', $id_heyxxmh)
-                ->exec(' INSERT INTO htsprrd (
-                            id_hemxxmh,
-                            keterangan,
-                            kode_finger,
-                            tanggal,
-                            shift_in,
-                            shift_out,
-                            st_jadwal,
-                            tanggaljam_awal_t1,
-                            tanggaljam_awal,
-                            tanggaljam_awal_t2,
-                            tanggaljam_akhir_t1,
-                            tanggaljam_akhir,
-                            tanggaljam_akhir_t2,
-                            clock_in,
-                            clock_out,
-                            st_clock_in,
-                            st_clock_out,
-                            status_presensi_in,
-                            status_presensi_out,
-                            htlxxrh_kode,
-                            jam_awal_lembur_libur,
-                            jam_akhir_lembur_libur,
-                            durasi_lembur_libur,
-                            jam_awal_lembur_awal,
-                            jam_akhir_lembur_awal,
-                            durasi_lembur_awal,
-                            jam_awal_lembur_akhir,
-                            jam_akhir_lembur_akhir,
-                            durasi_lembur_akhir,
-                            jam_awal_lembur_istirahat1,
-                            jam_akhir_lembur_istirahat1,
-                            durasi_lembur_istirahat1,
-                            jam_awal_lembur_istirahat2,
-                            jam_akhir_lembur_istirahat2,
-                            durasi_lembur_istirahat2,
-                            jam_awal_lembur_istirahat3,
-                            jam_akhir_lembur_istirahat3,
-                            durasi_lembur_istirahat3,
-                            durasi_lembur_total_jam,
-                            pot_jam,
-                            pot_overtime,
-                            pot_hk,
-                            pot_ti,
-                            durasi_lembur_final,
-                            pot_jam_final,
-                            is_makan,
-                            is_pot_premi,
-                            is_pot_upah,
-                            cek,
-                            lembur15,
-                            rp_lembur15,
-                            lembur15_final,
-                            lembur2,
-                            rp_lembur2,
-                            lembur2_final,
-                            lembur3,
-                            rp_lembur3,
-                            lembur3_final,
-                            nominal_lembur_jam,
-                            grup_hk,
-                            id_holxxmd_2,
-                            break_in,
-                            break_out
-                        )
-                        WITH presensi AS (
+                ->exec(' WITH presensi AS (
                             SELECT
                                 b.id_hemxxmh,
                                 id_holxxmd_2,
@@ -1402,7 +1337,7 @@
 
                             shift_in,
                             shift_out,
-                            kode_shift AS jadwal,
+                            kode_shift AS st_jadwal,
                             tanggaljam_awal_t1,
                             tanggaljam_awal,
                             tanggaljam_awal_t2,
@@ -1442,8 +1377,8 @@
                             durasi_lembur_istirahat3_jam,
                             durasi_lembur_total_jam,
                             
-                            total_pot_jam,
-                            pot_non_ti,
+                            total_pot_jam AS pot_jam,
+                            pot_non_ti AS pot_overtime,
                             pot_hk,
                             pot_ti,
                             durasi_lembur_final,
@@ -1476,6 +1411,49 @@
                         FROM hitung_lembur_final
                     '
             );
+            $rs_htsprrd = $qs_htsprrd_new->fetchAll();
+
+            if (!empty($rs_htsprrd)) {
+                $fields = array_keys($rs_htsprrd[0]);
+                $placeholders = array_map(fn($f) => ':' . $f, $fields);
+
+                $sql_insert = "INSERT INTO htsprrd (" . implode(',', $fields) . ") VALUES (" . implode(',', $placeholders) . ")";
+                $stmt_insert = $pdo->prepare($sql_insert);
+
+                try {
+                    // Mulai transaction
+                    $pdo->beginTransaction();
+
+                    foreach ($rs_htsprrd as $hr_presensi) {
+                        $params = [];
+                        foreach ($fields as $f) {
+                            $params[':' . $f] = $hr_presensi[$f] ?? null;
+                        }
+                        $stmt_insert->execute($params);
+                    }
+
+                    // Commit transaction
+                    $pdo->commit();
+
+                    $data = array(
+                        'message' => 'Insert ' . count($rs_htsprrd) . ' row berhasil.',
+                        'type_message' => 'success'
+                    );
+
+                } catch (PDOException $e) {
+                    $pdo->rollBack();
+                    $data = array(
+                        'message' => 'Data Gagal Dibuat', 
+                        'type_message' => 'danger',
+                        'error' => $e->getMessage() // ambil pesan error
+                    );
+                }
+            } else {
+                $data = array(
+                    'message' => 'Tidak ada data untuk dimasukkan',
+                    'type_message' => 'warning'
+                );
+            }
         }
 
         // Khusus untuk karyawan a/n 09110415 MASKUR dan 12090891 SUGIONO 
@@ -1588,58 +1566,6 @@
                         AND b.is_pot_hk = 1;
             '
         );
-
-        //QUERY LAMA EXECUTE
-        // $qu_pot_upah = $db
-        //     ->raw()
-        //     ->bind(':tanggal', $tanggal)
-        //     ->exec('UPDATE htsprrd AS a
-        //             INNER JOIN htssctd AS b 
-        //                 ON b.id_hemxxmh = a.id_hemxxmh 
-        //                 AND b.tanggal = a.tanggal
-        //             SET 
-        //                 cek = IF(
-        //                     a.clock_in IS NULL AND a.clock_out IS NULL, 
-        //                     0, 
-        //                     IF(
-        //                         a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
-        //                         a.cek, 
-        //                         1
-        //                     )
-        //                 ),
-        //                 a.htlxxrh_kode = IF(
-        //                     a.clock_in IS NULL AND a.clock_out IS NULL, 
-        //                     "Cuti Bersama - Potong Upah", 
-        //                     IF(
-        //                         a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
-        //                         a.htlxxrh_kode, 
-        //                         "Cuti Bersama - Potong Upah"
-        //                     )
-        //                 ),
-        //                 a.is_pot_upah = IF(
-        //                     a.clock_in IS NULL AND a.clock_out IS NULL, 
-        //                     1, 
-        //                     IF(
-        //                         a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
-        //                         a.cek, 
-        //                         1
-        //                     )
-        //                 ),
-        //                 a.is_pot_premi = IF(
-        //                     a.clock_in IS NULL AND a.clock_out IS NULL, 
-        //                     1, 
-        //                     IF(
-        //                         a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL, 
-        //                         a.cek, 
-        //                         1
-        //                     )
-        //                 )
-        //             WHERE 
-        //                 a.tanggal = :tanggal
-        //                 AND b.is_active = 1 
-        //                 AND b.is_pot_hk = 1;
-        //     '
-        // );
         
         // di commit per karyawan
         $qu_hgtprth = $db
