@@ -288,7 +288,7 @@
                             tanggaljam_akhir_min1,
                             tanggaljam_akhir_t2_min_hour,
                             ceklok_in,
-                            if(DAYNAME("2025-09-24") = "saturday", 1, 0) AS is_sabtu,
+                            if(DAYNAME(:tanggal) = "saturday", 1, 0) AS is_sabtu,
                             ceklok_out,
                             
                             -- cek check in
@@ -468,7 +468,7 @@
                                         ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
                                     FROM hemjbrd
                                     WHERE
-                                        tanggal_awal <= "2025-09-24"
+                                        tanggal_awal <= :tanggal
                                 ) AS subquery
                                 WHERE row_num = 1
                             ) history ON history.id_hemxxmh = j.id_hemxxmh
@@ -492,7 +492,7 @@
                             FROM htssctd AS jad
                             INNER JOIN htsxxmh AS sft ON sft.id = jad.id_htsxxmh
                             
-                            WHERE jad.is_active = 1 AND jad.tanggal = "2025-09-24"
+                            WHERE jad.is_active = 1 AND jad.tanggal = :tanggal
                         ) AS jadwal ON jadwal.id_hemxxmh =  a.id
 
                         -- ceklok
@@ -509,7 +509,7 @@
                                 ) AS mesin,
 
                                 IFNULL(
-                                    IF(hari = "Friday" AND shift LIKE "%PAGI%" AND STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i") < "2025-09-24 13:00", 0, 
+                                    IF(hari = "Friday" AND shift LIKE "%PAGI%" AND STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i") < CONCAT(:tanggal, " ", 13:00), 0, 
                                         TIMESTAMPDIFF(MINUTE, STR_TO_DATE(SUBSTRING_INDEX(concat_break_in,  "|",  1), "%Y-%m-%d %H:%i"), 
                                         STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i"))
                                     ),
@@ -518,7 +518,7 @@
                                 AS durasi_break_menit,
                                 IFNULL(
                                     IF(is_istirahat = 2,
-                                        IF(hari = "Friday" AND shift LIKE "%PAGI%" AND STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i") < "2025-09-24 13:00", 0, 
+                                        IF(hari = "Friday" AND shift LIKE "%PAGI%" AND STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i") < CONCAT(:tanggal, " ", 13:00), 0, 
                                             TIMESTAMPDIFF(MINUTE, STR_TO_DATE(SUBSTRING_INDEX(concat_break_in,  "|",  1), "%Y-%m-%d %H:%i"), 
                                             STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i"))
                                         ),
@@ -678,9 +678,9 @@
                                 LEFT JOIN htoxxrd AS d ON d.id_hemxxmh = jadwal.id_hemxxmh AND d.tanggal = jadwal.tanggal
                                 LEFT JOIN htsxxmh shift ON shift.id = jadwal.id_htsxxmh
                                 WHERE jadwal.is_active = 1
-                                AND jadwal.tanggal = "2025-09-24"
+                                AND jadwal.tanggal = :tanggal
                                 AND (
-                                    (jb.tanggal_keluar IS NULL OR jb.tanggal_keluar >= "2025-09-24") AND jb.id_hemxxmh = :id_hemxxmh AND tanggal_masuk <= "2025-09-24"
+                                    (jb.tanggal_keluar IS NULL OR jb.tanggal_keluar >= :tanggal) AND jb.id_hemxxmh = :id_hemxxmh AND tanggal_masuk <= :tanggal
                                 )
                                 GROUP BY jadwal.id
                                 ORDER BY jadwal.id
@@ -701,7 +701,7 @@
                             FROM htlxxrh
                             LEFT JOIN htlxxmh ON htlxxmh.id = htlxxrh.id_htlxxmh
                             LEFT JOIN htlgrmh ON htlgrmh.id = htlxxmh.id_htlgrmh
-                            WHERE htlxxrh.tanggal = "2025-09-24"
+                            WHERE htlxxrh.tanggal = :tanggal
                                 AND htlxxrh.jenis = 1
                             GROUP BY htlxxrh.id_hemxxmh
                         ) AS absen ON absen.id_hemxxmh = a.id
@@ -723,7 +723,7 @@
                             INNER JOIN htpxxmh ON htpxxmh.id = htlxxrh.id_htlxxmh
                             LEFT JOIN htlgrmh ON htlgrmh.id = htpxxmh.id_htlgrmh
                             WHERE htlxxrh.is_active = 1
-                                AND htlxxrh.tanggal = "2025-09-24"
+                                AND htlxxrh.tanggal = :tanggal
                                 AND (
                                     htlxxrh.id_htlxxmh = 1 OR
                                     htlxxrh.id_htlxxmh = 5
@@ -749,7 +749,7 @@
                             INNER JOIN htpxxmh ON htpxxmh.id = htlxxrh.id_htlxxmh
                             LEFT JOIN htlgrmh ON htlgrmh.id = htpxxmh.id_htlgrmh
                             WHERE htlxxrh.is_active = 1
-                                AND htlxxrh.tanggal = "2025-09-24"
+                                AND htlxxrh.tanggal = :tanggal
                                 AND (
                                     htlxxrh.id_htlxxmh = 2 OR
                                     htlxxrh.id_htlxxmh = 6
@@ -777,7 +777,7 @@
                             INNER JOIN htpxxmh ON htpxxmh.id = htlxxrh.id_htlxxmh
                             LEFT JOIN htlgrmh ON htlgrmh.id = htpxxmh.id_htlgrmh
                             WHERE htlxxrh.is_active = 1
-                                AND htlxxrh.tanggal = "2025-09-24"
+                                AND htlxxrh.tanggal = :tanggal
                                 AND (
                                     htlxxrh.id_htlxxmh = 3 OR
                                     htlxxrh.id_htlxxmh = 4
@@ -830,7 +830,7 @@
                                         DATE_FORMAT(hto.jam_awal, "%H:%i") jam_awal_lembur
                                     
                                     FROM htoxxrd as hto
-                                    WHERE hto.tanggal = "2025-09-24" AND hto.is_active = 1
+                                    WHERE hto.tanggal = :tanggal AND hto.is_active = 1
                                     GROUP BY hto.id_htoemtd
                                 )
                                 AS ot
@@ -854,7 +854,7 @@
                                 FROM htpr_ti
                                 WHERE
                                     htpr_ti.nama = "Toleransi TI"
-                                    AND tanggal_efektif <= "2025-09-24"
+                                    AND tanggal_efektif <= :tanggal
                             ) AS subquery
                             WHERE row_num = 1
                         ) menit_toleransi_ti ON menit_toleransi_ti.is_active = 1
@@ -875,7 +875,7 @@
                                 FROM htpr_ti
                                 WHERE
                                     htpr_ti.nama = "Toleransi Keluar Istirahat"
-                                    AND tanggal_efektif <= "2025-09-24"
+                                    AND tanggal_efektif <= :tanggal
                             ) AS subquery
                             WHERE row_num = 1
                         ) menit_toleransi_keluar_istirahat ON menit_toleransi_keluar_istirahat.is_active = 1
@@ -896,7 +896,7 @@
                                 FROM htpr_hesxxmh
                                 WHERE
                                     htpr_hesxxmh.id_hpcxxmh = 36
-                                    AND tanggal_efektif <= "2025-09-24"
+                                    AND tanggal_efektif <= :tanggal
                             ) AS subquery
                             WHERE row_num = 1
                         ) lembur_mati ON lembur_mati.id_hesxxmh = b.id_hesxxmh
@@ -919,7 +919,7 @@
                                 INNER JOIN hemjbmh AS c ON c.id_hevxxmh = b.id
                                 WHERE
                                     a.id_hpcxxmh = 32
-                                    AND tanggal_efektif <= "2025-09-24"
+                                    AND tanggal_efektif <= :tanggal
                             ) AS subquery
                             WHERE row_num = 1
                         ) t_jabatan ON t_jabatan.id_hevxxmh = b.id_hevxxmh
@@ -940,7 +940,7 @@
                                 FROM htpr_hemxxmh
                                 WHERE
                                     htpr_hemxxmh.id_hpcxxmh = 32
-                                    AND tanggal_efektif <= "2025-09-24"
+                                    AND tanggal_efektif <= :tanggal
                                     AND is_active = 1
                             ) AS subquery
                             WHERE row_num = 1
@@ -962,7 +962,7 @@
                                 FROM htpr_hemxxmh
                                 WHERE
                                     htpr_hemxxmh.id_hpcxxmh = 1
-                                    AND tanggal_efektif <= "2025-09-24"
+                                    AND tanggal_efektif <= :tanggal
                             ) AS subquery
                             WHERE row_num = 1
                         ) tbl_htpr_hemxxmh ON tbl_htpr_hemxxmh.id_hemxxmh = a.id
@@ -974,12 +974,12 @@
                                 a.id_hemxxmh_pengaju,
                                 a.id_hemxxmh_pengganti
                             FROM htscctd AS a
-                            WHERE a.tanggal = "2025-09-24"
+                            WHERE a.tanggal = :tanggal
                                 AND a.is_active = 1 
                                 AND a.is_approve = 1
                         ) AS tukar_jadwal_kmj ON (id_hemxxmh_pengaju = a.id OR id_hemxxmh_pengganti = a.id)
 
-                        WHERE (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= "2025-09-24") AND b.id_hemxxmh = :id_hemxxmh 
+                        WHERE (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= :tanggal) AND b.id_hemxxmh = :id_hemxxmh 
 
                     ),
                     status_presensi AS (
@@ -1362,7 +1362,7 @@
                         id_hemxxmh,
                         keterangan,
                         kode_finger,
-                        ifnull(tanggal, "2025-09-24") AS tanggal,
+                        ifnull(tanggal, :tanggal) AS tanggal,
 
                         shift_in,
                         shift_out,
