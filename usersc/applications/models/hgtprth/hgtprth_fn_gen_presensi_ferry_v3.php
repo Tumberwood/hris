@@ -1329,7 +1329,7 @@
 
                             FROM hitung_lembur
                         )
-                        SELECT DISTINCT
+                        SELECT
                             id_hemxxmh,
                             keterangan,
                             kode_finger,
