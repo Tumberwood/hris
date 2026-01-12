@@ -1365,7 +1365,7 @@
                             durasi_lembur_awal_jam AS durasi_lembur_awal,
                             jam_awal_lembur_akhir,
                             jam_akhir_lembur_akhir,
-                            durasi_lembur_akhir_jam,
+                            durasi_lembur_akhir_jam AS durasi_lembur_akhir,
                             jam_awal_lembur_istirahat1,
                             jam_akhir_lembur_istirahat1,
                             durasi_lembur_istirahat1_jam AS durasi_lembur_istirahat1,
