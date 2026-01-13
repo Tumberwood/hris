@@ -41,7 +41,7 @@
 						b.kode_finger,
 						c.id_heyxxmh,
 						CONCAT(b.kode, " - ", b.nama) AS hemxxmh_data,
-						DATEDIFF(:end_date, :start_date) + 1 AS HR,
+						DATEDIFF(:end_date, :start_date) + 1 AS hr,
 						d.nama AS hodxxmh_nama,
 						e.nama AS hetxxmh_nama,
 						CEIL(hk_in + hk_out) AS hk,
