@@ -142,7 +142,7 @@
 									sd: 'SD',
 									kk: 'KK',
 									al: 'AL',
-									IT: 'IT'
+									it: 'IT'
 								};
 
 								str += `<th rowspan="2">${labels[colObj.name] ?? colObj.name}</th>`;
