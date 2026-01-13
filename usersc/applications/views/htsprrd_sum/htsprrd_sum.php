@@ -116,7 +116,7 @@
 							const normalCols = [
 								'kode_finger','hemxxmh_data','hodxxmh_nama','hetxxmh_nama',
 								'hr','hari_kerja_efektif','hk','persen',
-								'hk_tok', 'late_1', 'st_off','st_nj','hl','ct','cb','sd','kk','al','ip'
+								'hk_tok', 'late_1', 'st_off','st_nj','hl','ct','cb','sd','kk','al','it'
 							];
 
 							if (normalCols.includes(colObj.name)) {
