@@ -116,7 +116,7 @@
 							const normalCols = [
 								'kode_finger','hemxxmh_data','hodxxmh_nama','hetxxmh_nama',
 								'hr','hari_kerja_efektif','hk','persen',
-								'st_off','st_nj','hl','ct','cb','sd','kk','al','ip'
+								'hk_tok', 'late_1', 'st_off','st_nj','hl','ct','cb','sd','kk','al','ip'
 							];
 
 							if (normalCols.includes(colObj.name)) {
@@ -133,6 +133,8 @@
 									persen: 'Persen Kerja Efektif',
 									hk: 'Hari Hadir',
 									st_off: 'OFF',
+									hk_tok: 'HK',
+									late_1: 'Late 1',
 									st_nj: 'NJ',
 									hl: 'HL',
 									ct: 'CT',
@@ -140,7 +142,7 @@
 									sd: 'SD',
 									kk: 'KK',
 									al: 'AL',
-									ip: 'IP'
+									IT: 'IT'
 								};
 
 								str += `<th rowspan="2">${labels[colObj.name] ?? colObj.name}</th>`;
