@@ -249,7 +249,7 @@
 			['data' => 'sd', 'name' => 'sd'],
 			['data' => 'kk', 'name' => 'kk'],
 			['data' => 'al', 'name' => 'al'],
-			['data' => 'ip', 'name' => 'ip'],
+			['data' => 'it', 'name' => 'it'],
 			// ['data' => 'absen_khusus', 'name' => 'absen_khusus'],
 			// ['data' => 'lain', 'name' => 'lain'],
 			
