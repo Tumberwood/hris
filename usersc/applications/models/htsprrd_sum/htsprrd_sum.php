@@ -42,9 +42,9 @@
 						prr.kode_finger,
 
 						/* HK */
-						-- SUM(
-						--     IF( (prr.status_presensi_in  = "HK" OR prr.status_presensi_in  = "TL 1") OR prr.status_presensi_out = "HK", 1, 0)
-						-- ) AS hk,
+						SUM(
+						    IF( (prr.status_presensi_in  = "HK" OR prr.status_presensi_in  = "TL 1") OR prr.status_presensi_out = "HK", 1, 0)
+						) AS hk,
 						SUM(
 							IF( prr.status_presensi_in  = "HK" OR (prr.status_presensi_out = "HK" AND prr.status_presensi_in <> "TL 1"), 1, 0)
 						) AS hk_tok,
@@ -52,9 +52,9 @@
 							IF( prr.status_presensi_in  = "TL 1", 1, 0)
 						) AS late_1,
 
-						SUM(
-							IF( prr.status_presensi_in  <> "OFF" AND prr.status_presensi_in  <> "NJ" , 1, 0)
-						) AS hk,
+						-- SUM(
+						-- 	IF( prr.status_presensi_in  <> "OFF" AND prr.status_presensi_in  <> "NJ" , 1, 0)
+						-- ) AS hk,
 
 						/* OFF & NJ (hanya dari IN sesuai logic awal) */
 						SUM(IF(prr.status_presensi_in = "OFF", 1, 0)) AS st_off,
