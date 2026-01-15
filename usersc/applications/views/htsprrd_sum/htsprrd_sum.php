@@ -114,7 +114,7 @@
 						const normalCols = [
 							'kode_finger','hemxxmh_data','hodxxmh_nama','hetxxmh_nama',
 							'hr','hari_kerja_efektif','hk','persen',
-							'hk_tok','late_1','st_off','st_nj','hl','ct','cb','sd','kk','al','it'
+							'hk_tok','late_1', 'TL','st_off','st_nj','hl','ct','cb','sd','kk','al','it'
 						];
 
 						const colsMeta = {
@@ -128,6 +128,7 @@
 							hk: { label: 'Hari Hadir', tooltip: 'HK + Late 1' },
 							hk_tok: { label: 'HK', tooltip: 'Hadir kerja normal' },
 							late_1: { label: 'Late 1', tooltip: 'Terlambat tidak kena potongan' },
+							TL: { label: 'TL', tooltip: 'Terlambat kena potongan' },
 							st_off: { label: 'OFF', tooltip: 'Hari libur / off' },
 							st_nj: { label: 'NJ', tooltip: 'Jadwal Belum Dibuat' },
 							hl: { label: 'HL', tooltip: 'Hari Libur Nasional' },

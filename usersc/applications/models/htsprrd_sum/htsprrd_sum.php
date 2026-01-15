@@ -45,12 +45,18 @@
 						SUM(
 						    IF( (prr.status_presensi_in  = "HK" OR prr.status_presensi_in  = "TL 1") OR prr.status_presensi_out = "HK", 1, 0)
 						) AS hk,
+
 						SUM(
-							IF( prr.status_presensi_in  = "HK" OR (prr.status_presensi_out = "HK" AND prr.status_presensi_in <> "TL 1"), 1, 0)
+							IF( prr.status_presensi_in  = "HK" OR (prr.status_presensi_out = "HK" AND prr.status_presensi_in NOT IN ("TL", "TL 1")), 1, 0)
 						) AS hk_tok,
+
 						SUM(
 							IF( prr.status_presensi_in  = "TL 1", 1, 0)
 						) AS late_1,
+
+						SUM(
+							IF( prr.status_presensi_in  = "TL", 1, 0)
+						) AS TL,
 
 						-- SUM(
 						-- 	IF( prr.status_presensi_in  <> "OFF" AND prr.status_presensi_in  <> "NJ" , 1, 0)
@@ -188,6 +194,7 @@
 					(p.hk / sc.hari_kerja_efektif * 100) AS persen,
 					p.hk_tok,
 					p.late_1,
+					p.TL,
 					p.st_off,
 					p.st_nj,
 					p.hl,
@@ -241,6 +248,7 @@
 			['data' => 'persen', 'name' => 'persen'],
 			['data' => 'hk_tok', 'name' => 'hk_tok'],
 			['data' => 'late_1', 'name' => 'late_1'],
+			['data' => 'TL', 'name' => 'TL'],
 			['data' => 'st_off', 'name' => 'st_off'],
 			['data' => 'st_nj', 'name' => 'st_nj'],
 			['data' => 'hl', 'name' => 'hl'],
