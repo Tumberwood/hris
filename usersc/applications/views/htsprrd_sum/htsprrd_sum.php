@@ -110,42 +110,49 @@
 						========================= */
 						str += '<tr>';
 
-						$.each(json.columns, function (k, colObj) {
+						// kolom normal (rowspan 2)
+						const normalCols = [
+							'kode_finger','hemxxmh_data','hodxxmh_nama','hetxxmh_nama',
+							'hr','hari_kerja_efektif','hk','persen',
+							'hk_tok','late_1','st_off','st_nj','hl','ct','cb','sd','kk','al','it'
+						];
 
-							// kolom normal (rowspan 2)
-							const normalCols = [
-								'kode_finger','hemxxmh_data','hodxxmh_nama','hetxxmh_nama',
-								'hr','hari_kerja_efektif','hk','persen',
-								'hk_tok', 'late_1', 'st_off','st_nj','hl','ct','cb','sd','kk','al','it'
-							];
+						const colsMeta = {
+							kode_finger: { label: 'Kode Finger', tooltip: 'Kode absensi karyawan' },
+							hemxxmh_data: { label: 'Karyawan', tooltip: 'Kode dan nama karyawan' },
+							hodxxmh_nama: { label: 'Department', tooltip: 'Departemen karyawan' },
+							hetxxmh_nama: { label: 'Jabatan', tooltip: 'Jabatan karyawan' },
+							hr: { label: 'Hari Kalender', tooltip: 'Jumlah hari kalender pada periode terpilih' },
+							hari_kerja_efektif: { label: 'Hari Kerja Efektif', tooltip: 'hari kerja efektif' },
+							persen: { label: 'Persen Kerja Efektif', tooltip: 'Persentase kehadiran' },
+							hk: { label: 'Hari Hadir', tooltip: 'Total hari kehadiran' },
+							hk_tok: { label: 'HK', tooltip: 'Hadir kerja normal' },
+							late_1: { label: 'Late 1', tooltip: 'Terlambat tidak kena potongan' },
+							st_off: { label: 'OFF', tooltip: 'Hari libur / off' },
+							st_nj: { label: 'NJ', tooltip: 'Jadwal Belum Dibuat' },
+							hl: { label: 'HL', tooltip: 'Hari Libur Nasional' },
+							ct: { label: 'CT', tooltip: 'Cuti Tahunan' },
+							cb: { label: 'CB', tooltip: 'Cuti Bersama' },
+							sd: { label: 'SD', tooltip: 'Sakit dengan surat dokter' },
+							kk: { label: 'KK', tooltip: 'Kecelakaan Kerja' },
+							al: { label: 'AL', tooltip: 'Alpa / tanpa izin' },
+							it: { label: 'IT', tooltip: 'Izin terlambat' }
+						};
+
+						$.each(json.columns, function (k, colObj) {
 
 							if (normalCols.includes(colObj.name)) {
 
-								let label = colObj.name;
-
-								const labels = {
-									kode_finger: 'Kode Finger',
-									hemxxmh_data: 'Karyawan',
-									hodxxmh_nama: 'Department',
-									hetxxmh_nama: 'Jabatan',
-									hr: 'Hari Kalender',
-									hari_kerja_efektif: 'Hari Kerja Efektif',
-									persen: 'Persen Kerja Efektif',
-									hk: 'Hari Hadir',
-									st_off: 'OFF',
-									hk_tok: 'HK',
-									late_1: 'Late 1',
-									st_nj: 'NJ',
-									hl: 'HL',
-									ct: 'CT',
-									cb: 'CB',
-									sd: 'SD',
-									kk: 'KK',
-									al: 'AL',
-									it: 'IT'
+								const meta = colsMeta[colObj.name] || {
+								label: colObj.name,
+								tooltip: null
 								};
 
-								str += `<th rowspan="2">${labels[colObj.name] ?? colObj.name}</th>`;
+								const tooltipAttr = meta.tooltip
+								? `data-toggle="tooltip" data-placement="top" title="${meta.tooltip}"`
+								: '';
+
+								str += `<th rowspan="2" ${tooltipAttr}>${meta.label}</th>`;
 							}
 
 							// GROUP HEADER
@@ -247,6 +254,7 @@
 		}
 
 		$(document).ready(function() {
+			$('[data-toggle="tooltip"]').tooltip();
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 			
