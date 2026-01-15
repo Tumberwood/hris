@@ -125,7 +125,7 @@
 							hr: { label: 'Hari Kalender', tooltip: 'Jumlah hari kalender pada periode terpilih' },
 							hari_kerja_efektif: { label: 'Hari Kerja Efektif', tooltip: 'hari kerja efektif' },
 							persen: { label: 'Persen Kerja Efektif', tooltip: 'Persentase kehadiran' },
-							hk: { label: 'Hari Hadir', tooltip: 'HK + Late 1' },
+							hk: { label: 'Hari Hadir', tooltip: 'HK + Late 1 + Late' },
 							hk_tok: { label: 'HK', tooltip: 'Hadir kerja normal' },
 							late_1: { label: 'Late 1', tooltip: 'Terlambat tidak kena potongan' },
 							TL: { label: 'TL', tooltip: 'Terlambat kena potongan' },
