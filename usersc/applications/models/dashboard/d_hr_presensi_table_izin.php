@@ -32,53 +32,62 @@
     ->bind(':izin', $izin)
     ->bind(':start_date', $start_date)
     ->bind(':end_date', $end_date)
-    ->exec(' WITH izin AS (
+    ->exec('SELECT
+                x.* ,
+                IFNULL(iz.nama, kondite) jenis 
+            FROM (
                 SELECT
-                    a.id id_report,
+                    a.id,
                     date_format(a.tanggal, "%d %b %Y") tanggal,
-                    a.st_clock_in,
-                    a.status_presensi_in,
-                    a.status_presensi_out,
-                    DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i") AS clock_in,
-                    DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i") AS clock_out,
-                    case
-                        when a.st_clock_in = "LATE" AND  a.status_presensi_in = "Belum Ada Izin" then CONCAT(a.st_clock_in, " - ", a.status_presensi_in)
-                        WHEN a.htlxxrh_kode LIKE "%[I/%" THEN TRIM(SUBSTRING_INDEX(a.htlxxrh_kode, "[I/", 1))
-                        when a.status_presensi_in <> "HK" then a.status_presensi_in
-                        when a.status_presensi_out <> "HK" then a.status_presensi_out
-                        ELSE ""
-                    END kondite,
-                    a.id_hemxxmh,
-                    a.htlxxrh_kode,
-                    dep.nama departemen
+                    a.htlxxrh_kode kode,
+                    b.nama,
+                    dep.nama AS departemen,
+                    CASE
+                        WHEN a.st_clock_in = "LATE"
+                            AND a.status_presensi_in = "Belum Ada Izin"
+                            THEN CONCAT(a.st_clock_in, " - ", a.status_presensi_in)
+
+                        WHEN a.htlxxrh_kode LIKE "%[I/%"
+                            THEN TRIM(SUBSTRING_INDEX(a.htlxxrh_kode, "[I/", 1))
+
+                        WHEN pin.kode IS NOT NULL
+                            THEN a.status_presensi_in
+
+                        WHEN pout.kode IS NOT NULL
+                            THEN a.status_presensi_out
+
+                        ELSE NULL
+                    END AS kondite,
+                
+                    DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i") AS jam_awal,
+                    DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i") AS jam_akhir,
+
+                    "" keterangan
+
                 FROM htsprrd a
-                LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
-            LEFT JOIN hodxxmh AS dep ON dep.id = job.id_hodxxmh
+                INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
+                LEFT JOIN hemjbmh job ON job.id_hemxxmh = a.id_hemxxmh
+                LEFT JOIN hodxxmh AS dep ON dep.id = job.id_hodxxmh
+                LEFT JOIN htpxxmh pin
+                    ON pin.kode = a.status_presensi_in
+
+                LEFT JOIN htpxxmh pout
+                    ON pout.kode = a.status_presensi_out
+
                 WHERE a.tanggal BETWEEN :start_date AND :end_date
                 AND (
-                    a.status_presensi_in IN ( SELECT kode FROM htpxxmh) 
-                    OR a.status_presensi_out IN ( SELECT kode FROM htpxxmh) 
-                    OR a.st_clock_in IN ("LATE")
+                        pin.kode IS NOT NULL
+                    OR pout.kode IS NOT NULL
+                    OR a.st_clock_in = "LATE"
                     OR a.htlxxrh_kode LIKE "%[I/%"
                 )
+                AND a.htlxxrh_kode NOT LIKE "%[KD%"
                 '.$where.'
-                HAVING kondite <> ""
-            )
-            SELECT
-                id_report id,
-                tanggal,
-                htlxxrh_kode kode,
-                h.nama,
-                departemen,
-                IFNULL(iz.nama, kondite) jenis,
-                clock_in jam_awal,
-                clock_out jam_akhir,
-                "" keterangan,
-                IFNULL(iz.id, -1) id_izin
-            FROM izin
-            LEFT JOIN htpxxmh iz ON iz.kode = izin.kondite
-            LEFT JOIN hemxxmh h ON h.id = izin.id_hemxxmh
+            ) x
+            LEFT JOIN htpxxmh iz
+                ON iz.kode = x.kondite
             HAVING departemen = :dept AND jenis = :izin
+                    
             '
             );
     $rs_hemxxmh = $qs_hemxxmh->fetchAll();

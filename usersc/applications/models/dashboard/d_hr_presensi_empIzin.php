@@ -28,40 +28,56 @@
     ->raw()
     ->bind(':start_date', $start_date)
     ->bind(':end_date', $end_date)
-    ->exec('WITH izin AS (
+    ->exec('SELECT
+                IF( kondite = "PA", -2,
+                    IFNULL(iz.id, -1)
+                ) AS id_izin, 
+                IFNULL(iz.nama, x.kondite) AS hemxxmh_izin,
+                COUNT(*) AS c_izin
+            FROM (
                 SELECT
-                    a.st_clock_in,
-                    a.status_presensi_in,
-                    a.status_presensi_out,
-                    case
-                        when a.st_clock_in = "LATE" AND  a.status_presensi_in = "Belum Ada Izin" then CONCAT(a.st_clock_in, " - ", a.status_presensi_in)
-                        WHEN a.htlxxrh_kode LIKE "%[I/%" THEN TRIM(SUBSTRING_INDEX(a.htlxxrh_kode, "[I/", 1))
-                        when a.status_presensi_in <> "HK" then a.status_presensi_in
-                        when a.status_presensi_out <> "HK" then a.status_presensi_out
-                        ELSE ""
-                    END kondite,
-                    a.tanggal,
                     a.id_hemxxmh,
-                    a.htlxxrh_kode
+                    a.tanggal,
+
+                    CASE
+                        WHEN a.st_clock_in = "LATE"
+                            AND a.status_presensi_in = "Belum Ada Izin"
+                            THEN CONCAT(a.st_clock_in, " - ", a.status_presensi_in)
+
+                        WHEN a.htlxxrh_kode LIKE "%[I/%"
+                            THEN TRIM(SUBSTRING_INDEX(a.htlxxrh_kode, "[I/", 1))
+
+                        WHEN pin.kode IS NOT NULL
+                            THEN a.status_presensi_in
+
+                        WHEN pout.kode IS NOT NULL
+                            THEN a.status_presensi_out
+
+                        ELSE NULL
+                    END AS kondite
+
                 FROM htsprrd a
-                LEFT JOIN hemjbmh job on job.id_hemxxmh = a.id_hemxxmh
+	            LEFT JOIN hemjbmh job ON job.id_hemxxmh = a.id_hemxxmh
+                LEFT JOIN htpxxmh pin
+                    ON pin.kode = a.status_presensi_in
+
+                LEFT JOIN htpxxmh pout
+                    ON pout.kode = a.status_presensi_out
+
                 WHERE a.tanggal BETWEEN :start_date AND :end_date
                 AND (
-                    a.status_presensi_in IN ( SELECT kode FROM htpxxmh) 
-                    OR a.status_presensi_out IN ( SELECT kode FROM htpxxmh) 
-                    OR a.st_clock_in IN ("LATE")
+                        pin.kode IS NOT NULL
+                    OR pout.kode IS NOT NULL
+                    OR a.st_clock_in = "LATE"
                     OR a.htlxxrh_kode LIKE "%[I/%"
                 )
+                AND a.htlxxrh_kode NOT LIKE "%[KD%"
                 '.$where.'
-                HAVING kondite <> ""
-            )
-            SELECT
-                IFNULL(iz.id, -1) id_izin,
-                IFNULL(iz.nama, kondite) hemxxmh_izin,
-                COUNT(kondite) c_izin
-            FROM izin
-            LEFT JOIN htpxxmh iz ON iz.kode = izin.kondite
-            GROUP BY kondite
+            ) x
+            LEFT JOIN htpxxmh iz
+                ON iz.kode = x.kondite
+            WHERE x.kondite IS NOT NULL
+            GROUP BY x.kondite, iz.id, iz.nama
             ORDER BY id_izin
             '
             );
@@ -98,43 +114,60 @@
         ->bind(':izin', $izin)
         ->bind(':start_date', $start_date)
         ->bind(':end_date', $end_date)
-        ->exec('WITH izin AS (
+        ->exec('SELECT
+                    IF( kondite = "PA", -2,
+                        IFNULL(iz.id, -1)
+                    ) AS id_izin, 
+                    IFNULL(iz.nama, x.kondite) AS hemxxmh_izin,
+                    department,
+                    COUNT(*) AS c_izin
+                FROM (
                     SELECT
-                        a.st_clock_in,
-                        a.status_presensi_in,
-                        a.status_presensi_out,
-                        case
-                            when a.st_clock_in = "LATE" AND  a.status_presensi_in = "Belum Ada Izin" then CONCAT(a.st_clock_in, " - ", a.status_presensi_in)
-                            WHEN a.htlxxrh_kode LIKE "%[I/%" THEN TRIM(SUBSTRING_INDEX(a.htlxxrh_kode, "[I/", 1))
-                            when a.status_presensi_in <> "HK" then a.status_presensi_in
-                            when a.status_presensi_out <> "HK" then a.status_presensi_out
-                            ELSE ""
-                        END kondite,
-                        a.tanggal,
                         a.id_hemxxmh,
-                        a.htlxxrh_kode,
-                        dep.nama department
+                        a.tanggal,
+                        dep.nama AS department,
+
+                        CASE
+                            WHEN a.st_clock_in = "LATE"
+                                AND a.status_presensi_in = "Belum Ada Izin"
+                                THEN CONCAT(a.st_clock_in, " - ", a.status_presensi_in)
+
+                            WHEN a.htlxxrh_kode LIKE "%[I/%"
+                                THEN TRIM(SUBSTRING_INDEX(a.htlxxrh_kode, "[I/", 1))
+
+                            WHEN pin.kode IS NOT NULL
+                                THEN a.status_presensi_in
+
+                            WHEN pout.kode IS NOT NULL
+                                THEN a.status_presensi_out
+
+                            ELSE NULL
+                        END AS kondite
+
                     FROM htsprrd a
-                    LEFT JOIN hemjbmh AS job ON job.id_hemxxmh = a.id_hemxxmh
-                LEFT JOIN hodxxmh AS dep ON dep.id = job.id_hodxxmh
+                    INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
+                    LEFT JOIN hemjbmh job ON job.id_hemxxmh = b.id
+                    LEFT JOIN hodxxmh AS dep ON dep.id = job.id_hodxxmh
+                    LEFT JOIN htpxxmh pin
+                        ON pin.kode = a.status_presensi_in
+
+                    LEFT JOIN htpxxmh pout
+                        ON pout.kode = a.status_presensi_out
+
                     WHERE a.tanggal BETWEEN :start_date AND :end_date
                     AND (
-                        a.status_presensi_in IN ( SELECT kode FROM htpxxmh) 
-                        OR a.status_presensi_out IN ( SELECT kode FROM htpxxmh) 
-                        OR a.st_clock_in IN ("LATE")
+                            pin.kode IS NOT NULL
+                        OR pout.kode IS NOT NULL
+                        OR a.st_clock_in = "LATE"
                         OR a.htlxxrh_kode LIKE "%[I/%"
                     )
+                    AND a.htlxxrh_kode NOT LIKE "%[KD%"
                     '.$where.'
-                    HAVING kondite <> ""
-                )
-                SELECT
-                    IFNULL(iz.id, -1) id_izin,
-                    department,
-                    IFNULL(iz.nama, kondite) hemxxmh_izin,
-                    COUNT(kondite) c_izin
-                FROM izin
-                LEFT JOIN htpxxmh iz ON iz.kode = izin.kondite
-                GROUP BY department, hemxxmh_izin
+                ) x
+                LEFT JOIN htpxxmh iz
+                    ON iz.kode = x.kondite
+                WHERE x.kondite IS NOT NULL
+                GROUP BY department, x.kondite
                 HAVING id_izin = :izin
                 ORDER BY department
                 '
