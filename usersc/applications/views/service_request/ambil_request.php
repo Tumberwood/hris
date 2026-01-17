@@ -212,7 +212,7 @@
 						text: 'Ambil Request',
 						name: 'btnAmbil',
 						className: 'btn btn-outline',
-						titleAttr: 'Outstanding Approval',
+						titleAttr: 'klik ambil request untuk mengerjakan',
 						action: function (e, dt, node, config) {
 							e.preventDefault();
 

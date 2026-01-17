@@ -208,24 +208,25 @@
 					{ data: "service_request.rencanapengerjaan" },
 					{ data: "service_request.estimasiwaktu" },
 					{ data: "service_request.waktuselesai" },
-					{
-						data: "service_request.rateservice",
-						render: function (data, type, row) {
-						if (!data) return ''; // kalau belum ada rating
+					// {
+					// 	data: "service_request.rateservice",
+					// 	render: function (data, type, row) {
+					// 	if (!data) return ''; // kalau belum ada rating
 
-						// Tampilkan bintang sesuai nilai (misal data = 3 -> ★★★)
-						let stars = '';
-						for (let i = 0; i < data; i++) {
-							stars += '<i class="fa fa-star" style="color:#FFD700;"></i>'; // bintang emas
-						}
-						// Tambahkan bintang kosong (5 - data)
-						for (let i = data; i < 5; i++) {
-							stars += '<i class="fa fa-star" style="color:#ccc;"></i>'; // abu untuk kosong
-						}
+					// 	// Tampilkan bintang sesuai nilai (misal data = 3 -> ★★★)
+					// 	let stars = '';
+					// 	for (let i = 0; i < data; i++) {
+					// 		stars += '<i class="fa fa-star" style="color:#FFD700;"></i>'; // bintang emas
+					// 	}
+					// 	// Tambahkan bintang kosong (5 - data)
+					// 	for (let i = data; i < 5; i++) {
+					// 		stars += '<i class="fa fa-star" style="color:#ccc;"></i>'; // abu untuk kosong
+					// 	}
 
-						return stars;
-						}
-					},
+					// 	return stars;
+					// 	}
+					// },
+					{ data: "service_request.rateservice" },
 				],
 				buttons: [
 					// BEGIN breaking generate button
