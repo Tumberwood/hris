@@ -104,7 +104,6 @@
 						
 						-- SHIFT 2 ADA LEMBUR TI
 						when ot.is_istirahat = 2 AND (a.st_jadwal LIKE "%SIANG%" OR a.st_jadwal LIKE "%SORE%") AND  
-							jad.jam_awal_istirahat <> "00:00:00" AND
 						(
 							a.break_in NOT BETWEEN DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 1 HOUR) AND jad.tanggaljam_akhir_istirahat
 							OR
