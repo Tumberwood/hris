@@ -42,7 +42,7 @@
 	$nama_field_value = explode (",", $_POST['nama_field_value']);
 	$c_where = count($nama_field_value);
 
-	$where = ' WHERE id <> ' . $id_transaksi;
+	$where = ' WHERE is_active = 1 AND id <> ' . $id_transaksi;
 	for ($x = 0; $x < $c_where; $x++) {
 		$where = $where . ' AND ' . $nama_field[$x] . '=' . $nama_field_value[$x];
 	}
