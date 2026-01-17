@@ -95,7 +95,6 @@
 
 <body class="gray-bg">
     <div class="middle-box text-center loginscreen animated fadeInDown">
-		<h3>Welcome to </h3>
     <?php 
       if($rs_ggsxxsh->posisi_logo_login == 1){
     ?>
@@ -111,6 +110,7 @@
           </div>
         </div>
 
+		<h3>Welcome to </h3>
 		<h3><?=$settings->site_name?></h3>
 		
 		<div class="row">
