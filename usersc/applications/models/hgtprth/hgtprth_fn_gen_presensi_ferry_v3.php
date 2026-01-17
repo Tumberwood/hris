@@ -651,7 +651,7 @@
                                     WHERE jadwal.is_active = 1
                                     AND jadwal.tanggal = :tanggal
                                     AND (
-                                        (jb.tanggal_keluar IS NULL OR jb.tanggal_keluar >= :tanggal) AND jb.id_heyxxmh = :id_heyxxmh AND tanggal_masuk <= :tanggal
+                                        (jb.tanggal_keluar IS NULL OR jb.tanggal_keluar >= :tanggal) AND jb.id_heyxxmh = :id_heyxxmh AND tanggal_masuk <= :tanggal AND is_checkclock = 1
                                     )
                                     GROUP BY jadwal.id
                                     ORDER BY jadwal.id
@@ -950,7 +950,7 @@
                                     AND a.is_approve = 1
                             ) AS tukar_jadwal_kmj ON (id_hemxxmh_pengaju = a.id OR id_hemxxmh_pengganti = a.id)
 
-                            WHERE tanggal_masuk <= :tanggal AND (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= :tanggal) AND id_heyxxmh = :id_heyxxmh 
+                            WHERE tanggal_masuk <= :tanggal AND (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= :tanggal) AND id_heyxxmh = :id_heyxxmh AND is_checkclock = 1
 
                         ),
                         status_presensi AS (
