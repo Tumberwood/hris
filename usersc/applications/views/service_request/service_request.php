@@ -231,7 +231,7 @@
 							return stars;
 						}
 					},
-					{ data: "service_request.rateservice" },
+					// { data: "service_request.rateservice" },
 				],
 				buttons: [
 					// BEGIN breaking generate button
