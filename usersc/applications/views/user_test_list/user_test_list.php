@@ -83,20 +83,20 @@
 						def: 1
 					},	
 					{
-						label: "Menu <sup class='text-danger'>*<sup>",
+						label: "Menu",
 						name: "user_test_list.menu"
 					},
 					{
-						label: "Catatan User <sup class='text-danger'>*<sup>",
+						label: "Catatan User",
 						name: "user_test_list.catatan_user",
 						type: "quill"
 					},
 					{
-						label: "User <sup class='text-danger'>*<sup>",
+						label: "User",
 						name: "user_test_list.username"
 					},
 					{
-						label: "Tanggal User Tes  <sup class='text-danger'>*<sup>",
+						label: "Tanggal User Tes ",
 						name: "user_test_list.tanggal_user_tes",
 						type: "datetime",
 						def: function () { 
@@ -142,26 +142,6 @@
             edtuser_test_list.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 				
-					menu = edtuser_test_list.field('user_test_list.menu').val();
-					if(!menu || menu == ''){
-						edtuser_test_list.field('user_test_list.menu').error( 'Wajib diisi!' );
-					}
-				
-					username = edtuser_test_list.field('user_test_list.username').val();
-					if(!username || username == ''){
-						edtuser_test_list.field('user_test_list.username').error( 'Wajib diisi!' );
-					}
-				
-					catatan_user = edtuser_test_list.field('user_test_list.catatan_user').val();
-					if(!catatan_user || catatan_user == '' || catatan_user == '<p><br></p>'){
-						edtuser_test_list.field('user_test_list.catatan_user').error( 'Wajib diisi!' );
-					}
-				
-					tanggal_user_tes = edtuser_test_list.field('user_test_list.tanggal_user_tes').val();
-					if(!tanggal_user_tes || tanggal_user_tes == ''){
-						edtuser_test_list.field('user_test_list.tanggal_user_tes').error( 'Wajib diisi!' );
-					}
-					
 				}
 				
 				if ( edtuser_test_list.inError() ) {
