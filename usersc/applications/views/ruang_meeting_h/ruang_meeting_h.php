@@ -73,7 +73,7 @@
 	<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
 			<div class="ibox-title">
-				<h5>Detail</h5>
+				<h5>Peserta</h5>
 			</div>
 			<div class="ibox-content">
 				<div class="table-responsive">
@@ -82,8 +82,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>id_ruang_meeting_h</th>
-                                <th>NRP</th>
-                                <th>Nama</th>
+                                <th>Peserta</th>
+                                <th>Keterangan</th>
                             </tr>
                         </thead>
                     </table>
@@ -481,42 +481,51 @@
                         type: "hidden",
 						def: 1
 					},	
+					// {
+					// 	label: "Pegawai",
+					// 	name: "ruang_meeting_d.id_hemxxmh",
+					// 	type: "select2",
+					// 	opts: {
+					// 		placeholder : "Select",
+					// 		allowClear: true,
+					// 		multiple: false,
+					// 		ajax: {
+					// 			url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+					// 			dataType: 'json',
+					// 			data: function (params) {
+					// 				var query = {
+					// 					id_hemxxmh_old: id_hemxxmh_old,
+					// 					search: params.term || '',
+					// 					page: params.page || 1
+					// 				}
+					// 				return query;
+					// 			},
+					// 			processResults: function (data, params) {
+					// 				return {
+					// 					results: data.results,
+					// 					pagination: {
+					// 						more: true
+					// 					}
+					// 				};
+					// 			},
+					// 			cache: true,
+					// 			minimumInputLength: 1,
+					// 			maximum: 10,
+					// 			delay: 500,
+					// 			maximumSelectionLength: 5,
+					// 			minimumResultsForSearch: -1
+					// 		}
+					// 	}
+					// },
 					{
-						label: "Pegawai",
-						name: "ruang_meeting_d.id_hemxxmh",
-						type: "select2",
-						opts: {
-							placeholder : "Select",
-							allowClear: true,
-							multiple: false,
-							ajax: {
-								url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
-								dataType: 'json',
-								data: function (params) {
-									var query = {
-										id_hemxxmh_old: id_hemxxmh_old,
-										search: params.term || '',
-										page: params.page || 1
-									}
-									return query;
-								},
-								processResults: function (data, params) {
-									return {
-										results: data.results,
-										pagination: {
-											more: true
-										}
-									};
-								},
-								cache: true,
-								minimumInputLength: 1,
-								maximum: 10,
-								delay: 500,
-								maximumSelectionLength: 5,
-								minimumResultsForSearch: -1
-							}
-						}
-					},
+						label: "Peserta",
+						name: "ruang_meeting_d.nama",
+					},	
+					{
+						label: "Keterangan",
+						name: "ruang_meeting_d.keterangan",
+                        type: "textarea",
+					},	
 				]
 			} );
 			
@@ -570,8 +579,8 @@
 				columns: [
 					{ data: "ruang_meeting_d.id",visible:false },
 					{ data: "ruang_meeting_d.id_ruang_meeting_h",visible:false },
-					{ data: "hemxxmh.kode" },
-					{ data: "hemxxmh.nama" },
+					{ data: "ruang_meeting_d.nama" },
+					{ data: "ruang_meeting_d.keterangan" },
 				],
 				buttons: [
 					// BEGIN breaking generate button
