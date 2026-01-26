@@ -22,6 +22,8 @@
 		->debug(true)
 		->fields(
 			Field::inst( 'harxxth.id' ),
+			Field::inst( 'harxxth.id_harxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'harxxth.id_hemxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'harxxth.id_hovxxmh_awal' )
@@ -85,9 +87,12 @@
 					'from' => 'd M Y',
 					'to' =>   'Y-m-d'
 				) ),
-			Field::inst( 'CONCAT(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' )
+			Field::inst( 'CONCAT(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' ),
+			Field::inst( 'harxxmh.nama' ),
 		)
-		->leftJoin( 'hemxxmh','hemxxmh.id','=','harxxth.id_hemxxmh' );
+		->leftJoin( 'harxxmh','harxxmh.id','=','harxxth.id_harxxmh' )
+		->leftJoin( 'hemxxmh','hemxxmh.id','=','harxxth.id_hemxxmh' )
+		;
 	
 	// do not erase
 	// function show / hide inactive document

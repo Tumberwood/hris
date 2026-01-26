@@ -30,6 +30,11 @@
 							</div>
 							<div class="row">
 								<div class="col-lg-6">
+									<editor-field name="harxxth.id_harxxmh"></editor-field>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6">
 									<editor-field name="hovxxmh_awal_nama"></editor-field>
 								</div>
 								<div class="col-lg-6">
@@ -90,6 +95,7 @@
                                 <th>ID</th>
                                 <th>Kode</th>
                                 <th>Nama</th>
+                                <th>Jenis Rotasi</th>
                                 <th>Tanggal Efektif</th>
                                 <th>Keterangan</th>
                                 <th>Approval</th>
@@ -119,7 +125,7 @@
 		var id_hemxxmh_old = 0, id_hovxxmh_awal_old = 0, id_hovxxmh_akhir_old = 0, id_hodxxmh_awal_old = 0, id_hodxxmh_akhir_old = 0, id_hosxxmh_awal_old = 0, id_hosxxmh_akhir_old = 0, id_hevxxmh_awal_old = 0, id_hevxxmh_akhir_old = 0, id_hetxxmh_awal_old = 0, id_hetxxmh_akhir_old = 0;
 		var id_holxxmd_2_awal_old = 0, id_holxxmd_2_akhir_old = 0;
 		
-		var is_need_approval = 1;
+		var is_need_approval = 1, id_harxxmh_old = 0;
 
 		$(document).ready(function() {
 			//start datatables editor
@@ -504,6 +510,42 @@
 					},
 
 					{
+						label: "Jenis Rotasi <sup class='text-danger'>*<sup>",
+						name: "harxxth.id_harxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/harxmh/harxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_harxmh_old: id_harxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
 						label: "Keterangan",
 						name: "harxxth.keterangan",
 						type: "textarea"
@@ -553,6 +595,11 @@
 						}
 					}
 					// END of validasi harxxth.tanggal_efektif
+					
+					id_harxxmh = edtharxxth.field('harxxth.id_harxxmh').val();
+					if(!id_harxxmh || id_harxxmh == ''){
+						edtharxxth.field('harxxth.id_harxxmh').error( 'Wajib diisi!' );
+					}
 				}
 				
 				if ( edtharxxth.inError() ) {
@@ -587,6 +634,7 @@
 					{ data: "harxxth.id",visible:false },
 					{ data: "harxxth.kode" },
 					{ data: "hemxxmh_data" },
+					{ data: "id_harxxmh.nama" },
 					{ data: "harxxth.tanggal_efektif" },
 					{ data: "harxxth.keterangan" },
 					{ 

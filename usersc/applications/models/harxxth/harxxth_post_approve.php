@@ -40,6 +40,7 @@
 			->bind(':id', $id)
 			->exec('INSERT INTO hemjbrd(
 						id_hemxxmh,
+						id_harxxmh,
 						id_hovxxmh_akhir,
 						id_hodxxmh_akhir,
 						id_hosxxmh_akhir,
@@ -60,6 +61,7 @@
 					)
 					SELECT
 						b.id_hemxxmh,
+						b.id_harxxmh,
 						b.id_hovxxmh_akhir,
 						b.id_hodxxmh_akhir,
 						b.id_hosxxmh_akhir,
