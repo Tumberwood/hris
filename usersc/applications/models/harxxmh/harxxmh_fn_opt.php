@@ -54,6 +54,7 @@
         ])
         ->where('is_active',1)
         ->where('id', $id_harxxmh_old, '<>' )
+        ->where('id_harxxmh', '(6,7,8)', 'IN', false )
         ->where( function ( $r ) {
             $q = $_GET['search'];
             $r
