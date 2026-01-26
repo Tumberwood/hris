@@ -595,7 +595,7 @@
 						}
 					}
 					// END of validasi harxxth.tanggal_efektif
-					
+
 					id_harxxmh = edtharxxth.field('harxxth.id_harxxmh').val();
 					if(!id_harxxmh || id_harxxmh == ''){
 						edtharxxth.field('harxxth.id_harxxmh').error( 'Wajib diisi!' );
@@ -634,7 +634,7 @@
 					{ data: "harxxth.id",visible:false },
 					{ data: "harxxth.kode" },
 					{ data: "hemxxmh_data" },
-					{ data: "id_harxxmh.nama" },
+					{ data: "harxxmh.nama" },
 					{ data: "harxxth.tanggal_efektif" },
 					{ data: "harxxth.keterangan" },
 					{ 
