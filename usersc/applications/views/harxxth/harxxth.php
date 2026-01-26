@@ -511,18 +511,18 @@
 
 					{
 						label: "Jenis Rotasi <sup class='text-danger'>*<sup>",
-						name: "harxxth.id_harxmh",
+						name: "harxxth.id_harxxmh",
 						type: "select2",
 						opts: {
 							placeholder : "Select",
 							allowClear: true,
 							multiple: false,
 							ajax: {
-								url: "../../models/harxmh/harxmh_fn_opt.php",
+								url: "../../models/harxxmh/harxxmh_fn_opt.php",
 								dataType: 'json',
 								data: function (params) {
 									var query = {
-										id_harxmh_old: id_harxmh_old,
+										id_harxxmh_old: id_harxxmh_old,
 										search: params.term || '',
 										page: params.page || 1
 									}
