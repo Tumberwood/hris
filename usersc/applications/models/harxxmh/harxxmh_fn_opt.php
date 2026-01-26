@@ -1,9 +1,9 @@
 <?php 
     /**
      * Digunakan untuk populate options data currency / mata uang
-     * Table terkait    : harxmh
+     * Table terkait    : harxxmh
      * Parameter        : 
-     *  - id_harxmh_old       : data existing (untuk keperluan edit), dipakai di query self
+     *  - id_harxxmh_old       : data existing (untuk keperluan edit), dipakai di query self
      */
     require_once( "../../../../users/init.php" );
 	require_once( "../../../../usersc/lib/DataTables.php" );
@@ -22,38 +22,38 @@
     $offset      = ($page - 1) * $resultCount;
     // END select2 pagination preparation
 
-    if($_GET['id_harxmh_old'] > 0){
-        $id_harxmh_old = $_GET['id_harxmh_old'];
+    if($_GET['id_harxxmh_old'] > 0){
+        $id_harxxmh_old = $_GET['id_harxxmh_old'];
     }else{
-        $id_harxmh_old = 0;
+        $id_harxxmh_old = 0;
     }
     
     // BEGIN query self.
     // Hanya dipanggil jika field ada nilai id nya
-    if($id_harxmh_old > 0){
-        $qs_harxmh_self = $db
-            ->query('select', 'harxmh')
+    if($id_harxxmh_old > 0){
+        $qs_harxxmh_self = $db
+            ->query('select', 'harxxmh')
             ->get([
                 'id as id',
                 'nama as text'
             ])
-            ->where('id', $id_harxmh_old )
+            ->where('id', $id_harxxmh_old )
             ->exec();
-        $rs_harxmh_self = $qs_harxmh_self->fetchAll();
+        $rs_harxxmh_self = $qs_harxxmh_self->fetchAll();
     }else{
-        $rs_harxmh_self = [];
+        $rs_harxxmh_self = [];
     }
     // END query self
 
     // BEGIN query options all except self
-    $qs_harxmh_all = $db
-        ->query('select', 'harxmh')
+    $qs_harxxmh_all = $db
+        ->query('select', 'harxxmh')
         ->get([
             'id as id',
             'nama as text'
         ])
         ->where('is_active',1)
-        ->where('id', $id_harxmh_old, '<>' )
+        ->where('id', $id_harxxmh_old, '<>' )
         ->where( function ( $r ) {
             $q = $_GET['search'];
             $r
@@ -63,14 +63,14 @@
         ->limit($resultCount)
         ->offset($offset)
         ->exec();
-    $rs_harxmh_all = $qs_harxmh_all->fetchAll();
+    $rs_harxxmh_all = $qs_harxxmh_all->fetchAll();
     // END query options all except self
 
     // BEGIN menggabungkan options
-    if(count($rs_harxmh_self) > 0){
-        $rs_opt = array_merge($rs_harxmh_self, $rs_harxmh_all);
+    if(count($rs_harxxmh_self) > 0){
+        $rs_opt = array_merge($rs_harxxmh_self, $rs_harxxmh_all);
     }else{
-        $rs_opt = $rs_harxmh_all;
+        $rs_opt = $rs_harxxmh_all;
     }
     $c_rs_opt = count($rs_opt);
     // END menggabungkan options
