@@ -692,6 +692,7 @@
 				is_active      = harxxth_data.is_active;
 
 				id_hemxxmh_old = harxxth_data.id_hemxxmh;
+				id_harxxmh_old = harxxth_data.id_harxxmh;
 				
 				id_hovxxmh_awal_old = harxxth_data.id_hovxxmh_awal;
 				id_hovxxmh_akhir_old = harxxth_data.id_hovxxmh_akhir;
@@ -718,6 +719,7 @@
 			tblharxxth.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
 				id_harxxth = 0;
+				id_harxxmh_old = 0;
 				id_holxxmd_2_awal_old = 0, id_holxxmd_2_akhir_old = 0;
 				id_hemxxmh_old = 0, id_hovxxmh_awal_old = 0, id_hovxxmh_akhir_old = 0, id_hodxxmh_awal_old = 0, id_hodxxmh_akhir_old = 0, id_hosxxmh_awal_old = 0, id_hosxxmh_akhir_old = 0, id_hevxxmh_awal_old = 0, id_hevxxmh_akhir_old = 0, id_hetxxmh_awal_old = 0, id_hetxxmh_akhir_old = 0;
 
