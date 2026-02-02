@@ -1413,29 +1413,31 @@
             ->raw()
             ->bind(':tanggal', $tanggal)
             ->bind(':id_hemxxmh', $id_hemxxmh)
-            ->exec(' UPDATE htsprrd AS a
-                    INNER JOIN hemxxmh AS h ON h.id = a.id_hemxxmh
-                    INNER JOIN hemjbmh AS b ON b.id_hemxxmh = a.id_hemxxmh
-                    LEFT JOIN (
-                        SELECT
-                            count(ho.id) AS is_holiday,
-                            tanggal
-                        FROM hthhdth AS ho
-                        WHERE ho.tanggal = :tanggal
-                    ) AS holiday ON holiday.tanggal = a.tanggal
-                    LEFT JOIN (
-                        SELECT
-                            count(cu.id) AS is_cuti,
-                            tanggal
-                        FROM htlgnth AS cu
-                        WHERE cu.tanggal = :tanggal
-                    ) AS cuti ON cuti.tanggal = a.tanggal
-                    
+            ->exec('UPDATE htsprrd a
+                    JOIN hemjbmh b ON b.id_hemxxmh = a.id_hemxxmh
                     SET 
                         a.cek = 0,
                         a.status_presensi_in = "OFF",
                         a.status_presensi_out = "OFF"
-                    WHERE a.id_hemxxmh = :id_hemxxmh AND a.tanggal = :tanggal AND b.id_hetxxmh IN (99, 48) AND b.id_heyxxmd <> 4 AND a.status_presensi_in = "AL" AND (is_holiday IS NOT NULL OR is_cuti IS NOT null)
+                    WHERE a.id_hemxxmh = :id_hemxxmh 
+                    AND a.tanggal = :tanggal
+                    AND a.status_presensi_in = "AL"
+                    AND b.id_hetxxmh IN (99, 48)
+                    AND b.id_heyxxmd <> 4
+                    AND (
+                        EXISTS (
+                            SELECT 1 
+                            FROM hthhdth ho
+                            WHERE ho.tanggal = :tanggal
+                            LIMIT 1
+                        )
+                        OR EXISTS (
+                            SELECT 1 
+                            FROM htlgnth cu
+                            WHERE cu.tanggal = :tanggal
+                            LIMIT 1
+                        )
+                    );
                     '
         );
 
