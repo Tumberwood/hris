@@ -1389,7 +1389,8 @@
                             total_pot_jam AS pot_jam_final,
                             is_makan,
 
-                            is_pot_premi,IF(is_pot_upah > 0 AND pot_hk_jadwal = 1 AND durasi_lembur_final > 0, 0, is_pot_upah) AS is_pot_upah,
+                            is_pot_premi,
+                            IF(is_pot_upah > 0 AND pot_hk_jadwal = 1 AND durasi_lembur_final > 0, 0, is_pot_upah) AS is_pot_upah,
                             if(kode_shift = "NJ", 1, cek) AS cek,
                             
                             lembur15,
