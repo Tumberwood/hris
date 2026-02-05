@@ -386,6 +386,7 @@
                                 break_out,
                                 tanggaljam_awal_toleransi_lembur,
                                 jam_awal_lembur,
+                                pot_hk_jadwal,
                                 jam_akhir_schedule
 
 
@@ -451,6 +452,7 @@
                             LEFT JOIN (
                                 SELECT
                                     jad.*,
+                                    jad.is_pot_hk as pot_hk_jadwal,
                                     sft.kode AS kode_shift,
                                     sft.keterangan AS ket_jadwal,
                                     DATE_FORMAT(jad.tanggaljam_akhir, "%H:%i") jam_akhir_schedule,
@@ -1106,6 +1108,7 @@
                                 
                                 -- POTONG UPAH
                                 CASE
+                                    WHEN pot_hk_jadwal = 1 THEN 1
                                     WHEN is_pot_upah_absen = 1 THEN 1
                                     WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND id_htsxxmh <> 1 AND ceklok_luar IS NULL THEN 1
                                     ELSE 0
@@ -1386,8 +1389,7 @@
                             total_pot_jam AS pot_jam_final,
                             is_makan,
 
-                            is_pot_premi,
-                            is_pot_upah,
+                            is_pot_premi,IF(is_pot_upah > 0 AND pot_hk_jadwal = 1 AND durasi_lembur_final > 0, 0, is_pot_upah) AS is_pot_upah,
                             if(kode_shift = "NJ", 1, cek) AS cek,
                             
                             lembur15,
@@ -1481,46 +1483,6 @@
         //Jika ada kedua ceklok maka, akan cek tidak akan dirubah atau sesuai dengan cek asli dari generate presensi.
         
         //UPDATE QUERY 31 JAN 2025
-        $qu_pot_upah = $db
-            ->raw()
-            ->bind(':tanggal', $tanggal)
-            ->exec('UPDATE htsprrd AS a
-                    INNER JOIN htssctd AS b ON b.id_hemxxmh = a.id_hemxxmh AND b.tanggal = a.tanggal
-                    SET
-                    a.cek =
-                        CASE
-                            WHEN a.clock_in IS NULL AND a.clock_out IS NULL THEN 0
-                            WHEN a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL THEN a.cek
-                            ELSE 1
-                        END,
-
-                    a.htlxxrh_kode =
-                        CASE
-                            WHEN a.durasi_lembur_final > 0 THEN "Lembur di hari Cuti Bersama"
-                            WHEN a.clock_in IS NULL AND a.clock_out IS NULL THEN "Cuti Bersama - Potong Upah"
-                            WHEN a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL THEN a.htlxxrh_kode
-                            ELSE "Cuti Bersama - Potong Upah"
-                        END,
-
-                    a.is_pot_upah =
-                        CASE
-                            WHEN a.durasi_lembur_final > 0 THEN 0
-                            WHEN a.clock_in IS NULL AND a.clock_out IS NULL THEN 1
-                            WHEN a.clock_in IS NOT NULL AND a.clock_out IS NOT NULL THEN a.cek
-                            ELSE 1
-                        END
-                    WHERE 
-                        a.id_hemxxmh IN '.$id_hemxxmh.'
-                        AND a.tanggal = :tanggal
-                        AND b.is_active = 1 
-                        AND b.is_pot_hk = 1
-                        AND (
-                            a.clock_in IS NULL
-                            OR a.clock_out IS NULL
-                            OR a.durasi_lembur_final > 0
-                        );
-            '
-        );
         
         // di commit per karyawan
         $qu_hgtprth = $db

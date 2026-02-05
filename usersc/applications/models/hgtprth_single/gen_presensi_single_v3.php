@@ -350,6 +350,7 @@
                             break_out,
                             tanggaljam_awal_toleransi_lembur,
                             jam_awal_lembur,
+                            pot_hk_jadwal,
                             jam_akhir_schedule
 
 
@@ -415,6 +416,7 @@
                         LEFT JOIN (
                             SELECT
                                 jad.*,
+                                jad.is_pot_hk as pot_hk_jadwal,
                                 sft.kode AS kode_shift,
                                 sft.keterangan AS ket_jadwal,
                                 DATE_FORMAT(jad.tanggaljam_akhir, "%H:%i") jam_akhir_schedule,
@@ -1070,6 +1072,7 @@
                             
                             -- POTONG UPAH
                             CASE
+                                WHEN pot_hk_jadwal = 1 THEN 1
                                 WHEN is_pot_upah_absen = 1 THEN 1
                                 WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND id_htsxxmh <> 1 AND ceklok_luar IS NULL THEN 1
                                 ELSE 0
