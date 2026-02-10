@@ -34,82 +34,35 @@
     ->bind(':end_date', $end_date)
     ->exec(' SELECT
                 a.id,
-                DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
-                a.htlxxrh_kode AS kode,
+                a.id_hemxxmh,
                 b.nama,
-                dep.nama AS departemen,
-
-                IFNULL(
-                    iz.nama,
-                    CASE
-                        WHEN a.st_clock_in = "LATE"
-                            AND a.status_presensi_in = "Belum Ada Izin"
-                            THEN CONCAT(a.st_clock_in, " - ", a.status_presensi_in)
-
-                        WHEN a.htlxxrh_kode LIKE "%[I/%"
-                            THEN TRIM(SUBSTRING_INDEX(a.htlxxrh_kode, "[I/", 1))
-
-                        WHEN pin.kode IS NOT NULL
-                            THEN a.status_presensi_in
-
-                        WHEN pout.kode IS NOT NULL
-                            THEN a.status_presensi_out
-
-                        ELSE NULL
-                    END
-                ) AS jenis,
-
+                DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
+                dep.nama departemen,
+                a.status_presensi_in,
+                a.status_presensi_out,
+                
+                IFNULL(ij.nama, :izin) jenis,
                 DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i")  AS jam_awal,
                 DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i") AS jam_akhir,
                 "" AS keterangan
-
             FROM htsprrd a
-            JOIN hemxxmh b
-                ON b.id = a.id_hemxxmh
-
-            LEFT JOIN hemjbmh job
-                ON job.id_hemxxmh = a.id_hemxxmh
-
-            LEFT JOIN hodxxmh dep
-                ON dep.id = job.id_hodxxmh
-
-            LEFT JOIN htpxxmh pin
-                ON pin.kode = a.status_presensi_in
-
-            LEFT JOIN htpxxmh pout
-                ON pout.kode = a.status_presensi_out
-
-            LEFT JOIN htpxxmh iz
-                ON iz.kode =
-                    CASE
-                        WHEN a.st_clock_in = "LATE"
-                            AND a.status_presensi_in = "Belum Ada Izin"
-                            THEN CONCAT(a.st_clock_in, " - ", a.status_presensi_in)
-
-                        WHEN a.htlxxrh_kode LIKE "%[I/%"
-                            THEN TRIM(SUBSTRING_INDEX(a.htlxxrh_kode, "[I/", 1))
-
-                        WHEN pin.kode IS NOT NULL
-                            THEN a.status_presensi_in
-
-                        WHEN pout.kode IS NOT NULL
-                            THEN a.status_presensi_out
-
-                        ELSE NULL
-                    END
-
-            WHERE
+            JOIN hemxxmh b ON b.id = a.id_hemxxmh
+            JOIN hemjbmh c ON c.id_hemxxmh = b.id
+            JOIN hodxxmh dep ON dep.id = c.id_hodxxmh
+            LEFT JOIN htpxxmh ij ON ij.nama = :izin
+            WHERE 
                 a.tanggal BETWEEN :start_date AND :end_date
                 AND dep.nama = :dept
-                AND iz.nama = :izin
-                AND a.htlxxrh_kode NOT LIKE "%[KD%"
+                AND NOT (
+                a.status_presensi_in = "HK"
+                AND a.status_presensi_out = "HK"
+            )
+                AND (a.status_presensi_in <> "OFF" AND a.status_presensi_out <> "OFF")
                 AND (
-                    pin.kode IS NOT NULL
-                    OR pout.kode IS NOT NULL
-                    OR a.st_clock_in = "LATE"
-                    OR a.htlxxrh_kode LIKE "%[I/%"
-                );
-
+                a.status_presensi_in = ij.kode
+                OR a.status_presensi_out = ij.kode
+                OR a.htlxxrh_kode LIKE CONCAT("%", ij.kode, "%")
+            )
             '
             );
     $rs_hemxxmh = $qs_hemxxmh->fetchAll();
