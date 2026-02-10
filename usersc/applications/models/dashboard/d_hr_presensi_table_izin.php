@@ -38,6 +38,7 @@
                 b.nama,
                 DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
                 dep.nama departemen,
+                a.htlxxrh_kode AS kode,
                 a.status_presensi_in,
                 a.status_presensi_out,
                 
