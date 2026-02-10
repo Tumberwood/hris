@@ -33,6 +33,7 @@ if (!empty($_POST['id_heyxxmh']) && $_POST['id_heyxxmh'] > 0) {
  * ========================================================= */
 $sql = '
 SELECT
+    IFNULL(ij.id, -1) AS id_izin,
     dep.nama AS department,
     IFNULL(ij.nama, "Late - Belum Ada Izin") AS nama_izin,
     COUNT(*) AS total
@@ -74,8 +75,7 @@ GROUP BY
     nama_izin
 
 ORDER BY 
-    department,
-    nama_izin
+    id_izin, departement
 ';
 
 $rows = $db->raw()
