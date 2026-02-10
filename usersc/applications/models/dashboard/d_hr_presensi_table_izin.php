@@ -48,16 +48,16 @@
                 "" AS keterangan
             FROM htsprrd a
             JOIN hemxxmh b ON b.id = a.id_hemxxmh
-            JOIN hemjbmh c ON c.id_hemxxmh = b.id
-            JOIN hodxxmh dep ON dep.id = c.id_hodxxmh
+            JOIN hemjbmh c ON job.id_hemxxmh = b.id
+            JOIN hodxxmh dep ON dep.id = job.id_hodxxmh
             LEFT JOIN htpxxmh ij ON ij.nama = :izin
             WHERE 
                 a.tanggal BETWEEN :start_date AND :end_date
                 AND dep.nama = :dept
                 AND NOT (
-                a.status_presensi_in = "HK"
-                AND a.status_presensi_out = "HK"
-            )
+                    a.status_presensi_in = "HK"
+                    AND a.status_presensi_out = "HK"
+                )
                 AND (a.status_presensi_in <> "OFF" AND a.status_presensi_out <> "OFF")
                 AND (
                 a.status_presensi_in = ij.kode
@@ -71,6 +71,7 @@
                     AND a.st_clock_in = "LATE"
                     AND a.status_presensi_in = "Belum Ada Izin"
                 )
+                '.$where.'
             )
             '
             );
