@@ -63,6 +63,14 @@
                 a.status_presensi_in = ij.kode
                 OR a.status_presensi_out = ij.kode
                 OR a.htlxxrh_kode LIKE CONCAT("%", ij.kode, "%")
+                
+                -- fallback kalau ij tidak ketemu
+                OR (
+                    ij.kode IS NULL
+                    AND :izin = "Late - Belum Ada Izin"
+                    AND a.st_clock_in = "LATE"
+                    AND a.status_presensi_in = "Belum Ada Izin"
+                )
             )
             '
             );
