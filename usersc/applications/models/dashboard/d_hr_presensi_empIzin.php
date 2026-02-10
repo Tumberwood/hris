@@ -33,8 +33,8 @@ if (!empty($_POST['id_heyxxmh']) && $_POST['id_heyxxmh'] > 0) {
  * ========================================================= */
 $sql = '
 SELECT
-    dep.nama AS departemen,
-    IFNULL(ij.nama, "Late - Belum Ada Izin") AS jenis,
+    dep.nama AS department,
+    IFNULL(ij.nama, "Late - Belum Ada Izin") AS nama_izin,
     COUNT(*) AS total
 FROM htsprrd a
 JOIN hemxxmh b ON b.id = a.id_hemxxmh
@@ -67,15 +67,15 @@ WHERE
             AND a.status_presensi_in = "Belum Ada Izin"
         )
     )
-    '.$where.'
+'.$where.'
 
 GROUP BY 
-    dep.nama,
-    jenis
+    department,
+    nama_izin
 
 ORDER BY 
-    dep.nama,
-    jenis
+    department,
+    nama_izin
 ';
 
 $rows = $db->raw()
