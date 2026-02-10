@@ -48,7 +48,7 @@
                 "" AS keterangan
             FROM htsprrd a
             JOIN hemxxmh b ON b.id = a.id_hemxxmh
-            JOIN hemjbmh c ON job.id_hemxxmh = b.id
+            JOIN hemjbmh job ON job.id_hemxxmh = b.id
             JOIN hodxxmh dep ON dep.id = job.id_hodxxmh
             LEFT JOIN htpxxmh ij ON ij.nama = :izin
             WHERE 
