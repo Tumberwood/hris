@@ -54,10 +54,6 @@
             WHERE 
                 a.tanggal BETWEEN :start_date AND :end_date
                 AND dep.nama = :dept
-                AND NOT (
-                    a.status_presensi_in = "HK"
-                    AND a.status_presensi_out = "HK"
-                )
                 AND (a.status_presensi_in <> "OFF" AND a.status_presensi_out <> "OFF")
                 AND (
                 a.status_presensi_in = ij.kode

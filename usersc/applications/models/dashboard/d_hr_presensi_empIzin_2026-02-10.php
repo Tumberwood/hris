@@ -33,49 +33,49 @@ if (!empty($_POST['id_heyxxmh']) && $_POST['id_heyxxmh'] > 0) {
  * ========================================================= */
 $sql = '
 SELECT
-    dep.nama AS departemen,
-    IFNULL(ij.nama, "Late - Belum Ada Izin") AS jenis,
+    IF(kondite = "PA", -2, IFNULL(iz.id, -1)) AS id_izin,
+    IFNULL(iz.nama, kondite) AS nama_izin,
+    department,
     COUNT(*) AS total
-FROM htsprrd a
-JOIN hemxxmh b ON b.id = a.id_hemxxmh
-JOIN hemjbmh c ON c.id_hemxxmh = b.id
-JOIN hodxxmh dep ON dep.id = c.id_hodxxmh
+FROM (
+    SELECT
+        a.id_hemxxmh,
+        dep.nama AS department,
+        CASE
+            WHEN a.st_clock_in = "LATE"
+                 AND a.status_presensi_in = "Belum Ada Izin"
+                THEN CONCAT(a.st_clock_in, " - ", a.status_presensi_in)
 
-LEFT JOIN htpxxmh ij 
-    ON (
-        ij.kode = a.status_presensi_in
-        OR ij.kode = a.status_presensi_out
-        OR a.htlxxrh_kode LIKE CONCAT("%", ij.kode, "%")
-    )
+            WHEN a.htlxxrh_kode LIKE "%[I/%"
+                THEN TRIM(SUBSTRING_INDEX(a.htlxxrh_kode, "[I/", 1))
 
-WHERE 
-    a.tanggal BETWEEN :start_date AND :end_date
+            WHEN pin.kode IS NOT NULL
+                THEN a.status_presensi_in
 
-    AND (
-        a.status_presensi_in <> "OFF"
-        AND a.status_presensi_out <> "OFF"
-    )
+            WHEN pout.kode IS NOT NULL
+                THEN a.status_presensi_out
 
-    AND (
-        a.status_presensi_in = ij.kode
-        OR a.status_presensi_out = ij.kode
-        OR a.htlxxrh_kode LIKE CONCAT("%", ij.kode, "%")
-
-        OR (
-            ij.kode IS NULL
-            AND a.st_clock_in = "LATE"
-            AND a.status_presensi_in = "Belum Ada Izin"
-        )
-    )
-    '.$where.'
-
-GROUP BY 
-    dep.nama,
-    jenis
-
-ORDER BY 
-    dep.nama,
-    jenis
+            ELSE NULL
+        END AS kondite
+    FROM htsprrd a
+    LEFT JOIN hemjbmh job ON job.id_hemxxmh = a.id_hemxxmh
+    LEFT JOIN hodxxmh dep ON dep.id = job.id_hodxxmh
+    LEFT JOIN htpxxmh pin ON pin.kode = a.status_presensi_in
+    LEFT JOIN htpxxmh pout ON pout.kode = a.status_presensi_out
+    WHERE a.tanggal BETWEEN :start_date AND :end_date
+      AND (
+            pin.kode IS NOT NULL
+         OR pout.kode IS NOT NULL
+         OR a.st_clock_in = "LATE"
+         OR a.htlxxrh_kode LIKE "%[I/%"
+      )
+      AND a.htlxxrh_kode NOT LIKE "%[KD%"
+      '.$where.'
+) x
+LEFT JOIN htpxxmh iz ON iz.kode = x.kondite
+WHERE kondite IS NOT NULL
+GROUP BY nama_izin, department, id_izin
+ORDER BY id_izin, department
 ';
 
 $rows = $db->raw()
