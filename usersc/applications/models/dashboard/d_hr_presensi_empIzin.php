@@ -75,7 +75,7 @@ GROUP BY
     nama_izin
 
 ORDER BY 
-    id_izin, departement
+    id_izin, department
 ';
 
 $rows = $db->raw()
