@@ -64,6 +64,7 @@
                 OR (
                     ij.kode IS NULL
                     AND :izin = "Late - Belum Ada Izin"
+                    AND htlxxrh_kode = ""
                     AND a.st_clock_in = "LATE"
                     AND a.status_presensi_in = "Belum Ada Izin"
                 )
