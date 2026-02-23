@@ -103,12 +103,56 @@
 						then "Shift 1, Istirahat Reguler Tidak Sesuai"
 						
 						-- SHIFT 2 ADA LEMBUR TI
-						when ot.is_istirahat = 2 AND (a.st_jadwal LIKE "%SIANG%" OR a.st_jadwal LIKE "%SORE%") AND  
-							jad.jam_awal_istirahat <> "00:00:00" AND
-						(
-							a.break_in NOT BETWEEN DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 1 HOUR) AND jad.tanggaljam_akhir_istirahat
+						when ot.is_istirahat = 2 AND (a.st_jadwal LIKE "%SIANG%" OR a.st_jadwal LIKE "%SORE%") 
+						AND jad.jam_awal_istirahat <> "00:00:00"
+						AND (
+
+							-- ================= NORMAL (SEBELUM RAMADAN)
+							(
+								jad.tanggal < "2026-02-19"
+								AND (
+									a.break_in NOT BETWEEN
+										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
+									AND
+										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+									OR
+									a.break_out NOT BETWEEN
+										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
+									AND
+										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+								)
+							)
+
 							OR
-							a.break_out NOT BETWEEN DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 1 HOUR) AND jad.tanggaljam_akhir_istirahat
+
+							-- ================= RAMADAN
+							(
+								jad.tanggal BETWEEN "2026-02-19" AND "2026-03-19"
+								AND (
+									TIME(a.break_in) NOT BETWEEN "17:45:00" AND "19:00:00"
+									OR
+									TIME(a.break_out) NOT BETWEEN "17:45:00" AND "19:00:00"
+								)
+							)
+
+							OR
+
+							-- ================= SETELAH RAMADAN (BALIK NORMAL)
+							(
+								jad.tanggal >= "2026-03-20"
+								AND (
+									a.break_in NOT BETWEEN
+										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
+									AND
+										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+									OR
+									a.break_out NOT BETWEEN
+										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
+									AND
+										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+								)
+							)
+
 						)
 						then "Shift 2 Lembur TI, Istirahat TI Tidak Sesuai"
 						
