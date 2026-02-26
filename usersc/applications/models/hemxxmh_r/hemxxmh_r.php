@@ -165,7 +165,7 @@
 				});
 		})
 
-		->where( 'hemjbmh.tanggal_masuk', $end_date, '<=' );
+		->where( 'hemjbmh.tanggal_masuk', $end_date, '<' );
 	
 	// do not erase
 	// function show / hide inactive document
