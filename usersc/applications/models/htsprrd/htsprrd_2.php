@@ -154,6 +154,12 @@
 	}
 
 	if ($_SESSION['user'] > 100){
+		if ($_SESSION['str_arr_ha_heyxxmd'] != 0) {
+			$editor
+				->where( function ( $q ) {
+					$q->where('hemjbmh.id_heyxxmd', '(' . $_SESSION['str_arr_ha_heyxxmd'] . ')', 'IN', false );
+				} );
+		}
 		$editor
 			->where( function ( $q ) {
 				$q->where('hemjbmh.id_heyxxmh', '(' . $_SESSION['str_arr_ha_heyxxmh'] . ')', 'IN', false );
