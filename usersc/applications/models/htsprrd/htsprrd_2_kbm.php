@@ -145,7 +145,7 @@
 		->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','htsprrd.id_holxxmd_2' )
 		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
-		->where( 'hemjbmh.id_heyxxmd', 2 )
+		->where( 'hemjbmh.id_heyxxmd', 1 )
 		;
 	
 	// do not erase
