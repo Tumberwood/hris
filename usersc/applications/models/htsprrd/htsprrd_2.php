@@ -159,11 +159,13 @@
 				->where( function ( $q ) {
 					$q->where('hemjbmh.id_heyxxmd', '(' . $_SESSION['str_arr_ha_heyxxmd'] . ')', 'IN', false );
 				} );
+		} else {
+
+			$editor
+				->where( function ( $q ) {
+					$q->where('hemjbmh.id_heyxxmh', '(' . $_SESSION['str_arr_ha_heyxxmh'] . ')', 'IN', false );
+				} );
 		}
-		$editor
-			->where( function ( $q ) {
-				$q->where('hemjbmh.id_heyxxmh', '(' . $_SESSION['str_arr_ha_heyxxmh'] . ')', 'IN', false );
-			} );
 	}
 
 	if($_POST['id_hemxxmh'] > 0){
