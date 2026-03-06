@@ -93,7 +93,8 @@
                         type: "readonly"
 					}, 	{
 						label: "Info",
-						name: "pages_extend.info"
+						name: "pages_extend.info",
+						type: "textarea"
 					}, 	{
 						label: "Perlu Atur C-U-D-A",
 						name: "pages_extend.is_crud",
