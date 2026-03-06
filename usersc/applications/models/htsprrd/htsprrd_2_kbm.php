@@ -144,20 +144,15 @@
 		->leftJoin( 'hodxxmh','hodxxmh.id','=','hemjbmh.id_hodxxmh' )
 		->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','htsprrd.id_holxxmd_2' )
-		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' );
+		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
+		->where( 'hemjbmh.id_heyxxmd', 2 )
+		;
 	
 	// do not erase
 	// function show / hide inactive document
 	if ($show_inactive_status == 0){
 		$editor
 			->where( 'htsprrd.is_active', 1);
-	}
-
-	if ($_SESSION['user'] > 100){
-		$editor
-			->where( function ( $q ) {
-				$q->where('hemjbmh.id_heyxxmh', '(' . $_SESSION['str_arr_ha_heyxxmh'] . ')', 'IN', false );
-			} );
 	}
 
 	if($_POST['id_hemxxmh'] > 0){
@@ -170,14 +165,6 @@
 			->where( 'htsprrd.tanggal', $_POST['end_date'], '<=' );
 		}
 		
-	if ($id_heyxxmd > 0) {
-		$editor
-			->where( 'hemjbmh.id_heyxxmd', $id_heyxxmd );
-	} else {
-		$editor
-			->where( 'hemjbmh.id_heyxxmd', $id_heyxxmd , '<>');
-	}
-	
 	include( "htsprrd_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
