@@ -176,7 +176,7 @@ if($_SESSION['user'] < 101){
 		// BEGIN get SUB TIPE
 		$qs_heyxxmd = "
 			SELECT 
-				id_heyxxmd
+				id_heyxxmh
 			FROM udpeysd a
 			WHERE 
 				a.is_active = 1 AND 
@@ -189,7 +189,7 @@ if($_SESSION['user'] < 101){
 			
 			$arr_ha_heyxxmd=array();
 			foreach ($rs_ha_heyxxmd as $key => $value) {	
-				array_push($arr_ha_heyxxmd,$rs_ha_heyxxmd[$key]->id_heyxxmd);
+				array_push($arr_ha_heyxxmd,$rs_ha_heyxxmd[$key]->id_heyxxmh);
 			}
 			$_SESSION['arr_ha_heyxxmd'] 		= $arr_ha_heyxxmd;
 			$_SESSION['str_arr_ha_heyxxmd'] 	= implode(",",$_SESSION['arr_ha_heyxxmd']);
