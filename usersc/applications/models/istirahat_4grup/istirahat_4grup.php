@@ -128,3 +128,7 @@
 
 	echo json_encode($results);
 ?>
+
+<!-- Hanya Gedung 1 -->
+ <!-- setiawan
+ eko purwono -->
