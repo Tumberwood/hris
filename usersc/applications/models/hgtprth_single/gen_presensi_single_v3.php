@@ -614,60 +614,7 @@
 
                                 FROM htssctd AS jadwal
                                 INNER JOIN hemxxmh AS b ON b.id = jadwal.id_hemxxmh AND b.is_active = 1
-                                INNER JOIN (
-                                    SELECT
-                                        j.id_hemxxmh,
-                                        j.id_heyxxmh,
-                                        j.id_hevxxmh,
-                                        j.id_heyxxmd,
-                                        j.is_checkclock,
-                                        j.tanggal_masuk,
-                                        j.tanggal_keluar,
-                                        IFNULL(history.id_hesxxmh, j.id_hesxxmh) id_hesxxmh,
-                                        IFNULL(history.jumlah_grup, j.jumlah_grup) jumlah_grup,
-                                        IF(
-                                            IFNULL(history.id_holxxmd_2_akhir, 0) > 0,
-                                            history.id_holxxmd_2_akhir,
-                                            IF(
-                                                IFNULL(history.id_holxxmd_2_awal, 0) > 0,
-                                                history.id_holxxmd_2_awal,
-                                                IFNULL(j.id_holxxmd_2, 0)
-                                            )
-                                        ) AS id_holxxmd_2,
-                                        IF(
-                                            IFNULL(history.id_hetxxmh_akhir, 0) > 0,
-                                            history.id_hetxxmh_akhir,
-                                            IF(
-                                                IFNULL(history.id_hetxxmh_awal, 0) > 0,
-                                                history.id_hetxxmh_awal,
-                                                IFNULL(j.id_hetxxmh, 0)
-                                            )
-                                        ) AS id_hetxxmh,
-                                        IF(
-                                            IFNULL(history.id_hosxxmh_akhir, 0) > 0,
-                                            history.id_hosxxmh_akhir,
-                                            IF(
-                                                IFNULL(history.id_hosxxmh_awal, 0) > 0,
-                                                history.id_hosxxmh_awal,
-                                                IFNULL(j.id_hosxxmh, 0)
-                                            )
-                                        ) AS id_hosxxmh,
-                                        IFNULL(history.grup_hk, j.grup_hk) grup_hk
-                                    FROM hemjbmh j
-                                    LEFT JOIN (
-                                        SELECT
-                                            *
-                                        FROM (
-                                            SELECT
-                                                *,
-                                                ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
-                                            FROM hemjbrd
-                                            WHERE
-                                                tanggal_awal <= :tanggal
-                                        ) AS subquery
-                                        WHERE row_num = 1
-                                    ) history ON history.id_hemxxmh = j.id_hemxxmh
-                                ) jb on jb.id_hemxxmh = b.id
+                                INNER JOIN hemjbmh jb on jb.id_hemxxmh = b.id
                                 LEFT JOIN htsprtd c
                                     ON c.kode = b.kode_finger
                                     AND c.tanggal_jam >= jadwal.tanggaljam_awal_t1
@@ -1080,10 +1027,10 @@
                             WHEN id_htsxxmh IN (select id from htsxxmh where id <> 1 and is_active = 1 and jam_awal_istirahat = "00:00:00") AND IFNULL(durasi_break_menit, 0) > 0 THEN 1
 
                         --     -- apabila 4 grup sudah ada finger makan atau inputan makan manual, maka tidak boleh ada finger keluar di mesin PMI, KBM, atau Istirahat. Jika diketahui ada makan dan ada finger keluar (meskipun <30 menit), maka akan dipotong 1 jam.
-                            WHEN (jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND IFNULL(ceklok_makan, 0) > 0 AND (break_in IS NOT NULL AND durasi_break_menit > 1) THEN 1
+                            WHEN (jumlah_grup = 4 OR ket_jadwal LIKE "%satpam%") AND IFNULL(ceklok_makan, 0) > 0 AND (break_in IS NOT NULL AND durasi_break_menit > 1) THEN 1
 
                         --     -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
-                            WHEN (jumlah_grup = 2 OR ket_jadwal LIKE "%satpam%") AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
+                            WHEN (jumlah_grup = 4 OR ket_jadwal LIKE "%satpam%") AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
                             ELSE 0
                         END AS pot_jam_keluar_istirahat,
                             
