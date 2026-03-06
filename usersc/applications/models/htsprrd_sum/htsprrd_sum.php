@@ -55,7 +55,7 @@
 						) AS late_1,
 
 						SUM(
-							IF( prr.status_presensi_in  = "TL", 1, 0)
+							IF( prr.status_presensi_in  = "TL" OR (prr.st_clock_in = "LATE" AND prr.status_presensi_in = "BELUM ADA IZIN"), 1, 0)
 						) AS TL,
 
 						-- SUM(
