@@ -156,7 +156,7 @@
 				->set('tanggal_awal',$rs_hemjbmh['tanggal_masuk'])
 				->set('jumlah_grup',$rs_hemjbmh['jumlah_grup'])
 				->set('grup_hk',$rs_hemjbmh['grup_hk'])
-				->set('tanggal_akhir',$tanggal_akhir_kontrak)
+				->set('tanggal_akhir',$tanggal_akhir)
 				->set('id_hemxxmh',$id)
 				->exec();
 
