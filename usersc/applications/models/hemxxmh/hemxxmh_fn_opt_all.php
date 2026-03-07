@@ -92,6 +92,7 @@
         ->where('hemjbmh.id_heyxxmh', $w_id_heyxxmh, $s_id_heyxxmh, false )
         ->where('hemjbmh.id_hesxxmh', $w_id_hesxxmh, $s_id_hesxxmh)
         ->where('hemxxmh.id', $id_hemxxmh_old, '<>' )
+        ->where('hemjbmh.is_harian_lepas', '0' )
         ->where( function ( $r ) {
             $q = $_GET['search'];
             $r
