@@ -164,6 +164,7 @@
 						->or_where('hemjbmh.tanggal_keluar', $end_date, '>=');
 				});
 		})
+		->where( 'hemjbmh.is_harian_lepas', 0)
 
 		->where( 'hemjbmh.tanggal_masuk', $end_date, '<' );
 	

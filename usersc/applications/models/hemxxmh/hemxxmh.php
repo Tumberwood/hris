@@ -143,6 +143,7 @@
 		->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
 		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
+		->where( 'hemjbmh.is_harian_lepas', 0)
 		
         ->where( function ( $r ) use ($tanggal_akhir) {
             $r
