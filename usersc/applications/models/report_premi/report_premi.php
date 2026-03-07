@@ -32,7 +32,7 @@
 					b.nama,
 					d.nama AS dep,
 					e.nama AS jab,
-					f.nama AS AREA,
+					f.nama AS area,
 					SUM(a.is_pot_premi) pot_premi
 				FROM htsprrd a
 				INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
@@ -40,7 +40,6 @@
 				INNER JOIN (
 					SELECT
 						j.id_hemxxmh,
-						j.id_holxxmd_2,
 						j.id_heyxxmh,
 						j.id_hevxxmh,
 						j.id_heyxxmd,
