@@ -197,7 +197,7 @@
 			//start datatables
 			tblreport_premi = $('#tblreport_premi').DataTable( {
 				searchPanes:{
-					layout: 'columns-3',
+					layout: 'columns-4',
 				},
 				dom: 
 					"<P>"+

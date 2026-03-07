@@ -106,6 +106,7 @@
 				LEFT JOIN holxxmd_2 f ON f.id = c.id_holxxmd_2
 
 				WHERE a.tanggal BETWEEN :start_date AND :end_date
+				'.$where.'
 				GROUP BY a.id_hemxxmh
 				HAVING pot_premi = 0
 				' 
