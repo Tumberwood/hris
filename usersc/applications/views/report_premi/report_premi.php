@@ -247,14 +247,6 @@
 					{ data: "dep" },
 					{ data: "jab" },
 					{ data: "area" },
-					{ data: "tanggal" },
-					{ data: "st_jadwal" },
-					{ data: "masuk" },
-					{ data: "break_in" },
-					{ data: "break_out" },
-					{ data: "makan" },
-					{ data: "pulang" },
-					{ data: "kategori" },
 				],
 				buttons: [
 					// BEGIN breaking generate button
