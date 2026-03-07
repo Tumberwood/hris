@@ -40,6 +40,7 @@
 				INNER JOIN (
 					SELECT
 						j.id_hemxxmh,
+						j.id_holxxmd_2,
 						j.id_heyxxmh,
 						j.id_hevxxmh,
 						j.id_heyxxmd,
