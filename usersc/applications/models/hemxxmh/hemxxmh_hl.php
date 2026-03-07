@@ -100,10 +100,8 @@
 				->setFormatter( Format::ifEmpty( 0 ) ),
 				
 			Field::inst( 'hemjbmh.is_harian_lepas' )
-				->set( Field::SET_CREATE )
 				->setValue(1),
 			Field::inst( 'hemjbmh.is_checkclock' )
-				->set( Field::SET_CREATE )
 				->setValue(0),
 				
 			Field::inst( 'hemdcmh.is_npwp' ),
