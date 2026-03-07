@@ -237,11 +237,9 @@
 					{ 
 						data: "nama",
 						render: function(data, type, row) {
-							var id_hemxxmh = row.id_hemxxmh;
-							var tanggal = row.tanggal;
-							var url = "../dashboard/d_hr_report_presensi.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
-							var link = '<a href="' + url + '" target="_blank"> '+data+' </a>';
-							return link;
+							return '<a target="_blank" href="../htsprrd_2/htsprrd_2.php?id_hemxxmh=' + row.id_hemxxmh + 
+								'&start_date=' + row.start_date + 
+								'&end_date=' + row.end_date + '">' + data + '</a>';
 						}
 					},
 					{ data: "dep" },
