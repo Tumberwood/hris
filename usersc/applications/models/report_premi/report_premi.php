@@ -27,6 +27,8 @@
 		->bind(':end_date', $end_date)
 		->exec('SELECT
 					a.id,
+					:start_date AS start_date,
+					:end_date AS end_date,
 					a.id_hemxxmh,
 					b.kode AS nik,
 					b.nama,
