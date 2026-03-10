@@ -99,12 +99,23 @@
 			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'hemdcmh.id_gtxpkmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
+
+			Field::inst( 'hemdcmh.id_gctxxmh_domisili' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemdcmh.id_gctxxmh_ktp' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+
 			Field::inst( 'hemdcmh.is_npwp' ),
 			Field::inst( 'hemdcmh.npwp_alamat' ),
 			Field::inst( 'hemdcmh.npwp_no' ),
 			Field::inst( 'hemdcmh.ktp_no' ),
 			Field::inst( 'hemdcmh.ktp_alamat' ),
 			Field::inst( 'hemdcmh.alamat' ),
+			Field::inst( 'hemdcmh.domisili_desa' ),
+			Field::inst( 'hemdcmh.ktp_desa' ),
+			Field::inst( 'hemdcmh.domisili_kecamatan' ),
+			Field::inst( 'hemdcmh.ktp_kecamatan' ),
+
 			Field::inst( 'hemdcmh.no_bpjs_tk' ),
 			Field::inst( 'hemdcmh.no_bpjs_kes' ),
 			Field::inst( 'hosxxmh.nama' ),
