@@ -282,7 +282,14 @@
 						no_bpjs_tk,
 						ktp_alamat,
 						alamat,
+
 						id_gctxxmh_ktp,
+						id_gctxxmh_domisili,
+						ktp_desa,
+						ktp_kecamatan,
+						domisili_desa,
+						domisili_kecamatan,
+
 						no_bpjs_kes
 					)
 					SELECT
@@ -292,7 +299,14 @@
 						a.no_bpjs_tk,
 						a.ktp_alamat,
 						a.alamat,
-						a.id_gctxxmh_ktp,
+						
+						id_gctxxmh_ktp,
+						id_gctxxmh_domisili,
+						ktp_desa,
+						ktp_kecamatan,
+						domisili_desa,
+						domisili_kecamatan,
+
 						a.no_bpjs_kes
 					FROM hemdcmh AS a
 					WHERE a.id_hemxxmh = :id_hemxxmh;
