@@ -155,11 +155,14 @@
 		->where( 'heyxxmd.id', 1)
 		->where( 'hemjbmh.is_harian_lepas', 0)
 		
-        ->where( function ( $r ) use ($tanggal_akhir) {
-            $r
-                ->where( 'hemjbmh.tanggal_keluar', NULL)
-                ->or_where( 'hemjbmh.tanggal_keluar', $tanggal_akhir->format('Y-m-d') , '>=');
-        } )
+		->where( function ( $q ) use ($tanggal_akhir) {
+			$q
+				->where( function ( $r ) use ($tanggal_akhir) {
+					$r
+						->where( 'hemjbmh.tanggal_keluar', NULL)
+						->or_where( 'hemjbmh.tanggal_keluar', $tanggal_akhir->format('Y-m-d') , '>=');
+				} );
+		} )
 		;
 	
 	// do not erase
