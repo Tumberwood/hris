@@ -77,6 +77,7 @@
 								<th>Nama</th>
 								<th>Department</th>
 								<th>Jabatan</th>
+								<th>Sub Tipe</th>
 								<th>Area Kerja</th>
 							</tr>
 						</thead>
@@ -244,6 +245,7 @@
 					},
 					{ data: "dep" },
 					{ data: "jab" },
+					{ data: "sub_tipe" },
 					{ data: "area" },
 				],
 				buttons: [

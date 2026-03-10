@@ -35,6 +35,7 @@
 					d.nama AS dep,
 					e.nama AS jab,
 					f.nama AS area,
+					g.nama AS sub_tipe,
 					SUM(a.is_pot_premi) pot_premi
 				FROM htsprrd a
 				INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
@@ -103,9 +104,10 @@
 					) history ON history.id_hemxxmh = j.id_hemxxmh
 				) c ON c.id_hemxxmh = b.id
 
-				INNER JOIN hodxxmh d ON d.id = c.id_hodxxmh
-				INNER JOIN hetxxmh e ON e.id = c.id_hetxxmh
+				LEFT JOIN hodxxmh d ON d.id = c.id_hodxxmh
+				LEFT JOIN hetxxmh e ON e.id = c.id_hetxxmh
 				LEFT JOIN holxxmd_2 f ON f.id = c.id_holxxmd_2
+				LEFT JOIN heyxxmd g ON g.id = c.id_heyxxmd
 
 				WHERE a.tanggal BETWEEN :start_date AND :end_date
 					AND id_heyxxmd = 3
