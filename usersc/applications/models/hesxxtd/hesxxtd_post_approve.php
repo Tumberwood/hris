@@ -280,6 +280,7 @@
 						id_gtxpkmh,
 						ktp_no,
 						no_bpjs_tk,
+						ktp_alamat,
 						no_bpjs_kes
 					)
 					SELECT
@@ -287,6 +288,7 @@
 						a.id_gtxpkmh,
 						a.ktp_no,
 						a.no_bpjs_tk,
+						a.ktp_alamat,
 						a.no_bpjs_kes
 					FROM hemdcmh AS a
 					WHERE a.id_hemxxmh = :id_hemxxmh;
