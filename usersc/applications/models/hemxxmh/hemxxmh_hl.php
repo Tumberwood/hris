@@ -112,6 +112,16 @@
 			Field::inst( 'hemdcmh.alamat' ),
 			Field::inst( 'hemdcmh.no_bpjs_tk' ),
 			Field::inst( 'hemdcmh.no_bpjs_kes' ),
+			
+			Field::inst( 'hemdcmh.id_gctxxmh_domisili' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemdcmh.id_gctxxmh_ktp' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemdcmh.domisili_desa' ),
+			Field::inst( 'hemdcmh.ktp_desa' ),
+			Field::inst( 'hemdcmh.domisili_kecamatan' ),
+			Field::inst( 'hemdcmh.ktp_kecamatan' ),
+			
 			Field::inst( 'hosxxmh.nama' ),
 			Field::inst( 'hevxxmh.nama' ),
 			Field::inst( 'hetxxmh.nama' ),

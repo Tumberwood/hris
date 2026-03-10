@@ -161,6 +161,30 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
+								<editor-field name="hemdcmh.id_gctxxmh_domisili"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.id_gctxxmh_ktp"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.domisili_desa"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.ktp_desa"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.domisili_kecamatan"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemdcmh.ktp_kecamatan"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
 								<editor-field name="hemxxmh.keterangan"></editor-field>
 							</div>
 							<div class="col-lg-6">
@@ -189,6 +213,7 @@
                                 <th>Tanggal Join</th>
                                 <th>Tanggal Keluar</th>
                                 <th>Grup HK</th>
+                                <th>Gender</th>
                                 <th>Aktif</th>
                             </tr>
                         </thead>
@@ -338,6 +363,7 @@
 		var id_hedlvmh_old = 0;
 		var id_gtxpkmh_old = 0, id_holxxmd_2_old = 0;
 		var id_heyxxmd_old = 0, tanggal_keluar_old = null, id_gctxxmh_old = 0;
+		var id_gctxxmh_domisili_old = 0, id_gctxxmh_ktp_old = 0;
 
 		$(document).ready(function() {
 
@@ -909,6 +935,78 @@
 						}
 					},
 					{
+						label: "Kota KTP",
+						name: "hemdcmh.id_gctxxmh_ktp",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/core/gctxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_gctxxmh_old: id_gctxxmh_ktp_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+									return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1
+							}
+						}
+					},
+					{
+						label: "Kota Domisili",
+						name: "hemdcmh.id_gctxxmh_domisili",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/core/gctxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_gctxxmh_old: id_gctxxmh_domisili_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+									return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1
+							}
+						}
+					},
+					{
 						label: "Tanggal Lahir  <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.tanggal_lahir",
 						type: "datetime",
@@ -926,6 +1024,26 @@
 					{
 						label: "Alamat KTP " ,
 						name: "hemdcmh.ktp_alamat",
+						type: "textarea"
+					},
+					{
+						label: "Desa Domisili" ,
+						name: "hemdcmh.domisili_desa",
+						type: "textarea"
+					},
+					{
+						label: "Desa KTP " ,
+						name: "hemdcmh.ktp_desa",
+						type: "textarea"
+					},
+					{
+						label: "Kecamatan Domisili" ,
+						name: "hemdcmh.domisili_kecamatan",
+						type: "textarea"
+					},
+					{
+						label: "Kecamatan KTP " ,
+						name: "hemdcmh.ktp_kecamatan",
 						type: "textarea"
 					},
 				]
@@ -1264,7 +1382,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [4,5,6,7,8,9,10,11,13]
+						targets: [4,5,6,7,8,9,10,11,13,15]
 					},
 					{
 						searchPanes:{
@@ -1312,6 +1430,7 @@
 							}
 						}
 					},
+					{ data: "hemxxmh.gender" },
 					{ 
 						data: "hemxxmh.is_active",
 						render: function (data){
@@ -1384,6 +1503,8 @@
 
 				data_hemdcmh = tblhemxxmh.row( { selected: true } ).data().hemdcmh;
 				id_gtxpkmh_old   = data_hemdcmh.id_gtxpkmh;
+				id_gctxxmh_ktp_old   = data_hemdcmh.id_gctxxmh_ktp;
+				id_gctxxmh_domisili_old   = data_hemdcmh.id_gctxxmh_domisili;
 				
 				// atur hak akses
 				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth, tblhemjbrd];
@@ -1416,6 +1537,9 @@
 				id_hovxxmh_old   = 0, id_hodxxmh_old   = 0, id_hosxxmh_old   = 0, id_hevxxmh_old   = 0, id_hetxxmh_old   = 0, id_heyxxmh_old   = 0, id_hesxxmh_old   = 0, tanggal_keluar_old = null;
 				id_holxxmd_2_old   = 0;
 				id_gctxxmh_old   = 0;
+				
+				id_gctxxmh_ktp_old = 0;
+				id_gctxxmh_domisili_old = 0;
 
 				// atur hak akses
 				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth, tblhemjbrd];
