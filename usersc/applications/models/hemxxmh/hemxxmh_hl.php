@@ -92,6 +92,18 @@
 					'from' => 'd M Y',
 					'to' =>   'Y-m-d'
 				) ),
+			Field::inst( 'hemjbmh.tanggal_akhir_kontrak' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y',
+					'to' =>   'Y-m-d'
+				) ),
 			Field::inst( 'hemjbmh.grup_hk' ),
 			Field::inst( 'hemjbmh.jumlah_grup' ),
 			Field::inst( 'hovxxmh.nama' ),
