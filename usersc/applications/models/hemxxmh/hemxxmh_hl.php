@@ -24,6 +24,19 @@
 		->debug(true)
 		->fields(
 			Field::inst( 'hemxxmh.id' ),
+			Field::inst( 'hemxxmh.id_files_foto' )
+				->setFormatter( Format::ifEmpty( 0 ) )
+				->upload( Upload::inst(  $abs_us_root.$us_url_root.'usersc/files/foto_karyawan/__ID__.__EXTN__' )
+					->db( 'files', 'id', array(
+						'filename'    => Upload::DB_FILE_NAME,
+						'filesize'    => Upload::DB_FILE_SIZE,
+						'web_path'    => Upload::DB_WEB_PATH,
+						'system_path' => Upload::DB_SYSTEM_PATH,
+						'extn' 		  => Upload::DB_EXTN
+					) )
+					->validator( Validate::fileSize( 500000, 'Ukuran lampiran maksimal 500Kb' ) )
+					->validator( Validate::fileExtensions( array( 'png', 'jpg', 'jpeg'), "Hanya boleh format png, jpg atau jpeg" ) )
+				),
 			Field::inst( 'hemjbmh.id_hovxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemjbmh.id_hodxxmh' )
