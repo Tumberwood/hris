@@ -14,6 +14,12 @@
     $nama_tabels_d[2] = 'htlxxth';
     $nama_tabels_d[3] = 'htpxxth';
     $nama_tabels_d[4] = 'hemjbrd';
+
+	$nama_tabels_d[5] = 'hemedmd';
+	$nama_tabels_d[6] = 'hemjbmd';
+	$nama_tabels_d[7] = 'hemlgmd';
+	$nama_tabels_d[8] = 'hemskmd';
+	$nama_tabels_d[9] = 'hemtrmd';
 ?>
 
 <!-- begin content here -->
@@ -221,7 +227,13 @@
                     <legend>Detail</legend>
 					<div class="tabs-container">
 						<ul class="nav nav-tabs" role="tablist">
-							<li><a class="nav-link active" data-toggle="tab" href="#tabhemfmmd"> Family</a></li>
+							<li><a class="nav-link active" data-toggle="tab" href="#tabhemfmmd"> Keluarga</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhemedmd"> Pendidikan</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhemjbmd"> Pengalaman Kerja</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhemlgmd"> Bahasa</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhemskmd"> Kemampuan</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhemtrmd"> Pelatihan</a></li>
+
 							<li><a class="nav-link" data-toggle="tab" href="#tabhadxxtd "> Pelanggaran</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhtlxxth"> Absensi</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhtpxxth"> Izin</a></li>
@@ -332,6 +344,107 @@
 
 								</div>
 							</div>
+
+							
+							<div role="tabpanel" id="tabhemedmd" class="tab-pane">
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table id="tblhemedmd" class="table table-striped table-bordered table-hover nowrap" width="100%">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>id_hemxxmh</th>
+													<th>Jenjang</th>
+													<th>Nama</th>
+													<th>Kota</th>
+													<th>Tahun Lulus</th>
+													<th>Jurusan</th>
+													<th>Nilai Akhir</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div role="tabpanel" id="tabhemjbmd" class="tab-pane">
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table id="tblhemjbmd" class="table table-striped table-bordered table-hover nowrap" width="100%">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>id_hemxxmh</th>
+													<th>Perusahaan</th>
+													<th>Jenis Usaha</th>
+													<th>Alamat</th>
+													<th>Kota</th>
+													<th>Tanggal Awal</th>
+													<th>Tanggal Akhir</th>
+													<th>Jabatan Awal</th>
+													<th>Jabatan Akhir</th>
+													<th>Atasan Langsung</th>
+													<th>Gaji Terakhir</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div role="tabpanel" id="tabhemlgmd" class="tab-pane">
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table id="tblhemlgmd" class="table table-striped table-bordered table-hover nowrap" width="100%">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>id_hemxxmh</th>
+													<th>Bahasa</th>
+													<th>Membaca</th>
+													<th>Mendengar</th>
+													<th>Menulis</th>
+													<th>Percakapan</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div role="tabpanel" id="tabhemskmd" class="tab-pane">
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table id="tblhemskmd" class="table table-striped table-bordered table-hover nowrap" width="100%">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>id_hemxxmh</th>
+													<th>Jenis Skill</th>
+													<th>Tingkat</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div role="tabpanel" id="tabhemtrmd" class="tab-pane">
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table id="tblhemtrmd" class="table table-striped table-bordered table-hover nowrap" width="100%">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>id_hemxxmh</th>
+													<th>Nama</th>
+													<th>Lembaga</th>
+													<th>Bersertifikat</th>
+													<th>Tanggal Mulai</th>
+													<th>Tanggal Selesai</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>
@@ -357,6 +470,12 @@
         var edthtlxxth, tblhtlxxth, show_inactive_status_htlxxth = 0, id_htlxxth;
         var edthtpxxth, tblhtpxxth, show_inactive_status_htpxxth = 0, id_htpxxth;
         var edthemjbrd, tblhemjbrd, show_inactive_status_hemjbrd = 0, id_hemjbrd;
+
+		var edthemedmd, tblhemedmd, show_inactive_status_hemedmd = 0, id_hemedmd;
+        var edthemjbmd, tblhemjbmd, show_inactive_status_hemjbmd = 0, id_hemjbmd;
+        var edthemlgmd, tblhemlgmd, show_inactive_status_hemlgmd = 0, id_hemlgmd;
+        var edthemskmd, tblhemskmd, show_inactive_status_hemskmd = 0, id_hemskmd;
+        var edthemtrmd, tblhemtrmd, show_inactive_status_hemtrmd = 0, id_hemtrmd;
 		// ------------- end of default variable
 
 		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0, id_hevxxmh_old = 0, id_heyxxmh_old = 0, id_hesxxmh_old = 0;
@@ -364,6 +483,8 @@
 		var id_gtxpkmh_old = 0, id_holxxmd_2_old = 0;
 		var id_heyxxmd_old = 0, tanggal_keluar_old = null, id_gctxxmh_old = 0;
 		var id_gctxxmh_domisili_old = 0, id_gctxxmh_ktp_old = 0;
+		var id_gctxxmh_old_pendidikan = 0;
+		var id_gedxxmh_old_pendidikan = 0;
 
 		$(document).ready(function() {
 
@@ -1475,7 +1596,13 @@
 
 			tblhemxxmh.on( 'init', function () {
 				// atur hak akses
-				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth, tblhemjbrd];
+				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth, tblhemjbrd,
+					tblhemedmd,
+					tblhemjbmd,
+					tblhemlgmd,
+					tblhemskmd,
+					tblhemtrmd,
+				];
 				CekInitHeaderHD(tblhemxxmh, tbl_details);
 			} );
 			
@@ -1507,7 +1634,13 @@
 				id_gctxxmh_domisili_old   = data_hemdcmh.id_gctxxmh_domisili;
 				
 				// atur hak akses
-				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth, tblhemjbrd];
+				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth, tblhemjbrd,
+					tblhemedmd,
+					tblhemjbmd,
+					tblhemlgmd,
+					tblhemskmd,
+					tblhemtrmd,
+				];
 				CekSelectHeaderHD(tblhemxxmh, tbl_details);
 
 				$('#sisa_cuti_text').empty();
@@ -1542,7 +1675,13 @@
 				id_gctxxmh_domisili_old = 0;
 
 				// atur hak akses
-				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth, tblhemjbrd];
+				tbl_details = [tblhemfmmd, tblhadxxtd, tblhtlxxth, tblhtpxxth, tblhemjbrd,
+					tblhemedmd,
+					tblhemjbmd,
+					tblhemlgmd,
+					tblhemskmd,
+					tblhemtrmd,
+				];
 				CekDeselectHeaderHD(tblhemxxmh, tbl_details);
 				
 				$('#sisa_cuti_text').empty();
@@ -2802,6 +2941,1081 @@
 			} );
 
 // --------- end _detail --------------- //
+
+
+// --------- start _detail pendidikan--------------- //
+
+			//start datatables editor
+			edthemedmd = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/hemxxmh/hemedmd.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hemedmd = show_inactive_status_hemedmd;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				table: "#tblhemedmd",
+				formOptions: {
+					main: {
+						focus: 3
+					}
+				},
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "hemedmd",
+						type: "hidden"
+					},	{
+						label: "id_hemxxmh",
+						name: "hemedmd.id_hemxxmh",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "hemedmd.is_active",
+                        type: "hidden",
+						def: 1
+					}, 	{
+						label: "Jenjang Pendidikan <sup class='text-danger'>*<sup>",
+						name: "hemedmd.id_gedxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/core/gedxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_gedxxmh_old: id_gedxxmh_old_pendidikan,
+										search: params.term || '',
+										page: params.page || 1
+									}
+									return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1
+							}
+						}
+					},	{
+						label: "Nama Institusi <sup class='text-danger'>*<sup>",
+						name: "hemedmd.nama"
+					}, 	{
+						label: "Kota <sup class='text-danger'>*<sup>",
+						name: "hemedmd.id_gctxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/core/gctxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_gctxxmh_old: id_gctxxmh_old_pendidikan,
+										search: params.term || '',
+										page: params.page || 1
+									}
+									return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1
+							}
+						}
+					},	{
+						label: "Tahun Lulus",
+						name: "hemedmd.tahun_lulus"
+					},	{
+						label: "Jurusan",
+						name: "hemedmd.jurusan"
+					},	{
+						label: "Nilai Akhir",
+						name: "hemedmd.nilai_akhir"
+					}
+				]
+			} );
+			
+			edthemedmd.on( 'preOpen', function( e, mode, action ) {
+				edthemedmd.field('hemedmd.id_hemxxmh').val(id_hemxxmh);
+				
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthemedmd.field('start_on').val(start_on);
+
+				if(action == 'create'){
+					tblhemedmd.rows().deselect();
+				}
+			});
+
+            edthemedmd.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+			});
+			
+			edthemedmd.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+
+					// BEGIN of validasi hemedmd.nama 
+					nama = edthemedmd.field('hemedmd.nama').val();
+					if(!nama || nama == ''){
+						edthemedmd.field('hemedmd.nama').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemedmd.nama 
+
+					// BEGIN of validasi hemedmd.id_gctxxmh 
+					id_gctxxmh = edthemedmd.field('hemedmd.id_gctxxmh').val();
+					if(!id_gctxxmh || id_gctxxmh == ''){
+						edthemedmd.field('hemedmd.id_gctxxmh').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemedmd.id_gctxxmh 
+
+					// BEGIN of validasi hemedmd.id_gedxxmh 
+					id_gedxxmh = edthemedmd.field('hemedmd.id_gedxxmh').val();
+					if(!id_gedxxmh || id_gedxxmh == ''){
+						edthemedmd.field('hemedmd.id_gedxxmh').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemedmd.id_gedxxmh 
+
+				}
+				
+				if ( edthemedmd.inError() ) {
+					return false;
+				}
+			});
+
+			edthemedmd.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthemedmd.field('finish_on').val(finish_on);
+			});
+			
+			edthemedmd.on( 'postSubmit', function (e, json, data, action, xhr) {
+				// event setelah Create atau Edit, dibedakan dari parameter action
+				// action : "create" | "edit"
+				// do something
+			} );
+			
+			//start datatables
+			tblhemedmd = $('#tblhemedmd').DataTable( {
+				ajax: {
+					url: "../../models/hemxxmh/hemedmd.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hemedmd = show_inactive_status_hemedmd;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				order: [[ 2, "desc" ]],
+				columns: [
+					{ data: "hemedmd.id",visible:false },
+					{ data: "hemedmd.id_hemxxmh",visible:false },
+					{ data: "gedxxmh.nama" },
+					{ data: "hemedmd.nama" },
+					{ data: "gctxxmh.nama" },
+					{ data: "hemedmd.tahun_lulus" },
+					{ data: "hemedmd.jurusan" },
+					{ data: "hemedmd.nilai_akhir" }
+				],
+				buttons: [
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_hemedmd';
+						$table       = 'tblhemedmd';
+						$edt         = 'edthemedmd';
+						$show_status = '_hemedmd';
+						$table_name  = $nama_tabels_d[5];
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
+						$arr_buttons_action 	= ['create', 'edit', 'view','nonaktif_h','approve'];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+				],
+				rowCallback: function( row, data, index ) {
+					if ( data.hemedmd.is_active == 0 ) {
+						$('td', row).addClass('text-danger');
+					}
+				}
+			} );
+
+			tblhemedmd.on( 'draw', function( e, settings ) { 
+				// atur hak akses
+				cek_c_detail= 1;
+				CekDrawDetailHD(tblhemxxmh, tblhemedmd, 'hemedmd' );
+				CekDrawDetailHDFinal(tblhemxxmh);
+			} );
+
+			tblhemedmd.on( 'select', function( e, dt, type, indexes ) {
+				data_hemedmd = tblhemedmd.row( { selected: true } ).data().hemedmd;
+				id_hemedmd   = data_hemedmd.id;
+				id_transaksi_d    = id_hemedmd; // dipakai untuk general
+				is_active_d       = data_hemedmd.is_active;
+				id_gedxxmh_old_pendidikan       = data_hemedmd.id_gedxxmh;
+				id_gctxxmh_old_pendidikan       = data_hemedmd.id_gctxxmh;
+				
+				// atur hak akses
+				CekSelectDetailHD(tblhemxxmh, tblhemedmd );
+			} );
+
+			tblhemedmd.on( 'deselect', function() {
+				id_hemedmd = '';
+				id_gedxxmh_old_pendidikan = 0;
+				id_gctxxmh_old_pendidikan = 0;
+				
+				// atur hak akses
+				CekDeselectDetailHD(tblhemxxmh, tblhemedmd );
+			} );
+
+// --------- end _detail --------------- //		
+			
+// --------- start _detail hemjbmd PEKERJAAN --------------- //
+
+			//start datatables editor
+			edthemjbmd = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/hemxxmh/hemjbmd.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hemjbmd = show_inactive_status_hemjbmd;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				table: "#tblhemjbmd",
+				formOptions: {
+					main: {
+						focus: 3
+					}
+				},
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "hemjbmd",
+						type: "hidden"
+					},	{
+						label: "id_hemxxmh",
+						name: "hemjbmd.id_hemxxmh",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "hemjbmd.is_active",
+                        type: "hidden",
+						def: 1
+					},	{
+						label: "Nama Perusahaan <sup class='text-danger'>*<sup>",
+						name: "hemjbmd.nama"
+					},	{
+						label: "Alamat",
+						name: "hemjbmd.alamat",
+						type: "textarea"
+					}, 	{
+						label: "Kota <sup class='text-danger'>*<sup>",
+						name: "hemjbmd.id_gctxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true
+						}
+					},	{
+						label: "Jenis Usaha",
+						name: "hemjbmd.jenis"
+					}, {
+						label: "Tanggal Awal",
+						name: "hemjbmd.tanggal_awal",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					}, {
+						label: "Tanggal Akhir",
+						name: "hemjbmd.tanggal_akhir",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},	{
+						label: "jabatan Awal",
+						name: "hemjbmd.jabatan_awal"
+					},	{
+						label: "jabatan Akhir",
+						name: "hemjbmd.jabatan_akhir"
+					},	{
+						label: "Nama Atasan Langsung",
+						name: "hemjbmd.nama_atasan"
+					},	{
+						label: "Gaji Terakhir",
+						name: "hemjbmd.gaji"
+					}
+				]
+			} );
+			
+			edthemjbmd.on( 'preOpen', function( e, mode, action ) {
+				edthemjbmd.field('hemjbmd.id_hemxxmh').val(id_hemxxmh);
+				
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthemjbmd.field('start_on').val(start_on);
+
+				if(action == 'create'){
+					tblhemjbmd.rows().deselect();
+				}
+			});
+
+            edthemjbmd.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+			});
+			
+			edthemjbmd.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+
+					// BEGIN of validasi hemjbmd.nama 
+					nama = edthemjbmd.field('hemjbmd.nama').val();
+					if(!nama || nama == ''){
+						edthemjbmd.field('hemjbmd.nama').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemjbmd.nama 
+
+					// BEGIN of validasi hemjbmd.id_gctxxmh 
+					id_gctxxmh = edthemjbmd.field('hemjbmd.id_gctxxmh').val();
+					if(!id_gctxxmh || id_gctxxmh == ''){
+						edthemjbmd.field('hemjbmd.id_gctxxmh').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemjbmd.id_gctxxmh 
+
+				}
+				
+				if ( edthemjbmd.inError() ) {
+					return false;
+				}
+			});
+
+			edthemjbmd.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthemjbmd.field('finish_on').val(finish_on);
+			});
+			
+			edthemjbmd.on( 'postSubmit', function (e, json, data, action, xhr) {
+				// event setelah Create atau Edit, dibedakan dari parameter action
+				// action : "create" | "edit"
+				// do something
+			} );
+			
+			//start datatables
+			tblhemjbmd = $('#tblhemjbmd').DataTable( {
+				ajax: {
+					url: "../../models/hemxxmh/hemjbmd.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hemjbmd = show_inactive_status_hemjbmd;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				order: [[ 2, "desc" ]],
+				columns: [
+					{ data: "hemjbmd.id",visible:false },
+					{ data: "hemjbmd.id_hemxxmh",visible:false },
+					{ data: "hemjbmd.nama" },
+					{ data: "hemjbmd.jenis" },
+					{ data: "hemjbmd.alamat" },
+					{ data: "gctxxmh.nama" },
+					{ data: "hemjbmd.tanggal_awal" },
+					{ data: "hemjbmd.tanggal_akhir" },
+					{ data: "hemjbmd.jabatan_awal" },
+					{ data: "hemjbmd.jabatan_akhir" },
+					{ data: "hemjbmd.nama_atasan" },
+					{ data: "hemjbmd.gaji",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'Rp. ','' ),
+						class: "text-right" 
+					}
+				],
+				buttons: [
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_hemjbmd';
+						$table       = 'tblhemjbmd';
+						$edt         = 'edthemjbmd';
+						$show_status = '_hemjbmd';
+						$table_name  = $nama_tabels_d[6];
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
+						$arr_buttons_action 	= ['create', 'edit', 'view','nonaktif_h','approve'];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+				],
+				rowCallback: function( row, data, index ) {
+					if ( data.hemjbmd.is_active == 0 ) {
+						$('td', row).addClass('text-danger');
+					}
+				}
+			} );
+
+			tblhemjbmd.on( 'draw', function( e, settings ) { 
+				// atur hak akses
+				cek_c_detail= 1;
+				CekDrawDetailHD(tblhemxxmh, tblhemjbmd, 'hemjbmd' );
+				CekDrawDetailHDFinal(tblhemxxmh);
+			} );
+
+			tblhemjbmd.on( 'select', function( e, dt, type, indexes ) {
+				data_hemjbmd = tblhemjbmd.row( { selected: true } ).data().hemjbmd;
+				id_hemjbmd   = data_hemjbmd.id;
+				id_transaksi_d    = id_hemjbmd; // dipakai untuk general
+				is_active_d       = data_hemjbmd.is_active;
+				
+				// atur hak akses
+				CekSelectDetailHD(tblhemxxmh, tblhemjbmd );
+			} );
+
+			tblhemjbmd.on( 'deselect', function() {
+				id_hemjbmd = '';
+				is_active_d = 0;
+				
+				// atur hak akses
+				CekDeselectDetailHD(tblhemxxmh, tblhemjbmd );
+			} );
+
+// --------- end _detail --------------- //		
+			
+// --------- start _detail hemlgmd BAHASA --------------- //
+
+			//start datatables editor
+			edthemlgmd = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/hemxxmh/hemlgmd.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hemlgmd = show_inactive_status_hemlgmd;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				table: "#tblhemlgmd",
+				formOptions: {
+					main: {
+						focus: 3
+					}
+				},
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "hemlgmd",
+						type: "hidden"
+					},	{
+						label: "id_hemxxmh",
+						name: "hemlgmd.id_hemxxmh",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "hemlgmd.is_active",
+                        type: "hidden",
+						def: 1
+					}, 	
+					// {
+					// 	label: "Bahasa <sup class='text-danger'>*<sup>",
+					// 	name: "hemlgmd.id_hlgxxmh",
+					// 	type: "select2",
+					// 	opts: {
+					// 		placeholder : "Select",
+					// 		allowClear: true
+					// 	}
+					// },	
+					{
+						label: "Bahasa <sup class='text-danger'>*<sup>",
+						name: "hemlgmd.nama",
+					},	
+					{
+						label: "Kemampuan Mendengar	",
+						name: "hemlgmd.mendengar",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Sangat Baik", "value": "Sangat Baik" },
+							{ "label": "Mahir", "value": "Mahir" },
+							{ "label": "Baik", "value": "Baik" },
+							{ "label": "Kurang Baik", "value": "Kurang Baik" }
+						]
+					},	{
+						label: "Kemampuan Membaca	",
+						name: "hemlgmd.membaca",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Sangat Baik", "value": "Sangat Baik" },
+							{ "label": "Mahir", "value": "Mahir" },
+							{ "label": "Baik", "value": "Baik" },
+							{ "label": "Kurang Baik", "value": "Kurang Baik" }
+						]
+					},	{
+						label: "Kemampuan Menulis	",
+						name: "hemlgmd.menulis",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Sangat Baik", "value": "Sangat Baik" },
+							{ "label": "Mahir", "value": "Mahir" },
+							{ "label": "Baik", "value": "Baik" },
+							{ "label": "Kurang Baik", "value": "Kurang Baik" }
+						]
+					},	{
+						label: "Kemampuan Percakapan	",
+						name: "hemlgmd.percakapan",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Sangat Baik", "value": "Sangat Baik" },
+							{ "label": "Mahir", "value": "Mahir" },
+							{ "label": "Baik", "value": "Baik" },
+							{ "label": "Kurang Baik", "value": "Kurang Baik" }
+						]
+					}
+				]
+			} );
+			
+			edthemlgmd.on( 'preOpen', function( e, mode, action ) {
+				edthemlgmd.field('hemlgmd.id_hemxxmh').val(id_hemxxmh);
+				
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthemlgmd.field('start_on').val(start_on);
+
+				if(action == 'create'){
+					tblhemlgmd.rows().deselect();
+				}
+			});
+
+            edthemlgmd.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+			});
+			
+			edthemlgmd.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+					// BEGIN of validasi hemlgmd.nama 
+					nama = edthemlgmd.field('hemlgmd.nama').val();
+					if(!nama || nama == ''){
+						edthemlgmd.field('hemlgmd.nama').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemlgmd.nama 
+
+				}
+				
+				if ( edthemlgmd.inError() ) {
+					return false;
+				}
+			});
+
+			edthemlgmd.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthemlgmd.field('finish_on').val(finish_on);
+			});
+			
+			edthemlgmd.on( 'postSubmit', function (e, json, data, action, xhr) {
+				// event setelah Create atau Edit, dibedakan dari parameter action
+				// action : "create" | "edit"
+				// do something
+			} );
+			
+			//start datatables
+			tblhemlgmd = $('#tblhemlgmd').DataTable( {
+				ajax: {
+					url: "../../models/hemxxmh/hemlgmd.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hemlgmd = show_inactive_status_hemlgmd;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				order: [[ 2, "desc" ]],
+				columns: [
+					{ data: "hemlgmd.id",visible:false },
+					{ data: "hemlgmd.id_hemxxmh",visible:false },
+					{ data: "hemlgmd.nama" },
+					{ data: "hemlgmd.membaca" },
+					{ data: "hemlgmd.mendengar" },
+					{ data: "hemlgmd.menulis" },
+					{ data: "hemlgmd.percakapan" }
+				],
+				buttons: [
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_hemlgmd';
+						$table       = 'tblhemlgmd';
+						$edt         = 'edthemlgmd';
+						$show_status = '_hemlgmd';
+						$table_name  = $nama_tabels_d[7];
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
+						$arr_buttons_action 	= ['create', 'edit', 'view','nonaktif_h','approve'];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+				],
+				rowCallback: function( row, data, index ) {
+					if ( data.hemlgmd.is_active == 0 ) {
+						$('td', row).addClass('text-danger');
+					}
+				}
+			} );
+
+			tblhemlgmd.on( 'draw', function( e, settings ) { 
+				// atur hak akses
+				cek_c_detail= 1;
+				CekDrawDetailHD(tblhemxxmh, tblhemlgmd, 'hemlgmd' );
+				CekDrawDetailHDFinal(tblhemxxmh);
+			} );
+
+			tblhemlgmd.on( 'select', function( e, dt, type, indexes ) {
+				data_hemlgmd = tblhemlgmd.row( { selected: true } ).data().hemlgmd;
+				id_hemlgmd   = data_hemlgmd.id;
+				id_transaksi_d    = id_hemlgmd; // dipakai untuk general
+				is_active_d       = data_hemlgmd.is_active;
+				
+				// atur hak akses
+				CekSelectDetailHD(tblhemxxmh, tblhemlgmd );
+			} );
+
+			tblhemlgmd.on( 'deselect', function() {
+				id_hemlgmd = '';
+				is_active_d = 0;
+				
+				// atur hak akses
+				CekDeselectDetailHD(tblhemxxmh, tblhemlgmd );
+			} );
+
+// --------- end _detail --------------- //		
+			
+// --------- start _detail hemskmd KEMAMPUAN --------------- //
+
+			//start datatables editor
+			edthemskmd = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/hemxxmh/hemskmd.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hemskmd = show_inactive_status_hemskmd;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				table: "#tblhemskmd",
+				formOptions: {
+					main: {
+						focus: 3
+					}
+				},
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "hemskmd",
+						type: "hidden"
+					},	{
+						label: "id_hemxxmh",
+						name: "hemskmd.id_hemxxmh",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "hemskmd.is_active",
+                        type: "hidden",
+						def: 1
+					}, 	{
+						label: "Jenis Skill <sup class='text-danger'>*<sup>",
+						name: "hemskmd.nama"
+					},	{
+						label: "Tingkat Kemampuan 	",
+						name: "hemskmd.tingkat",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Sangat Baik", "value": "Sangat Baik" },
+							{ "label": "Mahir", "value": "Mahir" },
+							{ "label": "Baik", "value": "Baik" },
+							{ "label": "Kurang Baik", "value": "Kurang Baik" }
+						]
+					}
+				]
+			} );
+			
+			edthemskmd.on( 'preOpen', function( e, mode, action ) {
+				edthemskmd.field('hemskmd.id_hemxxmh').val(id_hemxxmh);
+				
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthemskmd.field('start_on').val(start_on);
+
+				if(action == 'create'){
+					tblhemskmd.rows().deselect();
+				}
+			});
+
+            edthemskmd.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+			});
+			
+			edthemskmd.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+					// BEGIN of validasi hemskmd.nama 
+					nama = edthemskmd.field('hemskmd.nama').val();
+					if(!nama || nama == ''){
+						edthemskmd.field('hemskmd.nama').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemskmd.nama 
+
+				}
+				
+				if ( edthemskmd.inError() ) {
+					return false;
+				}
+			});
+
+			edthemskmd.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthemskmd.field('finish_on').val(finish_on);
+			});
+			
+			edthemskmd.on( 'postSubmit', function (e, json, data, action, xhr) {
+				// event setelah Create atau Edit, dibedakan dari parameter action
+				// action : "create" | "edit"
+				// do something
+			} );
+			
+			//start datatables
+			tblhemskmd = $('#tblhemskmd').DataTable( {
+				ajax: {
+					url: "../../models/hemxxmh/hemskmd.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hemskmd = show_inactive_status_hemskmd;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				order: [[ 2, "desc" ]],
+				columns: [
+					{ data: "hemskmd.id",visible:false },
+					{ data: "hemskmd.id_hemxxmh",visible:false },
+					{ data: "hemskmd.nama" },
+					{ data: "hemskmd.tingkat" }
+				],
+				buttons: [
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_hemskmd';
+						$table       = 'tblhemskmd';
+						$edt         = 'edthemskmd';
+						$show_status = '_hemskmd';
+						$table_name  = $nama_tabels_d[8];
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
+						$arr_buttons_action 	= ['create', 'edit', 'view','nonaktif_h','approve'];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+				],
+				rowCallback: function( row, data, index ) {
+					if ( data.hemskmd.is_active == 0 ) {
+						$('td', row).addClass('text-danger');
+					}
+				}
+			} );
+
+			tblhemskmd.on( 'draw', function( e, settings ) { 
+				// atur hak akses
+				cek_c_detail= 1;
+				CekDrawDetailHD(tblhemxxmh, tblhemskmd, 'hemskmd' );
+				CekDrawDetailHDFinal(tblhemxxmh);
+			} );
+
+			tblhemskmd.on( 'select', function( e, dt, type, indexes ) {
+				data_hemskmd = tblhemskmd.row( { selected: true } ).data().hemskmd;
+				id_hemskmd   = data_hemskmd.id;
+				id_transaksi_d    = id_hemskmd; // dipakai untuk general
+				is_active_d       = data_hemskmd.is_active;
+				
+				// atur hak akses
+				CekSelectDetailHD(tblhemxxmh, tblhemskmd );
+			} );
+
+			tblhemskmd.on( 'deselect', function() {
+				id_hemskmd = '';
+				is_active_d = 0;
+				
+				// atur hak akses
+				CekDeselectDetailHD(tblhemxxmh, tblhemskmd );
+			} );
+
+// --------- end _detail --------------- //	
+
+			
+// --------- start _detail hemtrmd PELATIHAN --------------- //
+
+			//start datatables editor
+			edthemtrmd = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/hemxxmh/hemtrmd.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hemtrmd = show_inactive_status_hemtrmd;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				table: "#tblhemtrmd",
+				formOptions: {
+					main: {
+						focus: 3
+					}
+				},
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "hemtrmd",
+						type: "hidden"
+					},	{
+						label: "id_hemxxmh",
+						name: "hemtrmd.id_hemxxmh",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "hemtrmd.is_active",
+                        type: "hidden",
+						def: 1
+					},	{
+						label: "Nama Pelatihan <sup class='text-danger'>*<sup>",
+						name: "hemtrmd.nama",
+						type: "textarea"
+					},	{
+						label: "Lembaga <sup class='text-danger'>*<sup>",
+						name: "hemtrmd.lembaga"
+					},	{
+						label: "Bersertifikat",
+						name: "hemtrmd.bersertifikat",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Ya", "value": "Ya" },
+							{ "label": "Tidak", "value": "Tidak" }
+						]
+					}, {
+						label: "Tanggal Mulai",
+						name: "hemtrmd.tanggal_mulai",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					}, {
+						label: "Tanggal Selesai",
+						name: "hemtrmd.tanggal_selesai",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					}
+				]
+			} );
+			
+			edthemtrmd.on( 'preOpen', function( e, mode, action ) {
+				edthemtrmd.field('hemtrmd.id_hemxxmh').val(id_hemxxmh);
+				
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthemtrmd.field('start_on').val(start_on);
+
+				if(action == 'create'){
+					tblhemtrmd.rows().deselect();
+				}
+			});
+
+            edthemtrmd.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+			});
+			
+			edthemtrmd.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+
+					// BEGIN of validasi hemtrmd.nama 
+					nama = edthemtrmd.field('hemtrmd.nama').val();
+					if(!nama || nama == ''){
+						edthemtrmd.field('hemtrmd.nama').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemtrmd.nama 
+
+					// BEGIN of validasi hemtrmd.lembaga 
+					lembaga = edthemtrmd.field('hemtrmd.lembaga').val();
+					if(!lembaga || lembaga == ''){
+						edthemtrmd.field('hemtrmd.lembaga').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemtrmd.lembaga 
+
+				}
+				
+				if ( edthemtrmd.inError() ) {
+					return false;
+				}
+			});
+
+			edthemtrmd.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthemtrmd.field('finish_on').val(finish_on);
+			});
+			
+			edthemtrmd.on( 'postSubmit', function (e, json, data, action, xhr) {
+				// event setelah Create atau Edit, dibedakan dari parameter action
+				// action : "create" | "edit"
+				// do something
+			} );
+			
+			//start datatables
+			tblhemtrmd = $('#tblhemtrmd').DataTable( {
+				ajax: {
+					url: "../../models/hemxxmh/hemtrmd.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hemtrmd = show_inactive_status_hemtrmd;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				order: [[ 2, "desc" ]],
+				columns: [
+					{ data: "hemtrmd.id",visible:false },
+					{ data: "hemtrmd.id_hemxxmh",visible:false },
+					{ data: "hemtrmd.nama" },
+					{ data: "hemtrmd.lembaga" },
+					{ data: "hemtrmd.bersertifikat" },
+					{ data: "hemtrmd.tanggal_mulai" },
+					{ data: "hemtrmd.tanggal_selesai" }
+				],
+				buttons: [
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_hemtrmd';
+						$table       = 'tblhemtrmd';
+						$edt         = 'edthemtrmd';
+						$show_status = '_hemtrmd';
+						$table_name  = $nama_tabels_d[9];
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
+						$arr_buttons_action 	= ['create', 'edit', 'view','nonaktif_h','approve'];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+				],
+				rowCallback: function( row, data, index ) {
+					if ( data.hemtrmd.is_active == 0 ) {
+						$('td', row).addClass('text-danger');
+					}
+				}
+			} );
+
+			tblhemtrmd.on( 'draw', function( e, settings ) { 
+				// atur hak akses
+				cek_c_detail= 1;
+				CekDrawDetailHD(tblhemxxmh, tblhemtrmd, 'hemtrmd' );
+				CekDrawDetailHDFinal(tblhemxxmh);
+			} );
+
+			tblhemtrmd.on( 'select', function( e, dt, type, indexes ) {
+				data_hemtrmd = tblhemtrmd.row( { selected: true } ).data().hemtrmd;
+				id_hemtrmd   = data_hemtrmd.id;
+				id_transaksi_d    = id_hemtrmd; // dipakai untuk general
+				is_active_d       = data_hemtrmd.is_active;
+				
+				// atur hak akses
+				CekSelectDetailHD(tblhemxxmh, tblhemtrmd );
+			} );
+
+			tblhemtrmd.on( 'deselect', function() {
+				id_hemtrmd = '';
+				is_active_d = 0;
+				
+				// atur hak akses
+				CekDeselectDetailHD(tblhemxxmh, tblhemtrmd );
+			} );
+
+// --------- end _detail --------------- //		
 
 			
 		} );// end of document.ready
