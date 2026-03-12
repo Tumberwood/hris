@@ -117,7 +117,7 @@
 								<editor-field name="hemjbmh.tanggal_masuk"></editor-field>
 							</div>
 							<div class="col-lg-6">
-								<editor-field name="hemjbmh.tanggal_keluar"></editor-field>
+								<editor-field name="hemjbmh.tanggal_akhir_kontrak"></editor-field>
 							</div>
 						</div>
 						<div class="row">
@@ -192,6 +192,11 @@
 							</div>
 							<div class="col-lg-6">
 								<editor-field name="hemdcmh.ktp_kecamatan"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.id_files_foto"></editor-field>
 							</div>
 						</div>
 						<div class="row">
@@ -592,6 +597,20 @@
 						name: "hemxxmh.nama"
 					}, 	
 					{
+						label: "Foto",
+						name: "hemxxmh.id_files_foto",
+						type: "upload",
+						display: function ( fileId, counter ) {
+							if(fileId > 0){
+								return '<img src="'+edthemxxmh.file( 'files', fileId ).web_path+'"/>';
+							}else{
+								return '';
+							}
+							
+						},
+						noFileText: 'Belum ada gambar'
+					},
+					{
 						label: "Kode <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.kode"
 					}, 	
@@ -959,7 +978,7 @@
 					},
 					{
 						label: "Tanggal Akhir Kontrak",
-						name: "hemjbmh.tanggal_keluar",
+						name: "hemjbmh.tanggal_akhir_kontrak",
 						type: "datetime",
 						def: function () { 
 							return new Date(); 
@@ -1249,11 +1268,11 @@
 					edthemxxmh.field('status_aktif').val(is_active);
 					edthemxxmh.field('hemjbmh.grup_hk').hide();
 					edthemxxmh.field('hemjbmh.jumlah_grup').disable();
-					edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
+					edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').hide();
 				} else {
 					edthemxxmh.field('hemjbmh.grup_hk').show();
 					edthemxxmh.field('hemjbmh.jumlah_grup').enable();
-					edthemxxmh.field('hemjbmh.tanggal_keluar').show();
+					edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').show();
 				}
 			});
 
@@ -1539,7 +1558,7 @@
 				if (action == 'edit') {
 					status_aktif = edthemxxmh.field('status_aktif').val()
 					edthemxxmh.field('hemxxmh.is_active').val(status_aktif);
-					get_tgl_keluar();
+					// get_tgl_keluar();
 				}
 			});
 			
@@ -1698,7 +1717,7 @@
 				id_heyxxmd_old   = data_hemjbmh.id_heyxxmd;
 				id_hesxxmh_old   = data_hemjbmh.id_hesxxmh;
 				id_holxxmd_2_old   = data_hemjbmh.id_holxxmd_2;
-				tanggal_keluar_old   = data_hemjbmh.tanggal_keluar;
+				tanggal_keluar_old   = data_hemjbmh.tanggal_akhir_kontrak;
 
 				data_hemdcmh = tblhemxxmh.row( { selected: true } ).data().hemdcmh;
 				id_gtxpkmh_old   = data_hemdcmh.id_gtxpkmh;

@@ -52,19 +52,19 @@
         // console.log(id_hesxxmh);
         
         if (id_hesxxmh == 1 || id_hesxxmh  == 5 || id_hesxxmh  == 4) {
-            edthemxxmh.field('hemjbmh.tanggal_keluar').hide();
+            edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').hide();
             if (tanggal_keluar_old == null) {
-                edthemxxmh.field('hemjbmh.tanggal_keluar').val(null);
+                edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').val(null);
             } else {
-                edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_keluar_old);
+                edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').val(tanggal_keluar_old);
             }
         } else {
-            edthemxxmh.field('hemjbmh.tanggal_keluar').show();
+            edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').show();
             if (tanggal_keluar_old == null) {
                 tanggal_akhir = moment(tanggal_masuk).add('month', 6).format('DD MMM YYYY');
-                edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_akhir);
+                edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').val(tanggal_akhir);
             } else {
-                edthemxxmh.field('hemjbmh.tanggal_keluar').val(tanggal_keluar_old);
+                edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').val(tanggal_keluar_old);
             }
         }
     }

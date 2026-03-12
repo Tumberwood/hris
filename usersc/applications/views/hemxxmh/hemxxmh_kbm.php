@@ -1350,7 +1350,6 @@
 				if (action == 'edit') {
 					status_aktif = edthemxxmh.field('status_aktif').val()
 					edthemxxmh.field('hemxxmh.is_active').val(status_aktif);
-					get_tgl_keluar();
 				}
 			});
 			
@@ -1499,7 +1498,7 @@
 				id_heyxxmd_old   = data_hemjbmh.id_heyxxmd;
 				id_hesxxmh_old   = data_hemjbmh.id_hesxxmh;
 				id_holxxmd_2_old   = data_hemjbmh.id_holxxmd_2;
-				tanggal_keluar_old   = data_hemjbmh.tanggal_keluar;
+				tanggal_keluar_old   = data_hemjbmh.tanggal_akhir_kontrak;
 
 				data_hemdcmh = tblhemxxmh.row( { selected: true } ).data().hemdcmh;
 				id_gtxpkmh_old   = data_hemdcmh.id_gtxpkmh;
