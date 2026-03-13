@@ -63,7 +63,7 @@
 					DATE_FORMAT(tanggal_bekerja, "%d %b %Y") tanggal_bekerja,
 					DATE_FORMAT(tanggal_akhir_kontrak, "%d %b %Y") tanggal_akhir_kontrak,
 					DATE_FORMAT(tanggal_keluar, "%d %b %Y") tanggal_keluar,
-					IF(b.grup_hk = 1, 5, 6) grup_hk,
+					CONCAT( IF(b.grup_hk = 1, 5, 6), " HK") grup_hk,
 					gender,
 					f.web_path,
 					f.filename,
