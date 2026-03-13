@@ -72,7 +72,7 @@
 					SELECT
 						COUNT(a.id) c_id,
 						id_gctxxmh_lahir,
-						MAX(a.id) id_baru,
+						MAX(CASE WHEN a.is_active = 1 THEN a.id END) AS id_baru,
 						MAX(a.id_files_foto) foto,
 						tanggal_lahir,
 						a.nama,
@@ -83,7 +83,8 @@
 						MAX(a.is_active) is_active
 					FROM hemxxmh a
 					JOIN hemjbmh jb ON jb.id_hemxxmh = a.id
-					GROUP BY a.nama
+					JOIN hemdcmh dc ON dc.id_hemxxmh = a.id
+					GROUP BY a.nama, dc.ktp_no
 				) peg
 				JOIN hemjbmh b ON b.id_hemxxmh = peg.id_baru
 				JOIN hemdcmh c ON c.id_hemxxmh = peg.id_baru
