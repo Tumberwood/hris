@@ -16,7 +16,7 @@
 	$end_date = $_POST['end_date'];
 
 	if ($_POST['id_hemxxmh'] > 0) {
-		$where = ' AND a.id_hemxxmh = ' . $_POST['id_hemxxmh'];
+		$where = ' AND b.id_hemxxmh = ' . $_POST['id_hemxxmh'];
 	} else {
 		$where = '';
 	}
@@ -109,7 +109,7 @@
 						tanggal_keluar >= :end_date
 					)
 					AND peg.is_active = 1
-				' 
+				' . $where
 				);
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
 
