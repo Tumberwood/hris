@@ -506,9 +506,9 @@
                                                     )
                                                 AND (
                                                     (jb.jumlah_grup = 1 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1 AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
-                                                    OR (jb.jumlah_grup = 2 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1 AND c.nama IN ("os","out","staff","PMI","istirahat","istirahat manual","makan"))
+                                                    OR (jb.jumlah_grup = 2 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1 AND c.nama IN ("out","staff","PMI","istirahat","istirahat manual","makan"))
                                                     OR (jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
-                                                    OR (jadwal.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan"))
+                                                    OR (jadwal.tanggal < "2025-04-14" AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan"))
                                                 )
                                             THEN CONCAT(c.tanggal_jam,"|",c.nama)
 
@@ -519,9 +519,9 @@
                                                     AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                 AND (
                                                     (jb.jumlah_grup = 1 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1 AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
-                                                    OR (jb.jumlah_grup = 2 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1 AND c.nama IN ("os","out","staff","PMI","istirahat","istirahat manual","makan"))
+                                                    OR (jb.jumlah_grup = 2 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1 AND c.nama IN ("out","staff","PMI","istirahat","istirahat manual","makan"))
                                                     OR (jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
-                                                    OR (jadwal.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan"))
+                                                    OR (jadwal.tanggal < "2025-04-14" AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan"))
                                                 )
                                             THEN CONCAT(c.tanggal_jam,"|",c.nama)
                                         END
@@ -546,11 +546,10 @@
                                                     (jb.jumlah_grup = 1 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1
                                                     AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
 
-                                                    OR (jb.jumlah_grup = 2 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1
-                                                    AND c.nama IN ("os","out","staff","PMI","istirahat","istirahat manual","makan"))
+                                                    OR (jb.jumlah_grup = 2 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1 AND c.nama IN ("out","staff","PMI","istirahat","istirahat manual","makan"))
                                                     OR (jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
                                                         AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
-                                                    OR (jadwal.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27"
+                                                    OR (jadwal.tanggal < "2025-04-14"
                                                         AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan"))
                                                     )
                                             THEN CONCAT(c.tanggal_jam,"|",c.nama)
@@ -564,11 +563,10 @@
                                                     (jb.jumlah_grup = 1 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1
                                                     AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
 
-                                                    OR (jb.jumlah_grup = 2 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1
-                                                    AND c.nama IN ("os","out","staff","PMI","istirahat","istirahat manual","makan"))
+                                                    OR (jb.jumlah_grup = 2 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1 AND c.nama IN ("out","staff","PMI","istirahat","istirahat manual","makan"))
                                                     OR (jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
                                                         AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
-                                                    OR (jadwal.tanggal NOT BETWEEN "2025-04-14" AND "2025-07-27"
+                                                    OR (jadwal.tanggal < "2025-04-14"
                                                         AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan"))
                                                     )
                                             THEN CONCAT(c.tanggal_jam,"|",c.nama)
@@ -924,7 +922,7 @@
                                 AND a.is_approve = 1
                         ) AS tukar_jadwal_kmj ON (id_hemxxmh_pengaju = a.id OR id_hemxxmh_pengganti = a.id)
 
-                        WHERE (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= :tanggal) AND b.id_hemxxmh = :id_hemxxmh 
+                        WHERE (b.tanggal_keluar IS NULL OR b.tanggal_keluar > :tanggal) AND b.id_hemxxmh = :id_hemxxmh 
 
                     ),
                     status_presensi AS (
