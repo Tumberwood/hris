@@ -505,10 +505,42 @@
                                                         d.jam_akhir
                                                     )
                                                 AND (
-                                                    (jb.jumlah_grup = 1 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1 AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
-                                                    OR (jb.jumlah_grup = 2 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1 AND c.nama IN ("out","staff","PMI","istirahat","istirahat manual","makan"))
-                                                    OR (jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
-                                                    OR (jadwal.tanggal < "2025-04-14" AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan"))
+                                                    -- 🔹 GRUP 1
+                                                    (jb.jumlah_grup = 1 
+                                                        AND jadwal.tanggal > "2025-07-27" 
+                                                        AND id_holxxmd_2 = 1 
+                                                        AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
+                                                    )
+
+                                                    -- 🔹 GRUP 2 + FILTER DOUBLE
+                                                    OR (
+                                                        jb.jumlah_grup = 2 
+                                                        AND jadwal.tanggal > "2025-07-27" 
+                                                        AND id_holxxmd_2 = 1 
+                                                        AND c.nama IN ("PMI-Gedung-3","OS-Gedung-3", "os","out","staff","PMI","istirahat","istirahat manual","makan")
+
+                                                        AND NOT (
+                                                            c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                            AND EXISTS (
+                                                                SELECT 1
+                                                                FROM htsprtd c2
+                                                                WHERE c2.kode = c.kode
+                                                                AND c2.tanggal_jam = c.tanggal_jam
+                                                                AND c2.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                            )
+                                                        )
+                                                    )
+
+                                                    -- 🔹 RANGE LAMA
+                                                    OR (
+                                                        jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
+                                                        AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
+                                                    )
+
+                                                    OR (
+                                                        jadwal.tanggal < "2025-04-14"
+                                                        AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan")
+                                                    )
                                                 )
                                             THEN CONCAT(c.tanggal_jam,"|",c.nama)
 
@@ -518,15 +550,47 @@
                                                     jadwal.tanggaljam_awal_istirahat
                                                     AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                 AND (
-                                                    (jb.jumlah_grup = 1 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1 AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
-                                                    OR (jb.jumlah_grup = 2 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1 AND c.nama IN ("out","staff","PMI","istirahat","istirahat manual","makan"))
-                                                    OR (jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27" AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
-                                                    OR (jadwal.tanggal < "2025-04-14" AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan"))
+                                                    -- 🔹 GRUP 1
+                                                    (jb.jumlah_grup = 1 
+                                                        AND jadwal.tanggal > "2025-07-27" 
+                                                        AND id_holxxmd_2 = 1 
+                                                        AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
+                                                    )
+
+                                                    -- 🔹 GRUP 2 + FILTER DOUBLE
+                                                    OR (
+                                                        jb.jumlah_grup = 2 
+                                                        AND jadwal.tanggal > "2025-07-27" 
+                                                        AND id_holxxmd_2 = 1 
+                                                        AND c.nama IN ("PMI-Gedung-3","OS-Gedung-3", "os","out","staff","PMI","istirahat","istirahat manual","makan")
+
+                                                        AND NOT (
+                                                            c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                            AND EXISTS (
+                                                                SELECT 1
+                                                                FROM htsprtd c2
+                                                                WHERE c2.kode = c.kode
+                                                                AND c2.tanggal_jam = c.tanggal_jam
+                                                                AND c2.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                            )
+                                                        )
+                                                    )
+
+                                                    -- 🔹 RANGE LAMA
+                                                    OR (
+                                                        jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
+                                                        AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
+                                                    )
+
+                                                    OR (
+                                                        jadwal.tanggal < "2025-04-14"
+                                                        AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan")
+                                                    )
                                                 )
                                             THEN CONCAT(c.tanggal_jam,"|",c.nama)
                                         END
                                     ) AS concat_break_in,
-
+                                    
                                     MAX(
                                         CASE
                                             -- 🔹 PAKAI RANGE OVERRIDE (htoXXrd)
@@ -543,15 +607,43 @@
                                                         d.jam_akhir
                                                     )
                                                 AND (
-                                                    (jb.jumlah_grup = 1 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1
-                                                    AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
-
-                                                    OR (jb.jumlah_grup = 2 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1 AND c.nama IN ("out","staff","PMI","istirahat","istirahat manual","makan"))
-                                                    OR (jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
-                                                        AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
-                                                    OR (jadwal.tanggal < "2025-04-14"
-                                                        AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan"))
+                                                    -- 🔹 GRUP 1
+                                                    (jb.jumlah_grup = 1 
+                                                        AND jadwal.tanggal > "2025-07-27" 
+                                                        AND id_holxxmd_2 = 1
+                                                        AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
                                                     )
+
+                                                    -- 🔹 GRUP 2 + FILTER DOUBLE KHUSUS
+                                                    OR (
+                                                        jb.jumlah_grup = 2 
+                                                        AND jadwal.tanggal > "2025-07-27" 
+                                                        AND id_holxxmd_2 = 1 
+                                                        AND c.nama IN ("PMI-Gedung-3","OS-Gedung-3", "os","out","staff","PMI","istirahat","istirahat manual","makan")
+
+                                                        AND NOT (
+                                                            c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                            AND EXISTS (
+                                                                SELECT 1
+                                                                FROM htsprtd c2
+                                                                WHERE c2.kode = c.kode
+                                                                AND c2.tanggal_jam = c.tanggal_jam
+                                                                AND c2.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                            )
+                                                        )
+                                                    )
+
+                                                    -- 🔹 RANGE LAMA
+                                                    OR (
+                                                        jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
+                                                        AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
+                                                    )
+
+                                                    OR (
+                                                        jadwal.tanggal < "2025-04-14"
+                                                        AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan")
+                                                    )
+                                                )
                                             THEN CONCAT(c.tanggal_jam,"|",c.nama)
 
                                             -- 🔹 DEFAULT RANGE ISTIRAHAT (jadwal)
@@ -560,15 +652,43 @@
                                                     jadwal.tanggaljam_awal_istirahat
                                                     AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                 AND (
-                                                    (jb.jumlah_grup = 1 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1
-                                                    AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
-
-                                                    OR (jb.jumlah_grup = 2 AND jadwal.tanggal > "2025-07-27" AND id_holxxmd_2 = 1 AND c.nama IN ("out","staff","PMI","istirahat","istirahat manual","makan"))
-                                                    OR (jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
-                                                        AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan"))
-                                                    OR (jadwal.tanggal < "2025-04-14"
-                                                        AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan"))
+                                                    -- 🔹 GRUP 1
+                                                    (jb.jumlah_grup = 1 
+                                                        AND jadwal.tanggal > "2025-07-27" 
+                                                        AND id_holxxmd_2 = 1
+                                                        AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
                                                     )
+
+                                                    -- 🔹 GRUP 2 + FILTER DOUBLE KHUSUS
+                                                    OR (
+                                                        jb.jumlah_grup = 2 
+                                                        AND jadwal.tanggal > "2025-07-27" 
+                                                        AND id_holxxmd_2 = 1 
+                                                        AND c.nama IN ("PMI-Gedung-3","OS-Gedung-3", "os","out","staff","PMI","istirahat","istirahat manual","makan")
+
+                                                        AND NOT (
+                                                            c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                            AND EXISTS (
+                                                                SELECT 1
+                                                                FROM htsprtd c2
+                                                                WHERE c2.kode = c.kode
+                                                                AND c2.tanggal_jam = c.tanggal_jam
+                                                                AND c2.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                            )
+                                                        )
+                                                    )
+
+                                                    -- 🔹 RANGE LAMA
+                                                    OR (
+                                                        jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
+                                                        AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
+                                                    )
+
+                                                    OR (
+                                                        jadwal.tanggal < "2025-04-14"
+                                                        AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan")
+                                                    )
+                                                )
                                             THEN CONCAT(c.tanggal_jam,"|",c.nama)
                                         END
                                     ) AS concat_break_out,
@@ -1024,11 +1144,18 @@
                             -- shift pendek tidak boleh ada ceklok makan dan istirahat
                             WHEN id_htsxxmh IN (select id from htsxxmh where id <> 1 and is_active = 1 and jam_awal_istirahat = "00:00:00") AND IFNULL(durasi_break_menit, 0) > 0 THEN 1
 
-                        --     -- apabila 4 grup sudah ada finger makan atau inputan makan manual, maka tidak boleh ada finger keluar di mesin PMI, KBM, atau Istirahat. Jika diketahui ada makan dan ada finger keluar (meskipun <30 menit), maka akan dipotong 1 jam.
-                            WHEN (jumlah_grup = 4 OR ket_jadwal LIKE "%satpam%") AND IFNULL(ceklok_makan, 0) > 0 AND (break_in IS NOT NULL AND durasi_break_menit > 1) THEN 1
+                            -- apabila 4 grup sudah ada finger makan atau inputan makan manual, maka tidak boleh ada finger keluar di mesin PMI, KBM, atau Istirahat. Jika diketahui ada makan dan ada finger keluar (meskipun <30 menit), maka akan dipotong 1 jam.
+                            WHEN (jumlah_grup = 4 OR ket_jadwal LIKE "%satpam%") 
+                                AND IFNULL(ceklok_makan, 0) > 0 
+                                AND (break_in IS NOT NULL AND durasi_break_menit > 1) 
+                                AND mesin NOT LIKE "%Gedung-3%"
+                            THEN 1
 
-                        --     -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
-                            WHEN (jumlah_grup = 4 OR ket_jadwal LIKE "%satpam%") AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) THEN 1
+                            -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
+                            WHEN (jumlah_grup = 4 OR ket_jadwal LIKE "%satpam%") 
+                                AND is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) 
+                                AND mesin NOT LIKE "%Gedung-3%" 
+                            THEN 1
                             ELSE 0
                         END AS pot_jam_keluar_istirahat,
                             
