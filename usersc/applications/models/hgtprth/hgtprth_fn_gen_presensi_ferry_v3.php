@@ -531,7 +531,7 @@
                                                 WHEN d.id IS NOT NULL
                                                     AND jadwal.id_htsxxmh = 1
                                                     AND c.tanggal_jam BETWEEN
-                                                        CONCAT(d.tanggal, " ", d.jam_awal)
+                                                        DATE_ADD(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 30 MINUTE)
                                                         AND CONCAT(
                                                             IF(d.jam_awal > d.jam_akhir,
                                                                 DATE_ADD(d.tanggal, INTERVAL 1 DAY),
@@ -633,7 +633,7 @@
                                                 WHEN d.id IS NOT NULL
                                                     AND jadwal.id_htsxxmh = 1
                                                     AND c.tanggal_jam BETWEEN
-                                                        CONCAT(d.tanggal, " ", d.jam_awal)
+                                                        DATE_ADD(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 30 MINUTE)
                                                         AND CONCAT(
                                                             IF(d.jam_awal > d.jam_akhir,
                                                                 DATE_ADD(d.tanggal, INTERVAL 1 DAY),
