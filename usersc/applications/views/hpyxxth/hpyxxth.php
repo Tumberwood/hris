@@ -74,7 +74,7 @@
 								<ul>
 									<li>Gaji Pokok</li>
 									<li>Tunjangan Jabatan</li>
-									<li>Fix Cost</li>
+									<li>Tj. Masa Kerja</li>
 								</ul>
 							</div>
 						</div>
@@ -107,8 +107,8 @@
 													<th>Gaji Pokok</th>
 													<th>TJ. Jabatan</th>
 													<th>Terima Lain</th>
-													<th>Var Cost</th>
-													<th>Fix Cost</th>
+													<th>Tj. Lain-lain</th>
+													<th>Tj. Masa Kerja</th>
 													<th>Premi Absen</th>
 													<th>JKK</th>
 													<th>JKM</th>
@@ -222,8 +222,8 @@
 													<th>Uniform</th>
 													<th>RP Free</th>
 													<th>Terima Lain</th>
-													<th>Var Cost</th>
-													<th>Fix Cost</th>
+													<th>Tj. Lain-lain</th>
+													<th>Tj. Masa Kerja</th>
 													<th>Premi Absen</th>
 													<th>Trm JKK JKM</th>
 													<th>Lembur 1,5</th>
@@ -326,8 +326,8 @@
 													<th>Gaji Pokok</th>
 													<th>TJ. Jabatan</th>
 													<th>Terima Lain</th>
-													<th>Var Cost</th>
-													<th>Fix Cost</th>
+													<th>Tj. Lain-lain</th>
+													<th>Tj. Masa Kerja</th>
 													<th>Premi Absen</th>
 													<th>JKK</th>
 													<th>JKM</th>
@@ -441,8 +441,8 @@
 													<th>Uniform</th>
 													<th>RP Free</th>
 													<th>Terima Lain</th>
-													<th>Var Cost</th>
-													<th>Fix Cost</th>
+													<th>Tj. Lain-lain</th>
+													<th>Tj. Masa Kerja</th>
 													<th>Premi Absen</th>
 													<th>Trm JKK JKM</th>
 													<th>Lembur 1,5</th>
@@ -547,8 +547,8 @@
 													<th>Uniform</th>
 													<th>RP Free</th>
 													<th>Terima Lain</th>
-													<th>Var Cost</th>
-													<th>Fix Cost</th>
+													<th>Tj. Lain-lain</th>
+													<th>Tj. Masa Kerja</th>
 													<th>Premi Absen</th>
 													<th>Trm JKK JKM</th>
 													<th>Lembur 1,5</th>
@@ -651,8 +651,8 @@
 													<th>Gaji Pokok</th>
 													<th>TJ. Jabatan</th>
 													<th>Terima Lain</th>
-													<th>Var Cost</th>
-													<th>Fix Cost</th>
+													<th>Tj. Lain-lain</th>
+													<th>Tj. Masa Kerja</th>
 													<th>Premi Absen</th>
 													<th>JKK</th>
 													<th>JKM</th>
@@ -764,8 +764,8 @@
 													<th>Gaji Pokok</th>
 													<th>TJ. Jabatan</th>
 													<th>Terima Lain</th>
-													<th>Var Cost</th>
-													<th>Fix Cost</th>
+													<th>Tj. Lain-lain</th>
+													<th>Tj. Masa Kerja</th>
 													<th>Premi Absen</th>
 													<th>JKK</th>
 													<th>JKM</th>
