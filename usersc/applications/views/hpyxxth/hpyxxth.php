@@ -121,7 +121,7 @@
 													<th>Rp Lembur 3</th>
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
-													<th>Total Lembur (Rp) </th>
+													<th>Total Lembur (Rp Final) </th>
 													<th>Lembur Susulan (Rp) </th>
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
@@ -235,7 +235,7 @@
 
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
-													<th>Total Lembur (Rp) </th>
+													<th>Total Lembur (Rp Final) </th>
 
 													<!-- <th>Lembur Susulan (Rp) </th>
 													<th>PPh21 Back </th>
@@ -340,7 +340,7 @@
 													<th>Rp Lembur 3</th>
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
-													<th>Total Lembur (Rp) </th>
+													<th>Total Lembur (Rp Final) </th>
 													<th>Lembur Susulan (Rp) </th>
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
@@ -454,7 +454,7 @@
 
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
-													<th>Total Lembur (Rp) </th>
+													<th>Total Lembur (Rp Final) </th>
 
 													<!-- <th>Lembur Susulan (Rp) </th>
 													<th>PPh21 Back </th>
@@ -560,7 +560,7 @@
 
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
-													<th>Total Lembur (Rp) </th>
+													<th>Total Lembur (Rp Final) </th>
 
 													<!-- <th>Lembur Susulan (Rp) </th>
 													<th>PPh21 Back </th>
@@ -665,7 +665,7 @@
 													<th>Rp Lembur 3</th>
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
-													<th>Total Lembur (Rp) </th>
+													<th>Total Lembur (Rp Final) </th>
 													<th>Lembur Susulan (Rp) </th>
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
@@ -778,7 +778,7 @@
 													<th>Rp Lembur 3</th>
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
-													<th>Total Lembur (Rp) </th>
+													<th>Total Lembur (Rp Final) </th>
 													<th>Lembur Susulan (Rp) </th>
 													<th>PPh21 Back </th>
 													<th>Kompensasi Rekontrak </th>
@@ -1413,7 +1413,8 @@
 					{ 
 						data: "hpyemtd.overtime_susulan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
+						class: "text-right ",
+						visible: false,
 					},
 					{ 
 						data: "hpyemtd.pph21_back",
@@ -2154,7 +2155,8 @@
 					{ 
 						data: "hpyemtd.overtime_susulan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
+						class: "text-right ",
+						visible: false,
 					},
 					{ 
 						data: "hpyemtd.pph21_back",
@@ -3258,7 +3260,8 @@
 					{ 
 						data: "hpyemtd.overtime_susulan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
+						class: "text-right ",
+						visible: false,
 					},
 					{ 
 						data: "hpyemtd.pph21_back",
@@ -3628,7 +3631,8 @@
 					{ 
 						data: "hpyemtd.overtime_susulan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
-						class: "text-right "
+						class: "text-right ",
+						visible: false,
 					},
 					{ 
 						data: "hpyemtd.pph21_back",

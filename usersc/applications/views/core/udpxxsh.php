@@ -110,6 +110,7 @@
                                                 <th>U</th>
                                                 <th>D</th>
                                                 <th>A</th>
+                                                <th>CA</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -895,7 +896,8 @@
                             { "label": "Ya", "value": 1 },
                             { "label": "Tidak", "value": 0 }
                         ]
-                    },	{
+                    },	
+                    {
                         label: "Approve",
                         name: "ucudasd.hak_a",
                         type: "select",
@@ -904,7 +906,17 @@
                             { "label": "Ya", "value": 1 },
                             { "label": "Tidak", "value": 0 }
                         ]
-                    }
+                    },
+                    {
+                        label: "Cancel Approve",
+                        name: "ucudasd.hak_ca",
+                        type: "select",
+                        placeholder: "Pilih",
+                        options: [
+                            { "label": "Ya", "value": 1 },
+                            { "label": "Tidak", "value": 0 }
+                        ]
+                    },
                 ]
             } );
             
@@ -977,7 +989,17 @@
                                 return '<i class="fa fa-remove text-danger"></i>';
                             }
                         }
-                    }
+                    },
+                    { 
+                        data: "ucudasd.hak_ca" ,
+                        render: function (data){
+                            if (data == 1){
+                                return '<i class="fa fa-check text-navy"></i>';
+                            }else if(data == 0){
+                                return '<i class="fa fa-remove text-danger"></i>';
+                            }
+                        }
+                    },
                 ],
                 buttons: [
                     // BEGIN breaking generate button
