@@ -23,7 +23,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nama</th>
-                                <th>Jenis</th>
+                                <th>Komponen</th>
                                 <th>Nominal</th>
                                 <th>Tenor</th>
                                 <th>Cicilan per Bulan</th>
@@ -126,7 +126,7 @@
 						}
 					},
 					{
-						label: "jenis <sup class='text-danger'>*<sup>",
+						label: "Komponen <sup class='text-danger'>*<sup>",
 						name: "hpy_piutang_h.id_hpcxxmh",
 						type: "select2",
 						opts: {
@@ -163,7 +163,7 @@
 						}
 					},
 					// {
-					// 	label: "Jenis<sup class='text-danger'>*<sup>",
+					// 	label: "Komponen<sup class='text-danger'>*<sup>",
 					// 	name: "hpy_piutang_h.id_hpcxxmh",
 					// 	type: "select",
 					// 	placeholder : "Select",

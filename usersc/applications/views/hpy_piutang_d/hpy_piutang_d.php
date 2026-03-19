@@ -88,7 +88,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nama</th>
-                                <th>Jenis</th>
+                                <th>Komponen</th>
                                 <th>Nominal</th>
                                 <th>Perhitungan</th>
                                 <th>Tanggal</th>
@@ -215,7 +215,7 @@
 						]
 					},
 					{
-						label: "Jenis <sup class='text-danger'>*<sup>",
+						label: "Komponen <sup class='text-danger'>*<sup>",
 						name: "hpy_piutang_d.id_hpcxxmh",
 						type: "select2",
 						opts: {
