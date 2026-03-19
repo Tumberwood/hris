@@ -220,7 +220,7 @@
 													<th>Gaji Pokok</th>
 													<th>TJ. Jabatan</th>
 													<th>Uniform</th>
-													<th>RP Free</th>
+													<th>RP Fee</th>
 													<th>Terima Lain</th>
 													<th>Tj. Lain-lain</th>
 													<th>Tj. Masa Kerja</th>
@@ -439,7 +439,7 @@
 													<th>Gaji Pokok</th>
 													<th>TJ. Jabatan</th>
 													<th>Uniform</th>
-													<th>RP Free</th>
+													<th>RP Fee</th>
 													<th>Terima Lain</th>
 													<th>Tj. Lain-lain</th>
 													<th>Tj. Masa Kerja</th>
@@ -545,7 +545,7 @@
 													<th>Gaji Pokok</th>
 													<th>TJ. Jabatan</th>
 													<th>Uniform</th>
-													<th>RP Free</th>
+													<th>RP Fee</th>
 													<th>Terima Lain</th>
 													<th>Tj. Lain-lain</th>
 													<th>Tj. Masa Kerja</th>
