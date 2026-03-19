@@ -23,7 +23,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Kode</th>
-                                <th>Kelas</th>
+                                <th>TER</th>
                                 <th>Keterangan</th>
                                 <th>Nominal</th>
                             </tr>
