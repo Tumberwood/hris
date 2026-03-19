@@ -113,12 +113,12 @@
 													<th>JKK</th>
 													<th>JKM</th>
 													<th>Trm JKK JKM</th>
-													<th>Lembur 1,5</th>
-													<th>Rp Lembur 1,5</th>
-													<th>Lembur 2</th>
-													<th>Rp Lembur 2</th>
-													<th>Lembur 3</th>
-													<th>Rp Lembur 3</th>
+													<th>Lembur Jam Pertama</th>
+													<th>Rp Jam Pertama x 1,5</th>
+													<th>Lembur Jam Kedua</th>
+													<th>Rp Jam Kedua x 2</th>
+													<th>Lembur Jam Ketiga</th>
+													<th>Rp Jam Ketiga x 3</th>
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
 													<th>Total Lembur (Rp Final) </th>
@@ -226,12 +226,12 @@
 													<th>Tj. Masa Kerja</th>
 													<th>Premi Absen</th>
 													<th>Trm JKK JKM</th>
-													<th>Lembur 1,5</th>
-													<th>Rp Lembur 1,5</th>
-													<th>Lembur 2</th>
-													<th>Rp Lembur 2</th>
-													<th>Lembur 3</th>
-													<th>Rp Lembur 3</th>
+													<th>Lembur Jam Pertama</th>
+													<th>Rp Jam Pertama x 1,5</th>
+													<th>Lembur Jam Kedua</th>
+													<th>Rp Jam Kedua x 2</th>
+													<th>Lembur Jam Ketiga</th>
+													<th>Rp Jam Ketiga x 3</th>
 
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
@@ -332,12 +332,12 @@
 													<th>JKK</th>
 													<th>JKM</th>
 													<th>Trm JKK JKM</th>
-													<th>Lembur 1,5</th>
-													<th>Rp Lembur 1,5</th>
-													<th>Lembur 2</th>
-													<th>Rp Lembur 2</th>
-													<th>Lembur 3</th>
-													<th>Rp Lembur 3</th>
+													<th>Lembur Jam Pertama</th>
+													<th>Rp Jam Pertama x 1,5</th>
+													<th>Lembur Jam Kedua</th>
+													<th>Rp Jam Kedua x 2</th>
+													<th>Lembur Jam Ketiga</th>
+													<th>Rp Jam Ketiga x 3</th>
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
 													<th>Total Lembur (Rp Final) </th>
@@ -445,12 +445,12 @@
 													<th>Tj. Masa Kerja</th>
 													<th>Premi Absen</th>
 													<th>Trm JKK JKM</th>
-													<th>Lembur 1,5</th>
-													<th>Rp Lembur 1,5</th>
-													<th>Lembur 2</th>
-													<th>Rp Lembur 2</th>
-													<th>Lembur 3</th>
-													<th>Rp Lembur 3</th>
+													<th>Lembur Jam Pertama</th>
+													<th>Rp Jam Pertama x 1,5</th>
+													<th>Lembur Jam Kedua</th>
+													<th>Rp Jam Kedua x 2</th>
+													<th>Lembur Jam Ketiga</th>
+													<th>Rp Jam Ketiga x 3</th>
 
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
@@ -551,12 +551,12 @@
 													<th>Tj. Masa Kerja</th>
 													<th>Premi Absen</th>
 													<th>Trm JKK JKM</th>
-													<th>Lembur 1,5</th>
-													<th>Rp Lembur 1,5</th>
-													<th>Lembur 2</th>
-													<th>Rp Lembur 2</th>
-													<th>Lembur 3</th>
-													<th>Rp Lembur 3</th>
+													<th>Lembur Jam Pertama</th>
+													<th>Rp Jam Pertama x 1,5</th>
+													<th>Lembur Jam Kedua</th>
+													<th>Rp Jam Kedua x 2</th>
+													<th>Lembur Jam Ketiga</th>
+													<th>Rp Jam Ketiga x 3</th>
 
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
@@ -657,12 +657,12 @@
 													<th>JKK</th>
 													<th>JKM</th>
 													<th>Trm JKK JKM</th>
-													<th>Lembur 1,5</th>
-													<th>Rp Lembur 1,5</th>
-													<th>Lembur 2</th>
-													<th>Rp Lembur 2</th>
-													<th>Lembur 3</th>
-													<th>Rp Lembur 3</th>
+													<th>Lembur Jam Pertama</th>
+													<th>Rp Jam Pertama x 1,5</th>
+													<th>Lembur Jam Kedua</th>
+													<th>Rp Jam Kedua x 2</th>
+													<th>Lembur Jam Ketiga</th>
+													<th>Rp Jam Ketiga x 3</th>
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
 													<th>Total Lembur (Rp Final) </th>
@@ -770,12 +770,12 @@
 													<th>JKK</th>
 													<th>JKM</th>
 													<th>Trm JKK JKM</th>
-													<th>Lembur 1,5</th>
-													<th>Rp Lembur 1,5</th>
-													<th>Lembur 2</th>
-													<th>Rp Lembur 2</th>
-													<th>Lembur 3</th>
-													<th>Rp Lembur 3</th>
+													<th>Lembur Jam Pertama</th>
+													<th>Rp Jam Pertama x 1,5</th>
+													<th>Lembur Jam Kedua</th>
+													<th>Rp Jam Kedua x 2</th>
+													<th>Lembur Jam Ketiga</th>
+													<th>Rp Jam Ketiga x 3</th>
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
 													<th>Total Lembur (Rp Final) </th>
