@@ -592,7 +592,8 @@
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
 						$arr_buttons_action 	= ['create', 'edit', 'view', 'nonaktif_h'];
-						$arr_buttons_approve 	= ['approve','cancel_approve','void'];
+						// $arr_buttons_approve 	= ['approve','cancel_approve','void'];
+						$arr_buttons_approve 	= ['approve'];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
