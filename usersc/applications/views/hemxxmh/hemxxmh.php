@@ -1262,6 +1262,7 @@
 				edthemxxmh.field('start_on').val(start_on);
 				edthemxxmh.field('status_aktif').hide();
 				edthemxxmh.field('hemjbmh.id_heyxxmh').disable();
+				edthemxxmh.field('hemjbmh.grup_hk').show();
 
 				if (action == 'edit') {
 					edthemxxmh.field('status_aktif').show();
