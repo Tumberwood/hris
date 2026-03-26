@@ -75,19 +75,26 @@
 								<th>Level</th>
 								<th>Status</th>
 								<th>Type</th>
-								<th>Komp. Gaji</th>
-								<th>Komp. T.Jab</th>
-								<th>Komp. Var Cost</th>
-								<th>Komp. Fix Cost</th>
-								<th>Komp. Premi</th>
-								<th>Nominal Lembur / Jam</th>
-								<th>Komp. Gaji BPJS</th>
-								<th>% JKK</th>
-								<th>% JKM</th>
-								<th>% JHT</th>
-								<th>% JP</th>
-								<th>% BPJS Kes</th>
-								<th>Komp. Pot Makan</th>
+								<th>Gaji Pokok</th>
+								<th>Tj. Jabatan</th>
+								<th>Tj. Lain-lain</th>
+								<th>Tj. Masa Kerja</th>
+								<th>Premi Absen</th>
+								<th>Rp Lembur /jam</th>
+								<th>Gaji BPJS</th>
+
+								<th>% Kes P</th>
+								<th>% JKK P</th>
+								<th>% JKM P</th>
+								<th>% JHT P</th>
+								<th>% JP P</th>
+
+								<th>% JHT K</th>
+								<th>% JP K</th>
+								<th>% Kes K</th>
+								<th>Pot. Uang Makan</th>
+								<th>Pot. Absen</th>
+								<th>Lembur Mati / Jam</th>
 							</tr>
 						</thead>
                     </table>
@@ -279,12 +286,27 @@
 						class: "text-right"
 					},
 					{ 
+						data: "persen_karyawan",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
 						data: "persen_jkk",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
 					{ 
 						data: "persen_jkm",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "persen_jht_perusahaan",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "persen_jp_perusahaan",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},
@@ -305,6 +327,16 @@
 					},
 					{ 
 						data: "pot_uang_makan",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "pot_absen",
+						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "nominal_lembur_mati",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
 						class: "text-right"
 					},

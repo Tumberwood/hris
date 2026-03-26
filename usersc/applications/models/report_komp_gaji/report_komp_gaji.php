@@ -40,12 +40,19 @@
 					IFNULL(premiabs,0) premi,
 					(FLOOR(IF(c.id_hesxxmh = 3, COALESCE(nominal_lembur_mati, 0), (COALESCE(nominal_gp, 0) + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) ) / 173))) AS nominal_lembur_jam,
 					if(c.id_hesxxmh IN (1,2,5), IFNULL(gaji_bpjs,0) ,0) gaji_bpjs,
-					if(c.id_hesxxmh IN (1,2,5), IFNULL(persen_jkk,0) ,0) persen_jkk,
-					if(c.id_hesxxmh IN (1,2,5), IFNULL(persen_jkm,0) ,0) persen_jkm,
-					if(c.id_hesxxmh IN (1,2,5), IFNULL(persen_jht_karyawan,0) ,0) persen_jht_karyawan,
-					if(c.id_hesxxmh IN (1,2,5), IFNULL(persen_jp_karyawan,0) ,0) persen_jp_karyawan,
-					if(c.id_hesxxmh IN (1,2,5), IFNULL(persen_karyawan,0) ,0) bpjs_kes,
-					IFNULL(pot_uang_makan,0) pot_uang_makan
+
+					IF(c.id_hesxxmh IN (1,2,5), IFNULL(persen_karyawan,0), 0) persen_karyawan,
+					IF(c.id_hesxxmh IN (1,2,5), IFNULL(persen_jkk,0), 0) persen_jkk,
+					IF(c.id_hesxxmh IN (1,2,5), IFNULL(persen_jkm,0), 0) persen_jkm,
+					IF(c.id_hesxxmh IN (1,2,5), IFNULL(persen_jht_perusahaan,0), 0) persen_jht_perusahaan,
+					IF(c.id_hesxxmh IN (1,2,5), IFNULL(persen_jp_perusahaan,0), 0) persen_jp_perusahaan,
+					IF(c.id_hesxxmh IN (1,2,5), IFNULL(persen_jht_karyawan,0), 0) persen_jht_karyawan,
+					IF(c.id_hesxxmh IN (1,2,5), IFNULL(persen_jp_karyawan,0), 0) persen_jp_karyawan,
+					IF(c.id_hesxxmh IN (1,2,5), IFNULL(persen_karyawan,0), 0) bpjs_kes,
+
+					IFNULL(pot_uang_makan,0) pot_uang_makan,
+					"-" AS pot_absen,
+					IF(c.id_hesxxmh = 3, COALESCE(nominal_lembur_mati, 0), 0) AS nominal_lembur_mati
 				FROM hemxxmh a
 				INNER JOIN hemjbmh c ON c.id_hemxxmh = a.id
 				INNER JOIN hodxxmh d ON d.id = c.id_hodxxmh
@@ -250,20 +257,14 @@
 				-- select data dari hibtkmh untuk hitung bpjs
 				LEFT JOIN (
 					SELECT
-					persen_jkk,
-					persen_jkm,
-					persen_jht_karyawan,
-					persen_jp_karyawan,
-					is_active
-					FROM (
-						SELECT
-							persen_jkk,
-							persen_jkm,
-							persen_jht_karyawan,
-							persen_jp_karyawan,
-							is_active
-						FROM hibtkmh
-					) sel_bpjs
+						persen_jht_perusahaan,
+						persen_jht_karyawan,
+						persen_jkk,
+						persen_jkm,
+						persen_jp_perusahaan,
+						persen_jp_karyawan,
+						is_active
+					FROM hibtkmh
 				) bpjs ON bpjs.is_active = 1
 				
 				-- select gaji bpjs
@@ -291,14 +292,10 @@
 				-- select data dari hibksmh untuk hitung bpjs kesehatan
 				LEFT JOIN (
 					SELECT
-					persen_karyawan,
-					is_active
-					FROM (
-						SELECT
-							persen_karyawan,
-							is_active
-						FROM hibksmh
-					) sel_bpjs
+						persen_karyawan,
+						persen_perusahaan,
+						is_active
+					FROM hibksmh
 				) bpjs_kesehatan ON bpjs_kesehatan.is_active = 1
 				
 				-- Ambil lembur mati dari htpr_hesxxmh untuk pelatihan
