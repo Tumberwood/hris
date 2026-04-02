@@ -58,8 +58,8 @@
 					$sub_tipe = $sheetData[$i][1];
 					$status = $sheetData[$i][2];
 					$hari = $sheetData[$i][3];
-					$nominal_lembur = $sheetData[$i][4];
-					$nominal_pot_absen = $sheetData[$i][5];
+					$nominal_pot_absen = $sheetData[$i][4];
+					$nominal_lembur = $sheetData[$i][5];
 
 					if ($hari == '5') {
 						$grup_hk = 1;
