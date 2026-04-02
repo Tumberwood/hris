@@ -120,6 +120,7 @@
 				) ),
 			Field::inst( 'hemjbmh.grup_hk' ),
 			Field::inst( 'hemjbmh.jumlah_grup' ),
+			Field::inst( 'hemjbmh.is_harian_lepas' ),
 			Field::inst( 'hovxxmh.nama' ),
 			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'hemdcmh.id_gtxpkmh' )

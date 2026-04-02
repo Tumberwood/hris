@@ -201,10 +201,15 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
-								<editor-field name="hemxxmh.keterangan"></editor-field>
+								<editor-field name="hemjbmh.is_harian_lepas"></editor-field>
 							</div>
 							<div class="col-lg-6">
 								<editor-field name="status_aktif"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.keterangan"></editor-field>
 							</div>
 						</div>
 					</div>
@@ -1255,6 +1260,17 @@
 						name: "hemdcmh.ktp_kecamatan",
 						type: "textarea"
 					},
+					{
+						label: "Harian Lepas",
+						name: "hemjbmh.is_harian_lepas",
+						type: "select",
+						placeholder : "Select",
+						def: 1,
+						options: [
+							{ "label": "Ya", "value": 1 },
+							{ "label": "Tidak", "value": 0 }
+						]
+					},
 				]
 			} );
 			
@@ -1263,6 +1279,7 @@
 				edthemxxmh.field('start_on').val(start_on);
 				edthemxxmh.field('status_aktif').hide();
 				edthemxxmh.field('hemjbmh.id_heyxxmh').disable();
+				edthemxxmh.field('hemjbmh.is_harian_lepas').disable();
 
 				if (action == 'edit') {
 					edthemxxmh.field('status_aktif').show();
