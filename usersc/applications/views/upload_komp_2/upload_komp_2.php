@@ -97,6 +97,22 @@
 					</div>
 
 					<div class="form-group row">
+						<label class="col-lg-2 col-form-label"><b>Komponen Sub Tipe (Potongan Absen, Lembur Mati / Jam)</b></label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input type="file" name="filename" class="form-control" id="inputKompSub_tipe">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div>
+								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_per_sub_tipe.xlsx');">
+									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group row">
 						<label class="col-lg-2 col-form-label"><b>Komponen Sub Tipe (Potongan Uang Makan)</b></label>
 						<div class="col-sm-4">
 							<div class="input-group">
@@ -331,6 +347,43 @@
 								$("#inputKompGrup_Level").val('');
 							},
 							error: function (xhr, Grup_Level, err){
+								console.log('x');
+							}
+						} );
+					}
+					
+					//sub_tipe
+					var fd_sub_tipe = new FormData();
+					var sub_tipe = $('#inputKompSub_tipe')[0].files[0];
+					console.log(sub_tipe);
+					if (sub_tipe != undefined) {
+						fd_sub_tipe.append('filename',sub_tipe);
+			
+						$.ajax( {
+							url: "../../models/upload_komp_2/upload_komp_2_fn_sub_tipe.php",
+							type: 'POST',
+							dataType: 'json',
+							data: fd_sub_tipe,
+							async: false,
+							contentType: false,
+							processData: false,
+							success: function ( json ) {
+								notifyprogress.close();
+								$.notify({
+									message: json.data.message
+								},{
+									type: json.data.type_message,
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
+								});
+								$("#inputKompSub_tipe").val('');
+							},
+							error: function (xhr, Sub_tipe, err){
 								console.log('x');
 							}
 						} );

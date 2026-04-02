@@ -44,26 +44,33 @@
      
 		$sheetData = $spreadsheet->getActiveSheet()->toArray();
 		
-		if ($sheetData[0][0] == 'Sub Tipe') {
+		if ($sheetData[0][0] == 'Tipe') {
 			try{
 				$db->transaction();
 				
 				$datakembar = 0;
 				$dataupload = 0;
 				$emptyPeg = array();
-				/**
-				 *                      
-				 * 0: NIK           : nama
-				 * 1: Id Komponen	: id_hpcxxmh              
-				 * 2: Tanggal             
-				 * 3: Nominal
-				 */
+				
 				for($i = 1; $i < count($sheetData); $i++){
 
-					$nama = $sheetData[$i][0];
+					$tipe = $sheetData[$i][0];
+					$sub_tipe = $sheetData[$i][1];
+					$status = $sheetData[$i][2];
+					$hari = $sheetData[$i][3];
+					$nominal_lembur = $sheetData[$i][4];
+					$nominal_pot_absen = $sheetData[$i][5];
+
+					if ($hari == '5') {
+						$grup_hk = 1;
+					} elseif ($hari == '6') {
+						$grup_hk = 2;
+					} else {
+						$grup_hk = 0;
+					}
 
 					// ===== FIX TANGGAL =====
-					$raw = trim($sheetData[$i][2]);
+					$raw = trim($sheetData[$i][6]);
 
 					$formats = [
 						'd/m/Y',
@@ -92,62 +99,86 @@
 						}
 					}
 					
-					$keterangan = $sheetData[$i][3];
+					$keterangan = $sheetData[$i][7];
 
-					// mapping komponen
-					$komponen = [
-						['id_hpcxxmh' => 34,   'nominal' => $sheetData[$i][1]],
-					];
-
-					// cari Tipe
-					$qs = $db->query('select','heyxxmd')
-						->get(['id as id_heyxxmd'])
+					// cari tipe
+					$qs_tipe = $db->query('select','heyxxmh')
+						->get(['id as id_heyxxmh'])
 						->get(['count(id) as id'])
-						->where('nama',$nama)
+						->where('nama',$tipe)
 						->exec();
 
-					$rs = $qs->fetch();
-					$id_heyxxmd = $rs['id_heyxxmd'];
+					$rs_tipe = $qs_tipe->fetch();
+					$id_heyxxmh = $rs_tipe['id_heyxxmh'];
 
-					if ($rs['id'] == 0) {
+					// cari sub_tipe
+					$qs_sub_tipe = $db->query('select','heyxxmd')
+						->get(['id as id_heyxxmd'])
+						->get(['count(id) as id'])
+						->where('nama',$sub_tipe)
+						->exec();
+
+					$rs_sub_tipe = $qs_sub_tipe->fetch();
+					$id_heyxxmd = $rs_sub_tipe['id_heyxxmd'];
+					
+					// cari status
+					$qs_status = $db->query('select','hesxxmh')
+						->get(['id as id_hesxxmh'])
+						->get(['count(id) as id'])
+						->where('nama',$status)
+						->exec();
+
+					$rs_status = $qs_status->fetch();
+					$id_hesxxmh = $rs_status['id_hesxxmh'];
+
+					if ($rs_tipe['id'] == 0) {
 						$emptyPeg[] = ['rowIndex' => $i + 1];
 						continue;
 					}
 
-					foreach($komponen as $k){
+					if ($rs_sub_tipe['id'] == 0) {
+						$emptyPeg[] = ['rowIndex' => $i + 1];
+						continue;
+					}
 
-						$id_hpcxxmh = $k['id_hpcxxmh'];
-						$nominal    = $k['nominal'];
+					if ($rs_status['id'] == 0) {
+						$emptyPeg[] = ['rowIndex' => $i + 1];
+						continue;
+					}
+					
+					$qs_check = $db->query('select','htpr_sub_tipe')
+						->get(['id'])
+						->where('id_heyxxmh',$id_heyxxmh)
+						->where('id_heyxxmd',$id_heyxxmd)
+						->where('id_hesxxmh',$id_hesxxmh)
+						->where('tanggal_efektif',$tanggal_efektif)
+						->where('grup_hk',$grup_hk)
+						->where('nominal_lembur',$nominal_lembur)
+						->where('nominal_pot_absen',$nominal_pot_absen)
+						->where('is_active',1)
+						->exec();
 
-						if($nominal === null || $nominal === '') continue;
+					$rs_check = $qs_check->fetch();
 
-						$qs_check = $db->query('select','htpr_heyxxmd')
-							->get(['id'])
-							->where('id_heyxxmd',$id_heyxxmd)
-							->where('id_hpcxxmh',$id_hpcxxmh)
-							->where('tanggal_efektif',$tanggal_efektif)
-							->where('is_active',1)
+					if(!$rs_check){
+
+						$db->query('insert','htpr_sub_tipe')
+							->set('kode', 'Upload')
+							->set('created_by', $_SESSION['user'])
+							->set('id_heyxxmh',$id_heyxxmh)
+							->set('id_heyxxmd',$id_heyxxmd)
+							->set('id_hesxxmh',$id_hesxxmh)
+							->set('nominal_lembur',$nominal_lembur)
+							->set('nominal_pot_absen',$nominal_pot_absen)
+							->set('tanggal_efektif',$tanggal_efektif)
+							->set('grup_hk',$grup_hk)
+							->set('keterangan',$keterangan)
 							->exec();
 
-						$rs_check = $qs_check->fetch();
+						$dataupload++;
 
-						if(!$rs_check){
-
-							$db->query('insert','htpr_heyxxmd')
-								->set('kode', 'Upload')
-								->set('created_by', $_SESSION['user'])
-								->set('id_heyxxmd',$id_heyxxmd)
-								->set('id_hpcxxmh',$id_hpcxxmh)
-								->set('nominal',$nominal)
-								->set('tanggal_efektif',$tanggal_efektif)
-								->set('keterangan',$keterangan)
-								->exec();
-
-							$dataupload++;
-
-						} else {
-							$datakembar++;
-						}
+					} else {
+						$datakembar++;
 					}
 				}
 				
@@ -167,7 +198,7 @@
 					);
 				} else {
 					$data = array(
-						"message" => "Upload Komponen Potongan Uang Makan Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
+						"message" => "Upload Komponen per Sub Tipe Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
 						"type_message" => "success"
 					);
 				}
@@ -177,19 +208,19 @@
 			}catch (PDOException $e){
 				$db->rollback();
 				$data = array(
-					"message" => "Upload Komponen Potongan Uang Makan gagal," . $e,
+					"message" => "Upload Komponen per Sub Tipe gagal," . $e,
 					"type_message" => "danger"
 				);
 			}
 		} else {
 			$data = array(
-				"message" => "Template Upload Komponen Potongan Uang Makan salah!",
+				"message" => "Template Upload Komponen Sub Tipe salah!",
 				"type_message" => "danger"
 			);
 		}
 	}else{
 		$data = array(
-			"message" => "Upload Komponen Potongan Uang Makan gagal, format file salah!",
+			"message" => "Upload Komponen per Sub Tipe gagal, format file salah!",
 			"type_message" => "danger"
 		);
 	}
