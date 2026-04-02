@@ -109,6 +109,11 @@
 								<editor-field name="hemjbmh.id_holxxmd_2"></editor-field>
 							</div>
 							<div class="col-lg-6">
+								<editor-field name="hemjbmh.id_hobxxmh"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
 								<editor-field name="hemdcmh.id_gtxpkmh"></editor-field>
 							</div>
 						</div>
@@ -225,14 +230,16 @@
                                 <th>No KTP</th>
                                 <th>Nama</th>
                                 <th>Department</th>
-                                <th>Bagian</th>
+                                <th>Unit Kerja</th>
                                 <th>Jabatan</th>
                                 <th>Area Kerja</th>
                                 <th>Tipe</th>
                                 <th>Sub Tipe</th>
                                 <th>Status</th>
+                                <th>Grade</th>
+                                <th>Bagian</th>
                                 <th>Tanggal Join</th>
-                                <th>Tanggal Keluar</th>
+                                <th>Tanggal Akhir Kontrak</th>
                                 <th>Grup HK</th>
                                 <th>Gender</th>
                                 <th>Harian Lepas</th>
@@ -303,7 +310,7 @@
 							</div>
 							<div role="tabpanel" id="tabhtlxxth" class="tab-pane">
 								<div class="panel-body">
-									<h3 id="sisa_cuti_text">AKOWKOK</h3>
+									<h3 id="sisa_cuti_text"></h3>
 									<div class="table-responsive">
 										<table id="tblhtlxxth" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
@@ -558,6 +565,7 @@
 		// ------------- end of default variable
 
 		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0, id_hevxxmh_old = 0, id_heyxxmh_old = 0, id_hesxxmh_old = 0;
+		var id_hobxxmh_old = 0;
 		var id_hedlvmh_old = 0;
 		var id_gtxpkmh_old = 0, id_holxxmd_2_old = 0;
 		var id_heyxxmd_old = 0, tanggal_keluar_old = null, id_gctxxmh_old = 0;
@@ -711,7 +719,7 @@
 						}
 					},
 					{
-						label: "Bagian <sup class='text-danger'>*<sup>",
+						label: "Unit Kerja <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_hosxxmh",
 						type: "select2",
 						opts: {
@@ -748,7 +756,43 @@
 						}
 					},
 					{
-						label: "Level",
+						label: "Bagian",
+						name: "hemjbmh.id_hobxxmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hobxxmh/hobxxmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hobxxmh_old: id_hobxxmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
+					{
+						label: "Grade",
 						name: "hemjbmh.id_hevxxmh",
 						type: "select2",
 						opts: {
@@ -1641,6 +1685,8 @@
 					{ data: "heyxxmh.nama" },
 					{ data: "heyxxmd.nama" },
 					{ data: "hesxxmh.nama" },//10
+					{ data: "hevxxmh.nama" },//10
+					{ data: "hobxxmh.nama" },//10
 					{ data: "hemjbmh.tanggal_masuk" },
 					{ data: "hemjbmh.tanggal_keluar" },
 					{ 
@@ -1744,6 +1790,7 @@
 				id_hetxxmh_old   = data_hemjbmh.id_hetxxmh;
 				id_heyxxmh_old   = data_hemjbmh.id_heyxxmh;
 				id_heyxxmd_old   = data_hemjbmh.id_heyxxmd;
+				id_hobxxmh_old   = data_hemjbmh.id_hobxxmh;
 				id_hesxxmh_old   = data_hemjbmh.id_hesxxmh;
 				id_holxxmd_2_old   = data_hemjbmh.id_holxxmd_2;
 				tanggal_keluar_old   = data_hemjbmh.tanggal_akhir_kontrak;
@@ -1790,6 +1837,7 @@
 				// reload dipanggil di function CekDeselectHeader
 				id_hemxxmh = 0;
 				id_heyxxmd_old = 0;
+				id_hobxxmh_old = 0;
 				id_gtxpkmh_old = 0;
 				id_hovxxmh_old   = 0, id_hodxxmh_old   = 0, id_hosxxmh_old   = 0, id_hevxxmh_old   = 0, id_hetxxmh_old   = 0, id_heyxxmh_old   = 0, id_hesxxmh_old   = 0, tanggal_keluar_old = null;
 				id_holxxmd_2_old   = 0;

@@ -23,7 +23,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Kode</th>
-                                <th>Nama</th>
+                                <th>Grup Jabatan</th>
                             </tr>
                         </thead>
                     </table>

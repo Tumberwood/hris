@@ -22,7 +22,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nama</th>
+                                <th>Sub Tipe</th>
                             </tr>
                         </thead>
                     </table>

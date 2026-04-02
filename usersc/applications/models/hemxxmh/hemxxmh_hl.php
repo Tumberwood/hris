@@ -51,6 +51,8 @@
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemjbmh.id_hesxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hobxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemjbmh.id_heyxxmd' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemjbmh.id_holxxmd_2' )
@@ -153,6 +155,7 @@
 			Field::inst( 'heyxxmh.nama' ),
 			Field::inst( 'heyxxmd.nama' ),
 			Field::inst( 'hesxxmh.nama' ),
+			Field::inst( 'hobxxmh.nama' ),
 			Field::inst( 'holxxmd_2.nama' ),
 
 			Field::inst( 'hemxxmh.gender' ),
@@ -183,6 +186,7 @@
 		->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
 		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
+		->leftJoin( 'hobxxmh','hobxxmh.id','=','hemjbmh.id_hobxxmh' )
 		->where( 'hemjbmh.is_harian_lepas', 1)
 		;
 	
