@@ -22,6 +22,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Grup Jabatan</th>
                                 <th>Kode</th>
                                 <th>Nama</th>
                                 <th>Atasan Langsung</th>
@@ -49,7 +50,7 @@
 		var edthetxxmh, tblhetxxmh, show_inactive_status_hetxxmh = 0, id_hetxxmh;
 		// ------------- end of default variable
 
-		var id_hetxxmh_old = 0;
+		var id_hetxxmh_old = 0, id_hevgrmh_old = 0;
 		
 		$(document).ready(function() {
 			//start datatables editor
@@ -87,7 +88,44 @@
 					}, 	{
 						label: "Nama <sup class='text-danger'>*<sup>",
 						name: "hetxxmh.nama"
-					}, 	{
+					}, 	
+					{
+						label: "Grup Jabatan <sup class='text-danger'>*<sup>",
+						name: "hetxxmh.id_hevgrmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hevgrmh/hevgrmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hevgrmh_old: id_hevgrmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},	
+					{
 						label: "Atasan Langsung",
 						name: "hetxxmh.id_hetxxmh_al",
 						type: "select2",
@@ -122,7 +160,8 @@
 								minimumResultsForSearch: -1,
 							},
 						}
-					},	{
+					},	
+					{
 						label: "Keterangan",
 						name: "hetxxmh.keterangan",
 						type: "textarea"
@@ -210,6 +249,11 @@
 						// END of cek unik hetxxmh.nama
 					}
 					// END of validasi hetxxmh.nama
+
+					id_hevgrmh = edthetxxmh.field('hetxxmh.id_hevgrmh').val();
+					if(!id_hevgrmh || id_hevgrmh == ''){
+						edthetxxmh.field('hetxxmh.id_hevgrmh').error( 'Wajib diisi!' );
+					}
 				}
 				
 				if ( edthetxxmh.inError() ) {
@@ -234,6 +278,7 @@
 				order: [[ 1, "asc" ]],
 				columns: [
 					{ data: "hetxxmh.id",visible:false },
+					{ data: "hevgrmh.nama" },
 					{ data: "hetxxmh.kode" },
 					{ data: "hetxxmh.nama" },
 					{ data: "hetxxmh_al.nama" },
@@ -277,6 +322,7 @@
 				is_active      = hetxxmh_data.is_active;
 
 				id_hetxxmh_old = hetxxmh_data.id_hetxxmh;
+				id_hevgrmh_old = hetxxmh_data.id_hevgrmh;
 
 				// atur hak akses
 				CekSelectHeaderH(tblhetxxmh);
@@ -286,6 +332,7 @@
 				// reload dipanggil di function CekDeselectHeader
 				id_hetxxmh = 0;
 				id_hetxxmh_old = 0;
+				id_hevgrmh_old = 0;
 
 				// atur hak akses
 				CekDeselectHeaderH(tblhetxxmh);

@@ -22,6 +22,8 @@
 		->debug(true)
 		->fields(
 			Field::inst( 'hetxxmh.id' ),
+			Field::inst( 'hetxxmh.id_hevgrmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hetxxmh.id_hetxxmh_al' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hetxxmh.kode' )
@@ -44,9 +46,12 @@
 				->setValue($_SESSION['user']),
 			Field::inst( 'hetxxmh.is_approve' ),
 			Field::inst( 'hetxxmh.is_defaultprogram' ),
-			Field::inst( 'hetxxmh_al.nama' )
+			Field::inst( 'hetxxmh_al.nama' ),
+			Field::inst( 'hevgrmh.nama' ),
 		)
-		->leftJoin( 'hetxxmh as hetxxmh_al','hetxxmh_al.id','=','hetxxmh.id_hetxxmh_al' );
+		->leftJoin( 'hetxxmh as hetxxmh_al','hetxxmh_al.id','=','hetxxmh.id_hetxxmh_al' )
+		->leftJoin( 'hevgrmh as hevgrmh','hevgrmh.id','=','hetxxmh_al.id_hevgrmh' )
+		;
 	
 	// do not erase
 	// function show / hide inactive document
