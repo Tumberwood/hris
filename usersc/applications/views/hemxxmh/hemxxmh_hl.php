@@ -230,6 +230,7 @@
                                 <th>Tanggal Keluar</th>
                                 <th>Grup HK</th>
                                 <th>Gender</th>
+                                <th>Harian Lepas</th>
                                 <th>Aktif</th>
                             </tr>
                         </thead>
@@ -1639,6 +1640,16 @@
 						}
 					},
 					{ data: "hemxxmh.gender" },
+					{ 
+						data: "hemjbmh.is_harian_lepas",
+						render: function (data){
+							if (data == 0){
+								return 'Tidak';
+							}else if(data == 1){
+								return 'Ya';
+							}
+						}
+					},
 					{ 
 						data: "hemxxmh.is_active",
 						render: function (data){
