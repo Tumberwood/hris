@@ -22,8 +22,9 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>PKP ></th>
-                                <th>PKP <=</th>
+                                <th>Tanggal Efektif</th>
+                                <th>Batas Awal</th>
+                                <th>Batas Akhir</th>
                                 <th>% Pajak</th>
                             </tr>
                         </thead>
@@ -80,12 +81,25 @@
 						def: 1
 					},	
 					{
-						label: "PKP > <sup class='text-danger'>*<sup>",
+						label: "Tanggal Efektif <sup class='text-danger'>*<sup>",
+						name: "hppphmh.tanggal_efektif",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},
+					{
+						label: "Batas Awal <sup class='text-danger'>*<sup>",
 						name: "hppphmh.pkp_awal"
 					
 					}, 	
 					{ 	
-						label: "PKP <= <sup class='text-danger'>*<sup>",
+						label: "Batas Akhir <sup class='text-danger'>*<sup>",
 						name: "hppphmh.pkp_akhir"
 					
 					},
@@ -111,7 +125,13 @@
 
             edthppphmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					// END of validasi hppphmh.pkp_awal
+
+					// BEGIN of validasi hppphmh.tanggal_efektif 
+					tanggal_efektif = edthppphmh.field('hppphmh.tanggal_efektif').val();
+					if(!tanggal_efektif || tanggal_efektif == ''){
+						edthppphmh.field('hppphmh.tanggal_efektif').error( 'Wajib diisi!' );
+					}
+					// END of validasi hppphmh.tanggal_efektif 
 					
 					// BEGIN of validasi hppphmh.pkp_awal
 					if ( ! edthppphmh.field('hppphmh.pkp_awal').isMultiValue() ) {
@@ -176,6 +196,7 @@
 				order: [[ 1, "asc" ]],
 				columns: [
 					{ data: "hppphmh.id",visible:false },
+					{ data: "hppphmh.tanggal_efektif" },
 					{ 
 						data: "hppphmh.pkp_awal" ,
 						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
