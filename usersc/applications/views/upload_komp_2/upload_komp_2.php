@@ -35,7 +35,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="form-group row" style='display:none;'>
 						<label class="col-lg-2 col-form-label"><b>Komponen per Status (Potongan Uang Makan)</b></label>
 						<div class="col-sm-4">
 							<div class="input-group">
@@ -50,7 +50,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="form-group row" style='display:none;'>
 						<label class="col-lg-2 col-form-label"><b>Komponen per Tipe (Outsourcing/Organik)</b></label>
 						<div class="col-sm-4">
 							<div class="input-group">
@@ -90,6 +90,22 @@
 						<div class="col-sm-4">
 							<div>
 								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_per_grup_level.xlsx');">
+									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-lg-2 col-form-label"><b>Komponen Sub Tipe (Potongan Uang Makan)</b></label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input type="file" name="filename" class="form-control" id="inputKompPot_uang_makan">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div>
+								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_pot_uang_makan.xlsx');">
 									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 								</button>
 							</div>
@@ -315,6 +331,43 @@
 								$("#inputKompGrup_Level").val('');
 							},
 							error: function (xhr, Grup_Level, err){
+								console.log('x');
+							}
+						} );
+					}
+
+					//pot_uang_makan
+					var fd_pot_uang_makan = new FormData();
+					var pot_uang_makan = $('#inputKompPot_uang_makan')[0].files[0];
+					console.log(pot_uang_makan);
+					if (pot_uang_makan != undefined) {
+						fd_pot_uang_makan.append('filename',pot_uang_makan);
+			
+						$.ajax( {
+							url: "../../models/upload_komp_2/upload_komp_2_fn_pot_uang_makan.php",
+							type: 'POST',
+							dataType: 'json',
+							data: fd_pot_uang_makan,
+							async: false,
+							contentType: false,
+							processData: false,
+							success: function ( json ) {
+								notifyprogress.close();
+								$.notify({
+									message: json.data.message
+								},{
+									type: json.data.type_message,
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
+								});
+								$("#inputKompPot_uang_makan").val('');
+							},
+							error: function (xhr, Pot_uang_makan, err){
 								console.log('x');
 							}
 						} );
