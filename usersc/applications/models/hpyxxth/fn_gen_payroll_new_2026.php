@@ -247,24 +247,24 @@
                         -- t jabatan untuk yang Tetap
                         LEFT JOIN (
                             SELECT
-                                id_hevxxmh,
+                                id_hemxxmh,
                                 tanggal_efektif,
                                 IFNULL(nominal, 0) AS nominal_t_jab
                             FROM (
                                 SELECT
                                     id,
-                                    id_hevxxmh,
+                                    id_hemxxmh,
                                     tanggal_efektif,
                                     nominal,
-                                    ROW_NUMBER() OVER (PARTITION BY id_hevxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                                FROM htpr_hevxxmh
+                                    ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                                FROM htpr_hemxxmh
                                 WHERE
-                                    htpr_hevxxmh.id_hpcxxmh = 32
+                                    htpr_hemxxmh.id_hpcxxmh = 32
                                     AND tanggal_efektif <= :tanggal_akhir
                                     AND is_active = 1
                             ) AS subquery
                             WHERE row_num = 1
-                        ) t_jabatan ON t_jabatan.id_hevxxmh = p.id_hevxxmh
+                        ) t_jabatan ON t_jabatan.id_hemxxmh = p.id_hemxxmh
 
                         -- nominal tunjangan jabatan di menu per karyawan
                         LEFT JOIN (
@@ -395,23 +395,23 @@
                         -- nominal premi absen per jabatan
                         LEFT JOIN (
                             SELECT
-                                id_hevxxmh,
+                                id_hemxxmh,
                                 IFNULL(nominal, 0) AS premiabs
                             FROM (
                                 SELECT
-                                    id_hevxxmh,
+                                    id_hemxxmh,
                                     nominal,
                                     ROW_NUMBER() OVER (
-                                        PARTITION BY id_hevxxmh 
+                                        PARTITION BY id_hemxxmh 
                                         ORDER BY tanggal_efektif DESC
                                     ) AS row_num
-                                FROM htpr_hevxxmh
+                                FROM htpr_hemxxmh
                                 WHERE id_hpcxxmh = 33
                                 AND tanggal_efektif <= :tanggal_akhir
                                 AND is_active = 1
                             ) x
                             WHERE row_num = 1
-                        ) pa ON pa.id_hevxxmh = p.id_hevxxmh
+                        ) pa ON pa.id_hemxxmh = p.id_hemxxmh
                     ),
                     bpjs AS (
                         SELECT

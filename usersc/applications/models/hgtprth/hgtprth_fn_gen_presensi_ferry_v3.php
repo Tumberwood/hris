@@ -1027,25 +1027,25 @@
                             -- t jabatan
                             LEFT JOIN (
                                 SELECT
-                                    id_hevxxmh,
+                                    id_hemxxmh,
                                     tanggal_efektif,
                                     nominal AS nominal_t_jab
                                 FROM (
                                     SELECT
                                         a.id,
-                                        a.id_hevxxmh,
+                                        a.id_hemxxmh,
                                         a.tanggal_efektif,
                                         a.nominal,
-                                        ROW_NUMBER() OVER (PARTITION BY id_hevxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                                    FROM htpr_hevxxmh AS a
-                                    INNER JOIN hevxxmh AS b ON b.id = a.id_hevxxmh
-                                    INNER JOIN hemjbmh AS c ON c.id_hevxxmh = b.id
+                                        ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                                    FROM htpr_hemxxmh AS a
+                                    INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
+                                    INNER JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
                                     WHERE
                                         a.id_hpcxxmh = 32
                                         AND tanggal_efektif <= :tanggal
                                 ) AS subquery
                                 WHERE row_num = 1
-                            ) t_jabatan ON t_jabatan.id_hevxxmh = b.id_hevxxmh
+                            ) t_jabatan ON t_jabatan.id_hemxxmh = b.id_hemxxmh
 
                             -- nominal tunjangan jabatan di menu per karyawan
                             LEFT JOIN (
