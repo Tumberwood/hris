@@ -33,59 +33,67 @@ if (!empty($_POST['id_heyxxmh']) && $_POST['id_heyxxmh'] > 0) {
  * ========================================================= */
 $sql = '
 SELECT
-    IFNULL(ij.id, -1) AS id_izin,
-	dep.nama AS department,
-	a.tanggal,
-    IFNULL(ij.nama, "Late - Belum Ada Izin") AS nama_izin,
-	b.nama
-FROM htsprrd a
-JOIN hemxxmh b ON b.id = a.id_hemxxmh
-JOIN hemjbmh job ON job.id_hemxxmh = b.id
-JOIN hodxxmh dep ON dep.id = job.id_hodxxmh
-
-LEFT JOIN htpxxmh ij 
-    ON (
-        ij.kode = a.status_presensi_in
-        OR ij.kode = a.status_presensi_out
-        OR a.htlxxrh_kode LIKE CONCAT("%", ij.kode, "%")
-    )
-WHERE a.tanggal BETWEEN :start_date AND :end_date
-AND (
-        a.status_presensi_in <> "OFF"
-        AND a.status_presensi_out <> "OFF"
-    )
-
-    AND (
-        a.status_presensi_in = ij.kode
-        OR a.status_presensi_out = ij.kode
-        OR a.htlxxrh_kode LIKE CONCAT("%", ij.kode, "%")
-    )
-    '.$where.'
-
-UNION ALL
-
-SELECT
-    -1 AS id_izin,
-	dep.nama AS department,
-	a.tanggal,
-    "Late - Belum Ada Izin" AS nama_izin,
-	b.nama
-FROM htsprrd a
-JOIN hemxxmh b ON b.id = a.id_hemxxmh
-JOIN hemjbmh job ON job.id_hemxxmh = b.id
-JOIN hodxxmh dep ON dep.id = job.id_hodxxmh
-
-WHERE a.tanggal BETWEEN :start_date AND :end_date
-AND (
-        a.status_presensi_in <> "OFF"
-        AND a.status_presensi_out <> "OFF"
-    )
-
-    AND (
-      a.st_clock_in = "LATE"
-      AND a.status_presensi_in = "Belum Ada Izin"
-    )
-    '.$where.'
+	id_izin,
+	department,
+	nama_izin,
+	COUNT(*) AS total
+FROM (
+	SELECT
+	    IFNULL(ij.id, -1) AS id_izin,
+		dep.nama AS department,
+		a.tanggal,
+	    IFNULL(ij.nama, "Late - Belum Ada Izin") AS nama_izin,
+		b.nama
+	FROM htsprrd a
+	JOIN hemxxmh b ON b.id = a.id_hemxxmh
+	JOIN hemjbmh job ON job.id_hemxxmh = b.id
+	JOIN hodxxmh dep ON dep.id = job.id_hodxxmh
+	
+	LEFT JOIN htpxxmh ij 
+	    ON (
+	        ij.kode = a.status_presensi_in
+	        OR ij.kode = a.status_presensi_out
+	        OR a.htlxxrh_kode LIKE CONCAT("%", ij.kode, "%")
+	    )
+	WHERE a.tanggal BETWEEN :start_date AND :end_date
+	AND (
+	        a.status_presensi_in <> "OFF"
+	        AND a.status_presensi_out <> "OFF"
+	    )
+	
+	    AND (
+	        a.status_presensi_in = ij.kode
+	        OR a.status_presensi_out = ij.kode
+	        OR a.htlxxrh_kode LIKE CONCAT("%", ij.kode, "%")
+	    )
+        ' . $where . '
+	
+	UNION ALL
+	
+	SELECT
+	    -1 AS id_izin,
+		dep.nama AS department,
+		a.tanggal,
+	    "Late - Belum Ada Izin" AS nama_izin,
+		b.nama
+	FROM htsprrd a
+	JOIN hemxxmh b ON b.id = a.id_hemxxmh
+	JOIN hemjbmh job ON job.id_hemxxmh = b.id
+	JOIN hodxxmh dep ON dep.id = job.id_hodxxmh
+	
+	WHERE a.tanggal BETWEEN :start_date AND :end_date
+	AND (
+	        a.status_presensi_in <> "OFF"
+	        AND a.status_presensi_out <> "OFF"
+	    )
+	
+	    AND (
+	      a.st_clock_in = "LATE"
+	      AND a.status_presensi_in = "Belum Ada Izin"
+	    )
+        ' . $where . '
+        
+) AS izin
     
 GROUP BY 
     department,
