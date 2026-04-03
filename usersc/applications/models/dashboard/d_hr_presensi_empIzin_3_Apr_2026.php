@@ -34,10 +34,9 @@ if (!empty($_POST['id_heyxxmh']) && $_POST['id_heyxxmh'] > 0) {
 $sql = '
 SELECT
     IFNULL(ij.id, -1) AS id_izin,
-	dep.nama AS department,
-	a.tanggal,
+    dep.nama AS department,
     IFNULL(ij.nama, "Late - Belum Ada Izin") AS nama_izin,
-	b.nama
+    COUNT(*) AS total
 FROM htsprrd a
 JOIN hemxxmh b ON b.id = a.id_hemxxmh
 JOIN hemjbmh job ON job.id_hemxxmh = b.id
@@ -49,8 +48,11 @@ LEFT JOIN htpxxmh ij
         OR ij.kode = a.status_presensi_out
         OR a.htlxxrh_kode LIKE CONCAT("%", ij.kode, "%")
     )
-WHERE a.tanggal BETWEEN :start_date AND :end_date
-AND (
+
+WHERE 
+    a.tanggal BETWEEN :start_date AND :end_date
+
+    AND (
         a.status_presensi_in <> "OFF"
         AND a.status_presensi_out <> "OFF"
     )
@@ -59,34 +61,15 @@ AND (
         a.status_presensi_in = ij.kode
         OR a.status_presensi_out = ij.kode
         OR a.htlxxrh_kode LIKE CONCAT("%", ij.kode, "%")
+
+        OR (
+            ij.kode IS NULL
+            AND a.st_clock_in = "LATE"
+            AND a.status_presensi_in = "Belum Ada Izin"
+        )
     )
-    '.$where.'
+'.$where.'
 
-UNION ALL
-
-SELECT
-    -1 AS id_izin,
-	dep.nama AS department,
-	a.tanggal,
-    "Late - Belum Ada Izin" AS nama_izin,
-	b.nama
-FROM htsprrd a
-JOIN hemxxmh b ON b.id = a.id_hemxxmh
-JOIN hemjbmh job ON job.id_hemxxmh = b.id
-JOIN hodxxmh dep ON dep.id = job.id_hodxxmh
-
-WHERE a.tanggal BETWEEN :start_date AND :end_date
-AND (
-        a.status_presensi_in <> "OFF"
-        AND a.status_presensi_out <> "OFF"
-    )
-
-    AND (
-      a.st_clock_in = "LATE"
-      AND a.status_presensi_in = "Belum Ada Izin"
-    )
-    '.$where.'
-    
 GROUP BY 
     department,
     nama_izin
