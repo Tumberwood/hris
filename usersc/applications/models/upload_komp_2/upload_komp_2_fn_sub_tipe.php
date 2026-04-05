@@ -162,7 +162,8 @@
 
 					if(!$rs_check){
 
-						$db->query('insert','htpr_sub_tipe')
+						$qi_htpr_sub_tipe = $db
+							->query('insert','htpr_sub_tipe')
 							->set('kode', 'Upload')
 							->set('created_by', $_SESSION['user'])
 							->set('id_heyxxmh',$id_heyxxmh)
@@ -174,6 +175,78 @@
 							->set('grup_hk',$grup_hk)
 							->set('keterangan',$keterangan)
 							->exec();
+							
+						$id_htpr_sub_tipe = $qi_htpr_sub_tipe->insertId();
+
+						//Insert ke Gaji Karyawan
+						$qs_htpr_hemxxmh = $db
+							->raw()
+							->bind(':id_htpr_sub_tipe', $id_htpr_sub_tipe)
+							->exec('INSERT INTO htpr_hemxxmh (
+										id_hemxxmh,
+										id_hpcxxmh,
+										nominal,
+										tanggal_efektif,
+										keterangan,
+										kode
+									)
+
+									-- ===== LEMBUR =====
+									SELECT
+										b.id_hemxxmh,
+										36,
+										a.nominal_lembur,
+										a.tanggal_efektif,
+										a.keterangan,
+										"Upload"
+									FROM htpr_sub_tipe a
+									JOIN hemjbmh b 
+										ON b.id_heyxxmh = a.id_heyxxmh
+										AND b.id_heyxxmd = a.id_heyxxmd
+										AND a.id_hesxxmh = b.id_hesxxmh
+										AND b.grup_hk = a.grup_hk
+									JOIN hemxxmh c 
+										ON c.id = b.id_hemxxmh
+										AND c.is_active = 1
+									WHERE a.id = :id_htpr_sub_tipe
+									AND a.nominal_lembur IS NOT NULL
+									AND NOT EXISTS (
+										SELECT 1 FROM htpr_hemxxmh x
+										WHERE x.id_hemxxmh = b.id_hemxxmh
+											AND x.id_hpcxxmh = 36
+											AND x.tanggal_efektif = a.tanggal_efektif
+											AND x.is_active = 1
+									)
+
+									UNION ALL
+
+									-- ===== POT ABSEN =====
+									SELECT
+										b.id_hemxxmh,
+										35,
+										a.nominal_pot_absen,
+										a.tanggal_efektif,
+										a.keterangan,
+										"Upload"
+									FROM htpr_sub_tipe a
+									JOIN hemjbmh b 
+										ON b.id_heyxxmh = a.id_heyxxmh
+										AND b.id_heyxxmd = a.id_heyxxmd
+										AND a.id_hesxxmh = b.id_hesxxmh
+										AND b.grup_hk = a.grup_hk
+									JOIN hemxxmh c 
+										ON c.id = b.id_hemxxmh
+										AND c.is_active = 1
+									WHERE a.id = :id_htpr_sub_tipe
+									AND a.nominal_pot_absen IS NOT NULL
+									AND NOT EXISTS (
+										SELECT 1 FROM htpr_hemxxmh x
+										WHERE x.id_hemxxmh = b.id_hemxxmh
+											AND x.id_hpcxxmh = 35
+											AND x.tanggal_efektif = a.tanggal_efektif
+											AND x.is_active = 1
+									)
+						');
 
 						$dataupload++;
 

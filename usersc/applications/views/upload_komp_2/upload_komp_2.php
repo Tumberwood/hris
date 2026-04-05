@@ -67,7 +67,7 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>Komponen per Level (Premi Absen & Tunj. Jabatan)</b></label>
+						<label class="col-lg-2 col-form-label"><b>Komponen per Grade (Premi Absen & Tunj. Jabatan)</b></label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputKompLevel">
@@ -75,7 +75,7 @@
 						</div>
 						<div class="col-sm-4">
 							<div>
-								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_per_level.xlsx');">
+								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_per_grade.xlsx');">
 									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 								</button>
 								<b class="ml-2">Insert ke Gaji Karyawan</b>
@@ -291,7 +291,7 @@
 						fd_level.append('filename',level);
 			
 						$.ajax( {
-							url: "../../models/upload_komp_2/upload_komp_2_fn_level.php",
+							url: "../../models/upload_komp_2/upload_komp_2_fn_grade.php",
 							type: 'POST',
 							dataType: 'json',
 							data: fd_level,
