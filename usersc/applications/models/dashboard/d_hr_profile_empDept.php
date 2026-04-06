@@ -29,6 +29,7 @@
                     LEFT JOIN hemjbmh b ON b.id_hemxxmh = a.id
                     LEFT JOIN hodxxmh c ON c.id = b.id_hodxxmh
                     WHERE (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= CURDATE() )
+                    AND is_harian_lepas = 0
                     GROUP BY b.id_hodxxmh
         ');
     $rs_hemxxmh = $qs_hemxxmh->fetchAll();

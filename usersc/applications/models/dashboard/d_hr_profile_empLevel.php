@@ -28,6 +28,7 @@
         ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' ) 
         ->join('hevxxmh','hevxxmh.id = hemjbmh.id_hevxxmh','LEFT' )
         ->join('hevgrmh','hevgrmh.id = hevxxmh.id_hevgrmh','LEFT' )
+        ->where( 'hemjbmh.is_harian_lepas', 0 )
         ->where( function ( $r ) use ($tanggal_akhir) {
             $r
                 ->where( 'hemjbmh.tanggal_keluar', NULL)
