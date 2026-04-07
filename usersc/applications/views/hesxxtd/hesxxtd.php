@@ -560,6 +560,7 @@
 					}
 				},
 				order: [[ 0, "desc" ]],
+				responsive: false,
 				columns: [
 					{ data: "hesxxtd.id",visible:false },
 					{ data: "hesxxtd.kode" },
