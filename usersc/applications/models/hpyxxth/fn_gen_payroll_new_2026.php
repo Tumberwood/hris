@@ -228,16 +228,16 @@
                         ) gp1 ON gp1.id_hemxxmh = p.id_hemxxmh
 
                         LEFT JOIN (
-                            SELECT id_hesxxmh, nominal AS gp_pelatihan
+                            SELECT id_hemxxmh, nominal AS gp_pelatihan
                             FROM (
                                 SELECT *,
-                                    ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) rn
-                                FROM htpr_hesxxmh
+                                    ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) rn
+                                FROM htpr_hemxxmh
                                 WHERE id_hpcxxmh = 1
                                 AND is_active = 1
                                 AND tanggal_efektif <= :tanggal_akhir
                             ) x WHERE rn = 1
-                        ) gp2 ON gp2.id_hesxxmh = p.id_hesxxmh
+                        ) gp2 ON gp2.id_hemxxmh = p.id_hemxxmh
                     ),
                     t_jabatan AS (
                         SELECT
@@ -643,24 +643,24 @@
 
                         LEFT JOIN (
                             SELECT
-                                id_hesxxmh,
+                                id_hemxxmh,
                                 tanggal_efektif,
                                 IFNULL(nominal, 0) AS pot_uang_makan
                             FROM (
                                 SELECT
                                     id,
-                                    id_hesxxmh,
+                                    id_hemxxmh,
                                     tanggal_efektif,
                                     nominal,
-                                    ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                                FROM htpr_hesxxmh
+                                    ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                                FROM htpr_hemxxmh
                                 WHERE
-                                    htpr_hesxxmh.id_hpcxxmh = 34
+                                    htpr_hemxxmh.id_hpcxxmh = 34
                                     AND tanggal_efektif <= :tanggal_akhir
                                     AND is_active = 1
                             ) AS subquery
                             WHERE row_num = 1
-                        ) pot_uang_makan ON pot_uang_makan.id_hesxxmh = p.id_hesxxmh
+                        ) pot_uang_makan ON pot_uang_makan.id_hemxxmh = p.id_hemxxmh
                     ),
                     pot_upah AS (
                         SELECT
