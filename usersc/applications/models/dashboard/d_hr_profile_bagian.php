@@ -27,6 +27,7 @@
             LEFT JOIN hemjbmh b ON b.id_hemxxmh = a.id
             LEFT JOIN hosxxmh c ON c.id = b.id_hosxxmh
             WHERE (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= CURDATE())
+            AND b.is_harian_lepas = 0
             GROUP BY c.nama
             '
             );

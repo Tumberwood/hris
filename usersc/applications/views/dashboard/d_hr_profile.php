@@ -121,12 +121,12 @@
 	<div class="col-lg-12">
 		<div class="ibox ">
 			<div class="ibox-content">
-				<h3>Table Bagian</h3>
+				<h3>Table Unit Kerja</h3>
 				<div class="table-responsive">
 					<table id="tblhtlxxrh" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
 							<tr>
-								<th>Bagian</th>
+								<th>Unit Kerja</th>
 								<th>Jumlah Organik</th>
 								<th>Jumlah Outsourcing</th>
 								<th>Total</th>
