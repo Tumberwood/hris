@@ -22,6 +22,8 @@
 		->debug(true)
 		->fields(
 			Field::inst( 'hpyxxth.id' ),
+			Field::inst( 'hpyxxth.id_periode_payroll' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hpyxxth.id_heyxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hpyxxth.kode' )
