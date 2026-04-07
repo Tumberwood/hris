@@ -40,13 +40,21 @@
 			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'hosxxmh.nama' ),
 			Field::inst( 'hevxxmh.nama' ),
-			Field::inst( 'hetxxmh.nama' )
+			Field::inst( 'hetxxmh.nama' ),
+			Field::inst( 'heyxxmh.nama' ),
+			Field::inst( 'hesxxmh.nama' ),
+			Field::inst( 'heyxxmd.nama' ),
+			Field::inst( 'hemjbmh.grup_hk' ),
 		)
 		->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
 		->leftJoin( 'hodxxmh','hodxxmh.id','=','hemjbmh.id_hodxxmh' )
 		->leftJoin( 'hosxxmh','hosxxmh.id','=','hemjbmh.id_hosxxmh' )
 		->leftJoin( 'hevxxmh','hevxxmh.id','=','hemjbmh.id_hevxxmh' )
-		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' );
+		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
+		->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
+		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
+		->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
+		;
 	
 	// do not erase
 	// function show / hide inactive document

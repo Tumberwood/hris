@@ -111,7 +111,7 @@
 								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_per_sub_tipe.xlsx');">
 									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 								</button>
-								<b class="ml-2">Insert ke Komponen Sub Tipe</b>
+								<b class="ml-2">Insert ke Gaji Karyawan</b>
 							</div>
 						</div>
 					</div>
@@ -128,7 +128,7 @@
 								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_pot_uang_makan.xlsx');">
 									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 								</button>
-								<b class="ml-2">Insert ke Komponen Pot. UM</b>
+								<b class="ml-2">Insert ke Gaji Karyawan</b>
 							</div>
 						</div>
 					</div>
@@ -365,7 +365,7 @@
 						fd_sub_tipe.append('filename',sub_tipe);
 			
 						$.ajax( {
-							url: "../../models/upload_komp_2/upload_komp_2_fn_sub_tipe.php",
+							url: "../../models/upload_komp_2/upload_komp_2_fn_sub_tipe_baru.php",
 							type: 'POST',
 							dataType: 'json',
 							data: fd_sub_tipe,
@@ -402,7 +402,7 @@
 						fd_pot_uang_makan.append('filename',pot_uang_makan);
 			
 						$.ajax( {
-							url: "../../models/upload_komp_2/upload_komp_2_fn_pot_uang_makan.php",
+							url: "../../models/upload_komp_2/upload_komp_2_fn_pot_uang_makan_baru.php",
 							type: 'POST',
 							dataType: 'json',
 							data: fd_pot_uang_makan,

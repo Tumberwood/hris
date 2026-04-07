@@ -44,31 +44,26 @@
      
 		$sheetData = $spreadsheet->getActiveSheet()->toArray();
 		
-		if ($sheetData[0][0] == 'Tipe') {
+		if ($sheetData[0][0] == 'Sub Tipe') {
 			try{
 				$db->transaction();
 				
 				$datakembar = 0;
 				$dataupload = 0;
 				$emptyPeg = array();
-				
+				/**
+				 *                      
+				 * 0: NIK           : nama
+				 * 1: Id Komponen	: id_hpcxxmh              
+				 * 2: Tanggal             
+				 * 3: Nominal
+				 */
 				for($i = 1; $i < count($sheetData); $i++){
 
-					$tipe = $sheetData[$i][0];
-					$sub_tipe = $sheetData[$i][1];
-					$status = $sheetData[$i][2];
-					$hari = $sheetData[$i][3];
-					
-					if ($hari == '5') {
-						$grup_hk = 1;
-					} elseif ($hari == '6') {
-						$grup_hk = 2;
-					} else {
-						$grup_hk = 0;
-					}
+					$nama = $sheetData[$i][0];
 
 					// ===== FIX TANGGAL =====
-					$raw = trim($sheetData[$i][6]);
+					$raw = trim($sheetData[$i][2]);
 
 					$formats = [
 						'd/m/Y',
@@ -97,47 +92,24 @@
 						}
 					}
 					
-					$keterangan = $sheetData[$i][7];
+					$keterangan = $sheetData[$i][3];
 
 					// mapping komponen
 					$komponen = [
-						['id_hpcxxmh' => 35,   'nominal' => $sheetData[$i][4]],
-						['id_hpcxxmh' => 36,   'nominal' => $sheetData[$i][5]],
+						['id_hpcxxmh' => 34,   'nominal' => $sheetData[$i][1]],
 					];
 
-					// cari tipe
-					$qs_heyxxmh = $db->query('select','heyxxmh')
-						->get(['id as id_heyxxmh'])
-						->where('nama',$tipe)
-						->exec();
-
-					$rs_heyxxmh = $qs_heyxxmh->fetch();
-					$id_heyxxmh = $rs_heyxxmh['id_heyxxmh'];
-
-					if ($rs_heyxxmh['id_heyxxmh'] == 0) {
-						$emptyPeg[] = ['rowIndex' => $i + 1];
-						continue;
-					}
-
-					// cari sub_tipe
-					$qs_heyxxmd = $db->query('select','heyxxmd')
+					// cari Tipe
+					$qs = $db->query('select','heyxxmd')
 						->get(['id as id_heyxxmd'])
-						->where('nama',$sub_tipe)
+						->get(['count(id) as id'])
+						->where('nama',$nama)
 						->exec();
 
-					$rs_heyxxmd = $qs_heyxxmd->fetch();
-					$id_heyxxmd = $rs_heyxxmd['id_heyxxmd'] ?? 0;
+					$rs = $qs->fetch();
+					$id_heyxxmd = $rs['id_heyxxmd'];
 
-					// cari status
-					$qs_hesxxmh = $db->query('select','hesxxmh')
-						->get(['id as id_hesxxmh'])
-						->where('nama',$status)
-						->exec();
-
-					$rs_hesxxmh = $qs_hesxxmh->fetch();
-					$id_hesxxmh = $rs_hesxxmh['id_hesxxmh'];
-
-					if ($rs_hesxxmh['id_hesxxmh'] == 0) {
+					if ($rs['id'] == 0) {
 						$emptyPeg[] = ['rowIndex' => $i + 1];
 						continue;
 					}
@@ -146,10 +118,7 @@
 						->query('select', 'hemxxmh' )
 						->get(['hemxxmh.id as id_hemxxmh'] )
 						->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
-						->where('hemjbmh.id_heyxxmh', $id_heyxxmh )
 						->where('hemjbmh.id_heyxxmd', $id_heyxxmd )
-						->where('hemjbmh.id_hesxxmh', $id_hesxxmh )
-						->where('hemjbmh.grup_hk', $grup_hk )
 						->exec();
 					$rs_hemxxmh = $qs_hemxxmh->fetchAll();
 
@@ -192,7 +161,6 @@
 							}
 						}
 					}
-
 				}
 				
 				// print_r(count($emptyPeg));
@@ -211,7 +179,7 @@
 					);
 				} else {
 					$data = array(
-						"message" => "Upload Komponen per status Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
+						"message" => "Upload Komponen Potongan Uang Makan Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
 						"type_message" => "success"
 					);
 				}
@@ -221,19 +189,19 @@
 			}catch (PDOException $e){
 				$db->rollback();
 				$data = array(
-					"message" => "Upload Komponen per status gagal," . $e,
+					"message" => "Upload Komponen Potongan Uang Makan gagal," . $e,
 					"type_message" => "danger"
 				);
 			}
 		} else {
 			$data = array(
-				"message" => "Template Upload Komponen status salah!",
+				"message" => "Template Upload Komponen Potongan Uang Makan salah!",
 				"type_message" => "danger"
 			);
 		}
 	}else{
 		$data = array(
-			"message" => "Upload Komponen per status gagal, format file salah!",
+			"message" => "Upload Komponen Potongan Uang Makan gagal, format file salah!",
 			"type_message" => "danger"
 		);
 	}

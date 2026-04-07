@@ -14,6 +14,19 @@
 
 <!-- begin content here -->
 <div class="row">
+    <div class="col">
+        <div class="ibox collapsed" id="iboxfilter">
+            <div class="ibox-title">
+                <h5 class="text-navy">Filter</h5>&nbsp
+                <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+            </div>
+            <div class="ibox-content">
+                <div id="searchPanes1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
 			<div class="ibox-content">
@@ -24,6 +37,10 @@
                                 <th>ID</th>
                                 <th>NIP</th>
                                 <th>Nama</th>
+                                <th>Tipe</th>
+                                <th>Sub Tipe</th>
+                                <th>Status</th>
+                                <th>Grup HK</th>
                                 <th>Department</th>
                                 <th>Level</th>
                                 <th>Jabatan</th>
@@ -238,6 +255,29 @@
 			
 			//start datatables
 			tblhemxxmh = $('#tblhemxxmh').DataTable( {
+				searchPanes:{
+					layout: 'columns-4'
+				},
+				dom: 
+					"<P>"+
+					"<lf>"+
+					"<B>"+
+					"<rt>"+
+					"<'row'<'col-sm-4'i><'col-sm-8'p>>",
+				columnDefs:[
+					{
+						searchPanes:{
+							show: true,
+						},
+						targets: [3,4,5,6,7,8,9]
+					},
+					{
+						searchPanes:{
+							show: false,
+						},
+						targets: '_all'
+					}
+				],
 				ajax: {
 					url: "../../models/htpr_hemxxmh/htpr_hemxxmh_h.php",
 					type: 'POST',
@@ -250,6 +290,23 @@
 					{ data: "hemxxmh.id",visible:false },
 					{ data: "hemxxmh.kode" },
 					{ data: "hemxxmh.nama" },
+					{ data: "heyxxmh.nama" },
+					{ data: "heyxxmd.nama" },
+					{ data: "hesxxmh.nama" },
+					{ 
+						data: "hemjbmh.grup_hk",
+						render: function (data){
+							if (data == 0){
+								return '';
+							}else if(data == 1){
+								return '5HK';
+							}else if(data == 2){
+								return '6HK';
+							}else{
+								return '<span class="text-danger"> Data Invalid</span>';
+							}
+						}
+					},
 					{ data: "hodxxmh.nama" },
 					{ data: "hevxxmh.nama" },
 					{ data: "hetxxmh.nama" }
@@ -283,9 +340,14 @@
 					if ( data.hemxxmh.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
+				},
+				initComplete: function() {
+					this.api().searchPanes.rebuildPane();
 				}
 			} );
 			
+			tblhemxxmh.searchPanes.container().appendTo( '#searchPanes1' );
+
 			tblhemxxmh.on( 'init', function () {
 				// atur hak akses
 				tbl_details = [tblhtpr_hemxxmh];

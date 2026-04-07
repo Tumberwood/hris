@@ -1003,26 +1003,26 @@
                                 WHERE row_num = 1
                             ) menit_toleransi_keluar_istirahat ON menit_toleransi_keluar_istirahat.is_active = 1
 
-                            -- Ambil lembur mati dari htpr_hesxxmh untuk pelatihan
+                            -- Ambil lembur mati dari htpr_hemxxmh untuk pelatihan
                             LEFT JOIN (
                                 SELECT
-                                    id_hesxxmh,
+                                    id_hemxxmh,
                                     tanggal_efektif,
                                     IFNULL(nominal, 0) AS nominal_lembur_mati
                                 FROM (
                                     SELECT
                                         id,
-                                        id_hesxxmh,
+                                        id_hemxxmh,
                                         tanggal_efektif,
                                         nominal,
-                                        ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                                    FROM htpr_hesxxmh
+                                        ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                                    FROM htpr_hemxxmh
                                     WHERE
-                                        htpr_hesxxmh.id_hpcxxmh = 36
+                                        htpr_hemxxmh.id_hpcxxmh = 36
                                         AND tanggal_efektif <= :tanggal
                                 ) AS subquery
                                 WHERE row_num = 1
-                            ) lembur_mati ON lembur_mati.id_hesxxmh = b.id_hesxxmh
+                            ) lembur_mati ON lembur_mati.id_hemxxmh = b.id_hemxxmh
 
                             -- t jabatan
                             LEFT JOIN (
