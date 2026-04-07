@@ -41,6 +41,7 @@
                                 <th>Sub Tipe</th>
                                 <th>Status</th>
                                 <th>Grup HK</th>
+                                <th>Bagian</th>
                                 <th>Department</th>
                                 <th>Level</th>
                                 <th>Jabatan</th>
@@ -269,7 +270,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [3,4,5,6,7,8,9]
+						targets: [3,4,5,6,7,8,9,10]
 					},
 					{
 						searchPanes:{
@@ -307,6 +308,7 @@
 							}
 						}
 					},
+					{ data: "hobxxmh.nama" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hevxxmh.nama" },
 					{ data: "hetxxmh.nama" }
