@@ -33,6 +33,8 @@
 					g.nama AS level,
 					h.nama AS status,
 					i.nama AS tipe,
+					j.nama AS sub_tipe,
+					IF(c.grup_hk = 1, "5HK", "6HK") grup_hk,
 					if(c.id_hesxxmh = 3, gp_pelatihan, nominal_gp) komp_gaji,
 					ifnull(if(c.id_hesxxmh = 1 OR (c.id_heyxxmd = 1 and c.id_hesxxmh = 4), IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) , if(c.id_heyxxmh = 1 and c.id_hesxxmh = 2, ifnull(nominal_jabatan, 0), 0) ),0) komp_t_jab,
 					IFNULL(nominal_var_cost, 0) AS var_cost,
@@ -40,6 +42,7 @@
 					IFNULL(premiabs,0) premi,
 					(FLOOR(IF(c.id_hesxxmh = 3, COALESCE(nominal_lembur_mati, 0), (COALESCE(nominal_gp, 0) + IF(c.id_heyxxmd = 1 AND c.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) ) / 173))) AS nominal_lembur_jam,
 					if(c.id_hesxxmh IN (1,2,5), IFNULL(gaji_bpjs,0) ,0) gaji_bpjs,
+					IFNULL(nominal_pot_absen, 0) pot_absen,
 
 					IF(c.id_hesxxmh IN (1,2,5), IFNULL(persen_karyawan,0), 0) persen_karyawan,
 					IF(c.id_hesxxmh IN (1,2,5), IFNULL(persen_jkk,0), 0) persen_jkk,
@@ -51,7 +54,6 @@
 					IF(c.id_hesxxmh IN (1,2,5), IFNULL(persen_karyawan,0), 0) bpjs_kes,
 
 					IFNULL(pot_uang_makan,0) pot_uang_makan,
-					"-" AS pot_absen,
 					IF(c.id_hesxxmh = 3, COALESCE(nominal_lembur_mati, 0), 0) AS nominal_lembur_mati
 				FROM hemxxmh a
 				INNER JOIN hemjbmh c ON c.id_hemxxmh = a.id
@@ -60,7 +62,8 @@
 				LEFT JOIN holxxmd_2 f ON f.id = c.id_holxxmd_2
 				LEFT JOIN hevxxmh g ON g.id = c.id_hevxxmh
 				LEFT JOIN hesxxmh h ON h.id = c.id_hesxxmh
-				LEFT JOIN heyxxmd i ON i.id = c.id_heyxxmd
+				LEFT JOIN heyxxmh i ON i.id = c.id_heyxxmh
+				LEFT JOIN heyxxmd j ON j.id = c.id_heyxxmd
 				
 				-- gaji pokok
 				LEFT JOIN (
@@ -87,45 +90,45 @@
 				-- gaji untuk pelatihan
 				LEFT JOIN (
 						SELECT
-							id_hesxxmh,
+							id_hemxxmh,
 							tanggal_efektif,
 							IFNULL(nominal, 0) AS gp_pelatihan
 						FROM (
 							SELECT
 								id,
-								id_hesxxmh,
+								id_hemxxmh,
 								tanggal_efektif,
 								nominal,
-								ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
-							FROM htpr_hesxxmh
+								ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+							FROM htpr_hemxxmh
 						WHERE
-							htpr_hesxxmh.id_hpcxxmh = 1
+							htpr_hemxxmh.id_hpcxxmh = 1
 							AND tanggal_efektif < :start_date
 					) AS subquery
 					WHERE row_num = 1
-				) gaji_pelatihan ON gaji_pelatihan.id_hesxxmh = c.id_hesxxmh
+				) gaji_pelatihan ON gaji_pelatihan.id_hemxxmh = c.id_hemxxmh
 				
 				-- t jabatan untuk yang Tetap
 				LEFT JOIN (
 					SELECT
-						id_hevxxmh,
+						id_hemxxmh,
 						tanggal_efektif,
 						IFNULL(nominal, 0) AS nominal_t_jab
 					FROM (
 						SELECT
 							id,
-							id_hevxxmh,
+							id_hemxxmh,
 							tanggal_efektif,
 							nominal,
-							ROW_NUMBER() OVER (PARTITION BY id_hevxxmh ORDER BY tanggal_efektif DESC) AS row_num
-						FROM htpr_hevxxmh
+							ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+						FROM htpr_hemxxmh
 						WHERE
-							htpr_hevxxmh.id_hpcxxmh = 32
+							htpr_hemxxmh.id_hpcxxmh = 32
 							AND tanggal_efektif < :start_date
 							AND is_active = 1
 					) AS subquery
 					WHERE row_num = 1
-				) t_jabatan ON t_jabatan.id_hevxxmh = c.id_hevxxmh
+				) t_jabatan ON t_jabatan.id_hemxxmh = c.id_hemxxmh
 				
 				-- nominal tunjangan jabatan di menu per karyawan
 				LEFT JOIN (
@@ -210,49 +213,49 @@
 					GROUP BY job.id_hemxxmh
 				) AS mk ON mk.id_hemxxmh = a.id
 				
-				-- potongan makan htpr_hesxxmh
+				-- potongan makan htpr_hemxxmh
 				LEFT JOIN (
 					SELECT
-						id_hesxxmh,
+						id_hemxxmh,
 						tanggal_efektif,
 						IFNULL(nominal, 0) AS pot_uang_makan
 					FROM (
 						SELECT
 							id,
-							id_hesxxmh,
+							id_hemxxmh,
 							tanggal_efektif,
 							nominal,
-							ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
-						FROM htpr_hesxxmh
+							ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+						FROM htpr_hemxxmh
 						WHERE
-							htpr_hesxxmh.id_hpcxxmh = 34
+							htpr_hemxxmh.id_hpcxxmh = 34
 							AND tanggal_efektif < :start_date
 							AND is_active = 1
 					) AS subquery
 					WHERE row_num = 1
-				) pot_uang_makan ON pot_uang_makan.id_hesxxmh = c.id_hesxxmh
+				) pot_uang_makan ON pot_uang_makan.id_hemxxmh = c.id_hemxxmh
 				
 				-- premi absen
 				LEFT JOIN (
 					SELECT
-						id_hevxxmh,
+						id_hemxxmh,
 						tanggal_efektif,
 						IFNULL(nominal, 0) AS premiabs 
 					FROM (
 						SELECT
 							id,
-							id_hevxxmh,
+							id_hemxxmh,
 							tanggal_efektif,
 							nominal,
-							ROW_NUMBER() OVER (PARTITION BY id_hevxxmh ORDER BY tanggal_efektif DESC) AS row_num
-						FROM htpr_hevxxmh
+							ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+						FROM htpr_hemxxmh
 						WHERE
-							htpr_hevxxmh.id_hpcxxmh = 33
+							htpr_hemxxmh.id_hpcxxmh = 33
 							AND tanggal_efektif < :start_date
 							AND is_active = 1
 					) AS subquery
 					WHERE row_num = 1
-				) premi_abs ON premi_abs.id_hevxxmh = c.id_hevxxmh
+				) premi_abs ON premi_abs.id_hemxxmh = c.id_hemxxmh
 				
 				-- select data dari hibtkmh untuk hitung bpjs
 				LEFT JOIN (
@@ -298,26 +301,49 @@
 					FROM hibksmh
 				) bpjs_kesehatan ON bpjs_kesehatan.is_active = 1
 				
-				-- Ambil lembur mati dari htpr_hesxxmh untuk pelatihan
+				-- Ambil lembur mati dari htpr_hemxxmh untuk pelatihan
 				LEFT JOIN (
 					SELECT
-						id_hesxxmh,
+						id_hemxxmh,
 						tanggal_efektif,
 						IFNULL(nominal, 0) AS nominal_lembur_mati
 					FROM (
 						SELECT
 							id,
-							id_hesxxmh,
+							id_hemxxmh,
 							tanggal_efektif,
 							nominal,
-							ROW_NUMBER() OVER (PARTITION BY id_hesxxmh ORDER BY tanggal_efektif DESC) AS row_num
-						FROM htpr_hesxxmh
+							ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+						FROM htpr_hemxxmh
 						WHERE
-							htpr_hesxxmh.id_hpcxxmh = 36
+							htpr_hemxxmh.id_hpcxxmh = 36
 							AND tanggal_efektif < :start_date
 					) AS subquery
 					WHERE row_num = 1
-				) lembur_mati ON lembur_mati.id_hesxxmh = c.id_hesxxmh
+				) lembur_mati ON lembur_mati.id_hemxxmh = c.id_hemxxmh
+				
+				
+				-- Potongan Absen
+				LEFT JOIN (
+					SELECT
+						id_hemxxmh,
+						tanggal_efektif,
+						IFNULL(nominal, 0) AS nominal_pot_absen
+					FROM (
+						SELECT
+							id,
+							id_hemxxmh,
+							tanggal_efektif,
+							nominal,
+							ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+						FROM htpr_hemxxmh
+						WHERE
+							htpr_hemxxmh.id_hpcxxmh = 35
+							AND tanggal_efektif < :start_date
+					) AS subquery
+					WHERE row_num = 1
+				) pot_absen ON pot_absen.id_hemxxmh = c.id_hemxxmh
+
 				WHERE a.is_active = 1
 				HAVING komp_gaji IS NOT null
 				' . $where

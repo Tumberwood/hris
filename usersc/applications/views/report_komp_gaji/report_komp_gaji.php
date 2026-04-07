@@ -70,17 +70,19 @@
 								<th>ID</th>
 								<th>NIK</th>
 								<th>Nama</th>
+								<th>Tipe</th>
+								<th>Sub Tipe</th>
+								<th>Status</th>
+								<th>Grup HK</th>
 								<th>Department</th>
 								<th>Jabatan</th>
 								<th>Level</th>
-								<th>Status</th>
-								<th>Type</th>
 								<th>Gaji Pokok</th>
 								<th>Tj. Jabatan</th>
 								<th>Tj. Lain-lain</th>
 								<th>Tj. Masa Kerja</th>
 								<th>Premi Absen</th>
-								<th>Rp Lembur /jam</th>
+								<th>Rp Lembur / jam</th>
 								<th>Gaji BPJS</th>
 
 								<th>% Kes P</th>
@@ -228,7 +230,7 @@
 					}
 				],
 				fixedColumns: {
-                    leftColumns: 1 // Freeze column 0 and 1
+                    leftColumns: 2 // Freeze column 0 and 1
                 },
 				ajax: {
 					url: "../../models/report_komp_gaji/report_komp_gaji.php",
@@ -245,11 +247,13 @@
 					{ data: "id", visible: false },
 					{ data: "nik" },
 					{ data: "nama" },
+					{ data: "tipe" },
+					{ data: "sub_tipe" },
+					{ data: "status" },
+					{ data: "grup_hk" },
 					{ data: "dep" },
 					{ data: "jab" },
 					{ data: "level" },
-					{ data: "status" },
-					{ data: "tipe" },
 					{ 
 						data: "komp_gaji",
 						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
