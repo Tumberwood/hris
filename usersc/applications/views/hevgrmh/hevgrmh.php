@@ -22,8 +22,8 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Kode Group Jabatan</th>
-                                <th>Nama Group Jabatan</th>
+                                <th>Kode Grup Jabatan</th>
+                                <th>Nama Grup Jabatan</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -81,10 +81,10 @@
                         type: "hidden",
 						def: 1
 					},	{
-						label: "Kode Group Jabatan <sup class='text-danger'>*<sup>",
+						label: "Kode Grup Jabatan <sup class='text-danger'>*<sup>",
 						name: "hevgrmh.kode"
 					}, 	{
-						label: "Nama Group Jabatan <sup class='text-danger'>*<sup>",
+						label: "Nama Grup Jabatan <sup class='text-danger'>*<sup>",
 						name: "hevgrmh.nama"
 					}, 	
 					{
