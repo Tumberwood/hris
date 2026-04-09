@@ -23,11 +23,13 @@
 
     $where = ''; 
     if (isset($_POST['id_heyxxmh']) && ($_POST['id_heyxxmh'] > 0 ) ) {
-        $where = ' AND job.id_heyxxmh =' . $_POST['id_heyxxmh']; 
+        $where .= ' AND job.id_heyxxmh =' . $_POST['id_heyxxmh']; 
     } 
     
-    if ($_POST['dept'] != 0) {
-        $where = ' AND dep.nama = "'.$dept.'"';
+    if ($_POST['dept'] == 0) {
+        $where .= '';
+    } else {
+        $where .= ' AND dep.nama = "' . $dept . '"';
     }
 
     $qs_hemxxmh = $db
