@@ -46,6 +46,22 @@
                         </div>
                     </div>
 					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Status Active Pegawai</label>
+						<div class="col-md-10">
+							<div class="input-group">
+								<div class="row">
+									<div class="col-md-12">
+										<select class="form-control" id="select_is_active" name="select_is_active">
+											<option value="1" selected>Active</option>
+											<option value="0">Nonaktif</option>
+											<option value="0,1">All</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Employee</label>
 						<div class="col-sm-4">
 							<div class="input-group">
@@ -200,11 +216,12 @@
         $("#select_hemxxmh").select2({
 			placeholder: 'Ketik atau TekanTanda Panah Kanan',
 			ajax: {
-				url: "../../models/hemxxmh/hemxxmh_fn_opt_all.php",
+				url: "../../models/hemxxmh/hemxxmh_fn_opt_custom.php",
 				dataType: 'json',
 				data: function (params) {
 					var query = {
 						id_hemxxmh_old: id_hemxxmh_old,
+						is_active: $('#select_is_active').val(),
 						search: params.term || '',
 						page: params.page || 1
 					}

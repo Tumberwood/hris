@@ -92,6 +92,7 @@ $qs_outstanding_pr = $db
 				hodxxmh.nama AS hodxxmh_nama,
 				hetxxmh.nama AS hetxxmh_nama,
 				heyxxmh.nama AS heyxxmh_nama,
+				heyxxmd.nama AS heyxxmd_nama,
 				hosxxmh.nama AS hosxxmh_nama,
 				holxxmd_2.nama AS holxxmd_2_nama,
 				htoxxrd.kode AS kode_spkl,
@@ -101,6 +102,7 @@ $qs_outstanding_pr = $db
 			LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = hemxxmh.id
 			LEFT JOIN hodxxmh ON hodxxmh.id = hemjbmh.id_hodxxmh
 			LEFT JOIN heyxxmh ON heyxxmh.id = hemjbmh.id_heyxxmh
+			LEFT JOIN heyxxmd ON heyxxmd.id = hemjbmh.id_heyxxmd
 			LEFT JOIN hosxxmh ON hosxxmh.id = hemjbmh.id_hosxxmh
 			LEFT JOIN holxxmd_2 ON holxxmd_2.id = hemjbmh.id_holxxmd_2
 			LEFT JOIN hetxxmh ON hetxxmh.id = hemjbmh.id_hetxxmh

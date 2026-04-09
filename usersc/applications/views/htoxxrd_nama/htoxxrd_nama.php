@@ -78,7 +78,6 @@
                                 <th rowspan=2>Sub Tipe</th>
                                 <th rowspan=2>Status</th>
 								
-								<th rowspan=2>Jenis</th>
 								<th colspan=2>Lembur Libur</th>
 								<th colspan=2>Lembur Awal</th>
 								<th colspan=2>Lembur Akhir</th>
@@ -145,7 +144,6 @@
 								<th id="s_27"></th>
 								<th id="s_28"></th>
 								<th id="s_29"></th>
-								<th id="s_30"></th>
 
 							</tr>
 						</tfoot>
@@ -238,7 +236,7 @@
 						searchPanes:{
 							show: true
 						},
-						targets: [1,2,3,5]
+						targets: [1,4,5,6,7,8,9,10]
 					},
 					{
 						searchPanes:{
@@ -441,6 +439,7 @@
 					{ data: "heyxxmh_nama" },
 					{ data: "heyxxmd_nama" },
 					{ data: "hesxxmh_nama" },//10
+					
 					{ data: "jam_awal_lembur_libur" },//6
 					{ data: "jam_akhir_lembur_libur" },
 					{ data: "jam_awal_lembur_awal" },
@@ -521,7 +520,7 @@
 					var api       = this.api(), data;
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					
-					for (var i = 18; i <= 30; i++) {
+					for (var i = 18; i <= 29; i++) {
 						var columnIndex = i;
 						var sum = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }

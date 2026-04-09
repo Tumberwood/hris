@@ -757,7 +757,7 @@
 					},
 					
 					{
-						label: "Bagian",
+						label: "Bagian <sup class='text-danger'>*<sup>",  
 						name: "hemjbmh.id_hobxxmh",
 						type: "select2",
 						opts: {
@@ -1527,12 +1527,12 @@
 					// }
 					// END of validasi hemjbmh.id_hevxxmh 
 
-					// BEGIN of validasi hemjbmh.id_hetxxmh 
-					id_hetxxmh = edthemxxmh.field('hemjbmh.id_hetxxmh').val();
-					if(!id_hetxxmh || id_hetxxmh == ''){
-						edthemxxmh.field('hemjbmh.id_hetxxmh').error( 'Wajib diisi!' );
+					// BEGIN of validasi hemjbmh.id_hobxxmh 
+					id_hobxxmh = edthemxxmh.field('hemjbmh.id_hobxxmh').val();
+					if(!id_hobxxmh || id_hobxxmh == ''){
+						edthemxxmh.field('hemjbmh.id_hobxxmh').error( 'Wajib diisi!' );
 					}
-					// END of validasi hemjbmh.id_hetxxmh 
+					// END of validasi hemjbmh.id_hobxxmh 
 
 					is_npwp = edthemxxmh.field('hemdcmh.is_npwp').val();
 					if(!is_npwp || is_npwp == ''){
