@@ -20,11 +20,15 @@
 	$end_date   = $_POST['end_date'];
 	$dept   = $_POST['dept'];
 	$izin   = $_POST['izin'];
-    
+
     $where = ''; 
     if (isset($_POST['id_heyxxmh']) && ($_POST['id_heyxxmh'] > 0 ) ) {
         $where = ' AND job.id_heyxxmh =' . $_POST['id_heyxxmh']; 
     } 
+    
+    if (isset($_POST['dept']) && $_POST['dept'] != '') {
+        $where = ' AND dep.nama = :dept';
+    }
 
     $qs_hemxxmh = $db
     ->raw()
@@ -53,7 +57,6 @@
             LEFT JOIN htpxxmh ij ON ij.nama = :izin
             WHERE 
                 a.tanggal BETWEEN :start_date AND :end_date
-                AND dep.nama = :dept
                 AND (a.status_presensi_in <> "OFF" AND a.status_presensi_out <> "OFF")
                 AND (
                 a.status_presensi_in = ij.kode
