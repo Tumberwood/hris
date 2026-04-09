@@ -32,12 +32,12 @@
                     drilldown: function (e) {
                         izin = e.point.name;
                         console.log("Drilldown ke:", e.point.name);
-                        tableIzin(izin0, 0, start_date, end_date);
+                        tableIzin(izin, 0, start_date, end_date);
                     },
                     drillup: function (e) {
                         izin = e.point.name;
                         console.log("Kembali dari drilldown");
-                        tableIzin(izin0, 0, start_date, end_date);
+                        tableIzin(izin, 0, start_date, end_date);
                     }
                 }
             },
