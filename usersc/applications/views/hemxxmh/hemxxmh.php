@@ -234,6 +234,7 @@
                                 <th>Nama</th>
                                 <th>Department</th>
                                 <th>Unit Kerja</th>
+                                <th>Grup Jabatan</th>
                                 <th>Jabatan</th>
                                 <th>Area Kerja</th>
                                 <th>Tipe</th>
@@ -1726,6 +1727,7 @@
 					{ data: "hemxxmh.nama" }, //4
 					{ data: "hodxxmh.nama" },
 					{ data: "hosxxmh.nama" },
+					{ data: "hevgrmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "holxxmd_2.nama" },
 					{ data: "heyxxmh.nama" },

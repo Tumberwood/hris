@@ -159,6 +159,7 @@
 			Field::inst( 'hesxxmh.nama' ),
 			Field::inst( 'hobxxmh.nama' ),
 			Field::inst( 'holxxmd_2.nama' ),
+			Field::inst( 'hevgrmh.nama' ),
 
 			Field::inst( 'hemxxmh.gender' ),
 			Field::inst( 'hemxxmh.tanggal_lahir' )
@@ -188,6 +189,7 @@
 		->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
 		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
+		->leftJoin( 'hevgrmh','hevgrmh.id','=','hemjbmh.id_hevgrmh' )
 		->leftJoin( 'hobxxmh','hobxxmh.id','=','hemjbmh.id_hobxxmh' )
 		->where( 'hemjbmh.is_harian_lepas', 1)
 		;
