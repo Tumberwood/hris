@@ -26,6 +26,10 @@
         $where = ' AND id_heyxxmh =' . $_POST['id_heyxxmh']; 
     } 
     
+    if (isset($_POST['dept']) && $_POST['dept'] > 0) {
+        $where = ' AND dep.nama = :dept';
+    }
+    
     $qs_hemxxmh = $db
     ->raw()
     ->bind(':dept', $dept)
@@ -50,7 +54,8 @@
             WHERE a.jenis = 1 
                 '.$where.'
                 AND a.is_active = 1 
-                AND a.tanggal BETWEEN :start_date AND :end_date and dep.nama = :dept AND absen.nama = :absen
+                AND a.tanggal BETWEEN :start_date AND :end_date 
+                AND absen.nama = :absen
             ORDER BY absen.id ASC
             '
             );

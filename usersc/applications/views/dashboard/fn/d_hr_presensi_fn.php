@@ -170,8 +170,9 @@
                 type: 'column',
                 events: {
                     drilldown: function (e) {
+                        absen = e.point.name;
                         console.log("Drilldown ke:", e.point.name);
-                        tableAbsen(0, 0, start_date, end_date);
+                        tableAbsen(absen, 0, start_date, end_date);
                     },
                     drillup: function (e) {
                         console.log("Kembali dari drilldown");
