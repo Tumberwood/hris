@@ -26,7 +26,7 @@
         $where = ' AND job.id_heyxxmh =' . $_POST['id_heyxxmh']; 
     } 
     
-    if (isset($_POST['dept']) && $_POST['dept'] != 0) {
+    if ($_POST['dept'] != 0) {
         $where = ' AND dep.nama = "'.$dept.'"';
     }
 
