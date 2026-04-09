@@ -391,7 +391,6 @@
 							.append( '<td></td>' )
 							.append( '<td></td>' )
 							.append( '<td></td>' )
-							.append( '<td></td>' )
 							.append( '<td class="text-right font-bold bg-warning">'+sum_libur+'</td>' )
 							.append( '<td class="text-right font-bold bg-warning">'+sum_awal+'</td>' )
 							.append( '<td class="text-right font-bold bg-warning">'+sum_akhir+'</td>' )
