@@ -146,7 +146,19 @@
                         { data: "id",visible: false },         // pastikan query SELECT punya id (kalau perlu tambahin a.id di PHP)
                         { data: "tanggal" },
                         { data: "kode" },
-                        { data: "nama" },
+                        { 
+                            data: null ,
+                            render: function (data, type, row) {
+                                console.log(row);
+                                
+                                var id_hemxxmh = row.id_hemxxmh;
+                                var nama = row.nama;
+                                var tanggal = row.tanggal;
+                                var url = "../dashboard/d_hr_report_presensi.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+                                var link = '<a href="' + url + '" target="_blank">'.nama.'</a>';
+                                return link;
+                            }
+                        },
                         { data: "departemen" },
                         { data: "jenis" },
                         { data: "jam_awal" },
