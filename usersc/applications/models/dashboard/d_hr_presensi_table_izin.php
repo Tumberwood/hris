@@ -44,6 +44,7 @@
                 a.htlxxrh_kode AS kode,
                 a.status_presensi_in,
                 a.status_presensi_out,
+                a.pot_jam,
                 
                 IFNULL(ij.nama, :izin) jenis,
                 DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i")  AS jam_awal,
