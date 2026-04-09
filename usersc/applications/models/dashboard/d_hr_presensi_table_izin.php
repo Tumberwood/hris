@@ -38,7 +38,7 @@
     ->exec(' SELECT
                 a.id,
                 a.id_hemxxmh,
-                b.nama,
+                CONCAT(b.kode, " - ", b.nama) nama,
                 DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
                 dep.nama departemen,
                 a.htlxxrh_kode AS kode,
