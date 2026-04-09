@@ -27,12 +27,11 @@
     } 
     
     if (isset($_POST['dept']) && $_POST['dept'] > 0) {
-        $where = ' AND dep.nama = :dept';
+        $where = ' AND dep.nama = "'.$dept.'"';
     }
 
     $qs_hemxxmh = $db
     ->raw()
-    ->bind(':dept', $dept)
     ->bind(':izin', $izin)
     ->bind(':start_date', $start_date)
     ->bind(':end_date', $end_date)
