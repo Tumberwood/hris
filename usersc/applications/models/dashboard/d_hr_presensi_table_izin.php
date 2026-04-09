@@ -29,7 +29,7 @@
     if ($_POST['dept'] == 0) {
         $where .= '';
     } else {
-        $where .= ' AND dep.nama = "' . $dept . '"';
+        $where .= ' AND dep.nama = "' . $_POST['dept'] . '"';
     }
 
     $qs_hemxxmh = $db
