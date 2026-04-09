@@ -56,7 +56,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Kode</th>
-                                <th>Section</th>
+                                <th>Unit Kerja</th>
 								<th>Tanggal Terpilih</th>
 								<th>Tanggal Pengganti</th>
                                 <th>Keterangan</th>
@@ -83,7 +83,7 @@
                                 <th>id_htssctd_tukarhari</th>
 								<th>NIK</th>
 								<th>Nama</th>
-								<th>Section</th>
+								<th>Unit Kerja</th>
 								<th>Jabatan</th>
                             </tr>
                         </thead>
@@ -180,7 +180,7 @@
 						def: 1
 					},
 					{
-						label: "Section <sup class='text-danger'>*<sup>",
+						label: "Unit Kerja <sup class='text-danger'>*<sup>",
 						name: "hosxxmh[].id",
 						type: "select2",
 						opts: {
@@ -506,7 +506,7 @@
 							allowClear: true,
 							multiple: false,
 							ajax: {
-								url: "../../models/htssctd_tukarhari/hemxxmh_fn_opt_section.php",
+								url: "../../models/htssctd_tukarhari/hemxxmh_fn_opt_Unit Kerja.php",
 								dataType: 'json',
 								data: function (params) {
 									var query = {

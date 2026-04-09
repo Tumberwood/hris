@@ -328,12 +328,12 @@
 						// type: "hidden"
 					},
 					{
-						label: "Section Awal",
+						label: "Unit Kerja Awal",
 						name: "hosxxmh_awal_nama",
 						type: "readonly"
 					},
 					{
-						label: "Section Akhir",
+						label: "Unit Kerja Akhir",
 						name: "harxxth.id_hosxxmh_akhir",
 						type: "select2",
 						opts: {
