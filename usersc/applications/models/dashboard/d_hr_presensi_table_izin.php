@@ -27,7 +27,7 @@
     }   
     
     if ($dept !== 0) {
-        $where .= ' AND dep.nama = "' . $_POST['dept'] . '"';
+        $where .= ' AND dep.nama = "' . $dept . '"';
     }
 
     $qs_hemxxmh = $db
