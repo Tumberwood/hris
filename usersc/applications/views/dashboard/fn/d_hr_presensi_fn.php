@@ -30,12 +30,14 @@
                 type: 'column',
                 events: {
                     drilldown: function (e) {
+                        izin = e.point.name;
                         console.log("Drilldown ke:", e.point.name);
-                        tableIzin(0, 0, start_date, end_date);
+                        tableIzin(izin0, 0, start_date, end_date);
                     },
                     drillup: function (e) {
+                        izin = e.point.name;
                         console.log("Kembali dari drilldown");
-                        tableIzin(0, 0, start_date, end_date);
+                        tableIzin(izin0, 0, start_date, end_date);
                     }
                 }
             },
