@@ -376,16 +376,13 @@
 							}, 0);
 						sum_lembur3 = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_lembur3 );
 						
-						var sum_lembur4 = rows
-							.data()
-							.pluck('lembur4') 
-							.reduce( function (a, b) {
-								return parseFloat(a) + parseFloat(b);
-							}, 0);
-						sum_lembur4 = $.fn.dataTable.render.number(',', '.', 1, '').display( sum_lembur4 );
-
 						return $('<tr/>')
 							.append( '<td colspan="2" class="font-bold">Total</td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
+							.append( '<td></td>' )
 							.append( '<td></td>' )
 							.append( '<td></td>' )
 							.append( '<td></td>' )
@@ -401,14 +398,13 @@
 							.append( '<td class="text-right font-bold bg-warning">'+sum_istirahat1+'</td>' )
 							.append( '<td class="text-right font-bold bg-warning">'+sum_istirahat2+'</td>' )
 							.append( '<td class="text-right font-bold bg-warning">'+sum_istirahat3+'</td>' )
-							.append( '<td class="text-right font-bold bg-warning">'+sum_total_jam+'</td>' )
 							.append( '<td class="text-right font-bold bg-warning">'+sum_pot_ti+'</td>' )
 							.append( '<td class="text-right font-bold bg-warning">'+sum_pot_overtime+'</td>' )
 							.append( '<td class="text-right font-bold bg-warning">'+sum_final+'</td>' )
 							.append( '<td class="text-right font-bold bg-warning">'+sum_lembur15+'</td>' )
 							.append( '<td class="text-right font-bold bg-warning">'+sum_lembur2+'</td>' )
 							.append( '<td class="text-right font-bold bg-warning">'+sum_lembur3+'</td>' )
-							.append( '<td class="text-right font-bold bg-warning">'+sum_lembur4+'</td>' )
+							.append( '<td class="text-right font-bold bg-warning">'+sum_total_jam+'</td>' )
 							;
 					},
 					dataSrc: function (row) {
