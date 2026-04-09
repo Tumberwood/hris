@@ -92,8 +92,8 @@
 						}
 					}
 					
-					$tahun_min 		= $sheetData[$i][3] ;
-					$tahun_max 		= $sheetData[$i][4] ;
+					$tahun_min 		= $sheetData[$i][3];
+					$tahun_max 		= $sheetData[$i][4];
 					$keterangan 	= $sheetData[$i][5];
 
 					// mapping komponen
@@ -142,6 +142,8 @@
 								->set('created_by', $_SESSION['user'])
 								->set('id_hevgrmh',$id_hevgrmh)
 								->set('id_hpcxxmh',$id_hpcxxmh)
+								->set('tahun_min',$tahun_min)
+								->set('tahun_max',$tahun_max)
 								->set('nominal',$nominal)
 								->set('tanggal_efektif',$tanggal_efektif)
 								->set('keterangan',$keterangan)
