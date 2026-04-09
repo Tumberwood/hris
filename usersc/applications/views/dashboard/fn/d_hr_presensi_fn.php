@@ -35,9 +35,8 @@
                         tableIzin(izin, 0, start_date, end_date);
                     },
                     drillup: function (e) {
-                        izin = e.point.name;
                         console.log("Kembali dari drilldown");
-                        tableIzin(izin, 0, start_date, end_date);
+                        tableIzin(0, 0, start_date, end_date);
                     }
                 }
             },
