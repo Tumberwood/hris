@@ -551,7 +551,7 @@
                                             THEN CONCAT(c.tanggal_jam,"|",c.nama)
 
                                             -- 🔹 DEFAULT RANGE (jadwal)
-                                            WHEN d.id IS NULL
+                                            WHEN (d.id IS NULL OR is_istirahat = 2)
                                                 AND c.tanggal_jam BETWEEN
                                                     jadwal.tanggaljam_awal_istirahat
                                                     AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
@@ -665,7 +665,7 @@
                                             THEN CONCAT(c.tanggal_jam,"|",c.nama)
 
                                             -- 🔹 DEFAULT RANGE ISTIRAHAT (jadwal)
-                                            WHEN d.id IS NULL
+                                            WHEN (d.id IS NULL OR is_istirahat = 2)
                                                 AND c.tanggal_jam BETWEEN
                                                     jadwal.tanggaljam_awal_istirahat
                                                     AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
@@ -745,7 +745,7 @@
                                             THEN c.tanggal_jam
 
                                             -- 🔹 DEFAULT RANGE (jadwal)
-                                            WHEN d.id IS NULL
+                                            WHEN (d.id IS NULL OR is_istirahat = 2)
                                                 AND c.nama IN ("makan","makan manual")
                                                 AND c.tanggal_jam BETWEEN
                                                     jadwal.tanggaljam_awal_t1
