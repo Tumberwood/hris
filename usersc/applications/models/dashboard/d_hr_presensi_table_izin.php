@@ -24,9 +24,9 @@
     $where = ''; 
     if (isset($_POST['id_heyxxmh']) && ($_POST['id_heyxxmh'] > 0 ) ) {
         $where .= ' AND job.id_heyxxmh =' . $_POST['id_heyxxmh']; 
-    } 
+    }   
     
-    if ($dept != 0) {
+    if ($dept !== 0) {
         $where .= ' AND dep.nama = "' . $_POST['dept'] . '"';
     }
 
