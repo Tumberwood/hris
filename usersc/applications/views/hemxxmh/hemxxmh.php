@@ -869,7 +869,7 @@
 						}
 					},
 					{
-						label: "Jabatan <sup class='text-danger'>*<sup>",
+						label: "Jabatan",
 						name: "hemjbmh.id_hetxxmh",
 						type: "select2",
 						opts: {
