@@ -82,7 +82,15 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
+								<editor-field name="hemjbmh.id_hobxxmh"></editor-field>
+							</div>
+							<div class="col-lg-6">
 								<editor-field name="hemjbmh.id_hosxxmh"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemjbmh.id_hevgrmh"></editor-field>
 							</div>
 							<div class="col-lg-6">
 								<editor-field name="hemjbmh.id_hevxxmh"></editor-field>
@@ -108,11 +116,6 @@
 							<div class="col-lg-6">
 								<editor-field name="hemjbmh.id_holxxmd_2"></editor-field>
 							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_hobxxmh"></editor-field>
-							</div>
-						</div>
-						<div class="row">
 							<div class="col-lg-6">
 								<editor-field name="hemdcmh.id_gtxpkmh"></editor-field>
 							</div>
@@ -572,6 +575,7 @@
 		var id_gctxxmh_domisili_old = 0, id_gctxxmh_ktp_old = 0;
 		var id_gctxxmh_old_pendidikan = 0;
 		var id_gedxxmh_old_pendidikan = 0;
+		var id_hevgrmh_old = 0;
 
 		$(document).ready(function() {
 
@@ -644,6 +648,42 @@
 						label: "No BPJS Kesehatan <sup class='text-danger'>*<sup>",
 						name: "hemdcmh.no_bpjs_kes"
 					}, 
+					{
+						label: "Grup Jabatan <sup class='text-danger'>*<sup>",
+						name: "hemjbmh.id_hevgrmh",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hevgrmh/hevgrmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hevgrmh_old: id_hevgrmh_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},	
 					{
 						label: "Divisi <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_hovxxmh",
@@ -1377,6 +1417,13 @@
 			
 			edthemxxmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
+					// BEGIN of validasi hemjbmh.id_hevgrmh 
+					id_hevgrmh = edthemxxmh.field('hemjbmh.id_hevgrmh').val();
+					if(!id_hevgrmh || id_hevgrmh == ''){
+						edthemxxmh.field('hemjbmh.id_hevgrmh').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemjbmh.id_hevgrmh 
+
 					id_gctxxmh_lahir = edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').val();
 					if(!id_gctxxmh_lahir || id_gctxxmh_lahir == ''){
 						edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').error( 'Wajib diisi!' );
@@ -1793,6 +1840,7 @@
 				id_hobxxmh_old   = data_hemjbmh.id_hobxxmh;
 				id_hesxxmh_old   = data_hemjbmh.id_hesxxmh;
 				id_holxxmd_2_old   = data_hemjbmh.id_holxxmd_2;
+				id_hevgrmh_old   = data_hemjbmh.id_hevgrmh;
 				tanggal_keluar_old   = data_hemjbmh.tanggal_akhir_kontrak;
 
 				data_hemdcmh = tblhemxxmh.row( { selected: true } ).data().hemdcmh;
@@ -1841,6 +1889,7 @@
 				id_gtxpkmh_old = 0;
 				id_hovxxmh_old   = 0, id_hodxxmh_old   = 0, id_hosxxmh_old   = 0, id_hevxxmh_old   = 0, id_hetxxmh_old   = 0, id_heyxxmh_old   = 0, id_hesxxmh_old   = 0, tanggal_keluar_old = null;
 				id_holxxmd_2_old   = 0;
+				id_hevgrmh_old   = 0;
 				id_gctxxmh_old   = 0;
 				
 				id_gctxxmh_ktp_old = 0;
