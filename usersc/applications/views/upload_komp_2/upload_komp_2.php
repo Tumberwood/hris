@@ -83,15 +83,15 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>Komponen per Grup Level (Tunjangan Masa Kerja)</b></label>
+						<label class="col-lg-2 col-form-label"><b>Komponen per Grup Jabatan (Tunjangan Masa Kerja)</b></label>
 						<div class="col-sm-4">
 							<div class="input-group">
-								<input type="file" name="filename" class="form-control" id="inputKompGrup_Level">
+								<input type="file" name="filename" class="form-control" id="inputKompgrup_jabatan">
 							</div>
 						</div>
 						<div class="col-sm-4">
 							<div>
-								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_per_grup_level.xlsx');">
+								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_per_grup_jabatan.xlsx');">
 									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 								</button>
 								<b class="ml-2">Insert ke Tunjangan Masa Kerja</b>
@@ -320,18 +320,18 @@
 						} );
 					}
 					
-					//grup_level
-					var fd_grup_level = new FormData();
-					var grup_level = $('#inputKompGrup_Level')[0].files[0];
-					console.log(grup_level);
-					if (grup_level != undefined) {
-						fd_grup_level.append('filename',grup_level);
+					//grup_jabatan
+					var fd_grup_jabatan = new FormData();
+					var grup_jabatan = $('#inputKompgrup_jabatan')[0].files[0];
+					console.log(grup_jabatan);
+					if (grup_jabatan != undefined) {
+						fd_grup_jabatan.append('filename',grup_jabatan);
 			
 						$.ajax( {
-							url: "../../models/upload_komp_2/upload_komp_2_fn_grup_level.php",
+							url: "../../models/upload_komp_2/upload_komp_2_fn_grup_jabatan.php",
 							type: 'POST',
 							dataType: 'json',
-							data: fd_grup_level,
+							data: fd_grup_jabatan,
 							async: false,
 							contentType: false,
 							processData: false,
@@ -349,9 +349,9 @@
 											'<div data-notify="message">{2}</div>' +
 										'</div>'
 								});
-								$("#inputKompGrup_Level").val('');
+								$("#inputKompgrup_jabatan").val('');
 							},
-							error: function (xhr, Grup_Level, err){
+							error: function (xhr, grup_jabatan, err){
 								console.log('x');
 							}
 						} );
