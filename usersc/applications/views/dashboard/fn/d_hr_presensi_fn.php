@@ -153,7 +153,8 @@
                         { data: "jam_akhir" },
                         { 
                             data: "pot_jam",
-						    class: "text-right"
+						    class: "text-right",
+                            visible: false,
                         },
                         { data: "keterangan" },
                     ],
