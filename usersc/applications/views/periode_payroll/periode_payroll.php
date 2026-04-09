@@ -24,7 +24,8 @@
                                 <th>ID</th>
 								<th>Tanggal Awal</th>
 								<th>Tanggal Akhir</th>
-                                <th>Status</th>
+                                <th>Kunci Generate Presensi</th>
+                                <th>Browse Generate Payroll</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -107,7 +108,7 @@
 						format: 'DD MMM YYYY'
 					},
 					{
-						label: "Status",
+						label: "Browse Generate Payroll",
 						name: "periode_payroll.status",
 						type: "select",
 						placeholder : "Select",
@@ -189,6 +190,16 @@
 					{ data: "periode_payroll.id",visible:false },
 					{ data: "periode_payroll.tanggal_awal" },
 					{ data: "periode_payroll.tanggal_akhir" },
+					{ 
+						data: "periode_payroll.is_approve",
+						render: function (data, type, row) {
+							if (data == 1	) {
+								return `Locked`;
+							} else {
+								return `Unlocked`;
+							}
+						}
+					},
 					{ data: "periode_payroll.status" },
 					{ data: "periode_payroll.keterangan" }
 				],
@@ -203,7 +214,7 @@
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
 						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_h'];
-						$arr_buttons_approve 	= [];
+						$arr_buttons_approve 	= ['approve','cancel_approve'];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
@@ -218,6 +229,7 @@
 			tblperiode_payroll.on( 'init', function () {
 				// atur hak akses
 				CekInitHeaderH(tblperiode_payroll);
+				tblperiode_payroll.button('btnSetApprove:name').disable();
 			} );
 			
 			tblperiode_payroll.on( 'select', function( e, dt, type, indexes ) {
@@ -231,6 +243,15 @@
 
 				// atur hak akses
 				CekSelectHeaderH(tblperiode_payroll);
+				tblperiode_payroll.button('btnSetApprove:name').enable();
+				
+				if (is_approve == 1) {
+					tblperiode_payroll.button('btnApprove:name').disable();
+					tblperiode_payroll.button('btnCancelApprove:name').enable();
+				} else {
+					tblperiode_payroll.button('btnApprove:name').enable();
+					tblperiode_payroll.button('btnCancelApprove:name').disable();
+				}
 			} );
 
 			tblperiode_payroll.on( 'deselect', function () {
@@ -239,6 +260,7 @@
 
 				// atur hak akses
 				CekDeselectHeaderH(tblperiode_payroll);
+				tblperiode_payroll.button('btnSetApprove:name').disable();
 			} );
 			
 		} );// end of document.ready
