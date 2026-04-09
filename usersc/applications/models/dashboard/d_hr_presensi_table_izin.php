@@ -26,6 +26,8 @@
         $where .= ' AND job.id_heyxxmh =' . $_POST['id_heyxxmh']; 
     } 
     
+    print_r($_POST['dept']);
+    
     if ($_POST['dept'] == 0) {
         $where .= '';
     } else {
