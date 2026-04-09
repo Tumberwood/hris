@@ -873,18 +873,19 @@
 					{
 						label: "Jabatan",
 						name: "hemjbmh.id_hetxxmh",
+						fieldInfo: "Jabatan sesuai Grup Jabatan",
 						type: "select2",
 						opts: {
 							placeholder : "Select",
 							allowClear: true,
 							multiple: false,
 							ajax: {
-								url: "../../models/hetxxmh/hetxxmh_fn_opt.php",
+								url: "../../models/hetxxmh/hetxxmh_fn_opt_grup.php",
 								dataType: 'json',
 								data: function (params) {
 									var query = {
-										id_hetxxmh: 0,
 										id_hetxxmh_old: id_hetxxmh_old,
+										id_hevgrmh: edthemxxmh.field('hemjbmh.id_hevgrmh').val() || -1,
 										search: params.term || '',
 										page: params.page || 1
 									}
