@@ -69,15 +69,23 @@
 								<th rowspan=2>Tanggal</th>
 								<th rowspan=2>Nama</th>
 								<th rowspan=2>Kode SPKL</th>
-								<th rowspan=2>Department</th>
-								<th rowspan=2>Jabatan</th>
+								
+                                <th rowspan=2>Department</th>
+                                <th rowspan=2>Unit Kerja</th>
+                                <th rowspan=2>Jabatan</th>
+                                <th rowspan=2>Area Kerja</th>
+                                <th rowspan=2>Tipe</th>
+                                <th rowspan=2>Sub Tipe</th>
+                                <th rowspan=2>Status</th>
+								
 								<th rowspan=2>Jenis</th>
 								<th colspan=2>Lembur Libur</th>
 								<th colspan=2>Lembur Awal</th>
 								<th colspan=2>Lembur Akhir</th>
 								<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
-								<th class="text-center" colspan=3>Potongan Jam Overtime</th>
-								<th class="text-center" colspan=4>Jam Lembur</th>
+								<th class="text-center" colspan=2>Potongan Jam Overtime</th>
+								<th class="text-center" colspan=3>Jam Lembur</th>
+								<th rowspan=2>Overtime Final</th>
 
 							</tr>
 							<tr>
@@ -98,11 +106,9 @@
 
 								<th>Pot TI</th>
 								<th>Pot Overtime</th>
-								<th>Overtime Final</th>
 								<th>Lembur 1.5</th>
 								<th>Lembur 2</th>
 								<th>Lembur 3</th>
-								<th>Lembur 4</th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -120,13 +126,13 @@
 								<th></th>
 								<th></th>
 								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th></th>
 								<th>Total</th>
 
-								<th id="s_13"></th>
-								<th id="s_14"></th>
-								<th id="s_15"></th>
-								<th id="s_16"></th>
-								<th id="s_17"></th>
 								<th id="s_18"></th>
 								<th id="s_19"></th>
 								<th id="s_20"></th>
@@ -136,6 +142,10 @@
 								<th id="s_24"></th>
 								<th id="s_25"></th>
 								<th id="s_26"></th>
+								<th id="s_27"></th>
+								<th id="s_28"></th>
+								<th id="s_29"></th>
+								<th id="s_30"></th>
 
 							</tr>
 						</tfoot>
@@ -234,7 +244,7 @@
 						searchPanes:{
 							show: false
 						},
-						targets: [4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21, 22, 23, 24,25]
+						targets: '_all'
 					}
 				],
 				ajax: {
@@ -407,6 +417,9 @@
 						return row.hemxxmh_data;
 					}
 				},
+				fixedColumns:   {
+					left: 2
+				},
 				columns: [
 					{ data: "id",visible:false },
 					{ 
@@ -421,18 +434,13 @@
 						data: "kode_spkl"
 						// ,visible:false 
 					},
-					{ 
-						data: "hodxxmh_nama"
-						// ,visible:false 
-					},
-					{ 
-						data: "hetxxmh_nama"
-						// ,visible:false 
-					},
-					{ 
-						data: "heyxxmh_nama"
-						// ,visible:false 
-					},
+					{ data: "hodxxmh_nama" },
+					{ data: "hosxxmh_nama" },
+					{ data: "hetxxmh_nama" },
+					{ data: "holxxmd_2_nama" },
+					{ data: "heyxxmh_nama" },
+					{ data: "heyxxmd_nama" },
+					{ data: "hesxxmh_nama" },//10
 					{ data: "jam_awal_lembur_libur" },//6
 					{ data: "jam_akhir_lembur_libur" },
 					{ data: "jam_awal_lembur_awal" },
@@ -476,10 +484,6 @@
 						class: "text-right"
 					},
 					{ 
-						data: "durasi_lembur_final",
-						class: "text-right"
-					},
-					{ 
 						data: "lembur15",
 						class: "text-right"
 					},
@@ -492,9 +496,9 @@
 						class: "text-right"
 					},
 					{ 
-						data: "lembur4",
+						data: "durasi_lembur_final",
 						class: "text-right"
-					}
+					},
 					
 				],
 				buttons: [	
@@ -517,7 +521,7 @@
 					var api       = this.api(), data;
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 					
-					for (var i = 13; i <= 26; i++) {
+					for (var i = 18; i <= 30; i++) {
 						var columnIndex = i;
 						var sum = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }

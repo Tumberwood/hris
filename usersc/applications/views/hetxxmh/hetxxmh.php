@@ -23,8 +23,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Grup Jabatan</th>
-                                <th>Kode</th>
-                                <th>Nama</th>
+                                <th>Kode Jabatan</th>
+                                <th>Nama Jabatan</th>
                                 <th>Atasan Langsung</th>
                                 <th>Keterangan</th>
                             </tr>
@@ -83,10 +83,10 @@
                         type: "hidden",
 						def: 1
 					},	{
-						label: "Kode <sup class='text-danger'>*<sup>",
+						label: "Kode Jabatan<sup class='text-danger'>*<sup>",
 						name: "hetxxmh.kode"
 					}, 	{
-						label: "Nama <sup class='text-danger'>*<sup>",
+						label: "Nama Jabatan<sup class='text-danger'>*<sup>",
 						name: "hetxxmh.nama"
 					}, 	
 					{

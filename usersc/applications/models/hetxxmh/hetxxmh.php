@@ -50,7 +50,7 @@
 			Field::inst( 'hevgrmh.nama' ),
 		)
 		->leftJoin( 'hetxxmh as hetxxmh_al','hetxxmh_al.id','=','hetxxmh.id_hetxxmh_al' )
-		->leftJoin( 'hevgrmh as hevgrmh','hevgrmh.id','=','hetxxmh_al.id_hevgrmh' )
+		->leftJoin( 'hevgrmh as hevgrmh','hevgrmh.id','=','hetxxmh.id_hevgrmh' )
 		;
 	
 	// do not erase
