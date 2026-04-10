@@ -44,7 +44,12 @@
                 a.htlxxrh_kode AS kode,
                 a.status_presensi_in,
                 a.status_presensi_out,
-                a.pot_jam,
+                CASE 
+                	WHEN jenis_jam = 1 OR :izin = "Late - Belum Ada Izin" THEN a.pot_jam_late
+                	WHEN jenis_jam = 2 THEN a.pot_jam_early
+                	WHEN jenis_jam = 3 then a.pot_jam_izin
+                	ELSE 0
+               END AS pot_jam,
                 
                 IFNULL(ij.nama, :izin) jenis,
                 DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i")  AS jam_awal,

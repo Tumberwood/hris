@@ -163,6 +163,10 @@
                         { data: "jenis" },
                         { data: "jam_awal" },
                         { data: "jam_akhir" },
+                        { 
+                            data: "pot_jam",
+						    class: "text-right"
+                        },
                         { data: "keterangan" },
                     ],
                     destroy: true,

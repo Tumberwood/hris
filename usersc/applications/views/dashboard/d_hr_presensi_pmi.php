@@ -69,6 +69,7 @@
                                                 <th>Jenis</th>
                                                 <th>Jam Awal</th>
                                                 <th>Jam Akhir</th>
+                                                <th>Pot Jam</th>
                                                 <th>Keterangan</th>
                                             </tr>
                                         </thead>
