@@ -63,7 +63,7 @@
 					$kode = $sheetData[$i][0];
 
 					// ===== FIX TANGGAL =====
-					$raw = trim($sheetData[$i][5]);
+					$raw = trim($sheetData[$i][7]);
 
 					$formats = [
 						'd/m/Y',
@@ -92,13 +92,15 @@
 						}
 					}
 					
-					$keterangan = $sheetData[$i][6];
+					$keterangan = $sheetData[$i][8];
 
 					// mapping komponen
 					$komponen = [
 						['id_hpcxxmh' => 1,   'nominal' => $sheetData[$i][2]],
 						['id_hpcxxmh' => 2,   'nominal' => $sheetData[$i][3]],
-						['id_hpcxxmh' => 102, 'nominal' => $sheetData[$i][4]],
+						['id_hpcxxmh' => 127, 'nominal' => $sheetData[$i][4]],
+						['id_hpcxxmh' => 102, 'nominal' => $sheetData[$i][5]],
+						['id_hpcxxmh' => 126, 'nominal' => $sheetData[$i][6]],
 					];
 
 					// cari karyawan

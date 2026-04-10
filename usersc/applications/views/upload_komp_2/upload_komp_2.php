@@ -21,7 +21,7 @@
 				<hr>
 				<form id="frmUploadKompKaryawan" enctype="multipart/form-data">
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>Komponen per Karyawan (Gaji Pokok & Gaji BPJS)</b></label>
+						<label class="col-lg-2 col-form-label"><b>Komponen per Karyawan (Gaji Pokok, Gaji BPJS TK, Gaji BPJS Kes, Tunjangan Lain-lain & Iuran SPSI)</b></label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputKompKaryawan">
