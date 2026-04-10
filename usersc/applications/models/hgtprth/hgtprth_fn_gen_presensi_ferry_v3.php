@@ -541,39 +541,40 @@
                                                             d.jam_akhir
                                                         )
                                                     AND (
-                                                        -- 🔹 GRUP 1
-                                                        (jb.jumlah_grup = 1 
-                                                            AND jadwal.tanggal > "2025-07-27" 
+                                                        -- 🔹 Istirahat Gedung 3
+                                                        (
+                                                            jadwal.tanggal > "2025-07-27" 
                                                             AND id_holxxmd_2 = 1 
-                                                            AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
-                                                        )
 
-                                                        -- 🔹 GRUP 2 + FILTER DOUBLE
-                                                        OR (
-                                                            jb.jumlah_grup = 2 
-                                                            AND jadwal.tanggal > "2025-07-27" 
-                                                            AND id_holxxmd_2 = 1 
-                                                            AND c.nama IN ("PMI-Gedung-3","OS-Gedung-3", "os","out","staff","PMI","istirahat","istirahat manual","makan")
+                                                            AND (
+                                                                -- 1. Gedung 3 selalu lolos
+                                                                c.nama IN ("PMI-Gedung-3","OS-Gedung-3")
 
-                                                            AND NOT (
-                                                                c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
-                                                                AND EXISTS (
-                                                                    SELECT 1
-                                                                    FROM htsprtd c2
-                                                                    WHERE c2.kode = c.kode
-                                                                    AND c2.tanggal_jam = c.tanggal_jam
-                                                                    AND c2.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                                OR (
+
+                                                                    -- 2. selain gedung 3 (OS, PMI, dll)
+                                                                    c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
+
+                                                                    -- hanya kalau tidak ada pasangan gedung 3 di waktu yg sama
+                                                                    AND NOT EXISTS (
+                                                                        SELECT 1
+                                                                        FROM htsprtd c2
+                                                                        WHERE c2.kode = c.kode
+                                                                        AND c2.tanggal_jam = c.tanggal_jam
+                                                                        AND c2.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                                    )
                                                                 )
                                                             )
+
                                                         )
 
-                                                        -- 🔹 RANGE LAMA
+                                                        -- 🔹 Istirahat Selain Gedung 3
                                                         OR (
                                                             jadwal.tanggal > "2025-07-27"
-                                                            AND id_holxxmd_2 <> 1  
+                                                            AND id_holxxmd_2 <> 1 
                                                             AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual")
                                                         )
-                                                        
+
                                                         OR (
                                                             jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
                                                             AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
@@ -592,39 +593,39 @@
                                                         jadwal.tanggaljam_awal_istirahat
                                                         AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                     AND (
-                                                        -- 🔹 GRUP 1
-                                                        (jb.jumlah_grup = 1 
-                                                            AND jadwal.tanggal > "2025-07-27" 
+                                                        -- 🔹 Istirahat Gedung 3
+                                                        (
+                                                            jadwal.tanggal > "2025-07-27" 
                                                             AND id_holxxmd_2 = 1 
-                                                            AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
-                                                        )
 
-                                                        -- 🔹 GRUP 2 + FILTER DOUBLE
-                                                        OR (
-                                                            jb.jumlah_grup = 2 
-                                                            AND jadwal.tanggal > "2025-07-27" 
-                                                            AND id_holxxmd_2 = 1 
-                                                            AND c.nama IN ("PMI-Gedung-3","OS-Gedung-3", "os","out","staff","PMI","istirahat","istirahat manual","makan")
+                                                            AND (
+                                                                -- 1. Gedung 3 selalu lolos
+                                                                c.nama IN ("PMI-Gedung-3","OS-Gedung-3")
 
-                                                            AND NOT (
-                                                                c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
-                                                                AND EXISTS (
-                                                                    SELECT 1
-                                                                    FROM htsprtd c2
-                                                                    WHERE c2.kode = c.kode
-                                                                    AND c2.tanggal_jam = c.tanggal_jam
-                                                                    AND c2.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                                OR (
+
+                                                                    -- 2. selain gedung 3 (OS, PMI, dll)
+                                                                    c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
+
+                                                                    -- hanya kalau tidak ada pasangan gedung 3 di waktu yg sama
+                                                                    AND NOT EXISTS (
+                                                                        SELECT 1
+                                                                        FROM htsprtd c2
+                                                                        WHERE c2.kode = c.kode
+                                                                        AND c2.tanggal_jam = c.tanggal_jam
+                                                                        AND c2.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                                    )
                                                                 )
                                                             )
                                                         )
 
-                                                        -- 🔹 RANGE LAMA
+                                                        -- 🔹 Istirahat Selain Gedung 3
                                                         OR (
                                                             jadwal.tanggal > "2025-07-27"
-                                                            AND id_holxxmd_2 <> 1  
+                                                            AND id_holxxmd_2 <> 1 
                                                             AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual")
                                                         )
-                                                        
+
                                                         OR (
                                                             jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
                                                             AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
@@ -645,7 +646,7 @@
                                                 WHEN d.id IS NOT NULL
                                                     AND jadwal.id_htsxxmh = 1
                                                     AND c.tanggal_jam BETWEEN
-                                                        DATE_ADD(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 30 MINUTE)
+                                                        CONCAT(d.tanggal, " ", d.jam_awal)
                                                         AND CONCAT(
                                                             IF(d.jam_awal > d.jam_akhir,
                                                                 DATE_ADD(d.tanggal, INTERVAL 1 DAY),
@@ -655,39 +656,39 @@
                                                             d.jam_akhir
                                                         )
                                                     AND (
-                                                        -- 🔹 GRUP 1
-                                                        (jb.jumlah_grup = 1 
-                                                            AND jadwal.tanggal > "2025-07-27" 
-                                                            AND id_holxxmd_2 = 1
-                                                            AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
-                                                        )
-
-                                                        -- 🔹 GRUP 2 + FILTER DOUBLE KHUSUS
-                                                        OR (
-                                                            jb.jumlah_grup = 2 
-                                                            AND jadwal.tanggal > "2025-07-27" 
+                                                        -- 🔹 Istirahat Gedung 3
+                                                        (
+                                                            jadwal.tanggal > "2025-07-27" 
                                                             AND id_holxxmd_2 = 1 
-                                                            AND c.nama IN ("PMI-Gedung-3","OS-Gedung-3", "os","out","staff","PMI","istirahat","istirahat manual","makan")
 
-                                                            AND NOT (
-                                                                c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
-                                                                AND EXISTS (
-                                                                    SELECT 1
-                                                                    FROM htsprtd c2
-                                                                    WHERE c2.kode = c.kode
-                                                                    AND c2.tanggal_jam = c.tanggal_jam
-                                                                    AND c2.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                            AND (
+                                                                -- 1. Gedung 3 selalu lolos
+                                                                c.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+
+                                                                OR (
+
+                                                                    -- 2. selain gedung 3 (OS, PMI, dll)
+                                                                    c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
+
+                                                                    -- hanya kalau tidak ada pasangan gedung 3 di waktu yg sama
+                                                                    AND NOT EXISTS (
+                                                                        SELECT 1
+                                                                        FROM htsprtd c2
+                                                                        WHERE c2.kode = c.kode
+                                                                        AND c2.tanggal_jam = c.tanggal_jam
+                                                                        AND c2.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                                    )
                                                                 )
                                                             )
                                                         )
 
-                                                        -- 🔹 RANGE LAMA
+                                                        -- 🔹 Istirahat Selain Gedung 3
                                                         OR (
                                                             jadwal.tanggal > "2025-07-27"
-                                                            AND id_holxxmd_2 <> 1  
+                                                            AND id_holxxmd_2 <> 1 
                                                             AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual")
                                                         )
-                                                        
+
                                                         OR (
                                                             jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
                                                             AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
@@ -706,39 +707,39 @@
                                                         jadwal.tanggaljam_awal_istirahat
                                                         AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                     AND (
-                                                        -- 🔹 GRUP 1
-                                                        (jb.jumlah_grup = 1 
-                                                            AND jadwal.tanggal > "2025-07-27" 
-                                                            AND id_holxxmd_2 = 1
-                                                            AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
-                                                        )
-
-                                                        -- 🔹 GRUP 2 + FILTER DOUBLE KHUSUS
-                                                        OR (
-                                                            jb.jumlah_grup = 2 
-                                                            AND jadwal.tanggal > "2025-07-27" 
+                                                        -- 🔹 Istirahat Gedung 3
+                                                        (
+                                                            jadwal.tanggal > "2025-07-27" 
                                                             AND id_holxxmd_2 = 1 
-                                                            AND c.nama IN ("PMI-Gedung-3","OS-Gedung-3", "os","out","staff","PMI","istirahat","istirahat manual","makan")
 
-                                                            AND NOT (
-                                                                c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
-                                                                AND EXISTS (
-                                                                    SELECT 1
-                                                                    FROM htsprtd c2
-                                                                    WHERE c2.kode = c.kode
-                                                                    AND c2.tanggal_jam = c.tanggal_jam
-                                                                    AND c2.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                            AND (
+                                                                -- 1. Gedung 3 selalu lolos
+                                                                c.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+
+                                                                OR (
+
+                                                                    -- 2. selain gedung 3 (OS, PMI, dll)
+                                                                    c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
+
+                                                                    -- hanya kalau tidak ada pasangan gedung 3 di waktu yg sama
+                                                                    AND NOT EXISTS (
+                                                                        SELECT 1
+                                                                        FROM htsprtd c2
+                                                                        WHERE c2.kode = c.kode
+                                                                        AND c2.tanggal_jam = c.tanggal_jam
+                                                                        AND c2.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                                    )
                                                                 )
                                                             )
                                                         )
 
-                                                        -- 🔹 RANGE LAMA
+                                                        -- 🔹 Istirahat Selain Gedung 3
                                                         OR (
                                                             jadwal.tanggal > "2025-07-27"
-                                                            AND id_holxxmd_2 <> 1  
+                                                            AND id_holxxmd_2 <> 1 
                                                             AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual")
                                                         )
-                                                        
+
                                                         OR (
                                                             jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
                                                             AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
@@ -752,7 +753,7 @@
                                                 THEN CONCAT(c.tanggal_jam,"|",c.nama)
                                             END
                                         ) AS concat_break_out,
-
+                                        
                                         -- Ceklok Luar: max tanggal_jam di luar jam shift
                                         MAX(CASE
                                             WHEN c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "pocan")
