@@ -22,9 +22,9 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Kode</th>
                                 <th>Tipe</th>
-                                <th>Nama</th>
+                                <th>Kode Sub Tipe</th>
+                                <th>Nama Sub Tipe</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -118,10 +118,10 @@
 							},
 						}
 					},	{
-						label: "Kode <sup class='text-danger'>*<sup>",
+						label: "Kode Sub Tipe <sup class='text-danger'>*<sup>",
 						name: "heyxxmd.kode"
 					}, 	{
-						label: "Nama <sup class='text-danger'>*<sup>",
+						label: "Nama Sub Tipe <sup class='text-danger'>*<sup>",
 						name: "heyxxmd.nama"
 					}, 	{
 						label: "Keterangan",
