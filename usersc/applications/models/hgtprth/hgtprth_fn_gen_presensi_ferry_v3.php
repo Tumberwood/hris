@@ -1566,6 +1566,11 @@
                             nominal_lembur_jam,
                             grup_hk,
                             id_holxxmd_2,
+
+                            IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_late_lembur, 0) AS pot_jam_late,
+                            IFNULL(pot_jam_early, 0) AS pot_jam_early,
+                            IFNULL(pot_jam_izin, 0) AS pot_jam_izin,
+                            
                             break_in,
                             break_out
                         
