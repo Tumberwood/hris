@@ -328,7 +328,7 @@
 						AND a.id_htsxxmh = 1
 				) ceklok_istirahat
 				ORDER BY tanggal_jam
-				LIMIT 7
+				LIMIT 20
 				;
 				'
 				);
