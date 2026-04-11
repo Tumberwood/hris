@@ -187,6 +187,7 @@
 							FROM hemjbrd
 							WHERE
 								tanggal_awal <= :start_date
+								AND id_harxxmh <> 1
 						) AS subquery
 						WHERE row_num = 1
 					) history ON history.id_hemxxmh = j.id_hemxxmh
