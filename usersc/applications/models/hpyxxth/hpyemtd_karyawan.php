@@ -80,6 +80,65 @@
 				Field::inst( 'hpyemtd.overtime_susulan' ),
 				Field::inst( 'hpyemtd.sisa_cuti' ),
 				Field::inst( 'hpyemtd.pot_lain' ),
+				
+				// IDENTITAS TAMBAHAN
+				Field::inst( 'hpyemtd.nrp' ),
+				Field::inst( 'hpyemtd.departemen' ),
+				Field::inst( 'hpyemtd.jabatan' ),
+				Field::inst( 'hpyemtd.tipe' ),
+				Field::inst( 'hpyemtd.sub_tipe' ),
+				Field::inst( 'hpyemtd.status_peg' ),
+
+				Field::inst( 'hpyemtd.ptkp' ),
+				Field::inst( 'hpyemtd.no_rekening' ),
+				Field::inst( 'hpyemtd.ktp' ),
+				Field::inst( 'hpyemtd.npwp' ),
+
+				// TAMBAHAN GAJI
+				Field::inst( 'hpyemtd.terima_lain' ),
+
+				Field::inst( 'hpyemtd.lembur15_final' ),
+				Field::inst( 'hpyemtd.lembur2_final' ),
+				Field::inst( 'hpyemtd.lembur3_final' ),
+
+				Field::inst( 'hpyemtd.total_lembur_jam' ),
+				Field::inst( 'hpyemtd.total_lembur_jam_final' ),
+				Field::inst( 'hpyemtd.total_rp_lembur' ),
+
+				Field::inst( 'hpyemtd.komp_rekontrak' ),
+				Field::inst( 'hpyemtd.komp_sisa_cuti' ),
+				Field::inst( 'hpyemtd.thr' ),
+
+				// BEFORE PPH
+				Field::inst( 'hpyemtd.pendapatan_lain_before_pph' ),
+				Field::inst( 'hpyemtd.pot_lain_before_pph' ),
+
+				// BPJS PERUSAHAAN
+				Field::inst( 'hpyemtd.bpjs_kes_perusahaan' ),
+
+				// TER / PAJAK
+				Field::inst( 'hpyemtd.kategori_kelas' ),
+				Field::inst( 'hpyemtd.persen_ter' ),
+				Field::inst( 'hpyemtd.after_pph21' ),
+
+				// BPJS DETAIL
+				Field::inst( 'hpyemtd.jht_perusahaan' ),
+				Field::inst( 'hpyemtd.jp_perusahaan' ),
+
+				Field::inst( 'hpyemtd.pot_jht_karyawan' ),
+				Field::inst( 'hpyemtd.pot_jp_karyawan' ),
+				Field::inst( 'hpyemtd.bpjs_kes_karyawan' ),
+
+				// POTONGAN TAMBAHAN
+				Field::inst( 'hpyemtd.pot_piutang' ),
+				Field::inst( 'hpyemtd.denda_apd' ),
+				Field::inst( 'hpyemtd.iuran_spsi' ),
+
+				Field::inst( 'hpyemtd.pendapatan_lain_after_pph' ),
+				Field::inst( 'hpyemtd.pot_lain_after_pph' ),
+
+				// BRUTO (WAJIB ADA)
+				Field::inst( 'hpyemtd.bruto' ),
 
 				Field::inst( 'hetxxmh.nama' ),
 				Field::inst( 'hodxxmh.nama' ),
@@ -87,6 +146,9 @@
 				Field::inst( 'heyxxmh.nama' ),
 				Field::inst( 'heyxxmd.nama' ),
 				Field::inst( 'hesxxmh.nama' ),
+				Field::inst( 'gtxpkmh.nama' ),
+				Field::inst( 'hemdcmh.ktp_no' ),
+				Field::inst( 'hemdcmh.npwp_no' ),
 				
 				Field::inst( 'hemxxmh.kode as kode' ),
 				Field::inst( 'hemxxmh.nama as nama' )
@@ -99,6 +161,9 @@
 			->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
 			->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
 			->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
+			
+			->leftJoin( 'hemdcmh','hemdcmh.id_hemxxmh','=','hemxxmh.id' )
+			->leftJoin( 'gtxpkmh','gtxpkmh.id','=','hemdcmh.id_gtxpkmh' )
 			->where('hpyemtd.id_hpyxxth',$_POST['id_hpyxxth'])
 			->where('heyxxmd.id', 3)
 			->where('hesxxmh.id', 1) //tetap
