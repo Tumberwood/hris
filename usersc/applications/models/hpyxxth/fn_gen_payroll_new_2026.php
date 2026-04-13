@@ -1202,6 +1202,7 @@
                     payroll_final AS (
                         SELECT
                             payroll.*,
+                            ter.persen persen_ter,
 
                             -- GAJI BERSIH
                             ( bruto - ( bruto * (IFNULL(ter.persen,0) / 100) ) )
