@@ -1201,8 +1201,69 @@
                     ),
                     payroll_final AS (
                         SELECT
-                            payroll.*,
+                            id_hemxxmh,
+                            nrp,
+                            payroll.nama,
+                            departemen,
+                            jabatan,
+                            tipe,
+                            sub_tipe,
+                            status_peg,
+                            
+                            ptkp,
+                            no_rekening,
+                            ktp,
+                            npwp,
+                            gp,
+                            t_jab,
+                            terima_lain,
+                            var_cost,
+                            fix_cost,
+                            premi_abs,
+                            
+                            lembur15,
+                            lembur15_final,
+                            rp_lembur15,
+                            lembur2,
+                            lembur2_final,
+                            rp_lembur2,
+                            lembur3,
+                            lembur3_final,
+                            rp_lembur3,
+                            
+                            total_lembur_jam,
+                            total_lembur_jam_final,
+                            total_rp_lembur,
+                            komp_rekontrak,
+                            komp_sisa_cuti,
+                            thr,
+                            
+                            pot_makan,
+                            pot_upah,
+                            pendapatan_lain_before_pph,
+                            pot_lain_before_pph,
+                            bpjs_kes_perusahaan,
+                            jkk,
+                            jkm,
+                            
+                            bruto,
+                            kategori_kelas,
                             ter.persen persen_ter,
+                            bruto * (IFNULL(ter.persen,0) / 100) AS pot_pph21,
+                            bruto - ( bruto * (IFNULL(ter.persen,0) / 100) ) AS after_pph21,
+                            
+                            jht_perusahaan,
+                            jp_perusahaan,
+
+                            pot_jht_karyawan,
+                            pot_jp_karyawan,
+                            bpjs_kes_karyawan,
+                            pot_piutang,
+                            denda_apd,
+                            iuran_spsi,
+
+                            pendapatan_lain_after_pph,
+                            pot_lain_after_pph,
 
                             -- GAJI BERSIH
                             ( bruto - ( bruto * (IFNULL(ter.persen,0) / 100) ) )
