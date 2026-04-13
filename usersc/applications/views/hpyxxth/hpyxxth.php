@@ -1282,7 +1282,7 @@
 					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
 					{ data: "hpyemtd.bruto", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.persen_ter", class: "text-right" },
+					{ data: "hpyemtd.persen_ter", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
 					{ data: "hpyemtd.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
 
@@ -1525,7 +1525,7 @@
 					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
 					{ data: "hpyemtd.bruto", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.persen_ter", class: "text-right" },
+					{ data: "hpyemtd.persen_ter", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
 					{ data: "hpyemtd.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
 
@@ -1768,7 +1768,7 @@
 					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
 					{ data: "hpyemtd.bruto", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.persen_ter", class: "text-right" },
+					{ data: "hpyemtd.persen_ter", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
 					{ data: "hpyemtd.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
 
