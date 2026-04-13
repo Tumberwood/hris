@@ -199,8 +199,8 @@
 				order: [[ 1, "asc" ]],
 				columns: [
 					{ data: "hevgrmh.id",visible:false },
-					{ data: "hevgrmh.nama" },
 					{ data: "hevgrmh.kode" },
+					{ data: "hevgrmh.nama" },
 					{ data: "hevgrmh.keterangan" }
 				],
 				buttons: [
