@@ -120,7 +120,7 @@
 													<th class="text-center align-middle text-danger">Pot Denda APD</th>
 													<th class="text-center align-middle text-danger">Iuran SPSI (potongan)</th>
 
-													<th class="text-center align-middle">Pendapatan Lain Setelah PPh 21</th>
+													<th class="text-center align-middle">Pendapatan Setelah PPh 21</th>
 													<th class="text-center align-middle text-danger">Potongan Setelah PPh 21</th>
 
 													<th class="text-center align-middle">Gaji Bersih</th>
@@ -254,7 +254,7 @@
 													<th class="text-center align-middle text-danger">Pot Denda APD</th>
 													<th class="text-center align-middle text-danger">Iuran SPSI (potongan)</th>
 
-													<th class="text-center align-middle">Pendapatan Lain Setelah PPh 21</th>
+													<th class="text-center align-middle">Pendapatan Setelah PPh 21</th>
 													<th class="text-center align-middle text-danger">Potongan Setelah PPh 21</th>
 
 													<th class="text-center align-middle">Gaji Bersih</th>
@@ -388,7 +388,7 @@
 													<th class="text-center align-middle text-danger">Pot Denda APD</th>
 													<th class="text-center align-middle text-danger">Iuran SPSI (potongan)</th>
 
-													<th class="text-center align-middle">Pendapatan Lain Setelah PPh 21</th>
+													<th class="text-center align-middle">Pendapatan Setelah PPh 21</th>
 													<th class="text-center align-middle text-danger">Potongan Setelah PPh 21</th>
 
 													<th class="text-center align-middle">Gaji Bersih</th>
