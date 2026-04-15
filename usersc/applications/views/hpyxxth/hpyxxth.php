@@ -1827,7 +1827,7 @@
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
 						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
-						$('#kbm_reg' + columnIndex).html(numFormat(sum_all));
+						$('#kbm_reg_' + columnIndex).html(numFormat(sum_all));
 
 						// console.log('Number of Pages: ' + api.page.info().pages);
 					}
