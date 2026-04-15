@@ -254,7 +254,7 @@
                     gaji_pokok AS (
                         SELECT
                             p.id_hemxxmh,
-                            IF(p.id_hesxxmh = 3, gp_pelatihan, nominal_gp) AS gp
+                            COALESCE(nominal_gp, 0) AS gp
                         FROM pegawai p
 
                         LEFT JOIN (
@@ -268,25 +268,12 @@
                                 AND tanggal_efektif <= :tanggal_akhir
                             ) x WHERE rn = 1
                         ) gp1 ON gp1.id_hemxxmh = p.id_hemxxmh
-
-                        LEFT JOIN (
-                            SELECT id_hemxxmh, nominal AS gp_pelatihan
-                            FROM (
-                                SELECT *,
-                                    ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) rn
-                                FROM htpr_hemxxmh
-                                WHERE id_hpcxxmh = 1
-                                AND is_active = 1
-                                AND tanggal_efektif <= :tanggal_akhir
-                            ) x WHERE rn = 1
-                        ) gp2 ON gp2.id_hemxxmh = p.id_hemxxmh
                     ),
                     t_jabatan AS (
                         SELECT
                             p.id_hemxxmh,
-                            COALESCE(nominal_jabatan, nominal_t_jab, 0) AS t_jab
+                            COALESCE(nominal_t_jab, 0) AS t_jab
                         FROM pegawai p
-                        -- t jabatan untuk yang Tetap
                         LEFT JOIN (
                             SELECT
                                 id_hemxxmh,
@@ -307,28 +294,6 @@
                             ) AS subquery
                             WHERE row_num = 1
                         ) t_jabatan ON t_jabatan.id_hemxxmh = p.id_hemxxmh
-
-                        -- nominal tunjangan jabatan di menu per karyawan
-                        LEFT JOIN (
-                            SELECT
-                                id_hemxxmh,
-                                tanggal_efektif,
-                                IFNULL(nominal, 0) AS nominal_jabatan
-                            FROM (
-                                SELECT
-                                    id,
-                                    id_hemxxmh,
-                                    tanggal_efektif,
-                                    nominal,
-                                    ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                                FROM htpr_hemxxmh
-                                WHERE
-                                    htpr_hemxxmh.id_hpcxxmh = 32
-                                    AND tanggal_efektif <= :tanggal_akhir
-                                    AND is_active = 1
-                            ) AS subquery
-                            WHERE row_num = 1
-                        ) tbl_jabatan ON tbl_jabatan.id_hemxxmh = p.id_hemxxmh
                     ),
                     var_cost AS (
                         SELECT
@@ -375,6 +340,8 @@
                                 SELECT
                                     a.id_hemxxmh,
                                     id_hevgrmh,
+                                    id_heyxxmd,
+                                    id_hesxxmh,
                                     IF(
                                         a.tanggal_keluar IS NULL,
                                         TIMESTAMPDIFF(MONTH, a.tanggal_masuk, :tanggal_akhir) / 12,
@@ -386,17 +353,24 @@
                             LEFT JOIN (
                                 SELECT
                                     id_hevgrmh,
+                                    id_heyxxmd,
+                                    id_hesxxmh,
                                     tanggal_efektif,
                                     nominal,
                                     tahun_min,
                                     tahun_max,
-                                    ROW_NUMBER() OVER (PARTITION BY id_hevgrmh ORDER BY tanggal_efektif DESC) AS row_num
+                                    ROW_NUMBER() OVER (
+                                        PARTITION BY id_hevgrmh, id_heyxxmd, id_hesxxmh
+                                        ORDER BY tanggal_efektif DESC
+                                    ) AS row_num
                                 FROM htpr_hevgrmh_mk
                                 WHERE
                                     id_hpcxxmh = 31
                                     AND tanggal_efektif <= :tanggal_akhir
                                     AND is_active = 1
                             ) AS masakerja ON masakerja.id_hevgrmh = job.id_hevgrmh
+                                AND masakerja.id_heyxxmd = job.id_heyxxmd
+                                AND masakerja.id_hesxxmh = job.id_hesxxmh
                             WHERE if(masakerja.tahun_max > 0, job.masa_kerja_year BETWEEN tahun_min AND tahun_max, job.masa_kerja_year > masakerja.tahun_min)
                             GROUP BY job.id_hemxxmh
                         ) AS mk ON mk.id_hemxxmh = p.id_hemxxmh
@@ -1284,7 +1258,7 @@
                             AND payroll.bruto > ter.nominal_awal AND payroll.bruto <= ter.nominal_akhir
                     )
                     SELECT
-                        :id_hpyxxth,
+                        :id_hpyxxth AS id_hpyxxth,
 
                         id_hemxxmh,
                         nrp,
