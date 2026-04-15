@@ -61,9 +61,11 @@
 				for($i = 1; $i < count($sheetData); $i++){
 
 					$nama = $sheetData[$i][0];
+					$sub_tipe = $sheetData[$i][1];
+					$status = $sheetData[$i][2];
 
 					// ===== FIX TANGGAL =====
-					$raw = trim($sheetData[$i][2]);
+					$raw = trim($sheetData[$i][4]);
 
 					$formats = [
 						'd/m/Y',
@@ -92,26 +94,53 @@
 						}
 					}
 					
-					$tahun_min 		= $sheetData[$i][3];
-					$tahun_max 		= $sheetData[$i][4];
-					$keterangan 	= $sheetData[$i][5];
+					$tahun_min 		= $sheetData[$i][5];
+					$tahun_max 		= $sheetData[$i][6];
+					$keterangan 	= $sheetData[$i][7];
 
 					// mapping komponen
 					$komponen = [
-						['id_hpcxxmh' => 31,   'nominal' => $sheetData[$i][1]],
+						['id_hpcxxmh' => 31,   'nominal' => $sheetData[$i][3]],
 					];
 
 					// cari Grup Jabatan
-					$qs = $db->query('select','hevgrmh')
+					$qs_hevgrmh = $db->query('select','hevgrmh')
 						->get(['id as id_hevgrmh'])
-						->get(['count(id) as id'])
 						->where('nama',$nama)
 						->exec();
 
-					$rs = $qs->fetch();
-					$id_hevgrmh = $rs['id_hevgrmh'];
+					$rs_hevgrmh = $qs_hevgrmh->fetch();
+					$id_hevgrmh = $rs_hevgrmh['id_hevgrmh'];
 
-					if ($rs['id'] == 0) {
+					if ($rs_hevgrmh['id_hevgrmh'] == 0) {
+						$emptyPeg[] = ['rowIndex' => $i + 1];
+						continue;
+					}
+
+					// cari sub_tipe
+					$qs_heyxxmd = $db->query('select','heyxxmd')
+						->get(['id as id_heyxxmd'])
+						->where('nama',$sub_tipe)
+						->exec();
+
+					$rs_heyxxmd = $qs_heyxxmd->fetch();
+					$id_heyxxmd = $rs_heyxxmd['id_heyxxmd'];
+
+					if ($rs_heyxxmd['id_heyxxmd'] == 0) {
+						$emptyPeg[] = ['rowIndex' => $i + 1];
+						continue;
+					}
+
+					// cari status
+					$qs_hesxxmh = $db->query('select','hesxxmh')
+						->get(['id as id_hesxxmh'])
+						->where('nama',$status)
+						->exec();
+
+					$rs_hesxxmh = $qs_hesxxmh->fetch();
+					$id_hesxxmh = $rs_hesxxmh['id_hesxxmh'];
+
+					if ($rs_hesxxmh['id_hesxxmh'] == 0) {
 						$emptyPeg[] = ['rowIndex' => $i + 1];
 						continue;
 					}
@@ -126,6 +155,8 @@
 						$qs_check = $db->query('select','htpr_hevgrmh_mk')
 							->get(['id'])
 							->where('id_hevgrmh',$id_hevgrmh)
+							->where('id_heyxxmd', $id_heyxxmd)
+							->where('id_hesxxmh', $id_hesxxmh)
 							->where('id_hpcxxmh',$id_hpcxxmh)
 							->where('tahun_min',$tahun_min)
 							->where('tahun_max',$tahun_max)
@@ -140,6 +171,8 @@
 							$db->query('insert','htpr_hevgrmh_mk')
 								->set('kode', 'Upload')
 								->set('created_by', $_SESSION['user'])
+								->set('id_heyxxmd', $id_heyxxmd)
+								->set('id_hesxxmh', $id_hesxxmh)
 								->set('id_hevgrmh',$id_hevgrmh)
 								->set('id_hpcxxmh',$id_hpcxxmh)
 								->set('tahun_min',$tahun_min)
