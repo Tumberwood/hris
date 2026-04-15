@@ -57,9 +57,11 @@
 					$jabatan = $sheetData[$i][0];
 					$bagian = $sheetData[$i][1];
 					$grade = $sheetData[$i][2];
+					$sub_tipe = $sheetData[$i][3];
+					$status = $sheetData[$i][4];
 
 					// ===== FIX TANGGAL =====
-					$raw = trim($sheetData[$i][5]);
+					$raw = trim($sheetData[$i][7]);
 
 					$formats = [
 						'd/m/Y',
@@ -88,12 +90,12 @@
 						}
 					}
 					
-					$keterangan = $sheetData[$i][6];
+					$keterangan = $sheetData[$i][8];
 
 					// mapping komponen
 					$komponen = [
-						['id_hpcxxmh' => 32,   'nominal' => $sheetData[$i][3]],
-						['id_hpcxxmh' => 33,   'nominal' => $sheetData[$i][4]],
+						['id_hpcxxmh' => 32,   'nominal' => $sheetData[$i][5]],
+						['id_hpcxxmh' => 33,   'nominal' => $sheetData[$i][6]],
 					];
 
 					// cari jabatan
@@ -133,6 +135,34 @@
 						continue;
 					}
 
+					// cari sub_tipe
+					$qs_heyxxmd = $db->query('select','heyxxmd')
+						->get(['id as id_heyxxmd'])
+						->where('nama',$sub_tipe)
+						->exec();
+
+					$rs_heyxxmd = $qs_heyxxmd->fetch();
+					$id_heyxxmd = $rs_heyxxmd['id_heyxxmd'];
+
+					if ($rs_heyxxmd['id_heyxxmd'] == 0) {
+						$emptyPeg[] = ['rowIndex' => $i + 1];
+						continue;
+					}
+
+					// cari status
+					$qs_hesxxmh = $db->query('select','hesxxmh')
+						->get(['id as id_hesxxmh'])
+						->where('nama',$status)
+						->exec();
+
+					$rs_hesxxmh = $qs_hesxxmh->fetch();
+					$id_hesxxmh = $rs_hesxxmh['id_hesxxmh'];
+
+					if ($rs_hesxxmh['id_hesxxmh'] == 0) {
+						$emptyPeg[] = ['rowIndex' => $i + 1];
+						continue;
+					}
+
 					$qs_hemxxmh = $db
 						->query('select', 'hemxxmh' )
 						->get(['hemxxmh.id as id_hemxxmh'] )
@@ -140,6 +170,9 @@
 						->where('hemjbmh.id_hetxxmh', $id_hetxxmh )
 						->where('hemjbmh.id_hobxxmh', $id_hobxxmh )
 						->where('hemjbmh.id_hevxxmh', $id_hevxxmh )
+						->where('hemjbmh.id_heyxxmd', $id_heyxxmd )
+						->where('hemjbmh.id_hesxxmh', $id_hesxxmh )
+						->where('hemxxmh.is_active', 1 )
 						->exec();
 					$rs_hemxxmh = $qs_hemxxmh->fetchAll();
 
