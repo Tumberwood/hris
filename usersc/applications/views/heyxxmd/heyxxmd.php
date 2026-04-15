@@ -241,8 +241,8 @@
 				order: [[ 1, "asc" ]],
 				columns: [
 					{ data: "heyxxmd.id",visible:false },
-					{ data: "heyxxmd.kode" },
 					{ data: "heyxxmh.nama" },
+					{ data: "heyxxmd.kode" },
 					{ data: "heyxxmd.nama" },
 					{ data: "heyxxmd.keterangan" }
 				],
