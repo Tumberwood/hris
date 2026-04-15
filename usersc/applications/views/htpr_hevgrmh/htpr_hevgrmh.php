@@ -22,8 +22,9 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Kode</th>
                                 <th>Grup Jabatan</th>
+                                <th>Sub Tipe</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                     </table>
@@ -102,6 +103,9 @@
 		// ------------- end of default variable
 	
 		var id_hpcxxmh_old = 0;
+		var id_hevgrmh = 0;
+		var id_heyxxmd = 0;
+		var id_hesxxmh = 0;
 
 		$(document).ready(function() {
 			//start datatables
@@ -111,13 +115,17 @@
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_hevgrmh = show_inactive_status_hevgrmh;
-					}
+					},
+					dataSrc: function (json) {
+						return json.data.result;
+					},
 				},
 				order: [[ 1, "desc" ]],
 				columns: [
-					{ data: "hevgrmh.id",visible:false },
-					{ data: "hevgrmh.kode" },
-					{ data: "hevgrmh.nama" }
+					{ data: "id_hevgrmh",visible:false },
+					{ data: "grup" },
+					{ data: "sub_tipe" },
+					{ data: "status_peg" },
 				],
 				buttons: [
 
@@ -137,9 +145,6 @@
 					// END breaking generate button
 				],
 				rowCallback: function( row, data, index ) {
-					if ( data.hevgrmh.is_active == 0 ) {
-						$('td', row).addClass('text-danger');
-					}
 				}
 			} );
 			
@@ -150,8 +155,10 @@
 			} );
 			
 			tblhevgrmh.on( 'select', function( e, dt, type, indexes ) {
-				data_hevgrmh = tblhevgrmh.row( { selected: true } ).data().hevgrmh;
-				id_hevgrmh  = data_hevgrmh.id;
+				data_hevgrmh = tblhevgrmh.row( { selected: true } ).data();
+				id_hevgrmh  = data_hevgrmh.id_hevgrmh;
+				id_heyxxmd  = data_hevgrmh.id_heyxxmd;
+				id_hesxxmh  = data_hevgrmh.id_hesxxmh;
 				id_transaksi_h   = id_hevgrmh; // dipakai untuk general
 				is_approve       = data_hevgrmh.is_approve;
 				is_nextprocess   = data_hevgrmh.is_nextprocess;
@@ -166,7 +173,9 @@
 			
 			tblhevgrmh.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
-				id_hevgrmh = '';
+				id_hevgrmh = 0;
+				id_heyxxmd = 0;
+				id_hesxxmh = 0;
 
 				// atur hak akses
 				tbl_details = [tblhtpr_hevgrmh_mk];
@@ -183,6 +192,8 @@
 					data: function (d){
 						d.show_inactive_status_htpr_hevgrmh_mk = show_inactive_status_htpr_hevgrmh_mk;
 						d.id_hevgrmh = id_hevgrmh;
+						d.id_heyxxmd = id_heyxxmd;
+						d.id_hesxxmh = id_hesxxmh;
 					}
 				},
 				table: "#tblhtpr_hevgrmh_mk",
@@ -338,6 +349,8 @@
 					data: function (d){
 						d.show_inactive_status_htpr_hevgrmh_mk = show_inactive_status_htpr_hevgrmh_mk;
 						d.id_hevgrmh = id_hevgrmh;
+						d.id_heyxxmd = id_heyxxmd;
+						d.id_hesxxmh = id_hesxxmh;
 					}
 				},
 				order: [[ 2, "desc" ]],

@@ -57,7 +57,10 @@
 				Field::inst( 'htpr_hevgrmh_mk.tahun_max' ),
 				Field::inst( 'htpr_hevgrmh_mk.nominal' ),
 			)
-			->where('htpr_hevgrmh_mk.id_hevgrmh',$_POST['id_hevgrmh']);
+			->where('htpr_hevgrmh_mk.id_hevgrmh',$_POST['id_hevgrmh'])
+			->where('htpr_hevgrmh_mk.id_heyxxmd',$_POST['id_heyxxmd'])
+			->where('htpr_hevgrmh_mk.id_hesxxmh',$_POST['id_hesxxmh'])
+			;
 		
 		// do not erase
 		// function show / hide inactive document
