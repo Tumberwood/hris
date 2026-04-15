@@ -1255,8 +1255,8 @@
                         pot_lain_after_pph,
 
                         gaji_bersih,
-                        FLOOR(gaji_bersih % 100),
-                        FLOOR(gaji_bersih - (gaji_bersih % 100))
+                        FLOOR(gaji_bersih % 100) AS bulat,
+                        FLOOR(gaji_bersih - (gaji_bersih % 100)) AS gaji_terima
 
                     FROM payroll_final
         ');
