@@ -54,27 +54,25 @@
 				
 				function getId($db, $table, $nama, $alias) {
 
-					$nama = trim($nama);
+    $nama = trim($nama);
 
-					// 🔥 decode HTML entity (penting banget)
-					$nama = html_entity_decode($nama, ENT_QUOTES | ENT_HTML5);
+    // 🔥 encode 2x biar match DB (R&D → R&AMP;AMP;D)
+    $nama = htmlspecialchars($nama, ENT_QUOTES | ENT_HTML5);
+    $nama = htmlspecialchars($nama, ENT_QUOTES | ENT_HTML5);
 
-					// 🔥 handle double encode (kayak R&AMP;AMP;D)
-					$nama = html_entity_decode($nama, ENT_QUOTES | ENT_HTML5);
+    $qs = $db->query('select', $table)
+        ->get(["id as $alias"])
+        ->where('nama', $nama)
+        ->exec();
 
-					$qs = $db->query('select', $table)
-						->get(["id as $alias"])
-						->where('LOWER(nama)', strtolower($nama))
-						->exec();
+    $rs = $qs->fetch();
 
-					$rs = $qs->fetch();
+    if (!$rs || !isset($rs[$alias])) {
+        return 0;
+    }
 
-					if (!$rs || !isset($rs[$alias])) {
-						return 0;
-					}
-
-					return $rs[$alias];
-				}
+    return $rs[$alias];
+}
 				
 				for($i = 1; $i < count($sheetData); $i++){
 					
