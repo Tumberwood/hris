@@ -53,9 +53,12 @@
 				$emptyPeg = array();
 				
 				function getId($db, $table, $nama, $alias) {
+
+					$nama = trim($nama); // 🔥 penting buang spasi
+
 					$qs = $db->query('select', $table)
 						->get(["id as $alias"])
-						->where('nama', $nama)
+						->where('LOWER(nama)', strtolower($nama)) // 🔥 anti case mismatch
 						->exec();
 
 					$rs = $qs->fetch();
