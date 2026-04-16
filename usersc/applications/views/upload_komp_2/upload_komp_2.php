@@ -133,6 +133,23 @@
 						</div>
 					</div>
 
+					<div class="form-group row">
+						<label class="col-lg-2 col-form-label"><b>Komponen Tunjangan Khusus</b></label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input type="file" name="filename" class="form-control" id="inputKompTj_khusus">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div>
+								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_tj_khusus.xlsx');">
+									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
+								</button>
+								<b class="ml-2">Insert ke Gaji Karyawan</b>
+							</div>
+						</div>
+					</div>
+
 					<span class="input-group-append"> 
 						<button type="submit" class="btn btn-primary">Import</button>
 					</span>
@@ -426,6 +443,43 @@
 								$("#inputKompPot_uang_makan").val('');
 							},
 							error: function (xhr, Pot_uang_makan, err){
+								console.log('x');
+							}
+						} );
+					}
+
+					//tj_khusus
+					var fd_tj_khusus = new FormData();
+					var tj_khusus = $('#inputKompTj_khusus')[0].files[0];
+					console.log(tj_khusus);
+					if (tj_khusus != undefined) {
+						fd_tj_khusus.append('filename',tj_khusus);
+			
+						$.ajax( {
+							url: "../../models/upload_komp_2/upload_komp_2_fn_tj_khusus.php",
+							type: 'POST',
+							dataType: 'json',
+							data: fd_tj_khusus,
+							async: false,
+							contentType: false,
+							processData: false,
+							success: function ( json ) {
+								notifyprogress.close();
+								$.notify({
+									message: json.data.message
+								},{
+									type: json.data.type_message,
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
+								});
+								$("#inputKompTj_khusus").val('');
+							},
+							error: function (xhr, Tj_khusus, err){
 								console.log('x');
 							}
 						} );
