@@ -185,7 +185,7 @@
 						d.show_inactive_status_periode_payroll = show_inactive_status_periode_payroll;
 					}
 				},
-				order: [[ 1, "asc" ]],
+				order: [[ 0, "desc" ]],
 				columns: [
 					{ data: "periode_payroll.id",visible:false },
 					{ data: "periode_payroll.tanggal_awal" },
