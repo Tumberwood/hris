@@ -53,22 +53,19 @@
 				$emptyPeg = array();
 				
 				function getId($db, $table, $nama, $alias) {
+					$qs = $db->query('select', $table)
+						->get(["id as $alias"])
+						->where('nama', $nama)
+						->exec();
 
-				$nama = trim($nama); // 🔥 penting buang spasi
+					$rs = $qs->fetch();
 
-				$qs = $db->query('select', $table)
-					->get(["id as $alias"])
-					->where('LOWER(nama)', strtolower($nama)) // 🔥 anti case mismatch
-					->exec();
+					if (!$rs || !isset($rs[$alias])) {
+						return 0;
+					}
 
-				$rs = $qs->fetch();
-
-				if (!$rs || !isset($rs[$alias])) {
-					return 0;
+					return $rs[$alias];
 				}
-
-				return $rs[$alias];
-			}
 				
 				for($i = 1; $i < count($sheetData); $i++){
 					
