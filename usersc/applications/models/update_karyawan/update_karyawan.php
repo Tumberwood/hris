@@ -169,7 +169,7 @@
 								a.id_heyxxmh     = COALESCE(NULLIF(:id_heyxxmh, 0), a.id_heyxxmh),
 								a.id_heyxxmd     = COALESCE(NULLIF(:id_heyxxmd, 0), a.id_heyxxmd),
 								a.id_hesxxmh     = COALESCE(NULLIF(:id_hesxxmh, 0), a.id_hesxxmh),
-								a.id_hevxxmh     = COALESCE(NULLIF(:id_hevxxmh, 0), 1),
+								a.id_hevxxmh     = COALESCE(NULLIF(:id_hevxxmh, 0), 25),
 								a.grup_hk        = COALESCE(NULLIF(:grup_hk, 0), a.grup_hk)
 							WHERE a.id_hemxxmh = :id_hemxxmh
 						");
