@@ -67,7 +67,7 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>Komponen per Grade (Premi Absen & Tunj. Jabatan)</b></label>
+						<label class="col-lg-2 col-form-label"><b>Komponen per Skala Upah (Premi Absen & Tunj. Jabatan)</b></label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputKompLevel">

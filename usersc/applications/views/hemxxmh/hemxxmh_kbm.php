@@ -240,7 +240,7 @@
                                 <th>Tipe</th>
                                 <th>Sub Tipe</th>
                                 <th>Status</th>
-                                <th>Grade</th>
+                                <th>Skala Upah</th>
                                 <th>Bagian</th>
                                 <th>Tanggal Join</th>
                                 <th>Tanggal Akhir Kontrak</th>
@@ -834,7 +834,7 @@
 						}
 					},
 					{
-						label: "Grade",
+						label: "Skala Upah",
 						name: "hemjbmh.id_hevxxmh",
 						type: "select2",
 						opts: {

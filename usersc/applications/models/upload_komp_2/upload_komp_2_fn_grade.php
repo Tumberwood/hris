@@ -56,7 +56,7 @@
 
 					$jabatan = $sheetData[$i][0];
 					$bagian = $sheetData[$i][1];
-					$grade = $sheetData[$i][2];
+					$skala_upah = $sheetData[$i][2];
 					$sub_tipe = $sheetData[$i][3];
 					$status = $sheetData[$i][4];
 
@@ -121,10 +121,10 @@
 					$rs_hobxxmh = $qs_hobxxmh->fetch();
 					$id_hobxxmh = $rs_hobxxmh['id_hobxxmh'] ?? 0;
 
-					// cari grade
+					// cari skala_upah
 					$qs_hevxxmh = $db->query('select','hevxxmh')
 						->get(['id as id_hevxxmh'])
-						->where('nama',$grade)
+						->where('nama',$skala_upah)
 						->exec();
 
 					$rs_hevxxmh = $qs_hevxxmh->fetch();
@@ -234,7 +234,7 @@
 					);
 				} else {
 					$data = array(
-						"message" => "Upload Komponen per Grade Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
+						"message" => "Upload Komponen per Skala Upah Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
 						"type_message" => "success"
 					);
 				}
@@ -244,19 +244,19 @@
 			}catch (PDOException $e){
 				$db->rollback();
 				$data = array(
-					"message" => "Upload Komponen per Grade gagal," . $e,
+					"message" => "Upload Komponen per Skala Upah gagal," . $e,
 					"type_message" => "danger"
 				);
 			}
 		} else {
 			$data = array(
-				"message" => "Template Upload Komponen Grade salah!",
+				"message" => "Template Upload Komponen Skala Upah salah!",
 				"type_message" => "danger"
 			);
 		}
 	}else{
 		$data = array(
-			"message" => "Upload Komponen per Grade gagal, format file salah!",
+			"message" => "Upload Komponen per Skala Upah gagal, format file salah!",
 			"type_message" => "danger"
 		);
 	}
