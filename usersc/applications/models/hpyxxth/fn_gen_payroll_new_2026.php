@@ -688,42 +688,64 @@
                     pot_upah AS (
                         SELECT
                             pr.id_hemxxmh,
+                            
                             ROUND(SUM(
-                                (
+                                IF(
+                                    job.id_hesxxmh = 3 AND job.id_heyxxmd = 1,
+
+                                    -- Pot Upah Mati
                                     (
-                                        -- GP
                                         IFNULL((
                                             SELECT a.nominal
                                             FROM htpr_hemxxmh a
-                                            WHERE a.id_hpcxxmh = 1
+                                            WHERE a.id_hpcxxmh = 35
                                                 AND a.id_hemxxmh = pr.id_hemxxmh
                                                 AND a.tanggal_efektif <= pr.tanggal
                                             ORDER BY a.tanggal_efektif DESC
                                             LIMIT 1
                                         ),0)
+                                        * pr.is_pot_upah
+                                    ),
 
-                                        +
+                                    -- Rumus: ( (gp + tjab + fix_cost) / grup_hk (21 / 25) ) * is_pot_upah
+                                    (
+                                        (
+                                            (
+                                                -- GP
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 1
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
 
-                                        -- TJAB
-                                        IFNULL((
-                                            SELECT a.nominal
-                                            FROM htpr_hemxxmh a
-                                            WHERE a.id_hpcxxmh = 32
-                                                AND a.id_hemxxmh = pr.id_hemxxmh
-                                                AND a.tanggal_efektif <= pr.tanggal
-                                            ORDER BY a.tanggal_efektif DESC
-                                            LIMIT 1
-                                        ),0)
+                                                +
 
-                                        +
+                                                -- TJAB
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 32
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
 
-                                        IFNULL(fc.fix_cost,0)
+                                                +
 
+                                                IFNULL(fc.fix_cost,0)
+
+                                            )
+                                            /
+                                            IF(job.grup_hk = 1, 21, 25)
+                                        )
+                                        * pr.is_pot_upah
                                     )
-                                    /
-                                    IF(job.grup_hk = 1, 21, 25)
                                 )
-                                * pr.is_pot_upah
                             )) AS pot_upah
 
                         FROM htsprrd pr
