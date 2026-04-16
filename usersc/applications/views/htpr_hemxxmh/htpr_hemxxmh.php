@@ -332,14 +332,7 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
-					{ 
-						extend: 'create',
-						name: 'btngenerate_kbm', 
-						editor: edtgenerate_kbm, 
-						text: '<i class="fa fa-google"> KBM</i>', 
-						className: 'btn btn-outline', 
-						titleAttr: 'Generate Komponen KBM'
-					},
+					
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.hemxxmh.is_active == 0 ) {
