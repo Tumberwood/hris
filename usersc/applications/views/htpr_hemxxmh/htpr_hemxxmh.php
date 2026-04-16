@@ -45,6 +45,7 @@
                                 <th>Department</th>
                                 <th>Level</th>
                                 <th>Jabatan</th>
+                                <th>Tanggal Keluar</th>
                             </tr>
                         </thead>
                     </table>
@@ -286,6 +287,7 @@
 						d.show_inactive_status_hemxxmh = show_inactive_status_hemxxmh;
 					}
 				},
+				responsive: false,
 				order: [[ 1, "desc" ]],
 				columns: [
 					{ data: "hemxxmh.id",visible:false },
@@ -311,7 +313,8 @@
 					{ data: "hobxxmh.nama" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hevxxmh.nama" },
-					{ data: "hetxxmh.nama" }
+					{ data: "hetxxmh.nama" },
+					{ data: "hemjbmh.tanggal_keluar" },
 				],
 				buttons: [
 
@@ -342,6 +345,10 @@
 					if ( data.hemxxmh.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
+					
+					// if (moment(data.hemjbmh.tanggal_keluar).isBefore(moment(), 'day')) {
+					// 	$('td', row).addClass('text-warning');
+					// }
 				},
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
