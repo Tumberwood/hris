@@ -159,16 +159,16 @@
 						->exec("
 							UPDATE hemjbmh a
 							SET
-								a.id_hovxxmh     = COALESCE(NULLIF(:id_hovxxmh, 0), a.id_hovxxmh),
-								a.id_hodxxmh     = COALESCE(NULLIF(:id_hodxxmh, 0), a.id_hodxxmh),
-								a.id_hobxxmh     = COALESCE(NULLIF(:id_hobxxmh, 0), a.id_hobxxmh),
-								a.id_hosxxmh     = COALESCE(NULLIF(:id_hosxxmh, 0), a.id_hosxxmh),
-								a.id_hevgrmh     = COALESCE(NULLIF(:id_hevgrmh, 0), a.id_hevgrmh),
-								a.id_hetxxmh     = COALESCE(NULLIF(:id_hetxxmh, 0), a.id_hetxxmh),
-								a.id_holxxmd_2   = COALESCE(NULLIF(:id_holxxmd_2, 0), a.id_holxxmd_2),
-								a.id_heyxxmh     = COALESCE(NULLIF(:id_heyxxmh, 0), a.id_heyxxmh),
-								a.id_heyxxmd     = COALESCE(NULLIF(:id_heyxxmd, 0), a.id_heyxxmd),
-								a.id_hesxxmh     = COALESCE(NULLIF(:id_hesxxmh, 0), a.id_hesxxmh),
+								a.id_hovxxmh     = COALESCE(NULLIF(:id_hovxxmh, 0), 0),
+								a.id_hodxxmh     = COALESCE(NULLIF(:id_hodxxmh, 0), 0),
+								a.id_hobxxmh     = COALESCE(NULLIF(:id_hobxxmh, 0), 0),
+								a.id_hosxxmh     = COALESCE(NULLIF(:id_hosxxmh, 0), 0),
+								a.id_hevgrmh     = COALESCE(NULLIF(:id_hevgrmh, 0), 0),
+								a.id_hetxxmh     = COALESCE(NULLIF(:id_hetxxmh, 0), 0),
+								a.id_holxxmd_2   = COALESCE(NULLIF(:id_holxxmd_2, 0), 0),
+								a.id_heyxxmh     = COALESCE(NULLIF(:id_heyxxmh, 0), 0),
+								a.id_heyxxmd     = COALESCE(NULLIF(:id_heyxxmd, 0), 0),
+								a.id_hesxxmh     = COALESCE(NULLIF(:id_hesxxmh, 0), 0),
 								a.id_hevxxmh     = COALESCE(NULLIF(:id_hevxxmh, 0), 25),
 								a.grup_hk        = COALESCE(NULLIF(:grup_hk, 0), a.grup_hk)
 							WHERE a.id_hemxxmh = :id_hemxxmh
