@@ -129,8 +129,25 @@
                             extend: "excel",
                             name: 'btnExcel', 
                             text: '<span class="fa fa-file-excel-o">&nbsp &nbsp Excel</span>', 
-                            className: 'btn  btn-outline',
-                            titleAttr: 'Export to Excel'
+                            className: 'btn btn-outline',
+                            titleAttr: 'Export to Excel',
+
+                            customize: function (xlsx) {
+                                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+
+                                // semua cell jadi inlineStr (text)
+                                $('c', sheet).attr('t', 'inlineStr');
+
+                                // ubah value jadi string
+                                $('c', sheet).each(function () {
+                                    var $this = $(this);
+                                    var text = $this.find('v').text();
+
+                                    if (text) {
+                                        $this.html('<is><t>' + text + '</t></is>');
+                                    }
+                                });
+                            }
                         },
 <?php
                     }   // END button excel

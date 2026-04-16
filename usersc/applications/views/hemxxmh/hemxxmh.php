@@ -1724,7 +1724,14 @@
 					{ data: "hemxxmh.id",visible:false },
 					{ data: "hemxxmh.kode" },
 					{ data: "hemxxmh.kode_finger" },
-					{ data: "hemdcmh.ktp_no" },
+					{ 
+						data: "hemdcmh.ktp_no",
+						render: function(data, type, row) {
+							if (data == null) return '';
+							return data.toString();
+						}
+
+					},
 					{ data: "hemxxmh.nama" }, //4
 					{ data: "hodxxmh.nama" },
 					{ data: "hosxxmh.nama" },
