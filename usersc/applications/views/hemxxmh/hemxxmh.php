@@ -1744,7 +1744,7 @@
 					{ data: "hevxxmh.nama" },//10
 					{ data: "hobxxmh.nama" },//10
 					{ data: "hemjbmh.tanggal_masuk" },
-					{ data: "hemjbmh.tanggal_keluar" },
+					{ data: "hemjbmh.tanggal_akhir_kontrak" },
 					{ 
 						data: "hemjbmh.grup_hk",
 						render: function (data){
