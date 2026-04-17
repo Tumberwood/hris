@@ -321,7 +321,7 @@
 				is_jurnal      = hetxxmh_data.is_jurnal;
 				is_active      = hetxxmh_data.is_active;
 
-				id_hetxxmh_old = hetxxmh_data.id_hetxxmh;
+				id_hetxxmh_old = hetxxmh_data.id_hetxxmh_al;
 				id_hevgrmh_old = hetxxmh_data.id_hevgrmh;
 
 				// atur hak akses
