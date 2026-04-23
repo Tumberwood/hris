@@ -62,6 +62,9 @@
 
 			Field::inst( 'hemxxmh.kode' ),
 			Field::inst( 'hemxxmh.nama' ),
+			
+			Field::inst( 'hovxxmh.nama' ),
+			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'hosxxmh.nama' ),
 			Field::inst( 'hobxxmh.nama' ),
 			Field::inst( 'hevxxmh.nama' ),
