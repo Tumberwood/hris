@@ -191,7 +191,7 @@
             ->exec(' WITH presensi AS (
                         SELECT
                             b.id_hemxxmh,
-                                id_hodxxmh,
+                            id_hodxxmh,
                             id_holxxmd_2,
                             a.kode AS nik,
                             a.nama AS peg,
@@ -199,6 +199,8 @@
                             kode_finger,
                             b.grup_hk,
                             is_istirahat,
+                            a.gender,
+                            DAYNAME(jadwal.tanggal) AS hari,
 
                             id_hetxxmh,
                             bagian.nama as bagian,
@@ -1150,6 +1152,17 @@
                                 AND (shift LIKE "SIANG%" OR shift LIKE "SORE%")
                             THEN 0
                             
+                            -- Laki2 -> Shift 1 atau Lembur Hari Libur (Jadwal OFF tapi lembur Pagi) 
+                            -- -> Hari Jumat -> Range istirahat harus pkl 11.30 - 13.00
+                            WHEN gender = "Laki-laki" 
+                                AND hari = "Friday"
+                                AND jam_awal_lembur_libur BETWEEN "07:00:00" AND "10:00:00"
+                                
+                                -- 🔥 break harus di range 11:30 - 13:00
+                                AND break_in >= CONCAT(tanggal, " 11:30:00")
+                                AND break_out <= CONCAT(tanggal, " 13:00:00")
+                            THEN 0
+                            
                             -- [16.06, 12/6/2025] +62 895-6326-78236: Iya pak. Karena jam istirahat normal kan 1 jam. Otomatis jika>1 jam, meskipun tdk ada lembur juga tetap dipotong 1jam.
                             WHEN durasi_break_menit > 65 THEN 1
                             
@@ -1171,6 +1184,17 @@
                             -- shift pendek tidak boleh ada ceklok makan dan istirahat
                             WHEN id_htsxxmh IN (select id from htsxxmh where id <> 1 and is_active = 1 and jam_awal_istirahat = "00:00:00") AND IFNULL(durasi_break_menit, 0) > 0 THEN 1
 
+                            -- Laki2 -> Shift 1 atau Lembur Hari Libur (Jadwal OFF tapi lembur Pagi) 
+                            -- -> Hari Jumat -> Range istirahat harus pkl 11.30 - 13.00
+                            WHEN gender = "Laki-laki" 
+                                AND hari = "Friday"
+                                AND jam_awal_lembur_libur BETWEEN "07:00:00" AND "10:00:00"
+                                
+                                -- 🔥 break harus di range 11:30 - 13:00
+                                AND break_in >= CONCAT(tanggal, " 11:30:00")
+                                AND break_out <= CONCAT(tanggal, " 13:00:00")
+                            THEN 0
+                            
                             -- 4 Grup -> Dept Maintenance -> lembur hari libur -> istirahat max 1 jam termasuk ada makan
                             WHEN (jumlah_grup = 4 OR ket_jadwal LIKE "%satpam%") 
                                 AND IFNULL(ceklok_makan, 0) > 0 
