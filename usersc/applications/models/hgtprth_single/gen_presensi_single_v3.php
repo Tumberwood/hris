@@ -191,6 +191,7 @@
             ->exec(' WITH presensi AS (
                         SELECT
                             b.id_hemxxmh,
+                                id_hodxxmh,
                             id_holxxmd_2,
                             a.kode AS nik,
                             a.nama AS peg,
@@ -1170,6 +1171,14 @@
                             -- shift pendek tidak boleh ada ceklok makan dan istirahat
                             WHEN id_htsxxmh IN (select id from htsxxmh where id <> 1 and is_active = 1 and jam_awal_istirahat = "00:00:00") AND IFNULL(durasi_break_menit, 0) > 0 THEN 1
 
+                            -- 4 Grup -> Dept Maintenance -> lembur hari libur -> istirahat max 1 jam termasuk ada makan
+                            WHEN (jumlah_grup = 4 OR ket_jadwal LIKE "%satpam%") 
+                                AND IFNULL(ceklok_makan, 0) > 0 
+                                AND (break_in IS NOT NULL AND durasi_break_menit < 60) 
+                                AND id_hodxxmh = 6 -- Dept Maintenance
+                                AND durasi_lembur_libur_jam > 0
+                            THEN 0
+                            
                             -- apabila 4 grup sudah ada finger makan atau inputan makan manual, maka tidak boleh ada finger keluar di mesin PMI, KBM, atau Istirahat. Jika diketahui ada makan dan ada finger keluar (meskipun <30 menit), maka akan dipotong 1 jam.
                             WHEN (jumlah_grup = 4 OR ket_jadwal LIKE "%satpam%") 
                                 AND IFNULL(ceklok_makan, 0) > 0 
