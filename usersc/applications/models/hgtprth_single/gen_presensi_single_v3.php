@@ -1156,7 +1156,7 @@
                             -- -> Hari Jumat -> Range istirahat harus pkl 11.30 - 13.00
                             WHEN gender = "Laki-laki" 
                                 AND hari = "Friday"
-                                AND jam_awal_lembur_libur BETWEEN "07:00:00" AND "10:00:00"
+                                AND jam_awal_lembur_libur BETWEEN "06:00:00" AND "10:00:00"
                                 
                                 -- 🔥 break harus di range 11:30 - 13:00
                                 AND break_in >= CONCAT(tanggal, " 11:30:00")
