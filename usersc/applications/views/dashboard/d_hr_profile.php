@@ -106,10 +106,53 @@
 					<div class="col-lg-6">
 						<div class="" id="chartEmpAge"></div>
 						<h3 id="total_age"  style="text-align:center;"></h3>
+						
+                        <h3 id='usia'>Table Usia</h3>
+                        <div class="ibox ">
+                            <div class="ibox-content">
+                                <div class="table-responsive">
+                                    <table id="tblusia" class="table table-striped table-bordered table-hover nowrap" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>NIK</th>
+                                                <th>Nama</th>
+                                                <th>Departemen</th>
+                                                <th>Unit Kerja</th>
+                                                <th>Jabatan</th>
+                                                <th>Tanggal Join</th>
+                                                <th>Usia</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 					</div>
 					<div class="col-lg-6">
 						<div class="" id="chartEmpMK"></div>
 						<h3 id="total_mk"  style="text-align:center;"></h3>
+						
+                        <h3 id='mk'>Table Masa Kerja</h3>
+                        <div class="ibox ">
+                            <div class="ibox-content">
+                                <div class="table-responsive">
+                                    <table id="tblmk" class="table table-striped table-bordered table-hover nowrap" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>NIK</th>
+                                                <th>Nama</th>
+                                                <th>Departemen</th>
+                                                <th>Unit Kerja</th>
+                                                <th>Jabatan</th>
+                                                <th>Tanggal Join</th>
+                                                <th>Masa Kerja</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
 					</div>
 				</div>
 			</div>

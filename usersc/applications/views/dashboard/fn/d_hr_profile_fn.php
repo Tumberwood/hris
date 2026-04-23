@@ -370,7 +370,18 @@
             plotOptions: {
                 column: {
                     pointPadding: 0.2,
-                    borderWidth: 0
+                    borderWidth: 0,
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function () {
+                                const usia = this.category; // 🔥 ambil kategori (usia)
+
+                                // panggil function table
+                                tableUsia(usia);
+                            }
+                        }
+                    }
                 },
                 series: {
                     dataLabels: {
@@ -441,7 +452,18 @@
             plotOptions: {
                 column: {
                     pointPadding: 0.2,
-                    borderWidth: 0
+                    borderWidth: 0,
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function () {
+                                const mk = this.category; // 🔥 ambil kategori (mk)
+
+                                // panggil function table
+                                tablemk(mk);
+                            }
+                        }
+                    }
                 },
                 series: {
                     dataLabels: {
@@ -467,6 +489,78 @@
             }
         } );
         
+    }
+
+    function tableUsia(usia) {
+        $('#usia').html(`Table Usia ${usia} tahun`)
+        $.ajax({
+            url: "../../models/dashboard/d_hr_presensi_table_usia.php",
+            dataType: 'json',
+            type: 'POST',
+            data: {
+                usia: usia,
+            },
+            success: function (json) {
+                // kalau table sudah ada → reset dulu
+                if ($.fn.dataTable.isDataTable('#tblusia')) {
+                    $('#tblusia').DataTable().clear().destroy();
+                    $('#tblusia tbody').empty();
+                }
+
+                // build DataTable baru
+                $('#tblusia').DataTable({
+                    data: json.data.result, // dari fn_ajax_results.php otomatis "data"
+                    columns: [
+                        { data: "kode" },
+                        { data: "nama" },
+                        { data: "departemen" },
+                        { data: "unit_kerja" },
+                        { data: "jabatan" },
+                        { data: "tanggal_masuk" },
+                        { data: "usia" },
+                    ],
+                    destroy: true,
+                    responsive: false,
+                    scrollX: true
+                });
+            }
+        });
+    }
+
+    function tablemk(mk) {
+        $('#mk').html(`Table Masa Kerja ${mk} tahun`)
+        $.ajax({
+            url: "../../models/dashboard/d_hr_presensi_table_mk.php",
+            dataType: 'json',
+            type: 'POST',
+            data: {
+                mk: mk,
+            },
+            success: function (json) {
+                // kalau table sudah ada → reset dulu
+                if ($.fn.dataTable.isDataTable('#tblmk')) {
+                    $('#tblmk').DataTable().clear().destroy();
+                    $('#tblmk tbody').empty();
+                }
+
+                // build DataTable baru
+                $('#tblmk').DataTable({
+                    data: json.data.result, // dari fn_ajax_results.php otomatis "data"
+                    columns: [
+                        { data: "kode" },
+                        { data: "nama" },
+                        { data: "departemen" },
+                        { data: "unit_kerja" },
+                        { data: "jabatan" },
+                        { data: "tanggal_lahir" },
+                        { data: "mk" },
+                    ],
+                    destroy: true,
+                    responsive: false,
+                    scrollX: true
+                });
+            }
+        });
     }
 
 </script>
