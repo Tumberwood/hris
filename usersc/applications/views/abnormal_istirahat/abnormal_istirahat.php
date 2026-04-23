@@ -65,6 +65,7 @@
                                 <th>Tipe</th>
                                 <th>Sub Tipe</th>
                                 <th>Status</th>
+                                <th>Keterangan</th>
 							</tr>
                         </thead>
                     </table>
@@ -307,6 +308,7 @@
 					{ data: "heyxxmh.nama" },
 					{ data: "heyxxmd.nama" },
 					{ data: "hesxxmh.nama" },//10
+					{ data: "abnormal_istirahat.keterangan" },
 				],
 				buttons: [
 					// BEGIN breaking generate button
