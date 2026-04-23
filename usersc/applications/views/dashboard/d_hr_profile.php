@@ -144,7 +144,7 @@
                                                 <th>Departemen</th>
                                                 <th>Unit Kerja</th>
                                                 <th>Jabatan</th>
-                                                <th>Tanggal Join</th>
+                                                <th>Tanggal Lahir</th>
                                                 <th>Masa Kerja</th>
                                             </tr>
                                         </thead>
