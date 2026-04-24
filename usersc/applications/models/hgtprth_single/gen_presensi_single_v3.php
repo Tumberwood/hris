@@ -200,6 +200,7 @@
                             b.grup_hk,
                             is_istirahat,
                             a.gender,
+                            IF(IFNULL(is_abnormal_istirahat,0) > 0, 1, 0) AS pot_abnormal_istirahat,
                             DAYNAME(jadwal.tanggal) AS hari,
 
                             id_hetxxmh,
@@ -1071,6 +1072,17 @@
                                 AND a.is_approve = 1
                         ) AS tukar_jadwal_kmj ON (id_hemxxmh_pengaju = a.id OR id_hemxxmh_pengganti = a.id)
 
+                        -- ABNORMAL ISTIRAHAT
+                        LEFT JOIN (
+                            SELECT
+                                COUNT(a.id) AS is_abnormal_istirahat,
+                                a.tanggal,
+                                a.id_hemxxmh
+                            FROM abnormal_istirahat AS a
+                            WHERE a.tanggal = :tanggal AND a.is_active = 1 
+                            GROUP BY a.id_hemxxmh
+                        ) AS abnormal_istirahat ON abnormal_istirahat.id_hemxxmh = a.id
+
                         WHERE (b.tanggal_keluar IS NULL OR b.tanggal_keluar > :tanggal) AND b.id_hemxxmh = :id_hemxxmh 
 
                     ),
@@ -1344,7 +1356,19 @@
                             END AS cek,
 
                             -- IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_late_lembur, 0) + IFNULL(pot_jam_early, 0) + IFNULL(pot_jam_izin,0) + IF(potongan_ti_jam > 0, potongan_ti_jam ,ifnull(pot_jam_keluar_istirahat,0)) AS total_pot_jam
-                            IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_late_lembur, 0) + IFNULL(pot_jam_early, 0) + IFNULL(pot_jam_izin,0) + IF(potongan_ti_jam > 0 AND IFNULL(pot_jam_late_lembur, 0) = 0, potongan_ti_jam ,ifnull(pot_jam_keluar_istirahat,0)) AS total_pot_jam
+
+                            (
+                                IFNULL(pot_jam_late, 0) + 
+                                IFNULL(pot_jam_late_lembur, 0) + 
+                                IFNULL(pot_jam_early, 0) + 
+                                IFNULL(pot_jam_izin,0) + 
+                                IF(potongan_ti_jam > 0 AND IFNULL(pot_jam_late_lembur, 0) = 0, 
+                                    potongan_ti_jam,
+                                    ifnull(pot_jam_keluar_istirahat,0)
+                                ) +
+                                pot_abnormal_istirahat
+                            )
+                            AS total_pot_jam
                         FROM perhitungan
                     ),
                     hitung_pot_ti AS (
@@ -1568,6 +1592,7 @@
                         IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_late_lembur, 0) AS pot_jam_late,
                         IFNULL(pot_jam_early, 0) AS pot_jam_early,
                         IFNULL(pot_jam_izin, 0) AS pot_jam_izin,
+                        IFNULL(pot_abnormal_istirahat, 0) AS pot_abnormal_istirahat,
                         
                         break_in,
                         break_out
