@@ -385,12 +385,12 @@
 						async: false,
 						data: {
 							table_name: 'htoxxth',
-							nama_field: 'tanggal_ymd, id_holxxmd',
+							nama_field: 'tanggal, id_holxxmd',
 							nama_field_value: '"'+tanggal_ymd+'",'+ id_holxxmd,
 							id_transaksi: id_htoxxth
 						},
 						success: function ( json ) {
-							if(json.data.count == 1){
+							if(json.data.count >= 1){
 								edthtoxxth.field('htoxxth.tanggal').error( 'Data Area Kerja pada Tanggal tersebut sudah ada!' );
 								edthtoxxth.field('htoxxth.id_holxxmd').error( 'Data Area Kerja pada Tanggal tersebut sudah ada!' );
 							}

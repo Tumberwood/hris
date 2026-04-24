@@ -240,6 +240,33 @@
 						}
 					}
 					// END of validasi abnormal_istirahat.id_hemxxmh
+
+					
+					// BEGIN of cek unik kombinasi abnormal_istirahat.id_hemxxmh dan abnormal_istirahat.tanggal 
+					tanggal_ymd = moment(edtabnormal_istirahat.field('abnormal_istirahat.tanggal').val()).format('YYYY-MM-DD');
+					if(action == 'create'){
+						id_abnormal_istirahat = 0;
+					}
+					
+					$.ajax( {
+						url: '../../../helpers/validate_fn_unique.php',
+						dataType: 'json',
+						type: 'POST',
+						async: false,
+						data: {
+							table_name: 'abnormal_istirahat',
+							nama_field: 'tanggal, id_hemxxmh',
+							nama_field_value: '"'+tanggal_ymd+'",'+ id_hemxxmh,
+							id_transaksi: id_abnormal_istirahat
+						},
+						success: function ( json ) {
+							if(json.data.count >= 1){
+								edtabnormal_istirahat.field('abnormal_istirahat.tanggal').error( 'Data Pegawai pada Tanggal tersebut sudah ada!' );
+								edtabnormal_istirahat.field('abnormal_istirahat.id_hemxxmh').error( 'Data Pegawai pada Tanggal tersebut sudah ada!' );
+							}
+						}
+					} );
+					// BEGIN of cek unik kombinasi abnormal_istirahat.id_hemxxmh dan abnormal_istirahat.tanggal 
 					
 				}
 				
