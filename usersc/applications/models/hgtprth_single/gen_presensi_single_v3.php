@@ -516,6 +516,15 @@
                                                         AND id_holxxmd_2 = 1 
 
                                                         AND (
+                                                            -- Filter jika gedung 3 dan 4 Grup
+                                                            (
+                                                                jumlah_grup = 2 
+                                                                AND c.nama NOT IN ("Makan Manual")
+                                                            )
+                                                            OR jumlah_grup <> 2
+                                                        )
+
+                                                        AND (
                                                             -- 1. Gedung 3 selalu lolos
                                                             c.nama IN ("PMI-Gedung-3","OS-Gedung-3")
 
@@ -566,6 +575,15 @@
                                                     (
                                                         jadwal.tanggal > "2025-07-27" 
                                                         AND id_holxxmd_2 = 1 
+
+                                                        AND (
+                                                            -- Filter jika gedung 3 dan 4 Grup
+                                                            (
+                                                                jumlah_grup = 2 
+                                                                AND c.nama NOT IN ("Makan Manual")
+                                                            )
+                                                            OR jumlah_grup <> 2
+                                                        )
 
                                                         AND (
                                                             -- 1. Gedung 3 selalu lolos
@@ -631,6 +649,15 @@
                                                         AND id_holxxmd_2 = 1 
 
                                                         AND (
+                                                            -- Filter jika gedung 3 dan 4 Grup
+                                                            (
+                                                                jumlah_grup = 2 
+                                                                AND c.nama NOT IN ("Makan Manual")
+                                                            )
+                                                            OR jumlah_grup <> 2
+                                                        )
+
+                                                        AND (
                                                             -- 1. Gedung 3 selalu lolos
                                                             c.nama IN ("PMI-Gedung-3","OS-Gedung-3")
 
@@ -680,6 +707,15 @@
                                                     (
                                                         jadwal.tanggal > "2025-07-27" 
                                                         AND id_holxxmd_2 = 1 
+
+                                                        AND (
+                                                            -- Filter jika gedung 3 dan 4 Grup
+                                                            (
+                                                                jumlah_grup = 2 
+                                                                AND c.nama NOT IN ("Makan Manual")
+                                                            )
+                                                            OR jumlah_grup <> 2
+                                                        )
 
                                                         AND (
                                                             -- 1. Gedung 3 selalu lolos
