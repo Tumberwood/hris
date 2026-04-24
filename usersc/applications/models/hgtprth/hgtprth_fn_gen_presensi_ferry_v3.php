@@ -555,7 +555,7 @@
                                                                 -- Filter jika gedung 3 dan 4 Grup
                                                                 (
                                                                     jumlah_grup = 2 
-                                                                    AND c.nama NOT IN ("Makan Manual")
+                                                                    AND c.nama NOT IN ("Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
                                                                 )
                                                                 OR jumlah_grup <> 2
                                                             )
@@ -616,7 +616,7 @@
                                                                 -- Filter jika gedung 3 dan 4 Grup
                                                                 (
                                                                     jumlah_grup = 2 
-                                                                    AND c.nama NOT IN ("Makan Manual")
+                                                                    AND c.nama NOT IN ("Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
                                                                 )
                                                                 OR jumlah_grup <> 2
                                                             )
@@ -688,7 +688,7 @@
                                                                 -- Filter jika gedung 3 dan 4 Grup
                                                                 (
                                                                     jumlah_grup = 2 
-                                                                    AND c.nama NOT IN ("Makan Manual")
+                                                                    AND c.nama NOT IN ("Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
                                                                 )
                                                                 OR jumlah_grup <> 2
                                                             )
@@ -748,7 +748,7 @@
                                                                 -- Filter jika gedung 3 dan 4 Grup
                                                                 (
                                                                     jumlah_grup = 2 
-                                                                    AND c.nama NOT IN ("Makan Manual")
+                                                                    AND c.nama NOT IN ("Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
                                                                 )
                                                                 OR jumlah_grup <> 2
                                                             )
