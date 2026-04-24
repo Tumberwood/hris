@@ -67,6 +67,16 @@
 						WHEN c.jumlah_grup = 2 AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30 AND IF(mesin = "MAKAN MANUAL", break_in <> makan_ymd, 1) AND a.pot_jam > 0 THEN "4 Grup > 30 Menit"
 						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 60 AND IF(mesin = "MAKAN MANUAL", break_in <> makan_ymd, 1) AND a.pot_jam > 0 THEN "Istirahat > 60 Menit"
 
+						-- SHIFT 1 JUMAT
+						when a.st_jadwal LIKE "%PAGI%" AND DAYNAME(a.tanggal = "Friday")
+						AND (
+							TIME(a.break_in) BETWEEN "11:30:00" AND "13:00:00"
+							OR
+							TIME(a.break_out) BETWEEN "11:30:00" AND "13:00:00"
+						)
+				
+						then "Aman"
+
                         -- QC SHIFT 1
 						WHEN id_hodxxmh = 9 AND st_jadwal LIKE "%06:00-%"
 						AND (
@@ -75,16 +85,6 @@
 							TIME(a.break_out) NOT BETWEEN "11:00:00" AND "12:00:00"
 						)
                         THEN "QC - Shift 1, Istirahat Reguler Tidak Sesuai"
-						
-						-- SHIFT 1 JUMAT
-						when a.st_jadwal LIKE "%PAGI%" AND DAYNAME(a.tanggal = "Friday")
-						AND (
-							TIME(a.break_in) NOT BETWEEN "11:30:00" AND "13:00:00"
-							OR
-							TIME(a.break_out) NOT BETWEEN "11:30:00" AND "13:00:00"
-						)
-				
-						then "Shift 1 Lembur TI, Istirahat TI Tidak Sesuai"
 						
 						-- SHIFT 1 ADA LEMBUR TI
 						when ot.is_istirahat = 2 AND a.st_jadwal LIKE "%PAGI%"
