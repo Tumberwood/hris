@@ -85,21 +85,23 @@
                         THEN "QC - Shift 1, Istirahat Reguler Tidak Sesuai"
 						
 						-- SHIFT 1 ADA LEMBUR TI
-						when ot.is_istirahat = 2 AND a.st_jadwal LIKE "%PAGI%" AND  
-						(
-							a.break_in NOT BETWEEN jad.tanggaljam_awal_istirahat AND DATE_SUB(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+						when ot.is_istirahat = 2 AND a.st_jadwal LIKE "%PAGI%"
+						AND (
+							TIME(a.break_in) NOT BETWEEN "11:00:00" AND "12:00:00"
 							OR
-							a.break_out NOT BETWEEN jad.tanggaljam_awal_istirahat AND DATE_SUB(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+							TIME(a.break_out) NOT BETWEEN "11:00:00" AND "12:00:00"
 						)
+				
 						then "Shift 1 Lembur TI, Istirahat TI Tidak Sesuai"
 						
 						-- SHIFT 1 TIDAK ADA LEMBUR TI
-						when ot.id is null AND a.st_jadwal LIKE "%PAGI%" AND  
-						(
-							a.break_in NOT BETWEEN DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 1 HOUR) AND jad.tanggaljam_akhir_istirahat
+						when ot.id is null AND a.st_jadwal LIKE "%PAGI%" 
+						AND (
+							TIME(a.break_in) NOT BETWEEN "12:00:00" AND "13:00:00"
 							OR
-							a.break_out NOT BETWEEN DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 1 HOUR) AND jad.tanggaljam_akhir_istirahat
+							TIME(a.break_out) NOT BETWEEN "12:00:00" AND "13:00:00"
 						)
+						
 						then "Shift 1, Istirahat Reguler Tidak Sesuai"
 						
 						-- SHIFT 2 ADA LEMBUR TI
@@ -141,15 +143,9 @@
 							(
 								jad.tanggal >= "2026-03-20"
 								AND (
-									a.break_in NOT BETWEEN
-										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
-									AND
-										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+									TIME(a.break_in) NOT BETWEEN "18:00:00" AND "19:00:00"
 									OR
-									a.break_out NOT BETWEEN
-										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
-									AND
-										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+									TIME(a.break_out) NOT BETWEEN "18:00:00" AND "19:00:00"
 								)
 							)
 
@@ -196,15 +192,9 @@
 							(
 								jad.tanggal >= "2026-03-20"
 								AND (
-									a.break_in NOT BETWEEN
-										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
-									AND
-										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+									TIME(a.break_in) NOT BETWEEN "19:00:00" AND "20:00:00"
 									OR
-									a.break_out NOT BETWEEN
-										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
-									AND
-										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+									TIME(a.break_out) NOT BETWEEN "19:00:00" AND "20:00:00"
 								)
 							)
 
@@ -262,9 +252,9 @@
 							(
 								jad.tanggal >= "2026-03-20"
 								AND (
-									TIME(a.break_in) NOT BETWEEN "02:00:00" AND "03:00:00"
+									TIME(a.break_in) NOT BETWEEN "01:00:00" AND "02:00:00"
 									OR
-									TIME(a.break_out) NOT BETWEEN "02:00:00" AND "03:00:00"
+									TIME(a.break_out) NOT BETWEEN "01:00:00" AND "02:00:00"
 								)
 							)
 
