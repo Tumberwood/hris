@@ -42,7 +42,7 @@
             WHERE 1
             AND is_harian_lepas = 0
             AND (tanggal_keluar IS NULL OR tanggal_keluar >= CURDATE() )
-            AND TIMESTAMPDIFF(YEAR, a.tanggal_lahir, CURDATE()) = :usia
+            AND IFNULL(TIMESTAMPDIFF(YEAR, a.tanggal_lahir, CURDATE()), 0) = :usia
             '
             );
     $rs_hemxxmh = $qs_hemxxmh->fetchAll();

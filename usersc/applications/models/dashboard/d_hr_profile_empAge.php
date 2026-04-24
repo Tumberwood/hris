@@ -22,7 +22,7 @@
     $qs_hemxxmh = $db
         ->query('select', 'hemxxmh' )
         ->get([
-            'TIMESTAMPDIFF(YEAR, hemxxmh.tanggal_lahir, CURDATE()) as hemxxmh_age',
+            'IFNULL( TIMESTAMPDIFF(YEAR, hemxxmh.tanggal_lahir, CURDATE()), 0) as hemxxmh_age',
             'COUNT(*) as c_age'
         ] )
         ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
