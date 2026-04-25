@@ -26,6 +26,7 @@
                                 <th>Kode Jabatan</th>
                                 <th>Nama Jabatan</th>
                                 <th>Atasan Langsung</th>
+                                <th>Urutan</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -162,10 +163,14 @@
 						}
 					},	
 					{
+						label: "Urutan <sup class='text-danger'>*<sup>",  
+						name: "hetxxmh.urutan",
+					},
+					{
 						label: "Keterangan",
 						name: "hetxxmh.keterangan",
 						type: "textarea"
-					}
+					},
 				]
 			} );
 
@@ -184,6 +189,20 @@
 
             edthetxxmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
+					urutan = edthetxxmh.field('hetxxmh.urutan').val();
+					if(!urutan || urutan == ''){
+						edthetxxmh.field('hetxxmh.urutan').error( 'Wajib diisi!' );
+					}
+
+					if(urutan <= 0 ){
+						edthetxxmh.field('hetxxmh.urutan').error( 'Inputan harus >= 0' );
+					}
+					
+					// validasi angka
+					if(isNaN(urutan) ){
+						edthetxxmh.field('hetxxmh.urutan').error( 'Inputan harus berupa Angka!' );
+					}
+
 					// BEGIN of validasi hetxxmh.kode
 					if ( ! edthetxxmh.field('hetxxmh.kode').isMultiValue() ) {
 						kode = edthetxxmh.field('hetxxmh.kode').val();
@@ -282,6 +301,11 @@
 					{ data: "hetxxmh.kode" },
 					{ data: "hetxxmh.nama" },
 					{ data: "hetxxmh_al.nama" },
+					{ 
+						data: "hetxxmh.urutan", 
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right" 
+					},
 					{ data: "hetxxmh.keterangan" }
 				],
 				buttons: [

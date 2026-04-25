@@ -46,6 +46,8 @@
 				->setValue($_SESSION['user']),
 			Field::inst( 'hetxxmh.is_approve' ),
 			Field::inst( 'hetxxmh.is_defaultprogram' ),
+			Field::inst( 'hetxxmh.urutan' ),
+			
 			Field::inst( 'hetxxmh_al.nama' ),
 			Field::inst( 'hevgrmh.nama' ),
 		)
