@@ -15,9 +15,9 @@ $morePages = 0;
 // ambil data
 $qs = $db->raw()->exec("
     SELECT
-      a.kode AS title,
-      a.nama AS name,
-      b.nama AS parent
+        a.nama AS title,
+        a.kode AS name,
+        b.nama AS parent
     FROM hetxxmh a
     LEFT JOIN hetxxmh b ON b.id = a.id_hetxxmh_al
     WHERE 1

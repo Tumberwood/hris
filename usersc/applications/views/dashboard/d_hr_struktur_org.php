@@ -27,6 +27,24 @@
 	.orgchart {
 	background: #ffffff !important;  /* ganti putih atau transparent */
 	}
+	.orgchart .node .title,
+	.orgchart .node .content {
+		white-space: normal !important;
+		word-break: break-word;
+		overflow: visible !important;
+		height: auto !important;
+	}
+
+	/* ini penting banget */
+	.orgchart .node {
+		width: 160px; /* atur sendiri */
+	}
+
+	/* biar text turun rapi */
+	.orgchart .node .content {
+		padding: 5px;
+		line-height: 1.2;
+	}
 </style>
 
 <!-- begin content here -->
