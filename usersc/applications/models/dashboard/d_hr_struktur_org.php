@@ -12,90 +12,101 @@ $rs_opt    = array();
 $c_rs_opt  = 0;
 $morePages = 0;
 
-// ambil data
+// =======================
+// AMBIL DATA (PAKAI ID)
+// =======================
 $qs = $db->raw()->exec("
     SELECT
-        a.nama AS title,
+        a.id,
         a.kode AS name,
-        b.nama AS parent
+        a.nama AS title,
+        a.id_hetxxmh_al AS parent_id,
+        a.urutan
     FROM hetxxmh a
-    LEFT JOIN hetxxmh b ON b.id = a.id_hetxxmh_al
-    WHERE 1
-        AND a.urutan > 0 
+    WHERE 
+        a.urutan > 0 
         AND a.is_active = 1
-    ORDER BY a.urutan
+    ORDER BY a.urutan, a.id
 ");
 
 $rows = $qs->fetchAll(PDO::FETCH_ASSOC);
 
 // =======================
-// BUILD TREE
+// BUILD NODE MAP
 // =======================
 $map = [];
-$hasParent = [];
 
-// build node
 foreach ($rows as $r) {
 
-    $name   = trim($r['name'] ?? '');
-    $title  = trim($r['title'] ?? '') ?: $name;
-    $parent = trim($r['parent'] ?? '');
+    $id        = (int)$r['id'];
+    $name      = trim($r['name']);
+    $title     = trim($r['title']);
+    $parent_id = (int)$r['parent_id'];
+    $urutan    = (int)$r['urutan'];
 
-    // create node
-    if (!isset($map[$name])) {
-        $map[$name] = [
+    if (!isset($map[$id])) {
+        $map[$id] = [
+            'id' => $id,
             'name' => $name,
             'title' => $title,
             'children' => []
         ];
     } else {
-        if (empty($map[$name]['title'])) {
-            $map[$name]['title'] = $title;
+        if (empty($map[$id]['title'])) {
+            $map[$id]['title'] = $title;
         } else {
-            $map[$name]['title'] = $map[$name]['title'];
+            $map[$id]['title'] = $map[$id]['title'];
         }
     }
 
-    // handle parent
-    if (!empty($parent)) {
+    // simpan sementara
+    $map[$id]['parent_id'] = $parent_id;
+    $map[$id]['urutan']    = $urutan;
+}
 
-        if (!isset($map[$parent])) {
-            $map[$parent] = [
-                'name' => $parent,
-                'title' => $parent,
-                'children' => []
-            ];
+// =======================
+// BUILD TREE
+// =======================
+$roots = [];
+
+foreach ($map as $id => &$node) {
+
+    if ($node['parent_id'] === 0) {
+
+        // cek root utama
+        if ($node['urutan'] === 1) {
+            $roots[] = &$node;
         } else {
-            $map[$parent] = $map[$parent];
+            // orphan (anggap root juga biar ga hilang)
+            $roots[] = &$node;
         }
 
-        // tandai punya parent
-        $hasParent[$name] = true;
-
-        // push child
-        $map[$parent]['children'][] = &$map[$name];
-
     } else {
-        // tidak punya parent
-        if (!isset($hasParent[$name])) {
-            $hasParent[$name] = false;
+
+        if (isset($map[$node['parent_id']])) {
+            $map[$node['parent_id']]['children'][] = &$node;
         } else {
-            $hasParent[$name] = $hasParent[$name];
+            // parent tidak ada → jadi root fallback
+            $roots[] = &$node;
         }
     }
 }
 
 // =======================
-// AMBIL SEMUA ROOT
+// CLEAN FIELD
 // =======================
-$roots = [];
+foreach ($map as &$n) {
 
-foreach ($map as $name => $node) {
-
-    if (empty($hasParent[$name])) {
-        $roots[] = $node;
+    if (isset($n['parent_id'])) {
+        unset($n['parent_id']);
     } else {
-        $roots = $roots;
+        $n = $n;
+    }
+
+    if (isset($n['urutan'])) {
+        unset($n['urutan']);
+    } else {
+        $n = $n;
     }
 }
 
