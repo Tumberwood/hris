@@ -54,6 +54,7 @@
 		<div class="ibox ">
 			<div class="ibox-content">
               <div class="card-body">
+				<h3>Ferry</h3>
                 <div id="chart-container"></div>
               </div>
 			</div>
