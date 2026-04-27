@@ -159,6 +159,7 @@
 			Field::inst( 'hevgrmh.nama' ),
 
 			Field::inst( 'hemxxmh.gender' ),
+			Field::inst( 'hemxxmh.perkawinan' ),
 			Field::inst( 'hemxxmh.tanggal_lahir' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === '0000-00-00' || $val === null){

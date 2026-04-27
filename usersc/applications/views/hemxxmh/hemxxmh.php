@@ -206,6 +206,9 @@
 							<div class="col-lg-6">
 								<editor-field name="hemxxmh.id_files_foto"></editor-field>
 							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.perkawinan"></editor-field>
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
@@ -627,6 +630,17 @@
 							
 						},
 						noFileText: 'Belum ada gambar'
+					},
+					{
+						label: "Status Pernikahan",
+						name: "hemxxmh.perkawinan",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Menikah", "value": "Menikah" },
+							{ "label": "Belum Menikah", "value": "Belum Menikah" },
+							{ "label": "Janda/Duda", "value": "Janda/Duda" },
+						]
 					},
 					{
 						label: "NIK <sup class='text-danger'>*<sup>",
