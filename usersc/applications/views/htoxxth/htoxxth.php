@@ -372,31 +372,31 @@
 					}
 					// END of validasi htoxxth.id_holxxmd
 
-					// BEGIN of cek unik kombinasi htoxxth.id_holxxmd dan htoxxth.tanggal 
-					tanggal_ymd = moment(edthtoxxth.field('htoxxth.tanggal').val()).format('YYYY-MM-DD');
-					if(action == 'create'){
-						id_htoxxth = 0;
-					}
+					// // BEGIN of cek unik kombinasi htoxxth.id_holxxmd dan htoxxth.tanggal 
+					// tanggal_ymd = moment(edthtoxxth.field('htoxxth.tanggal').val()).format('YYYY-MM-DD');
+					// if(action == 'create'){
+					// 	id_htoxxth = 0;
+					// }
 					
-					$.ajax( {
-						url: '../../../helpers/validate_fn_unique.php',
-						dataType: 'json',
-						type: 'POST',
-						async: false,
-						data: {
-							table_name: 'htoxxth',
-							nama_field: 'tanggal, id_holxxmd',
-							nama_field_value: '"'+tanggal_ymd+'",'+ id_holxxmd,
-							id_transaksi: id_htoxxth
-						},
-						success: function ( json ) {
-							if(json.data.count >= 1){
-								edthtoxxth.field('htoxxth.tanggal').error( 'Data Area Kerja pada Tanggal tersebut sudah ada!' );
-								edthtoxxth.field('htoxxth.id_holxxmd').error( 'Data Area Kerja pada Tanggal tersebut sudah ada!' );
-							}
-						}
-					} );
-					// BEGIN of cek unik kombinasi htoxxth.id_holxxmd dan htoxxth.tanggal 
+					// $.ajax( {
+					// 	url: '../../../helpers/validate_fn_unique.php',
+					// 	dataType: 'json',
+					// 	type: 'POST',
+					// 	async: false,
+					// 	data: {
+					// 		table_name: 'htoxxth',
+					// 		nama_field: 'tanggal, id_holxxmd',
+					// 		nama_field_value: '"'+tanggal_ymd+'",'+ id_holxxmd,
+					// 		id_transaksi: id_htoxxth
+					// 	},
+					// 	success: function ( json ) {
+					// 		if(json.data.count >= 1){
+					// 			edthtoxxth.field('htoxxth.tanggal').error( 'Data Area Kerja pada Tanggal tersebut sudah ada!' );
+					// 			edthtoxxth.field('htoxxth.id_holxxmd').error( 'Data Area Kerja pada Tanggal tersebut sudah ada!' );
+					// 		}
+					// 	}
+					// } );
+					// // BEGIN of cek unik kombinasi htoxxth.id_holxxmd dan htoxxth.tanggal 
 				}
 				
 				if ( edthtoxxth.inError() ) {
