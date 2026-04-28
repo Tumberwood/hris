@@ -806,6 +806,29 @@
                                                         } );
                                                     }
                                                     
+                                                    <?php 
+                                                        if(file_exists("../../models/" . $table_name . '/' . $table_name . "_post_approve.php")) {
+                                                    ?>
+                                                        $.ajax( {
+                                                            url: '../../models/'+ "<?php echo $table_name . '/' . $table_name;?>" +'_post_approve.php',
+                                                            dataType: 'json',
+                                                            type: 'POST',
+                                                            data: {
+                                                                state           : -9,
+                                                                id_transaksi_h  : id_transaksi_h
+                                                            },
+                                                            success: function ( json ) {
+                                                                $.notify({
+                                                                    message: json.data.message
+                                                                },{
+                                                                    type: json.data.type_message
+                                                                });
+                                                            }
+                                                        } );
+                                                    <?php
+                                                        }
+                                                    ?>
+                                                    
                                                     <?php echo $table;?>.ajax.reload(null, false);
                                                 }
                                             } );

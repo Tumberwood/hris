@@ -183,7 +183,7 @@
                 }
             }
         
-        }elseif($state == 2){
+        }else{
             // BEGIN ambil data htoemtd
             $qs_htoemtd = $db
                 ->raw()
