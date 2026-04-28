@@ -45,7 +45,13 @@
                     LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = htoemtd.id_hemxxmh
                     WHERE htoemtd.is_active = 1
                         AND htoxxth.is_active = 1
-                        AND htoxxth.id = :id_transaksi_h;
+                        AND htoxxth.id = :id_transaksi_h
+                        AND NOT EXISTS (
+                            SELECT 1 
+                            FROM htoxxrd r
+                            WHERE r.id_htoemtd = htoemtd.id AND r.is_active = 1
+                        )
+                        ;
                     '
                     );
         $rs_htoemtd = $qs_htoemtd->fetchAll();
