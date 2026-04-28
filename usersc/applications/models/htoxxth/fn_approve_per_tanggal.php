@@ -81,6 +81,11 @@
                         WHERE htoemtd.is_active = 1
                             AND htoxxth.is_active = 1
                             AND tanggal = :end_date
+                            AND NOT EXISTS (
+                                SELECT 1 
+                                FROM htoxxrd r
+                                WHERE r.id_htoemtd = htoemtd.id AND r.is_active = 1
+                            )
                         '
             );
         } else {
