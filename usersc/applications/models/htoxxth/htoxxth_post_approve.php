@@ -21,42 +21,42 @@
 
     try{
         $db->transaction();
-        // BEGIN ambil data htoemtd
-        $qs_htoemtd = $db
-            ->raw()
-            ->bind(':id_transaksi_h', $id_transaksi_h)
-            ->exec('SELECT
-                        htoemtd.id_hemxxmh AS id_hemxxmh,
-                        htoxxth.id AS id_htoxxth,
-                        htoemtd.id AS id_htoemtd,
-                        htoemtd.id_htotpmh AS id_htotpmh,
-                        htoxxth.id_heyxxmh AS id_heyxxmh,
-                        htoxxth.kode AS kode,
-                        htoxxth.tanggal AS tanggal,
-                        htoxxth.is_approve AS is_approve,
-                        htoemtd.is_istirahat AS is_istirahat,
-                        htoemtd.jam_awal AS jam_awal,
-                        htoemtd.jam_akhir AS jam_akhir,
-                        htoemtd.durasi_lembur_jam AS durasi_lembur_jam,
-                        htoemtd.durasi_lembur_menit AS durasi_lembur_menit,
-                        hemjbmh.id_hesxxmh AS id_hesxxmh
-                    FROM htoemtd
-                    LEFT JOIN htoxxth ON htoxxth.id = htoemtd.id_htoxxth
-                    LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = htoemtd.id_hemxxmh
-                    WHERE htoemtd.is_active = 1
-                        AND htoxxth.is_active = 1
-                        AND htoxxth.id = :id_transaksi_h
-                        AND NOT EXISTS (
-                            SELECT 1 
-                            FROM htoxxrd r
-                            WHERE r.id_htoemtd = htoemtd.id AND r.is_active = 1
-                        )
-                        ;
-                    '
-                    );
-        $rs_htoemtd = $qs_htoemtd->fetchAll();
-        // END ambil data htoemtd
         if($state == 1){
+            // BEGIN ambil data htoemtd
+            $qs_htoemtd = $db
+                ->raw()
+                ->bind(':id_transaksi_h', $id_transaksi_h)
+                ->exec('SELECT
+                            htoemtd.id_hemxxmh AS id_hemxxmh,
+                            htoxxth.id AS id_htoxxth,
+                            htoemtd.id AS id_htoemtd,
+                            htoemtd.id_htotpmh AS id_htotpmh,
+                            htoxxth.id_heyxxmh AS id_heyxxmh,
+                            htoxxth.kode AS kode,
+                            htoxxth.tanggal AS tanggal,
+                            htoxxth.is_approve AS is_approve,
+                            htoemtd.is_istirahat AS is_istirahat,
+                            htoemtd.jam_awal AS jam_awal,
+                            htoemtd.jam_akhir AS jam_akhir,
+                            htoemtd.durasi_lembur_jam AS durasi_lembur_jam,
+                            htoemtd.durasi_lembur_menit AS durasi_lembur_menit,
+                            hemjbmh.id_hesxxmh AS id_hesxxmh
+                        FROM htoemtd
+                        LEFT JOIN htoxxth ON htoxxth.id = htoemtd.id_htoxxth
+                        LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = htoemtd.id_hemxxmh
+                        WHERE htoemtd.is_active = 1
+                            AND htoxxth.is_active = 1
+                            AND htoxxth.id = :id_transaksi_h
+                            AND NOT EXISTS (
+                                SELECT 1 
+                                FROM htoxxrd r
+                                WHERE r.id_htoemtd = htoemtd.id AND r.is_active = 1
+                            )
+                            ;
+                        '
+                        );
+            $rs_htoemtd = $qs_htoemtd->fetchAll();
+            // END ambil data htoemtd
 
             foreach ($rs_htoemtd as $row_htoemtd) {
                 $durasi_lembur_menit = $row_htoemtd['durasi_lembur_jam'] * 60;
@@ -184,6 +184,36 @@
             }
         
         }elseif($state == 2){
+            // BEGIN ambil data htoemtd
+            $qs_htoemtd = $db
+                ->raw()
+                ->bind(':id_transaksi_h', $id_transaksi_h)
+                ->exec('SELECT
+                            htoemtd.id_hemxxmh AS id_hemxxmh,
+                            htoxxth.id AS id_htoxxth,
+                            htoemtd.id AS id_htoemtd,
+                            htoemtd.id_htotpmh AS id_htotpmh,
+                            htoxxth.id_heyxxmh AS id_heyxxmh,
+                            htoxxth.kode AS kode,
+                            htoxxth.tanggal AS tanggal,
+                            htoxxth.is_approve AS is_approve,
+                            htoemtd.is_istirahat AS is_istirahat,
+                            htoemtd.jam_awal AS jam_awal,
+                            htoemtd.jam_akhir AS jam_akhir,
+                            htoemtd.durasi_lembur_jam AS durasi_lembur_jam,
+                            htoemtd.durasi_lembur_menit AS durasi_lembur_menit,
+                            hemjbmh.id_hesxxmh AS id_hesxxmh
+                        FROM htoemtd
+                        LEFT JOIN htoxxth ON htoxxth.id = htoemtd.id_htoxxth
+                        LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = htoemtd.id_hemxxmh
+                        WHERE htoemtd.is_active = 1
+                            AND htoxxth.is_active = 1
+                            AND htoxxth.id = :id_transaksi_h;
+                        '
+                        );
+            $rs_htoemtd = $qs_htoemtd->fetchAll();
+            // END ambil data htoemtd
+            
             // print_r($id_transaksi_h);
             $qd_htoxxrd = $db
                 ->query('delete', 'htoxxrd')
