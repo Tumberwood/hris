@@ -175,6 +175,8 @@
 					'from' => 'd M Y',
 					'to' =>   'Y-m-d'
 				) ),
+			Field::inst( 'hemxxmh.jumlah_anak' ),
+			Field::inst( 'gtxpkmh.kode' ),
 			// ,
 			// Field::inst( 'v_hemxxmh_htsptth.pola_shift' ),
 			// Field::inst( 'v_hemxxmh_htsptth.grup_ke' )
@@ -192,6 +194,7 @@
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
 		->leftJoin( 'hevgrmh','hevgrmh.id','=','hemjbmh.id_hevgrmh' )
 		->leftJoin( 'hobxxmh','hobxxmh.id','=','hemjbmh.id_hobxxmh' )
+		->leftJoin( 'gtxpkmh','gtxpkmh.id','=','hemdcmh.id_gtxpkmh' )
 		->where( 'hemjbmh.is_harian_lepas', 1)
 		;
 	
