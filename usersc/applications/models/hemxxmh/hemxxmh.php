@@ -160,6 +160,8 @@
 
 			Field::inst( 'hemxxmh.gender' ),
 			Field::inst( 'hemxxmh.perkawinan' ),
+			Field::inst( 'hemxxmh.jumlah_anak' ),
+			Field::inst( 'gtxpkmh.kode' ),
 			Field::inst( 'hemxxmh.tanggal_lahir' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === '0000-00-00' || $val === null){
@@ -189,6 +191,7 @@
 		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
 		->leftJoin( 'hevgrmh','hevgrmh.id','=','hemjbmh.id_hevgrmh' )
+		->leftJoin( 'gtxpkmh','gtxpkmh.id','=','hemdcmh.id_gtxpkmh' )
 		->where( 'hemjbmh.is_harian_lepas', 0)
 		
         ->where( function ( $r ) use ($tanggal_akhir) {

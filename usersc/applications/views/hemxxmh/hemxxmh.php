@@ -122,6 +122,14 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
+								<editor-field name="hemxxmh.perkawinan"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.jumlah_anak"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
 								<editor-field name="hemjbmh.tanggal_masuk"></editor-field>
 							</div>
 							<div class="col-lg-6">
@@ -206,9 +214,6 @@
 							<div class="col-lg-6">
 								<editor-field name="hemxxmh.id_files_foto"></editor-field>
 							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.perkawinan"></editor-field>
-							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
@@ -249,6 +254,9 @@
                                 <th>Tanggal Akhir Kontrak</th>
                                 <th>Grup HK</th>
                                 <th>Gender</th>
+                                <th>PTKP</th>
+                                <th>Status Pernikahan</th>
+                                <th>Jumlah Anak</th>
                                 <th>Harian Lepas</th>
                                 <th>Aktif</th>
                             </tr>
@@ -642,6 +650,10 @@
 							{ "label": "Janda/Duda", "value": "Janda/Duda" },
 						]
 					},
+					{
+						label: "Jumlah Anak",
+						name: "hemxxmh.jumlah_anak"
+					}, 	
 					{
 						label: "NIK <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.kode"
@@ -1774,6 +1786,9 @@
 						}
 					},
 					{ data: "hemxxmh.gender" },
+					{ data: "gtxpkmh.kode" },
+					{ data: "hemxxmh.perkawinan" },
+					{ data: "hemxxmh.jumlah_anak" },
 					{ 
 						data: "hemjbmh.is_harian_lepas",
 						render: function (data){
