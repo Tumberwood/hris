@@ -253,6 +253,7 @@
                                 <th>Tanggal Join</th>
                                 <th>Tanggal Akhir Kontrak</th>
                                 <th>Grup HK</th>
+                                <th>Gender</th>
                                 <th>PTKP</th>
                                 <th>Status Pernikahan</th>
                                 <th>Jumlah Anak</th>

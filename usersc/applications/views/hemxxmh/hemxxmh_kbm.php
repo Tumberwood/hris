@@ -214,9 +214,6 @@
 							<div class="col-lg-6">
 								<editor-field name="hemxxmh.id_files_foto"></editor-field>
 							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.perkawinan"></editor-field>
-							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
