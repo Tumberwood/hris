@@ -99,6 +99,8 @@
 					$gender = $sheetData[$i][19];
 					//$harian_lepas = $sheetData[$i][20];
 					$ptkp = $sheetData[$i][21];
+					$perkawinan = $sheetData[$i][22];
+					$jumlah_anak = $sheetData[$i][23];
 					
 					// cari nik
 					$qs_hemxxmh = $db->query('select','hemxxmh')
@@ -182,6 +184,19 @@
 								UPDATE hemdcmh
 								SET id_gtxpkmh = COALESCE(NULLIF(:id_gtxpkmh, 0), id_gtxpkmh)
 								WHERE id_hemxxmh = :id_hemxxmh
+							");
+
+						$qu_hemxxmh = $db
+							->raw()
+							->bind(':jumlah_anak', $jumlah_anak)
+							->bind(':perkawinan', $perkawinan)
+							->bind(':id_hemxxmh', $id_hemxxmh)
+							->exec("
+								UPDATE hemxxmh
+								SET 
+									perkawinan = :perkawinan,
+									jumlah_anak = :jumlah_anak
+								WHERE id = :id_hemxxmh
 							");
 
 						if ($qu_hemjbmh && $qu_hemdcmh) {
