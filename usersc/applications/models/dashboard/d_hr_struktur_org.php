@@ -26,6 +26,7 @@ $qs = $db->raw()->exec("
     WHERE 
         a.urutan > 0 
         AND a.is_active = 1
+        AND a.id_hetxxmh_al > 0
     ORDER BY a.urutan, a.id
 ");
 
