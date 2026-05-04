@@ -94,12 +94,23 @@
 				},
 				success: function (json) {
 					var struktur_org = json.data.struktur_org;
+					var root = json.data.root;
 
-					var finalData = {
-						name: "ROOT",
-						title: "ROOT",
-						children: struktur_org
-					};
+					var finalData;
+
+					if (root) {
+						finalData = {
+							name: root.name,
+							title: root.title,
+							children: struktur_org
+						};
+					} else {
+						finalData = {
+							name: "ROOT",
+							title: "ROOT",
+							children: struktur_org
+						};
+					}
 
 					$('#chart-container').orgchart({
 						data: finalData,

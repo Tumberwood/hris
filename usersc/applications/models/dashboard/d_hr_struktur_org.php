@@ -13,6 +13,22 @@ $c_rs_opt  = 0;
 $morePages = 0;
 
 // =======================
+// AMBIL ROOT (urutan = 1)
+// =======================
+$qRoot = $db->raw()->exec("
+    SELECT
+        id,
+        kode AS name,
+        nama AS title
+    FROM hetxxmh
+    WHERE urutan = 1
+    AND is_active = 1
+    LIMIT 1
+");
+
+$root = $qRoot->fetch(PDO::FETCH_ASSOC);
+
+// =======================
 // AMBIL DATA (PAKAI ID)
 // =======================
 $qs = $db->raw()->exec("
@@ -60,7 +76,6 @@ foreach ($rows as $r) {
         }
     }
 
-    // simpan sementara
     $map[$id]['parent_id'] = $parent_id;
     $map[$id]['urutan']    = $urutan;
 }
@@ -74,11 +89,9 @@ foreach ($map as $id => &$node) {
 
     if ($node['parent_id'] === 0) {
 
-        // cek root utama
         if ($node['urutan'] === 1) {
             $roots[] = &$node;
         } else {
-            // orphan (anggap root juga biar ga hilang)
             $roots[] = &$node;
         }
 
@@ -87,7 +100,6 @@ foreach ($map as $id => &$node) {
         if (isset($map[$node['parent_id']])) {
             $map[$node['parent_id']]['children'][] = &$node;
         } else {
-            // parent tidak ada → jadi root fallback
             $roots[] = &$node;
         }
     }
@@ -115,6 +127,7 @@ foreach ($map as &$n) {
 // OUTPUT
 // =======================
 $data = [
+    'root' => $root,
     'struktur_org' => $roots
 ];
 
