@@ -32,6 +32,7 @@
 				'
 				);
 	$rs_kode = $qs_kode->fetch();
+	$id_hemxxmh = $rs_kode['id_hemxxmh'];
 
 	if($state == 1){
 
@@ -127,6 +128,17 @@
 					'
 					);
 
+		$qu_grup_jabatan = $db
+			->raw()
+			->bind('id_hemxxmh', $id_hemxxmh)
+			->exec('UPDATE hemjbmh AS a
+					LEFT JOIN hetxxmh b ON b.id = a.id_hetxxmh
+					SET
+						a.id_hevgrmh = b.id_hevgrmh
+					WHERE a.id = :id_hemxxmh;
+					'
+					);
+
 	} else if($state == 2) {
 
 		$qu_hemjbmh = $db
@@ -151,6 +163,17 @@
 			->where('id_hemxxmh',$rs_kode['id_hemxxmh'])
 			->where('kode',$rs_kode['kode'])
 			->exec();
+
+		$qu_grup_jabatan = $db
+			->raw()
+			->bind('id_hemxxmh', $id_hemxxmh)
+			->exec('UPDATE hemjbmh AS a
+					LEFT JOIN hetxxmh b ON b.id = a.id_hetxxmh
+					SET
+						a.id_hevgrmh = b.id_hevgrmh
+					WHERE a.id = :id_hemxxmh;
+					'
+					);
 	}
 
 	
