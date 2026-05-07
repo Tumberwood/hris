@@ -148,12 +148,12 @@
 					LEFT JOIN harxxth AS b ON b.id_hemxxmh = a.id_hemxxmh 
 					LEFT JOIN hemjbrd AS c ON c.kode = b.kode
 					SET 
-						a.id_hovxxmh = IF(id_hovxxmh_awal = 0, a.id_hovxxmh, b.id_hovxxmh_awal),
-						a.id_hodxxmh = IF(id_hodxxmh_awal = 0, a.id_hodxxmh, b.id_hodxxmh_awal),
-						a.id_hosxxmh = IF(id_hosxxmh_awal = 0, a.id_hosxxmh, b.id_hosxxmh_awal),
-						a.id_hevxxmh = IF(id_hevxxmh_awal = 0, a.id_hevxxmh, b.id_hevxxmh_awal),
-						a.id_hetxxmh = IF(id_hetxxmh_awal = 0, a.id_hetxxmh, b.id_hetxxmh_awal),
-						a.id_holxxmd_2 = IF(id_holxxmd_2_awal = 0, a.id_holxxmd_2, b.id_holxxmd_2_awal)
+						a.id_hovxxmh = IF(b.id_hovxxmh_awal = 0, a.id_hovxxmh, b.id_hovxxmh_awal),
+						a.id_hodxxmh = IF(b.id_hodxxmh_awal = 0, a.id_hodxxmh, b.id_hodxxmh_awal),
+						a.id_hosxxmh = IF(b.id_hosxxmh_awal = 0, a.id_hosxxmh, b.id_hosxxmh_awal),
+						a.id_hevxxmh = IF(b.id_hevxxmh_awal = 0, a.id_hevxxmh, b.id_hevxxmh_awal),
+						a.id_hetxxmh = IF(b.id_hetxxmh_awal = 0, a.id_hetxxmh, b.id_hetxxmh_awal),
+						a.id_holxxmd_2 = IF(b.id_holxxmd_2_awal = 0, a.id_holxxmd_2, b.id_holxxmd_2_awal)
 					WHERE b.id = :id;
 					'
 					);
