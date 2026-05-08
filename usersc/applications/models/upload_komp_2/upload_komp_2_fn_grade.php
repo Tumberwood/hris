@@ -105,7 +105,14 @@
 						->exec();
 
 					$rs_hetxxmh = $qs_hetxxmh->fetch();
-					$id_hetxxmh = $rs_hetxxmh['id_hetxxmh'];
+					if ($rs_hetxxmh) {
+						# code...
+						$id_hetxxmh = $rs_hetxxmh['id_hetxxmh'];
+					} else {
+
+						echo $i;
+						echo $jabatan;
+					}
 
 					if ($rs_hetxxmh['id_hetxxmh'] == 0) {
 						$emptyPeg[] = ['rowIndex' => $i + 1];
