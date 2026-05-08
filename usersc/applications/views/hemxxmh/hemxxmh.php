@@ -645,8 +645,8 @@
 						type: "select",
 						placeholder : "Select",
 						options: [
-							{ "label": "Menikah", "value": "Menikah" },
-							{ "label": "Belum Menikah", "value": "Belum Menikah" },
+							{ "label": "Kawin", "value": "Kawin" },
+							{ "label": "Tidak Kawin", "value": "Tidak Kawin" },
 							{ "label": "Janda/Duda", "value": "Janda/Duda" },
 						]
 					},
