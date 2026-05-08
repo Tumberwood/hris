@@ -52,7 +52,7 @@
 	} );
 
 	if(is_notification == 1){
-		// setInterval(cekNotification, notification_interval_ms);
+		setInterval(cekNotification, notification_interval_ms);
 	}
 
 	function cekNotification(){
