@@ -21,7 +21,21 @@
 				<hr>
 				<form id="frmUploadKompKaryawan" enctype="multipart/form-data">
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>1. Komponen per Karyawan (Gaji Pokok, Gaji BPJS TK, Gaji BPJS Kes, Tunjangan Lain-lain & Iuran SPSI)</b></label>
+						<label class="col-lg-2 col-form-label">
+							<div class="d-flex">
+								<div class="mr-2">
+									<b>1.</b>
+								</div>
+
+								<div>
+									<b>
+										Komponen per Karyawan
+										(Gaji Pokok, Gaji BPJS TK, Gaji BPJS Kes,
+										Tunjangan Lain-lain & Iuran SPSI)
+									</b>
+								</div>
+							</div>
+						</label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputKompKaryawan">
@@ -67,7 +81,20 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>2. Komponen per Skala Upah (Premi Absen & Tunj. Jabatan)</b></label>
+						<label class="col-lg-2 col-form-label">
+							<div class="d-flex">
+								<div class="mr-2">
+									<b>2.</b>
+								</div>
+
+								<div>
+									<b>
+										Komponen per Skala Upah
+										(Premi Absen & Tunj. Jabatan)
+									</b>
+								</div>
+							</div>
+						</label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputKompLevel">
@@ -83,7 +110,20 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>3. Komponen per Grup Jabatan (Tunjangan Masa Kerja)</b></label>
+						<label class="col-lg-2 col-form-label">
+							<div class="d-flex">
+								<div class="mr-2">
+									<b>3.</b>
+								</div>
+
+								<div>
+									<b>
+										Komponen per Grup Jabatan
+										(Tunjangan Masa Kerja)
+									</b>
+								</div>
+							</div>
+						</label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputKompgrup_jabatan">
@@ -100,7 +140,20 @@
 					</div>
 
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>4. Komponen Sub Tipe (Potongan Absen, Lembur Mati / Jam)</b></label>
+						<label class="col-lg-2 col-form-label">
+							<div class="d-flex">
+								<div class="mr-2">
+									<b>4.</b>
+								</div>
+
+								<div>
+									<b>
+										Komponen Sub Tipe
+										(Potongan Absen, Lembur Mati / Jam)
+									</b>
+								</div>
+							</div>
+						</label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputKompSub_tipe">
@@ -117,7 +170,20 @@
 					</div>
 
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>5. Komponen Sub Tipe (Potongan Uang Makan)</b></label>
+						<label class="col-lg-2 col-form-label">
+							<div class="d-flex">
+								<div class="mr-2">
+									<b>5.</b>
+								</div>
+
+								<div>
+									<b>
+										Komponen Sub Tipe
+										(Potongan Uang Makan)
+									</b>
+								</div>
+							</div>
+						</label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputKompPot_uang_makan">
