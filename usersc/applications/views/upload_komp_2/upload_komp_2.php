@@ -21,7 +21,7 @@
 				<hr>
 				<form id="frmUploadKompKaryawan" enctype="multipart/form-data">
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>Komponen per Karyawan (Gaji Pokok, Gaji BPJS TK, Gaji BPJS Kes, Tunjangan Lain-lain & Iuran SPSI)</b></label>
+						<label class="col-lg-2 col-form-label"><b>1. Komponen per Karyawan (Gaji Pokok, Gaji BPJS TK, Gaji BPJS Kes, Tunjangan Lain-lain & Iuran SPSI)</b></label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputKompKaryawan">
@@ -29,7 +29,7 @@
 						</div>
 						<div class="col-sm-4">
 							<div>
-								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_per_karyawan.xlsx');">
+								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/1. template_komp_per_karyawan.xlsx');">
 									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 								</button>
 								<b class="ml-2">Insert ke Gaji Karyawan</b>
@@ -67,7 +67,7 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>Komponen per Skala Upah (Premi Absen & Tunj. Jabatan)</b></label>
+						<label class="col-lg-2 col-form-label"><b>2. Komponen per Skala Upah (Premi Absen & Tunj. Jabatan)</b></label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputKompLevel">
@@ -75,7 +75,7 @@
 						</div>
 						<div class="col-sm-4">
 							<div>
-								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_per_grade.xlsx');">
+								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/2. template_komp_per_grade.xlsx');">
 									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 								</button>
 								<b class="ml-2">Insert ke Gaji Karyawan</b>
@@ -83,7 +83,7 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>Komponen per Grup Jabatan (Tunjangan Masa Kerja)</b></label>
+						<label class="col-lg-2 col-form-label"><b>3. Komponen per Grup Jabatan (Tunjangan Masa Kerja)</b></label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputKompgrup_jabatan">
@@ -91,7 +91,7 @@
 						</div>
 						<div class="col-sm-4">
 							<div>
-								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_per_grup_jabatan.xlsx');">
+								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/3. template_komp_per_grup_jabatan.xlsx');">
 									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 								</button>
 								<b class="ml-2">Insert ke Tunjangan Masa Kerja</b>
@@ -100,7 +100,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>Komponen Sub Tipe (Potongan Absen, Lembur Mati / Jam)</b></label>
+						<label class="col-lg-2 col-form-label"><b>4. Komponen Sub Tipe (Potongan Absen, Lembur Mati / Jam)</b></label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputKompSub_tipe">
@@ -108,7 +108,7 @@
 						</div>
 						<div class="col-sm-4">
 							<div>
-								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_per_sub_tipe.xlsx');">
+								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/4. template_komp_per_sub_tipe.xlsx');">
 									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 								</button>
 								<b class="ml-2">Insert ke Gaji Karyawan</b>
@@ -117,7 +117,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>Komponen Sub Tipe (Potongan Uang Makan)</b></label>
+						<label class="col-lg-2 col-form-label"><b>5. Komponen Sub Tipe (Potongan Uang Makan)</b></label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputKompPot_uang_makan">
@@ -125,7 +125,7 @@
 						</div>
 						<div class="col-sm-4">
 							<div>
-								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_pot_uang_makan.xlsx');">
+								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/5. template_komp_pot_uang_makan.xlsx');">
 									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 								</button>
 								<b class="ml-2">Insert ke Gaji Karyawan</b>
@@ -134,7 +134,7 @@
 					</div>
 
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label"><b>Komponen Tunjangan Khusus</b></label>
+						<label class="col-lg-2 col-form-label"><b>6. Komponen Tunjangan Khusus</b></label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputKompTj_khusus">
@@ -142,7 +142,7 @@
 						</div>
 						<div class="col-sm-4">
 							<div>
-								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/template_komp_tj_khusus.xlsx');">
+								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/6. template_komp_tj_khusus.xlsx');">
 									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 								</button>
 								<b class="ml-2">Insert ke Gaji Karyawan</b>
