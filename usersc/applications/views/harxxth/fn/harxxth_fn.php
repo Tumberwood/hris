@@ -16,6 +16,7 @@
                 edtharxxth.field('hevxxmh_awal_nama').val(json.data.rs_hemxxmh.hevxxmh_awal_nama);
                 edtharxxth.field('hetxxmh_awal_nama').val(json.data.rs_hemxxmh.hetxxmh_awal_nama);
                 edtharxxth.field('holxxmd_2_awal_nama').val(json.data.rs_hemxxmh.holxxmd_2_awal_nama);
+                edtharxxth.field('hevgrmh_awal_nama').val(json.data.rs_hemxxmh.hevgrmh_awal_nama);
 
                 id_hovxxmh = json.data.rs_hemxxmh.id_hovxxmh_awal;
                 id_hodxxmh = json.data.rs_hemxxmh.id_hodxxmh_awal;
@@ -44,5 +45,20 @@
                 }
             }
         } );
-    };
+    }
+
+    function grup_jabatan(){
+        id_hetxxmh = edtharxxth.field('harxxth.id_hetxxmh_akhir').val();
+        $.ajax( {
+            url: "../../models/harxxth/harxxth_fn_grup_jabatan.php",
+            dataType: 'json',
+            type: 'POST',
+            data: {
+                id_hetxxmh: id_hetxxmh,
+            },
+            success: function ( json ) {
+                edtharxxth.field('hevgrmh_akhir_nama').val(json.data.rs_hemxxmh.hevgrmh_akhir_nama);
+            }
+        } );
+    }
 </script>

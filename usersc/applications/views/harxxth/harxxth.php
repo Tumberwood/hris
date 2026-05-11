@@ -80,6 +80,15 @@
 
 							<div class="row">
 								<div class="col-lg-6">
+									<editor-field name="hevgrmh_awal_nama"></editor-field>
+								</div>
+								<div class="col-lg-6">
+									<editor-field name="hevgrmh_akhir_nama"></editor-field>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-lg-6">
 									<editor-field name="holxxmd_2_awal_nama"></editor-field>
 								</div>
 								<div class="col-lg-6">
@@ -125,7 +134,7 @@
 		var id_hemxxmh_old = 0, id_hovxxmh_awal_old = 0, id_hovxxmh_akhir_old = 0, id_hodxxmh_awal_old = 0, id_hodxxmh_akhir_old = 0, id_hosxxmh_awal_old = 0, id_hosxxmh_akhir_old = 0, id_hevxxmh_awal_old = 0, id_hevxxmh_akhir_old = 0, id_hetxxmh_awal_old = 0, id_hetxxmh_akhir_old = 0;
 		var id_holxxmd_2_awal_old = 0, id_holxxmd_2_akhir_old = 0;
 		
-		var is_need_approval = 1, id_harxxmh_old = 0;
+		var is_need_approval = 1, id_harxxmh_old = 0, id_hodxxmh = 0;
 
 		$(document).ready(function() {
 			//start datatables editor
@@ -549,7 +558,18 @@
 						label: "Keterangan",
 						name: "harxxth.keterangan",
 						type: "textarea"
-					}
+					},
+					
+					{
+						label: "Grup Jabatan Awal",
+						name: "hevgrmh_awal_nama",
+						type: "readonly"
+					},
+					{
+						label: "Grup Jabatan Akhir",
+						name: "hevgrmh_akhir_nama",
+						type: "readonly"
+					},
 				]
 			} );
 
@@ -572,6 +592,13 @@
 			edtharxxth.dependent( 'harxxth.id_hemxxmh', function ( val, data, callback ) {
 				if(val > 0){
 					harxxth_load_hemxxmh();
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+			edtharxxth.dependent( 'harxxth.id_hetxxmh_akhir', function ( val, data, callback ) {
+				if(val > 0){
+					grup_jabatan();
 				}
 				return {}
 			}, {event: 'keyup change'});
@@ -629,7 +656,7 @@
 						d.show_inactive_status_harxxth = show_inactive_status_harxxth;
 					}
 				},
-				order: [[ 1, "asc" ]],
+				order: [[ 1, "desc" ]],
 				columns: [
 					{ data: "harxxth.id",visible:false },
 					{ data: "harxxth.kode" },

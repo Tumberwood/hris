@@ -32,6 +32,7 @@
                     'hevxxmh.nama as hevxxmh_awal_nama',
                     'hetxxmh.nama as hetxxmh_awal_nama',
                     'holxxmd_2.nama as holxxmd_2_awal_nama',
+                    'hevgrmh.nama as hevgrmh_awal_nama',
                 ])
                 ->join('hovxxmh','hovxxmh.id = harxxth.id_hovxxmh_awal','LEFT')
                 ->join('hodxxmh','hodxxmh.id = harxxth.id_hodxxmh_awal','LEFT')
@@ -39,6 +40,7 @@
                 ->join('hevxxmh','hevxxmh.id = harxxth.id_hevxxmh_awal','LEFT')
                 ->join('hetxxmh','hetxxmh.id = harxxth.id_hetxxmh_awal','LEFT')
                 ->join('holxxmd_2','holxxmd_2.id = harxxth.id_holxxmd_2_awal','LEFT')
+                ->join('hevgrmh','hevgrmh.id = hetxxmh.id_hevgrmh','LEFT')
                 ->where('harxxth.id', $id_harxxth)
                 ->exec();
             $rs_hemxxmh = $qs_hemxxmh->fetch();
@@ -59,6 +61,7 @@
                     'hevxxmh.nama as hevxxmh_awal_nama',
                     'hetxxmh.nama as hetxxmh_awal_nama',
                     'holxxmd_2.nama as holxxmd_2_awal_nama',
+                    'hevgrmh.nama as hevgrmh_awal_nama',
                 ])
                 ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
                 ->join('hovxxmh','hovxxmh.id = hemjbmh.id_hovxxmh','LEFT')
@@ -67,6 +70,7 @@
                 ->join('hevxxmh','hevxxmh.id = hemjbmh.id_hevxxmh','LEFT')
                 ->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
                 ->join('holxxmd_2','holxxmd_2.id = hemjbmh.id_holxxmd_2','LEFT')
+                ->join('hevgrmh','hevgrmh.id = hetxxmh.id_hevgrmh','LEFT')
                 ->where('hemxxmh.id', $_POST['id_hemxxmh'] )
                 ->exec();
             $rs_hemxxmh = $qs_hemxxmh->fetch();
