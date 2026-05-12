@@ -89,7 +89,10 @@
 				Field::inst( 'hesxxmh.nama' ),
 				
 				Field::inst( 'hemxxmh.kode as kode' ),
-				Field::inst( 'hemxxmh.nama as nama' )
+				Field::inst( 'hemxxmh.nama as nama' ),
+				
+				Field::inst( 'hobxxmh.nama' ),
+				Field::inst( 'hevgrmh.nama' ),
 			)
 			->leftJoin( 'hemxxmh','hemxxmh.id','=','hpyemtd.id_hemxxmh' )
 			->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
@@ -99,6 +102,9 @@
 			->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
 			->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
 			->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
+			->leftJoin( 'hevgrmh','hevgrmh.id','=','hemjbmh.id_hevgrmh' )
+			->leftJoin( 'hobxxmh','hobxxmh.id','=','hemjbmh.id_hobxxmh' )
+			
 			->where('hpyemtd.id_hpyxxth',$_POST['id_hpyxxth'])
 			->where('heyxxmd.id', 1)
 			->where('hesxxmh.id', 3)

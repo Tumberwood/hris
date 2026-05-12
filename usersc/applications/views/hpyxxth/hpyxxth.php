@@ -70,6 +70,9 @@
 													<th class="text-center align-middle">Tipe</th>
 													<th class="text-center align-middle">Sub Tipe</th>
 													<th class="text-center align-middle">Status</th>
+													<th class="text-center align-middle">Grup Jabatan</th>
+													<th class="text-center align-middle">Skala Upah</th>
+													<th class="text-center align-middle">Bagian</th>
 													<th class="text-center align-middle">PTKP</th>
 													<th class="text-center align-middle">No Rek</th>
 													<th class="text-center align-middle">No KTP</th>
@@ -204,6 +207,9 @@
 													<th class="text-center align-middle">Tipe</th>
 													<th class="text-center align-middle">Sub Tipe</th>
 													<th class="text-center align-middle">Status</th>
+													<th class="text-center align-middle">Grup Jabatan</th>
+													<th class="text-center align-middle">Skala Upah</th>
+													<th class="text-center align-middle">Bagian</th>
 													<th class="text-center align-middle">PTKP</th>
 													<th class="text-center align-middle">No Rek</th>
 													<th class="text-center align-middle">No KTP</th>
@@ -338,6 +344,9 @@
 													<th class="text-center align-middle">Tipe</th>
 													<th class="text-center align-middle">Sub Tipe</th>
 													<th class="text-center align-middle">Status</th>
+													<th class="text-center align-middle">Grup Jabatan</th>
+													<th class="text-center align-middle">Skala Upah</th>
+													<th class="text-center align-middle">Bagian</th>
 													<th class="text-center align-middle">PTKP</th>
 													<th class="text-center align-middle">No Rek</th>
 													<th class="text-center align-middle">No KTP</th>
@@ -1243,6 +1252,10 @@
 					{ data: "hpyemtd.tipe" },
 					{ data: "hpyemtd.sub_tipe" },
 					{ data: "hpyemtd.status_peg" },
+					{ data: "hevgrmh.nama" },
+					{ data: "hevxxmh.nama" },
+					{ data: "hobxxmh.nama" },
+
 					{ data: "hpyemtd.ptkp" },
 					{ data: "hpyemtd.no_rekening" },
 					{ data: "hpyemtd.ktp" },
@@ -1486,6 +1499,10 @@
 					{ data: "hpyemtd.tipe" },
 					{ data: "hpyemtd.sub_tipe" },
 					{ data: "hpyemtd.status_peg" },
+					{ data: "hevgrmh.nama" },
+					{ data: "hevxxmh.nama" },
+					{ data: "hobxxmh.nama" },
+
 					{ data: "hpyemtd.ptkp" },
 					{ data: "hpyemtd.no_rekening" },
 					{ data: "hpyemtd.ktp" },
@@ -1729,6 +1746,10 @@
 					{ data: "hpyemtd.tipe" },
 					{ data: "hpyemtd.sub_tipe" },
 					{ data: "hpyemtd.status_peg" },
+					{ data: "hevgrmh.nama" },
+					{ data: "hevxxmh.nama" },
+					{ data: "hobxxmh.nama" },
+
 					{ data: "hpyemtd.ptkp" },
 					{ data: "hpyemtd.no_rekening" },
 					{ data: "hpyemtd.ktp" },
