@@ -1249,12 +1249,12 @@
 					{ data: "hpyemtd.npwp" },
 
 					// GAJI
-					{ data: "hpyemtd.gp", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.t_jab", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.var_cost", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.fix_cost", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.premi_abs", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.gp", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.t_jab", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.var_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.fix_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.premi_abs", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					{ data: "hpyemtd.lembur15", class: "text-right" },
 					{ data: "hpyemtd.rp_lembur15", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
@@ -1266,44 +1266,44 @@
 					{ data: "hpyemtd.total_lembur_jam", class: "text-right" },
 					{ data: "hpyemtd.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
-					{ data: "hpyemtd.komp_rekontrak", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.thr", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.komp_rekontrak", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.thr", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					// POTONGAN
-					{ data: "hpyemtd.pot_makan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_makan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.pendapatan_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.pot_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pendapatan_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.pot_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.jkk", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					{ data: "hpyemtd.bruto", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.persen_ter", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.bruto", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.persen_ter", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					{ data: "hpyemtd.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.after_pph21", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.after_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					{ data: "hpyemtd.jht_perusahaan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.jp_perusahaan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.jht_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jp_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					{ data: "hpyemtd.pot_jht_karyawan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_jp_karyawan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.bpjs_kes_karyawan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_piutang", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.denda_apd", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.iuran_spsi", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_jht_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_jp_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.bpjs_kes_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_piutang", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.denda_apd", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.iuran_spsi", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.pendapatan_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.pot_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pendapatan_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.pot_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.gaji_bersih", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.bulat", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" }
+					{ data: "hpyemtd.gaji_bersih", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.bulat", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" }
 				],
 				buttons: [
 					// BEGIN breaking generate button
@@ -1492,12 +1492,12 @@
 					{ data: "hpyemtd.npwp" },
 
 					// GAJI
-					{ data: "hpyemtd.gp", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.t_jab", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.var_cost", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.fix_cost", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.premi_abs", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.gp", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.t_jab", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.var_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.fix_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.premi_abs", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					{ data: "hpyemtd.lembur15", class: "text-right" },
 					{ data: "hpyemtd.rp_lembur15", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
@@ -1509,44 +1509,44 @@
 					{ data: "hpyemtd.total_lembur_jam", class: "text-right" },
 					{ data: "hpyemtd.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
-					{ data: "hpyemtd.komp_rekontrak", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.thr", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.komp_rekontrak", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.thr", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					// POTONGAN
-					{ data: "hpyemtd.pot_makan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_makan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.pendapatan_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.pot_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pendapatan_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.pot_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.jkk", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					{ data: "hpyemtd.bruto", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.persen_ter", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.bruto", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.persen_ter", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					{ data: "hpyemtd.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.after_pph21", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.after_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					{ data: "hpyemtd.jht_perusahaan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.jp_perusahaan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.jht_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jp_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					{ data: "hpyemtd.pot_jht_karyawan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_jp_karyawan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.bpjs_kes_karyawan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_piutang", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.denda_apd", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.iuran_spsi", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_jht_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_jp_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.bpjs_kes_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_piutang", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.denda_apd", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.iuran_spsi", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.pendapatan_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.pot_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pendapatan_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.pot_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.gaji_bersih", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.bulat", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" }
+					{ data: "hpyemtd.gaji_bersih", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.bulat", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" }
 				],
 				buttons: [
 					// BEGIN breaking generate button
@@ -1735,12 +1735,12 @@
 					{ data: "hpyemtd.npwp" },
 
 					// GAJI
-					{ data: "hpyemtd.gp", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.t_jab", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.var_cost", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.fix_cost", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.premi_abs", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.gp", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.t_jab", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.var_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.fix_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.premi_abs", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					{ data: "hpyemtd.lembur15", class: "text-right" },
 					{ data: "hpyemtd.rp_lembur15", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
@@ -1752,44 +1752,44 @@
 					{ data: "hpyemtd.total_lembur_jam", class: "text-right" },
 					{ data: "hpyemtd.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
-					{ data: "hpyemtd.komp_rekontrak", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.thr", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.komp_rekontrak", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.thr", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					// POTONGAN
-					{ data: "hpyemtd.pot_makan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_makan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.pendapatan_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.pot_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pendapatan_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.pot_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.jkk", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					{ data: "hpyemtd.bruto", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.persen_ter", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.bruto", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.persen_ter", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					{ data: "hpyemtd.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.after_pph21", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.after_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					{ data: "hpyemtd.jht_perusahaan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.jp_perusahaan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ data: "hpyemtd.jht_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jp_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					{ data: "hpyemtd.pot_jht_karyawan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_jp_karyawan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.bpjs_kes_karyawan", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_piutang", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.denda_apd", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
-					{ data: "hpyemtd.iuran_spsi", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_jht_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_jp_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.bpjs_kes_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_piutang", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.denda_apd", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.iuran_spsi", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.pendapatan_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.pot_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right text-danger" },
+					{ data: "hpyemtd.pendapatan_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.pot_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					{ data: "hpyemtd.gaji_bersih", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.bulat", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" }
+					{ data: "hpyemtd.gaji_bersih", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.bulat", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" }
 				],
 				buttons: [
 					// BEGIN breaking generate button
@@ -1977,7 +1977,7 @@
 					{ data: "hevxxmh.nama",visible:false },
 					{ 
 						data: "hpyemtd.gp",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right"
 					},
 					{ 
@@ -1987,7 +1987,7 @@
 					},
 					{ 
 						data: "hpyemtd.rp_lembur15",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right",
 						visible: false,
 					},
@@ -1998,7 +1998,7 @@
 					},
 					{ 
 						data: "hpyemtd.rp_lembur2",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right",
 						visible: false,
 					},
@@ -2009,7 +2009,7 @@
 					},
 					{ 
 						data: "hpyemtd.rp_lembur3",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right",
 						visible: false,
 					},
@@ -2023,49 +2023,49 @@
 					},
 					{ 
 						data: "hpyemtd.lemburbersih",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
 					},
 					{ 
 						data: "hpyemtd.pot_makan",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
 					},
 					{ 
 						data: "hpyemtd.pot_lain",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
 					},
 					{ 
 						data: "hpyemtd.pendapatan_lain",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
 					},
 					{ 
 						data: "hpyemtd.pot_upah",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right ",
 						visible: false,
 					},
 					{ 
 						data: "hpyemtd.pot_jam",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right ",
 						visible: false,
 					},
 					{ 
 						data: "hpyemtd.gaji_bersih",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
 					},
 					{ 
 						data: "hpyemtd.bulat",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
 					},
 					{ 
 						data: "hpyemtd.gaji_terima",
-						render: $.fn.dataTable.render.number( ',', '.', 2,'','' ),
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
 					}
 				],
