@@ -1263,7 +1263,7 @@
 					{ data: "hpyemtd.lembur3", class: "text-right" },
 					{ data: "hpyemtd.rp_lembur3", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
-					{ data: "hpyemtd.total_lembur_jam", class: "text-right" },
+					{ data: "hpyemtd.total_lembur_jam_final", class: "text-right" },
 					{ data: "hpyemtd.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
 					{ data: "hpyemtd.komp_rekontrak", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
@@ -1506,7 +1506,7 @@
 					{ data: "hpyemtd.lembur3", class: "text-right" },
 					{ data: "hpyemtd.rp_lembur3", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
-					{ data: "hpyemtd.total_lembur_jam", class: "text-right" },
+					{ data: "hpyemtd.total_lembur_jam_final", class: "text-right" },
 					{ data: "hpyemtd.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
 					{ data: "hpyemtd.komp_rekontrak", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
@@ -1749,7 +1749,7 @@
 					{ data: "hpyemtd.lembur3", class: "text-right" },
 					{ data: "hpyemtd.rp_lembur3", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
-					{ data: "hpyemtd.total_lembur_jam", class: "text-right" },
+					{ data: "hpyemtd.total_lembur_jam_final", class: "text-right" },
 					{ data: "hpyemtd.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
 					{ data: "hpyemtd.komp_rekontrak", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
