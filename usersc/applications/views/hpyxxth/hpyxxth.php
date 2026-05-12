@@ -119,7 +119,7 @@
 													<th class="text-center align-middle text-danger">BPJS JHT Karyawan (pot_jht)</th>
 													<th class="text-center align-middle text-danger">BPJS JP Karyawan (pot_psiun)</th>
 													<th class="text-center align-middle text-danger">BPJS Kes Karyawan (pot_bpjs)</th>
-													<th class="text-center align-middle text-danger">Pinjaman Karyawan / Pot Pinjaman / Pot. Piutang Karyawan</th>
+													<th class="text-center align-middle text-danger">Pinjaman Karyawan</th>
 													<th class="text-center align-middle text-danger">Pot Denda APD</th>
 													<th class="text-center align-middle text-danger">Iuran SPSI (potongan)</th>
 
@@ -259,7 +259,7 @@
 													<th class="text-center align-middle text-danger">BPJS JHT Karyawan (pot_jht)</th>
 													<th class="text-center align-middle text-danger">BPJS JP Karyawan (pot_psiun)</th>
 													<th class="text-center align-middle text-danger">BPJS Kes Karyawan (pot_bpjs)</th>
-													<th class="text-center align-middle text-danger">Pinjaman Karyawan / Pot Pinjaman / Pot. Piutang Karyawan</th>
+													<th class="text-center align-middle text-danger">Pinjaman Karyawan</th>
 													<th class="text-center align-middle text-danger">Pot Denda APD</th>
 													<th class="text-center align-middle text-danger">Iuran SPSI (potongan)</th>
 
@@ -399,7 +399,7 @@
 													<th class="text-center align-middle text-danger">BPJS JHT Karyawan (pot_jht)</th>
 													<th class="text-center align-middle text-danger">BPJS JP Karyawan (pot_psiun)</th>
 													<th class="text-center align-middle text-danger">BPJS Kes Karyawan (pot_bpjs)</th>
-													<th class="text-center align-middle text-danger">Pinjaman Karyawan / Pot Pinjaman / Pot. Piutang Karyawan</th>
+													<th class="text-center align-middle text-danger">Pinjaman Karyawan</th>
 													<th class="text-center align-middle text-danger">Pot Denda APD</th>
 													<th class="text-center align-middle text-danger">Iuran SPSI (potongan)</th>
 
