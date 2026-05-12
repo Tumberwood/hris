@@ -135,17 +135,54 @@
                             customize: function (xlsx) {
                                 var sheet = xlsx.xl.worksheets['sheet1.xml'];
 
-                                // semua cell jadi inlineStr (text)
-                                $('c', sheet).attr('t', 'inlineStr');
+                                // pakai table yang sudah ada
+                                var dtColumns = <?php echo $table;?>.settings()[0].aoColumns;
 
-                                // ubah value jadi string
-                                $('c', sheet).each(function () {
+                                $('row c', sheet).each(function () {
+
                                     var $this = $(this);
-                                    var text = $this.find('v').text();
 
-                                    if (text) {
-                                        $this.html('<is><t>' + text + '</t></is>');
+                                    var cellRef = $this.attr('r');
+
+                                    // contoh A1 -> A
+                                    var colLetter = cellRef.replace(/[0-9]/g, '');
+
+                                    // convert excel column ke index
+                                    var colIndex = 0;
+
+                                    for (var i = 0; i < colLetter.length; i++) {
+
+                                        colIndex *= 26;
+                                        colIndex += colLetter.charCodeAt(i) - 64;
+
                                     }
+
+                                    colIndex -= 1;
+
+                                    var columnDef = dtColumns[colIndex];
+
+                                    // cek class text-right
+                                    var isNumeric =
+                                        columnDef &&
+                                        columnDef.sClass &&
+                                        columnDef.sClass.indexOf('text-right') !== -1;
+
+                                    if (!isNumeric) {
+
+                                        var text = $this.find('v').text();
+
+                                        if (text !== '') {
+
+                                            $this.attr('t', 'inlineStr');
+
+                                            $this.find('v').replaceWith(
+                                                '<is><t>' + text + '</t></is>'
+                                            );
+
+                                        }
+
+                                    }
+
                                 });
                             }
                         },
