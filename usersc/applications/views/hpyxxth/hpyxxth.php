@@ -1958,7 +1958,7 @@
 						d.id_hpyxxth = id_hpyxxth;
 					}
 				},
-				order: [[ 1, "asc" ]],
+				order: [[ 2, "asc" ]],
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
