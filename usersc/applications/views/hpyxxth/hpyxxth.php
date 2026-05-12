@@ -1228,7 +1228,7 @@
 						d.id_hpyxxth = id_hpyxxth;
 					}
 				},
-				order: [[ 2, "asc" ]],
+				order: [[ 1, "asc" ]],
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
@@ -1471,7 +1471,7 @@
 						d.id_hpyxxth = id_hpyxxth;
 					}
 				},
-				order: [[ 2, "asc" ]],
+				order: [[ 1, "asc" ]],
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
@@ -1714,7 +1714,7 @@
 						d.id_hpyxxth = id_hpyxxth;
 					}
 				},
-				order: [[ 2, "asc" ]],
+				order: [[ 1, "asc" ]],
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
@@ -1958,7 +1958,7 @@
 						d.id_hpyxxth = id_hpyxxth;
 					}
 				},
-				order: [[ 2, "asc" ]],
+				order: [[ 1, "asc" ]],
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
@@ -2235,7 +2235,7 @@
 						d.id_hpyxxth = id_hpyxxth;
 					}
 				},
-				order: [[ 2, "asc" ]],
+				order: [[ 1, "asc" ]],
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
@@ -2606,7 +2606,7 @@
 						d.id_hpyxxth = id_hpyxxth;
 					}
 				},
-				order: [[ 2, "asc" ]],
+				order: [[ 1, "asc" ]],
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
