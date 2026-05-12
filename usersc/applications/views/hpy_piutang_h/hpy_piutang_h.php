@@ -126,52 +126,11 @@
 						}
 					},
 					{
-						label: "Komponen <sup class='text-danger'>*<sup>",
+						label: "Komponen",
 						name: "hpy_piutang_h.id_hpcxxmh",
-						type: "select2",
-						opts: {
-							placeholder : "Select",
-							allowClear: true,
-							multiple: false,
-							ajax: {
-								url: "../../models/hpcxxmh/hpcxxmh_fn_opt.php",
-								dataType: 'json',
-								data: function (params) {
-									var query = {
-										id_hpcxxmh_old: id_hpcxxmh_old,
-										is_denda: 1,
-										search: params.term || '',
-										page: params.page || 1
-									}
-										return query;
-								},
-								processResults: function (data, params) {
-									return {
-										results: data.results,
-										pagination: {
-											more: true
-										}
-									};
-								},
-								cache: true,
-								minimumInputLength: 1,
-								maximum: 10,
-								delay: 500,
-								maximumSelectionLength: 5,
-								minimumResultsForSearch: -1,
-							},
-						}
+						def: 105,
+						type: "hidden",
 					},
-					// {
-					// 	label: "Komponen<sup class='text-danger'>*<sup>",
-					// 	name: "hpy_piutang_h.id_hpcxxmh",
-					// 	type: "select",
-					// 	placeholder : "Select",
-					// 	options: [
-					// 		{ "label": "Klaim", "value": "Klaim" },
-					// 		{ "label": "Pinjaman", "value": "Pinjaman" }
-					// 	]
-					// },	
 					{
 						label: "Nominal<sup class='text-danger'>*<sup>",
 						name: "hpy_piutang_h.nominal"
@@ -267,13 +226,6 @@
 						edthpy_piutang_h.field('hpy_piutang_h.id_hemxxmh').error( 'Wajib diisi!' );
 					}
 					// END of validasi hpy_piutang_h.id_hemxxmh 
-					
-					// BEGIN of validasi hpy_piutang_h.id_hpcxxmh 
-					jenis = edthpy_piutang_h.field('hpy_piutang_h.id_hpcxxmh').val();
-					if(!jenis || jenis == ''){
-						edthpy_piutang_h.field('hpy_piutang_h.id_hpcxxmh').error( 'Wajib diisi!' );
-					}
-					// END of validasi hpy_piutang_h.id_hpcxxmh 
 					
 					// BEGIN of validasi hpy_piutang_h.keterangan 
 					keterangan = edthpy_piutang_h.field('hpy_piutang_h.keterangan').val();
