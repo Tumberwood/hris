@@ -110,7 +110,7 @@
 				LEFT JOIN heyxxmd g ON g.id = c.id_heyxxmd
 
 				WHERE a.tanggal BETWEEN :start_date AND :end_date
-					AND id_heyxxmd = 3
+				--	AND id_heyxxmd = 3
 				'.$where.'
 				GROUP BY a.id_hemxxmh
 				HAVING pot_premi = 0
