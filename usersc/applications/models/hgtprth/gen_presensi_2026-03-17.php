@@ -1465,7 +1465,7 @@
                         a.status_presensi_out = "OFF"
                     WHERE a.tanggal = :tanggal
                     AND a.status_presensi_in = "AL"
-                    AND b.id_hetxxmh IN (99, 48)
+                    AND b.id_hetxxmh IN (99, 48, 131)
                     AND b.id_heyxxmd <> 4
                     AND (
                         EXISTS (

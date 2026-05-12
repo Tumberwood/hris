@@ -40,7 +40,7 @@
                             SELECT
                                 id_hemxxmh
                             FROM hemjbmh
-                            WHERE id_hetxxmh NOT IN (99, 48)
+                            WHERE id_hetxxmh NOT IN (99, 48, 131)
                         )
                         AND is_active = 1
                         AND id_hemxxmh = :id_hemxxmh

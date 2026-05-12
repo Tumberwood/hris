@@ -50,7 +50,7 @@
                     a.is_active = 1
                 AND a.tanggal = :tanggal
                 AND NOT (
-                    id_hetxxmh IN (99, 48) -- kecuali jabatan Petugas Satpam & Koordinator Satpam
+                    id_hetxxmh IN (99, 48, 131) -- kecuali jabatan Petugas Satpam & Koordinator Satpam
                     -- OR id_heyxxmd = 1  -- kecuali KBM
                     OR (id_heyxxmd = 2 AND id_hesxxmh = 2)  -- staff dengan status kontrak
                     OR (id_heyxxmd = 3 AND id_hesxxmh = 2) -- karyawan dengan status kontrak
@@ -166,7 +166,7 @@
                         SET 
                             jad.is_pot_hk = 
                                 case 
-                                    when ifnull(sisa_saldo,0) = 0 AND jad.id_htsxxmh <> 1 AND id_hetxxmh NOT IN (99, 48) then 1
+                                    when ifnull(sisa_saldo,0) = 0 AND jad.id_htsxxmh <> 1 AND id_hetxxmh NOT IN (99, 48, 131) then 1
                                     when ifnull(sisa_saldo,0) = 0 AND jad.keterangan LIKE "%cuti bersama%" then 1
                                 ELSE 0
                                 END ,

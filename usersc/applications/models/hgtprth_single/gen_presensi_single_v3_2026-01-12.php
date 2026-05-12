@@ -1697,7 +1697,7 @@
                         a.cek = 0,
                         a.status_presensi_in = "OFF",
                         a.status_presensi_out = "OFF"
-                    WHERE a.id_hemxxmh = :id_hemxxmh AND a.tanggal = :tanggal AND b.id_hetxxmh IN (99, 48) AND b.id_heyxxmd <> 4 AND a.status_presensi_in = "AL" AND (is_holiday IS NOT NULL OR is_cuti IS NOT null)
+                    WHERE a.id_hemxxmh = :id_hemxxmh AND a.tanggal = :tanggal AND b.id_hetxxmh IN (99, 48, 131) AND b.id_heyxxmd <> 4 AND a.status_presensi_in = "AL" AND (is_holiday IS NOT NULL OR is_cuti IS NOT null)
                     '
         );
 
