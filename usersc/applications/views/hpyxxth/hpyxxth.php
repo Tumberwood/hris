@@ -144,10 +144,10 @@
 													<th></th>
 													<th></th>
 													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
 													<th>Total</th>
-													<th id="karyawan_12"></th>
-													<th id="karyawan_13"></th>
-													<th id="karyawan_14"></th>
 													<th id="karyawan_15"></th>
 													<th id="karyawan_16"></th>
 													<th id="karyawan_17"></th>
@@ -186,6 +186,9 @@
 													<th id="karyawan_50"></th>
 													<th id="karyawan_51"></th>
 													<th id="karyawan_52"></th>
+													<th id="karyawan_53"></th>
+													<th id="karyawan_54"></th>
+													<th id="karyawan_55"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -281,10 +284,10 @@
 													<th></th>
 													<th></th>
 													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
 													<th>Total</th>
-													<th id="kontrak_12"></th>
-													<th id="kontrak_13"></th>
-													<th id="kontrak_14"></th>
 													<th id="kontrak_15"></th>
 													<th id="kontrak_16"></th>
 													<th id="kontrak_17"></th>
@@ -323,6 +326,9 @@
 													<th id="kontrak_50"></th>
 													<th id="kontrak_51"></th>
 													<th id="kontrak_52"></th>
+													<th id="kontrak_53"></th>
+													<th id="kontrak_54"></th>
+													<th id="kontrak_55"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -418,10 +424,10 @@
 													<th></th>
 													<th></th>
 													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
 													<th>Total</th>
-													<th id="kbm_reg_12"></th>
-													<th id="kbm_reg_13"></th>
-													<th id="kbm_reg_14"></th>
 													<th id="kbm_reg_15"></th>
 													<th id="kbm_reg_16"></th>
 													<th id="kbm_reg_17"></th>
@@ -460,6 +466,9 @@
 													<th id="kbm_reg_50"></th>
 													<th id="kbm_reg_51"></th>
 													<th id="kbm_reg_52"></th>
+													<th id="kbm_reg_53"></th>
+													<th id="kbm_reg_54"></th>
+													<th id="kbm_reg_55"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -602,9 +611,6 @@
 													<th></th>
 													<th id="kmj_10"></th>
 													<th id="kmj_11"></th>
-													<th id="kmj_12"></th>
-													<th id="kmj_13"></th>
-													<th id="kmj_14"></th>
 													<th id="kmj_15"></th>
 													<th id="kmj_16"></th>
 													<th id="kmj_17"></th>
@@ -715,9 +721,6 @@
 													<th></th>
 													<th id="freelance_10"></th>
 													<th id="freelance_11"></th>
-													<th id="freelance_12"></th>
-													<th id="freelance_13"></th>
-													<th id="freelance_14"></th>
 													<th id="freelance_15"></th>
 													<th id="freelance_16"></th>
 													<th id="freelance_17"></th>
@@ -1349,7 +1352,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 52; i++) {
+					for (var i = 10; i <= 55; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1596,7 +1599,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 52; i++) {
+					for (var i = 10; i <= 55; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1843,7 +1846,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 52; i++) {
+					for (var i = 10; i <= 55; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
