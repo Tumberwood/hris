@@ -52,7 +52,7 @@
                         a.is_active = 0,
                         a.keterangan = CONCAT("Public Holiday - ", :keterangan)
                     WHERE 
-                        tanggal = :tanggal AND jb.id_hetxxmh NOT IN (99, 48, 131)
+                        tanggal = :tanggal AND jb.id_hetxxmh NOT IN (99, 48)
                         AND a.is_active = 1
                         ;
             ');
@@ -121,7 +121,7 @@
                     LEFT JOIN hemjbmh AS jb on jb.id_hemxxmh = htssctd.id_hemxxmh
                     WHERE 
                         tanggal = :tanggal
-                    AND keterangan = CONCAT("Public Holiday - ", :nama) AND jb.id_hetxxmh NOT IN (99, 48, 131)
+                    AND keterangan = CONCAT("Public Holiday - ", :nama) AND jb.id_hetxxmh NOT IN (99, 48)
                 ');
             // END insert pengaju
 
@@ -136,7 +136,7 @@
                                 SELECT
                                     id_hemxxmh
                                 FROM hemjbmh
-                                WHERE id_hetxxmh NOT IN (99, 48, 131)
+                                WHERE id_hetxxmh NOT IN (99, 48)
                             )
                             AND is_active = 1
                             AND tanggal = :tanggal
