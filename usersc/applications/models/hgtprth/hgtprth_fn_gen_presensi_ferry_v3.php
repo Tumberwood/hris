@@ -823,7 +823,7 @@
                                                 THEN c.tanggal_jam
 
                                                 -- 🔹 DEFAULT RANGE (jadwal)
-                                                WHEN (d.id IS NULL OR is_istirahat = 2)
+                                                WHEN 1
                                                     AND c.nama IN ("makan","makan manual")
                                                     AND c.tanggal_jam BETWEEN
                                                         jadwal.tanggaljam_awal_t1
