@@ -250,6 +250,34 @@
                             WHERE row_num = 1
                         ) tbl_var_cost ON tbl_var_cost.id_hemxxmh = p.id_hemxxmh
                     ),
+                    tj_khusus AS (
+                        SELECT
+                            p.id_hemxxmh,
+                            IFNULL(nominal_tj_khusus,0) as tj_khusus
+                        FROM pegawai p
+
+                        -- tj_khusus htpr_hemxxmh.id_hpcxxmh = 102
+                        LEFT JOIN (
+                            SELECT
+                                id_hemxxmh,
+                                tanggal_efektif,
+                                IFNULL(nominal, 0) AS nominal_tj_khusus
+                            FROM (
+                                SELECT
+                                    id,
+                                    id_hemxxmh,
+                                    tanggal_efektif,
+                                    nominal,
+                                    ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                                FROM htpr_hemxxmh
+                                WHERE
+                                    htpr_hemxxmh.id_hpcxxmh = 133
+                                    AND tanggal_efektif <= :tanggal_akhir
+                                    AND is_active = 1
+                            ) AS subquery
+                            WHERE row_num = 1
+                        ) tbl_tj_khusus ON tbl_tj_khusus.id_hemxxmh = p.id_hemxxmh
+                    ),
                     fix_cost AS (
                         SELECT
                             p.id_hemxxmh,
@@ -632,8 +660,8 @@
                                     COUNT(bpjs_kes.id) AS c_bpjs_kes,
                                     c.id id_hemxxmh
                                 FROM bpjs_kes_exclude AS bpjs_kes
-                                INNER JOIN hesxxtd b ON b.id_hemxxmh = bpjs_kes.id_hemxxmh
-                                INNER JOIN hemxxmh c ON c.kode = b.nik_baru
+                                LEFT JOIN hesxxtd b ON b.id_hemxxmh = bpjs_kes.id_hemxxmh
+                                LEFT JOIN hemxxmh c ON c.kode = b.nik_baru
                                 WHERE bpjs_kes.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                 GROUP BY id_hemxxmh
                             ) AS subquery
@@ -649,8 +677,8 @@
                                     COUNT(bpjs_tk.id) AS c_bpjs_tk,
                                     c.id id_hemxxmh
                                 FROM bpjs_tk_exclude AS bpjs_tk
-                                INNER JOIN hesxxtd b ON b.id_hemxxmh = bpjs_tk.id_hemxxmh
-                                INNER JOIN hemxxmh c ON c.kode = b.nik_baru
+                                LEFT JOIN hesxxtd b ON b.id_hemxxmh = bpjs_tk.id_hemxxmh
+                                LEFT JOIN hemxxmh c ON c.kode = b.nik_baru
                                 WHERE bpjs_tk.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
                                 GROUP BY id_hemxxmh
                             ) AS subquery
@@ -755,7 +783,6 @@
 
                         WHERE pr.is_pot_upah = 1 
                         AND pr.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-
                         GROUP BY pr.id_hemxxmh
                     ),
                     pot_jam AS (
@@ -924,13 +951,14 @@
                             -- peg.nama,
                             COALESCE(cb.c_cb, 0) AS c_cb,
                             ifnull(a.saldo,0) AS saldo,
+                            ifnull(a.saldo, 0) - COALESCE(cb.c_cb, 0) AS sisa_cuti_hari,
                             
                             CASE
                                 WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0))
                                 ELSE 0
                             END AS sisa_saldo,
                             ( 
-                                (gp + t_jab + fix_cost) / IF(grup_hk = 1, 21, 25) 
+                                (gp + t_jab + fix_cost + var_cost + tj_khusus) / IF(grup_hk = 1, 21, 25) 
                             ) * (
                                 CASE
                                     WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0))
@@ -952,9 +980,162 @@
                             GROUP BY rh.id_hemxxmh
                         ) AS cb ON cb.id_hemxxmh = a.id_hemxxmh
                         
-                        LEFT JOIN gaji_pokok gp ON gp.id_hemxxmh = jb.id_hemxxmh
-                        LEFT JOIN t_jabatan tj ON tj.id_hemxxmh = jb.id_hemxxmh
-                        LEFT JOIN fix_cost fc ON fc.id_hemxxmh = jb.id_hemxxmh
+                        LEFT JOIN (
+                            SELECT
+                                p.id_hemxxmh,
+                                COALESCE(nominal_gp, 0) AS gp
+                            FROM pegawai p
+
+                            LEFT JOIN (
+                                SELECT id_hemxxmh, nominal AS nominal_gp
+                                FROM (
+                                    SELECT *,
+                                        ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) rn
+                                    FROM htpr_hemxxmh
+                                    WHERE id_hpcxxmh = 1
+                                    AND is_active = 1
+                                    AND tanggal_efektif <= :tanggal_awal
+                                ) x WHERE rn = 1
+                            ) gp1 ON gp1.id_hemxxmh = p.id_hemxxmh
+                        ) gp ON gp.id_hemxxmh = jb.id_hemxxmh
+
+                        LEFT JOIN (
+                            SELECT
+                                p.id_hemxxmh,
+                                COALESCE(nominal_t_jab, 0) AS t_jab
+                            FROM pegawai p
+                            LEFT JOIN (
+                                SELECT
+                                    id_hemxxmh,
+                                    tanggal_efektif,
+                                    IFNULL(nominal, 0) AS nominal_t_jab
+                                FROM (
+                                    SELECT
+                                        id,
+                                        id_hemxxmh,
+                                        tanggal_efektif,
+                                        nominal,
+                                        ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                                    FROM htpr_hemxxmh
+                                    WHERE
+                                        htpr_hemxxmh.id_hpcxxmh = 32
+                                        AND tanggal_efektif <= :tanggal_awal
+                                        AND is_active = 1
+                                ) AS subquery
+                                WHERE row_num = 1
+                            ) t_jabatan ON t_jabatan.id_hemxxmh = p.id_hemxxmh
+                        ) tj ON tj.id_hemxxmh = jb.id_hemxxmh
+                        
+                        LEFT JOIN (
+                            SELECT
+                                p.id_hemxxmh,
+                                IF(id_heyxxmh = 1, IFNULL(nominal_mk,0) , 0) as fix_cost
+                            FROM pegawai p
+
+                            -- Masa Kerja
+                            LEFT JOIN (
+                                SELECT
+                                    job.id_hemxxmh,
+                                    nominal AS nominal_mk,
+                                    job.id_hevgrmh,
+                                    masa_kerja_year
+                                FROM (
+                                    SELECT
+                                        a.id_hemxxmh,
+                                        id_hevgrmh,
+                                        id_heyxxmd,
+                                        id_hesxxmh,
+                                        IF(
+                                            a.tanggal_keluar IS NULL,
+                                            TIMESTAMPDIFF(MONTH, a.tanggal_masuk, :tanggal_akhir) / 12,
+                                            TIMESTAMPDIFF(MONTH, a.tanggal_masuk, a.tanggal_keluar) / 12
+                                        ) AS masa_kerja_year
+                                    FROM hemjbmh AS a
+                                    GROUP BY a.id_hemxxmh
+                                ) AS job
+                                LEFT JOIN (
+                                    SELECT
+                                        id_hevgrmh,
+                                        id_heyxxmd,
+                                        id_hesxxmh,
+                                        tanggal_efektif,
+                                        nominal,
+                                        tahun_min,
+                                        tahun_max,
+                                        ROW_NUMBER() OVER (
+                                            PARTITION BY id_hevgrmh, id_heyxxmd, id_hesxxmh
+                                            ORDER BY tanggal_efektif DESC
+                                        ) AS row_num
+                                    FROM htpr_hevgrmh_mk
+                                    WHERE
+                                        id_hpcxxmh = 31
+                                        AND tanggal_efektif <= :tanggal_awal
+                                        AND is_active = 1
+                                ) AS masakerja ON masakerja.id_hevgrmh = job.id_hevgrmh
+                                    AND masakerja.id_heyxxmd = job.id_heyxxmd
+                                    AND masakerja.id_hesxxmh = job.id_hesxxmh
+                                WHERE if(masakerja.tahun_max > 0, job.masa_kerja_year BETWEEN tahun_min AND tahun_max, job.masa_kerja_year > masakerja.tahun_min)
+                                GROUP BY job.id_hemxxmh
+                            ) AS mk ON mk.id_hemxxmh = p.id_hemxxmh
+                        ) fc ON fc.id_hemxxmh = jb.id_hemxxmh
+
+                        LEFT JOIN (
+                            SELECT
+                                p.id_hemxxmh,
+                                IFNULL(nominal_var_cost,0) as var_cost
+                            FROM pegawai p
+
+                            -- var_cost htpr_hemxxmh.id_hpcxxmh = 102
+                            LEFT JOIN (
+                                SELECT
+                                    id_hemxxmh,
+                                    tanggal_efektif,
+                                    IFNULL(nominal, 0) AS nominal_var_cost
+                                FROM (
+                                    SELECT
+                                        id,
+                                        id_hemxxmh,
+                                        tanggal_efektif,
+                                        nominal,
+                                        ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                                    FROM htpr_hemxxmh
+                                    WHERE
+                                        htpr_hemxxmh.id_hpcxxmh = 102
+                                        AND tanggal_efektif <= :tanggal_awal
+                                        AND is_active = 1
+                                ) AS subquery
+                                WHERE row_num = 1
+                            ) tbl_var_cost ON tbl_var_cost.id_hemxxmh = p.id_hemxxmh
+                        ) vcost on vcost.id_hemxxmh = jb.id_hemxxmh
+
+                        LEFT JOIN (
+                            SELECT
+                                p.id_hemxxmh,
+                                IFNULL(nominal_tj_khusus,0) as tj_khusus
+                            FROM pegawai p
+
+                            -- tunjangan khusus
+                            LEFT JOIN (
+                                SELECT
+                                    id_hemxxmh,
+                                    tanggal_efektif,
+                                    IFNULL(nominal, 0) AS nominal_tj_khusus
+                                FROM (
+                                    SELECT
+                                        id,
+                                        id_hemxxmh,
+                                        tanggal_efektif,
+                                        nominal,
+                                        ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                                    FROM htpr_hemxxmh
+                                    WHERE
+                                        htpr_hemxxmh.id_hpcxxmh = 133
+                                        AND tanggal_efektif <= :tanggal_awal
+                                        AND is_active = 1
+                                ) AS subquery
+                                WHERE row_num = 1
+                            ) tbl_tj_khusus ON tbl_tj_khusus.id_hemxxmh = p.id_hemxxmh
+                        ) tjk on tjk.id_hemxxmh = jb.id_hemxxmh
                         
                         WHERE YEAR(a.tanggal) = YEAR(DATE_SUB(:tanggal_akhir, INTERVAL 1 YEAR)) AND jb.is_checkclock = 1 
                         GROUP BY a.id_hemxxmh 
@@ -1028,6 +1209,7 @@
                             t_jab,
                             0 AS terima_lain,
                             var_cost,
+                            tj_khusus,
                             fix_cost,
                             premi_abs,
                             
@@ -1052,6 +1234,12 @@
                                 IFNULL(komp_sisa_cuti,0 ),
                                 0
                             ) AS komp_sisa_cuti,
+
+                            IF(MONTH(:tanggal_akhir) = 1, 
+                                IFNULL(sisa_cuti_hari,0 ),
+                                0
+                            ) AS sisa_cuti_hari,
+
                             0 AS thr,
 
                             -- POTONGAN
@@ -1070,6 +1258,7 @@
                                 + COALESCE(t_jab,0)
                                 + 0
                                 + COALESCE(var_cost,0)
+                                + COALESCE(tj_khusus,0)
                                 + COALESCE(fix_cost,0)
                                 + COALESCE(total_rp_lembur,0)
                                 + COALESCE(komp_rekontrak,0)
@@ -1105,6 +1294,7 @@
                         LEFT JOIN gaji_pokok gp ON gp.id_hemxxmh = p.id_hemxxmh
                         LEFT JOIN t_jabatan tjab ON tjab.id_hemxxmh = p.id_hemxxmh
                         LEFT JOIN var_cost ON var_cost.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN tj_khusus ON tj_khusus.id_hemxxmh = p.id_hemxxmh
                         LEFT JOIN fix_cost ON fix_cost.id_hemxxmh = p.id_hemxxmh
                         LEFT JOIN premi_abs ON premi_abs.id_hemxxmh = p.id_hemxxmh
                         LEFT JOIN pot_makan ON pot_makan.id_hemxxmh = p.id_hemxxmh
@@ -1141,6 +1331,7 @@
                             t_jab,
                             terima_lain,
                             var_cost,
+                            tj_khusus,
                             fix_cost,
                             premi_abs,
                             
@@ -1159,6 +1350,7 @@
                             total_rp_lembur,
                             komp_rekontrak,
                             komp_sisa_cuti,
+                            sisa_cuti_hari,
                             thr,
                             
                             pot_makan,
@@ -1207,7 +1399,7 @@
                             AND payroll.bruto > ter.nominal_awal AND payroll.bruto <= ter.nominal_akhir
                     )
                     SELECT
-                        :id_hpyxxth AS id_hpyxxth,
+                        -- :id_hpyxxth AS id_hpyxxth,
 
                         id_hemxxmh,
                         nrp,
@@ -1227,6 +1419,7 @@
                         t_jab,
                         terima_lain,
                         var_cost,
+                        tj_khusus,
                         fix_cost,
                         premi_abs,
 
@@ -1246,6 +1439,7 @@
 
                         komp_rekontrak,
                         komp_sisa_cuti,
+                        sisa_cuti_hari,
                         thr,
 
                         pot_makan,
