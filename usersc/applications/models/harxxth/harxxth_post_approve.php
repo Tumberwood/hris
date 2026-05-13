@@ -47,6 +47,7 @@
 						id_hosxxmh_akhir,
 						id_hevxxmh_akhir,
 						id_hetxxmh_akhir,
+						id_hevgrmh_akhir,
 						id_holxxmd_2_akhir,
 					
 						id_hovxxmh_awal,
@@ -54,6 +55,7 @@
 						id_hosxxmh_awal,
 						id_hevxxmh_awal,
 						id_hetxxmh_awal,
+						id_hevgrmh_awal,
 						id_holxxmd_2_awal,
 						tanggal_awal,
 						kode,
@@ -68,6 +70,7 @@
 						b.id_hosxxmh_akhir,
 						b.id_hevxxmh_akhir,
 						b.id_hetxxmh_akhir,
+						b.id_hevgrmh_akhir,
 						b.id_holxxmd_2_akhir,
 
 						a.id_hovxxmh,
@@ -75,6 +78,7 @@
 						a.id_hosxxmh,
 						a.id_hevxxmh,
 						a.id_hetxxmh,
+						a.id_hevgrmh,
 						a.id_holxxmd_2,
 						b.tanggal_efektif,
 						b.kode,
@@ -90,6 +94,8 @@
 								THEN CONCAT("Perubahan Level ", hev.nama, " Menjadi ", hev_new.nama)
 							WHEN IF(id_hetxxmh_akhir <> 0, id_hetxxmh_akhir, a.id_hetxxmh) <> a.id_hetxxmh
 								THEN CONCAT("Perubahan Jabatan ", het.nama, " Menjadi ", het_new.nama)
+							WHEN IF(id_hevgrmh_akhir <> 0, id_hevgrmh_akhir, a.id_hevgrmh) <> a.id_hevgrmh
+								THEN CONCAT("Perubahan Grup Jabatan ", gr.nama, " Menjadi ", gr_new.nama)
 							WHEN IF(id_holxxmd_2_akhir <> 0, id_holxxmd_2_akhir, a.id_holxxmd_2) <> a.id_holxxmd_2
 								THEN CONCAT("Perubahan Area Kerja ", area.nama, " Menjadi ", area_new.nama)
 							ELSE "Tidak ada perubahan"
@@ -106,6 +112,8 @@
 					LEFT JOIN hevxxmh AS hev_new ON hev_new.id = b.id_hevxxmh_akhir
 					LEFT JOIN hetxxmh AS het ON het.id = a.id_hetxxmh
 					LEFT JOIN hetxxmh AS het_new ON het_new.id = b.id_hetxxmh_akhir
+					LEFT JOIN hevgrmh AS gr ON gr.id = a.id_hevgrmh
+					LEFT JOIN hevgrmh AS gr_new ON gr_new.id = b.id_hevgrmh_akhir
 					LEFT JOIN holxxmd_2 AS area ON area.id = a.id_holxxmd_2
 					LEFT JOIN holxxmd_2 AS area_new ON area_new.id = b.id_holxxmd_2_akhir
 					WHERE b.id = :id;
@@ -123,19 +131,9 @@
 						a.id_hosxxmh = IF(id_hosxxmh_akhir = 0, a.id_hosxxmh, b.id_hosxxmh_akhir),
 						a.id_hevxxmh = IF(id_hevxxmh_akhir = 0, a.id_hevxxmh, b.id_hevxxmh_akhir),
 						a.id_hetxxmh = IF(id_hetxxmh_akhir = 0, a.id_hetxxmh, b.id_hetxxmh_akhir),
+						a.id_hevgrmh = IF(id_hevgrmh_akhir = 0, a.id_hevgrmh, b.id_hevgrmh_akhir),
 						a.id_holxxmd_2 = IF(id_holxxmd_2_akhir = 0, a.id_holxxmd_2, b.id_holxxmd_2_akhir)
 					WHERE b.id = :id;
-					'
-					);
-
-		$qu_grup_jabatan = $db
-			->raw()
-			->bind('id_hemxxmh', $id_hemxxmh)
-			->exec('UPDATE hemjbmh AS a
-					LEFT JOIN hetxxmh b ON b.id = a.id_hetxxmh
-					SET
-						a.id_hevgrmh = b.id_hevgrmh
-					WHERE a.id = :id_hemxxmh;
 					'
 					);
 
@@ -153,6 +151,7 @@
 						a.id_hosxxmh = IF(b.id_hosxxmh_awal = 0, a.id_hosxxmh, b.id_hosxxmh_awal),
 						a.id_hevxxmh = IF(b.id_hevxxmh_awal = 0, a.id_hevxxmh, b.id_hevxxmh_awal),
 						a.id_hetxxmh = IF(b.id_hetxxmh_awal = 0, a.id_hetxxmh, b.id_hetxxmh_awal),
+						a.id_hevgrmh = IF(b.id_hevgrmh_awal = 0, a.id_hevgrmh, b.id_hevgrmh_awal),
 						a.id_holxxmd_2 = IF(b.id_holxxmd_2_awal = 0, a.id_holxxmd_2, b.id_holxxmd_2_awal)
 					WHERE b.id = :id;
 					'
@@ -163,17 +162,6 @@
 			->where('id_hemxxmh',$rs_kode['id_hemxxmh'])
 			->where('kode',$rs_kode['kode'])
 			->exec();
-
-		$qu_grup_jabatan = $db
-			->raw()
-			->bind('id_hemxxmh', $id_hemxxmh)
-			->exec('UPDATE hemjbmh AS a
-					LEFT JOIN hetxxmh b ON b.id = a.id_hetxxmh
-					SET
-						a.id_hevgrmh = b.id_hevgrmh
-					WHERE a.id = :id_hemxxmh;
-					'
-					);
 	}
 
 	

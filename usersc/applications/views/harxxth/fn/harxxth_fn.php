@@ -24,24 +24,17 @@
                 id_hevxxmh = json.data.rs_hemxxmh.id_hevxxmh_awal;
                 id_hetxxmh = json.data.rs_hemxxmh.id_hetxxmh_awal;
                 id_holxxmd_2 = json.data.rs_hemxxmh.id_holxxmd_2_awal;
+                id_hevgrmh = json.data.rs_hemxxmh.id_hevgrmh_awal;
+                is_berubah = json.data.is_berubah;
 
-                if(id_harxxth == 0){
+                if(is_berubah == 1){
                     edtharxxth.field('harxxth.id_hovxxmh_awal').val(id_hovxxmh);
-                }
-                if(id_harxxth == 0){
                     edtharxxth.field('harxxth.id_hodxxmh_awal').val(id_hodxxmh);
-                }
-                if(id_harxxth == 0){
                     edtharxxth.field('harxxth.id_hosxxmh_awal').val(id_hosxxmh);
-                }
-                if(id_harxxth == 0){
                     edtharxxth.field('harxxth.id_hevxxmh_awal').val(id_hevxxmh);
-                }
-                if(id_harxxth == 0){
                     edtharxxth.field('harxxth.id_hetxxmh_awal').val(id_hetxxmh);
-                }
-                if(id_harxxth == 0){
                     edtharxxth.field('harxxth.id_holxxmd_2_awal').val(id_holxxmd_2);
+                    edtharxxth.field('harxxth.id_hevgrmh_awal').val(id_hevgrmh);
                 }
             }
         } );
@@ -57,7 +50,8 @@
                 id_hetxxmh: id_hetxxmh,
             },
             success: function ( json ) {
-                edtharxxth.field('hevgrmh_akhir_nama').val(json.data.rs_hemxxmh.hevgrmh_akhir_nama);
+                id_hevgrmh_akhir_old = json.data.rs_hemxxmh.id_hevgrmh;
+                edtharxxth.field('harxxth.id_hevgrmh_akhir').val(id_hevgrmh_akhir_old);
             }
         } );
     }

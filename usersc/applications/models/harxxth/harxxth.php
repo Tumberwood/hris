@@ -52,6 +52,11 @@
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'harxxth.id_holxxmd_2_akhir' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
+				
+			Field::inst( 'harxxth.id_hevgrmh_awal' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'harxxth.id_hevgrmh_akhir' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 
 			Field::inst( 'harxxth.id_files_dokumen' )
 				->setFormatter( Format::ifEmpty( 0 ) ),

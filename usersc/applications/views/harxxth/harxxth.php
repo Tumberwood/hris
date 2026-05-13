@@ -83,7 +83,7 @@
 									<editor-field name="hevgrmh_awal_nama"></editor-field>
 								</div>
 								<div class="col-lg-6">
-									<editor-field name="hevgrmh_akhir_nama"></editor-field>
+									<editor-field name="harxxth.id_hevgrmh_akhir"></editor-field>
 								</div>
 							</div>
 
@@ -133,7 +133,7 @@
 
 		var id_hemxxmh_old = 0, id_hovxxmh_awal_old = 0, id_hovxxmh_akhir_old = 0, id_hodxxmh_awal_old = 0, id_hodxxmh_akhir_old = 0, id_hosxxmh_awal_old = 0, id_hosxxmh_akhir_old = 0, id_hevxxmh_awal_old = 0, id_hevxxmh_akhir_old = 0, id_hetxxmh_awal_old = 0, id_hetxxmh_akhir_old = 0;
 		var id_holxxmd_2_awal_old = 0, id_holxxmd_2_akhir_old = 0;
-		
+		var id_hevgrmh_awal_old = 0, id_hevgrmh_akhir_old = 0;
 		var is_need_approval = 1, id_harxxmh_old = 0, id_hodxxmh = 0;
 
 		$(document).ready(function() {
@@ -559,7 +559,11 @@
 						name: "harxxth.keterangan",
 						type: "textarea"
 					},
-					
+					{
+						label: "harxxth.id_hevgrmh_awal",
+						name: "harxxth.id_hevgrmh_awal",
+						// type: "hidden"
+					},
 					{
 						label: "Grup Jabatan Awal",
 						name: "hevgrmh_awal_nama",
@@ -567,8 +571,39 @@
 					},
 					{
 						label: "Grup Jabatan Akhir",
-						name: "hevgrmh_akhir_nama",
-						type: "readonly"
+						name: "harxxth.id_hevgrmh_akhir",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hevgrmh/hevgrmh_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hevgrmh_old: id_hevgrmh_akhir_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
 					},
 				]
 			} );
@@ -598,7 +633,7 @@
 
 			edtharxxth.dependent( 'harxxth.id_hetxxmh_akhir', function ( val, data, callback ) {
 				if(val > 0){
-					grup_jabatan();
+					// grup_jabatan();
 				}
 				return {}
 			}, {event: 'keyup change'});
@@ -739,6 +774,9 @@
 				id_holxxmd_2_awal_old = harxxth_data.id_holxxmd_2_awal;
 				id_holxxmd_2_akhir_old = harxxth_data.id_holxxmd_2_akhir;
 
+				id_hevgrmh_awal_old = harxxth_data.id_hevgrmh_awal;
+				id_hevgrmh_akhir_old = harxxth_data.id_hevgrmh_akhir;
+
 				// atur hak akses
 				CekSelectHeaderH(tblharxxth);
 			} );
@@ -748,6 +786,7 @@
 				id_harxxth = 0;
 				id_harxxmh_old = 0;
 				id_holxxmd_2_awal_old = 0, id_holxxmd_2_akhir_old = 0;
+				id_hevgrmh_awal_old = 0, id_hevgrmh_akhir_old = 0;
 				id_hemxxmh_old = 0, id_hovxxmh_awal_old = 0, id_hovxxmh_akhir_old = 0, id_hodxxmh_awal_old = 0, id_hodxxmh_akhir_old = 0, id_hosxxmh_awal_old = 0, id_hosxxmh_akhir_old = 0, id_hevxxmh_awal_old = 0, id_hevxxmh_akhir_old = 0, id_hetxxmh_awal_old = 0, id_hetxxmh_akhir_old = 0;
 
 				// atur hak akses
