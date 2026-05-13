@@ -25,7 +25,18 @@
 		->raw()
 		->bind(':start_date', $start_date)
 		->bind(':end_date', $end_date)
-		->exec('SELECT
+		->exec('WITH history AS (
+					SELECT *
+					FROM (
+						SELECT hemjbrd.*,
+							ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
+						FROM hemjbrd
+						INNER JOIN hemxxmh ON hemxxmh.id = hemjbrd.id_hemxxmh
+						WHERE tanggal_awal <= :end_date AND hemxxmh.is_active = 1
+					) AS sub
+					WHERE row_num = 1
+				)
+				SELECT
 					a.id,
 					a.id_hemxxmh,
 					b.kode AS nik,
@@ -39,16 +50,7 @@
 					DATE_FORMAT(a.break_in, "%d %b %Y %H:%i" ) break_in,
 					DATE_FORMAT(a.break_out, "%d %b %Y %H:%i" ) break_out,
 					is_makan,
-					(
-						SELECT
-							DATE_FORMAT(x.tanggal_jam, "%d %b %Y %H:%i")
-						FROM htsprtd x
-						LEFT JOIN hemxxmh hx ON hx.kode_finger = x.kode
-						WHERE hx.id = a.id_hemxxmh
-						AND x.nama IN ("MAKAN", "MAKAN MANUAL")
-						AND x.tanggal_jam BETWEEN a.clock_in AND a.clock_out
-						LIMIT 1
-					) AS makan,
+					makan,
 					DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i" ) AS pulang,
 				
 					TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) AS durasi_istirahat_menit,
@@ -66,7 +68,7 @@
 				FROM htsprrd a
 				INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
 				
-				LEFT JOIN (
+				INNER JOIN (
 					SELECT
 						j.id_hemxxmh,
 						j.id_holxxmd_2,
@@ -79,15 +81,29 @@
 						j.is_checkclock,
 						j.tanggal_masuk,
 						j.tanggal_keluar,
-						IFNULL(j.id_hesxxmh, 0) AS id_hesxxmh,
-						IFNULL(j.jumlah_grup, 0) AS jumlah_grup,
-						IFNULL(j.grup_hk, 0) AS grup_hk
+						IFNULL(h.id_hesxxmh, j.id_hesxxmh) AS id_hesxxmh,
+						IFNULL(h.jumlah_grup, j.jumlah_grup) AS jumlah_grup,
+						IFNULL(h.grup_hk, j.grup_hk) AS grup_hk
 					FROM hemjbmh j
+					LEFT JOIN history h ON h.id_hemxxmh = j.id_hemxxmh
 				) c ON c.id_hemxxmh = b.id AND (c.tanggal_masuk IS NULL OR a.tanggal >= c.tanggal_masuk)
 				
 				INNER JOIN hodxxmh d ON d.id = c.id_hodxxmh
 				INNER JOIN hetxxmh e ON e.id = c.id_hetxxmh
-				LEFT JOIN holxxmd_2 f ON f.id = a.id_holxxmd_2
+				LEFT JOIN holxxmd_2 f ON f.id = c.id_holxxmd_2
+				
+				LEFT JOIN (
+					SELECT
+						b.id id_hemxxmh,
+						a.tanggal,
+						CONCAT(a.tanggal, " ", a.jam) ceklok,
+						DATE_FORMAT(CONCAT(a.tanggal, " ", a.jam), "%d %b %Y %H:%i") makan
+					FROM htsprtd a
+					LEFT JOIN hemxxmh b ON b.kode_finger = a.kode
+					WHERE a.tanggal BETWEEN :start_date AND DATE_ADD(:end_date, INTERVAL 1 DAY)
+						AND a.nama IN ("MAKAN", "MAKAN MANUAL")
+					GROUP BY b.id, a.tanggal
+				) mk ON mk.ceklok BETWEEN a.clock_in AND a.clock_out AND mk.id_hemxxmh = a.id_hemxxmh
 				
 				WHERE 
 					a.tanggal BETWEEN :start_date AND :end_date
