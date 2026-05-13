@@ -308,9 +308,9 @@
 					// END breaking generate button
 				],
 				rowCallback: function( row, data, index ) {
-					if ( data.hemxxmh.is_active == 0 ) {
-						$('td', row).addClass('text-danger');
-					}
+					// if ( data.hemxxmh.is_active == 0 ) {
+					// 	$('td', row).addClass('text-danger');
+					// }
 				},
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
