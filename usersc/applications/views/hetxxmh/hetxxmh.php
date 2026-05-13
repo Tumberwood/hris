@@ -22,7 +22,6 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Grup Jabatan</th>
                                 <th>Kode Jabatan</th>
                                 <th>Nama Jabatan</th>
                                 <th>Atasan Langsung</th>
@@ -90,42 +89,6 @@
 						label: "Nama Jabatan<sup class='text-danger'>*<sup>",
 						name: "hetxxmh.nama"
 					}, 	
-					{
-						label: "Grup Jabatan <sup class='text-danger'>*<sup>",
-						name: "hetxxmh.id_hevgrmh",
-						type: "select2",
-						opts: {
-							placeholder : "Select",
-							allowClear: true,
-							multiple: false,
-							ajax: {
-								url: "../../models/hevgrmh/hevgrmh_fn_opt.php",
-								dataType: 'json',
-								data: function (params) {
-									var query = {
-										id_hevgrmh_old: id_hevgrmh_old,
-										search: params.term || '',
-										page: params.page || 1
-									}
-										return query;
-								},
-								processResults: function (data, params) {
-									return {
-										results: data.results,
-										pagination: {
-											more: true
-										}
-									};
-								},
-								cache: true,
-								minimumInputLength: 1,
-								maximum: 10,
-								delay: 500,
-								maximumSelectionLength: 5,
-								minimumResultsForSearch: -1,
-							},
-						}
-					},	
 					{
 						label: "Atasan Langsung",
 						name: "hetxxmh.id_hetxxmh_al",
@@ -268,11 +231,6 @@
 						// END of cek unik hetxxmh.nama
 					}
 					// END of validasi hetxxmh.nama
-
-					id_hevgrmh = edthetxxmh.field('hetxxmh.id_hevgrmh').val();
-					if(!id_hevgrmh || id_hevgrmh == ''){
-						edthetxxmh.field('hetxxmh.id_hevgrmh').error( 'Wajib diisi!' );
-					}
 				}
 				
 				if ( edthetxxmh.inError() ) {
@@ -297,7 +255,6 @@
 				order: [[ 1, "asc" ]],
 				columns: [
 					{ data: "hetxxmh.id",visible:false },
-					{ data: "hevgrmh.nama" },
 					{ data: "hetxxmh.kode" },
 					{ data: "hetxxmh.nama" },
 					{ data: "hetxxmh_al.nama" },

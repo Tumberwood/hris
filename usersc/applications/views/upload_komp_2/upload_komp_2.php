@@ -89,8 +89,8 @@
 
 								<div>
 									<b>
-										Komponen per Skala Upah
-										(Premi Absen & Tunj. Jabatan)
+										Komponen per Grup Jabatan, Bagian, Skala Upah, Sub Tipe, Status
+										(Tunj. Jabatan)
 									</b>
 								</div>
 							</div>
@@ -209,6 +209,36 @@
 						<div class="col-sm-4">
 							<div>
 								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/6. template_komp_tj_khusus.xlsx');">
+									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
+								</button>
+								<b class="ml-2">Insert ke Gaji Karyawan</b>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-lg-2 col-form-label">
+							<div class="d-flex">
+								<div class="mr-2">
+									<b>7.</b>
+								</div>
+
+								<div>
+									<b>
+										Komponen per Grup Jabatan, Skala Upah, Sub Tipe, Status
+										(Premi Absen)
+									</b>
+								</div>
+							</div>
+						</label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input type="file" name="filename" class="form-control" id="inputKompPremi">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div>
+								<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/temp_komp_v2/07 template_premi absesn_per_grup jabatan.xlsx');">
 									<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 								</button>
 								<b class="ml-2">Insert ke Gaji Karyawan</b>
@@ -374,7 +404,7 @@
 						fd_level.append('filename',level);
 			
 						$.ajax( {
-							url: "../../models/upload_komp_2/upload_komp_2_fn_grade.php",
+							url: "../../models/upload_komp_2/upload_komp_2_fn_tunj_jab.php",
 							type: 'POST',
 							dataType: 'json',
 							data: fd_level,
@@ -398,6 +428,43 @@
 								$("#inputKompLevel").val('');
 							},
 							error: function (xhr, Level, err){
+								console.log('x');
+							}
+						} );
+					}
+					
+					//premi
+					var fd_premi = new FormData();
+					var premi = $('#inputKompPremi')[0].files[0];
+					console.log(premi);
+					if (premi != undefined) {
+						fd_premi.append('filename',premi);
+			
+						$.ajax( {
+							url: "../../models/upload_komp_2/upload_komp_2_fn_premi.php",
+							type: 'POST',
+							dataType: 'json',
+							data: fd_premi,
+							async: false,
+							contentType: false,
+							processData: false,
+							success: function ( json ) {
+								notifyprogress.close();
+								$.notify({
+									message: json.data.message
+								},{
+									type: json.data.type_message,
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
+								});
+								$("#inputKompPremi").val('');
+							},
+							error: function (xhr, Premi, err){
 								console.log('x');
 							}
 						} );

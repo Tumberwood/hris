@@ -44,6 +44,7 @@
                                 <th>Bagian</th>
                                 <th>Department</th>
                                 <th>Level</th>
+                                <th>Grup Jabatan</th>
                                 <th>Jabatan</th>
                                 <th>Tanggal Keluar</th>
                             </tr>
@@ -313,6 +314,7 @@
 					{ data: "hobxxmh.nama" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hevxxmh.nama" },
+					{ data: "hevgrmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "hemjbmh.tanggal_keluar" },
 				],

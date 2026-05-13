@@ -904,7 +904,7 @@
 							allowClear: true,
 							multiple: false,
 							ajax: {
-								url: "../../models/hetxxmh/hetxxmh_fn_opt_grup.php",
+								url: "../../models/hetxxmh/hetxxmh_fn_opt.php",
 								dataType: 'json',
 								data: function (params) {
 									var query = {
