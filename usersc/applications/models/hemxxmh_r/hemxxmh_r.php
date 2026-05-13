@@ -170,10 +170,10 @@
 	
 	// do not erase
 	// function show / hide inactive document
-	if ($show_inactive_status == 0){
-		$editor
-			->where( 'hemxxmh.is_active', 1);
-	}
+	// if ($show_inactive_status == 0){
+	// 	$editor
+	// 		->where( 'hemxxmh.is_active', 1);
+	// }
 	
 	if($_POST['id_hemxxmh'] > 0){
 		$editor->where( 'hemxxmh.id', $_POST['id_hemxxmh'] );
