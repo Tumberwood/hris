@@ -136,6 +136,8 @@
 
 				Field::inst( 'hpyemtd.pendapatan_lain_after_pph' ),
 				Field::inst( 'hpyemtd.pot_lain_after_pph' ),
+				Field::inst( 'hpyemtd.sisa_cuti_hari' ),
+				Field::inst( 'hpyemtd.tj_khusus' ),
 
 				// BRUTO (WAJIB ADA)
 				Field::inst( 'hpyemtd.bruto' ),
