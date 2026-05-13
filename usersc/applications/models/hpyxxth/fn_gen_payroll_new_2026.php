@@ -783,6 +783,7 @@
 
                         WHERE pr.is_pot_upah = 1 
                         AND pr.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+
                         GROUP BY pr.id_hemxxmh
                     ),
                     pot_jam AS (
@@ -1399,7 +1400,7 @@
                             AND payroll.bruto > ter.nominal_awal AND payroll.bruto <= ter.nominal_akhir
                     )
                     SELECT
-                        -- :id_hpyxxth AS id_hpyxxth,
+                        :id_hpyxxth AS id_hpyxxth,
 
                         id_hemxxmh,
                         nrp,

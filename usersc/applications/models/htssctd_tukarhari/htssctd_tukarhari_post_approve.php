@@ -315,9 +315,17 @@
                 $db->raw()->exec("
                     UPDATE htssctd
                     SET is_active = 1
-                    WHERE is_active = 0
-                    AND tanggal = '$tanggal_terpilih'
-                    AND id_hemxxmh IN ($idPegawaiIn)
+                    WHERE id = (
+                        SELECT id FROM (
+                            SELECT id
+                            FROM htssctd
+                            WHERE is_active = 0
+                            AND tanggal = '$tanggal_terpilih'
+                            AND id_hemxxmh IN ($idPegawaiIn)
+                            ORDER BY id ASC
+                            LIMIT 1
+                        ) a
+                    )
                 ");
 
                 // hapus aktif tanggal pengganti
@@ -332,9 +340,17 @@
                 $db->raw()->exec("
                     UPDATE htssctd
                     SET is_active = 1
-                    WHERE is_active = 0
-                    AND tanggal = '$tanggal_pengganti'
-                    AND id_hemxxmh IN ($idPegawaiIn)
+                    WHERE id = (
+                        SELECT id FROM (
+                            SELECT id
+                            FROM htssctd
+                            WHERE is_active = 0
+                            AND tanggal = '$tanggal_pengganti'
+                            AND id_hemxxmh IN ($idPegawaiIn)
+                            ORDER BY id ASC
+                            LIMIT 1
+                        ) a
+                    )
                 ");
             }
         }
