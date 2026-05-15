@@ -391,8 +391,8 @@
                                 tanggaljam_awal_toleransi_lembur,
                                 jam_awal_lembur,
                                 pot_hk_jadwal,
-                                jam_akhir_schedule,
-                                diff_menit_pegawai_gedung3_ceklok_gedung1
+                                jam_akhir_schedule
+
 
                             FROM hemxxmh AS a
                             INNER JOIN (
@@ -504,12 +504,7 @@
                                         ),
                                         0
                                     )
-                                    AS durasi_break_ti,
-                                    TIMESTAMPDIFF(
-                                        MINUTE,
-                                        break_in_gedung1,
-                                        break_out_gedung1
-                                    ) AS diff_menit_pegawai_gedung3_ceklok_gedung1
+                                    AS durasi_break_ti
                                     
                                 FROM (
                                     SELECT
@@ -835,79 +830,7 @@
                                                         AND DATE_SUB(jadwal.tanggaljam_akhir_t2, INTERVAL 60 MINUTE)
                                                 THEN c.tanggal_jam
                                             END
-                                        ) AS ceklok_makan,
-                                        
-                                        MIN(
-                                            CASE
-                                                -- CEK KARYAWAN GEDUNG 3 YG CEKLOK DI GEDUNG 1
-                                                WHEN 1
-                                                    AND c.tanggal_jam BETWEEN
-                                                        jadwal.tanggaljam_awal_istirahat
-                                                        AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-
-                                                    AND (
-                                                        -- 🔹 Istirahat Gedung 3
-                                                        (
-                                                            id_holxxmd_2 = 1 
-                                                            AND (
-                                                                -- Filter jika gedung 3 dan 4 Grup
-                                                                (
-                                                                    jumlah_grup = 2 
-                                                                    AND c.nama NOT IN ("Makan", "Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-
-                                                    -- PASTIKAN TIDAK ADA CEKLOK KEMBAR DI MESIN LAIN
-                                                    AND NOT EXISTS (
-                                                        SELECT 1
-                                                        FROM htsprtd x
-                                                        WHERE x.kode = c.kode
-                                                            AND x.tanggal_jam = c.tanggal_jam
-                                                            AND x.id != c.id
-                                                            AND x.nama IN ("PMI-Gedung-3","OS-Gedung-3")
-                                                    )
-
-                                                THEN c.tanggal_jam
-                                            END
-                                        ) AS break_in_gedung1,
-
-                                        MAX(
-                                            CASE
-                                                -- CEK KARYAWAN GEDUNG 3 YG CEKLOK DI GEDUNG 1
-                                                WHEN 1
-                                                    AND c.tanggal_jam BETWEEN
-                                                        jadwal.tanggaljam_awal_istirahat
-                                                        AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-
-                                                    AND (
-                                                        -- 🔹 Istirahat Gedung 3
-                                                        (
-                                                            id_holxxmd_2 = 1 
-                                                            AND (
-                                                                -- Filter jika gedung 3 dan 4 Grup
-                                                                (
-                                                                    jumlah_grup = 2 
-                                                                    AND c.nama NOT IN ("Makan", "Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
-                                                                )
-                                                            )
-                                                        )
-                                                    )
-
-                                                    -- PASTIKAN TIDAK ADA CEKLOK KEMBAR DI MESIN LAIN
-                                                    AND NOT EXISTS (
-                                                        SELECT 1
-                                                        FROM htsprtd x
-                                                        WHERE x.kode = c.kode
-                                                            AND x.tanggal_jam = c.tanggal_jam
-                                                            AND x.id != c.id
-                                                            AND x.nama IN ("PMI-Gedung-3","OS-Gedung-3")
-                                                    )
-
-                                                THEN c.tanggal_jam
-                                            END
-                                        ) AS break_out_gedung1
+                                        ) AS ceklok_makan
 
                                     FROM htssctd AS jadwal
                                     INNER JOIN hemxxmh AS b ON b.id = jadwal.id_hemxxmh AND b.is_active = 1
@@ -1376,12 +1299,6 @@
                                     AND is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_keluar_istirahat, 0) 
                                     AND mesin NOT LIKE "%Gedung-3%" 
                                 THEN 1
-                            
-                                -- KARYAWAN 4 Grup & GEDUNG 3 YG CEKLOK DI GEDUNG 1 > 30 MENIT, MAKA POT 1 JAM
-                                WHEN (jumlah_grup = 4 OR ket_jadwal LIKE "%satpam%") 
-                                    AND diff_menit_pegawai_gedung3_ceklok_gedung1 > 30
-                                THEN 1
-
                                 ELSE 0
                             END AS pot_jam_keluar_istirahat,
                                 
