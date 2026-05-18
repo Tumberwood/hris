@@ -1314,10 +1314,20 @@
                                 THEN 0
                                 
                                 -- Laki2 -> Shift 1 atau Lembur Hari Libur (Jadwal OFF tapi lembur Pagi) 
+                                WHEN gender = "Laki-laki" 
+                                    AND hari = "Friday"
+                                    AND jam_awal_lembur_libur BETWEEN "06:00:00" AND "10:00:00"
+                                    
+                                    -- 🔥 break harus di range 11:30 - 13:00
+                                    AND break_in >= CONCAT(tanggal, " 11:30:00")
+                                    AND break_out <= CONCAT(tanggal, " 13:00:00")
+                                THEN 0
+
+                                -- -> Hari Jumat -> Laki2 -> Shift Pagi
                                 -- -> Hari Jumat -> Range istirahat harus pkl 11.30 - 13.00
                                 WHEN gender = "Laki-laki" 
                                     AND hari = "Friday"
-                                    AND jam_awal_lembur_libur BETWEEN "07:00:00" AND "10:00:00"
+                                    AND kode_shift LIKE "%PAGI%"
                                     
                                     -- 🔥 break harus di range 11:30 - 13:00
                                     AND break_in >= CONCAT(tanggal, " 11:30:00")
@@ -1350,6 +1360,17 @@
                                 WHEN gender = "Laki-laki" 
                                     AND hari = "Friday"
                                     AND jam_awal_lembur_libur BETWEEN "06:00:00" AND "10:00:00"
+                                    
+                                    -- 🔥 break harus di range 11:30 - 13:00
+                                    AND break_in >= CONCAT(tanggal, " 11:30:00")
+                                    AND break_out <= CONCAT(tanggal, " 13:00:00")
+                                THEN 0
+                                
+                                -- -> Hari Jumat -> Laki2 -> Shift Pagi
+                                -- -> Hari Jumat -> Range istirahat harus pkl 11.30 - 13.00
+                                WHEN gender = "Laki-laki" 
+                                    AND hari = "Friday"
+                                    AND kode_shift LIKE "%PAGI%"
                                     
                                     -- 🔥 break harus di range 11:30 - 13:00
                                     AND break_in >= CONCAT(tanggal, " 11:30:00")
