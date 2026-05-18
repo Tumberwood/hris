@@ -63,7 +63,7 @@
 				JOIN htotpmh c ON c.id = b.id_htotpmh
 				WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
 				AND a.id_hemxxmh = :id_hemxxmh
-				AND a.is_pot_upah = 1
+				AND a.durasi_lembur_total_jam > 0
 				;
 	');
 	$rs_lembur = $qs_lembur->fetchAll();
