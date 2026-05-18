@@ -38,7 +38,6 @@
 		->raw()
 		->bind(':id_hemxxmh', $id_hemxxmh)
 		->bind(':tanggal_awal', $tanggal_awal)
-		->bind(':tanggal_akhir', $tanggal_akhir)
 		->exec('SELECT
 					a.id,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
@@ -47,7 +46,7 @@
 					a.status_presensi_out,
 					a.is_pot_premi
 				FROM htsprrd a
-				WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+				WHERE a.tanggal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND LAST_DAY(:tanggal_awal)
 				AND a.id_hemxxmh = :id_hemxxmh
 				AND a.is_pot_premi = 1
 				;

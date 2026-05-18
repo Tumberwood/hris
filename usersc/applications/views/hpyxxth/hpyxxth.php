@@ -41,7 +41,7 @@
 		<div class="table-responsive">
 			<div class="row">
 				<div class="col-12">
-					<h3>Potongan Upah</h3>
+					<h3 id="text_upah">Potongan Upah</h3>
 					<table id="potongan_upah" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
 							<tr>
@@ -56,7 +56,7 @@
 				</div>
 
 				<div class="col-12">
-					<h3>Potongan Premi</h3>
+					<h3 id="text_premi">Potongan Premi</h3>
 					<table id="potongan_premi" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
 							<tr>
@@ -71,7 +71,7 @@
 				</div>
 
 				<div class="col-12">
-					<h3>Data Lembur</h3>
+					<h3 id="text_lembur">Data Lembur</h3>
 					<table id="data_lembur" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
 							<tr>
@@ -1209,6 +1209,17 @@
 				tblhpyemtd_kontrak.button( 'btnPrint:name' ).enable();
 				tblhpyemtd_kmj.button( 'btnPrint:name' ).enable();
 				tblhpyemtd_freelance.button( 'btnPrint:name' ).enable();
+				
+        		$('#text_upah').html(`<b>Potongan Upah (${tanggal_awal_select} - ${tanggal_akhir_select})</b>`);
+        		$('#text_lembur').html(`<b>Lembur (${tanggal_awal_select} - ${tanggal_akhir_select})</b>`);
+				$('#text_premi').html(`
+					<b>
+						Potongan Premi 
+						(${moment(tanggal_awal_select).startOf('month').format('DD MMM YYYY')} 
+						- 
+						${moment(tanggal_awal_select).endOf('month').format('DD MMM YYYY')})
+					</b>
+				`);
 			} );
 			
 			tblhpyxxth.on( 'deselect', function () {
