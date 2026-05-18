@@ -18,7 +18,88 @@
     $nama_tabels_d[6] = 'hpyemtd_kontrak';
 ?>
 
+<style>
+	.modal-xxl {
+		max-width: 90%; /* atau 1200px, 1400px sesuai kebutuhan */
+	}
+</style>
 <!-- begin content here -->
+
+<!-- Breakdown -->
+<div class="modal fade" id="modalBreakdown" tabindex="-1" role="dialog" aria-labelledby="myModal1Label" aria-hidden="true">
+  <div class="modal-dialog modal-xxl" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h3 class="modal-title" id="myModal1Label"></h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+		<div class="table-responsive">
+			<div class="row">
+				<div class="col-12">
+					<h3>Potongan Upah</h3>
+					<table id="potongan_upah" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						<thead>
+							<tr>
+								<th>Tanggal</th>
+								<th>Status Jadwal</th>
+								<th>Status In</th>
+								<th>Status Out</th>
+								<th>Pot Upah</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+
+				<div class="col-12">
+					<h3>Potongan Premi</h3>
+					<table id="potongan_premi" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						<thead>
+							<tr>
+								<th>Tanggal</th>
+								<th>Status Jadwal</th>
+								<th>Status In</th>
+								<th>Status Out</th>
+								<th>Pot Premi</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+
+				<div class="col-12">
+					<h3>Data Lembur</h3>
+					<table id="data_lembur" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						<thead>
+							<tr>
+								<th>Tanggal</th>
+								<th>SPKL</th>
+								<th>Jenis Lembur</th>
+								<th>Status Istirahat</th>
+								<th>Durasi SPKL</th>
+								<th>Pot TI</th>
+								<th>Pot Overtime</th>
+								<th>Pot HK</th>
+								<th>Pot Jam</th>
+								<th>Lembur Final</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <div class="row">
 	<div class="col">
@@ -1360,6 +1441,16 @@
 							var url = $(this).attr('href'); 
 							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=3', 'hpyxxth');
 						}
+					},
+					{
+						text: '<i class="fa fa-list"></i> Breakdown',
+						name: 'btnBreakdown',
+						className: 'btn btn-outline',
+						titleAttr: 'Breakdown',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							$('#modalBreakdown').modal('show');
+						}
 					}
 				],
 				footerCallback: function ( row, data, start, end, display ) {
@@ -1383,6 +1474,7 @@
 				cek_c_detail= 1;
 				CekDrawDetailHD(tblhpyxxth, tblhpyemtd_karyawan, 'hpyemtd' );
 				CekDrawDetailHDFinal(tblhpyxxth);
+				tblhpyemtd_karyawan.button('btnBreakdown:name').disable();
 			} );
 
 			tblhpyemtd_karyawan.on( 'select', function( e, dt, type, indexes ) {
@@ -1390,17 +1482,25 @@
 				id_hpyemtd   = data_hpyemtd.id;
 				id_transaksi_d    = id_hpyemtd; // dipakai untuk general
 				is_active_d       = data_hpyemtd.is_active;
+				nrp       = data_hpyemtd.nrp;
+				nama       = data_hpyemtd.nama;
 				
 				// atur hak akses
 				CekSelectDetailHD(tblhpyxxth, tblhpyemtd_karyawan );
+				detail_breakdown(id_transaksi_d);
+				$('#myModal1Label').html(`<b>${nrp} - ${nama}<b>`);
+				tblhpyemtd_karyawan.button('btnBreakdown:name').enable();
 			} );
 
 			tblhpyemtd_karyawan.on( 'deselect', function() {
 				id_hpyemtd = '';
 				is_active_d = 0;
+				nrp = '';
+				nama = '';
 				
 				// atur hak akses
 				CekDeselectDetailHD(tblhpyxxth, tblhpyemtd_karyawan );
+				tblhpyemtd_karyawan.button('btnBreakdown:name').disable();
 			} );
 
 // --------- end _detail --------------- //		
