@@ -49,7 +49,7 @@
 				FROM htsprrd a
 				WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
 				AND a.id_hemxxmh = :id_hemxxmh
-				AND a.is_pot_upah = 1
+				AND a.is_pot_premi = 1
 				;
 	');
 	$rs_potongan_premi = $qs_potongan_premi->fetchAll();
