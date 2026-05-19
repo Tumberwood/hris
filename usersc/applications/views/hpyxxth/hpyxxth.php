@@ -146,14 +146,19 @@
 													<th class="text-center align-middle">ID</th>
 													<th class="text-center align-middle">NIK</th>
 													<th class="text-center align-middle">Nama</th>
-													<th class="text-center align-middle">Departemen</th>
+
+													<th class="text-center align-middle">Divisi</th>
+													<th class="text-center align-middle">Department</th>
+													<th class="text-center align-middle">Unit Kerja</th>
 													<th class="text-center align-middle">Jabatan</th>
-													<th class="text-center align-middle">Tipe</th>
+													<th class="text-center align-middle">Grup Jabatan</th>
+													<th class="text-center align-middle">Bagian</th>
+													<th class="text-center align-middle">Skala Upah</th>
 													<th class="text-center align-middle">Sub Tipe</th>
 													<th class="text-center align-middle">Status</th>
-													<th class="text-center align-middle">Grup Jabatan</th>
-													<th class="text-center align-middle">Skala Upah</th>
-													<th class="text-center align-middle">Bagian</th>
+													<th class="text-center align-middle">Tipe</th>
+													<th class="text-center align-middle">Gender</th>
+
 													<th class="text-center align-middle">PTKP</th>
 													<th class="text-center align-middle">No Rek</th>
 													<th class="text-center align-middle">No KTP</th>
@@ -230,10 +235,10 @@
 													<th></th>
 													<th></th>
 													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
 													<th>Total</th>
-													<th id="karyawan_15"></th>
-													<th id="karyawan_16"></th>
-													<th id="karyawan_17"></th>
 													<th id="karyawan_18"></th>
 													<th id="karyawan_19"></th>
 													<th id="karyawan_20"></th>
@@ -274,6 +279,9 @@
 													<th id="karyawan_55"></th>
 													<th id="karyawan_56"></th>
 													<th id="karyawan_57"></th>
+													<th id="karyawan_58"></th>
+													<th id="karyawan_59"></th>
+													<th id="karyawan_60"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -290,14 +298,19 @@
 													<th class="text-center align-middle">ID</th>
 													<th class="text-center align-middle">NIK</th>
 													<th class="text-center align-middle">Nama</th>
-													<th class="text-center align-middle">Departemen</th>
+													
+													<th class="text-center align-middle">Divisi</th>
+													<th class="text-center align-middle">Department</th>
+													<th class="text-center align-middle">Unit Kerja</th>
 													<th class="text-center align-middle">Jabatan</th>
-													<th class="text-center align-middle">Tipe</th>
+													<th class="text-center align-middle">Grup Jabatan</th>
+													<th class="text-center align-middle">Bagian</th>
+													<th class="text-center align-middle">Skala Upah</th>
 													<th class="text-center align-middle">Sub Tipe</th>
 													<th class="text-center align-middle">Status</th>
-													<th class="text-center align-middle">Grup Jabatan</th>
-													<th class="text-center align-middle">Skala Upah</th>
-													<th class="text-center align-middle">Bagian</th>
+													<th class="text-center align-middle">Tipe</th>
+													<th class="text-center align-middle">Gender</th>
+
 													<th class="text-center align-middle">PTKP</th>
 													<th class="text-center align-middle">No Rek</th>
 													<th class="text-center align-middle">No KTP</th>
@@ -374,10 +387,10 @@
 													<th></th>
 													<th></th>
 													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
 													<th>Total</th>
-													<th id="kontrak_15"></th>
-													<th id="kontrak_16"></th>
-													<th id="kontrak_17"></th>
 													<th id="kontrak_18"></th>
 													<th id="kontrak_19"></th>
 													<th id="kontrak_20"></th>
@@ -418,6 +431,9 @@
 													<th id="kontrak_55"></th>
 													<th id="kontrak_56"></th>
 													<th id="kontrak_57"></th>
+													<th id="kontrak_58"></th>
+													<th id="kontrak_59"></th>
+													<th id="kontrak_60"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -434,14 +450,19 @@
 													<th class="text-center align-middle">ID</th>
 													<th class="text-center align-middle">NIK</th>
 													<th class="text-center align-middle">Nama</th>
-													<th class="text-center align-middle">Departemen</th>
+													
+													<th class="text-center align-middle">Divisi</th>
+													<th class="text-center align-middle">Department</th>
+													<th class="text-center align-middle">Unit Kerja</th>
 													<th class="text-center align-middle">Jabatan</th>
-													<th class="text-center align-middle">Tipe</th>
+													<th class="text-center align-middle">Grup Jabatan</th>
+													<th class="text-center align-middle">Bagian</th>
+													<th class="text-center align-middle">Skala Upah</th>
 													<th class="text-center align-middle">Sub Tipe</th>
 													<th class="text-center align-middle">Status</th>
-													<th class="text-center align-middle">Grup Jabatan</th>
-													<th class="text-center align-middle">Skala Upah</th>
-													<th class="text-center align-middle">Bagian</th>
+													<th class="text-center align-middle">Tipe</th>
+													<th class="text-center align-middle">Gender</th>
+
 													<th class="text-center align-middle">PTKP</th>
 													<th class="text-center align-middle">No Rek</th>
 													<th class="text-center align-middle">No KTP</th>
@@ -518,10 +539,10 @@
 													<th></th>
 													<th></th>
 													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
 													<th>Total</th>
-													<th id="kbm_reg_15"></th>
-													<th id="kbm_reg_16"></th>
-													<th id="kbm_reg_17"></th>
 													<th id="kbm_reg_18"></th>
 													<th id="kbm_reg_19"></th>
 													<th id="kbm_reg_20"></th>
@@ -562,6 +583,9 @@
 													<th id="kbm_reg_55"></th>
 													<th id="kbm_reg_56"></th>
 													<th id="kbm_reg_57"></th>
+													<th id="kbm_reg_58"></th>
+													<th id="kbm_reg_59"></th>
+													<th id="kbm_reg_60"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -703,10 +727,10 @@
 													<th>Total</th>
 													<th></th>
 													<th id="kmj_10"></th>
+													<th id="kmj_10"></th>
+													<th id="kmj_10"></th>
+													<th id="kmj_10"></th>
 													<th id="kmj_11"></th>
-													<th id="kmj_15"></th>
-													<th id="kmj_16"></th>
-													<th id="kmj_17"></th>
 													<th id="kmj_18"></th>
 													<th id="kmj_19"></th>
 													<th id="kmj_20"></th>
@@ -813,10 +837,10 @@
 													<th>Total</th>
 													<th></th>
 													<th id="freelance_10"></th>
+													<th id="freelance_10"></th>
+													<th id="freelance_10"></th>
+													<th id="freelance_10"></th>
 													<th id="freelance_11"></th>
-													<th id="freelance_15"></th>
-													<th id="freelance_16"></th>
-													<th id="freelance_17"></th>
 													<th id="freelance_18"></th>
 													<th id="freelance_19"></th>
 													<th id="freelance_20"></th>
@@ -1365,14 +1389,18 @@
 					{ data: "hpyemtd.id", visible:false },
 					{ data: "hpyemtd.nrp" },
 					{ data: "hpyemtd.nama" },
-					{ data: "hpyemtd.departemen" },
-					{ data: "hpyemtd.jabatan" },
-					{ data: "hpyemtd.tipe" },
-					{ data: "hpyemtd.sub_tipe" },
-					{ data: "hpyemtd.status_peg" },
-					{ data: "hevgrmh.nama" },
-					{ data: "hevxxmh.nama" },
-					{ data: "hobxxmh.nama" },
+					
+					{ data: "hovxxmh.nama" },	//divisi
+					{ data: "hodxxmh.nama" },	//dep
+					{ data: "hosxxmh.nama" },	//unit
+					{ data: "hetxxmh.nama" },	//jab
+					{ data: "hevgrmh.nama" },	//grup
+					{ data: "hobxxmh.nama" },	//Bagian
+					{ data: "hevxxmh.nama" },	//Skala
+					{ data: "heyxxmd.nama" },	//Sub Tipe
+					{ data: "hesxxmh.nama" },	//Status
+					{ data: "heyxxmh.nama" },	//Tipe
+					{ data: "hemxxmh.gender" },	//Gender
 
 					{ data: "hpyemtd.ptkp" },
 					{ data: "hpyemtd.no_rekening" },
@@ -1479,7 +1507,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 57; i++) {
+					for (var i = 10; i <= 60; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1633,14 +1661,18 @@
 					{ data: "hpyemtd.id", visible:false },
 					{ data: "hpyemtd.nrp" },
 					{ data: "hpyemtd.nama" },
-					{ data: "hpyemtd.departemen" },
-					{ data: "hpyemtd.jabatan" },
-					{ data: "hpyemtd.tipe" },
-					{ data: "hpyemtd.sub_tipe" },
-					{ data: "hpyemtd.status_peg" },
-					{ data: "hevgrmh.nama" },
-					{ data: "hevxxmh.nama" },
-					{ data: "hobxxmh.nama" },
+					
+					{ data: "hovxxmh.nama" },	//divisi
+					{ data: "hodxxmh.nama" },	//dep
+					{ data: "hosxxmh.nama" },	//unit
+					{ data: "hetxxmh.nama" },	//jab
+					{ data: "hevgrmh.nama" },	//grup
+					{ data: "hobxxmh.nama" },	//Bagian
+					{ data: "hevxxmh.nama" },	//Skala
+					{ data: "heyxxmd.nama" },	//Sub Tipe
+					{ data: "hesxxmh.nama" },	//Status
+					{ data: "heyxxmh.nama" },	//Tipe
+					{ data: "hemxxmh.gender" },	//Gender
 
 					{ data: "hpyemtd.ptkp" },
 					{ data: "hpyemtd.no_rekening" },
@@ -1737,7 +1769,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 57; i++) {
+					for (var i = 10; i <= 60; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1882,14 +1914,18 @@
 					{ data: "hpyemtd.id", visible:false },
 					{ data: "hpyemtd.nrp" },
 					{ data: "hpyemtd.nama" },
-					{ data: "hpyemtd.departemen" },
-					{ data: "hpyemtd.jabatan" },
-					{ data: "hpyemtd.tipe" },
-					{ data: "hpyemtd.sub_tipe" },
-					{ data: "hpyemtd.status_peg" },
-					{ data: "hevgrmh.nama" },
-					{ data: "hevxxmh.nama" },
-					{ data: "hobxxmh.nama" },
+					
+					{ data: "hovxxmh.nama" },	//divisi
+					{ data: "hodxxmh.nama" },	//dep
+					{ data: "hosxxmh.nama" },	//unit
+					{ data: "hetxxmh.nama" },	//jab
+					{ data: "hevgrmh.nama" },	//grup
+					{ data: "hobxxmh.nama" },	//Bagian
+					{ data: "hevxxmh.nama" },	//Skala
+					{ data: "heyxxmd.nama" },	//Sub Tipe
+					{ data: "hesxxmh.nama" },	//Status
+					{ data: "heyxxmh.nama" },	//Tipe
+					{ data: "hemxxmh.gender" },	//Gender
 
 					{ data: "hpyemtd.ptkp" },
 					{ data: "hpyemtd.no_rekening" },
@@ -1986,7 +2022,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 57; i++) {
+					for (var i = 10; i <= 60; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }

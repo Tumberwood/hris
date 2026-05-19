@@ -156,8 +156,10 @@
 				Field::inst( 'hemxxmh.nama as nama' ),
 				Field::inst( 'hemxxmh.gender' ),
 				
-				Field::inst( 'hobxxmh.nama' ),
 				Field::inst( 'hevgrmh.nama' ),
+				Field::inst( 'hobxxmh.nama' ),
+				Field::inst( 'hovxxmh.nama' ),
+				Field::inst( 'hosxxmh.nama' ),
 			)
 			->leftJoin( 'hemxxmh','hemxxmh.id','=','hpyemtd.id_hemxxmh' )
 			->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
@@ -169,6 +171,8 @@
 			->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 			->leftJoin( 'hevgrmh','hevgrmh.id','=','hemjbmh.id_hevgrmh' )
 			->leftJoin( 'hobxxmh','hobxxmh.id','=','hemjbmh.id_hobxxmh' )
+			->leftJoin( 'hovxxmh','hovxxmh.id','=','hemjbmh.id_hovxxmh' )
+			->leftJoin( 'hosxxmh','hosxxmh.id','=','hemjbmh.id_hosxxmh' )
 			
 			->leftJoin( 'hemdcmh','hemdcmh.id_hemxxmh','=','hemxxmh.id' )
 			->leftJoin( 'gtxpkmh','gtxpkmh.id','=','hemdcmh.id_gtxpkmh' )
