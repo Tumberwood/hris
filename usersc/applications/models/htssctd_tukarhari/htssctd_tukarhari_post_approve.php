@@ -313,11 +313,16 @@
 
                 // aktifkan kembali tanggal terpilih
                 $db->raw()->exec("
-                    UPDATE htssctd
-                    SET is_active = 1
-                    WHERE is_active = 0
-                    AND tanggal = '$tanggal_terpilih'
-                    AND id_hemxxmh IN ($idPegawaiIn)
+                    UPDATE htssctd a
+                    JOIN (
+                        SELECT MIN(id) AS id
+                        FROM htssctd
+                        WHERE is_active = 0
+                        AND tanggal = '$tanggal_terpilih'
+                        AND id_hemxxmh IN ($idPegawaiIn)
+                        GROUP BY id_hemxxmh
+                    ) b ON a.id = b.id
+                    SET a.is_active = 1
                 ");
 
                 // hapus aktif tanggal pengganti
@@ -330,11 +335,16 @@
 
                 // aktifkan kembali tanggal pengganti
                 $db->raw()->exec("
-                    UPDATE htssctd
-                    SET is_active = 1
-                    WHERE is_active = 0
-                    AND tanggal = '$tanggal_pengganti'
-                    AND id_hemxxmh IN ($idPegawaiIn)
+                    UPDATE htssctd a
+                    JOIN (
+                        SELECT MIN(id) AS id
+                        FROM htssctd
+                        WHERE is_active = 0
+                        AND tanggal = '$tanggal_pengganti'
+                        AND id_hemxxmh IN ($idPegawaiIn)
+                        GROUP BY id_hemxxmh
+                    ) b ON a.id = b.id
+                    SET a.is_active = 1
                 ");
             }
         }
