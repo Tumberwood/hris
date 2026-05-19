@@ -163,9 +163,9 @@
 													<th class="text-center align-middle">Gaji Pokok</th>
 													<th class="text-center align-middle">Tj. Jabatan</th>
 													<th class="text-center align-middle">Terima Lain</th>
-													<th class="text-center align-middle">Tj. Lain-lain (Var Cost)</th>
+													<th class="text-center align-middle">Tj. Lain-lain</th>
 													<th class="text-center align-middle">Tj. Khusus</th>
-													<th class="text-center align-middle">Tj. Masa Kerja (Fix Cost)</th>
+													<th class="text-center align-middle">Tj. Masa Kerja</th>
 													<th class="text-center align-middle">Premi Absensi</th>
 													<th class="text-center align-middle">Lembur x1.5 (jam)</th>
 													<th class="text-center align-middle">Lembur x1.5 (rp)</th>
@@ -307,9 +307,9 @@
 													<th class="text-center align-middle">Gaji Pokok</th>
 													<th class="text-center align-middle">Tj. Jabatan</th>
 													<th class="text-center align-middle">Terima Lain</th>
-													<th class="text-center align-middle">Tj. Lain-lain (Var Cost)</th>
+													<th class="text-center align-middle">Tj. Lain-lain</th>
 													<th class="text-center align-middle">Tj. Khusus</th>
-													<th class="text-center align-middle">Tj. Masa Kerja (Fix Cost)</th>
+													<th class="text-center align-middle">Tj. Masa Kerja</th>
 													<th class="text-center align-middle">Premi Absensi</th>
 													<th class="text-center align-middle">Lembur x1.5 (jam)</th>
 													<th class="text-center align-middle">Lembur x1.5 (rp)</th>
@@ -451,9 +451,9 @@
 													<th class="text-center align-middle">Gaji Pokok</th>
 													<th class="text-center align-middle">Tj. Jabatan</th>
 													<th class="text-center align-middle">Terima Lain</th>
-													<th class="text-center align-middle">Tj. Lain-lain (Var Cost)</th>
+													<th class="text-center align-middle">Tj. Lain-lain</th>
 													<th class="text-center align-middle">Tj. Khusus</th>
-													<th class="text-center align-middle">Tj. Masa Kerja (Fix Cost)</th>
+													<th class="text-center align-middle">Tj. Masa Kerja</th>
 													<th class="text-center align-middle">Premi Absensi</th>
 													<th class="text-center align-middle">Lembur x1.5 (jam)</th>
 													<th class="text-center align-middle">Lembur x1.5 (rp)</th>
