@@ -280,7 +280,7 @@
 									</div> <!-- end of table -->
 								</div>
 							</div>
-							<div role="tabpanel" id="tabhpyemtd_kontrak" class="tab-pane">x
+							<div role="tabpanel" id="tabhpyemtd_kontrak" class="tab-pane">
 								<div class="panel-body">
 									<div class="table-responsive">
 										<table id="tblhpyemtd_kontrak" class="table table-striped table-bordered table-hover nowrap" width="100%">
