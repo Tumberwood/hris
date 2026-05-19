@@ -240,16 +240,19 @@
                                 <th>Kode Finger</th>
                                 <th>No KTP</th>
                                 <th>Nama</th>
-                                <th>Department</th>
-                                <th>Unit Kerja</th>
-                                <th>Grup Jabatan</th>
-                                <th>Jabatan</th>
-                                <th>Area Kerja</th>
-                                <th>Tipe</th>
-                                <th>Sub Tipe</th>
-                                <th>Status</th>
-                                <th>Skala Upah</th>
-                                <th>Bagian</th>
+                                
+								<th>Divisi</th>
+								<th>Department</th>
+								<th>Unit Kerja</th>
+								<th>Jabatan</th>
+								<th>Grup Jabatan</th>
+								<th>Bagian</th>
+								<th>Skala Upah</th>
+								<th>Sub Tipe</th>
+								<th>Status</th>
+								<th>Tipe</th>
+								<th>Area Kerja</th>
+
                                 <th>Tanggal Join</th>
                                 <th>Tanggal Akhir Kontrak</th>
                                 <th>Grup HK</th>
@@ -1759,16 +1762,19 @@
 
 					},
 					{ data: "hemxxmh.nama" }, //4
-					{ data: "hodxxmh.nama" },
-					{ data: "hosxxmh.nama" },
-					{ data: "hevgrmh.nama" },
-					{ data: "hetxxmh.nama" },
-					{ data: "holxxmd_2.nama" },
-					{ data: "heyxxmh.nama" },
-					{ data: "heyxxmd.nama" },
-					{ data: "hesxxmh.nama" },//10
-					{ data: "hevxxmh.nama" },//10
-					{ data: "hobxxmh.nama" },//10
+					
+					{ data: "hovxxmh.nama" },	//divisi
+					{ data: "hodxxmh.nama" },	//dep
+					{ data: "hosxxmh.nama" },	//unit
+					{ data: "hetxxmh.nama" },	//jab
+					{ data: "hevgrmh.nama" },	//grup
+					{ data: "hobxxmh.nama" },	//Bagian
+					{ data: "hevxxmh.nama" },	//Skala
+					{ data: "heyxxmd.nama" },	//Sub Tipe
+					{ data: "hesxxmh.nama" },	//Status
+					{ data: "heyxxmh.nama" },	//Tipe
+					{ data: "holxxmd_2.nama" },	//Area Kerja
+
 					{ data: "hemjbmh.tanggal_masuk" },
 					{ data: "hemjbmh.tanggal_akhir_kontrak" },
 					{ 
