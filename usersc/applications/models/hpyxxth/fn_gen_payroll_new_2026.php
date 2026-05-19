@@ -1168,23 +1168,19 @@
                     iuran_spsi AS (
                         SELECT
                             p.id_hemxxmh,
-                            nominal_iuran_spsi AS iuran_spsi
+                            COALESCE(nominal_iuran_spsi, 0) AS iuran_spsi
                         FROM pegawai p
+
                         LEFT JOIN (
-                            SELECT
-                                id_hemxxmh,
-                                IFNULL(nominal, 0) AS nominal_iuran_spsi
+                            SELECT id_hemxxmh, nominal AS nominal_iuran_spsi
                             FROM (
-                                SELECT
-                                    a.id_hemxxmh,
-                                    SUM(nominal) as nominal
-                                FROM hpy_piutang_d as a
-                                WHERE
-                                    a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                                    AND id_hpcxxmh = 126
-                                    AND is_approve = 1
-                                GROUP BY id_hemxxmh
-                            ) AS subquery
+                                SELECT *,
+                                    ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) rn
+                                FROM htpr_hemxxmh
+                                WHERE id_hpcxxmh = 126
+                                AND is_active = 1
+                                AND tanggal_efektif <= :tanggal_akhir
+                            ) x WHERE rn = 1
                         ) iuran_spsi ON iuran_spsi.id_hemxxmh = p.id_hemxxmh
                     ),
                     payroll AS (
