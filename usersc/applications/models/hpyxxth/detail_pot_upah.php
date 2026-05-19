@@ -42,6 +42,8 @@
 		->exec('SELECT
 					a.id,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
+					a.id_hemxxmh,
+					a.tanggal AS tgl,
 					a.st_jadwal,
 					a.status_presensi_in,
 					a.status_presensi_out,

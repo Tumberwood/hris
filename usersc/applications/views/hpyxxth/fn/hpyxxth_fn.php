@@ -32,7 +32,22 @@
                 }
             },
             columns: [
-                { data: 'tanggal' },
+                {
+                    data: 'tanggal',
+                    render: function (data, type, row) {
+                        
+                        var id_hemxxmh = row.id_hemxxmh;
+                        var tgl = row.tgl;
+
+                        if (id_hemxxmh) {
+                            var url = "../dashboard/d_hr_report_presensi.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tgl;
+                            var link = `<a href="${url}" target="_blank">${data}</a>`;
+                            return link;
+                        } else {
+                            return data;
+                        }
+                    }
+                },
                 { data: 'st_jadwal' },
                 { data: 'status_presensi_in' },
                 { data: 'status_presensi_out' },
@@ -61,7 +76,23 @@
                 }
             },
             columns: [
-                { data: 'tanggal' },
+                {
+                    data: 'tanggal',
+                    render: function (data, type, row) {
+                        
+                        var id_hemxxmh = row.id_hemxxmh;
+                        var tgl = row.tgl;
+
+                        if (id_hemxxmh) {
+                            var url = "../dashboard/d_hr_report_presensi.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tgl;
+                            var link = `<a href="${url}" target="_blank">${data}</a>`;
+                            return link;
+                        } else {
+                            return data;
+                        }
+                    }
+                },
+                
                 { data: 'st_jadwal' },
                 { data: 'status_presensi_in' },
                 { data: 'status_presensi_out' },
@@ -90,7 +121,22 @@
                 }
             },
             columns: [
-                { data: 'tanggal' },
+                {
+                    data: 'tanggal',
+                    render: function (data, type, row) {
+                        
+                        var id_hemxxmh = row.id_hemxxmh;
+                        var tgl = row.tgl;
+
+                        if (id_hemxxmh) {
+                            var url = "../dashboard/d_hr_report_presensi.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tgl;
+                            var link = `<a href="${url}" target="_blank">${data}</a>`;
+                            return link;
+                        } else {
+                            return data;
+                        }
+                    }
+                },
                 { data: 'spkl' },
                 { data: 'jenis_lembur' },
                 { data: 'status_istirahat' },
