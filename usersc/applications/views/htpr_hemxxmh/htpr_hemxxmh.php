@@ -294,6 +294,9 @@
 					}
 				},
 				responsive: false,
+				fixedColumns:   {
+					left: 2
+				},
 				order: [[ 1, "desc" ]],
 				columns: [
 					{ data: "hemxxmh.id",visible:false },

@@ -1749,7 +1749,9 @@
 				},
 				order: [[ 1, "desc" ]],
 				responsive: false,
-				scrollX: true,
+				fixedColumns:   {
+					left: 2
+				},
 				columns: [
 					{ data: "hemxxmh.id",visible:false },
 					{ data: "hemxxmh.kode" },
