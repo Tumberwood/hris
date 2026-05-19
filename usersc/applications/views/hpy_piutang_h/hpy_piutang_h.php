@@ -305,6 +305,10 @@
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthpy_piutang_h.field('finish_on').val(finish_on);
 			});
+			
+			edthpy_piutang_h.on( 'close', function (e, json, data, action, xhr) {
+				edthpy_piutang_h.enable();
+			} );
 
 			//start datatables
 			tblhpy_piutang_h = $('#tblhpy_piutang_h').DataTable( {
@@ -372,8 +376,8 @@
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
-						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_h'];
-						$arr_buttons_approve 	= ['approve'];
+						$arr_buttons_action 	= ['create', 'edit', 'view', 'nonaktif_h'];
+						$arr_buttons_approve 	= ['approve', 'cancel_approve'];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
