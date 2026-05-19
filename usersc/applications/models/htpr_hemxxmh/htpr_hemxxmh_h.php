@@ -46,6 +46,8 @@
 			Field::inst( 'hesxxmh.nama' ),
 			Field::inst( 'heyxxmd.nama' ),
 			Field::inst( 'hobxxmh.nama' ),
+			Field::inst( 'hovxxmh.nama' ),
+			Field::inst( 'holxxmd_2.nama' ),
 			Field::inst( 'hemjbmh.grup_hk' ),
 			
 			Field::inst( 'hemjbmh.tanggal_keluar' )
@@ -71,6 +73,8 @@
 		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 		->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
 		->leftJoin( 'hobxxmh','hobxxmh.id','=','hemjbmh.id_hobxxmh' )
+		->leftJoin( 'hovxxmh','hovxxmh.id','=','hemjbmh.id_hovxxmh' )
+		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
 		;
 	
 	// do not erase

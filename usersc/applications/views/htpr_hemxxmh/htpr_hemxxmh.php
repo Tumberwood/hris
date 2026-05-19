@@ -37,15 +37,20 @@
                                 <th>ID</th>
                                 <th>NIP</th>
                                 <th>Nama</th>
-                                <th>Tipe</th>
-                                <th>Sub Tipe</th>
-                                <th>Status</th>
+                                
+								<th>Divisi</th>
+								<th>Department</th>
+								<th>Unit Kerja</th>
+								<th>Jabatan</th>
+								<th>Grup Jabatan</th>
+								<th>Bagian</th>
+								<th>Skala Upah</th>
+								<th>Sub Tipe</th>
+								<th>Status</th>
+								<th>Tipe</th>
+								<th>Area Kerja</th>
+
                                 <th>Grup HK</th>
-                                <th>Bagian</th>
-                                <th>Department</th>
-                                <th>Level</th>
-                                <th>Grup Jabatan</th>
-                                <th>Jabatan</th>
                                 <th>Tanggal Keluar</th>
                             </tr>
                         </thead>
@@ -294,9 +299,19 @@
 					{ data: "hemxxmh.id",visible:false },
 					{ data: "hemxxmh.kode" },
 					{ data: "hemxxmh.nama" },
-					{ data: "heyxxmh.nama" },
-					{ data: "heyxxmd.nama" },
-					{ data: "hesxxmh.nama" },
+					
+					{ data: "hovxxmh.nama" },	//divisi
+					{ data: "hodxxmh.nama" },	//dep
+					{ data: "hosxxmh.nama" },	//unit
+					{ data: "hetxxmh.nama" },	//jab
+					{ data: "hevgrmh.nama" },	//grup
+					{ data: "hobxxmh.nama" },	//Bagian
+					{ data: "hevxxmh.nama" },	//Skala
+					{ data: "heyxxmd.nama" },	//Sub Tipe
+					{ data: "hesxxmh.nama" },	//Status
+					{ data: "heyxxmh.nama" },	//Tipe
+					{ data: "holxxmd_2.nama" },	//Area Kerja
+
 					{ 
 						data: "hemjbmh.grup_hk",
 						render: function (data){
@@ -311,11 +326,6 @@
 							}
 						}
 					},
-					{ data: "hobxxmh.nama" },
-					{ data: "hodxxmh.nama" },
-					{ data: "hevxxmh.nama" },
-					{ data: "hevgrmh.nama" },
-					{ data: "hetxxmh.nama" },
 					{ data: "hemjbmh.tanggal_keluar" },
 				],
 				buttons: [
