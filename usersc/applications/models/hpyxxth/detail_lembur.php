@@ -59,6 +59,9 @@
 					a.pot_overtime,
 					a.pot_hk,
 					a.pot_jam,
+					lembur15,
+					lembur2,
+					lembur3,
 					a.durasi_lembur_final lembur_final
 				FROM htsprrd a
 				JOIN htoxxrd b ON b.tanggal = a.tanggal AND b.id_hemxxmh = a.id_hemxxmh AND b.is_active = 1
