@@ -154,6 +154,7 @@
 				
 				Field::inst( 'hemxxmh.kode as kode' ),
 				Field::inst( 'hemxxmh.nama as nama' ),
+				Field::inst( 'hemxxmh.gender' ),
 				
 				Field::inst( 'hobxxmh.nama' ),
 				Field::inst( 'hevgrmh.nama' ),

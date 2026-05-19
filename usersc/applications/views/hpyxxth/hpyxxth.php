@@ -1122,41 +1122,52 @@
 						className: 'btn btn-xs btn-outline',
 						titleAttr: '',
 						action: function ( e, dt, node, config ) {
-							e.preventDefault(); 
-							var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
 
-							notifyprogress = $.notify({
-								message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
-							},{
-								z_index: 9999,
-								allow_dismiss: false,
-								type: 'info',
-								delay: 0
-							});
+							e.preventDefault();
 
-							$.ajax( {
-								url: "../../models/hpyxxth/fn_gen_payroll_new_2026.php",
-								dataType: 'json',
-								type: 'POST',
-								data: {
-									id_hpyxxth		: id_hpyxxth,
-									tanggal_awal	: tanggal_awal_select,
-									tanggal_akhir	: tanggal_akhir_select,
-									timestamp		: timestamp
-								},
-								success: function ( json ) {
+							if (confirm('Are you sure want to generate payroll?')) {
 
-									$.notify({
-										message: json.data.message
-									},{
-										type: json.data.type_message
-									});
+								var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
 
-									tblhpyxxth.ajax.reload(function ( json ) {
-										notifyprogress.close();
-									}, false);
-								}
-							} );
+								notifyprogress = $.notify({
+									message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
+								},{
+									z_index: 9999,
+									allow_dismiss: false,
+									type: 'info',
+									delay: 0
+								});
+
+								$.ajax({
+									url: "../../models/hpyxxth/fn_gen_payroll_new_2026.php",
+									dataType: 'json',
+									type: 'POST',
+									data: {
+										id_hpyxxth		: id_hpyxxth,
+										tanggal_awal	: tanggal_awal_select,
+										tanggal_akhir	: tanggal_akhir_select,
+										timestamp		: timestamp
+									},
+									success: function ( json ) {
+
+										$.notify({
+											message: json.data.message
+										},{
+											type: json.data.type_message,
+											allow_dismiss: true,
+											delay: 0
+										});
+
+										tblhpyxxth.ajax.reload(function ( json ) {
+											notifyprogress.close();
+										}, false);
+									}
+								});
+
+							} else {
+
+							}
+
 						}
 					},
 				],
