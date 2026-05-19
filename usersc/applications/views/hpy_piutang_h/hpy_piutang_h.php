@@ -138,9 +138,8 @@
 						label: "Tenor<sup class='text-danger'>*<sup>",
 						name: "hpy_piutang_h.tenor"
 					}, 	{
-						label: "Cicilan per Bulan",
+						label: "Cicilan per Bulan <sup class='text-danger'>*<sup>",
 						name: "hpy_piutang_h.cicilan_per_bulan",
-						type: "readonly"
 					}, 	{
 						label: "Cicilan Terakhir",
 						name: "hpy_piutang_h.cicilan_terakhir",
@@ -194,6 +193,13 @@
 			edthpy_piutang_h.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
+			
+			edthpy_piutang_h.dependent( 'hpy_piutang_h.cicilan_per_bulan', function ( val, data, callback ) {
+				if (val > 0) {
+					hitung_cicilan();
+				}
+				return {}
+			}, {event: 'keyup change'});
 
 			edthpy_piutang_h.dependent( 'hpy_piutang_h.nominal', function ( val, data, callback ) {
 				if (val > 0) {
@@ -268,6 +274,26 @@
 						edthpy_piutang_h.field('hpy_piutang_h.nominal').error( 'Inputan harus berupa Angka!' );
 					}
 					// END of validasi hpy_piutang_h.nominal 
+					
+					// BEGIN of validasi hpy_piutang_h.cicilan_per_bulan 
+					cicilan_per_bulan = edthpy_piutang_h.field('hpy_piutang_h.cicilan_per_bulan').val();
+					
+					// validasi min atau max angka
+					if(cicilan_per_bulan <= 0 ){
+						edthpy_piutang_h.field('hpy_piutang_h.cicilan_per_bulan').error( 'Inputan harus > 0' );
+					}
+					
+					// validasi angka
+					if(isNaN(cicilan_per_bulan) ){
+						edthpy_piutang_h.field('hpy_piutang_h.cicilan_per_bulan').error( 'Inputan harus berupa Angka!' );
+					}
+					// END of validasi hpy_piutang_h.cicilan_per_bulan 
+
+					cicilan_terakhir = edthpy_piutang_h.field('hpy_piutang_h.cicilan_terakhir').val();
+					// validasi min atau max angka
+					if(cicilan_terakhir <= 0 ){
+						edthpy_piutang_h.field('hpy_piutang_h.cicilan_terakhir').error( 'Inputan harus > 0' );
+					}
 				}
 				
 				if ( edthpy_piutang_h.inError() ) {
