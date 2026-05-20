@@ -364,10 +364,10 @@
 				buttons: [
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_prcittd';
-						$table       = 'tblprcittd';
-						$edt         = 'edtprcittd';
-						$show_status = '_prcittd';
+						$id_table    = 'id_htoxxrd';
+						$table       = 'tblhtoxxrd';
+						$edt         = 'edthtoxxrd';
+						$show_status = '_htoxxrd';
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools = ['copy','excel','colvis'];

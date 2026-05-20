@@ -267,10 +267,10 @@
 				buttons: [
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_prcittd';
-						$table       = 'tblprcittd';
-						$edt         = 'edtprcittd';
-						$show_status = '_prcittd';
+						$id_table    = 'id_ti_tidak_sah';
+						$table       = 'tblti_tidak_sah';
+						$edt         = 'edtti_tidak_sah';
+						$show_status = '_ti_tidak_sah';
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools = ['copy','excel','colvis'];

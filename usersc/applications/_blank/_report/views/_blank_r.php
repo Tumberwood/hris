@@ -181,10 +181,10 @@
 				buttons: [
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_prcittd';
-						$table       = 'tblprcittd';
-						$edt         = 'edtprcittd';
-						$show_status = '_prcittd';
+						$id_table    = 'id__blank';
+						$table       = 'tbl_blank';
+						$edt         = 'edt_blank';
+						$show_status = '__blank';
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools = ['copy','excel'];

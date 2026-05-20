@@ -348,10 +348,10 @@
 				buttons: [
 					// BEGIN breaking generate button
 					<?php
-						$id_table    = 'id_prcittd';
-						$table       = 'tblprcittd';
-						$edt         = 'edtprcittd';
-						$show_status = '_prcittd';
+						$id_table    = 'id_report_komp_gaji';
+						$table       = 'tblreport_komp_gaji';
+						$edt         = 'edtreport_komp_gaji';
+						$show_status = '_report_komp_gaji';
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools = ['copy','excel','colvis'];
