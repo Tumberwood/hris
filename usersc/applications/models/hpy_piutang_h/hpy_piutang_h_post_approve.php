@@ -40,8 +40,21 @@
 
 		$tanggal_mulai = $rs_piutang['tanggal_mulai'];
 
-		for ($i=1; $i < $rs_piutang['tenor'] ; $i++) { 
+		for ($i=0; $i < $rs_piutang['tenor']; $i++) { 
+	
 			$tanggal = date('Y-m-d', strtotime($tanggal_mulai . ' + ' . $i . ' months'));
+
+			if ($i == ($rs_piutang['tenor'] - 1)) {
+				$nominal = $rs_piutang['cicilan_terakhir'];
+			} else {
+				$nominal = $rs_piutang['cicilan_per_bulan'];
+			}
+
+			if ($rs_piutang['tenor'] == 1) {
+				$nominal = $rs_piutang['cicilan_per_bulan'];
+			} else {
+				$nominal = $nominal;
+			}
 
 			$qi_hpy_piutang_d = $db
 				->query('insert', 'hpy_piutang_d')
@@ -49,34 +62,11 @@
 				->set('id_hpcxxmh',$rs_piutang['id_hpcxxmh'])
 				->set('id_hpy_piutang_h',$id_hpy_piutang_h)
 				->set('keterangan',$rs_piutang['keterangan'])
-				->set('nominal',$rs_piutang['cicilan_per_bulan'])
+				->set('nominal',$nominal)
 				->set('is_approve', 1)
 				->set('tanggal',$tanggal)
 				->exec();
 		}
-		
-		if ($rs_piutang['tenor'] > 1) {
-			$qi_hpy_piutang_d = $db
-				->query('insert', 'hpy_piutang_d')
-				->set('id_hemxxmh',$rs_piutang['id_hemxxmh'])
-				->set('id_hpcxxmh',$rs_piutang['id_hpcxxmh'])
-				->set('id_hpy_piutang_h',$id_hpy_piutang_h)
-				->set('keterangan',$rs_piutang['keterangan'])
-				->set('nominal',$rs_piutang['cicilan_terakhir'])
-				->set('is_approve', 1)
-				->set('tanggal',$rs_piutang['tanggal_akhir'])
-				->exec();
-		} else {
-			$qi_hpy_piutang_d = $db
-				->query('insert', 'hpy_piutang_d')
-				->set('id_hemxxmh',$rs_piutang['id_hemxxmh'])
-				->set('id_hpcxxmh',$rs_piutang['id_hpcxxmh'])
-				->set('id_hpy_piutang_h',$id_hpy_piutang_h)
-				->set('keterangan',$rs_piutang['keterangan'])
-				->set('nominal',$rs_piutang['cicilan_per_bulan'])
-				->set('is_approve', 1)
-				->set('tanggal',$rs_piutang['tanggal_akhir'])
-				->exec();}
 	}
 	else {
 		$qd_piutang = $db

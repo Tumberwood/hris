@@ -3,7 +3,11 @@
         tanggal_mulai = edthpy_piutang_h.field('hpy_piutang_h.tanggal_mulai').val();
         tenor = edthpy_piutang_h.field('hpy_piutang_h.tenor').val();
 
-        akhir = moment(tanggal_mulai).add(tenor, 'month').format('DD MMM YYYY');
+        // akhir = moment(tanggal_mulai).add(tenor, 'month').format('DD MMM YYYY');
+        akhir = moment(tanggal_mulai)
+        .add(tenor - 1, 'month')
+        .format('DD MMM YYYY');
+        
         edthpy_piutang_h.field('hpy_piutang_h.tanggal_akhir').val(akhir);
     }
 
