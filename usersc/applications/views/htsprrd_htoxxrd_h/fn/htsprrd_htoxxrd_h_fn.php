@@ -174,4 +174,35 @@
             lengthChange: true, // Allow users to select number of rows
         });
     }
+
+    function fn_sesuai(
+        id_htsprrd_htoxxrd_h,
+        id_hemxxmh,
+        is_sesuai
+    ){
+        $.ajax( {
+            url: "../../models/htsprrd_htoxxrd_h/fn_sesuai.php",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id_htsprrd_htoxxrd_h: id_htsprrd_htoxxrd_h,
+                id_hemxxmh: id_hemxxmh,
+                is_sesuai: is_sesuai,
+            },
+            async: false,
+            success: function ( json ) {
+                $.notify({
+                    message: json.data.message
+                },{
+                    type: json.data.type_message,
+                    allow_dismiss: true,
+                    delay: 0
+                });
+
+                tblhtsprrd_htoxxrd_d.ajax.reload(function ( json ) {
+                    notifyprogress.close();
+                }, false);
+            },
+        } );
+    }
 </script>

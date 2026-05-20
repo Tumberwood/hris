@@ -639,7 +639,37 @@
 							e.preventDefault(); 
 							$('#modalBreakdownLembur').modal('show');
 						}
-					}
+					},
+					{
+						text: 'Sesuai',
+						name: 'btnSesuai',
+						className: 'btn btn-xs btn-success',
+						titleAttr: '',
+						action: function ( e, dt, node, config ) {
+
+							e.preventDefault();
+
+							if (confirm('Apakah anda yakin?')) {
+
+								var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+
+								notifyprogress = $.notify({
+									message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
+								},{
+									z_index: 9999,
+									allow_dismiss: false,
+									type: 'info',
+									delay: 0
+								});
+
+								fn_sesuai()
+
+							} else {
+
+							}
+
+						}
+					},
 				],
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();

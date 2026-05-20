@@ -194,27 +194,59 @@
 				$(".modal-dialog").addClass("modal-lg");
 			});
 			
-			edthpy_piutang_h.dependent( 'hpy_piutang_h.cicilan_per_bulan', function ( val, data, callback ) {
-				if (val > 0) {
-					hitung_cicilan();
-				}
-				return {}
-			}, {event: 'keyup change'});
+			let is_auto_tenor = false;
 
-			edthpy_piutang_h.dependent( 'hpy_piutang_h.nominal', function ( val, data, callback ) {
-				if (val > 0) {
-					hitung_cicilan();
-				}
-				return {}
-			}, {event: 'keyup change'});
+			edthpy_piutang_h.dependent('hpy_piutang_h.cicilan_per_bulan', function (val, data, callback) {
 
-			edthpy_piutang_h.dependent( 'hpy_piutang_h.tenor', function ( val, data, callback ) {
 				if (val > 0) {
-					hitung_cicilan();
+
+					is_auto_tenor = true;
+
+					hitung_cicilan('cicilan');
+
+					setTimeout(function () {
+
+						is_auto_tenor = false;
+
+					}, 10);
+
+				}
+
+				return {};
+
+			}, { event: 'keyup change' });
+
+
+			edthpy_piutang_h.dependent('hpy_piutang_h.nominal', function (val, data, callback) {
+
+				if (val > 0) {
+
+					hitung_cicilan('nominal');
+
+				}
+
+				return {};
+
+			}, { event: 'keyup change' });
+
+
+			edthpy_piutang_h.dependent('hpy_piutang_h.tenor', function (val, data, callback) {
+
+				if (val > 0) {
+
+					if (is_auto_tenor == false) {
+
+						hitung_cicilan('tenor');
+
+					}
+
 					hitung_tanggal_akhir();
+
 				}
-				return {}
-			}, {event: 'keyup change'});
+
+				return {};
+
+			}, { event: 'keyup change' });
 
 			edthpy_piutang_h.dependent( 'hpy_piutang_h.tanggal_mulai', function ( val, data, callback ) {
 				if (val != null) {
