@@ -320,7 +320,7 @@
                             extend: 'remove', 
                             name: 'btnRemove',
                             editor: <?php echo $edt;?>, 
-                            text: '<span class="fa fa-trash">&nbsp &nbsp Delete</span>', 
+                            text: '<span class="fa fa-trash">&nbsp &nbsp Hard Delete</span>', 
                             className: 'btn  btn-danger',
                             titleAttr: 'Remove',
                             key: {
