@@ -1158,7 +1158,7 @@
 								},{
 									z_index: 9999,
 									allow_dismiss: false,
-									type: 'info',
+									type: 'danger',
 									delay: 0
 								});
 
