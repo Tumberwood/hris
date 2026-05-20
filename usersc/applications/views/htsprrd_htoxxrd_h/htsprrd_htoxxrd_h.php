@@ -244,7 +244,7 @@
 								<th rowspan="2">Status</th>
 								<th class="text-center" colspan="5">HRIS</th>
 								<th class="text-center" colspan="5">Excel</th>
-								<th rowspan="2">Sesuai</th>
+								<th rowspan="2">Sesuai Excel</th>
 							</tr>
 							<tr>
 								<th>Lembur 1.5</th>
