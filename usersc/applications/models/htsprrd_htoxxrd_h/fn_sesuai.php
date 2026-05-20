@@ -16,21 +16,25 @@
 	$id_htsprrd_htoxxrd_h = $_POST['id_htsprrd_htoxxrd_h'];
 	$id_hemxxmh = $_POST['id_hemxxmh'];
 	$is_sesuai = $_POST['is_sesuai'];
+	$id_users = $_SESSION['user'];
 	
-	$qs_htsprrd_htoxxrd_d = $db
+	$qu_htsprrd_htoxxrd_d = $db
 		->raw()
 		->bind(':id_htsprrd_htoxxrd_h', $id_htsprrd_htoxxrd_h)
 		->bind(':id_hemxxmh', $id_hemxxmh)
 		->bind(':is_sesuai', $is_sesuai)
+		->bind(':id_users', $id_users)
 		->exec('UPDATE htsprrd_htoxxrd_d
 				SET
+					sesuai_on = now(),
+					sesuai_by = :id_users,
 					is_sesuai = :is_sesuai
 				WHERE id_htsprrd_htoxxrd_h = :id_htsprrd_htoxxrd_h
 				AND id_hemxxmh = :id_hemxxmh
 	');
 	
 	$data = [
-		"message" => "Upload berhasil!",
+		"message" => "Data Berhasil diubah!",
 		"type_message" => "success",
 	];
 	require_once( "../../../../usersc/helpers/fn_ajax_results.php" );

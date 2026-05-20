@@ -643,7 +643,7 @@
 					{
 						text: 'Sesuai',
 						name: 'btnSesuai',
-						className: 'btn btn-xs btn-success',
+						className: 'btn btn-xs btn-primary',
 						titleAttr: '',
 						action: function ( e, dt, node, config ) {
 
@@ -662,7 +662,11 @@
 									delay: 0
 								});
 
-								fn_sesuai()
+								fn_sesuai(
+									id_htsprrd_htoxxrd_h,
+									id_hemxxmh,
+									1
+								)
 
 							} else {
 
@@ -677,6 +681,10 @@
 				rowCallback: function(row, data) {
 					if (data.is_tidak_sesuai == 1) {
 						$(row).addClass('text-danger');
+					}
+					
+					if (data.is_sesuai == 1) {
+						$(row).addClass('bg-primary');
 					}
 				},
 				footerCallback: function ( row, data, start, end, display ) {
@@ -712,6 +720,7 @@
 			tblhtsprrd_htoxxrd_d.searchPanes.container().appendTo( '#searchPanes1' );
 			tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').disable();
 			tblhtsprrd_htoxxrd_d.button('btnBreakdownLembur:name').disable();
+			tblhtsprrd_htoxxrd_d.button('btnSesuai:name').disable();
 
 			tblhtsprrd_htoxxrd_d.on( 'select', function( e, dt, type, indexes ) {
 				data_htsprrd_htoxxrd_d = tblhtsprrd_htoxxrd_d.row( { selected: true } ).data();
@@ -722,7 +731,7 @@
 				kode_finger = kode.slice(-4);
 
 				tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').enable();
-				tblhtsprrd_htoxxrd_d.button('btnBreakdownLembur:name').enable();
+				tblhtsprrd_htoxxrd_d.button('btnSesuai:name').enable();
 				breakdownMakan(id_hemxxmh, kode_finger, start_date, end_date);
 				breakdownLembur(id_hemxxmh, start_date, end_date);
 			} );
@@ -735,6 +744,7 @@
 				kode_finger = '';
 				tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').disable();
 				tblhtsprrd_htoxxrd_d.button('btnBreakdownLembur:name').disable();
+				tblhtsprrd_htoxxrd_d.button('btnSesuai:name').disable();
 			} );
 
 // --------- end _detail --------------- //		

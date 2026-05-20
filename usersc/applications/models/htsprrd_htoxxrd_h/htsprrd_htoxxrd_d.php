@@ -42,6 +42,7 @@
 			->exec('SELECT
 						a.id,
 						b.id_heyxxmh,
+						a.is_sesuai,
 						d.nama status,
 						a.id_hemxxmh,
 						id_htsprrd_htoxxrd_h,
@@ -110,6 +111,7 @@
 				"id"					=> $row['id'],
 				"id_heyxxmh"			=> $row['id_heyxxmh'],
 				"id_hemxxmh"			=> $row['id_hemxxmh'],
+				"is_sesuai"			=> $row['is_sesuai'],
 				"start_date"			=> $start_date,
 				"end_date"			=> $end_date,
 				"status"					=> $row['status'],
