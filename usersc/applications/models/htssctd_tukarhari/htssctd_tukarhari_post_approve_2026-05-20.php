@@ -51,39 +51,35 @@
         //add by ferry, tambahkan state, karena sebelum ditambahkan if state == 1 meskipun cancel approve tapi tetap menginsert ke database
         if($state == 1) {
 
-            foreach ($rs_htssctd_tukarhari_pegawai as $key => $tukar_pegawai) {
-                $id_hemxxmh = $tukar_pegawai['id_hemxxmh'];
-                
-                // BEGIN non aktif
-                    $qd_terpilih = $db
-                    ->query('delete', 'htssctd')
-                    ->where('is_active', 0)
-                    ->where('tanggal', $tanggal_terpilih)
-                    ->where('id_hemxxmh', $id_hemxxmh)
-                ->exec();
-                
-                $qd_pengganti = $db
-                    ->query('delete', 'htssctd')
-                    ->where('is_active', 0)
-                    ->where('tanggal', $tanggal_pengganti)
-                    ->where('id_hemxxmh', $id_hemxxmh)
-                ->exec();
+            $idPegawai = array_column($rs_htssctd_tukarhari_pegawai, 'id_hemxxmh');
+            if(count($idPegawai) > 0) {
+                $idPegawaiIn = implode(',', $idPegawai);
 
-                $qu_htssctd_pengganti = $db
-                    ->query('update', 'htssctd')
-                    ->set('is_active',0)
-                    ->set('keterangan', $keterangan)
-                    ->where('tanggal', $tanggal_terpilih)
-                    ->where('id_hemxxmh', $id_hemxxmh)
-                    ->exec();
-                // END non aktif
-                    
+                // BEGIN non aktif bulk
+                $db->raw()->exec("
+                    DELETE FROM htssctd
+                    WHERE is_active = 0
+                    AND tanggal IN ('$tanggal_terpilih', '$tanggal_pengganti')
+                    AND id_hemxxmh IN ($idPegawaiIn)
+                    AND keterangan NOT LIKE '%Cuti Bersama%'
+                    AND keterangan NOT LIKE '%Public Holiday%'
+                ");
+
+                $db->raw()->exec("
+                    UPDATE htssctd
+                    SET 
+                        is_active = 0,
+                        keterangan = '$keterangan'
+                    WHERE tanggal = '$tanggal_terpilih'
+                    AND id_hemxxmh IN ($idPegawaiIn)
+                ");
+                // END non aktif bulk
+                
                 // Begin insert pengaju
                 $qr_tanggal_terpilih = $db
                     ->raw()
                     ->bind(':tanggal_terpilih', $tanggal_terpilih)
                     ->bind(':tanggal_pengganti', $tanggal_pengganti)
-                    ->bind(':id_hemxxmh', $id_hemxxmh)
                     ->exec('INSERT INTO htssctd
                         (
                             keterangan,
@@ -180,24 +176,25 @@
                         WHERE 
                             htssctd.tanggal = :tanggal_pengganti
                             AND htssctd.is_active = 1
-                            AND htssctd.id_hemxxmh = :id_hemxxmh
+                            AND htssctd.id_hemxxmh IN ('.$idPegawaiIn.')
                     ');
                 // END insert pengaju
-
+                
                 //TANGGAL PENGGANTI Jadi tanggal pengaju
-                $qu_htssctd_pengganti = $db
-                    ->query('update', 'htssctd')
-                    ->set('is_active', 0)
-                    ->where('tanggal', $tanggal_pengganti)
-                    ->where('id_hemxxmh', $id_hemxxmh)
-                    ->exec();
-                    
+                $db->raw()->exec("
+                    UPDATE htssctd
+                    SET 
+                        is_active = 0,
+                        keterangan = '$keterangan'
+                    WHERE tanggal = '$tanggal_pengganti'
+                    AND id_hemxxmh IN ($idPegawaiIn)
+                ");
+                
                 // Begin insert pengaju
                 $qr_tanggal_pengganti = $db
                     ->raw()
                     ->bind(':tanggal_terpilih', $tanggal_terpilih)
                     ->bind(':tanggal_pengganti', $tanggal_pengganti)
-                    ->bind(':id_hemxxmh', $id_hemxxmh)
                     ->exec('INSERT INTO htssctd
                         (
                             keterangan,
@@ -294,49 +291,63 @@
                         WHERE 
                             htssctd.tanggal = :tanggal_terpilih
                         AND htssctd.is_active = 0
-                        AND htssctd.id_hemxxmh = :id_hemxxmh
+                        AND htssctd.id_hemxxmh IN ('.$idPegawaiIn.')
                     ');
                 // END insert pengaju
             }
-
             
-        } else if($state == 2) {
+        } else {
 
-            foreach ($rs_htssctd_tukarhari_pegawai as $key => $tukar_pegawai) {
-                $id_hemxxmh = $tukar_pegawai['id_hemxxmh'];
-                
-                // BEGIN non aktif
-                $qd_terpilih = $db
-                    ->query('delete', 'htssctd')
-                    ->where('is_active', 1)
-                    ->where('tanggal', $tanggal_terpilih)
-                    ->where('id_hemxxmh', $id_hemxxmh)
-                ->exec();
+            // ambil semua id pegawai
+            $idPegawai = array_column($rs_htssctd_tukarhari_pegawai, 'id_hemxxmh');
 
-                $qu_htssctd_pengganti = $db
-                    ->query('update', 'htssctd')
-                    ->set('is_active', 1)
-                    ->where('is_active',0)
-                    ->where('tanggal', $tanggal_terpilih)
-                    ->where('id_hemxxmh', $id_hemxxmh)
-                    ->exec();
+            if(count($idPegawai) > 0) {
 
-                //TANGGAL PENGGANTI Jadi tanggal pengaju
-                
-                $qd_pengganti = $db
-                    ->query('delete', 'htssctd')
-                    ->where('is_active', 1)
-                    ->where('tanggal', $tanggal_pengganti)
-                    ->where('id_hemxxmh', $id_hemxxmh)
-                ->exec();
-                
-                $qu_htssctd_pengganti = $db
-                    ->query('update', 'htssctd')
-                    ->set('is_active', 1)
-                    ->where('is_active',0)
-                    ->where('tanggal', $tanggal_pengganti)
-                    ->where('id_hemxxmh', $id_hemxxmh)
-                ->exec();
+                $idPegawaiIn = implode(',', $idPegawai);
+
+                // hapus aktif tanggal terpilih
+                $db->raw()->exec("
+                    DELETE FROM htssctd
+                    WHERE is_active = 1
+                    AND tanggal = '$tanggal_terpilih'
+                    AND id_hemxxmh IN ($idPegawaiIn)
+                ");
+
+                // aktifkan kembali tanggal terpilih
+                $db->raw()->exec("
+                    UPDATE htssctd a
+                    JOIN (
+                        SELECT MIN(id) AS id
+                        FROM htssctd
+                        WHERE is_active = 0
+                        AND tanggal = '$tanggal_terpilih'
+                        AND id_hemxxmh IN ($idPegawaiIn)
+                        GROUP BY id_hemxxmh
+                    ) b ON a.id = b.id
+                    SET a.is_active = 1
+                ");
+
+                // hapus aktif tanggal pengganti
+                $db->raw()->exec("
+                    DELETE FROM htssctd
+                    WHERE is_active = 1
+                    AND tanggal = '$tanggal_pengganti'
+                    AND id_hemxxmh IN ($idPegawaiIn)
+                ");
+
+                // aktifkan kembali tanggal pengganti
+                $db->raw()->exec("
+                    UPDATE htssctd a
+                    JOIN (
+                        SELECT MIN(id) AS id
+                        FROM htssctd
+                        WHERE is_active = 0
+                        AND tanggal = '$tanggal_pengganti'
+                        AND id_hemxxmh IN ($idPegawaiIn)
+                        GROUP BY id_hemxxmh
+                    ) b ON a.id = b.id
+                    SET a.is_active = 1
+                ");
             }
         }
         
