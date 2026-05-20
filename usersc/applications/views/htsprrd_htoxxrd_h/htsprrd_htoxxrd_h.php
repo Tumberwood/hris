@@ -205,6 +205,7 @@
                                 <th>ID</th>
                                 <th>Tanggal Awal</th>
                                 <th>Tanggal Akhir</th>
+                                <th>Keterangan</th>
                             </tr>
                         </thead>
                     </table>
@@ -458,6 +459,7 @@
 					{ data: "htsprrd_htoxxrd_h.id",visible:false },
 					{ data: "htsprrd_htoxxrd_h.tanggal_awal" },
 					{ data: "htsprrd_htoxxrd_h.tanggal_akhir" },
+					{ data: "htsprrd_htoxxrd_h.keterangan" },
 				],
 				buttons: [
 
