@@ -442,9 +442,9 @@
 						$show_status = '_hpy_piutang_d';
 						$table_name  = $nama_tabel;
 
-						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
-						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_h'];
-						$arr_buttons_approve 	= ['approve'];
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
+						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_h', 'remove'];
+						$arr_buttons_approve 	= ['approve', 'cancel_approve'];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					{
