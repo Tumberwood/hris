@@ -731,6 +731,7 @@
 				kode_finger = kode.slice(-4);
 
 				tblhtsprrd_htoxxrd_d.button('btnBreakdown:name').enable();
+				tblhtsprrd_htoxxrd_d.button('btnBreakdownLembur:name').enable();
 				tblhtsprrd_htoxxrd_d.button('btnSesuai:name').enable();
 				breakdownMakan(id_hemxxmh, kode_finger, start_date, end_date);
 				breakdownLembur(id_hemxxmh, start_date, end_date);
