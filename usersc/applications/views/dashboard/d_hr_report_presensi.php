@@ -456,7 +456,7 @@
 							console.log(json.data8.is_cuti_holiday);
 
 							if (json.data8.is_cuti_holiday != 0) {
-								// $('#del_cuti_holiday').show();
+								$('#del_cuti_holiday').show();
 
 								$("#del_cuti_holiday").click(function () {
 									$('#del_cuti_holiday').hide();
