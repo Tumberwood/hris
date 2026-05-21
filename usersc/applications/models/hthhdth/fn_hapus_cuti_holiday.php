@@ -29,33 +29,6 @@
             ->where('tanggal', $tanggal)
             ->where('id_hemxxmh', $id_hemxxmh)
         ->exec();
-
-        $qd_pengganti = $db
-            ->raw()
-            ->bind(':tanggal', $tanggal)
-            ->bind(':id_hemxxmh', $id_hemxxmh)
-            ->exec(' DELETE FROM htssctd
-                    WHERE 
-                        id_hemxxmh IN (
-                            SELECT
-                                id_hemxxmh
-                            FROM hemjbmh
-                            WHERE id_hetxxmh NOT IN (99, 48, 131)
-                        )
-                        AND is_active = 1
-                        AND id_hemxxmh = :id_hemxxmh
-                        AND tanggal = :tanggal
-                        ;
-                ');
-
-        $qu_htssctd = $db
-            ->query('update', 'htssctd')
-            ->set('is_active', 1)
-            ->set('keterangan', "Hapus Cuti & Public Holiday Dashboard Report Presensi")
-            ->where('is_active',0)
-            ->where('tanggal', $tanggal)
-            ->where('id_hemxxmh', $id_hemxxmh)
-        ->exec();
         
         $db->commit();
         $data = array(
