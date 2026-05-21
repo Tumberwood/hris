@@ -679,12 +679,52 @@
 					this.api().searchPanes.rebuildPane();
 				},
 				rowCallback: function(row, data) {
-					if (data.is_tidak_sesuai == 1) {
-						$(row).addClass('text-danger');
-					}
+					// if (data.is_tidak_sesuai == 1) {
+					// 	$(row).addClass('text-danger');
+					// }
 					
-					if (data.is_sesuai == 1) {
-						$(row).addClass('bg-primary');
+					// if (data.is_sesuai == 1) {
+					// 	$(row).addClass('bg-primary');
+					// }
+					
+					if (data.lembur15_db == data.lembur15_xl) {
+
+						$(row).find('td:eq(3)').addClass('bg-primary');
+
+					} else {
+
+						$(row).find('td:eq(3)').addClass('bg-danger');
+
+					}
+
+					if (data.lembur2_db == data.lembur2_xl) {
+
+						$(row).find('td:eq(4)').addClass('bg-primary');
+
+					} else {
+
+						$(row).find('td:eq(4)').addClass('bg-danger');
+
+					}
+
+					if (data.lembur3_db == data.lembur3_xl) {
+
+						$(row).find('td:eq(5)').addClass('bg-primary');
+
+					} else {
+
+						$(row).find('td:eq(5)').addClass('bg-danger');
+
+					}
+
+					if (parseFloat(data.makan_db) == parseFloat(data.makan_xl)) {
+
+						$(row).find('td:eq(6)').addClass('bg-primary');
+
+					} else {
+
+						$(row).find('td:eq(6)').addClass('bg-danger');
+
 					}
 				},
 				footerCallback: function ( row, data, start, end, display ) {
