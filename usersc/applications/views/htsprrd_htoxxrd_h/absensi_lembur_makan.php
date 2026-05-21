@@ -219,7 +219,7 @@
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
-						$('#total_' + columnIndex).html(numFormat(sum_all));
+						$('#total_' + columnIndex).html(numFormat(sum));
 					}
 					var tidak_sesuai = api.column(8).data().sum();
 					$('#tidak_sesuai').html(numFormat(tidak_sesuai));
