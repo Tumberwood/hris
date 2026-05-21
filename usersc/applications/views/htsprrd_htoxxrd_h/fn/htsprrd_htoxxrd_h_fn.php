@@ -23,6 +23,7 @@
         // Initialize DataTable
         $('#ceklok_makan').DataTable({
             dom: 'lrtip' ,
+            pageLength: -1,
             ajax: {
                 url: "../../models/htsprrd_htoxxrd_h/htsprrd_htoxxrd_h_fn_ceklok_makan.php",
                 type: 'POST',
@@ -58,6 +59,7 @@
         // Initialize DataTable
         $('#pot_makan').DataTable({
             dom: 'lrtip' ,
+            pageLength: -1,
             ajax: {
                 url: "../../models/htsprrd_htoxxrd_h/htsprrd_htoxxrd_h_fn_cek_pot_makan.php",
                 type: 'POST',
