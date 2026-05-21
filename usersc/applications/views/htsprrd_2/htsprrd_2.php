@@ -769,6 +769,9 @@
 					if ( data.htsprrd.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
+					if ( data.htsprrd.cek == 1 ) {
+						$('td', row).addClass('bg-danger');
+					}
 				},
 				footerCallback: function ( row, data, start, end, display ) {
 					var api       = this.api(), data;
