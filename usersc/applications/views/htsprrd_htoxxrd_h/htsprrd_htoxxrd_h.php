@@ -583,7 +583,7 @@
 					{ data: "lembur15_db" },
 					{ data: "lembur2_db" },
 					{ data: "lembur3_db" },
-					{ data: "lembur4_db" },
+					{ data: "lembur4_db",visible:false },
 					{ 
 						data: "makan_db",
 						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
@@ -592,7 +592,7 @@
 					{ data: "lembur15_xl" },
 					{ data: "lembur2_xl" },
 					{ data: "lembur3_xl" },
-					{ data: "lembur4_xl" },
+					{ data: "lembur4_xl",visible:false },
 					{ data: "makan_xl" },
 					{
 						data: "is_tidak_sesuai",
