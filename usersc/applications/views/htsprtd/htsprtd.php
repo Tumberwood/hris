@@ -389,7 +389,7 @@
 					// END of validasi htsprtd.tanggal
 
 					jam = edthtsprtd.field('htsprtd.jam').val();
-					// unikMakan(jam);
+					unikMakan(jam);
 					if (nama != "MAKAN MANUAL") {
 						// BEGIN of validasi htsprtd.jam
 						if ( ! edthtsprtd.field('htsprtd.jam').isMultiValue() ) {
@@ -651,7 +651,7 @@
 					// END of validasi htsprtd.tanggal
 
 					jam = edthtsprtd_multi.field('htsprtd.jam').val();
-					// unikMakan(jam);
+					unikMakan(jam);
 					if (nama != "MAKAN MANUAL") {
 						// BEGIN of validasi htsprtd.jam
 						if ( ! edthtsprtd_multi.field('htsprtd.jam').isMultiValue() ) {
