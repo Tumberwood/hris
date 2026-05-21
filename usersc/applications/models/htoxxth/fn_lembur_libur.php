@@ -63,7 +63,7 @@
         ->exec('SELECT
                     a.id
                 FROM htlxxrh a
-                WHERE a.tanggal = :tanggal AND a.id_htlxxmh = 2 AND a.id_hemxxmh = :id_hemxxmh
+                WHERE a.tanggal = :tanggal AND a.id_htlxxmh IN (1,2) AND a.id_hemxxmh = :id_hemxxmh
     ');
     $rs_absensi = $qs_absensi->fetch();
 
