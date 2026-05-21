@@ -121,7 +121,13 @@
 					c.jam_akhir
 				FROM htsprrd AS a
 				LEFT JOIN htssctd AS b ON b.id_hemxxmh = a.id_hemxxmh AND b.tanggal = a.tanggal 
-				LEFT JOIN htoxxrd AS c ON c.id_hemxxmh = a.id_hemxxmh AND c.tanggal = a.tanggal
+				LEFT JOIN (
+					SELECT
+						*
+					FROM htoxxrd rd
+					WHERE rd.tanggal = :start_date AND rd.id_hemxxmh = :id_hemxxmh
+					GROUP BY rd.id_hemxxmh
+				) AS c ON c.id_hemxxmh = a.id_hemxxmh AND c.tanggal = a.tanggal
 				LEFT JOIN grup AS d ON d.id_hemxxmh = a.id_hemxxmh
 				LEFT JOIN htsxxmh AS f on f.id = b.id_htsxxmh
 				WHERE a.tanggal = :start_date AND a.id_hemxxmh = :id_hemxxmh AND b.is_active = 1 
