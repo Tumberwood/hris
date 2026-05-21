@@ -211,18 +211,51 @@
 				],
 				rowCallback: function( row, data, index ) {
 				},
+				// footerCallback: function ( row, data, start, end, display ) {
+				// 	var api = this.api();
+				// 	var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+
+				// 	for (var i = 4; i <= 8; i++) {
+				// 		var columnIndex = i;
+				// 		var sum_all = api.column(columnIndex).data().sum();
+				// 		var sum = api.column(columnIndex, { page: 'current' }).data().sum();
+				// 		$('#total_' + columnIndex).html(numFormat(sum));
+				// 	}
+				// 	var tidak_sesuai = api.column(8).data().sum();
+				// 	$('#tidak_sesuai').html(numFormat(tidak_sesuai));
+				// },
 				footerCallback: function ( row, data, start, end, display ) {
+
 					var api = this.api();
-					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+					var numFormat = $.fn.dataTable.render.number('\,', '.', 1, '').display;
 
 					for (var i = 4; i <= 8; i++) {
+
 						var columnIndex = i;
-						var sum_all = api.column(columnIndex).data().sum();
-						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
-						$('#total_' + columnIndex).html(numFormat(sum));
+
+						// total sesuai filter/search/searchpanes
+						var sum_all = api
+							.column(columnIndex, { search: 'applied' })
+							.data()
+							.sum();
+
+						// total halaman sekarang
+						var sum_current = api
+							.column(columnIndex, { page: 'current', search: 'applied' })
+							.data()
+							.sum();
+
+						$('#total_' + columnIndex).html(numFormat(sum_all));
+
 					}
-					var tidak_sesuai = api.column(8).data().sum();
+
+					var tidak_sesuai = api
+						.column(8, { search: 'applied' })
+						.data()
+						.sum();
+
 					$('#tidak_sesuai').html(numFormat(tidak_sesuai));
+
 				},
 				columnDefs: [
 					{ targets: [5, 6, 7, 8, 8], className: "text-right" },
