@@ -770,7 +770,7 @@
 						$('td', row).addClass('text-danger');
 					}
 					if ( data.htsprrd.cek == 1 ) {
-						$('td', row).addClass('bg-danger');
+						$(row).find('td:eq(6)').addClass('bg-danger');
 					}
 				},
 				footerCallback: function ( row, data, start, end, display ) {
