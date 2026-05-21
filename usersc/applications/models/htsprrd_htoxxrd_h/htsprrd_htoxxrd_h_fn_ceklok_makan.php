@@ -22,7 +22,7 @@
 		->bind(':id_hemxxmh', $id_hemxxmh)
 		->bind(':start_date', $start_date)
 		->bind(':end_date', $end_date)
-		->exec('SELECT
+		->exec('SELECT DISTINCT
 					b.kode,
 					b.nama,
 					a.nama mesin,
