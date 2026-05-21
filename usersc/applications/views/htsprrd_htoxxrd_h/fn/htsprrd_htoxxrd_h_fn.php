@@ -103,6 +103,7 @@
         // Initialize DataTable
         $('#lembur_presensi').DataTable({
             dom: 'lrtip' ,
+            pageLength: -1,
             ajax: {
                 url: "../../models/htsprrd_htoxxrd_h/htsprrd_htoxxrd_h_fn_cek_lembur_presensi.php",
                 type: 'POST',
