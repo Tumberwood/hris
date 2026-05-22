@@ -376,7 +376,7 @@
                                     ) AS row_num
                                 FROM htpr_hemxxmh
                                 WHERE id_hpcxxmh = 33
-                                AND tanggal_efektif <= :tanggal_akhir
+                                AND tanggal_efektif <= :tanggal_awal
                                 AND is_active = 1
                             ) x
                             WHERE row_num = 1
