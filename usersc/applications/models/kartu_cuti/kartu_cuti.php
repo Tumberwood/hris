@@ -17,8 +17,8 @@
 
 	if (isset($_POST['start_date'])){
 		$awal		= new Carbon($_POST['start_date']);
+		$start_date = $awal->format('Y-m-d');
 	}
-	$start_date = $awal->format('Y-m-d');
 
 	$qs_cuti = $db
 		->raw()
