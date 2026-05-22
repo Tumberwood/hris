@@ -1299,6 +1299,9 @@
                             
                             -- POTONG PREMI
                             CASE
+                                -- Bu Maria 22 May 2026, Abnormal Istirahat maka tidak dapat premi
+                                WHEN IFNULL(pot_abnormal_istirahat, 0) > 0 THEN 1
+
                                 WHEN is_pot_premi_absen = 1 THEN 1
                                 
                                 -- WHEN st_clock_in = "LATE 1" AND is_pot_premi_izin_in = 1 THEN 0
