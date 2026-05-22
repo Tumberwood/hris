@@ -83,9 +83,10 @@
                                 <th>ID</th>
                                 <th>Tanggal</th>
                                 <th>Kode Cuti</th>
-                                <th>Jenis Cuti</th>
                                 <th>NRP</th>
                                 <th>Nama</th>
+                                <th>Jenis Cuti</th>
+                                <th>Keterangan Cuti</th>
                                 <th>Saldo Awal</th>
                                 <th>Plus</th>
                                 <th>Minus</th>
@@ -204,9 +205,10 @@
 							return '<a target="_blank" href="../htlxxrh/htlxxrh.php?id_hemxxmh=' + row.id_hemxxmh + '&start_date=' + row.tanggal + '">' + data + '</a>';
 						}
 					},
-					{ data: "jenis_cuti" },
 					{ data: "nrp" },
 					{ data: "nama" },
+					{ data: "jenis_cuti" },
+					{ data: "keterangan" },
 					{ data: "saldo_awal", class: "text-right" },
 					{ data: "plus", class: "text-right" },
 					{ data: "minus", class: "text-right" },
