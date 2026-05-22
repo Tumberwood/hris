@@ -16,8 +16,7 @@
 	}
 
 	if (isset($_POST['start_date'])){
-		$awal		= new Carbon($_POST['start_date']);
-		$start_date = $awal->format('Y-m-d');
+		$start_date = $_POST['start_date'];
 	}
 
 	$qs_cuti = $db
@@ -34,7 +33,7 @@
 					a.saldo
 					FROM htlxxrh a
 					LEFT JOIN hemxxmh b ON b.id = a.id_hemxxmh
-					WHERE YEAR(a.tanggal) = YEAR(:start_date)
+					WHERE YEAR(a.tanggal) = :start_date
 					AND b.id = :id_hemxxmh
 					AND a.saldo IS NOT NULL AND a.saldo <> 0
 				),
