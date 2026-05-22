@@ -198,7 +198,6 @@
 				columns: [
 					{ data: "id_hemxxmh",visible:false },
 					{ data: "tanggal" },
-					{ data: "kode" },
 					{ 
 						data: 'kode',
 						render: function(data, type, row) {
