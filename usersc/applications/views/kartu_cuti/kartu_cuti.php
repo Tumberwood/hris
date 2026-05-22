@@ -82,7 +82,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Tanggal</th>
-                                <th>Kode</th>
+                                <th>Kode Cuti</th>
+                                <th>Jenis Cuti</th>
                                 <th>NRP</th>
                                 <th>Nama</th>
                                 <th>Saldo Awal</th>
@@ -198,6 +199,7 @@
 					{ data: "id_hemxxmh",visible:false },
 					{ data: "tanggal" },
 					{ data: "kode" },
+					{ data: "jenis_cuti" },
 					{ data: "nrp" },
 					{ data: "nama" },
 					{ data: "saldo_awal", class: "text-right" },

@@ -25,14 +25,16 @@
 		->bind(':start_date', $start_date)
 		->exec('WITH base AS (
 					SELECT
-					a.id_hemxxmh,
-					a.tanggal,
-					b.kode AS nrp,
-					b.nama,
-					a.kode,
-					a.saldo
+						a.id_hemxxmh,
+						a.tanggal,
+						c.nama AS jenis_cuti,
+						b.kode AS nrp,
+						b.nama,
+						a.kode,
+						a.saldo
 					FROM htlxxrh a
 					LEFT JOIN hemxxmh b ON b.id = a.id_hemxxmh
+					LEFT JOIN htlxxmh c on c.id = a.id_htlxxmh
 					WHERE YEAR(a.tanggal) = :start_date
 					AND b.id = :id_hemxxmh
 					AND a.saldo IS NOT NULL AND a.saldo <> 0
@@ -41,6 +43,7 @@
 					SELECT
 					id_hemxxmh,
 					tanggal,
+					jenis_cuti,
 					nrp,
 					nama,
 					kode,
@@ -58,8 +61,8 @@
 					DATE_FORMAT(tanggal, "%d %b %Y") AS tanggal,
 					nrp,
 					nama,
+					jenis_cuti,
 					IF(kode IS NULL, "SALDO AWAL", kode) kode,
-					COALESCE(
 					(running_total - saldo) AS saldo_awal,
 					0 plus,
 					CASE WHEN saldo < 0 THEN saldo ELSE 0 END AS minus,
