@@ -199,6 +199,12 @@
 					{ data: "id_hemxxmh",visible:false },
 					{ data: "tanggal" },
 					{ data: "kode" },
+					{ 
+						data: 'kode',
+						render: function(data, type, row) {
+							return '<a target="_blank" href="../htlxxrh/htlxxrh.php?id_hemxxmh=' + row.id_hemxxmh + '&start_date=' + row.tanggal + '">' + data + '</a>';
+						}
+					},
 					{ data: "jenis_cuti" },
 					{ data: "nrp" },
 					{ data: "nama" },
