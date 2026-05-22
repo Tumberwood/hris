@@ -60,14 +60,7 @@
 					nama,
 					IF(kode IS NULL, "SALDO AWAL", kode) kode,
 					COALESCE(
-					LAG(running_total) OVER (
-						PARTITION BY id_hemxxmh
-						ORDER BY tanggal,
-								(CASE WHEN kode IS NULL OR kode = "\\N" THEN 0 ELSE 1 END),
-								kode
-					),
-					running_total
-					) AS saldo_awal,
+					(running_total - saldo) AS saldo_awal,
 					0 plus,
 					CASE WHEN saldo < 0 THEN saldo ELSE 0 END AS minus,
 					running_total AS sisa_saldo
