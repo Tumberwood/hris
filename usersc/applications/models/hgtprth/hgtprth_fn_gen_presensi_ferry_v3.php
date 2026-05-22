@@ -1441,8 +1441,7 @@
                                 CASE
                                     WHEN is_pot_premi_absen = 1 THEN 1
                                     
-                                    -- LATE 1 yang ada izin ini tidak dipotong premi
-                                    WHEN st_clock_in = "LATE 1" AND is_pot_premi_izin_in = 1 THEN 0
+                                    -- WHEN st_clock_in = "LATE 1" AND is_pot_premi_izin_in = 1 THEN 0
 
                                     -- Pak Rian 22 May 2026, LATE 1 dipotong premi (yg tidak ada izin)
                                     WHEN st_clock_in = "LATE 1" THEN 1
