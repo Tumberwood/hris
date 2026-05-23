@@ -48,9 +48,12 @@
                     </div>
                     <div class="form-group row">												
                         <label class="col-sm-2 col-form-label">Employee</label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-10">
                             <select class="form-control" id="select_hemxxmh" name="select_hemxxmh"></select>
                         </div>
+						<div class="col-md-2">
+							<button class="btn btn-danger" id="clearSelect"><i class="fa fa-times"></i></button>
+						</div>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg-4">
@@ -223,6 +226,11 @@
 			setTimeout(function() {
 				$('#select_hemxxmh').select2('close');
 			}, 5);
+			
+			$("#clearSelect").click(function () {
+				$("#select_hemxxmh").val(null).trigger('change');
+				id_hem_get = 0;
+			});
 
 			//start datatables
 			tblhtoxxrd = $('#tblhtoxxrd').DataTable( {
