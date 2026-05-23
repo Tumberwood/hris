@@ -28,6 +28,8 @@
             ->query('delete', 'htlxxrh')
             ->where('tanggal', $tanggal)
             ->where('id_hemxxmh', $id_hemxxmh)
+            ->where('id_htlxxmh', 2)
+            ->where('jenis', 1)
         ->exec();
         
         $db->commit();
