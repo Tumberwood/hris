@@ -38,6 +38,7 @@
 					'htlxxth.tanggal_akhir as tanggal_akhir',
 					'htlxxth.keterangan as keterangan',
 					'htlxxmh.kode as htlxxmh_kode',
+					'htlxxmh.is_cuti_khusus as is_cuti_khusus',
 					'ifnull(htlgrmh.kode, "") as htlgrmh_kode'
 				] )
 				->join('hemxxmh','hemxxmh.id = htlxxth.id_hemxxmh','LEFT' )
@@ -71,6 +72,34 @@
 
 			for ($x = 0; $x < $jumlah_hari; $x++) {
 				$tanggal_ymd = $tanggal;
+
+				//Cek apakah ada sakit atau absen khusus pada tanggal dan pegawai terpilih, maka cek apakah ada Cuti
+				if (
+					in_array($rs_htlxxth['id_htlxxmh'], [3,4,18]) || 
+					$rs_htlxxth['is_cuti_khusus'] == 1
+				) {
+					$qs_cuti = $db
+						->raw()
+						->bind(':tanggal_ymd', $tanggal_ymd->format('Y-m-d'))
+						->bind(':id_hemxxmh', $rs_htlxxth['id_hemxxmh'])
+						->exec('SELECT
+									a.id
+								FROM htlxxrh a
+								WHERE a.tanggal = :tanggal_ymd
+								AND a.id_hemxxmh = :id_hemxxmh
+								AND a.htlxxmh_kode = "CB"
+					');
+					$rs_cuti = $qs_cuti->fetch();
+	
+					//Jika ada cuti, maka hapus cuti
+					if (!empty($rs_cuti) && $rs_cuti['id'] > 0) {
+						$qd_cuti = $db
+							->query('delete', 'htlxxrh')
+							->where('id', $rs_cuti['id'] )
+							->exec();
+					}
+				}
+
 				$qi = $db
 					->query('insert', 'htlxxrh')
 					->set('id_transaksi', $rs_htlxxth['id_transaksi'] )
