@@ -958,14 +958,26 @@
                                 WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0))
                                 ELSE 0
                             END AS sisa_saldo,
-                            ( 
-                                (gp + t_jab + fix_cost + var_cost + tj_khusus) / IF(grup_hk = 1, 21, 25) 
-                            ) * (
-                                CASE
-                                    WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0))
-                                    ELSE 0
-                                END
-                            ) AS komp_sisa_cuti
+                            -- ( 
+                            --     (gp + t_jab + fix_cost + var_cost + tj_khusus) / IF(grup_hk = 1, 21, 25) 
+                            -- ) * (
+                            --     CASE
+                            --         WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0))
+                            --         ELSE 0
+                            --     END
+                            -- ) AS komp_sisa_cuti
+                            FLOOR(
+                                (
+                                    (gp + t_jab + fix_cost + var_cost + tj_khusus) 
+                                    / IF(grup_hk = 1, 21, 25)
+                                ) * (
+                                    CASE
+                                        WHEN IFNULL(a.saldo, 0) > 0 
+                                            THEN IFNULL(a.saldo, 0) - COALESCE(cb.c_cb, 0)
+                                        ELSE 0
+                                    END
+                                ) / 100
+                            ) * 100 AS komp_sisa_cuti
                         FROM htlxxrh AS a
                         LEFT JOIN hemxxmh AS peg ON peg.id = a.id_hemxxmh
                         LEFT JOIN hemjbmh AS jb ON jb.id_hemxxmh = peg.id
