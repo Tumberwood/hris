@@ -148,6 +148,7 @@
                         { data: "id",visible: false },         // pastikan query SELECT punya id (kalau perlu tambahin a.id di PHP)
                         { data: "tanggal" },
                         { data: "kode" },
+                        { data: "nik" },
                         { 
                             data: null ,
                             render: function (data, type, row) {
@@ -304,6 +305,7 @@
                         { data: "id",visible: false },         // pastikan query SELECT punya id (kalau perlu tambahin a.id di PHP)
                         { data: "tanggal" },
                         { data: "kode" },
+                        { data: "nik" },
                         { data: "nama" },
                         { data: "departemen" },
                         { data: "jenis" },

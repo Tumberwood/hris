@@ -39,6 +39,7 @@
                 a.id,
                 date_format(a.tanggal, "%d %b %Y") tanggal,
                 a.kode,
+                peg.kode nik,
                 peg.nama,
                 dep.nama departemen,
                 absen.nama AS jenis,

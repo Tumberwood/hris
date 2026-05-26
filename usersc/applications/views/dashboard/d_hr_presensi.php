@@ -139,6 +139,7 @@
                                                 <th>ID</th>
                                                 <th>Tanggal</th>
                                                 <th>Kode</th>
+                                                <th>NIK</th>
                                                 <th>Nama</th>
                                                 <th>Departemen</th>
                                                 <th>Jenis</th>
@@ -166,6 +167,7 @@
                                                 <th>ID</th>
                                                 <th>Tanggal</th>
                                                 <th>Kode</th>
+                                                <th>NIK</th>
                                                 <th>Nama</th>
                                                 <th>Departemen</th>
                                                 <th>Jenis</th>
