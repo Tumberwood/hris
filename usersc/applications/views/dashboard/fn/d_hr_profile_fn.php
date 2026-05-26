@@ -563,4 +563,139 @@
         });
     }
 
+    function htlxxrh() {
+        $.ajax({
+            url: "../../models/dashboard/d_hr_profile_bagian.php",
+            dataType: 'json',
+            type: 'POST',
+            data: {
+            },
+            success: function (json) {
+                // kalau table sudah ada → reset dulu
+                if ($.fn.dataTable.isDataTable('#tblhtlxxrh')) {
+                    $('#tblhtlxxrh').DataTable().clear().destroy();
+                    $('#tblhtlxxrh tbody').empty();
+                }
+
+                // build DataTable baru
+                $('#tblhtlxxrh').DataTable({
+                    data: json.data.result, // dari fn_ajax_results.php otomatis "data"
+                    columns: [
+                        { data: "bagian" },
+                        { data: "c_pmi", class: "text-right" },
+                        { data: "c_os", class: "text-right" },
+                        { data: "c_total", class: "text-right" },
+                    ],
+                    destroy: true,
+                    responsive: false,
+                    scrollX: true,
+                    footerCallback: function ( row, data, start, end, display ) {
+                        var api       = this.api(), data;
+                        var numFormat1 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+                        var numFormat0 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+                        // hitung jumlah 
+                        s_org = api.column( 1 ).data().sum();
+                        s_outs = api.column( 2 ).data().sum();
+                        s_total = api.column( 3 ).data().sum();
+                        
+
+                        $( '#s_org' ).html( numFormat1(s_org) );
+                        $( '#s_outs' ).html( numFormat1(s_outs) );
+                        $( '#s_total' ).html( numFormat1(s_total) );
+                    }
+                });
+            }
+        });
+    }
+
+    function hovxxmh() {
+        $.ajax({
+            url: "../../models/dashboard/d_hr_profile_hovxxmh.php",
+            dataType: 'json',
+            type: 'POST',
+            data: {
+            },
+            success: function (json) {
+                // kalau table sudah ada → reset dulu
+                if ($.fn.dataTable.isDataTable('#tblhovxxmh')) {
+                    $('#tblhovxxmh').DataTable().clear().destroy();
+                    $('#tblhovxxmh tbody').empty();
+                }
+
+                // build DataTable baru
+                $('#tblhovxxmh').DataTable({
+                    data: json.data.result, // dari fn_ajax_results.php otomatis "data"
+                    columns: [
+                        { data: "nama" },
+                        { data: "c_pmi", class: "text-right" },
+                        { data: "c_os", class: "text-right" },
+                        { data: "c_total", class: "text-right" },
+                    ],
+                    destroy: true,
+                    responsive: false,
+                    scrollX: true,
+                    footerCallback: function ( row, data, start, end, display ) {
+                        var api       = this.api(), data;
+                        var numFormat1 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+                        var numFormat0 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+                        // hitung jumlah 
+                        hovxxmh_org = api.column( 1 ).data().sum();
+                        hovxxmh_outs = api.column( 2 ).data().sum();
+                        hovxxmh_total = api.column( 3 ).data().sum();
+                        
+
+                        $( '#hovxxmh_org' ).html( numFormat1(hovxxmh_org) );
+                        $( '#hovxxmh_outs' ).html( numFormat1(hovxxmh_outs) );
+                        $( '#hovxxmh_total' ).html( numFormat1(hovxxmh_total) );
+                    }
+                });
+            }
+        });
+    }
+
+    function hodxxmh() {
+        $.ajax({
+            url: "../../models/dashboard/d_hr_profile_hodxxmh.php",
+            dataType: 'json',
+            type: 'POST',
+            data: {
+            },
+            success: function (json) {
+                // kalau table sudah ada → reset dulu
+                if ($.fn.dataTable.isDataTable('#tblhodxxmh')) {
+                    $('#tblhodxxmh').DataTable().clear().destroy();
+                    $('#tblhodxxmh tbody').empty();
+                }
+
+                // build DataTable baru
+                $('#tblhodxxmh').DataTable({
+                    data: json.data.result, // dari fn_ajax_results.php otomatis "data"
+                    columns: [
+                        { data: "nama" },
+                        { data: "c_pmi", class: "text-right" },
+                        { data: "c_os", class: "text-right" },
+                        { data: "c_total", class: "text-right" },
+                    ],
+                    destroy: true,
+                    responsive: false,
+                    scrollX: true,
+                    footerCallback: function ( row, data, start, end, display ) {
+                        var api       = this.api(), data;
+                        var numFormat1 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+                        var numFormat0 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+                        // hitung jumlah 
+                        hodxxmh_org = api.column( 1 ).data().sum();
+                        hodxxmh_outs = api.column( 2 ).data().sum();
+                        hodxxmh_total = api.column( 3 ).data().sum();
+                        
+
+                        $( '#hodxxmh_org' ).html( numFormat1(hodxxmh_org) );
+                        $( '#hodxxmh_outs' ).html( numFormat1(hodxxmh_outs) );
+                        $( '#hodxxmh_total' ).html( numFormat1(hodxxmh_total) );
+                    }
+                });
+            }
+        });
+    }
+
 </script>

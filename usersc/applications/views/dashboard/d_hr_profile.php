@@ -164,12 +164,66 @@
 	<div class="col-lg-12">
 		<div class="ibox ">
 			<div class="ibox-content">
+				<h3>Table Divisi</h3>
+				<div class="table-responsive">
+					<table id="tblhovxxmh" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						<thead>
+							<tr>
+								<th width="40%">Divisi</th>
+								<th>Jumlah Organik</th>
+								<th>Jumlah Outsourcing</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>Total</th>
+								<th class="text-right bg-success" id="hovxxmh_org"></th>
+								<th class="text-right bg-warning" id="hovxxmh_outs"></th>
+								<th class="text-right bg-primary" id="hovxxmh_total"></th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<div class="ibox ">
+			<div class="ibox-content">
+				<h3>Table Departemen</h3>
+				<div class="table-responsive">
+					<table id="tblhodxxmh" class="table table-striped table-bordered table-hoder nowrap" width="100%">
+						<thead>
+							<tr>
+								<th width="40%">Departemen</th>
+								<th>Jumlah Organik</th>
+								<th>Jumlah Outsourcing</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>Total</th>
+								<th class="text-right bg-success" id="hodxxmh_org"></th>
+								<th class="text-right bg-warning" id="hodxxmh_outs"></th>
+								<th class="text-right bg-primary" id="hodxxmh_total"></th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<div class="ibox ">
+			<div class="ibox-content">
 				<h3>Table Unit Kerja</h3>
 				<div class="table-responsive">
 					<table id="tblhtlxxrh" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
 							<tr>
-								<th>Unit Kerja</th>
+								<th width="40%">Unit Kerja</th>
 								<th>Jumlah Organik</th>
 								<th>Jumlah Outsourcing</th>
 								<th>Total</th>
@@ -218,49 +272,9 @@
 			chartEmpAge();
 			chartEmpMK();
 
-			
-			$.ajax({
-				url: "../../models/dashboard/d_hr_profile_bagian.php",
-				dataType: 'json',
-				type: 'POST',
-				data: {
-				},
-				success: function (json) {
-					// kalau table sudah ada → reset dulu
-					if ($.fn.dataTable.isDataTable('#tblhtlxxrh')) {
-						$('#tblhtlxxrh').DataTable().clear().destroy();
-						$('#tblhtlxxrh tbody').empty();
-					}
-
-					// build DataTable baru
-					$('#tblhtlxxrh').DataTable({
-						data: json.data.result, // dari fn_ajax_results.php otomatis "data"
-						columns: [
-							{ data: "bagian" },
-							{ data: "c_pmi", class: "text-right" },
-							{ data: "c_os", class: "text-right" },
-							{ data: "c_total", class: "text-right" },
-						],
-						destroy: true,
-						responsive: false,
-						scrollX: true,
-						footerCallback: function ( row, data, start, end, display ) {
-							var api       = this.api(), data;
-							var numFormat1 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
-							var numFormat0 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
-							// hitung jumlah 
-							s_org = api.column( 1 ).data().sum();
-							s_outs = api.column( 2 ).data().sum();
-							s_total = api.column( 3 ).data().sum();
-							
-
-							$( '#s_org' ).html( numFormat1(s_org) );
-							$( '#s_outs' ).html( numFormat1(s_outs) );
-							$( '#s_total' ).html( numFormat1(s_total) );
-						}
-					});
-				}
-			});
+			hovxxmh();
+			hodxxmh();
+			htlxxrh();
 						
 		} );// end of document.ready
 	
