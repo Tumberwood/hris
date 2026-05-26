@@ -698,4 +698,49 @@
         });
     }
 
+    function hobxxmh() {
+        $.ajax({
+            url: "../../models/dashboard/d_hr_profile_hobxxmh.php",
+            dataType: 'json',
+            type: 'POST',
+            data: {
+            },
+            success: function (json) {
+                // kalau table sudah ada → reset dulu
+                if ($.fn.dataTable.isDataTable('#tblhobxxmh')) {
+                    $('#tblhobxxmh').DataTable().clear().destroy();
+                    $('#tblhobxxmh tbody').empty();
+                }
+
+                // build DataTable baru
+                $('#tblhobxxmh').DataTable({
+                    data: json.data.result, // dari fn_ajax_results.php otomatis "data"
+                    columns: [
+                        { data: "nama" },
+                        { data: "c_pmi", class: "text-right" },
+                        { data: "c_os", class: "text-right" },
+                        { data: "c_total", class: "text-right" },
+                    ],
+                    destroy: true,
+                    responsive: false,
+                    scrollX: true,
+                    footerCallback: function ( row, data, start, end, display ) {
+                        var api       = this.api(), data;
+                        var numFormat1 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+                        var numFormat0 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+                        // hitung jumlah 
+                        hobxxmh_org = api.column( 1 ).data().sum();
+                        hobxxmh_outs = api.column( 2 ).data().sum();
+                        hobxxmh_total = api.column( 3 ).data().sum();
+                        
+
+                        $( '#hobxxmh_org' ).html( numFormat1(hobxxmh_org) );
+                        $( '#hobxxmh_outs' ).html( numFormat1(hobxxmh_outs) );
+                        $( '#hobxxmh_total' ).html( numFormat1(hobxxmh_total) );
+                    }
+                });
+            }
+        });
+    }
+
 </script>

@@ -218,6 +218,33 @@
 	<div class="col-lg-12">
 		<div class="ibox ">
 			<div class="ibox-content">
+				<h3>Table Bagian</h3>
+				<div class="table-responsive">
+					<table id="tblhobxxmh" class="table table-striped table-bordered table-hober nowrap" width="100%">
+						<thead>
+							<tr>
+								<th width="40%">Bagian</th>
+								<th>Jumlah Organik</th>
+								<th>Jumlah Outsourcing</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>Total</th>
+								<th class="text-right bg-success" id="hobxxmh_org"></th>
+								<th class="text-right bg-warning" id="hobxxmh_outs"></th>
+								<th class="text-right bg-primary" id="hobxxmh_total"></th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<div class="ibox ">
+			<div class="ibox-content">
 				<h3>Table Unit Kerja</h3>
 				<div class="table-responsive">
 					<table id="tblhtlxxrh" class="table table-striped table-bordered table-hover nowrap" width="100%">
@@ -274,6 +301,7 @@
 
 			hovxxmh();
 			hodxxmh();
+			hobxxmh();
 			htlxxrh();
 						
 		} );// end of document.ready
