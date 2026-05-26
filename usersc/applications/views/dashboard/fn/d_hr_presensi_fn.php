@@ -291,7 +291,7 @@
                 // kalau table sudah ada → reset dulu
                 if ($.fn.dataTable.isDataTable('#tblhtlxxrh_absen')) {
                     $('#tblhtlxxrh_absen').DataTable().clear().destroy();
-                    $('#tblhtlxxrh_absen tbody').empty();
+                    $('#tblhtlxxrh_absen').empty();
                 }
 
                 // build DataTable baru
