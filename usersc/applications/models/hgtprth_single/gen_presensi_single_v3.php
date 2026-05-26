@@ -1120,7 +1120,7 @@
                             GROUP BY a.id_hemxxmh
                         ) AS abnormal_istirahat ON abnormal_istirahat.id_hemxxmh = a.id
 
-                        WHERE (b.tanggal_keluar IS NULL OR b.tanggal_keluar > :tanggal) AND b.id_hemxxmh = :id_hemxxmh 
+                        WHERE (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= :tanggal) AND b.id_hemxxmh = :id_hemxxmh 
 
                     ),
                     status_presensi AS (
