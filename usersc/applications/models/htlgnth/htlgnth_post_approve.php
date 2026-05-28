@@ -166,7 +166,7 @@
                         SET 
                             jad.is_pot_hk = 
                                 case 
-                                    when ifnull(sisa_saldo,0) = 0 AND jad.id_htsxxmh <> 1 AND id_hetxxmh NOT IN (99, 48, 131) then 1
+                                    when ifnull(sisa_saldo,0) = 0 AND jad.id_htsxxmh <> 1 AND id_hetxxmh NOT IN (99, 48, 131) AND id_heyxxmd <> 4 then 1
                                     when ifnull(sisa_saldo,0) = 0 AND jad.keterangan LIKE "%cuti bersama%" then 1
                                 ELSE 0
                                 END ,
