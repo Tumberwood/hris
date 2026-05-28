@@ -60,9 +60,9 @@
 							<div class="col-lg-6">
 								<editor-field name="hemxxmh.kode_finger"></editor-field>
 							</div>
-							<div class="col-lg-6">
+							<!-- <div class="col-lg-6">
 								<editor-field name="hemdcmh.ktp_no"></editor-field>
-							</div>
+							</div> -->
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
@@ -666,10 +666,10 @@
 						label: "Kode Finger<sup class='text-danger'>*<sup>",
 						name: "hemxxmh.kode_finger"
 					}, 	
-					{
-						label: "No KTP <sup class='text-danger'>*<sup>",
-						name: "hemdcmh.ktp_no"
-					}, 	
+					// {
+					// 	label: "No KTP <sup class='text-danger'>*<sup>",
+					// 	name: "hemdcmh.ktp_no"
+					// }, 	
 					{
 						label: "No BPJS TK <sup class='text-danger'>*<sup>",
 						name: "hemdcmh.no_bpjs_tk"
@@ -1523,19 +1523,19 @@
 					// END of validasi hemxxmh.is_tukar 
 
 					// BEGIN of validasi hemdcmh.ktp_no 
-					ktp_no = edthemxxmh.field('hemdcmh.ktp_no').val();
-					if(!ktp_no || ktp_no == ''){
-						edthemxxmh.field('hemdcmh.ktp_no').error( 'Wajib diisi!' );
-					}
-					// validasi min atau max angka
-					if(ktp_no <= 0 ){
-						edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus > 0' );
-					}
+					// ktp_no = edthemxxmh.field('hemdcmh.ktp_no').val();
+					// if(!ktp_no || ktp_no == ''){
+					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Wajib diisi!' );
+					// }
+					// // validasi min atau max angka
+					// if(ktp_no <= 0 ){
+					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus > 0' );
+					// }
 					
-					// validasi angka
-					if(isNaN(ktp_no) ){
-						edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus berupa Angka!' );
-					}
+					// // validasi angka
+					// if(isNaN(ktp_no) ){
+					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus berupa Angka!' );
+					// }
 					// END of validasi hemxxmh.kode_finger 
 
 					// BEGIN of validasi hemdcmh.no_bpjs_kes 
@@ -1756,7 +1756,7 @@
 					{ data: "hemxxmh.id",visible:false },
 					{ data: "hemxxmh.kode" },
 					{ data: "hemxxmh.kode_finger" },
-					{ data: "hemdcmh.ktp_no" },
+					// { data: "hemdcmh.ktp_no" },
 					{ data: "hemxxmh.nama" }, //4
 					
 					{ data: "hovxxmh.nama" },	//divisi

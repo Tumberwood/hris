@@ -60,9 +60,9 @@
 							<div class="col-lg-6">
 								<editor-field name="hemxxmh.kode_finger"></editor-field>
 							</div>
-							<!-- <div class="col-lg-6">
+							<div class="col-lg-6">
 								<editor-field name="hemdcmh.ktp_no"></editor-field>
-							</div> -->
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
@@ -236,7 +236,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Kode</th>
+                                <th>NIK</th>
                                 <th>Kode Finger</th>
                                 <th>No KTP</th>
                                 <th>Nama</th>
@@ -584,20 +584,19 @@
 
 		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0, id_hevxxmh_old = 0, id_heyxxmh_old = 0, id_hesxxmh_old = 0;
 		var id_hobxxmh_old = 0;
-		var id_hedlvmh_old = 0;
+		var id_hedlvmh_old = 0, id_hevgrmh_old = 0;
 		var id_gtxpkmh_old = 0, id_holxxmd_2_old = 0;
 		var id_heyxxmd_old = 0, tanggal_keluar_old = null, id_gctxxmh_old = 0;
 		var id_gctxxmh_domisili_old = 0, id_gctxxmh_ktp_old = 0;
 		var id_gctxxmh_old_pendidikan = 0;
 		var id_gedxxmh_old_pendidikan = 0;
-		var id_hevgrmh_old   = 0;
 
 		$(document).ready(function() {
 
 			//start datatables editor
 			edthemxxmh = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/hemxxmh/hemxxmh_kbm.php",
+					url: "../../models/hemxxmh/hemxxmh.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_hemxxmh = show_inactive_status_hemxxmh;
@@ -659,17 +658,17 @@
 						name: "hemxxmh.jumlah_anak"
 					}, 	
 					{
-						label: "Kode <sup class='text-danger'>*<sup>",
+						label: "NIK <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.kode"
 					}, 	
 					{
 						label: "Kode Finger<sup class='text-danger'>*<sup>",
 						name: "hemxxmh.kode_finger"
 					}, 	
-					// {
-					// 	label: "No KTP <sup class='text-danger'>*<sup>",
-					// 	name: "hemdcmh.ktp_no"
-					// }, 	
+					{
+						label: "No KTP <sup class='text-danger'>*<sup>",
+						name: "hemdcmh.ktp_no"
+					}, 	
 					{
 						label: "No BPJS TK <sup class='text-danger'>*<sup>",
 						name: "hemdcmh.no_bpjs_tk"
@@ -825,7 +824,6 @@
 							},
 						}
 					},
-					
 					{
 						label: "Bagian <sup class='text-danger'>*<sup>",  
 						name: "hemjbmh.id_hobxxmh",
@@ -1395,16 +1393,17 @@
 				edthemxxmh.field('start_on').val(start_on);
 				edthemxxmh.field('status_aktif').hide();
 				edthemxxmh.field('hemjbmh.id_heyxxmh').disable();
+				edthemxxmh.field('hemjbmh.grup_hk').show();
 				edthemxxmh.field('hemjbmh.is_harian_lepas').disable();
 
 				if (action == 'edit') {
 					edthemxxmh.field('status_aktif').show();
 					edthemxxmh.field('status_aktif').val(is_active);
-					edthemxxmh.field('hemjbmh.grup_hk').hide();
+					edthemxxmh.field('hemjbmh.grup_hk').disable();
 					edthemxxmh.field('hemjbmh.jumlah_grup').disable();
 					edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').hide();
 				} else {
-					edthemxxmh.field('hemjbmh.grup_hk').show();
+					edthemxxmh.field('hemjbmh.grup_hk').enable();
 					edthemxxmh.field('hemjbmh.jumlah_grup').enable();
 					edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').show();
 				}
@@ -1448,13 +1447,6 @@
 			
 			edthemxxmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					// BEGIN of validasi hemjbmh.id_hevgrmh 
-					id_hevgrmh = edthemxxmh.field('hemjbmh.id_hevgrmh').val();
-					if(!id_hevgrmh || id_hevgrmh == ''){
-						edthemxxmh.field('hemjbmh.id_hevgrmh').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.id_hevgrmh 
-
 					id_gctxxmh_lahir = edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').val();
 					if(!id_gctxxmh_lahir || id_gctxxmh_lahir == ''){
 						edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').error( 'Wajib diisi!' );
@@ -1523,19 +1515,19 @@
 					// END of validasi hemxxmh.is_tukar 
 
 					// BEGIN of validasi hemdcmh.ktp_no 
-					// ktp_no = edthemxxmh.field('hemdcmh.ktp_no').val();
-					// if(!ktp_no || ktp_no == ''){
-					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Wajib diisi!' );
-					// }
-					// // validasi min atau max angka
-					// if(ktp_no <= 0 ){
-					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus > 0' );
-					// }
+					ktp_no = edthemxxmh.field('hemdcmh.ktp_no').val();
+					if(!ktp_no || ktp_no == ''){
+						edthemxxmh.field('hemdcmh.ktp_no').error( 'Wajib diisi!' );
+					}
+					// validasi min atau max angka
+					if(ktp_no <= 0 ){
+						edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus > 0' );
+					}
 					
-					// // validasi angka
-					// if(isNaN(ktp_no) ){
-					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus berupa Angka!' );
-					// }
+					// validasi angka
+					if(isNaN(ktp_no) ){
+						edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus berupa Angka!' );
+					}
 					// END of validasi hemxxmh.kode_finger 
 
 					// BEGIN of validasi hemdcmh.no_bpjs_kes 
@@ -1583,6 +1575,13 @@
 						edthemxxmh.field('hemjbmh.id_hovxxmh').error( 'Wajib diisi!' );
 					}
 					// END of validasi hemjbmh.id_hovxxmh 
+
+					// BEGIN of validasi hemjbmh.id_hevgrmh 
+					id_hevgrmh = edthemxxmh.field('hemjbmh.id_hevgrmh').val();
+					if(!id_hevgrmh || id_hevgrmh == ''){
+						edthemxxmh.field('hemjbmh.id_hevgrmh').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemjbmh.id_hevgrmh 
 
 					// BEGIN of validasi hemjbmh.id_hodxxmh 
 					id_hodxxmh = edthemxxmh.field('hemjbmh.id_hodxxmh').val();
@@ -1741,7 +1740,7 @@
 					}
 				],
 				ajax: {
-					url: "../../models/hemxxmh/hemxxmh_kbm.php",
+					url: "../../models/hemxxmh/hemxxmh.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_hemxxmh = show_inactive_status_hemxxmh;
@@ -1756,7 +1755,14 @@
 					{ data: "hemxxmh.id",visible:false },
 					{ data: "hemxxmh.kode" },
 					{ data: "hemxxmh.kode_finger" },
-					// { data: "hemdcmh.ktp_no" },
+					{ 
+						data: "hemdcmh.ktp_no",
+						render: function(data, type, row) {
+							if (data == null) return '';
+							return data.toString();
+						}
+
+					},
 					{ data: "hemxxmh.nama" }, //4
 					
 					{ data: "hovxxmh.nama" },	//divisi
