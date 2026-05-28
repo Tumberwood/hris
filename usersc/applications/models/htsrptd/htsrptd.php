@@ -64,14 +64,19 @@
 				) ),
 
 			Field::inst( 'concat(hemxxmh_pengaju.kode, " - ",hemxxmh_pengaju.nama) as hemxxmh_pengaju' ),
-			Field::inst( 'concat(hemxxmh_pengganti.kode, " - ",hemxxmh_pengganti.nama) as hemxxmh_pengganti' )
+			Field::inst( 'concat(hemxxmh_pengganti.kode, " - ",hemxxmh_pengganti.nama) as hemxxmh_pengganti' ),
+			Field::inst( 'heyxxmd_pengaju.nama as heyxxmd_pengaju' ),
+			Field::inst( 'heyxxmd_pengganti.nama as heyxxmd_pengganti' ),
 
 		)
 		->leftJoin( 'hemxxmh as hemxxmh_pengaju','hemxxmh_pengaju.id','=','htsrptd.id_hemxxmh_pengaju' )
 		->leftJoin( 'hemjbmh as hemjbmh_pengaju','hemjbmh_pengaju.id_hemxxmh','=','hemxxmh_pengaju.id' )
+		->leftJoin( 'heyxxmd as heyxxmd_pengaju','heyxxmd_pengaju.id','=','hemjbmh_pengaju.id_heyxxmd' )
 		
 		->leftJoin( 'hemxxmh as hemxxmh_pengganti','hemxxmh_pengganti.id','=','htsrptd.id_hemxxmh_pengganti' )
-		->leftJoin( 'hemjbmh as hemjbmh_pengganti','hemjbmh_pengganti.id_hemxxmh','=','hemxxmh_pengganti.id' );
+		->leftJoin( 'hemjbmh as hemjbmh_pengganti','hemjbmh_pengganti.id_hemxxmh','=','hemxxmh_pengganti.id' )
+		->leftJoin( 'heyxxmd as heyxxmd_pengganti','heyxxmd_pengganti.id','=','hemjbmh_pengganti.id_heyxxmd' )
+		;
 	
 	// do not erase
 	// function show / hide inactive document

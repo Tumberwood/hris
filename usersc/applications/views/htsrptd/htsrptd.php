@@ -25,7 +25,9 @@
                                 <th>Kode</th>
                                 <th>Tanggal</th>
                                 <th>Pengaju</th>
+                                <th>Sub Tipe Pengaju</th>
                                 <th>Pengganti</th>
+                                <th>Sub Tipe Pengganti</th>
                                 <th>Keterangan</th>
                                 <th>Appr</th>
                             </tr>
@@ -312,7 +314,9 @@
 					{ data: "htsrptd.kode" },
 					{ data: "htsrptd.tanggal" },
 					{ data: "hemxxmh_pengaju" },
+					{ data: "heyxxmd_pengaju" },
 					{ data: "hemxxmh_pengganti" },
+					{ data: "heyxxmd_pengganti" },
 					{ data: "htsrptd.keterangan" },
 					{ 
 						data: "htsrptd.is_approve" ,
