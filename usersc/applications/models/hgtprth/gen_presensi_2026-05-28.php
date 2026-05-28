@@ -913,28 +913,12 @@
                                     FROM htssctd AS jadwal
                                     INNER JOIN hemxxmh AS b ON b.id = jadwal.id_hemxxmh AND b.is_active = 1
                                     INNER JOIN hemjbmh jb on jb.id_hemxxmh = b.id
-                                    
-                                    LEFT JOIN htoxxrd d ON d.id_hemxxmh = jadwal.id_hemxxmh AND d.tanggal = jadwal.tanggal
-                                    LEFT JOIN htsprtd c ON c.kode = b.kode_finger
-                                    AND c.tanggal_jam >= IF(
-                                        d.id_hemxxmh IS NOT NULL,
-                                        CONCAT(d.tanggal, " ", d.jam_awal),
-                                        jadwal.tanggaljam_awal_t1
-                                    )
+                                    LEFT JOIN htsprtd c
+                                        ON c.kode = b.kode_finger
+                                        AND c.tanggal_jam >= jadwal.tanggaljam_awal_t1
+                                        AND c.tanggal_jam <= DATE_ADD(jadwal.tanggaljam_akhir_t2, INTERVAL 1 DAY)
 
-                                    AND c.tanggal_jam <= IF(
-                                        d.id_hemxxmh IS NOT NULL,
-                                        CONCAT(
-                                            IF(
-                                                d.jam_awal > d.jam_akhir,
-                                                DATE_ADD(d.tanggal, INTERVAL 1 DAY),
-                                                d.tanggal
-                                            ),
-                                            " ",
-                                            d.jam_akhir
-                                        ),
-                                        DATE_ADD(jadwal.tanggaljam_akhir_t2, INTERVAL 1 DAY)
-                                    )
+                                    LEFT JOIN htoxxrd AS d ON d.id_hemxxmh = jadwal.id_hemxxmh AND d.tanggal = jadwal.tanggal
                                     LEFT JOIN htsxxmh shift ON shift.id = jadwal.id_htsxxmh
                                     WHERE jadwal.is_active = 1
                                     AND jadwal.tanggal = :tanggal
