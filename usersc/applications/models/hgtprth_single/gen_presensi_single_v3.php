@@ -804,13 +804,13 @@
                                 LEFT JOIN htoxxrd d ON d.id_hemxxmh = jadwal.id_hemxxmh AND d.tanggal = jadwal.tanggal
                                 LEFT JOIN htsprtd c ON c.kode = b.kode_finger
                                 AND c.tanggal_jam >= IF(
-                                    d.id_hemxxmh IS NOT NULL,
+                                    d.id_hemxxmh IS NOT NULL AND jadwal.id_htsxxmh = 1,
                                     CONCAT(d.tanggal, " ", d.jam_awal),
                                     jadwal.tanggaljam_awal_t1
                                 )
 
                                 AND c.tanggal_jam <= IF(
-                                    d.id_hemxxmh IS NOT NULL,
+                                    d.id_hemxxmh IS NOT NULL AND jadwal.id_htsxxmh = 1,
                                     CONCAT(
                                         IF(
                                             d.jam_awal > d.jam_akhir,
