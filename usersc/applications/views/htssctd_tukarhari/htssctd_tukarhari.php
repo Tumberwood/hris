@@ -83,6 +83,7 @@
 								<th>NIK</th>
 								<th>Nama</th>
 								<th>Jabatan</th>
+								<th>Sub Tipe</th>
                             </tr>
                         </thead>
                     </table>
@@ -544,7 +545,8 @@
 					{ data: "htssctd_tukarhari_pegawai.id_htssctd_tukarhari",visible:false },
 					{ data: "hemxxmh.kode" },
 					{ data: "hemxxmh.nama" },
-					{ data: "hetxxmh.nama" }
+					{ data: "hetxxmh.nama" },
+					{ data: "heyxxmd.nama" },
 				],
 				buttons: [
 					// BEGIN breaking generate button

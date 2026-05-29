@@ -41,12 +41,14 @@
 				Field::inst( 'hemxxmh.nama' ),
 				Field::inst( 'hemxxmh.kode' ),
 				Field::inst( 'hetxxmh.nama' ),
+				Field::inst( 'heyxxmd.nama' ),
 				Field::inst( 'hosxxmh.nama' )
 			)
 			->where('htssctd_tukarhari_pegawai.id_htssctd_tukarhari',$_POST['id_htssctd_tukarhari'])
 			->leftJoin( 'hemxxmh','hemxxmh.id','=','htssctd_tukarhari_pegawai.id_hemxxmh' )
 			->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
 			->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
+			->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
 			->leftJoin( 'hosxxmh','hosxxmh.id','=','hemjbmh.id_hosxxmh' )
 			;
 		
