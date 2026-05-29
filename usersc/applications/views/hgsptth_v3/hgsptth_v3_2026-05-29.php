@@ -280,10 +280,8 @@
 		var id_htsxxmh_old = 0;
 		var id_hemxxmh_old = 0;
 		var id_htsptth_v3_old = 0;
-		var id_hgsptth_v3_old = 0;
 		var id_holxxmd_old = 0;
 		var select_bagian = 0;
-		var generated_on = null;
 		
 		// BEGIN datepicker init
 		$('#periode').datepicker({
@@ -397,46 +395,9 @@
 							firstDay: 0
 						},
 						format: 'DD MMM YYYY'
-					}, 
+					}, 	
 					{
-						label: "Copy dari Periode Jadwal <sup class='text-danger'>*<sup>",
-						name: "hgsptth_v3.id_hgsptth_v3",
-						type: "select2",
-						opts: {
-							placeholder : "Select",
-							allowClear: true,
-							multiple: false,
-							ajax: {
-								url: "../../models/hgsptth_v3/hgsptth_v3_fn_opt.php",
-								dataType: 'json',
-								data: function (params) {
-									var query = {
-										id_transaksi_h: id_transaksi_h,
-										id_hgsptth_v3_old: id_hgsptth_v3_old,
-										search: params.term || '',
-										page: params.page || 1
-									}
-									return query;
-								},
-								processResults: function (data, params) {
-									return {
-										results: data.results,
-										pagination: {
-											more: true
-										}
-									};
-								},
-								cache: true,
-								minimumInputLength: 1,
-								maximum: 10,
-								delay: 500,
-								maximumSelectionLength: 5,
-								minimumResultsForSearch: -1
-							}
-						}
-					},	
-					{
-						label: "Copy dari Periode Jadwal", //dibuat selection
+						label: "Copy Dari Periode Jadwal", //dibuat selection
 						name: "hgsptth_v3.dari_tanggal",
 						type: "datetime",
 						opts:{
@@ -452,7 +413,6 @@
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthgsptth_v3.field('start_on').val(start_on);
 				edthgsptth_v3.field('hgsptth_v3.tanggal_akhir').disable();
-				edthgsptth_v3.field('hgsptth_v3.dari_tanggal').hide();
 
 				if(action == 'create'){
 					tblhgsptth_v3.rows().deselect();
@@ -462,17 +422,6 @@
             edthgsptth_v3.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
-			
-			edthgsptth_v3.dependent( 'hgsptth_v3.id_hgsptth_v3', function ( val, data, callback ) {
-				if (val > 0) {
-					autofillField('hgsptth_v3', val, 'DATE_FORMAT(tanggal_awal, "%d %b %Y") tanggal');
-					var tanggal = autofillData.tanggal;
-
-					console.log(tanggal);
-					edthgsptth_v3.field('hgsptth_v3.dari_tanggal').val(tanggal);
-				}
-				return {}
-			}, {event: 'keyup change'});
 
 			edthgsptth_v3.dependent( 'hgsptth_v3.tanggal_awal', function ( val, data, callback ) {
 				if (val != null) {
@@ -630,8 +579,6 @@
 				dari_tanggal_select        = data_hgsptth_v3.dari_tanggal;
 				tipe        = data_hgsptth_v3.tipe;
 				tanggal_akhir_select        = data_hgsptth_v3.tanggal_akhir;
-				id_hgsptth_v3_old        = data_hgsptth_v3.id_hgsptth_v3;
-				generated_on        = data_hgsptth_v3.generated_on;
 				
 				// atur hak akses
 				tbl_details = [	
@@ -646,7 +593,7 @@
 								tblhgsemtd_v3_minggu_s3
 								];
 				CekSelectHeaderHD(tblhgsptth_v3, tbl_details);
-				if (dari_tanggal_select != null && generated_on == null) {
+				if (dari_tanggal_select != null) {
 					tblhgsptth_v3.button( 'btnGenJadwal:name' ).enable();
 				} else {
 					tblhgsptth_v3.button( 'btnGenJadwal:name' ).disable();
@@ -665,8 +612,6 @@
 				tanggal_akhir_select = null;
 				dari_tanggal_select = null;
 				id_htsptth_select = 0;
-				id_hgsptth_v3_old = 0;
-				generated_on = null;
 
 				// atur hak akses
 				

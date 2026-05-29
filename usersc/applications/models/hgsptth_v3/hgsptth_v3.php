@@ -25,6 +25,8 @@
 			Field::inst( 'hgsptth_v3.id' ),
 			Field::inst( 'hgsptth_v3.id_htsptth_v3' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hgsptth_v3.id_hgsptth_v3' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hgsptth_v3.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);

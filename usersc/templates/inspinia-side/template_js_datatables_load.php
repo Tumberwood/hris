@@ -71,4 +71,25 @@ $('table').on( 'init.dt', function () {
 		colvisCount += "," + i;
 	}
 } );
+
+function autofillField(tbl_name, id_transaksi, fields_name){
+    $.ajax( {
+        url: '../../../helpers/fn_autofillField.php',
+        dataType: 'json',
+        type: 'POST',
+        async: false,
+        data: {
+            tbl_name: tbl_name,
+            id_transaksi: id_transaksi,
+            fields_name: fields_name
+        },
+        success: function ( json ) {
+            if(json.data.status_code == 200){
+                autofillData = json.data.rs_autofill;
+            }else{
+                autofillData = [];
+            }
+        }
+    } );
+}
 </script>
