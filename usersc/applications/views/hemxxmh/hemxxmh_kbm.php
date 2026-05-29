@@ -238,7 +238,7 @@
                                 <th>ID</th>
                                 <th>Kode</th>
                                 <th>Kode Finger</th>
-                                <th>No KTP</th>
+                                <!-- <th>No KTP</th> -->
                                 <th>Nama</th>
                                 
 								<th>Divisi</th>
