@@ -87,6 +87,11 @@
                 { data: 'jadwal' },
                 { data: 'is_makan' },
             ],
+            rowCallback: function( row, data, index ) {
+                if ( data.is_makan == 0 ) {
+                    $('td', row).addClass('bg-warning');
+                }
+            },
             destroy: true, // Reinitialize allowed
             responsive: false, // Enable responsive layout
             autoWidth: false, // Disable automatic column width adjustment

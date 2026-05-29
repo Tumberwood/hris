@@ -27,10 +27,20 @@
 					b.nama,
 					a.nama mesin,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
+					IFNULL(pr.is_makan, 0) is_makan,
+					pr.st_jadwal,
 					a.jam,
 					a.keterangan
 				FROM htsprtd a
 				LEFT JOIN hemxxmh b on b.kode_finger = a.kode
+				LEFT JOIN htsprrd pr 
+					ON pr.id_hemxxmh = b.id
+					AND a.tanggal = CASE
+						WHEN TIME(a.jam) < "07:00:00"
+							THEN DATE_ADD(pr.tanggal, INTERVAL 1 DAY)
+						ELSE pr.tanggal
+					END
+					AND pr.is_makan = 1
 				WHERE a.tanggal BETWEEN :start_date AND :end_date 
 					AND a.nama IN ("MAKAN", "MAKAN MANUAL")
 					AND b.id = :id_hemxxmh
