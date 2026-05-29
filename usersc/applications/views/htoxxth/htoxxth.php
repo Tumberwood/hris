@@ -91,6 +91,12 @@
 				<h5>Detail</h5>
 			</div>
 			<div class="ibox-content">
+				<div class="alert alert-info alert-dismissable">
+					<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+					JIKA TIPE: AWAL, AKHIR DAN HARI LIBUR + ISTIRAHAT = TI. Maka Jam - 30 menit
+					<br>
+					JIKA TIPE: TI Shift 1,2,3 + ISTIRAHAT = TI. Maka Jam + 30 menit
+				</div>
 				<div class="table-responsive">
                     <table id="tblhtoemtd" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
