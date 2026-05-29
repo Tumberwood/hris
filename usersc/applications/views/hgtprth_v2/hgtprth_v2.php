@@ -376,14 +376,22 @@
 							var date = new Date().getTime();
 							var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
 
-							notifyprogress = $.notify({
-								message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
-							},{
-								z_index: 9999,
-								allow_dismiss: false,
-								type: 'info',
-								delay: 0
+							Swal.fire({
+								title: 'Processing...',
+								html: 'Jangan tutup halaman sampai proses selesai',
+								allowOutsideClick: false,
+								allowEscapeKey: false,
+								showConfirmButton: false,
+								didOpen: () => {
+									Swal.showLoading();
+								}
 							});
+
+							notifyprogress = {
+								close: function(){
+									Swal.close();
+								}
+							};
 
 							$.ajax( {
 								// url: "../../models/hgtprth/hgtprth_fn_gen_presensi_ferry.php",
