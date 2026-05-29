@@ -405,7 +405,8 @@
 									timestamp: timestamp
 								},
 								success: function ( json ) {
-
+									
+									notifyprogress.close();
 									$.notify({
 										message: json.data.message
 									},{
@@ -413,7 +414,6 @@
 									});
 
 									tblhgtprth.ajax.reload(function ( json ) {
-										notifyprogress.close();
 									}, false);
 								}
 							} );
