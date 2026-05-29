@@ -412,6 +412,7 @@
 			edthgsptth_v3.on( 'preOpen', function( e, mode, action ) {
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthgsptth_v3.field('start_on').val(start_on);
+				edthgsptth_v3.field('hgsptth_v3.tanggal_akhir').disable();
 
 				if(action == 'create'){
 					tblhgsptth_v3.rows().deselect();
