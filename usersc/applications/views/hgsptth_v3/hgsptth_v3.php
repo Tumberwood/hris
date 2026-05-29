@@ -370,6 +370,16 @@
 						def: 1
 					},	
 					{
+						label: "Copy Dari Periode Jadwal", //dibuat selection
+						name: "hgsptth_v3.dari_tanggal",
+						type: "datetime",
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					}, 
+					{
 						label: "Tanggal Awal <sup class='text-danger'>*<sup>",
 						name: "hgsptth_v3.tanggal_awal",
 						type: "datetime",
@@ -395,17 +405,7 @@
 							firstDay: 0
 						},
 						format: 'DD MMM YYYY'
-					}, 	
-					{
-						label: "Copy Dari Periode Jadwal", //dibuat selection
-						name: "hgsptth_v3.dari_tanggal",
-						type: "datetime",
-						opts:{
-							minDate: new Date('1900-01-01'),
-							firstDay: 0
-						},
-						format: 'DD MMM YYYY'
-					}, 	
+					}, 		
 				]
 			} );
 			
