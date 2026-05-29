@@ -39,15 +39,15 @@
     ');
     
     $rs_pegawai_terdaftar = $qs_pegawai_terdaftar->fetchAll(PDO::FETCH_ASSOC);
-    $id_terdaftar = array_column($rs_lunas, 'id_hemxxmh');
+    $id_terdaftar = array_column($rs_pegawai_terdaftar, 'id_hemxxmh');
     
     // Ambil yang belum lunas aja di show options nya
     if (!empty($id_terdaftar)) {
-        $w_ids_lunas = '(' . implode(',', $id_terdaftar) . ')';
-        $s_ids_lunas = 'NOT IN';
+        $w_ids_terdaftar = '(' . implode(',', $id_terdaftar) . ')';
+        $s_ids_terdaftar = 'NOT IN';
     } else {
-        $w_ids_lunas = '(-1)';
-        $s_ids_lunas = 'NOT IN';
+        $w_ids_terdaftar = '(-1)';
+        $s_ids_terdaftar = 'NOT IN';
     }             
 
     // BEGIN query options self.
@@ -80,7 +80,7 @@
 		->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
         ->where('hemxxmh.is_active',1)
         ->where('hemxxmh.id', $id_hemxxmh_old, '<>' )
-        ->where('hemxxmh.id', $w_ids_lunas, $s_ids_lunas, false )
+        ->where('hemxxmh.id', $w_ids_terdaftar, $s_ids_terdaftar, false )
         ->where('hemjbmh.is_harian_lepas', '0' )
         ->where( function ( $r ) {
             $q = $_GET['search'];
