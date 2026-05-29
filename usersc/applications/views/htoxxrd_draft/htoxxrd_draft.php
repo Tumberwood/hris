@@ -48,7 +48,7 @@
                     </div>
                     <div class="form-group row">												
                         <label class="col-sm-2 col-form-label">Employee</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-6">
                             <select class="form-control" id="select_hemxxmh" name="select_hemxxmh"></select>
                         </div>
 						<div class="col-md-2">
