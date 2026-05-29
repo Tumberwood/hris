@@ -73,7 +73,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Kode</th>
+                                <th>NIK</th>
                                 <th>Kode Finger</th>
                                 <th>No KTP</th>
                                 <th>Nama</th>
@@ -88,7 +88,8 @@
                                 <th>Tanggal Akhir Kontrak</th>
                                 <th>Tanggal Keluar</th>
                                 <th>Grup HK</th>
-                                <th>Aktif</th>
+                                <th>Transaksi</th>
+                                <th>Keterangan</th>
                             </tr>
                         </thead>
                     </table>
@@ -238,53 +239,31 @@
 						d.start_date = start_date;
 						d.end_date = end_date;
 						d.id_hemxxmh = id_hemxxmh;
-					}
+					},
+					dataSrc: 'data.resign'
 				},
 				order: [[ 1, "desc" ]],
 				responsive: false,
 				scrollX: true,
 				columns: [
-					{ data: "hemxxmh.id",visible:false },
-					{ data: "hemxxmh.kode" },
-					{ data: "hemxxmh.kode_finger" },
-					{ data: "hemdcmh.ktp_no" },
-					{ data: "hemxxmh.nama" }, //4
-					{ data: "hodxxmh.nama" },
-					{ data: "hosxxmh.nama" },
-					{ data: "hetxxmh.nama" },
-					{ data: "holxxmd_2.nama" },
-					{ data: "heyxxmh.nama" },
-					{ data: "heyxxmd.nama" },
-					{ data: "hesxxmh.nama" },//10
-					{ data: "hemjbmh.tanggal_masuk" },
-					{ data: "hemjbmh.tanggal_akhir_kontrak" },
-					{ data: "hemjbmh.tanggal_keluar" },
-					{ 
-						data: "hemjbmh.grup_hk",
-						render: function (data){
-							if (data == 0){
-								return '';
-							}else if(data == 1){
-								return '5HK';
-							}else if(data == 2){
-								return '6HK';
-							}else{
-								return '<span class="text-danger"> Data Invalid</span>';
-							}
-						}
-					},
-					{ 
-						data: "hemxxmh.is_active",
-						render: function (data){
-							if (data == 0){
-								return '';
-							}else if(data == 1){
-								return 'Aktif';
-							}else if(data == -9){
-								return 'Nonaktif';
-							}
-						}
-					}
+					{ data: "id", visible: false },
+					{ data: "kode" },
+					{ data: "kode_finger" },
+					{ data: "ktp_no" },
+					{ data: "nama" },
+					{ data: "divisi" },
+					{ data: "seksi" },
+					{ data: "title" },
+					{ data: "lokasi" },
+					{ data: "entitas" },
+					{ data: "departemen" },
+					{ data: "status_karyawan" },
+					{ data: "tanggal_masuk" },
+					{ data: "tanggal_akhir_kontrak" },
+					{ data: "tanggal_keluar" },
+					{ data: "grup_hk" },
+					{ data: "kode_transaksi" },
+					{ data: "keterangan" }
 				],
 				buttons: [
 					// BEGIN breaking generate button
@@ -303,23 +282,10 @@
 					// END breaking generate button
 				],
 				rowCallback: function( row, data, index ) {
-					if ( data.hemxxmh.is_active == 0 ) {
-						$('td', row).addClass('text-danger');
-					}
 				},
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
 				},
-				footerCallback: function ( row, data, start, end, display ) {
-					var api       = this.api(), data;
-					var numFormat1 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
-					var numFormat0 = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
-					// hitung jumlah 
-					s_jam = api.column( 13 ).data().sum();
-					
-
-					$( '#s_jam' ).html( numFormat1(s_jam) );
-				}
 			} );
 
 			tblhemxxmh.searchPanes.container().appendTo( '#searchPanes1' );

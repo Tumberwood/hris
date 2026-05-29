@@ -1,178 +1,120 @@
-<?php
-	include( "../../../../users/init.php" );
-	include( "../../../../usersc/lib/DataTables.php" );
-	
-	use
-		DataTables\Editor,
-		DataTables\Editor\Field,
-		DataTables\Editor\Format,
-		DataTables\Editor\Mjoin,
-		DataTables\Editor\Options,
-		DataTables\Editor\Upload,
-		DataTables\Editor\Validate,
-		DataTables\Editor\ValidateOptions,
-		DataTables\Editor\Query,
-		DataTables\Editor\Result;
-	
-	// ----------- do not erase
-	$show_inactive_status = $_POST['show_inactive_status_hemxxmh'];
-	// -----------
+<?php 
+    require_once( "../../../../users/init.php" );
+	require_once( "../../../../usersc/lib/DataTables.php" );
+	require_once( "../../../../usersc/helpers/datatables_fn_debug.php" );
 
+    require '../../../../usersc/vendor/autoload.php';
+	use Carbon\Carbon;
+
+    // BEGIN definisi variable untuk fn_ajax_results.php
+    $data      = array();
+    $rs_opt    = array();
+    $c_rs_opt  = 0;
+    $morePages = 0;
+    // END definisi variable untuk fn_ajax_results.php
+	
 	$start_date = $_POST['start_date'];
 	$end_date = $_POST['end_date'];
-	
-	$editor = Editor::inst( $db, 'hemxxmh' )
-		->debug(true)
-		->fields(
-			Field::inst( 'hemxxmh.id' ),
-			Field::inst( 'hemjbmh.id_hovxxmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemjbmh.id_hodxxmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemjbmh.id_hosxxmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemjbmh.id_hevxxmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemjbmh.id_hetxxmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemjbmh.id_heyxxmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemjbmh.id_hesxxmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemjbmh.id_heyxxmd' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemjbmh.id_holxxmd_2' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemxxmh.id_gctxxmh_lahir' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemxxmh.kode' )
-				->setFormatter( function ( $val ) {
-					return strtoupper(trim($val));
-			} ),
-			Field::inst( 'hemxxmh.nama' )
-				->setFormatter( function ( $val ) {
-					return ucwords($val);
-				} ),
-			Field::inst( 'hemxxmh.keterangan' ),
-			Field::inst( 'hemxxmh.kode_finger' ),
-			Field::inst( 'hemxxmh.is_active' ),
-			Field::inst( 'hemxxmh.is_tukar' ),
-			Field::inst( 'hemxxmh.created_by' )
-				->set( Field::SET_CREATE )
-				->setValue($_SESSION['user']),
-			Field::inst( 'hemxxmh.created_on' )
-				->set( Field::SET_CREATE ),
-			Field::inst( 'hemxxmh.last_edited_by' )
-				->set( Field::SET_EDIT )
-				->setValue($_SESSION['user']),
-			Field::inst( 'hemxxmh.is_approve' ),
-			Field::inst( 'hemxxmh.is_pot_makan' ),
-			Field::inst( 'hemxxmh.is_defaultprogram' ),
-			
-			Field::inst( 'hemjbmh.tanggal_masuk' )
-				->getFormatter( function ( $val, $data, $opts ) {
-					if ($val === '0000-00-00' || $val === null){
-						echo '';
-					}else{
-						return date( 'd M Y', strtotime( $val ) );
-					}
-				} )
-				->setFormatter( 'Format::datetime', array(
-					'from' => 'd M Y',
-					'to' =>   'Y-m-d'
-				) ),
-			Field::inst( 'hemjbmh.tanggal_keluar' )
-				->getFormatter( function ( $val, $data, $opts ) {
-					if ($val === '0000-00-00' || $val === null){
-						echo '';
-					}else{
-						return date( 'd M Y', strtotime( $val ) );
-					}
-				} )
-				->setFormatter( 'Format::datetime', array(
-					'from' => 'd M Y',
-					'to' =>   'Y-m-d'
-				) ),
-			Field::inst( 'hemjbmh.grup_hk' ),
-			Field::inst( 'hemjbmh.jumlah_grup' ),
-			Field::inst( 'hovxxmh.nama' ),
-			Field::inst( 'hodxxmh.nama' ),
-			Field::inst( 'hemdcmh.id_gtxpkmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemdcmh.is_npwp' ),
-			Field::inst( 'hemdcmh.npwp_alamat' ),
-			Field::inst( 'hemdcmh.npwp_no' ),
-			Field::inst( 'hemdcmh.ktp_no' ),
-			Field::inst( 'hemdcmh.ktp_alamat' ),
-			Field::inst( 'hemdcmh.alamat' ),
-			Field::inst( 'hemdcmh.no_bpjs_tk' ),
-			Field::inst( 'hemdcmh.no_bpjs_kes' ),
-			Field::inst( 'hosxxmh.nama' ),
-			Field::inst( 'hevxxmh.nama' ),
-			Field::inst( 'hetxxmh.nama' ),
-			Field::inst( 'heyxxmh.nama' ),
-			Field::inst( 'heyxxmd.nama' ),
-			Field::inst( 'hesxxmh.nama' ),
-			Field::inst( 'holxxmd_2.nama' ),
+	$id_hemxxmh = $_POST['id_hemxxmh'];
 
-			Field::inst( 'hemxxmh.gender' ),
-			Field::inst( 'hemxxmh.tanggal_lahir' )
-				->getFormatter( function ( $val, $data, $opts ) {
-					if ($val === '0000-00-00' || $val === null){
-						echo '';
-					}else{
-						return date( 'd M Y', strtotime( $val ) );
-					}
-				} )
-				->setFormatter( 'Format::datetime', array(
-					'from' => 'd M Y',
-					'to' =>   'Y-m-d'
-				) ),
-			
-			Field::inst( 'hemjbmh.tanggal_akhir_kontrak' )
-				->getFormatter( function ( $val, $data, $opts ) {
-					if ($val === '0000-00-00' || $val === null){
-						echo '';
-					}else{
-						return date( 'd M Y', strtotime( $val ) );
-					}
-				} )
-				->setFormatter( 'Format::datetime', array(
-					'from' => 'd M Y',
-					'to' =>   'Y-m-d'
-				) ),
-			// ,
-			// Field::inst( 'v_hemxxmh_htsptth.pola_shift' ),
-			// Field::inst( 'v_hemxxmh_htsptth.grup_ke' )
-		)
-		->leftJoin( 'hemdcmh','hemdcmh.id_hemxxmh','=','hemxxmh.id' )
-		->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
-		->leftJoin( 'hovxxmh','hovxxmh.id','=','hemjbmh.id_hovxxmh' )
-		->leftJoin( 'hodxxmh','hodxxmh.id','=','hemjbmh.id_hodxxmh' )
-		->leftJoin( 'hosxxmh','hosxxmh.id','=','hemjbmh.id_hosxxmh' )
-		->leftJoin( 'hevxxmh','hevxxmh.id','=','hemjbmh.id_hevxxmh' )
-		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
-		->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
-		->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
-		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
-		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
-		->where( 'hemjbmh.tanggal_keluar', $start_date, '>=' )
-		->where( 'hemjbmh.tanggal_keluar', $end_date, '<' );
-	
-	// do not erase
-	// function show / hide inactive document
-	if ($show_inactive_status == 0){
-		// $editor
-		// 	->where( 'hemxxmh.is_active', 1);
+	$where = '';
+	if ($id_hemxxmh > 0) {
+		$where .= ' AND id_hemxxmh a.id = ' . $id_hemxxmh;
 	}
+
+	$qs_data_sql = $db
+		->raw()
+		->bind(':start_date', $start_date)
+		->bind(':end_date', $end_date)
+		->exec('SELECT
+					a.id,
+					a.kode,
+					a.kode_finger,
+					c.ktp_no,
+					a.nama,
+
+					hodxxmh.nama AS divisi,
+					hosxxmh.nama AS seksi,
+					hetxxmh.nama AS title,
+					holxxmd_2.nama AS lokasi,
+					heyxxmh.nama AS entitas,
+					heyxxmd.nama AS departemen,
+					hesxxmh.nama AS status_karyawan,
+
+					DATE_FORMAT(b.tanggal_masuk, "%d %b %Y") tanggal_masuk,
+					DATE_FORMAT(b.tanggal_akhir_kontrak, "%d %b %Y") tanggal_akhir_kontrak,
+					DATE_FORMAT(b.tanggal_keluar, "%d %b %Y") tanggal_keluar,
+					CASE
+						WHEN b.grup_hk = 1 THEN "5HK"
+						WHEN b.grup_hk = 2 THEN "6HK"
+						ELSE ""
+					END AS grup_hk,
+					CASE
+						WHEN res.kode IS NOT NULL then res.kode
+						WHEN kode_ps IS NOT NULL then kode_ps
+						ELSE ""
+				END AS kode_transaksi,
+				
+					CASE
+						WHEN res.kode IS NOT NULL then "RESIGN"
+						WHEN kode_ps IS NOT NULL then "PERUBAHAN STATUS"
+						ELSE ""
+				END AS keterangan
+
+				FROM hemxxmh a
+				JOIN hemjbmh b ON b.id_hemxxmh = a.id
+				LEFT JOIN hemdcmh c ON c.id_hemxxmh = a.id
+				LEFT JOIN hodxxmh ON hodxxmh.id = b.id_hodxxmh
+				LEFT JOIN hosxxmh ON hosxxmh.id = b.id_hosxxmh
+				LEFT JOIN hetxxmh ON hetxxmh.id = b.id_hetxxmh
+				LEFT JOIN holxxmd holxxmd_2 ON holxxmd_2.id = b.id_holxxmd_2
+				LEFT JOIN heyxxmh ON heyxxmh.id = b.id_heyxxmh
+				LEFT JOIN heyxxmd ON heyxxmd.id = b.id_heyxxmd
+				LEFT JOIN hesxxmh ON hesxxmh.id = b.id_hesxxmh
+
+				LEFT JOIN hesxxtd_resign res ON res.id_hemxxmh = a.id AND res.tanggal_selesai = b.tanggal_keluar
+				LEFT JOIN (
+					SELECT
+						ps.kode kode_ps,
+						ps.id_hemxxmh
+					FROM hesxxtd ps
+					WHERE ps.is_approve = 1
+					GROUP BY ps.id_hemxxmh
+				) per ON per.id_hemxxmh = a.id
+				WHERE 1
+				AND b.tanggal_keluar >= :start_date
+				AND b.tanggal_keluar < :end_date
+	' . $where);
+	$rs_data_sql = $qs_data_sql->fetchAll();
 	
-	if($_POST['id_hemxxmh'] > 0){
-		$editor->where( 'hemxxmh.id', $_POST['id_hemxxmh'] );
-	}
-	
-	include( "../../../helpers/edt_log.php" );
-	
-	$editor
-		->process( $_POST )
-		->json();
+	$data = [
+		"message" => "Upload berhasil!",
+		"type_message" => "success",
+		"resign" => $rs_data_sql  
+	];
+
+    // BEGIN results akhir
+	$is_debug = true;
+    if($is_debug == true){
+        $results = array(
+            "debug" => $debug,
+            "data" => $data,
+            "results" => $rs_opt,
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+    }else{
+        $results = array(
+            "data" => $data,
+            "results" => $rs_opt,
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+    }
+    // END results akhir
+
+    echo json_encode($results);
+
 ?>
