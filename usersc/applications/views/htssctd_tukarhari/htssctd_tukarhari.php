@@ -74,15 +74,6 @@
 				<h5>Detail</h5>
 			</div>
 			<div class="ibox-content">
-				<div class="ibox collapsed" id="iboxfilter">
-					<div class="ibox-title">
-						<h5 class="text-navy">Filter</h5>&nbsp
-						<button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
-					</div>
-					<div class="ibox-content">
-						<div id="searchPanes1"></div>
-					</div>
-				</div>
 				<div class="table-responsive">
                     <table id="tblhtssctd_tukarhari_pegawai" class="table table-striped table-bordered table-hover nowrap" width="100%">
                         <thead>
@@ -540,29 +531,6 @@
 			
 			//start datatables
 			tblhtssctd_tukarhari_pegawai = $('#tblhtssctd_tukarhari_pegawai').DataTable( {
-				searchPanes:{
-					layout: 'columns-2'
-				},
-				dom: 
-					"<P>"+
-					"<lf>"+
-					"<B>"+
-					"<rt>"+
-					"<'row'<'col-sm-4'i><'col-sm-8'p>>",
-				columnDefs:[
-					{
-						searchPanes:{
-							show: true,
-						},
-						targets: [4,5]
-					},
-					{
-						searchPanes:{
-							show: false,
-						},
-						targets: '_all'
-					}
-				],
 				ajax: {
 					url: "../../models/htssctd_tukarhari/htssctd_tukarhari_pegawai.php",
 					type: 'POST',
@@ -601,13 +569,8 @@
 						$('td', row).addClass('text-danger');
 					}
 				},
-				initComplete: function() {
-					this.api().searchPanes.rebuildPane();
-				}
 			} );
 			
-			tblhtssctd_tukarhari_pegawai.searchPanes.container().appendTo( '#searchPanes1' );
-
 			tblhtssctd_tukarhari_pegawai.on( 'draw', function( e, settings ) { 
 				// atur hak akses
 				cek_c_detail= 1;

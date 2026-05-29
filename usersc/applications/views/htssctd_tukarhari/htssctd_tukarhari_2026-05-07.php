@@ -56,7 +56,6 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Kode</th>
-                                <th>Unit Kerja</th>
 								<th>Tanggal Terpilih</th>
 								<th>Tanggal Pengganti</th>
                                 <th>Keterangan</th>
@@ -75,6 +74,15 @@
 				<h5>Detail</h5>
 			</div>
 			<div class="ibox-content">
+				<div class="ibox collapsed" id="iboxfilter">
+					<div class="ibox-title">
+						<h5 class="text-navy">Filter</h5>&nbsp
+						<button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+					</div>
+					<div class="ibox-content">
+						<div id="searchPanes1"></div>
+					</div>
+				</div>
 				<div class="table-responsive">
                     <table id="tblhtssctd_tukarhari_pegawai" class="table table-striped table-bordered table-hover nowrap" width="100%">
                         <thead>
@@ -83,8 +91,8 @@
                                 <th>id_htssctd_tukarhari</th>
 								<th>NIK</th>
 								<th>Nama</th>
-								<th>Unit Kerja</th>
 								<th>Jabatan</th>
+								<th>Sub Tipe</th>
                             </tr>
                         </thead>
                     </table>
@@ -110,7 +118,6 @@
         var edthtssctd_tukarhari_pegawai, tblhtssctd_tukarhari_pegawai, show_inactive_status_htssctd_tukarhari_pegawai = 0, id_htssctd_tukarhari_pegawai;
 		// ------------- end of default variable
 		var is_need_approval = 1;
-		var id_hosxxmh_old = 0;
 		var is_need_generate_kode = 1;
 		var id_hemxxmh_old = 0;
 		
@@ -178,43 +185,6 @@
 						name: "htssctd_tukarhari.is_active",
                         type: "hidden",
 						def: 1
-					},
-					{
-						label: "Unit Kerja <sup class='text-danger'>*<sup>",
-						name: "hosxxmh[].id",
-						type: "select2",
-						opts: {
-							placeholder : "Select",
-							allowClear: true,
-							multiple: true,
-							ajax: {
-								url: "../../models/hosxxmh/hosxxmh_fn_opt.php",
-								dataType: 'json',
-								data: function (params) {
-									var query = {
-										id_hosxxmh_old: id_hosxxmh_old,
-										id_hosxxmh: 0,
-										search: params.term || '',
-										page: params.page || 1
-									}
-										return query;
-								},
-								processResults: function (data, params) {
-									return {
-										results: data.results,
-										pagination: {
-											more: true
-										}
-									};
-								},
-								cache: true,
-								minimumInputLength: 1,
-								maximum: 10,
-								delay: 500,
-								maximumSelectionLength: 5,
-								minimumResultsForSearch: -1,
-							},
-						}
 					},
 					{
 						label: "Tanggal Merah<sup class='text-danger'>*<sup>",
@@ -296,12 +266,6 @@
 					// END of cek unik htssctd_tukarhari.tanggal_pengganti 
 					// END of validasi htssctd_tukarhari.tanggal_pengganti
 					
-					// BEGIN of validasi hosxxmh[].id 
-					id_hosxxmh = edthtssctd_tukarhari.field('hosxxmh[].id').val();
-					if(!id_hosxxmh || id_hosxxmh == ''){
-						edthtssctd_tukarhari.field('hosxxmh[].id').error( 'Wajib Diisi!' );
-					}
-					
 					// BEGIN of validasi htssctd_tukarhari.tanggal_terpilih 
 					tanggal_terpilih = edthtssctd_tukarhari.field('htssctd_tukarhari.tanggal_terpilih').val();
 					if(!tanggal_terpilih || tanggal_terpilih == ''){
@@ -380,7 +344,6 @@
 				columns: [
 					{ data: "htssctd_tukarhari.id",visible:false },
 					{ data: "htssctd_tukarhari.kode" },
-					{ data: "hosxxmh[].nama" },
 					{ data: "htssctd_tukarhari.tanggal_terpilih" },
 					{ data: "htssctd_tukarhari.tanggal_pengganti" },
 					{ data: "htssctd_tukarhari.keterangan" },
@@ -439,7 +402,6 @@
 				is_nextprocess   = data_htssctd_tukarhari.is_nextprocess;
 				is_jurnal        = data_htssctd_tukarhari.is_jurnal;
 				is_active        = data_htssctd_tukarhari.is_active;
-				id_hosxxmh_old        = data_htssctd_tukarhari.id_hosxxmh;
 				
 				// atur hak akses
 				tbl_details = [tblhtssctd_tukarhari_pegawai];
@@ -450,7 +412,6 @@
 			tblhtssctd_tukarhari.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
 				id_htssctd_tukarhari = '';
-				id_hosxxmh_old = 0;
 				// atur hak akses
 				tbl_details = [tblhtssctd_tukarhari_pegawai];
 				CekDeselectHeaderHD(tblhtssctd_tukarhari, tbl_details);
@@ -506,7 +467,7 @@
 							allowClear: true,
 							multiple: false,
 							ajax: {
-								url: "../../models/htssctd_tukarhari/hemxxmh_fn_opt_section.php",
+								url: "../../models/htssctd_tukarhari/hemxxmh_fn_tukar_hari.php",
 								dataType: 'json',
 								data: function (params) {
 									var query = {
@@ -579,6 +540,29 @@
 			
 			//start datatables
 			tblhtssctd_tukarhari_pegawai = $('#tblhtssctd_tukarhari_pegawai').DataTable( {
+				searchPanes:{
+					layout: 'columns-2'
+				},
+				dom: 
+					"<P>"+
+					"<lf>"+
+					"<B>"+
+					"<rt>"+
+					"<'row'<'col-sm-4'i><'col-sm-8'p>>",
+				columnDefs:[
+					{
+						searchPanes:{
+							show: true,
+						},
+						targets: [4,5]
+					},
+					{
+						searchPanes:{
+							show: false,
+						},
+						targets: '_all'
+					}
+				],
 				ajax: {
 					url: "../../models/htssctd_tukarhari/htssctd_tukarhari_pegawai.php",
 					type: 'POST',
@@ -593,8 +577,8 @@
 					{ data: "htssctd_tukarhari_pegawai.id_htssctd_tukarhari",visible:false },
 					{ data: "hemxxmh.kode" },
 					{ data: "hemxxmh.nama" },
-					{ data: "hosxxmh.nama" },
-					{ data: "hetxxmh.nama" }
+					{ data: "hetxxmh.nama" },
+					{ data: "heyxxmd.nama" },
 				],
 				buttons: [
 					// BEGIN breaking generate button
@@ -616,8 +600,13 @@
 					if ( data.htssctd_tukarhari_pegawai.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
+				},
+				initComplete: function() {
+					this.api().searchPanes.rebuildPane();
 				}
 			} );
+			
+			tblhtssctd_tukarhari_pegawai.searchPanes.container().appendTo( '#searchPanes1' );
 
 			tblhtssctd_tukarhari_pegawai.on( 'draw', function( e, settings ) { 
 				// atur hak akses
