@@ -67,7 +67,7 @@
 				LEFT JOIN hodxxmh ON hodxxmh.id = b.id_hodxxmh
 				LEFT JOIN hosxxmh ON hosxxmh.id = b.id_hosxxmh
 				LEFT JOIN hetxxmh ON hetxxmh.id = b.id_hetxxmh
-				LEFT JOIN holxxmd holxxmd_2 ON holxxmd_2.id = b.id_holxxmd_2
+				LEFT JOIN holxxmd_2 ON holxxmd_2.id = b.id_holxxmd_2
 				LEFT JOIN heyxxmh ON heyxxmh.id = b.id_heyxxmh
 				LEFT JOIN heyxxmd ON heyxxmd.id = b.id_heyxxmd
 				LEFT JOIN hesxxmh ON hesxxmh.id = b.id_hesxxmh
