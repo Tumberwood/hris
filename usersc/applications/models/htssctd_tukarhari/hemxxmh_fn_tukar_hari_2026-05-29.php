@@ -22,34 +22,6 @@
         $id_hemxxmh_old = 0;
     }
 
-    if($_GET['id_htssctd_tukarhari'] > 0){
-        $id_htssctd_tukarhari = $_GET['id_htssctd_tukarhari'];
-    }else{
-        $id_htssctd_tukarhari = 0;
-    }
-
-    $qs_pegawai_terdaftar = $db
-        ->raw()
-        ->bind(':htssctd_tukarhari', $htssctd_tukarhari)
-        ->exec('SELECT
-                    a.id_hemxxmh
-                FROM htssctd_tukarhari_pegawai a
-                WHERE a.is_active = 1
-                AND a.id_htssctd_tukarhari = :htssctd_tukarhari
-    ');
-    
-    $rs_pegawai_terdaftar = $qs_pegawai_terdaftar->fetchAll(PDO::FETCH_ASSOC);
-    $id_terdaftar = array_column($rs_lunas, 'id_hemxxmh');
-    
-    // Ambil yang belum lunas aja di show options nya
-    if (!empty($id_terdaftar)) {
-        $w_ids_lunas = '(' . implode(',', $id_terdaftar) . ')';
-        $s_ids_lunas = 'NOT IN';
-    } else {
-        $w_ids_lunas = '(-1)';
-        $s_ids_lunas = 'NOT IN';
-    }             
-
     // BEGIN query options self.
     // Hanya dipanggil jika field ada nilai id nya
     if($id_hemxxmh_old > 0){
@@ -80,7 +52,6 @@
 		->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
         ->where('hemxxmh.is_active',1)
         ->where('hemxxmh.id', $id_hemxxmh_old, '<>' )
-        ->where('hemxxmh.id', $w_ids_lunas, $s_ids_lunas, false )
         ->where('hemjbmh.is_harian_lepas', '0' )
         ->where( function ( $r ) {
             $q = $_GET['search'];
@@ -88,6 +59,12 @@
                 ->where('hemxxmh.kode', '%' . $q . '%', 'LIKE' )
                 ->or_where('hemxxmh.nama', '%' . $q . '%', 'LIKE' )
                 ->or_where('hetxxmh.nama', '%' . $q . '%', 'LIKE' );
+        } )
+        ->where( function ( $r ) {
+            $r
+                ->where('hemxxmh.is_tukar', -9, '<>')
+                ->or_where('hemxxmh.is_tukar', null)
+                ;
         } )
         ->order('hemxxmh.nama')
         ->limit($resultCount)
