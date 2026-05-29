@@ -385,6 +385,7 @@
 					{
 						label: "Tanggal Akhir ",
 						name: "hgsptth_v3.tanggal_akhir",
+						fieldInfo: "Tanggal Akhir: Tanggal Awal + 7 Days",
 						type: "datetime",
 						def: function () { 
 							return new Date(); 
