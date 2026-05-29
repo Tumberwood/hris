@@ -30,12 +30,12 @@
 
     $qs_pegawai_terdaftar = $db
         ->raw()
-        ->bind(':htssctd_tukarhari', $htssctd_tukarhari)
+        ->bind(':id_htssctd_tukarhari', $id_htssctd_tukarhari)
         ->exec('SELECT
                     a.id_hemxxmh
                 FROM htssctd_tukarhari_pegawai a
                 WHERE a.is_active = 1
-                AND a.id_htssctd_tukarhari = :htssctd_tukarhari
+                AND a.id_htssctd_tukarhari = :id_htssctd_tukarhari
     ');
     
     $rs_pegawai_terdaftar = $qs_pegawai_terdaftar->fetchAll(PDO::FETCH_ASSOC);
