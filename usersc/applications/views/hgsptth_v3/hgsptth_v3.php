@@ -396,7 +396,7 @@
 						format: 'DD MMM YYYY'
 					}, 	
 					{
-						label: "Copy Dari Tanggal",
+						label: "Copy Dari Periode Jadwal", //dibuat selection
 						name: "hgsptth_v3.dari_tanggal",
 						type: "datetime",
 						opts:{
