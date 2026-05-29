@@ -76,6 +76,7 @@
 		var id_hesxxmh_old_tetap = 0;
 		var is_need_approval = 1;
 		var is_need_generate_kode = 1;
+		var get_kode = new URLSearchParams(window.location.search).get('kode') || '';
 		
 		$(document).ready(function() {
 			//start datatables editor
@@ -85,6 +86,7 @@
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_hesxxtd = show_inactive_status_hesxxtd;
+						d.kode = get_kode;
 					}
 				},
 				table: "#tblhesxxtd",
@@ -557,6 +559,7 @@
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_hesxxtd = show_inactive_status_hesxxtd;
+						d.kode = get_kode;
 					}
 				},
 				order: [[ 0, "desc" ]],

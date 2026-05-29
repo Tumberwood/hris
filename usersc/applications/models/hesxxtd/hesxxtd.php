@@ -95,6 +95,11 @@
 			->where( 'hesxxtd.is_active', 1);
 	}
 	
+	if (isset($_POST['kode']) && $_POST['kode'] != ''){
+		$editor
+			->where( 'hesxxtd.kode', $_POST['kode']);
+	}
+
 	include( "hesxxtd_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	

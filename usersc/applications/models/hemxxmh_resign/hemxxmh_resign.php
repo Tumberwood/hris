@@ -72,7 +72,7 @@
 				LEFT JOIN heyxxmd ON heyxxmd.id = b.id_heyxxmd
 				LEFT JOIN hesxxmh ON hesxxmh.id = b.id_hesxxmh
 
-				LEFT JOIN hesxxtd_resign res ON res.id_hemxxmh = a.id AND res.tanggal_selesai = b.tanggal_keluar
+				LEFT JOIN hesxxtd_resign res ON res.id_hemxxmh = a.id AND res.tanggal_selesai = b.tanggal_keluar AND res.is_approve = 1
 				LEFT JOIN (
 					SELECT
 						ps.kode kode_ps,

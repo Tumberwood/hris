@@ -245,11 +245,14 @@
 				order: [[ 1, "desc" ]],
 				responsive: false,
 				scrollX: true,
+				fixedColumns:   {
+					left: 2
+				},
 				columns: [
 					{ data: "id", visible: false },
 					{ data: "kode" },
-					{ data: "kode_finger" },
-					{ data: "ktp_no" },
+					{ data: "kode_finger", visible: false },
+					{ data: "ktp_no", visible: false },
 					{ data: "nama" },
 					{ data: "divisi" },
 					{ data: "seksi" },
@@ -262,7 +265,18 @@
 					{ data: "tanggal_akhir_kontrak" },
 					{ data: "tanggal_keluar" },
 					{ data: "grup_hk" },
-					{ data: "kode_transaksi" },
+					{
+						data: null,
+						render: function(data, type, row){
+							if (row.keterangan === 'RESIGN' && row.kode_transaksi) {
+								return `<a href="../hesxxtd_resign/hesxxtd_resign.php?kode=${row.kode_transaksi}" target="_blank">${row.kode_transaksi}</a>`;
+							} else if (row.keterangan === 'PERUBAHAN STATUS' && row.kode_transaksi) {
+								return `<a href="../hesxxtd/hesxxtd.php?kode=${row.kode_transaksi}" target="_blank">${row.kode_transaksi}</a>`;
+							} else {
+								return row.kode_transaksi || '';
+							}
+						}
+					},
 					{ data: "keterangan" }
 				],
 				buttons: [

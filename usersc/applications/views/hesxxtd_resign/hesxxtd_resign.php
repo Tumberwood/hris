@@ -50,6 +50,8 @@
 		var is_need_approval = 1;
 		var is_need_generate_kode = 1;
 		var id_hemxxmh_old = 0;
+
+		var get_kode = new URLSearchParams(window.location.search).get('kode') || '';
 		
 		$(document).ready(function() {
 			//start datatables editor
@@ -59,6 +61,7 @@
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_hesxxtd_resign = show_inactive_status_hesxxtd_resign;
+						d.kode = get_kode;
 					}
 				},
 				table: "#tblhesxxtd_resign",
@@ -199,6 +202,7 @@
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_hesxxtd_resign = show_inactive_status_hesxxtd_resign;
+						d.kode = get_kode;
 					}
 				},
 				order: [[ 1, "asc" ]],

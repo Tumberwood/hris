@@ -70,6 +70,11 @@
 		$editor
 			->where( 'hesxxtd_resign.is_active', 1);
 	}
+
+	if (isset($_POST['kode']) && $_POST['kode'] != ''){
+		$editor
+			->where( 'hesxxtd_resign.kode', $_POST['kode']);
+	}
 	
 	include( "hesxxtd_resign_extra.php" );
 	include( "../../../helpers/edt_log.php" );
