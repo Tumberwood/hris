@@ -88,6 +88,8 @@
                 { data: 'is_makan' },
             ],
             rowCallback: function( row, data, index ) {
+                console.log(data);
+                
                 if ( data.is_makan == 0 ) {
                     $('td', row).addClass('bg-warning');
                 }
