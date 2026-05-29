@@ -1148,57 +1148,67 @@
 						action: function ( e, dt, node, config ) {
 
 							e.preventDefault();
+							Swal.fire({
+								title: 'Generate Payroll?',
+								text: 'Are you sure want to generate payroll?',
+								icon: 'question',
+								showCancelButton: true,
+								confirmButtonText: 'Yes',
+								cancelButtonText: 'No'
+							}).then((result) => {
 
-							if (confirm('Are you sure want to generate payroll?')) {
+								if (result.isConfirmed) {
 
-								var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+									var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
 
-								Swal.fire({
-									title: 'Processing...',
-									html: 'Jangan tutup halaman sampai proses selesai',
-									allowOutsideClick: false,
-									allowEscapeKey: false,
-									showConfirmButton: false,
-									didOpen: () => {
-										Swal.showLoading();
-									}
-								});
+									Swal.fire({
+										title: 'Processing...',
+										html: 'Jangan tutup halaman sampai proses selesai',
+										allowOutsideClick: false,
+										allowEscapeKey: false,
+										showConfirmButton: false,
+										didOpen: () => {
+											Swal.showLoading();
+										}
+									});
 
-								notifyprogress = {
-									close: function(){
-										Swal.close();
-									}
-								};
+									notifyprogress = {
+										close: function(){
+											Swal.close();
+										}
+									};
 
-								$.ajax({
-									url: "../../models/hpyxxth/fn_gen_payroll_new_2026.php",
-									dataType: 'json',
-									type: 'POST',
-									data: {
-										id_hpyxxth		: id_hpyxxth,
-										tanggal_awal	: tanggal_awal_select,
-										tanggal_akhir	: tanggal_akhir_select,
-										timestamp		: timestamp
-									},
-									success: function ( json ) {
+									$.ajax({
+										url: "../../models/hpyxxth/fn_gen_payroll_new_2026.php",
+										dataType: 'json',
+										type: 'POST',
+										data: {
+											id_hpyxxth		: id_hpyxxth,
+											tanggal_awal	: tanggal_awal_select,
+											tanggal_akhir	: tanggal_akhir_select,
+											timestamp		: timestamp
+										},
+										success: function ( json ) {
 
-										$.notify({
-											message: json.data.message
-										},{
-											type: json.data.type_message,
-											allow_dismiss: true,
-											delay: 0
-										});
+											$.notify({
+												message: json.data.message
+											},{
+												type: json.data.type_message,
+												allow_dismiss: true,
+												delay: 0
+											});
 
-										tblhpyxxth.ajax.reload(function ( json ) {
-											notifyprogress.close();
-										}, false);
-									}
-								});
+											tblhpyxxth.ajax.reload(function ( json ) {
+												notifyprogress.close();
+											}, false);
+										}
+									});
 
-							} else {
+								} else {
 
-							}
+								}
+
+							});
 
 						}
 					},
