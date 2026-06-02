@@ -28,6 +28,10 @@
 							AND a.is_active = 1
 							AND c.is_active = 1
 							AND (c.is_tukar <> -9 OR c.is_tukar IS NULL)
+							AND (
+								b.tanggal_keluar IS NULL OR 
+								b.tanggal_keluar >= :tanggal
+							)
 						;
 						'
 			);
@@ -66,6 +70,10 @@
 							AND a.is_active = 1
 							AND c.is_active = 1
 							AND (c.is_tukar <> -9 OR c.is_tukar IS NULL)
+							AND (
+								b.tanggal_keluar IS NULL OR 
+								b.tanggal_keluar >= :tanggal
+							)
 						;
 						'
 			);
