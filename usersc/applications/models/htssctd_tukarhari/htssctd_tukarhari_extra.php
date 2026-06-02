@@ -26,6 +26,7 @@
 						WHERE a.tanggal = :tanggal 
 							AND a.id_htsxxmh <> 1 
 							AND a.is_active = 1
+							AND c.is_active = 1
 							AND (c.is_tukar <> -9 OR c.is_tukar IS NULL)
 						;
 						'
@@ -63,6 +64,7 @@
 						WHERE a.tanggal = :tanggal 
 							AND a.id_htsxxmh <> 1 
 							AND a.is_active = 1
+							AND c.is_active = 1
 							AND (c.is_tukar <> -9 OR c.is_tukar IS NULL)
 						;
 						'
