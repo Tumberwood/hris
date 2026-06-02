@@ -398,6 +398,11 @@
 				tbl_details = [tblhtssctd_tukarhari_pegawai];
 				CekSelectHeaderHD(tblhtssctd_tukarhari, tbl_details);
 
+				if(is_approve == 1 ) {
+					tblhtssctd_tukarhari_pegawai.button('btnRemove:name').disable();
+				} else {
+					tblhtssctd_tukarhari_pegawai.button('btnRemove:name').enable();
+				}
 			} );
 			
 			tblhtssctd_tukarhari.on( 'deselect', function () {
@@ -587,6 +592,12 @@
 				
 				// atur hak akses
 				CekSelectDetailHD(tblhtssctd_tukarhari, tblhtssctd_tukarhari_pegawai );
+				
+				if(is_approve == 1 ) {
+					tblhtssctd_tukarhari_pegawai.button('btnRemove:name').disable();
+				} else {
+					tblhtssctd_tukarhari_pegawai.button('btnRemove:name').enable();
+				}
 			} );
 
 			tblhtssctd_tukarhari_pegawai.on( 'deselect', function() {
