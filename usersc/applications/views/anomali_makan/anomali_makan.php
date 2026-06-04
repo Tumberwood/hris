@@ -236,7 +236,7 @@
 				order: [[ 1, "asc" ]],
 				responsive: false,
 				columns: [
-					{ data: "id" },
+					{ data: "id", visible: false },
 					{ data: "nik" },
 					{ 
 						data: "nama",
