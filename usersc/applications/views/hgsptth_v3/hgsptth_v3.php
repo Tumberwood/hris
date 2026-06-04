@@ -411,7 +411,7 @@
 								dataType: 'json',
 								data: function (params) {
 									var query = {
-										id_transaksi_h: id_transaksi_h,
+										id_transaksi_h: id_hgsptth_v3,
 										id_hgsptth_v3_old: id_hgsptth_v3_old,
 										search: params.term || '',
 										page: params.page || 1
