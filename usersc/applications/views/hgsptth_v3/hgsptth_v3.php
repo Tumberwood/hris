@@ -374,6 +374,7 @@
 					{
 						label: "Tanggal Awal <sup class='text-danger'>*<sup>",
 						name: "hgsptth_v3.tanggal_awal",
+						fieldInfo: "Tanggal Awal wajib hari sabtu",
 						type: "datetime",
 						def: function () { 
 							return new Date(); 
@@ -399,7 +400,7 @@
 						format: 'DD MMM YYYY'
 					}, 
 					{
-						label: "Copy dari Periode Jadwal <sup class='text-danger'>*<sup>",
+						label: "Copy dari Periode Jadwal",
 						name: "hgsptth_v3.id_hgsptth_v3",
 						type: "select2",
 						opts: {
