@@ -136,6 +136,12 @@
 			Field::inst( 'hetxxmh.nama' ),
 			Field::inst( 'heyxxmh.nama' ),
 			Field::inst( 'holxxmd_2.nama' ),
+			
+			Field::inst( 'htsprrd.pot_jam_late' ),
+			Field::inst( 'htsprrd.pot_jam_early' ),
+			Field::inst( 'htsprrd.pot_jam_izin' ),
+			Field::inst( 'htsprrd.pot_abnormal_istirahat' ),
+			Field::inst( 'htsprrd.pot_jam_istirahat' ),
 
 			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' )
 		)

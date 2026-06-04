@@ -139,9 +139,10 @@
 												<th colspan=2>Lembur Awal</th>
 												<th colspan=2>Lembur Akhir</th>
 												<th class="text-center" colspan=7>Durasi Lembur (Jam)</th>
+												<th class="text-center text-danger" colspan=5>Rincian Potongan Jam</th>
+												<th class="text-danger" rowspan=2>Pot Total (Jam)</th>
 												<th class="text-center text-danger" colspan=3>Potongan Jam Overtime</th>
 												<th class="text-danger" rowspan=2 data-toggle="tooltip" data-placement="top" title="Potongan Jam Kerja">Proporsional Jam</th>
-												<th class="text-danger" rowspan=2>Pot Total (Jam)</th>
 												<th rowspan=2>Pot Upah</th>
 												<th rowspan=2>Pot Premi</th>
 
@@ -161,6 +162,12 @@
 												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Sore">I2</th>
 												<th data-toggle="tooltip" data-placement="top" title="Lembur Istirahat Malam">I3</th>
 												<th data-toggle="tooltip" data-placement="top" title="Total Lembur">Total</th>
+
+												<th class="text-danger">LATE</th>
+												<th class="text-danger">EARLY</th>
+												<th class="text-danger">IZIN</th>
+												<th class="text-danger">ABNORMAL ISTIRAHAT</th>
+												<th class="text-danger">POTONGAN ISTIRAHAT</th>
 
 												<th class="text-danger">Pot TI</th>
 												<th class="text-danger">Pot Overtime</th>
@@ -197,19 +204,24 @@
 												<th></th>
 												<th></th>
 												
-												<th id="all_lb"></th>
-												<th id="all_aw"></th>
-												<th id="all_ak"></th>
-												<th id="all_i1"></th>
-												<th id="all_i2"></th>
-												<th id="all_i3"></th>
-												<th id="all_tl"></th>
+												<th id="all_27"></th>
+												<th id="all_28"></th>
+												<th id="all_29"></th>
+												<th id="all_30"></th>
+												<th id="all_31"></th>
+												<th id="all_32"></th>
+												<th id="all_33"></th>
 												
-												<th id="all_pot_ti"></th>
-												<th id="all_pot_overtime"></th>
-												<th id="all_overtime"></th>
-												<th id="all_pot_hk"></th>
-												<th id="all_pot_jam"></th>
+												<th id="all_34"></th>
+												<th id="all_35"></th>
+												<th id="all_36"></th>
+												<th id="all_37"></th>
+												<th id="all_38"></th>
+												<th id="all_39"></th>
+												<th id="all_40"></th>
+												<th id="all_41"></th>
+												<th id="all_42"></th>
+												<th id="all_43"></th>
 												<!-- <th id="s_hk"></th> -->
 
 											</tr>
@@ -580,6 +592,30 @@
 						class: "text-right"
 					}, //30
 					{ 
+						data: "htsprrd.pot_jam_late" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_jam_early" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_jam_izin" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_abnormal_istirahat" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_jam_istirahat" ,
+						class: "text-right"
+					},
+					{ 
+						data: "htsprrd.pot_jam",
+						class: "text-right"
+					},
+					{ 
 						data: "htsprrd.pot_ti" ,
 						class: "text-right"
 					},
@@ -593,10 +629,6 @@
 					},
 					{ 
 						data: "htsprrd.pot_hk" ,
-						class: "text-right"
-					},
-					{ 
-						data: "htsprrd.pot_jam",
 						class: "text-right"
 					},
 					{ 
@@ -774,34 +806,13 @@
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
 
 					all_makan = api.column(20).data().sum();
-					all_lb = api.column(27).data().sum();
-					all_aw = api.column(28).data().sum();
-					all_ak = api.column(29).data().sum();
-					all_i1 = api.column(30).data().sum();
-					all_i2 = api.column(31).data().sum();
-					all_i3 = api.column(32).data().sum();
-					all_tl = api.column(33).data().sum();
-
-					all_pot_ti = api.column(34).data().sum();
-					all_pot_overtime = api.column(35).data().sum();
-					all_overtime = api.column(36).data().sum();
-					all_pot_hk = api.column(37).data().sum();
-					all_pot_jam = api.column(38).data().sum();
-
 					$( '#all_makan' ).html( numFormat(all_makan) );
-					$( '#all_lb' ).html( numFormat(all_lb) );
-					$( '#all_aw' ).html( numFormat(all_aw) );
-					$( '#all_ak' ).html( numFormat(all_ak) );
-					$( '#all_i1' ).html( numFormat(all_i1) );
-					$( '#all_i2' ).html( numFormat(all_i2) );
-					$( '#all_i3' ).html( numFormat(all_i3) );
-					$( '#all_tl' ).html( numFormat(all_tl) );
 
-					$( '#all_pot_ti' ).html( numFormat(all_pot_ti) );
-					$( '#all_pot_overtime' ).html( numFormat(all_pot_overtime) );
-					$( '#all_overtime' ).html( numFormat(all_overtime) );
-					$( '#all_pot_hk' ).html( numFormat(all_pot_hk) );
-					$( '#all_pot_jam' ).html( numFormat(all_pot_jam) );
+					for (let i = 27; i <= 43; i++) {
+						let total = api.column(i).data().sum();
+
+						$('#all_' + i).html(numFormat(total));
+					}
 
 				},
 				initComplete: function() {
