@@ -262,7 +262,7 @@
 					},
 					endRender: function (rows, group) {
 
-						const total_pot_upah = rows
+						const total_pot_jam = rows
 							.data()
 							.pluck('pot_hk')
 							.toArray()
@@ -278,13 +278,13 @@
 							.append(
 								$('<td/>', {
 									class: 'text-end fw-bold bg-danger text-white',
-									html: 'Total Pot Upah (Hari)'
+									html: 'Total '
 								})
 							)
 							.append(
 								$('<td/>', {
 									class: 'text-right fw-bold bg-danger text-white',
-									html: total_pot_upah
+									html: total_pot_jam
 								})
 							);
 
