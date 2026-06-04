@@ -99,10 +99,6 @@
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-content">
-				<div class="alert alert-info alert-dismissable">
-                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-					Apabila data presensi sudah final pada satu tanggal, mohon lakukan approval untuk mengunci data yang ada. Pastikan hanya memilih satu tanggal saja.
-				</div>
 				<div class="tabs-container">
 					<ul class="nav nav-tabs" role="tablist">
 						<li><a class="nav-link active" data-toggle="tab" href="#tabhtsprrd"> Detail</a></li>
