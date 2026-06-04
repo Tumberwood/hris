@@ -353,6 +353,7 @@
                             IF(a.is_pot_makan = 1 AND ceklok_makan > 0, 1, 0) AS is_makan,
                             break_in,
                             break_out,
+                            jam_makan,
                             tanggaljam_awal_toleransi_lembur,
                             jam_awal_lembur,
                             pot_hk_jadwal,
@@ -795,7 +796,37 @@
                                                     AND DATE_SUB(jadwal.tanggaljam_akhir_t2, INTERVAL 60 MINUTE)
                                             THEN c.tanggal_jam
                                         END
-                                    ) AS ceklok_makan
+                                    ) AS ceklok_makan,
+                                    
+                                    -- AMBIL JAM CEKLOK MAKAN
+                                    MIN(
+                                        DISTINCT
+                                        CASE
+                                            -- 🔹 PAKAI RANGE OVERRIDE (htoXXrd)
+                                            WHEN d.id IS NOT NULL
+                                                AND jadwal.id_htsxxmh = 1
+                                                AND c.nama IN ("makan","makan manual")
+                                                AND c.tanggal_jam BETWEEN
+                                                    CONCAT(d.tanggal, " ", d.jam_awal)
+                                                    AND CONCAT(
+                                                        IF(d.jam_awal > d.jam_akhir,
+                                                            DATE_ADD(d.tanggal, INTERVAL 1 DAY),
+                                                            d.tanggal
+                                                        ),
+                                                        " ",
+                                                        d.jam_akhir
+                                                    )
+                                            THEN c.tanggal_jam
+
+                                            -- 🔹 DEFAULT RANGE (jadwal)
+                                            WHEN 1
+                                                AND c.nama IN ("makan","makan manual")
+                                                AND c.tanggal_jam BETWEEN
+                                                    jadwal.tanggaljam_awal_t1
+                                                    AND DATE_SUB(jadwal.tanggaljam_akhir_t2, INTERVAL 60 MINUTE)
+                                            THEN c.tanggal_jam
+                                        END
+                                    ) AS jam_makan
 
                                 FROM htssctd AS jadwal
                                 INNER JOIN hemxxmh AS b ON b.id = jadwal.id_hemxxmh AND b.is_active = 1
@@ -1661,7 +1692,8 @@
                         ) AS pot_jam_istirahat,
                         
                         break_in,
-                        break_out
+                        break_out,
+                        jam_makan
                     
                     FROM hitung_lembur_final
 
