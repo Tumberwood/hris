@@ -1794,6 +1794,10 @@
                             IFNULL(pot_jam_early, 0) AS pot_jam_early,
                             IFNULL(pot_jam_izin, 0) AS pot_jam_izin,
                             IFNULL(pot_abnormal_istirahat, 0) AS pot_abnormal_istirahat,
+                            IF(IFNULL(potongan_ti_jam,0) > 0 AND IFNULL(pot_jam_late_lembur, 0) = 0, 
+                                IFNULL(potongan_ti_jam,0),
+                                ifnull(pot_jam_keluar_istirahat,0)
+                            ) AS pot_jam_istirahat,
                             
                             break_in,
                             break_out
