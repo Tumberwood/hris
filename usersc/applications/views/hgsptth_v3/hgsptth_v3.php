@@ -24,7 +24,7 @@
             <div class="ibox-content">
 				<form class="form-horizontal" id="frmhgsptth_v3">
                     <div class="form-group row">
-                        <label class="col-lg-3 col-form-label">Periode</label>
+                        <label class="col-lg-3 col-form-label">Tanggal Awal Hari Sabtu</label>
                         <div class="col-lg-5">
                             <div class="input-group input-daterange" id="periode">
                                 <input type="text" id="start_date" class="form-control">
