@@ -26,6 +26,7 @@
 		->bind(':start_date', $start_date)
 		->bind(':end_date', $end_date)
 		->exec('SELECT
+					a.id,
 					a.id_hemxxmh,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
 					jb.id_heyxxmh,
@@ -87,6 +88,7 @@
 				UNION ALL
 
 				SELECT
+					a.id,
 					a.id_hemxxmh,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
 					jb.id_heyxxmh,
