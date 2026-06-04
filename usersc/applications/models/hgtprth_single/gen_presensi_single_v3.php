@@ -445,6 +445,7 @@
                                 *,
                                 STR_TO_DATE(SUBSTRING_INDEX(concat_break_in,  "|",  1), "%Y-%m-%d %H:%i") AS break_in,
                                 STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i") AS break_out,
+                                IF(jam_makan IS NOT NULL, 1, 0) ceklok_makan,
 
                                 CONCAT(
                                     SUBSTRING_INDEX(concat_break_in,  "|", -1),
@@ -772,36 +773,6 @@
                                         AND c.tanggal_jam BETWEEN CONCAT(jadwal.tanggal," 09:00:00") AND DATE_ADD(CONCAT(jadwal.tanggal," 04:00:00"), INTERVAL 1 DAY)
                                         THEN c.tanggal_jam
                                     END) AS ceklok_luar,
-
-                                    -- 🔹 HITUNG CEKLOK MAKAN + MAKAN MANUAL
-                                    COUNT(
-                                        DISTINCT
-                                        CASE
-                                            -- 🔹 PAKAI RANGE OVERRIDE (htoXXrd)
-                                            WHEN d.id IS NOT NULL
-                                                AND jadwal.id_htsxxmh = 1
-                                                AND c.nama IN ("makan","makan manual")
-                                                AND c.tanggal_jam BETWEEN
-                                                    CONCAT(d.tanggal, " ", d.jam_awal)
-                                                    AND CONCAT(
-                                                        IF(d.jam_awal > d.jam_akhir,
-                                                            DATE_ADD(d.tanggal, INTERVAL 1 DAY),
-                                                            d.tanggal
-                                                        ),
-                                                        " ",
-                                                        d.jam_akhir
-                                                    )
-                                            THEN c.tanggal_jam
-
-                                            -- 🔹 DEFAULT RANGE (jadwal)
-                                            WHEN 1
-                                                AND c.nama IN ("makan","makan manual")
-                                                AND c.tanggal_jam BETWEEN
-                                                    jadwal.tanggaljam_awal_t1
-                                                    AND DATE_SUB(jadwal.tanggaljam_akhir_t2, INTERVAL 60 MINUTE)
-                                            THEN c.tanggal_jam
-                                        END
-                                    ) AS ceklok_makan,
 
                                     -- AMBIL JAM CEKLOK MAKAN
                                     MIN(
