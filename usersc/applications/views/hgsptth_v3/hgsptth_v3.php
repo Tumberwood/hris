@@ -273,7 +273,7 @@
 <!-- BEGIN datatables here -->
 <script type="text/javascript">
 		// ------------- default variable, do not erase
-		var edthgsptth_v3, tblhgsptth_v3, show_inactive_status_hgsptth_v3 = 0, id_hgsptth_v3;
+		var edthgsptth_v3, tblhgsptth_v3, show_inactive_status_hgsptth_v3 = 0, id_hgsptth_v3 = 0;
         var edthgsemtd_v3_senjum_s1, tblhgsemtd_v3_senjum_s1, show_inactive_status_hgsemtd_v3 = 0, id_hgsemtd_v3;
 		// ------------- end of default variable
 		var id_htsptth_old = 0;
