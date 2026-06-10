@@ -89,48 +89,52 @@ class Employee
 		$qs_emp = $db
 			->raw()
 			->exec(' SELECT
-						a.id id_pegawai,
-						a.id_users id_users,
-						
-						job.id_hovxxmh id_divisi,
-						divisi.nama divisi,
-
-						job.id_hodxxmh id_department,
-						dep.nama department,
-
-						job.id_hosxxmh id_section,
-						hos.nama section,
-
-						job.id_hobxxmh id_bagian,
-						hob.nama bagian,
-
-						job.id_hevxxmh id_level,
-						hev.nama level,
-
-						job.id_hetxxmh id_jabatan,
-						het.nama jabatan,
-
-						a.kode nik,
-						a.nama nama_pegawai,
-						a.gender jenis_kelamin,
-						CASE
-							WHEN (tanggal_keluar IS NULL OR tanggal_keluar >= CURDATE() ) then 1
-							ELSE 0
-						END is_active_pegawai,
-						job.tanggal_masuk AS tanggal_join,
-						job.tanggal_keluar AS tanggal_keluar
-					FROM hemxxmh a
-					JOIN hemjbmh job ON job.id_hemxxmh = a.id
-					LEFT JOIN hodxxmh dep ON dep.id = job.id_hodxxmh
-					LEFT JOIN hovxxmh divisi ON divisi.id = job.id_hovxxmh
-					LEFT JOIN hetxxmh jab ON jab.id = job.id_hetxxmh
-					LEFT JOIN hosxxmh hos ON hos.id = job.id_hosxxmh
-					LEFT JOIN hobxxmh hob ON hob.id = job.id_hobxxmh
-					LEFT JOIN hevxxmh hev ON hev.id = job.id_hevxxmh
-					LEFT JOIN hetxxmh het ON het.id = job.id_hetxxmh
-					WHERE 1
-					AND is_harian_lepas = 0
-					ORDER BY a.is_active DESC, a.kode
+						a.id AS id_pegawai,
+						a.id_users AS id_user,
+						a.kode_finger AS id_checkclock,
+						b.id_hovxxmh AS id_divisi,
+						c.nama AS divisi,
+						b.id_hodxxmh AS id_department,
+						d.nama AS department,
+						b.id_hosxxmh AS id_section,
+						e.nama AS section,
+						b.id_hobxxmh AS id_bagian,
+						f.nama AS bagian,
+						b.id_hevxxmh AS id_level,
+						g.nama AS level,
+						b.id_hetxxmh AS id_jabatan,
+						h.nama AS jabatan,
+						a.kode AS nik,
+						a.nama AS nama_pegawai,
+						a.gender AS jenis_kelamin,
+						a.is_active AS is_active_pegawai,
+						b.tanggal_masuk AS tanggal_join,
+						b.tanggal_keluar AS tanggal_keluar,
+						ifnull(is_terminasi, 0) AS is_resign
+					FROM hemxxmh as a
+					left JOIN hemjbmh as b ON b.id_hemxxmh = a.id
+					LEFT JOIN hovxxmh AS c ON c.id = b.id_hovxxmh
+					LEFT JOIN hodxxmh AS d ON d.id = b.id_hodxxmh
+					LEFT JOIN hosxxmh AS e ON e.id = b.id_hosxxmh
+					LEFT JOIN hobxxmh AS f ON f.id = b.id_hobxxmh
+					LEFT JOIN hevxxmh AS g ON g.id = b.id_hevxxmh
+					LEFT JOIN hetxxmh AS h ON h.id = b.id_hetxxmh
+					LEFT JOIN heyxxmh AS i ON i.id = b.id_heyxxmh
+					LEFT JOIN heyxxmd AS j ON j.id = b.id_heyxxmd
+					LEFT JOIN hesxxmh AS k ON k.id = b.id_hesxxmh
+					LEFT JOIN (
+					SELECT
+						id_hemxxmh,
+						IFNULL(is_terminasi, 0) AS is_terminasi
+					FROM (
+						SELECT
+							id_hemxxmh,
+							COUNT(id) AS is_terminasi
+						FROM hemjbrd
+						WHERE id_harxxmh IN (3, 4)
+						GROUP BY id_hemxxmh
+					) AS subquery
+					) resign ON resign.id_hemxxmh = a.id
 					'
 					);
 		$result = $qs_emp->fetchAll();
@@ -164,48 +168,52 @@ class Employee
 		$qs_emp = $db
 			->raw()
 			->exec(' SELECT
-						a.id id_pegawai,
-						a.id_users id_users,
-						
-						job.id_hovxxmh id_divisi,
-						divisi.nama divisi,
-
-						job.id_hodxxmh id_department,
-						dep.nama department,
-
-						job.id_hosxxmh id_section,
-						hos.nama section,
-
-						job.id_hobxxmh id_bagian,
-						hob.nama bagian,
-
-						job.id_hevxxmh id_level,
-						hev.nama level,
-
-						job.id_hetxxmh id_jabatan,
-						het.nama jabatan,
-
-						a.kode nik,
-						a.nama nama_pegawai,
-						a.gender jenis_kelamin,
-						CASE
-							WHEN (tanggal_keluar IS NULL OR tanggal_keluar >= CURDATE() ) then 1
-							ELSE 0
-						END is_active_pegawai,
-						job.tanggal_masuk AS tanggal_join,
-						job.tanggal_keluar AS tanggal_keluar
-					FROM hemxxmh a
-					JOIN hemjbmh job ON job.id_hemxxmh = a.id
-					LEFT JOIN hodxxmh dep ON dep.id = job.id_hodxxmh
-					LEFT JOIN hovxxmh divisi ON divisi.id = job.id_hovxxmh
-					LEFT JOIN hetxxmh jab ON jab.id = job.id_hetxxmh
-					LEFT JOIN hosxxmh hos ON hos.id = job.id_hosxxmh
-					LEFT JOIN hobxxmh hob ON hob.id = job.id_hobxxmh
-					LEFT JOIN hevxxmh hev ON hev.id = job.id_hevxxmh
-					LEFT JOIN hetxxmh het ON het.id = job.id_hetxxmh
-					WHERE 1
-					AND is_harian_lepas = 0
-					ORDER BY a.is_active DESC, a.kode
+						a.id AS id_pegawai,
+						a.id_users AS id_user,
+						a.kode_finger AS id_checkclock,
+						b.id_hovxxmh AS id_divisi,
+						c.nama AS divisi,
+						b.id_hodxxmh AS id_department,
+						d.nama AS department,
+						b.id_hosxxmh AS id_section,
+						e.nama AS section,
+						b.id_hobxxmh AS id_bagian,
+						f.nama AS bagian,
+						b.id_hevxxmh AS id_level,
+						g.nama AS level,
+						b.id_hetxxmh AS id_jabatan,
+						h.nama AS jabatan,
+						a.kode AS nik,
+						a.nama AS nama_pegawai,
+						a.gender AS jenis_kelamin,
+						a.is_active AS is_active_pegawai,
+						b.tanggal_masuk AS tanggal_join,
+						b.tanggal_keluar AS tanggal_keluar,
+						ifnull(is_terminasi, 0) AS is_resign
+					FROM hemxxmh as a
+					left JOIN hemjbmh as b ON b.id_hemxxmh = a.id
+					LEFT JOIN hovxxmh AS c ON c.id = b.id_hovxxmh
+					LEFT JOIN hodxxmh AS d ON d.id = b.id_hodxxmh
+					LEFT JOIN hosxxmh AS e ON e.id = b.id_hosxxmh
+					LEFT JOIN hobxxmh AS f ON f.id = b.id_hobxxmh
+					LEFT JOIN hevxxmh AS g ON g.id = b.id_hevxxmh
+					LEFT JOIN hetxxmh AS h ON h.id = b.id_hetxxmh
+					LEFT JOIN heyxxmh AS i ON i.id = b.id_heyxxmh
+					LEFT JOIN heyxxmd AS j ON j.id = b.id_heyxxmd
+					LEFT JOIN hesxxmh AS k ON k.id = b.id_hesxxmh
+					LEFT JOIN (
+					SELECT
+						id_hemxxmh,
+						IFNULL(is_terminasi, 0) AS is_terminasi
+					FROM (
+						SELECT
+							id_hemxxmh,
+							COUNT(id) AS is_terminasi
+						FROM hemjbrd
+						WHERE id_harxxmh IN (3, 4)
+						GROUP BY id_hemxxmh
+					) AS subquery
+					) resign ON resign.id_hemxxmh = a.id
 					'.$query.'
 					'
 					);
