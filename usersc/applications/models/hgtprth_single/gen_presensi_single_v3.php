@@ -802,7 +802,7 @@
                                                     AND DATE_SUB(jadwal.tanggaljam_akhir_t2, INTERVAL 60 MINUTE)
                                             THEN c.tanggal_jam
                                         END
-                                    ) AS jam_makan
+                                    ) AS jam_makan,
                                     
                                     MIN(
                                         CASE
