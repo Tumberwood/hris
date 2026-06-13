@@ -100,43 +100,24 @@
 					}
 				}
 
-				$qs_htlxxrh = $db
-					->raw()
-					->bind(':tanggal', $tanggal_ymd->format('Y-m-d'))
-					->bind(':id_hemxxmh', $rs_htlxxth['id_hemxxmh'])
-					->bind(':kode', $rs_htlxxth['kode'])
-					->exec('SELECT
-								id
-							FROM htlxxrh
-							WHERE tanggal = :tanggal
-								AND id_hemxxmh = :id_hemxxmh
-								AND kode = :kode
-				');
-
-				$rs_htlxxrh = $qs_htlxxrh->fetch();
-
-				if (!isset($rs_htlxxrh['id'])) {
-
-					$qi = $db
-						->query('insert', 'htlxxrh')
-						->set('id_transaksi', $rs_htlxxth['id_transaksi'] )
-						->set('id_htlgrmh', $rs_htlxxth['id_htlgrmh'] )
-						->set('id_htlxxmh', $rs_htlxxth['id_htlxxmh'] )
-						->set('id_hemxxmh', $rs_htlxxth['id_hemxxmh'] )
-						->set('kode', $rs_htlxxth['kode'] )
-						->set('is_approve', $state )
-						->set('tanggal', $tanggal_ymd->format('Y-m-d') )
-						->set('keterangan', $rs_htlxxth['keterangan'] )
-						->set('jenis', 1 )
-						->set('htlxxmh_kode', $rs_htlxxth['htlxxmh_kode'] )
-						->set('htlgrmh_kode', $rs_htlxxth['htlgrmh_kode'] )
-						->set('jumlah', 1 )
-						->set('jam_awal', null )
-						->set('jam_akhir', null )
-						->set('saldo', $pot_cuti )
-						->exec();
-
-				}
+				$qi = $db
+					->query('insert', 'htlxxrh')
+					->set('id_transaksi', $rs_htlxxth['id_transaksi'] )
+					->set('id_htlgrmh', $rs_htlxxth['id_htlgrmh'] )
+					->set('id_htlxxmh', $rs_htlxxth['id_htlxxmh'] )
+					->set('id_hemxxmh', $rs_htlxxth['id_hemxxmh'] )
+					->set('kode', $rs_htlxxth['kode'] )
+					->set('is_approve', $state )
+					->set('tanggal', $tanggal_ymd->format('Y-m-d') )
+					->set('keterangan', $rs_htlxxth['keterangan'] )
+					->set('jenis', 1 )
+					->set('htlxxmh_kode', $rs_htlxxth['htlxxmh_kode'] )
+					->set('htlgrmh_kode', $rs_htlxxth['htlgrmh_kode'] )
+					->set('jumlah', 1 )
+					->set('jam_awal', null )
+					->set('jam_akhir', null )
+					->set('saldo', $pot_cuti )
+					->exec();
 				$tt = $tt . ' - ' . $tanggal_ymd->format('Y-m-d');
 				$tanggal->add(1, 'days');
 			}
