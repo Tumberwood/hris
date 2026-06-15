@@ -181,13 +181,18 @@
 													<th class="text-center align-middle">Lembur Total (jam)</th>
 													<th class="text-center align-middle">Lembur Total (rp)</th>
 													<th class="text-center align-middle">Kompensasi Kontrak Berakhir</th>
+													<th class="text-center align-middle">Cuti Tahunan</th>
+													<th class="text-center align-middle">Cuti Bersama (Cuti Masal)</th>
 													<th class="text-center align-middle">Hari Sisa Cuti</th>
 													<th class="text-center align-middle">Kompensasi Sisa Cuti</th>
 													<th class="text-center align-middle">THR</th>
 
 													<!-- POTONGAN -->
 													<th class="text-center align-middle text-danger">Potongan makan</th>
-													<th class="text-center align-middle text-danger">Potongan Upah</th>
+													<th class="text-center align-middle text-danger">Total Pot Upah</th>
+													<th class="text-center align-middle text-danger">Potongan Upah (Rp)</th>
+													<th class="text-center align-middle text-danger">Total Pot Jam</th>
+													<th class="text-center align-middle text-danger">Potongan Jam (Rp)</th>
 
 													<th class="text-center align-middle">Penghasilan Sebelum PPh 21</th>
 													<th class="text-center align-middle text-danger">Potongan Sebelum PPh 21</th>
@@ -282,6 +287,11 @@
 													<th id="karyawan_58"></th>
 													<th id="karyawan_59"></th>
 													<th id="karyawan_60"></th>
+													<th id="karyawan_61"></th>
+													<th id="karyawan_62"></th>
+													<th id="karyawan_63"></th>
+													<th id="karyawan_64"></th>
+													<th id="karyawan_65"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -333,13 +343,19 @@
 													<th class="text-center align-middle">Lembur Total (jam)</th>
 													<th class="text-center align-middle">Lembur Total (rp)</th>
 													<th class="text-center align-middle">Kompensasi Kontrak Berakhir</th>
+													<th class="text-center align-middle">Cuti Tahunan</th>
+													<th class="text-center align-middle">Cuti Bersama (Cuti Masal)</th>
 													<th class="text-center align-middle">Hari Sisa Cuti</th>
 													<th class="text-center align-middle">Kompensasi Sisa Cuti</th>
 													<th class="text-center align-middle">THR</th>
 
 													<!-- POTONGAN -->
 													<th class="text-center align-middle text-danger">Potongan makan</th>
-													<th class="text-center align-middle text-danger">Potongan Upah</th>
+													<th class="text-center align-middle text-danger">Total Pot Upah</th>
+													<th class="text-center align-middle text-danger">Potongan Upah (Rp)</th>
+													<th class="text-center align-middle text-danger">Total Pot Jam</th>
+													<th class="text-center align-middle text-danger">Potongan Jam (Rp)</th>
+
 
 													<th class="text-center align-middle">Penghasilan Sebelum PPh 21</th>
 													<th class="text-center align-middle text-danger">Potongan Sebelum PPh 21</th>
@@ -434,6 +450,11 @@
 													<th id="kontrak_58"></th>
 													<th id="kontrak_59"></th>
 													<th id="kontrak_60"></th>
+													<th id="kontrak_61"></th>
+													<th id="kontrak_62"></th>
+													<th id="kontrak_63"></th>
+													<th id="kontrak_64"></th>
+													<th id="kontrak_65"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -485,13 +506,19 @@
 													<th class="text-center align-middle">Lembur Total (jam)</th>
 													<th class="text-center align-middle">Lembur Total (rp)</th>
 													<th class="text-center align-middle">Kompensasi Kontrak Berakhir</th>
+													<th class="text-center align-middle">Cuti Tahunan</th>
+													<th class="text-center align-middle">Cuti Bersama (Cuti Masal)</th>
 													<th class="text-center align-middle">Hari Sisa Cuti</th>
 													<th class="text-center align-middle">Kompensasi Sisa Cuti</th>
 													<th class="text-center align-middle">THR</th>
 
 													<!-- POTONGAN -->
 													<th class="text-center align-middle text-danger">Potongan makan</th>
-													<th class="text-center align-middle text-danger">Potongan Upah</th>
+													<th class="text-center align-middle text-danger">Total Pot Upah</th>
+													<th class="text-center align-middle text-danger">Potongan Upah (Rp)</th>
+													<th class="text-center align-middle text-danger">Total Pot Jam</th>
+													<th class="text-center align-middle text-danger">Potongan Jam (Rp)</th>
+
 
 													<th class="text-center align-middle">Penghasilan Sebelum PPh 21</th>
 													<th class="text-center align-middle text-danger">Potongan Sebelum PPh 21</th>
@@ -586,6 +613,11 @@
 													<th id="kbm_reg_58"></th>
 													<th id="kbm_reg_59"></th>
 													<th id="kbm_reg_60"></th>
+													<th id="kbm_reg_61"></th>
+													<th id="kbm_reg_62"></th>
+													<th id="kbm_reg_63"></th>
+													<th id="kbm_reg_64"></th>
+													<th id="kbm_reg_65"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -1445,13 +1477,18 @@
 					{ data: "hpyemtd.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					{ data: "hpyemtd.komp_rekontrak", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.cuti_tahunan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.cuti_bersama", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.sisa_cuti_hari", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.thr", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					// POTONGAN
 					{ data: "hpyemtd.pot_makan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					{ data: "hpyemtd.pendapatan_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.pot_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -1525,7 +1562,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 60; i++) {
+					for (var i = 10; i <= 65; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1717,13 +1754,18 @@
 					{ data: "hpyemtd.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					{ data: "hpyemtd.komp_rekontrak", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.cuti_tahunan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.cuti_bersama", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.sisa_cuti_hari", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.thr", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					// POTONGAN
 					{ data: "hpyemtd.pot_makan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					{ data: "hpyemtd.pendapatan_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.pot_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -1787,7 +1829,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 60; i++) {
+					for (var i = 10; i <= 65; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1970,13 +2012,18 @@
 					{ data: "hpyemtd.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					{ data: "hpyemtd.komp_rekontrak", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.cuti_tahunan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.cuti_bersama", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.sisa_cuti_hari", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.thr", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					// POTONGAN
 					{ data: "hpyemtd.pot_makan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					{ data: "hpyemtd.pendapatan_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.pot_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -2040,7 +2087,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 60; i++) {
+					for (var i = 10; i <= 65; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }

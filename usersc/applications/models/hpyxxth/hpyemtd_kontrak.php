@@ -78,7 +78,6 @@
 				Field::inst( 'hpyemtd.koreksi_lembur' ),
 				Field::inst( 'hpyemtd.koreksi_status' ),
 				Field::inst( 'hpyemtd.overtime_susulan' ),
-				Field::inst( 'hpyemtd.sisa_cuti' ),
 				Field::inst( 'hpyemtd.pot_lain' ),
 				
 				// IDENTITAS TAMBAHAN
@@ -106,7 +105,14 @@
 				Field::inst( 'hpyemtd.total_rp_lembur' ),
 
 				Field::inst( 'hpyemtd.komp_rekontrak' ),
+				
 				Field::inst( 'hpyemtd.komp_sisa_cuti' ),
+				Field::inst( 'hpyemtd.cuti_tahunan' ),
+				Field::inst( 'hpyemtd.cuti_bersama' ),
+				Field::inst( 'hpyemtd.sisa_cuti_hari' ),
+				Field::inst( 'hpyemtd.c_pot_upah' ),
+				Field::inst( 'hpyemtd.c_pot_jam' ),
+
 				Field::inst( 'hpyemtd.thr' ),
 
 				// BEFORE PPH
@@ -136,7 +142,6 @@
 
 				Field::inst( 'hpyemtd.pendapatan_lain_after_pph' ),
 				Field::inst( 'hpyemtd.pot_lain_after_pph' ),
-				Field::inst( 'hpyemtd.sisa_cuti_hari' ),
 				Field::inst( 'hpyemtd.tj_khusus' ),
 
 				// BRUTO (WAJIB ADA)
