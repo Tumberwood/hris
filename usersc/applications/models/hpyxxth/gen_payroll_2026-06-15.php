@@ -774,9 +774,7 @@
                                         * pr.is_pot_upah
                                     )
                                 )
-                            )) AS pot_upah,
-
-                            SUM(pr.is_pot_upah) AS c_pot_upah
+                            )) AS pot_upah
 
                         FROM htsprrd pr
                         JOIN hemxxmh peg ON peg.id = pr.id_hemxxmh
@@ -791,78 +789,26 @@
                     pot_jam AS (
                         SELECT
                             pr.id_hemxxmh,
-                            
-                            ROUND(SUM(
+                            SUM(
                                 IF(
-                                    job.id_hesxxmh = 3 AND job.id_heyxxmd = 1,
-
-                                    -- Pot jam Mati
-                                    (
+                                    prr.id_heyxxmd = 1 AND prr.id_hesxxmh = 3,
+                                    pot_hk * IF(pr.grup_hk = 1, 83509 * 21, 70148 * 25) / 173,
+                                    FLOOR(
+                                        pot_hk
+                                        *
                                         (
-                                            IFNULL((
-                                                SELECT a.nominal
-                                                FROM htpr_hemxxmh a
-                                                WHERE a.id_hpcxxmh = 35
-                                                    AND a.id_hemxxmh = pr.id_hemxxmh
-                                                    AND a.tanggal_efektif <= pr.tanggal
-                                                ORDER BY a.tanggal_efektif DESC
-                                                LIMIT 1
-                                            ),0) 
-                                            / 173
-                                        )
-                                        * pr.pot_hk
-                                    ),
-
-                                    -- Rumus: ( (gp + tjab + fix_cost) / grup_hk (21 / 25) ) * pot_hk
-                                    (
-                                        (
-                                            (
-                                                -- GP
-                                                IFNULL((
-                                                    SELECT a.nominal
-                                                    FROM htpr_hemxxmh a
-                                                    WHERE a.id_hpcxxmh = 1
-                                                        AND a.id_hemxxmh = pr.id_hemxxmh
-                                                        AND a.tanggal_efektif <= pr.tanggal
-                                                    ORDER BY a.tanggal_efektif DESC
-                                                    LIMIT 1
-                                                ),0)
-
-                                                +
-
-                                                -- TJAB
-                                                IFNULL((
-                                                    SELECT a.nominal
-                                                    FROM htpr_hemxxmh a
-                                                    WHERE a.id_hpcxxmh = 32
-                                                        AND a.id_hemxxmh = pr.id_hemxxmh
-                                                        AND a.tanggal_efektif <= pr.tanggal
-                                                    ORDER BY a.tanggal_efektif DESC
-                                                    LIMIT 1
-                                                ),0)
-
-                                                +
-
-                                                IFNULL(fc.fix_cost,0)
-
-                                            )
-                                            /
-                                            173
-                                        )
-                                        * pr.pot_hk
+                                            gp + t_jab + var_cost + fix_cost
+                                        ) / 173
                                     )
                                 )
-                            )) AS pot_jam,
-
-                            SUM(pr.pot_hk) AS c_pot_jam
-
+                            ) AS pot_jam
                         FROM htsprrd pr
-                        JOIN hemxxmh peg ON peg.id = pr.id_hemxxmh
-                        JOIN hemjbmh job ON job.id_hemxxmh = peg.id
+                        LEFT JOIN hemjbmh prr on prr.id_hemxxmh = pr.id_hemxxmh
+                        LEFT JOIN gaji_pokok gp ON gp.id_hemxxmh = pr.id_hemxxmh
+                        LEFT JOIN t_jabatan tj ON tj.id_hemxxmh = pr.id_hemxxmh
+                        LEFT JOIN var_cost vc ON vc.id_hemxxmh = pr.id_hemxxmh
                         LEFT JOIN fix_cost fc ON fc.id_hemxxmh = pr.id_hemxxmh
-
-                        WHERE pr.pot_hk > 0
-                        AND pr.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                        WHERE pr.pot_hk > 0 AND pr.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                         GROUP BY pr.id_hemxxmh
                     ),
                     pendapatan_lain_before_pph AS (
@@ -1005,8 +951,6 @@
                             -- peg.kode,
                             -- peg.nama,
                             COALESCE(cb.c_cb, 0) AS c_cb,
-                            IFNULL(cuti_tahunan, 0) cuti_tahunan,
-                            IFNULL(cuti_bersama, 0) cuti_bersama,
                             ifnull(a.saldo,0) AS saldo,
                             ifnull(a.saldo, 0) - COALESCE(cb.c_cb, 0) AS sisa_cuti_hari,
                             
@@ -1042,19 +986,7 @@
                         LEFT JOIN (
                             SELECT
                                 rh.id_hemxxmh,
-                                COUNT(rh.id) AS c_cb,
-                                SUM(
-                                    CASE
-                                        WHEN rh.id_htlxxmh = 1 THEN 1
-                                        ELSE 0
-                                    END
-                                ) as cuti_tahunan,
-                                SUM(
-                                    CASE
-                                        WHEN rh.id_htlxxmh = 2 THEN 1
-                                        ELSE 0
-                                    END
-                                ) as cuti_bersama
+                                COUNT(rh.id) AS c_cb
                             FROM htlxxrh AS rh
                             LEFT JOIN htlxxmh AS mh ON mh.id = rh.id_htlxxmh
                             WHERE YEAR(rh.tanggal) = YEAR(DATE_SUB(:tanggal_akhir, INTERVAL 1 YEAR)) AND rh.jenis = 1 AND mh.is_potongcuti = 1
@@ -1307,27 +1239,21 @@
                             total_rp_lembur,
 
                             IFNULL(komp_rekontrak,0 ) AS komp_rekontrak,
-                            IF(MONTH("2026-01-22") = 1, 
+                            IF(MONTH(:tanggal_akhir) = 1, 
                                 IFNULL(komp_sisa_cuti,0 ),
                                 0
                             ) AS komp_sisa_cuti,
 
-                            IF(MONTH("2026-01-22") = 1, 
+                            IF(MONTH(:tanggal_akhir) = 1, 
                                 IFNULL(sisa_cuti_hari,0 ),
                                 0
                             ) AS sisa_cuti_hari,
-
-                            cuti_tahunan,
-                            cuti_bersama,
 
                             0 AS thr,
 
                             -- POTONGAN
                             pot_makan,
                             IFNULL(pot_upah, 0) AS pot_upah,
-                            IFNULL(c_pot_upah, 0) AS c_pot_upah,
-                            IFNULL(pot_jam, 0) AS pot_jam,
-                            IFNULL(c_pot_jam, 0) AS c_pot_jam,
                             IFNULL(pendapatan_lain_before_pph,0 ) AS pendapatan_lain_before_pph,
                             IFNULL(pot_lain_before_pph,0 ) AS pot_lain_before_pph,
 
@@ -1343,11 +1269,13 @@
                                 + COALESCE(var_cost,0)
                                 + COALESCE(tj_khusus,0)
                                 + COALESCE(fix_cost,0)
+                                + COALESCE(premi_abs,0)
                                 + COALESCE(total_rp_lembur,0)
                                 + COALESCE(komp_rekontrak,0)
                                 + COALESCE(komp_sisa_cuti,0)
                                 + 0
                                 + COALESCE(pendapatan_lain_before_pph,0)
+                                
                                 + COALESCE(bpjs_kes_perusahaan,0)
                                 + COALESCE(jkk,0)
                                 + COALESCE(jkm,0)
@@ -1356,7 +1284,6 @@
                             (
                                 COALESCE(pot_makan,0)
                                 + COALESCE(pot_upah,0)
-                                + COALESCE(pot_jam,0)
                                 + COALESCE(pot_lain_before_pph,0)
                             ) AS bruto,
 
@@ -1434,17 +1361,11 @@
                             total_rp_lembur,
                             komp_rekontrak,
                             komp_sisa_cuti,
-
-                            cuti_tahunan,
-                            cuti_bersama,
                             sisa_cuti_hari,
                             thr,
                             
                             pot_makan,
                             pot_upah,
-                            c_pot_upah,
-                            pot_jam,
-                            c_pot_jam,
                             pendapatan_lain_before_pph,
                             pot_lain_before_pph,
                             bpjs_kes_perusahaan,
@@ -1529,17 +1450,11 @@
 
                         komp_rekontrak,
                         komp_sisa_cuti,
-                        
-                        cuti_tahunan,
-                        cuti_bersama,
                         sisa_cuti_hari,
                         thr,
 
                         pot_makan,
                         pot_upah,
-                        c_pot_upah,
-                        pot_jam,
-                        c_pot_jam,
                         pendapatan_lain_before_pph,
                         pot_lain_before_pph,
 
