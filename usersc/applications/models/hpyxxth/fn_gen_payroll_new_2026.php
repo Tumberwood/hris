@@ -1307,12 +1307,12 @@
                             total_rp_lembur,
 
                             IFNULL(komp_rekontrak,0 ) AS komp_rekontrak,
-                            IF(MONTH("2026-01-22") = 1, 
+                            IF(MONTH(:tanggal_akhir) = 1, 
                                 IFNULL(komp_sisa_cuti,0 ),
                                 0
                             ) AS komp_sisa_cuti,
 
-                            IF(MONTH("2026-01-22") = 1, 
+                            IF(MONTH(:tanggal_akhir) = 1, 
                                 IFNULL(sisa_cuti_hari,0 ),
                                 0
                             ) AS sisa_cuti_hari,
