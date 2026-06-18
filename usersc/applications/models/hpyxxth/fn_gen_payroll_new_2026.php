@@ -866,7 +866,7 @@
                                                     ORDER BY a.tanggal_efektif DESC
                                                     LIMIT 1
                                                 ),0)
-                                                
+
                                                 +
 
                                                 IFNULL(fc.fix_cost,0)
@@ -1506,6 +1506,9 @@
                                 + pot_piutang
                                 + denda_apd
                                 + iuran_spsi
+                                + COALESCE(bpjs_kes_perusahaan,0)
+                                + COALESCE(jkk,0)
+                                + COALESCE(jkm,0)
                             )
                             + pendapatan_lain_after_pph
                             - pot_lain_after_pph
