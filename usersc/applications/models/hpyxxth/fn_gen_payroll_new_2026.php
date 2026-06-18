@@ -1369,6 +1369,7 @@
                                 + COALESCE(var_cost,0)
                                 + COALESCE(tj_khusus,0)
                                 + COALESCE(fix_cost,0)
+                                + COALESCE(premi_abs,0)
                                 + COALESCE(total_rp_lembur,0)
                                 + COALESCE(komp_rekontrak,0)
                                 + COALESCE(komp_sisa_cuti,0)
