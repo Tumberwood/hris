@@ -376,12 +376,21 @@
 						name: "hgsptth_v3.tanggal_awal",
 						fieldInfo: "Tanggal Awal wajib hari sabtu",
 						type: "datetime",
-						def: function () { 
-							return new Date(); 
+						def: function () {
+							let today = new Date();
+
+							// Jika bukan Sabtu, cari Sabtu berikutnya
+							if (today.getDay() !== 6) {
+								let daysUntilSaturday = (6 - today.getDay() + 7) % 7;
+								today.setDate(today.getDate() + daysUntilSaturday);
+							}
+
+							return today;
 						},
-						opts:{
+						opts: {
 							minDate: new Date('1900-01-01'),
-							firstDay: 0
+							firstDay: 0,
+							disableDays: [0,1,2,3,4,5]
 						},
 						format: 'DD MMM YYYY'
 					},	
