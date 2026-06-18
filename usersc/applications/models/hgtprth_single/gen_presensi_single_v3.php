@@ -1144,7 +1144,7 @@
                                 INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
                                 INNER JOIN hemjbmh AS c ON c.id_hemxxmh = b.id
                                 WHERE
-                                    a.id_hpcxxmh = 32
+                                    a.id_hpcxxmh IN (32,133)
                                     AND tanggal_efektif <= :tanggal
                             ) AS subquery
                             WHERE row_num = 1
