@@ -1066,7 +1066,18 @@
 							hari = 'Minggu';
 						}
 
-						$('#dayname').html(hari);
+						tanggal_merah(start_date);
+
+						if (is_holiday == 1) {
+							$('#dayname')
+								.html(hari)
+								.addClass('text-danger');
+						} else {
+							$('#dayname')
+								.html(hari)
+								.removeClass('text-danger');
+						}
+
 						$('#dayname').show();
 					} else {
 						$('#dayname').hide();
