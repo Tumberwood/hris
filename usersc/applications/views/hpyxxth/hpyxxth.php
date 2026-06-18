@@ -198,8 +198,8 @@
 													<th class="text-center align-middle text-danger">Potongan Sebelum PPh 21</th>
 
 													<th class="text-center align-middle">BPJS Kes Perusahaan</th>
-													<th class="text-center align-middle">BPJS JKK Perusahaan (pot_jkkjkm)</th>
-													<th class="text-center align-middle">BPJS JKM Perusahaan (pot_jkkjkm)</th>
+													<th class="text-center align-middle">BPJS JKK Perusahaan</th>
+													<th class="text-center align-middle">BPJS JKM Perusahaan</th>
 													<th class="text-center align-middle">Penghasilan Bruto</th>
 													<th class="text-center align-middle">Tarif TER (%)</th>
 
@@ -215,8 +215,8 @@
 													
 													<!-- Potongan JKK JKM BPJS KES -->
 													<th class="text-center align-middle text-danger">BPJS Kes Perusahaan</th>
-													<th class="text-center align-middle text-danger">BPJS JKK Perusahaan (pot_jkkjkm)</th>
-													<th class="text-center align-middle text-danger">BPJS JKM Perusahaan (pot_jkkjkm)</th>
+													<th class="text-center align-middle text-danger">Potongan BPJS JKK Perusahaan</th>
+													<th class="text-center align-middle text-danger">Potongan BPJS JKM Perusahaan</th>
 
 													<th class="text-center align-middle text-danger">Piutang Karyawan</th>
 													<th class="text-center align-middle text-danger">Pot Denda APD</th>
@@ -370,8 +370,8 @@
 													<th class="text-center align-middle text-danger">Potongan Sebelum PPh 21</th>
 
 													<th class="text-center align-middle">BPJS Kes Perusahaan</th>
-													<th class="text-center align-middle">BPJS JKK Perusahaan (pot_jkkjkm)</th>
-													<th class="text-center align-middle">BPJS JKM Perusahaan (pot_jkkjkm)</th>
+													<th class="text-center align-middle">BPJS JKK Perusahaan</th>
+													<th class="text-center align-middle">BPJS JKM Perusahaan</th>
 													<th class="text-center align-middle">Penghasilan Bruto</th>
 													<th class="text-center align-middle">Tarif TER (%)</th>
 
@@ -388,8 +388,8 @@
 													
 													<!-- Potongan JKK JKM BPJS KES -->
 													<th class="text-center align-middle text-danger">BPJS Kes Perusahaan</th>
-													<th class="text-center align-middle text-danger">BPJS JKK Perusahaan (pot_jkkjkm)</th>
-													<th class="text-center align-middle text-danger">BPJS JKM Perusahaan (pot_jkkjkm)</th>
+													<th class="text-center align-middle text-danger">Potongan BPJS JKK Perusahaan</th>
+													<th class="text-center align-middle text-danger">Potongan BPJS JKM Perusahaan</th>
 
 													<th class="text-center align-middle text-danger">Piutang Karyawan</th>
 													<th class="text-center align-middle text-danger">Pot Denda APD</th>
@@ -543,8 +543,8 @@
 													<th class="text-center align-middle text-danger">Potongan Sebelum PPh 21</th>
 
 													<th class="text-center align-middle">BPJS Kes Perusahaan</th>
-													<th class="text-center align-middle">BPJS JKK Perusahaan (pot_jkkjkm)</th>
-													<th class="text-center align-middle">BPJS JKM Perusahaan (pot_jkkjkm)</th>
+													<th class="text-center align-middle">BPJS JKK Perusahaan</th>
+													<th class="text-center align-middle">BPJS JKM Perusahaan</th>
 													<th class="text-center align-middle">Penghasilan Bruto</th>
 													<th class="text-center align-middle">Tarif TER (%)</th>
 
@@ -561,8 +561,8 @@
 													
 													<!-- Potongan JKK JKM BPJS KES -->
 													<th class="text-center align-middle text-danger">BPJS Kes Perusahaan</th>
-													<th class="text-center align-middle text-danger">BPJS JKK Perusahaan (pot_jkkjkm)</th>
-													<th class="text-center align-middle text-danger">BPJS JKM Perusahaan (pot_jkkjkm)</th>
+													<th class="text-center align-middle text-danger">Potongan BPJS JKK Perusahaan</th>
+													<th class="text-center align-middle text-danger">Potongan BPJS JKM Perusahaan</th>
 
 													<th class="text-center align-middle text-danger">Piutang Karyawan</th>
 													<th class="text-center align-middle text-danger">Pot Denda APD</th>
