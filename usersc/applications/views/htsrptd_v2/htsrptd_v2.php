@@ -66,7 +66,7 @@
 					}
 				},
 				ajax: {
-					url: "../../models/htsrptd/htsrptd.php",
+					url: "../../models/htsrptd_v2/htsrptd_v2.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_htsrptd = show_inactive_status_htsrptd;
@@ -302,7 +302,7 @@
 			//start datatables
 			tblhtsrptd = $('#tblhtsrptd').DataTable( {
 				ajax: {
-					url: "../../models/htsrptd/htsrptd.php",
+					url: "../../models/htsrptd_v2/htsrptd_v2.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_htsrptd = show_inactive_status_htsrptd;
@@ -344,7 +344,7 @@
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
 						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_h'];
-						$arr_buttons_approve 	= ['approve','cancel_approve','void'];
+						$arr_buttons_approve 	= [];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
