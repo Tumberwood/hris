@@ -107,6 +107,7 @@
 						<div role="tabpanel" id="tabhtsprrd" class="tab-pane active">
 							<div class="panel-body">
 								<div class="table-responsive">
+									<h3 id="dayname" style="display: none"></h3>
 									<table id="tblhtsprrd" class="table table-striped table-bordered table-hover nowrap" width="100%">
 										<thead>
 											<tr>
@@ -929,6 +930,43 @@
 					console.log('id_heyxxmd ='+id_heyxxmd);
 
 					cariApprove();
+
+					//Jika tanggal sama, maka munculin
+					if(start_date == end_date) {
+						dayname = moment($('#start_date').val()).format('dddd');
+						let hari = '';
+						if (dayname == 'Monday') {
+							hari = 'Senin';
+						} else if (dayname == 'Tuesday') {
+							hari = 'Selasa';
+						} else if (dayname == 'Wednesday') {
+							hari = 'Rabu';
+						} else if (dayname == 'Thursday') {
+							hari = 'Kamis';
+						} else if (dayname == 'Friday') {
+							hari = 'Jumat';
+						} else if (dayname == 'Saturday') {
+							hari = 'Sabtu';
+						} else if (dayname == 'Sunday') {
+							hari = 'Minggu';
+						}
+
+						tanggal_merah(start_date);
+
+						if (is_holiday == 1) {
+							$('#dayname')
+								.html(hari)
+								.addClass('text-danger');
+						} else {
+							$('#dayname')
+								.html(hari)
+								.removeClass('text-danger');
+						}
+
+						$('#dayname').show();
+					} else {
+						$('#dayname').hide();
+					}
 					
 					notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'

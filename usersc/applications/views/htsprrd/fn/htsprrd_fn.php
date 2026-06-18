@@ -57,4 +57,19 @@
             }
         } );
     };
+    
+    function tanggal_merah(tanggal) {
+        $.ajax( {
+            url: "../../models/htoxxth/fn_tanggal_merah.php",
+            dataType: 'json',
+            type: 'POST',
+            async: false,
+            data: {
+                tanggal: tanggal,
+            },
+            success: function ( json ) {
+                is_holiday = json.data.is_holiday;
+            }
+        });
+    }
 </script>
