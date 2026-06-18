@@ -645,9 +645,9 @@
 									} else if (colObj5.name == 'jam_wajib') {
 										str5 += '<th class="text-center">Jam Wajib</th>';
 									} else if (colObj5.name == 'potong') {
-										str5 += '<th class="text-center">Potong</th>';
+										str5 += '<th class="text-center">Potong Jam</th>';
 									} else if (colObj5.name == 'ti') {
-										str5 += '<th class="text-center">TI</th>';
+										str5 += '<th class="text-center">Potong TI</th>';
 									} else if (colObj5.name == 'makan') {
 										str5 += '<th class="text-center">Makan</th>';
 									} else if (colObj5.name == 'is_pot_upah') {
