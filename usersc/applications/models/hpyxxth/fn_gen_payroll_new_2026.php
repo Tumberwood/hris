@@ -856,6 +856,19 @@
 
                                                 +
 
+                                                -- TJ Khusus
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 133
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
+                                                
+                                                +
+
                                                 IFNULL(fc.fix_cost,0)
 
                                             )
