@@ -38,6 +38,7 @@
         ->raw()
         ->bind(':id_hemxxmh', $id_hemxxmh)
         ->exec('SELECT
+                    id_hesxxmh,
                     id_heyxxmd
                 FROM hemjbmh a
                 WHERE a.id_hemxxmh = :id_hemxxmh
@@ -45,11 +46,14 @@
     
     $rs_hemxxmh = $qs_hemxxmh->fetch();
     $id_heyxxmd = 0;
+    $id_hesxxmh = 0;
 
     if ($rs_hemxxmh) {
         $id_heyxxmd = $rs_hemxxmh['id_heyxxmd'];
+        $id_hesxxmh = $rs_hemxxmh['id_hesxxmh'];
     } else {
         $id_heyxxmd = 0;
+        $id_hesxxmh = 0;
     }
     
     //KBM
@@ -60,7 +64,15 @@
         $exclude_kbm = '(-1)';
         $w_exclude_kbm = 'NOT IN';
     }
-    
+
+    //STATUS = KONTRAK, maka tidak muncul LR (Libur)
+    if ($id_heyxxmd == 2) {
+        $exclude_kontrak = '(23)';
+        $w_exclude_kontrak = 'NOT IN';
+    }else{
+        $exclude_kontrak = '(-1)';
+        $w_exclude_kontrak = 'NOT IN';
+    }
 
     // BEGIN query self.
     // Hanya dipanggil jika field ada nilai id nya
@@ -89,6 +101,7 @@
         ->where('is_active',1)
         ->where('id', $id_htlxxmh_old, '<>' )
         ->where('id', $exclude_kbm, $w_exclude_kbm, false)
+        ->where('id', $exclude_kontrak, $w_exclude_kontrak, false)
         ->where( function ( $r ) {
             $q = $_GET['search'];
             $r
