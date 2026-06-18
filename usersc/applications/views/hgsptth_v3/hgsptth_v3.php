@@ -392,7 +392,8 @@
 							firstDay: 0,
 							disableDays: [0,1,2,3,4,5]
 						},
-						format: 'DD MMM YYYY'
+						format: 'DD MMM YYYY',
+						fieldInfo: "Hanya muncul hari Sabtu"
 					},	
 					{
 						label: "Tanggal Akhir ",

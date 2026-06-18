@@ -181,13 +181,14 @@
 						label: "Tanggal Merah<sup class='text-danger'>*<sup>",
 						name: "htssctd_tukarhari.tanggal_terpilih",
 						type: "datetime",
-						def: function () { 
-							return new Date(); 
+						opts: {
+							minDate: new Date('1900-01-01'),
+							disableDays: function (date) {
+								return allowedDates.indexOf(date.toDateString()) === -1;
+							}
 						},
-						opts:{
-							minDate: new Date('1900-01-01')
-						},
-						format: 'DD MMM YYYY'
+						format: 'DD MMM YYYY',
+						fieldInfo: "Hanya muncul dari Libur Nasional dan Cuti bersama"
 					}, 	{
 						label: "Tukar Dengan Tanggal<sup class='text-danger'>*<sup>",
 						name: "htssctd_tukarhari.tanggal_pengganti",
@@ -210,6 +211,7 @@
 			edthtssctd_tukarhari.on( 'preOpen', function( e, mode, action ) {
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthtssctd_tukarhari.field('start_on').val(start_on);
+				cek_tanggal_merah();
 
 				if(action == 'create'){
 					tblhtssctd_tukarhari.rows().deselect();
