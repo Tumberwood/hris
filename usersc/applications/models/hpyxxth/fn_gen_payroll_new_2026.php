@@ -1485,7 +1485,7 @@
 
                             -- GAJI BERSIH
                             ( bruto - ( bruto * (IFNULL(ter.persen,0) / 100) ) )
-                            + (jht_perusahaan + jp_perusahaan)
+                            -- + (jht_perusahaan + jp_perusahaan)
                             - (
                                 pot_jht_karyawan
                                 + pot_jp_karyawan
