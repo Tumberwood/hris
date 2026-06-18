@@ -212,6 +212,12 @@
 													<th class="text-center align-middle text-danger">BPJS JHT Karyawan (pot_jht)</th>
 													<th class="text-center align-middle text-danger">BPJS JP Karyawan (pot_psiun)</th>
 													<th class="text-center align-middle text-danger">BPJS Kes Karyawan (pot_bpjs)</th>
+													
+													<!-- Potongan JKK JKM BPJS KES -->
+													<th class="text-center align-middle text-danger">BPJS Kes Perusahaan</th>
+													<th class="text-center align-middle text-danger">BPJS JKK Perusahaan (pot_jkkjkm)</th>
+													<th class="text-center align-middle text-danger">BPJS JKM Perusahaan (pot_jkkjkm)</th>
+
 													<th class="text-center align-middle text-danger">Piutang Karyawan</th>
 													<th class="text-center align-middle text-danger">Pot Denda APD</th>
 													<th class="text-center align-middle text-danger">Iuran SPSI (potongan)</th>
@@ -292,6 +298,9 @@
 													<th id="karyawan_63"></th>
 													<th id="karyawan_64"></th>
 													<th id="karyawan_65"></th>
+													<th id="karyawan_66"></th>
+													<th id="karyawan_67"></th>
+													<th id="karyawan_68"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -372,9 +381,16 @@
 													<th class="text-center align-middle">BPJS JHT Perusahaan</th>
 													<th class="text-center align-middle">BPJS JP Perusahaan</th>
 
+
 													<th class="text-center align-middle text-danger">BPJS JHT Karyawan (pot_jht)</th>
 													<th class="text-center align-middle text-danger">BPJS JP Karyawan (pot_psiun)</th>
 													<th class="text-center align-middle text-danger">BPJS Kes Karyawan (pot_bpjs)</th>
+													
+													<!-- Potongan JKK JKM BPJS KES -->
+													<th class="text-center align-middle text-danger">BPJS Kes Perusahaan</th>
+													<th class="text-center align-middle text-danger">BPJS JKK Perusahaan (pot_jkkjkm)</th>
+													<th class="text-center align-middle text-danger">BPJS JKM Perusahaan (pot_jkkjkm)</th>
+
 													<th class="text-center align-middle text-danger">Piutang Karyawan</th>
 													<th class="text-center align-middle text-danger">Pot Denda APD</th>
 													<th class="text-center align-middle text-danger">Iuran SPSI (potongan)</th>
@@ -455,6 +471,9 @@
 													<th id="kontrak_63"></th>
 													<th id="kontrak_64"></th>
 													<th id="kontrak_65"></th>
+													<th id="kontrak_66"></th>
+													<th id="kontrak_67"></th>
+													<th id="kontrak_68"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -535,9 +554,16 @@
 													<th class="text-center align-middle">BPJS JHT Perusahaan</th>
 													<th class="text-center align-middle">BPJS JP Perusahaan</th>
 
+
 													<th class="text-center align-middle text-danger">BPJS JHT Karyawan (pot_jht)</th>
 													<th class="text-center align-middle text-danger">BPJS JP Karyawan (pot_psiun)</th>
 													<th class="text-center align-middle text-danger">BPJS Kes Karyawan (pot_bpjs)</th>
+													
+													<!-- Potongan JKK JKM BPJS KES -->
+													<th class="text-center align-middle text-danger">BPJS Kes Perusahaan</th>
+													<th class="text-center align-middle text-danger">BPJS JKK Perusahaan (pot_jkkjkm)</th>
+													<th class="text-center align-middle text-danger">BPJS JKM Perusahaan (pot_jkkjkm)</th>
+
 													<th class="text-center align-middle text-danger">Piutang Karyawan</th>
 													<th class="text-center align-middle text-danger">Pot Denda APD</th>
 													<th class="text-center align-middle text-danger">Iuran SPSI (potongan)</th>
@@ -618,6 +644,9 @@
 													<th id="kbm_reg_63"></th>
 													<th id="kbm_reg_64"></th>
 													<th id="kbm_reg_65"></th>
+													<th id="kbm_reg_66"></th>
+													<th id="kbm_reg_67"></th>
+													<th id="kbm_reg_68"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -1510,6 +1539,11 @@
 					{ data: "hpyemtd.pot_jht_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_jp_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.bpjs_kes_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					
+					{ data: "hpyemtd.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
 					{ data: "hpyemtd.pot_piutang", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.denda_apd", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.iuran_spsi", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -1562,7 +1596,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 65; i++) {
+					for (var i = 10; i <= 68; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1787,6 +1821,11 @@
 					{ data: "hpyemtd.pot_jht_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_jp_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.bpjs_kes_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					
+					{ data: "hpyemtd.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
 					{ data: "hpyemtd.pot_piutang", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.denda_apd", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.iuran_spsi", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -1829,7 +1868,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 65; i++) {
+					for (var i = 10; i <= 68; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -2045,6 +2084,11 @@
 					{ data: "hpyemtd.pot_jht_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_jp_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.bpjs_kes_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					
+					{ data: "hpyemtd.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
 					{ data: "hpyemtd.pot_piutang", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.denda_apd", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.iuran_spsi", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -2087,7 +2131,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 65; i++) {
+					for (var i = 10; i <= 68; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
