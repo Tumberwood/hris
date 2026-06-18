@@ -188,7 +188,7 @@
 							}
 						},
 						format: 'DD MMM YYYY',
-						fieldInfo: "Hanya muncul dari Libur Nasional dan Cuti bersama"
+						fieldInfo: "Hanya muncul tanggal Libur Nasional dan Cuti bersama"
 					}, 	{
 						label: "Tukar Dengan Tanggal<sup class='text-danger'>*<sup>",
 						name: "htssctd_tukarhari.tanggal_pengganti",
