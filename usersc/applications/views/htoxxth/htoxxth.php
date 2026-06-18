@@ -66,6 +66,7 @@
 <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
+			<h3>Testing</h3>
 			<div class="ibox-content">
 				<div class="table-responsive">
                     <table id="tblhtoxxth" class="table table-striped table-bordered table-hover nowrap" width="100%">
