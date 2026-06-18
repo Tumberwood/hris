@@ -75,7 +75,7 @@
 
 				//Cek apakah ada sakit atau absen khusus pada tanggal dan pegawai terpilih, maka cek apakah ada Cuti
 				if (
-					in_array($rs_htlxxth['id_htlxxmh'], [3,4,18]) || 
+					in_array($rs_htlxxth['id_htlxxmh'], [3]) || 
 					$rs_htlxxth['is_cuti_khusus'] == 1
 				) {
 					$qs_cuti = $db
