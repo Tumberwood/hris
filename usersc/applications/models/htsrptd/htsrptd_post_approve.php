@@ -42,7 +42,7 @@
             $rs_htsrptd = $qs_htsrptd->fetch();
             $keterangan = $rs_htsrptd['kode'] . " - " . $rs_htsrptd['keterangan'];
 
-            if ($rs_htsrptd['id_heyxxmd_pengaju'] != 4 && $rs_htsrptd['id_htsxxmh_pengganti'] != 4) {
+            // if ($rs_htsrptd['id_heyxxmd_pengaju'] == 4 && $rs_htsrptd['id_htsxxmh_pengganti'] == 4) {
                 // BEGIN non aktif pengaju
                 // harusnya bisa pakai where or, tapi belum berhasil diganti off
                 // $qu_htssctd_pengaju = $db
@@ -155,7 +155,7 @@
                             htsxxmh.id = :id_htsxxmh_pengaju
                     ');
                 // END insert pengganti tambahan
-            }
+            // }
             
         } else if($state == 2) {
             //CANCEL APPROVE
