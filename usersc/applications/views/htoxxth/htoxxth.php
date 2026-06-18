@@ -66,8 +66,8 @@
 <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
-			<h3>Testing</h3>
 			<div class="ibox-content">
+				<h3 id="dayname" style="display: none"></h3>
 				<div class="table-responsive">
                     <table id="tblhtoxxth" class="table table-striped table-bordered table-hover nowrap" width="100%">
                         <thead>
@@ -1045,6 +1045,32 @@
 						type: 'info',
 						delay: 0
 					});
+
+					//Jika tanggal sama, maka munculin
+					if(start_date == end_date) {
+						dayname = moment($('#start_date').val()).format('dddd');
+						let hari = '';
+						if (dayname == 'Monday') {
+							hari = 'Senin';
+						} else if (dayname == 'Tuesday') {
+							hari = 'Selasa';
+						} else if (dayname == 'Wednesday') {
+							hari = 'Rabu';
+						} else if (dayname == 'Thursday') {
+							hari = 'Kamis';
+						} else if (dayname == 'Friday') {
+							hari = 'Jumat';
+						} else if (dayname == 'Saturday') {
+							hari = 'Sabtu';
+						} else if (dayname == 'Sunday') {
+							hari = 'Minggu';
+						}
+
+						$('#dayname').html(hari);
+						$('#dayname').show();
+					} else {
+						$('#dayname').hide();
+					}
 
 					tblhtoxxth.rows().deselect();
 					tblhtoemtd.rows().deselect();
