@@ -118,6 +118,11 @@
 					IFNULL(c.kode, "-") AS kode_spkl,
 					c.jam_awal,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
+					a.pot_jam_late,
+					a.pot_jam_early,
+					a.pot_jam_izin,
+					a.pot_abnormal_istirahat,
+					a.pot_jam_istirahat,
 					c.jam_akhir
 				FROM htsprrd AS a
 				LEFT JOIN htssctd AS b ON b.id_hemxxmh = a.id_hemxxmh AND b.tanggal = a.tanggal 
@@ -410,6 +415,14 @@
 			['data' => 'lembur4', 'name' => 'lembur4'],
 			['data' => 'is_pot_upah', 'name' => 'is_pot_upah'],
 			['data' => 'is_pot_premi', 'name' => 'is_pot_premi'],
+		];
+		
+		$results['columns6'] = [
+			['data' => 'pot_jam_late', 'name' => 'pot_jam_late'],
+			['data' => 'pot_jam_early', 'name' => 'pot_jam_early'],
+			['data' => 'pot_jam_izin', 'name' => 'pot_jam_izin'],
+			['data' => 'pot_abnormal_istirahat', 'name' => 'pot_abnormal_istirahat'],
+			['data' => 'pot_jam_istirahat', 'name' => 'pot_jam_istirahat'],
 		];
 		
 	} else {

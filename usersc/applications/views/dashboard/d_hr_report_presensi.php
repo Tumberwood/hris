@@ -134,6 +134,7 @@
 				<br>
 				<div id="tabel_atas"></div>
 				<div style="margin-top: -40px" id="tabel_bawah"></div>
+				<div style="margin-top: -40px" id="tabel_potongan"></div>
 				<div class="row">
 					<div class="col-md-4">
                         <h3 id="h3_riwayat"></h3>
@@ -682,6 +683,67 @@
 								scrollCollapse: true,
 								data: json.data,
 								columns: json.columns5,
+								columnDefs: [
+									{ targets: '_all', className: 'text-right' } // Apply text-right class to all columns
+									,{
+										targets: [10,11],
+										className: 'text-center',
+										render: function (data){
+											if (data == 0){
+												return '<i class="fa fa-remove text-danger"></i>';
+											}else if(data == 1){
+												return '<i class="fa fa-check text-navy"></i>';
+											}
+										}
+									},
+								],
+								buttons: [
+								],
+								rowCallback: function (row, data, index) {
+
+								}
+							});
+							
+							var str6 = '<table id="tblhtsprrd6" class="table table-striped table-bordered">';
+							
+							if ($.fn.dataTable.isDataTable('#tblhtsprrd6')) {
+								$('#tblhtsprrd6').DataTable().clear();
+								$('#tblhtsprrd6').DataTable().destroy();
+								$('#tblhtsprrd6 tbody').empty();
+								$('#tblhtsprrd6 thead').empty();
+							}
+							str6 += '<thead>';
+								str6 += '<tr>';
+								$.each(json.columns6, function (k, colObj6) {
+									// BEGIN render column name
+									if (colObj6.name == 'pot_jam_late') {
+										str6 += '<th class="text-danger text-center">LATE</th>';
+									} else if (colObj6.name == 'pot_jam_early') {
+										str6 += '<th class="text-danger text-center">EARLY</th>';
+									} else if (colObj6.name == 'pot_jam_izin') {
+										str6 += '<th class="text-danger text-center">IZIN</th>';
+									} else if (colObj6.name == 'pot_abnormal_istirahat') {
+										str6 += '<th class="text-danger text-center">ABNORMAL ISTIRAHAT</th>';
+									} else if (colObj6.name == 'pot_jam_istirahat') {
+										str6 += '<th class="text-danger text-center">POTONGAN ISTIRAHAT</th>';
+									}
+								});
+								str6 += '</tr>';
+								// END header baris 6
+							str6 = str6 + '</thead>';
+
+							$('#tabel_potongan').html(str6);
+							// $('#h3_bawah').text("Checkclock bawah");
+
+							$('#tblhtsprrd6').DataTable({
+								paging: false,          // Disable pagination
+								searching: false,       // Disable search
+								info: false,            // Disable "Showing X of Y entries" information
+								lengthChange: false,    // Disable "Show X entries" dropdown
+								responsive: false,
+								scrollCollapse: true,
+								data: json.data,
+								columns: json.columns6,
 								columnDefs: [
 									{ targets: '_all', className: 'text-right' } // Apply text-right class to all columns
 									,{
