@@ -199,10 +199,13 @@
 							allowClear: true,
 							multiple: false,
 							ajax: {
-								url: "../../models/htlxxmh/htlxxmh_fn_opt.php",
+								url: "../../models/htlxxmh/htlxxmh_fn_opt_kbm.php",
 								dataType: 'json',
 								data: function (params) {
+									id_hemxxmh = edthtlxxth.field('htlxxth.id_hemxxmh').val();
+
 									var query = {
+										id_hemxxmh: id_hemxxmh,
 										id_htlxxmh_old: id_htlxxmh_old,
 										search: params.term || '',
 										page: params.page || 1
