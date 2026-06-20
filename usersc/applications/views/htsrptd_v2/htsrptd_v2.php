@@ -75,6 +75,18 @@
 				table: "#tblhtsrptd",
 				fields: [ 
 					{
+						label: "kategori_dokumen",
+						name: "kategori_dokumen",
+						type: "hidden"
+					},	{
+						label: "kategori_dokumen_value",
+						name: "kategori_dokumen_value",
+						type: "hidden"
+					},	{
+						label: "field_tanggal",
+						name: "field_tanggal",
+						type: "hidden"
+					},	{
 						label: "start_on",
 						name: "start_on",
 						type: "hidden"
@@ -204,6 +216,10 @@
 				
 				if(action == 'create'){
 					tblhtsrptd.rows().deselect();
+
+					edthtsrptd.field('kategori_dokumen').val('');
+					edthtsrptd.field('kategori_dokumen_value').val('');
+					edthtsrptd.field('field_tanggal').val('tanggal');
 				}
 			});
 
@@ -298,6 +314,14 @@
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthtsrptd.field('finish_on').val(finish_on);
 			});
+			
+			edthtsrptd.on( 'postSubmit', function (e, json, data, action, xhr) {
+				// event setelah Create atau Edit, dibedakan dari parameter action
+				// action : "create" | "edit"
+				// do something
+				tblhtsrptd.rows().deselect();
+				tblhtsrptd.ajax.reload(null, false);
+			} );
 
 			//start datatables
 			tblhtsrptd = $('#tblhtsrptd').DataTable( {
@@ -375,6 +399,7 @@
 
 				// atur hak akses
 				CekSelectHeaderH(tblhtsrptd);
+				tblhtsrptd.button('btnEdit:name').enable();
 			} );
 
 			tblhtsrptd.on( 'deselect', function () {

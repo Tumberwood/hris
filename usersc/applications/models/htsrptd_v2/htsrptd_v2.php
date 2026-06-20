@@ -48,7 +48,9 @@
 			Field::inst( 'htsrptd.last_edited_by' )
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
-			Field::inst( 'htsrptd.is_approve' ),
+			Field::inst( 'htsrptd.is_approve' )
+				->set( Field::SET_CREATE )
+				->setValue(1),
 			Field::inst( 'htsrptd.is_defaultprogram' ),
 			Field::inst( 'htsrptd.tanggal' )
 				->getFormatter( function ( $val, $data, $opts ) {
@@ -85,6 +87,7 @@
 			->where( 'htsrptd.is_active', 1);
 	}
 	
+	include( "../../../helpers/kode_fn_generate_c.php" );
 	include( "htsrptd_v2_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
