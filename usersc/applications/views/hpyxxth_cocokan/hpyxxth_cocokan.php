@@ -1419,6 +1419,8 @@
 		var id_heyxxmh_old = 0, id_periode_payroll_old = 0;
 		
 		$(document).ready(function() {
+			$('[data-toggle="tooltip"]').tooltip();
+			
 			$('.toggle-alert').click(function () {
 				var $content = $(this).closest('.alert').find('.alert-content');
 				$content.slideToggle(); // smooth hide/show
@@ -2056,6 +2058,11 @@
 					compareField(row, data, 114, 'gaji_bersih');
 					compareField(row, data, 116, 'bulat');
 					compareField(row, data, 118, 'gaji_terima');
+				},
+				drawCallback: function () {
+					$('[data-toggle="tooltip"]').tooltip({
+						container: 'body'
+					});
 				}
 			} );
 
@@ -2436,6 +2443,11 @@
 					compareField(row, data, 114, 'gaji_bersih');
 					compareField(row, data, 116, 'bulat');
 					compareField(row, data, 118, 'gaji_terima');
+				},
+				drawCallback: function () {
+					$('[data-toggle="tooltip"]').tooltip({
+						container: 'body'
+					});
 				}
 			} );
 
@@ -2807,6 +2819,11 @@
 					compareField(row, data, 114, 'gaji_bersih');
 					compareField(row, data, 116, 'bulat');
 					compareField(row, data, 118, 'gaji_terima');
+				},
+				drawCallback: function () {
+					$('[data-toggle="tooltip"]').tooltip({
+						container: 'body'
+					});
 				}
 			} );
 
