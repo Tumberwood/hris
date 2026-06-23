@@ -50,11 +50,11 @@
 								<input type="file" name="filename" class="form-control" id="frmUploadItem">
 							</div>
 						</div>
-						<!-- <div class="col-sm-4">
-							<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/Data Lembur & Makan Periode 18 12 2024 - 20 01 2025.xls');">
+						<div class="col-sm-4">
+							<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/template_payroll.xlsx');">
 								<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 							</button>
-						</div> -->
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
