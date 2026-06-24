@@ -1522,7 +1522,7 @@
                                     IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
                                         CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir) / 60),
                                         IF(jumlah_grup <> 4,
-                                            IF(ceklok_out < if(day(tanggaljam_akhir_istirahat) < day(tanggaljam_akhir) , date_add(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),  tanggaljam_akhir_istirahat) ,
+                                            IF(carbon_co < if(day(tanggaljam_akhir_istirahat) < day(tanggaljam_akhir) , date_add(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),  tanggaljam_akhir_istirahat) ,
                                                 CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir_min1) / 60),
                                                 CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir) / 60)
                                             ),
