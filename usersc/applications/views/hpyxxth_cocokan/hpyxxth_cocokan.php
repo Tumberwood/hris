@@ -1984,6 +1984,20 @@
     className: 'btn btn-success',
     action: async function () {
 
+		Swal.fire({
+			title: 'Processing...',
+			html: 'Jangan tutup halaman sampai proses selesai',
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+			showConfirmButton: false,
+			didOpen: () => {
+				Swal.showLoading();
+			}
+		});
+
+		await new Promise(resolve => requestAnimationFrame(resolve));
+		await new Promise(resolve => setTimeout(resolve, 50));
+
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Payroll');
 
@@ -2292,6 +2306,8 @@
             ),
             'Payroll.xlsx'
         );
+		
+		Swal.close();
 
     }
 }
