@@ -1648,6 +1648,8 @@
 				tblhpyemtd_kontrak.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_kmj.button( 'btnPrint:name' ).disable();
 				tblhpyemtd_freelance.button( 'btnPrint:name' ).disable();
+
+				tblhpyemtd_karyawan.button('btnExcelBerwarna:name').disable();
 				
 			} );
 			
@@ -1690,6 +1692,7 @@
 				`);
 				
 				tblhpyxxth.button('btnUpload:name').enable();
+				tblhpyemtd_karyawan.button('btnExcelBerwarna:name').enable();
 			} );
 			
 			tblhpyxxth.on( 'deselect', function () {
@@ -1716,6 +1719,7 @@
 				tblhpyemtd_freelance.button( 'btnPrint:name' ).disable();
 
 				tblhpyxxth.button('btnUpload:name').disable();
+				tblhpyemtd_karyawan.button('btnExcelBerwarna:name').disable();
 			} );
 
 				
@@ -1982,6 +1986,7 @@
 {
     text: '<span class="fa fa-file-excel-o">&nbsp;&nbsp;Excel Berwarna</span>',
     className: 'btn btn-success',
+	name: 'btnExcelBerwarna',
     action: async function () {
 
 		Swal.fire({
