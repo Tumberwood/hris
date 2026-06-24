@@ -2118,80 +2118,91 @@
         });
 
         // =========================
-        // DATA SEMUA PAGE
-        // =========================
-        const allRows = dt.rows().data().toArray();
+		// DATA SEMUA PAGE
+		// =========================
+		const allRows = dt.rows({ search: 'applied' }).indexes().toArray();
 
-        allRows.forEach(function (data) {
+		allRows.forEach(function (data) {
 
-            const rowData = [];
+			const rowData = [];
 
-            const tr = $(dt.row(function (idx, rowData) {
-                return rowData === data;
-            }).node());
+			dt.columns(':visible').every(function () {
 
-            tr.find('td').each(function () {
-                rowData.push($(this).text().trim());
-            });
+				let value = dt.cell(data, this.index()).render('display');
 
-            if (rowData.length === 0) {
-                return;
-            }
+				if (value === null || value === undefined) {
+					value = '';
+				}
 
-            const excelRow = worksheet.addRow(rowData);
+				value = $('<div>')
+					.html(value)
+					.text()
+					.trim();
 
-            excelRow.eachCell(function (cell) {
+				rowData.push(value);
 
-                cell.border = {
-                    top: { style: 'thin' },
-                    left: { style: 'thin' },
-                    bottom: { style: 'thin' },
-                    right: { style: 'thin' }
-                };
+			});
 
-            });
+			if (rowData.length === 0) {
+				return;
+			}
 
-            // =========================
-            // compareField() -> bg-danger
-            // =========================
-            Object.entries(compareMap).forEach(([colIndex, field]) => {
+			const excelRow = worksheet.addRow(rowData);
 
-                const nilaiCocokan =
-                    Number(data?.hpyemtd_cocokan?.[field] ?? 0);
+			excelRow.eachCell(function (cell) {
 
-                const nilaiAsli =
-                    Number(data?.hpyemtd?.[field] ?? 0);
+				cell.border = {
+					top: { style: 'thin' },
+					left: { style: 'thin' },
+					bottom: { style: 'thin' },
+					right: { style: 'thin' }
+				};
 
-                if (nilaiCocokan !== nilaiAsli) {
+			});
 
-                    const cell =
-                        excelRow.getCell(Number(colIndex) + 1);
+			const rowObj = dt.row(data).data();
 
-                    cell.fill = {
-                        type: 'pattern',
-                        pattern: 'solid',
-                        fgColor: {
-                            argb: 'FFDC3545'
-                        }
-                    };
+			// =========================
+			// compareField() -> bg-danger
+			// =========================
+			Object.entries(compareMap).forEach(([colIndex, field]) => {
 
-                    cell.font = {
-                        color: {
-                            argb: 'FFFFFFFF'
-                        },
-                        bold: true
-                    };
+				const nilaiCocokan =
+					Number(rowObj?.hpyemtd_cocokan?.[field] ?? 0);
 
-                    const selisih =
-                        nilaiCocokan - nilaiAsli;
+				const nilaiAsli =
+					Number(rowObj?.hpyemtd?.[field] ?? 0);
 
-                    cell.note =
-                        `Selisih : ${formatNumber(selisih)}`;
-                }
+				if (nilaiCocokan !== nilaiAsli) {
 
-            });
+					const cell =
+						excelRow.getCell(Number(colIndex) + 1);
 
-        });
+					cell.fill = {
+						type: 'pattern',
+						pattern: 'solid',
+						fgColor: {
+							argb: 'FFDC3545'
+						}
+					};
+
+					cell.font = {
+						color: {
+							argb: 'FFFFFFFF'
+						},
+						bold: true
+					};
+
+					const selisih =
+						nilaiCocokan - nilaiAsli;
+
+					cell.note =
+						`Selisih : ${formatNumber(selisih)}`;
+				}
+
+			});
+
+		});
 
         // =========================
         // STYLE KOLOM
