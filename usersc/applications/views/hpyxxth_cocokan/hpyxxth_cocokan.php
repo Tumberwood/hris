@@ -1409,6 +1409,8 @@
 <script src="<?=$us_url_root?>usersc/helpers/hakaksescrud_hd_fn.js"></script>
 
 <?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/hpyxxth_cocokan/fn/hpyxxth_cocokan_fn.php'; ?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
 <!-- BEGIN datatables here -->
 <script type="text/javascript">
@@ -1962,21 +1964,329 @@
 					{ data: "hpyemtd.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 				],
 				buttons: [
-					// BEGIN breaking generate button
-					<?php
-						$id_table    = 'id_hpyemtd';
-						$table       = 'tblhpyemtd_karyawan';
-						$edt         = 'edthpyemtd_karyawan';
-						$show_status = '_hpyemtd';
-						$table_name  = $nama_tabels_d[2];
+    // BEGIN breaking generate button
+    <?php
+        $id_table    = 'id_hpyemtd';
+        $table       = 'tblhpyemtd_karyawan';
+        $edt         = 'edthpyemtd_karyawan';
+        $show_status = '_hpyemtd';
+        $table_name  = $nama_tabels_d[2];
 
-						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
-						$arr_buttons_action 	= [];
-						$arr_buttons_approve 	= [];
-						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
-					?>
-					// END breaking generate button
-				],
+        $arr_buttons_tools      = ['show_hide','copy','excel','colvis'];
+        $arr_buttons_action     = [];
+        $arr_buttons_approve    = [];
+
+        include $abs_us_root.$us_url_root.'usersc/helpers/button_fn_generate.php';
+    ?>,
+
+{
+    text: '<span class="fa fa-file-excel-o">&nbsp;&nbsp;Excel Berwarna</span>',
+    className: 'btn btn-success',
+    action: async function () {
+
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Payroll');
+
+        const dt = $('#tblhpyemtd_karyawan').DataTable();
+
+        // =========================
+        // MAPPING compareField()
+        // =========================
+        const compareMap = {
+            18: 'gp',
+            20: 't_jab',
+            22: 'terima_lain',
+            24: 'var_cost',
+            26: 'tj_khusus',
+            28: 'fix_cost',
+            30: 'premi_abs',
+            32: 'lembur15',
+            34: 'rp_lembur15',
+            36: 'lembur2',
+            38: 'rp_lembur2',
+            40: 'lembur3',
+            42: 'rp_lembur3',
+            44: 'total_lembur_jam_final',
+            46: 'total_rp_lembur',
+            48: 'komp_rekontrak',
+            50: 'cuti_tahunan',
+            52: 'cuti_bersama',
+            54: 'sisa_cuti_hari',
+            56: 'komp_sisa_cuti',
+            58: 'thr',
+            60: 'pot_makan',
+            62: 'c_pot_upah',
+            64: 'pot_upah',
+            66: 'c_pot_jam',
+            68: 'pot_jam',
+            70: 'pendapatan_lain_before_pph',
+            72: 'pot_lain_before_pph',
+            74: 'bpjs_kes_perusahaan',
+            76: 'jkk',
+            78: 'jkm',
+            80: 'bruto',
+            82: 'persen_ter',
+            84: 'pot_pph21',
+            86: 'after_pph21',
+            88: 'jht_perusahaan',
+            90: 'jp_perusahaan',
+            92: 'pot_jht_karyawan',
+            94: 'pot_jp_karyawan',
+            96: 'bpjs_kes_karyawan',
+            98: 'bpjs_kes_perusahaan',
+            100: 'jkk',
+            102: 'jkm',
+            104: 'pot_piutang',
+            106: 'denda_apd',
+            108: 'iuran_spsi',
+            110: 'pendapatan_lain_after_pph',
+            112: 'pot_lain_after_pph',
+            114: 'gaji_bersih',
+            116: 'bulat',
+            118: 'gaji_terima'
+        };
+
+        // =========================
+        // HEADER
+        // =========================
+        const headers = [];
+
+        $('#tblhpyemtd_karyawan thead th').each(function () {
+            headers.push($(this).text().trim());
+        });
+
+        worksheet.addRow(headers);
+
+        const headerRow = worksheet.getRow(1);
+
+        $('#tblhpyemtd_karyawan thead th').each(function (idx) {
+
+            const cell = headerRow.getCell(idx + 1);
+
+            cell.font = {
+                bold: true,
+                color: { argb: 'FF000000' }
+            };
+
+            cell.alignment = {
+                horizontal: 'center',
+                vertical: 'middle',
+                wrapText: true
+            };
+
+            cell.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' }
+            };
+
+            if ($(this).hasClass('lama')) {
+
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFFFEBAA' }
+                };
+
+            } else if ($(this).hasClass('baru')) {
+
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFC3E6CB' }
+                };
+
+            } else {
+
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFE9ECEF' }
+                };
+            }
+
+            if ($(this).hasClass('text-danger')) {
+
+                cell.font = {
+                    bold: true,
+                    color: { argb: 'FFFF0000' }
+                };
+
+            }
+
+        });
+
+        // =========================
+        // DATA SEMUA PAGE
+        // =========================
+        const allRows = dt.rows().data().toArray();
+
+        allRows.forEach(function (data) {
+
+            const rowData = [];
+
+            const tr = $(dt.row(function (idx, rowData) {
+                return rowData === data;
+            }).node());
+
+            tr.find('td').each(function () {
+                rowData.push($(this).text().trim());
+            });
+
+            if (rowData.length === 0) {
+                return;
+            }
+
+            const excelRow = worksheet.addRow(rowData);
+
+            excelRow.eachCell(function (cell) {
+
+                cell.border = {
+                    top: { style: 'thin' },
+                    left: { style: 'thin' },
+                    bottom: { style: 'thin' },
+                    right: { style: 'thin' }
+                };
+
+            });
+
+            // =========================
+            // compareField() -> bg-danger
+            // =========================
+            Object.entries(compareMap).forEach(([colIndex, field]) => {
+
+                const nilaiCocokan =
+                    Number(data?.hpyemtd_cocokan?.[field] ?? 0);
+
+                const nilaiAsli =
+                    Number(data?.hpyemtd?.[field] ?? 0);
+
+                if (nilaiCocokan !== nilaiAsli) {
+
+                    const cell =
+                        excelRow.getCell(Number(colIndex) + 1);
+
+                    cell.fill = {
+                        type: 'pattern',
+                        pattern: 'solid',
+                        fgColor: {
+                            argb: 'FFDC3545'
+                        }
+                    };
+
+                    cell.font = {
+                        color: {
+                            argb: 'FFFFFFFF'
+                        },
+                        bold: true
+                    };
+
+                    const selisih =
+                        nilaiCocokan - nilaiAsli;
+
+                    cell.note =
+                        `Selisih : ${formatNumber(selisih)}`;
+                }
+
+            });
+
+        });
+
+        // =========================
+        // STYLE KOLOM
+        // =========================
+        $('#tblhpyemtd_karyawan thead th').each(function (idx) {
+
+            const th = $(this);
+            const col = worksheet.getColumn(idx + 1);
+
+            col.width = Math.max(
+                15,
+                Math.min(
+                    40,
+                    th.text().length + 5
+                )
+            );
+
+            if (th.hasClass('text-right')) {
+
+                col.alignment = {
+                    horizontal: 'right'
+                };
+
+            }
+
+            if (th.hasClass('text-center')) {
+
+                col.alignment = {
+                    horizontal: 'center'
+                };
+
+            }
+
+            if (th.hasClass('text-danger')) {
+
+				col.eachCell(function (cell, rowNumber) {
+
+					if (
+						rowNumber > 1 &&
+						!(
+							cell.fill &&
+							cell.fill.fgColor &&
+							cell.fill.fgColor.argb === 'FFDC3545'
+						)
+					) {
+
+						cell.font = {
+							color: {
+								argb: 'FFFF0000'
+							}
+						};
+
+					}
+
+				});
+
+			}
+
+        });
+
+        // =========================
+        // FREEZE HEADER
+        // =========================
+        worksheet.views = [
+            {
+                state: 'frozen',
+                ySplit: 1
+            }
+        ];
+
+        // =========================
+        // AUTO FILTER
+        // =========================
+        worksheet.autoFilter = {
+            from: 'A1',
+            to: worksheet.getRow(1).getCell(headers.length)._address
+        };
+
+        const buffer = await workbook.xlsx.writeBuffer();
+
+        saveAs(
+            new Blob(
+                [buffer],
+                {
+                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                }
+            ),
+            'Payroll.xlsx'
+        );
+
+    }
+}
+
+    // END breaking generate button
+],
 				footerCallback: function ( row, data, start, end, display ) {
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
