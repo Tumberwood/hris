@@ -285,6 +285,8 @@
 							.append('<td></td>')
 							.append('<td></td>')
 							.append('<td></td>')
+							.append('<td></td>')
+							.append('<td></td>')
 							.append(
 								$('<td/>', {
 									class: 'text-end fw-bold bg-danger text-white',
