@@ -79,6 +79,7 @@
 								<th>Jabatan</th>
 								<th>Area Kerja</th>
 								<th>Sub Tipe</th>
+								<th>Status</th>
 								<th>Tanggal</th>
 								<th>Jadwal</th>
 								<th>Proporsional Jam (IP)</th>
@@ -214,7 +215,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [1,3,4,5,6,7]
+						targets: [3,4,5,6,7,8]
 					},
 					{
 						searchPanes:{
@@ -252,6 +253,7 @@
 					{ data: "jab" },
 					{ data: "area" },
 					{ data: "sub_tipe" },
+					{ data: "status_peg" },
 					{ data: "tanggal" },
 					{ data: "st_jadwal" },
 					{ data: "pot_hk", class: "text-right" },
