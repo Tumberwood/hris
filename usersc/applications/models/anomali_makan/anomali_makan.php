@@ -118,19 +118,13 @@
 					WHERE ck.nama IN ("makan", "makan manual")
 						AND ck.tanggal BETWEEN :start_date
 							AND DATE_ADD(:end_date, INTERVAL 1 DAY)
-							AND a.tanggal_jam NOT IN (
-							SELECT
-								jam_makan
-							FROM htsprrd
-							WHERE tanggal BETWEEN :start_date AND DATE_ADD(:end_date, INTERVAL 1 DAY)
-							)
 					GROUP BY
 						ck.kode,
 						ck.tanggal_jam
 				) ceklok
 					ON ceklok.kode = hem.kode_finger
 					AND ceklok.tanggal_jam BETWEEN
-						CONCAT(a.tanggal, " 00:00")
+						CONCAT(a.tanggal, " 07:00")
 					AND 
 						CONCAT(a.tanggal, " 23:59")
 				WHERE 1
