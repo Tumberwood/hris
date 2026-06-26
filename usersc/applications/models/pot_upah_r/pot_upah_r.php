@@ -35,6 +35,8 @@
 					d.nama AS dep,
 					e.nama AS jab,
 					f.nama AS area,
+					sub.nama AS sub_tipe,
+					st.nama AS status_peg,
 					a.st_jadwal,
 					a.is_pot_upah
 				FROM htsprrd a
@@ -44,6 +46,10 @@
 				LEFT JOIN hodxxmh d ON d.id = jb.id_hodxxmh
 				LEFT JOIN hetxxmh e ON e.id = jb.id_hetxxmh
 				LEFT JOIN holxxmd_2 f ON f.id = a.id_holxxmd_2
+				
+				LEFT JOIN heyxxmd sub ON sub.id = jb.id_heyxxmd
+				LEFT JOIN hesxxmh st ON st.id = jb.id_hesxxmh
+
 				WHERE 1
 					AND a.tanggal BETWEEN :start_date AND :end_date
 					AND a.is_pot_upah = 1

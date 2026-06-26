@@ -78,11 +78,19 @@
 								<th>Department</th>
 								<th>Jabatan</th>
 								<th>Area Kerja</th>
+								<th>Sub Tipe</th>
+								<th>Status</th>
 								<th>Tanggal</th>
 								<th>Jadwal</th>
 								<th>Potongan Upah</th>
 							</tr>
 						</thead>
+						<tfoot>
+							<tr>
+								<th colspan="10" class="text-right">Grand Total</th>
+								<th class="text-right bg-primary" id="grand_total_ip"></th>
+							</tr>
+						</tfoot>
                     </table>
 				</div>
 			</div>
@@ -250,6 +258,8 @@
 					{ data: "dep" },
 					{ data: "jab" },
 					{ data: "area" },
+					{ data: "sub_tipe" },
+					{ data: "status_peg" },
 					{ data: "tanggal" },
 					{ data: "st_jadwal" },
 					{ data: "is_pot_upah", class: "text-right" },
@@ -312,6 +322,34 @@
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
 				},
+				footerCallback: function (row, data, start, end, display) {
+					const api = this.api();
+
+					const parseNumber = function (value) {
+						if (value === null || value === undefined || value === '') {
+							return 0;
+						}
+
+						if (typeof value === 'string') {
+							value = value.replace(/,/g, '');
+						}
+
+						return parseFloat(value) || 0;
+					};
+
+					// Kolom ke-10 = Proporsional Jam (IP)
+					const total = api
+						.column(10, { search: 'applied' })
+						.data()
+						.reduce(function (a, b) {
+							return parseNumber(a) + parseNumber(b);
+						}, 0);
+
+					$(api.column(10).footer()).html(total.toLocaleString('id-ID', {
+						minimumFractionDigits: 0,
+						maximumFractionDigits: 0
+					}));
+				}
 			} );
 
 			tblpot_upah_r.searchPanes.container().appendTo( '#searchPanes1' );
