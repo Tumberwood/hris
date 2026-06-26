@@ -85,6 +85,12 @@
 								<th>Proporsional Jam (IP)</th>
 							</tr>
 						</thead>
+						<tfoot>
+							<tr>
+								<th colspan="10" class="text-right">Grand Total</th>
+								<th id="grand_total_ip"></th>
+							</tr>
+						</tfoot>
                     </table>
 				</div>
 			</div>
@@ -316,6 +322,34 @@
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
 				},
+				footerCallback: function (row, data, start, end, display) {
+					const api = this.api();
+
+					const parseNumber = function (value) {
+						if (value === null || value === undefined || value === '') {
+							return 0;
+						}
+
+						if (typeof value === 'string') {
+							value = value.replace(/,/g, '');
+						}
+
+						return parseFloat(value) || 0;
+					};
+
+					// Kolom ke-10 = Proporsional Jam (IP)
+					const total = api
+						.column(10, { search: 'applied' })
+						.data()
+						.reduce(function (a, b) {
+							return parseNumber(a) + parseNumber(b);
+						}, 0);
+
+					$(api.column(10).footer()).html(total.toLocaleString('id-ID', {
+						minimumFractionDigits: 2,
+						maximumFractionDigits: 2
+					}));
+				}
 			} );
 
 			tblpot_jam_r.searchPanes.container().appendTo( '#searchPanes1' );
