@@ -178,13 +178,6 @@
                             htssctd.tanggal = :tanggal_pengganti
                             AND htssctd.is_active = 1
                             AND htssctd.id_hemxxmh IN ('.$idPegawaiIn.')
-                            AND htssctd.id = (
-                                SELECT MAX(b.id)
-                                FROM htssctd b
-                                WHERE b.tanggal = htssctd.tanggal
-                                    AND b.id_hemxxmh = htssctd.id_hemxxmh
-                                    AND b.is_active = 0
-                            )
                     ');
                 // END insert pengaju
                 
