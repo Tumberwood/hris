@@ -88,7 +88,7 @@
 						<tfoot>
 							<tr>
 								<th colspan="10" class="text-right">Grand Total</th>
-								<th id="grand_total_ip"></th>
+								<th class="text-right bg-primary" id="grand_total_ip"></th>
 							</tr>
 						</tfoot>
                     </table>
