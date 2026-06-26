@@ -383,8 +383,7 @@
 				
 				WHERE 
 					a.tanggal BETWEEN :start_date AND :end_date
-					-- AND a.is_pot_premi <> 1 -- yang potongan jam karena early, late dsb ini agar tidak masuk
-					AND a.pot_jam_istirahat > 0
+					AND (a.is_pot_premi <> 1 OR AND a.pot_jam_istirahat > 0) -- yang potongan jam karena early, late dsb ini agar tidak masuk
 				--	AND a.durasi_lembur_total_jam = 0
 				-- AND a.pot_jam > 0
 					'.$where.'
