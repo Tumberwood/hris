@@ -45,7 +45,7 @@
 				LEFT JOIN hodxxmh d ON d.id = jb.id_hodxxmh
 				LEFT JOIN hetxxmh e ON e.id = jb.id_hetxxmh
 				LEFT JOIN holxxmd_2 f ON f.id = a.id_holxxmd_2
-				LEFT JOIN heyxxmd sub ON sub.id = a.id_heyxxmd
+				LEFT JOIN heyxxmd sub ON sub.id = jb.id_heyxxmd
 				WHERE 1
 					AND a.tanggal BETWEEN :start_date AND :end_date
 					AND a.pot_hk > 0
