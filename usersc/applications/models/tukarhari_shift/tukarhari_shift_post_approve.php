@@ -178,6 +178,13 @@
                             htssctd.tanggal = :tanggal_pengganti
                             AND htssctd.is_active = 1
                             AND htssctd.id_hemxxmh IN ('.$idPegawaiIn.')
+                            AND htssctd.id = (
+                                SELECT MAX(b.id)
+                                FROM htssctd b
+                                WHERE b.tanggal = htssctd.tanggal
+                                    AND b.id_hemxxmh = htssctd.id_hemxxmh
+                                    AND b.is_active = 0
+                            )
                     ');
                 // END insert pengaju
                 
@@ -293,6 +300,13 @@
                             htssctd.tanggal = :tanggal_terpilih
                         AND htssctd.is_active = 0
                         AND htssctd.id_hemxxmh IN ('.$idPegawaiIn.')
+                        AND htssctd.id = (
+                            SELECT MAX(b.id)
+                            FROM htssctd b
+                            WHERE b.tanggal = htssctd.tanggal
+                                AND b.id_hemxxmh = htssctd.id_hemxxmh
+                                AND b.is_active = 0
+                        )
                     ');
                 // END insert pengaju
             }
@@ -318,7 +332,7 @@
                 $db->raw()->exec("
                     UPDATE htssctd a
                     JOIN (
-                        SELECT MIN(id) AS id
+                        SELECT MAX(id) AS id
                         FROM htssctd
                         WHERE is_active = 0
                         AND tanggal = '$tanggal_terpilih'
@@ -340,7 +354,7 @@
                 $db->raw()->exec("
                     UPDATE htssctd a
                     JOIN (
-                        SELECT MIN(id) AS id
+                        SELECT MAX(id) AS id
                         FROM htssctd
                         WHERE is_active = 0
                         AND tanggal = '$tanggal_pengganti'
