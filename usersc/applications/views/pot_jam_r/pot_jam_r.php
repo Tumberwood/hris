@@ -78,6 +78,7 @@
 								<th>Department</th>
 								<th>Jabatan</th>
 								<th>Area Kerja</th>
+								<th>Sub Tipe</th>
 								<th>Tanggal</th>
 								<th>Jadwal</th>
 								<th>Proporsional Jam (IP)</th>
@@ -213,7 +214,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [1,3,4,5,6]
+						targets: [1,3,4,5,6,7]
 					},
 					{
 						searchPanes:{
@@ -250,6 +251,7 @@
 					{ data: "dep" },
 					{ data: "jab" },
 					{ data: "area" },
+					{ data: "sub_tipe" },
 					{ data: "tanggal" },
 					{ data: "st_jadwal" },
 					{ data: "pot_hk", class: "text-right" },
