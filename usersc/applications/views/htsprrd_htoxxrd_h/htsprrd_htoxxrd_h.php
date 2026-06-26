@@ -455,6 +455,7 @@
 					}
 				},
 				order: [[ 1, "asc" ]],
+				responsive: false,
 				columns: [
 					{ data: "htsprrd_htoxxrd_h.id",visible:false },
 					{ data: "htsprrd_htoxxrd_h.tanggal_awal" },
