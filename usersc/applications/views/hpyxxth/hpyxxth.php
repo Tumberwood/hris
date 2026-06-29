@@ -1102,9 +1102,9 @@
 						edthpyxxth.field('hpyxxth.id_periode_payroll').error( 'Wajib diisi!' );
 					}
 					
-					// BEGIN of cek unik heyxxth.id_periode_payroll 
+					// BEGIN of cek unik hpyxxth.id_periode_payroll 
 					if(action == 'create'){
-						id_heyxxth = 0;
+						id_hpyxxth = 0;
 					}
 					
 					$.ajax( {
@@ -1113,14 +1113,14 @@
 						type: 'POST',
 						async: false,
 						data: {
-							table_name: 'heyxxth',
+							table_name: 'hpyxxth',
 							nama_field: 'id_periode_payroll',
 							nama_field_value: '"'+id_periode_payroll+'"',
-							id_transaksi: id_heyxxth
+							id_transaksi: id_hpyxxth
 						},
 						success: function ( json ) {
 							if(json.data.count == 1){
-								edtheyxxth.field('heyxxth.id_periode_payroll').error( 'Data tidak boleh kembar!' );
+								edthpyxxth.field('hpyxxth.id_periode_payroll').error( 'Data tidak boleh kembar!' );
 							}
 						}
 					} );
