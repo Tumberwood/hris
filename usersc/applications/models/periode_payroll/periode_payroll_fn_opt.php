@@ -35,7 +35,7 @@
             ->query('select', 'periode_payroll')
             ->get([
                 'id as id',
-                'CONCAT(DATE_FORMAT(tanggal_awal, "%d %b %Y"), " - ", DATE_FORMAT(tanggal_akhir, "%d %b %Y") ) as text'
+                'CONCAT(DATE_FORMAT(tanggal_awal, "%d %b %Y"), " - ", DATE_FORMAT(tanggal_akhir, "%d %b %Y"), " - ", keterangan ) as text'
             ])
             ->where('id', $id_periode_payroll_old )
             ->exec();
@@ -50,7 +50,7 @@
         ->query('select', 'periode_payroll')
         ->get([
             'id as id',
-            'CONCAT(DATE_FORMAT(tanggal_awal, "%d %b %Y"), " - ", DATE_FORMAT(tanggal_akhir, "%d %b %Y") ) as text'
+            'CONCAT(DATE_FORMAT(tanggal_awal, "%d %b %Y"), " - ", DATE_FORMAT(tanggal_akhir, "%d %b %Y"), " - ", keterangan ) as text'
         ])
         ->where('is_active',1)
         ->where('status',"Dibuka")

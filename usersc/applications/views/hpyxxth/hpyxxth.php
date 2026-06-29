@@ -1101,6 +1101,30 @@
 					if(!id_periode_payroll || id_periode_payroll == ''){
 						edthpyxxth.field('hpyxxth.id_periode_payroll').error( 'Wajib diisi!' );
 					}
+					
+					// BEGIN of cek unik heyxxth.id_periode_payroll 
+					if(action == 'create'){
+						id_heyxxth = 0;
+					}
+					
+					$.ajax( {
+						url: '../../../helpers/validate_fn_unique.php',
+						dataType: 'json',
+						type: 'POST',
+						async: false,
+						data: {
+							table_name: 'heyxxth',
+							nama_field: 'id_periode_payroll',
+							nama_field_value: '"'+id_periode_payroll+'"',
+							id_transaksi: id_heyxxth
+						},
+						success: function ( json ) {
+							if(json.data.count == 1){
+								edtheyxxth.field('heyxxth.id_periode_payroll').error( 'Data tidak boleh kembar!' );
+							}
+						}
+					} );
+					// END of cek unik heyxxth.id_periode_payroll 
 
 				}
 				
