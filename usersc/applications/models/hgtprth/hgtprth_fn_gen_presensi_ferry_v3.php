@@ -1531,8 +1531,10 @@
                                     ) 
                                 )
                                 AS pot_jam_early,
-
-                                CEIL(TIMESTAMPDIFF(MINUTE, tanggal_jam_izin_awal_mid, carbon_mid) / 60) AS pot_jam_izin
+                                IF(tanggal_jam_izin_awal_mid < if(day(tanggaljam_akhir_istirahat) < day(tanggaljam_akhir) , date_add(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),  tanggaljam_akhir_istirahat) ,
+                                    CEIL(TIMESTAMPDIFF(MINUTE, tanggal_jam_izin_awal_mid, carbon_mid) / 60) - 1,
+                                    CEIL(TIMESTAMPDIFF(MINUTE, tanggal_jam_izin_awal_mid, carbon_mid) / 60)
+                                ) AS pot_jam_izin
                                 
                             FROM status_presensi
                         ),
