@@ -275,6 +275,9 @@
 				// 		return row.hemxxmh_data + ' - ' + row.hodxxmh.nama + ' - ' + row.hetxxmh.nama + ' (' + row.htsprrd.tanggal + ')';
 				// 	}
 				// },
+				fixedColumns:   {
+					left: 2
+				},
 				columns: [
 					{ data: "htsprrd.id",visible:false },
 					{ 
@@ -425,7 +428,7 @@
 				},
 				footerCallback: function ( row, data, start, end, display ) {
 					var api       = this.api(), data;
-					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 					
 					for (var i = 12; i <= 34; i++) {
 						var columnIndex = i;
