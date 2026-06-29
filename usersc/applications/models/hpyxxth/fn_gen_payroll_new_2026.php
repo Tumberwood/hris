@@ -729,6 +729,7 @@
                                             WHERE a.id_hpcxxmh = 35
                                                 AND a.id_hemxxmh = pr.id_hemxxmh
                                                 AND a.tanggal_efektif <= pr.tanggal
+                                                AND a.is_active = 1
                                             ORDER BY a.tanggal_efektif DESC
                                             LIMIT 1
                                         ),0)
@@ -746,6 +747,7 @@
                                                     WHERE a.id_hpcxxmh = 1
                                                         AND a.id_hemxxmh = pr.id_hemxxmh
                                                         AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
                                                     ORDER BY a.tanggal_efektif DESC
                                                     LIMIT 1
                                                 ),0)
@@ -759,6 +761,7 @@
                                                     WHERE a.id_hpcxxmh = 32
                                                         AND a.id_hemxxmh = pr.id_hemxxmh
                                                         AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
                                                     ORDER BY a.tanggal_efektif DESC
                                                     LIMIT 1
                                                 ),0)
@@ -772,6 +775,7 @@
                                                     WHERE a.id_hpcxxmh = 133
                                                         AND a.id_hemxxmh = pr.id_hemxxmh
                                                         AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
                                                     ORDER BY a.tanggal_efektif DESC
                                                     LIMIT 1
                                                 ),0)
@@ -818,6 +822,7 @@
                                                 WHERE a.id_hpcxxmh = 35
                                                     AND a.id_hemxxmh = pr.id_hemxxmh
                                                     AND a.tanggal_efektif <= pr.tanggal
+                                                    AND a.is_active = 1
                                                 ORDER BY a.tanggal_efektif DESC
                                                 LIMIT 1
                                             ),0) 
@@ -837,6 +842,7 @@
                                                     WHERE a.id_hpcxxmh = 1
                                                         AND a.id_hemxxmh = pr.id_hemxxmh
                                                         AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
                                                     ORDER BY a.tanggal_efektif DESC
                                                     LIMIT 1
                                                 ),0)
@@ -850,6 +856,7 @@
                                                     WHERE a.id_hpcxxmh = 32
                                                         AND a.id_hemxxmh = pr.id_hemxxmh
                                                         AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
                                                     ORDER BY a.tanggal_efektif DESC
                                                     LIMIT 1
                                                 ),0)
@@ -863,6 +870,7 @@
                                                     WHERE a.id_hpcxxmh = 133
                                                         AND a.id_hemxxmh = pr.id_hemxxmh
                                                         AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
                                                     ORDER BY a.tanggal_efektif DESC
                                                     LIMIT 1
                                                 ),0)
