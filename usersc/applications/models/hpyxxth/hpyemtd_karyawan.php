@@ -114,6 +114,9 @@
 				Field::inst( 'hpyemtd.c_pot_upah' ),
 				Field::inst( 'hpyemtd.c_pot_jam' ),
 
+				Field::inst( 'hpyemtd.c_pot_resign' ),
+				Field::inst( 'hpyemtd.pot_resign' ),
+				
 				Field::inst( 'hpyemtd.thr' ),
 
 				// BEFORE PPH
