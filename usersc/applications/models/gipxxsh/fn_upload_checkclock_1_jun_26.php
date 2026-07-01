@@ -62,8 +62,6 @@
         }
         
         if ($arr_kode != "") {
-            //1 Jun 2026, Revisi query untuk menghindari duplikasi data, dengan cara membandingkan data excel dengan data di database
-            //Menambah Range Between dan jam format 18:00
             $qi_ceklok = $db
             ->raw()
             ->bind(':tanggal', $tanggal)
@@ -71,11 +69,9 @@
             ->exec('    INSERT INTO htsprtd (kode, nama, tipe, tanggal, jam)
                         WITH ada AS (
                             SELECT
-                                CONCAT(kode," ", nama, " ", tanggal, " " , TIME_FORMAT(jam, "%H:%i")) AS conc_ada
+                                CONCAT(kode," ", nama, " ", tanggal, " " ,jam) AS conc_ada
                             FROM htsprtd
-                            WHERE tanggal BETWEEN DATE_SUB(:tanggal, INTERVAL 1 DAY) AND DATE_ADD(:tanggal, INTERVAL 1 DAY)
-                            AND nama = :nama 
-                            AND tipe = "upload"
+                            WHERE tanggal = :tanggal AND nama = :nama AND tipe = "upload"
                         ),
                         excel_data AS (
                             '.$arr_kode.'
