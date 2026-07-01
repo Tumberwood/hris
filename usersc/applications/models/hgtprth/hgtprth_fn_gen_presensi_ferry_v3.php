@@ -611,6 +611,7 @@
 
                                                 -- 🔹 DEFAULT RANGE (jadwal)
                                                 WHEN (d.id IS NULL OR is_istirahat = 2)
+                                                    AND ij.keterangan IS NULL -- JIKA ADA IZIN DI JAM ISTIRAHAT
                                                     AND c.tanggal_jam BETWEEN
                                                         jadwal.tanggaljam_awal_istirahat
                                                         AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
@@ -743,6 +744,7 @@
 
                                                 -- 🔹 DEFAULT RANGE ISTIRAHAT (jadwal)
                                                 WHEN (d.id IS NULL OR is_istirahat = 2)
+                                                    AND ij.keterangan IS NULL -- JIKA ADA IZIN DI JAM ISTIRAHAT
                                                     AND c.tanggal_jam BETWEEN
                                                         jadwal.tanggaljam_awal_istirahat
                                                         AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
@@ -938,6 +940,17 @@
                                         DATE_ADD(jadwal.tanggaljam_akhir_t2, INTERVAL 1 DAY)
                                     )
                                     LEFT JOIN htsxxmh shift ON shift.id = jadwal.id_htsxxmh
+                                    
+                                    -- CEK APAKAH ADA IZIN DI JAM ISTIRAHAT
+                                    LEFT JOIN htlxxrh ij ON ij.id_hemxxmh = jadwal.id_hemxxmh
+                                    	AND ij.tanggal = jadwal.tanggal
+                                        
+                                        AND ij.jam_awal BETWEEN shift.jam_awal_istirahat 
+                                        AND shift.jam_akhir_istirahat
+
+                                        AND ij.jam_akhir BETWEEN shift.jam_awal_istirahat 
+                                        AND DATE_ADD(shift.jam_akhir_istirahat, INTERVAL 1 HOUR)
+                                   
                                     WHERE jadwal.is_active = 1
                                     AND jadwal.tanggal = :tanggal
                                     AND (
