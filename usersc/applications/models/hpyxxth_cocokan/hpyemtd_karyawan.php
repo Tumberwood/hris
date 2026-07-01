@@ -64,6 +64,7 @@
 				Field::inst( 'hpyemtd_cocokan.pot_jkkjkm' ), 
 				Field::inst( 'hpyemtd_cocokan.pot_jht' ), 
 				Field::inst( 'hpyemtd_cocokan.pot_upah' ), 
+				Field::inst( 'hpyemtd_cocokan.pot_resign' ), 
 				Field::inst( 'hpyemtd_cocokan.pot_bpjs' ), 
 				Field::inst( 'hpyemtd_cocokan.pot_psiun' ), 
 				Field::inst( 'hpyemtd_cocokan.pot_pinjaman' ), 
@@ -113,6 +114,7 @@
 				Field::inst( 'hpyemtd_cocokan.cuti_bersama' ),
 				Field::inst( 'hpyemtd_cocokan.sisa_cuti_hari' ),
 				Field::inst( 'hpyemtd_cocokan.c_pot_upah' ),
+				Field::inst( 'hpyemtd_cocokan.c_pot_resign' ),
 				Field::inst( 'hpyemtd_cocokan.c_pot_jam' ),
 
 				Field::inst( 'hpyemtd_cocokan.thr' ),
@@ -170,6 +172,7 @@
 				Field::inst( 'hpyemtd.pot_jkkjkm' ), 
 				Field::inst( 'hpyemtd.pot_jht' ), 
 				Field::inst( 'hpyemtd.pot_upah' ), 
+				Field::inst( 'hpyemtd.pot_resign' ), 
 				Field::inst( 'hpyemtd.pot_bpjs' ), 
 				Field::inst( 'hpyemtd.pot_psiun' ), 
 				Field::inst( 'hpyemtd.pot_pinjaman' ), 
@@ -219,6 +222,7 @@
 				Field::inst( 'hpyemtd.cuti_bersama' ),
 				Field::inst( 'hpyemtd.sisa_cuti_hari' ),
 				Field::inst( 'hpyemtd.c_pot_upah' ),
+				Field::inst( 'hpyemtd.c_pot_resign' ),
 				Field::inst( 'hpyemtd.c_pot_jam' ),
 
 				Field::inst( 'hpyemtd.thr' ),

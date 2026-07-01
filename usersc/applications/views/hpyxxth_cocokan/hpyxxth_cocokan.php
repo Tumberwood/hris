@@ -271,6 +271,12 @@
 													<th class="text-center align-middle text-danger lama">Potongan Upah (Rp) (Lama)</th>
 													<th class="text-center align-middle text-danger baru">Potongan Upah (Rp) (Baru)</th>
 
+													<th class="text-center align-middle text-danger lama">Total Pot Resign (Lama)</th>
+													<th class="text-center align-middle text-danger baru">Total Pot Resign (Baru)</th>
+
+													<th class="text-center align-middle text-danger lama">Potongan Resign (Rp) (Lama)</th>
+													<th class="text-center align-middle text-danger baru">Potongan Resign (Rp) (Baru)</th>
+
 													<th class="text-center align-middle text-danger lama">Total Pot Jam (Lama)</th>
 													<th class="text-center align-middle text-danger baru">Total Pot Jam (Baru)</th>
 
@@ -476,6 +482,10 @@
 													<th id="karyawan_117"></th>
 													<th id="karyawan_118"></th>
 													<th id="karyawan_119"></th>
+													<th id="karyawan_120"></th>
+													<th id="karyawan_121"></th>
+													<th id="karyawan_122"></th>
+													<th id="karyawan_123"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -583,6 +593,12 @@
 
 													<th class="text-center align-middle text-danger lama">Potongan Upah (Rp) (Lama)</th>
 													<th class="text-center align-middle text-danger baru">Potongan Upah (Rp) (Baru)</th>
+
+													<th class="text-center align-middle text-danger lama">Total Pot Resign (Lama)</th>
+													<th class="text-center align-middle text-danger baru">Total Pot Resign (Baru)</th>
+
+													<th class="text-center align-middle text-danger lama">Potongan Resign (Rp) (Lama)</th>
+													<th class="text-center align-middle text-danger baru">Potongan Resign (Rp) (Baru)</th>
 
 													<th class="text-center align-middle text-danger lama">Total Pot Jam (Lama)</th>
 													<th class="text-center align-middle text-danger baru">Total Pot Jam (Baru)</th>
@@ -789,6 +805,10 @@
 													<th id="kontrak_117"></th>
 													<th id="kontrak_118"></th>
 													<th id="kontrak_119"></th>
+													<th id="kontrak_120"></th>
+													<th id="kontrak_121"></th>
+													<th id="kontrak_122"></th>
+													<th id="kontrak_123"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -896,6 +916,12 @@
 
 													<th class="text-center align-middle text-danger lama">Potongan Upah (Rp) (Lama)</th>
 													<th class="text-center align-middle text-danger baru">Potongan Upah (Rp) (Baru)</th>
+
+													<th class="text-center align-middle text-danger lama">Total Pot Resign (Lama)</th>
+													<th class="text-center align-middle text-danger baru">Total Pot Resign (Baru)</th>
+
+													<th class="text-center align-middle text-danger lama">Potongan Resign (Rp) (Lama)</th>
+													<th class="text-center align-middle text-danger baru">Potongan Resign (Rp) (Baru)</th>
 
 													<th class="text-center align-middle text-danger lama">Total Pot Jam (Lama)</th>
 													<th class="text-center align-middle text-danger baru">Total Pot Jam (Baru)</th>
@@ -1102,6 +1128,10 @@
 													<th id="kbm_reg_117"></th>
 													<th id="kbm_reg_118"></th>
 													<th id="kbm_reg_119"></th>
+													<th id="kbm_reg_120"></th>
+													<th id="kbm_reg_121"></th>
+													<th id="kbm_reg_122"></th>
+													<th id="kbm_reg_123"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -1901,6 +1931,10 @@
 					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd_cocokan.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd_cocokan.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd_cocokan.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -2036,33 +2070,35 @@
             60: 'pot_makan',
             62: 'c_pot_upah',
             64: 'pot_upah',
-            66: 'c_pot_jam',
-            68: 'pot_jam',
-            70: 'pendapatan_lain_before_pph',
-            72: 'pot_lain_before_pph',
-            74: 'bpjs_kes_perusahaan',
-            76: 'jkk',
-            78: 'jkm',
-            80: 'bruto',
-            82: 'persen_ter',
-            84: 'pot_pph21',
-            86: 'after_pph21',
-            88: 'jht_perusahaan',
-            90: 'jp_perusahaan',
-            92: 'pot_jht_karyawan',
-            94: 'pot_jp_karyawan',
-            96: 'bpjs_kes_karyawan',
-            98: 'bpjs_kes_perusahaan',
-            100: 'jkk',
-            102: 'jkm',
-            104: 'pot_piutang',
-            106: 'denda_apd',
-            108: 'iuran_spsi',
-            110: 'pendapatan_lain_after_pph',
-            112: 'pot_lain_after_pph',
-            114: 'gaji_bersih',
-            116: 'bulat',
-            118: 'gaji_terima'
+			66: 'c_pot_resign',
+			68: 'pot_resign',
+			70: 'c_pot_jam',
+			72: 'pot_jam',
+			74: 'pendapatan_lain_before_pph',
+			76: 'pot_lain_before_pph',
+			78: 'bpjs_kes_perusahaan',
+			80: 'jkk',
+			82: 'jkm',
+			84: 'bruto',
+			86: 'persen_ter',
+			88: 'pot_pph21',
+			90: 'after_pph21',
+			92: 'jht_perusahaan',
+			94: 'jp_perusahaan',
+			96: 'pot_jht_karyawan',
+			98: 'pot_jp_karyawan',
+			100: 'bpjs_kes_karyawan',
+			102: 'bpjs_kes_perusahaan',
+			104: 'jkk',
+			106: 'jkm',
+			108: 'pot_piutang',
+			110: 'denda_apd',
+			112: 'iuran_spsi',
+			114: 'pendapatan_lain_after_pph',
+			116: 'pot_lain_after_pph',
+			118: 'gaji_bersih',
+			120: 'bulat',
+			122: 'gaji_terima'
         };
 
         // =========================
@@ -2323,7 +2359,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 119; i++) {
+					for (var i = 10; i <= 123; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -2362,44 +2398,47 @@
 					compareField(row, data, 60, 'pot_makan');
 					compareField(row, data, 62, 'c_pot_upah');
 					compareField(row, data, 64, 'pot_upah');
-					compareField(row, data, 66, 'c_pot_jam');
-					compareField(row, data, 68, 'pot_jam');
 
-					compareField(row, data, 70, 'pendapatan_lain_before_pph');
-					compareField(row, data, 72, 'pot_lain_before_pph');
+					compareField(row, data, 66, 'c_pot_resign');
+					compareField(row, data, 68, 'pot_resign');
+					compareField(row, data, 70, 'c_pot_jam');
+					compareField(row, data, 72, 'pot_jam');
 
-					compareField(row, data, 74, 'bpjs_kes_perusahaan');
-					compareField(row, data, 76, 'jkk');
-					compareField(row, data, 78, 'jkm');
+					compareField(row, data, 74, 'pendapatan_lain_before_pph');
+					compareField(row, data, 76, 'pot_lain_before_pph');
 
-					compareField(row, data, 80, 'bruto');
-					compareField(row, data, 82, 'persen_ter');
+					compareField(row, data, 78, 'bpjs_kes_perusahaan');
+					compareField(row, data, 80, 'jkk');
+					compareField(row, data, 82, 'jkm');
 
-					compareField(row, data, 84, 'pot_pph21');
+					compareField(row, data, 84, 'bruto');
+					compareField(row, data, 86, 'persen_ter');
 
-					compareField(row, data, 86, 'after_pph21');
+					compareField(row, data, 88, 'pot_pph21');
 
-					compareField(row, data, 88, 'jht_perusahaan');
-					compareField(row, data, 90, 'jp_perusahaan');
+					compareField(row, data, 90, 'after_pph21');
 
-					compareField(row, data, 92, 'pot_jht_karyawan');
-					compareField(row, data, 94, 'pot_jp_karyawan');
-					compareField(row, data, 96, 'bpjs_kes_karyawan');
+					compareField(row, data, 92, 'jht_perusahaan');
+					compareField(row, data, 94, 'jp_perusahaan');
 
-					compareField(row, data, 98, 'bpjs_kes_perusahaan');
-					compareField(row, data, 100, 'jkk');
-					compareField(row, data, 102, 'jkm');
+					compareField(row, data, 96, 'pot_jht_karyawan');
+					compareField(row, data, 98, 'pot_jp_karyawan');
+					compareField(row, data, 100, 'bpjs_kes_karyawan');
 
-					compareField(row, data, 104, 'pot_piutang');
-					compareField(row, data, 106, 'denda_apd');
-					compareField(row, data, 108, 'iuran_spsi');
+					compareField(row, data, 102, 'bpjs_kes_perusahaan');
+					compareField(row, data, 104, 'jkk');
+					compareField(row, data, 106, 'jkm');
 
-					compareField(row, data, 110, 'pendapatan_lain_after_pph');
-					compareField(row, data, 112, 'pot_lain_after_pph');
+					compareField(row, data, 108, 'pot_piutang');
+					compareField(row, data, 110, 'denda_apd');
+					compareField(row, data, 112, 'iuran_spsi');
 
-					compareField(row, data, 114, 'gaji_bersih');
-					compareField(row, data, 116, 'bulat');
-					compareField(row, data, 118, 'gaji_terima');
+					compareField(row, data, 114, 'pendapatan_lain_after_pph');
+					compareField(row, data, 116, 'pot_lain_after_pph');
+
+					compareField(row, data, 118, 'gaji_bersih');
+					compareField(row, data, 120, 'bulat');
+					compareField(row, data, 122, 'gaji_terima');
 				},
 				drawCallback: function () {
 					$('[data-toggle="tooltip"]').tooltip({
@@ -2622,6 +2661,10 @@
 					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd_cocokan.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd_cocokan.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd_cocokan.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -2708,7 +2751,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 119; i++) {
+					for (var i = 10; i <= 123; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -2747,44 +2790,47 @@
 					compareField(row, data, 60, 'pot_makan');
 					compareField(row, data, 62, 'c_pot_upah');
 					compareField(row, data, 64, 'pot_upah');
-					compareField(row, data, 66, 'c_pot_jam');
-					compareField(row, data, 68, 'pot_jam');
 
-					compareField(row, data, 70, 'pendapatan_lain_before_pph');
-					compareField(row, data, 72, 'pot_lain_before_pph');
+					compareField(row, data, 66, 'c_pot_resign');
+					compareField(row, data, 68, 'pot_resign');
+					compareField(row, data, 70, 'c_pot_jam');
+					compareField(row, data, 72, 'pot_jam');
 
-					compareField(row, data, 74, 'bpjs_kes_perusahaan');
-					compareField(row, data, 76, 'jkk');
-					compareField(row, data, 78, 'jkm');
+					compareField(row, data, 74, 'pendapatan_lain_before_pph');
+					compareField(row, data, 76, 'pot_lain_before_pph');
 
-					compareField(row, data, 80, 'bruto');
-					compareField(row, data, 82, 'persen_ter');
+					compareField(row, data, 78, 'bpjs_kes_perusahaan');
+					compareField(row, data, 80, 'jkk');
+					compareField(row, data, 82, 'jkm');
 
-					compareField(row, data, 84, 'pot_pph21');
+					compareField(row, data, 84, 'bruto');
+					compareField(row, data, 86, 'persen_ter');
 
-					compareField(row, data, 86, 'after_pph21');
+					compareField(row, data, 88, 'pot_pph21');
 
-					compareField(row, data, 88, 'jht_perusahaan');
-					compareField(row, data, 90, 'jp_perusahaan');
+					compareField(row, data, 90, 'after_pph21');
 
-					compareField(row, data, 92, 'pot_jht_karyawan');
-					compareField(row, data, 94, 'pot_jp_karyawan');
-					compareField(row, data, 96, 'bpjs_kes_karyawan');
+					compareField(row, data, 92, 'jht_perusahaan');
+					compareField(row, data, 94, 'jp_perusahaan');
 
-					compareField(row, data, 98, 'bpjs_kes_perusahaan');
-					compareField(row, data, 100, 'jkk');
-					compareField(row, data, 102, 'jkm');
+					compareField(row, data, 96, 'pot_jht_karyawan');
+					compareField(row, data, 98, 'pot_jp_karyawan');
+					compareField(row, data, 100, 'bpjs_kes_karyawan');
 
-					compareField(row, data, 104, 'pot_piutang');
-					compareField(row, data, 106, 'denda_apd');
-					compareField(row, data, 108, 'iuran_spsi');
+					compareField(row, data, 102, 'bpjs_kes_perusahaan');
+					compareField(row, data, 104, 'jkk');
+					compareField(row, data, 106, 'jkm');
 
-					compareField(row, data, 110, 'pendapatan_lain_after_pph');
-					compareField(row, data, 112, 'pot_lain_after_pph');
+					compareField(row, data, 108, 'pot_piutang');
+					compareField(row, data, 110, 'denda_apd');
+					compareField(row, data, 112, 'iuran_spsi');
 
-					compareField(row, data, 114, 'gaji_bersih');
-					compareField(row, data, 116, 'bulat');
-					compareField(row, data, 118, 'gaji_terima');
+					compareField(row, data, 114, 'pendapatan_lain_after_pph');
+					compareField(row, data, 116, 'pot_lain_after_pph');
+
+					compareField(row, data, 118, 'gaji_bersih');
+					compareField(row, data, 120, 'bulat');
+					compareField(row, data, 122, 'gaji_terima');
 				},
 				drawCallback: function () {
 					$('[data-toggle="tooltip"]').tooltip({
@@ -2998,6 +3044,10 @@
 					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd_cocokan.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd_cocokan.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd_cocokan.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -3084,7 +3134,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 119; i++) {
+					for (var i = 10; i <= 123; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -3123,44 +3173,47 @@
 					compareField(row, data, 60, 'pot_makan');
 					compareField(row, data, 62, 'c_pot_upah');
 					compareField(row, data, 64, 'pot_upah');
-					compareField(row, data, 66, 'c_pot_jam');
-					compareField(row, data, 68, 'pot_jam');
 
-					compareField(row, data, 70, 'pendapatan_lain_before_pph');
-					compareField(row, data, 72, 'pot_lain_before_pph');
+					compareField(row, data, 66, 'c_pot_resign');
+					compareField(row, data, 68, 'pot_resign');
+					compareField(row, data, 70, 'c_pot_jam');
+					compareField(row, data, 72, 'pot_jam');
 
-					compareField(row, data, 74, 'bpjs_kes_perusahaan');
-					compareField(row, data, 76, 'jkk');
-					compareField(row, data, 78, 'jkm');
+					compareField(row, data, 74, 'pendapatan_lain_before_pph');
+					compareField(row, data, 76, 'pot_lain_before_pph');
 
-					compareField(row, data, 80, 'bruto');
-					compareField(row, data, 82, 'persen_ter');
+					compareField(row, data, 78, 'bpjs_kes_perusahaan');
+					compareField(row, data, 80, 'jkk');
+					compareField(row, data, 82, 'jkm');
 
-					compareField(row, data, 84, 'pot_pph21');
+					compareField(row, data, 84, 'bruto');
+					compareField(row, data, 86, 'persen_ter');
 
-					compareField(row, data, 86, 'after_pph21');
+					compareField(row, data, 88, 'pot_pph21');
 
-					compareField(row, data, 88, 'jht_perusahaan');
-					compareField(row, data, 90, 'jp_perusahaan');
+					compareField(row, data, 90, 'after_pph21');
 
-					compareField(row, data, 92, 'pot_jht_karyawan');
-					compareField(row, data, 94, 'pot_jp_karyawan');
-					compareField(row, data, 96, 'bpjs_kes_karyawan');
+					compareField(row, data, 92, 'jht_perusahaan');
+					compareField(row, data, 94, 'jp_perusahaan');
 
-					compareField(row, data, 98, 'bpjs_kes_perusahaan');
-					compareField(row, data, 100, 'jkk');
-					compareField(row, data, 102, 'jkm');
+					compareField(row, data, 96, 'pot_jht_karyawan');
+					compareField(row, data, 98, 'pot_jp_karyawan');
+					compareField(row, data, 100, 'bpjs_kes_karyawan');
 
-					compareField(row, data, 104, 'pot_piutang');
-					compareField(row, data, 106, 'denda_apd');
-					compareField(row, data, 108, 'iuran_spsi');
+					compareField(row, data, 102, 'bpjs_kes_perusahaan');
+					compareField(row, data, 104, 'jkk');
+					compareField(row, data, 106, 'jkm');
 
-					compareField(row, data, 110, 'pendapatan_lain_after_pph');
-					compareField(row, data, 112, 'pot_lain_after_pph');
+					compareField(row, data, 108, 'pot_piutang');
+					compareField(row, data, 110, 'denda_apd');
+					compareField(row, data, 112, 'iuran_spsi');
 
-					compareField(row, data, 114, 'gaji_bersih');
-					compareField(row, data, 116, 'bulat');
-					compareField(row, data, 118, 'gaji_terima');
+					compareField(row, data, 114, 'pendapatan_lain_after_pph');
+					compareField(row, data, 116, 'pot_lain_after_pph');
+
+					compareField(row, data, 118, 'gaji_bersih');
+					compareField(row, data, 120, 'bulat');
+					compareField(row, data, 122, 'gaji_terima');
 				},
 				drawCallback: function () {
 					$('[data-toggle="tooltip"]').tooltip({
