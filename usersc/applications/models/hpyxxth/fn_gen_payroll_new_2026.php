@@ -805,6 +805,95 @@
 
                         GROUP BY pr.id_hemxxmh
                     ),
+                    pot_resign AS (
+                        SELECT
+                            -- peg.kode,
+                            -- peg.nama,
+                            job.id_hemxxmh,
+                            job.tanggal_keluar,
+                            (DATEDIFF(LAST_DAY(job.tanggal_keluar), job.tanggal_keluar) + 2) AS sisa_hari,
+                            (
+                                SELECT
+                                    count(jad.id) hari_kerja
+                                FROM htssctd jad
+                                WHERE jad.id_hemxxmh = job.id_hemxxmh
+                                    AND jad.tanggal BETWEEN job.tanggal_keluar AND LAST_DAY(job.tanggal_keluar)
+                                    AND jad.is_active = 1
+                                    AND jad.id_htsxxmh <> 1
+                            ) c_pot_resign,
+                            ROUND(
+                                -- Rumus: ( (gp + tjab + fix_cost) / grup_hk (21 / 25) ) * is_pot_resign
+                                (
+                                    (
+                                        (
+                                            -- GP
+                                            IFNULL((
+                                                SELECT a.nominal
+                                                FROM htpr_hemxxmh a
+                                                WHERE a.id_hpcxxmh = 1
+                                                    AND a.id_hemxxmh = job.id_hemxxmh
+                                                    AND a.tanggal_efektif <= :tanggal_akhir
+                                                    AND a.is_active = 1
+                                                ORDER BY a.tanggal_efektif DESC
+                                                LIMIT 1
+                                            ),0)
+
+                                            +
+
+                                            -- TJAB
+                                            IFNULL((
+                                                SELECT a.nominal
+                                                FROM htpr_hemxxmh a
+                                                WHERE a.id_hpcxxmh = 32
+                                                    AND a.id_hemxxmh = job.id_hemxxmh
+                                                    AND a.tanggal_efektif <= :tanggal_akhir
+                                                    AND a.is_active = 1
+                                                ORDER BY a.tanggal_efektif DESC
+                                                LIMIT 1
+                                            ),0)
+
+                                            +
+
+                                            -- TJ Khusus
+                                            IFNULL((
+                                                SELECT a.nominal
+                                                FROM htpr_hemxxmh a
+                                                WHERE a.id_hpcxxmh = 133
+                                                    AND a.id_hemxxmh = job.id_hemxxmh
+                                                    AND a.tanggal_efektif <= :tanggal_akhir
+                                                    AND a.is_active = 1
+                                                ORDER BY a.tanggal_efektif DESC
+                                                LIMIT 1
+                                            ),0)
+
+                                            +
+
+                                            IFNULL(fc.fix_cost,0)
+
+                                        )
+                                        /
+                                        IF(job.grup_hk = 1, 21, 25)
+                                    )
+                                    * 
+                                    (
+                                        SELECT
+                                            count(jad.id) hari_kerja
+                                        FROM htssctd jad
+                                        WHERE jad.id_hemxxmh = job.id_hemxxmh
+                                            AND jad.tanggal BETWEEN job.tanggal_keluar AND LAST_DAY(job.tanggal_keluar)
+                                            AND jad.is_active = 1
+                                            AND jad.id_htsxxmh <> 1
+                                    )
+                                )
+                            ) AS pot_resign
+                        FROM hemxxmh peg
+                        JOIN hemjbmh job ON job.id_hemxxmh = peg.id
+                        LEFT JOIN fix_cost fc ON fc.id_hemxxmh = job.id_hemxxmh
+                        WHERE 1
+                            AND job.tanggal_keluar 
+                                BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01")
+                                AND LAST_DAY(:tanggal_akhir)
+                    ),
                     pot_jam AS (
                         SELECT
                             pr.id_hemxxmh,
@@ -1360,6 +1449,10 @@
                             pot_makan,
                             IFNULL(pot_upah, 0) AS pot_upah,
                             IFNULL(c_pot_upah, 0) AS c_pot_upah,
+                            
+                            IFNULL(pot_resign, 0) AS pot_resign,
+                            IFNULL(c_pot_resign, 0) AS c_pot_resign,
+                            
                             IFNULL(pot_jam, 0) AS pot_jam,
                             IFNULL(c_pot_jam, 0) AS c_pot_jam,
                             IFNULL(pendapatan_lain_before_pph,0 ) AS pendapatan_lain_before_pph,
@@ -1391,6 +1484,7 @@
                             (
                                 COALESCE(pot_makan,0)
                                 + COALESCE(pot_upah,0)
+                                + COALESCE(pot_resign,0)
                                 + COALESCE(pot_jam,0)
                                 + COALESCE(pot_lain_before_pph,0)
                             ) AS bruto,
@@ -1419,6 +1513,7 @@
                         LEFT JOIN pot_makan ON pot_makan.id_hemxxmh = p.id_hemxxmh
                         LEFT JOIN bpjs ON bpjs.id_hemxxmh = p.id_hemxxmh
                         LEFT JOIN pot_upah pu ON pu.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN pot_resign resign ON resign.id_hemxxmh = p.id_hemxxmh
                         LEFT JOIN pot_jam ON pot_jam.id_hemxxmh = p.id_hemxxmh
                         LEFT JOIN piut_kyw ON piut_kyw.id_hemxxmh = p.id_hemxxmh
                         LEFT JOIN komp_rekontrak ON komp_rekontrak.id_hemxxmh = p.id_hemxxmh
@@ -1478,6 +1573,10 @@
                             pot_makan,
                             pot_upah,
                             c_pot_upah,
+                            
+                            pot_resign,
+                            c_pot_resign,
+                            
                             pot_jam,
                             c_pot_jam,
                             pendapatan_lain_before_pph,
@@ -1576,6 +1675,10 @@
                         pot_makan,
                         pot_upah,
                         c_pot_upah,
+                            
+                        pot_resign,
+                        c_pot_resign,
+                        
                         pot_jam,
                         c_pot_jam,
                         pendapatan_lain_before_pph,
