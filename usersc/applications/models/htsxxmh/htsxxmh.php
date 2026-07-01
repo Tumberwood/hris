@@ -42,6 +42,8 @@
 				->setValue($_SESSION['user']),
 			Field::inst( 'htsxxmh.is_approve' ),
 			Field::inst( 'htsxxmh.is_defaultprogram' ),
+			Field::inst( 'htsxxmh.is_pengecualian_late' ),
+			Field::inst( 'htsxxmh.is_non_shift' ),
 			Field::inst( 'htsxxmh.jam_awal' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === null){

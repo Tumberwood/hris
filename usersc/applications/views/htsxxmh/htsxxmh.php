@@ -28,6 +28,8 @@
                                 <th colspan="2">Durasi Toleransi Masuk</th>
                                 <th colspan="2">Durasi Toleransi Pulang</th>
                                 <th rowspan="2">Keterangan</th>
+                                <th rowspan="2">Non Shift</th>
+                                <th rowspan="2">Pengecualian Late</th>
                             </tr>
 							<tr>
                                 <th>Awal</th>
@@ -129,7 +131,30 @@
 					},	{
 						label: "Toleransi Akhir Pulang (menit) <sup class='text-danger'>*<sup>",
 						name: "htsxxmh.menit_toleransi_akhir_out"
-					},	{
+					},
+					{
+						label: "Non Shift",
+						name: "htsxxmh.is_non_shift",
+						type: "select",
+						placeholder : "Select",
+						fieldInfo: "Flag Non Shift",
+						options: [
+							{ "label": "Ya", "value": 1 },
+							{ "label": "Tidak", "value": 0 }
+						]
+					},	
+					{
+						label: "Pengecualian Late",
+						name: "htsxxmh.is_pengecualian_late",
+						type: "select",
+						placeholder : "Select",
+						fieldInfo: "Late tidak berlaku untuk jadwal ini",
+						options: [
+							{ "label": "Ya", "value": 1 },
+							{ "label": "Tidak", "value": 0 }
+						]
+					},	
+					{
 						label: "Keterangan",
 						name: "htsxxmh.keterangan",
 						type: "textarea"
@@ -335,7 +360,23 @@
 					{ data: "htsxxmh.menit_toleransi_akhir_in" },
 					{ data: "htsxxmh.menit_toleransi_awal_out" },
 					{ data: "htsxxmh.menit_toleransi_akhir_out" },
-					{ data: "htsxxmh.keterangan" }
+					{ data: "htsxxmh.keterangan" },
+					{
+						data: "htsxxmh.is_non_shift",
+						render: function (data) {
+							return data == 1
+								? '<span class="badge badge-success">YA</span>'
+								: '<span class="badge badge-danger">TIDAK</span>';
+						}
+					},
+					{
+						data: "htsxxmh.is_pengecualian_late",
+						render: function (data) {
+							return data == 1
+								? '<span class="badge badge-success">YA</span>'
+								: '<span class="badge badge-danger">TIDAK</span>';
+						}
+					},
 				],
 				buttons: [
 					// BEGIN breaking generate button
