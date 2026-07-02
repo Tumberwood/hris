@@ -157,7 +157,7 @@ function notifyLoadingDomba() {
 						width:100px;
 						height:auto;
 						display:block;
-						transform:translate(-20px, -20px);
+						transform:translate(-20px, -10px);
 					"
 				/>
 			</div>
@@ -215,7 +215,7 @@ function notifyLoadingJerapah() {
 						width:100px;
 						height:auto;
 						display:block;
-						transform:translate(-20px, -20px);
+						transform:translate(-20px, -10px);
 					"
 				/>
 			</div>
