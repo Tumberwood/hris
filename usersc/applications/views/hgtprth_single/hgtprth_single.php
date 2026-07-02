@@ -314,7 +314,7 @@
 							var date = new Date().getTime();
 							var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
 
-							notifyLoading();
+							notifyLoadingDomba();
 
 							$.ajax( {
 								url: "../../models/hgtprth_single/gen_presensi_single_v3.php",

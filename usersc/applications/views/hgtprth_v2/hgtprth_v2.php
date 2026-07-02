@@ -376,7 +376,7 @@
 							var date = new Date().getTime();
 							var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
 
-							notifyLoading();
+							notifyLoadingDomba();
 
 							$.ajax( {
 								// url: "../../models/hgtprth/hgtprth_fn_gen_presensi_ferry.php",
