@@ -1258,22 +1258,7 @@
 
 									var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
 
-									Swal.fire({
-										title: 'Processing...',
-										html: 'Jangan tutup halaman sampai proses selesai',
-										allowOutsideClick: false,
-										allowEscapeKey: false,
-										showConfirmButton: false,
-										didOpen: () => {
-											Swal.showLoading();
-										}
-									});
-
-									notifyprogress = {
-										close: function(){
-											Swal.close();
-										}
-									};
+									notifyLoading();
 
 									$.ajax({
 										url: "../../models/hpyxxth/fn_gen_payroll_new_2026.php",
