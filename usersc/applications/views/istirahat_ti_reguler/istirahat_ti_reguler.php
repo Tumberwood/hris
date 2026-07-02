@@ -81,6 +81,7 @@
 								<th>Type</th>
 								<th>Tanggal</th>
 								<th>Jadwal</th>
+								<th>SPKL</th>
 								<th>Jam Masuk</th>
 								<th>Istirahat In</th>
 								<th>Istirahat Out</th>
@@ -259,6 +260,19 @@
 					{ data: "type" },
 					{ data: "tanggal" },
 					{ data: "st_jadwal" },
+					{ 
+						data: "kode_spkl",
+						render: function(data, type, row) {
+							var tanggal = row.tanggal;
+							if (!data) {
+								return '-';
+							} else {
+								var url = "../htoxxth/htoxxth.php?kode_hto=" + data + "&start_date=" + tanggal;
+								var link = '<a href="' + url + '" target="_blank"> '+data+' </a>';
+								return link;
+							}
+						}
+					},
 					{ data: "masuk" },
 					{ data: "break_in" },
 					{ data: "break_out" },

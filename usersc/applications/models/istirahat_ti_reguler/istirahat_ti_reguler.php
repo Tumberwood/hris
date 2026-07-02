@@ -41,6 +41,7 @@
 					a.id_hemxxmh,
 					b.kode AS nik,
 					b.nama,
+					spkl.kode AS kode_spkl,
 					DAYNAME(a.tanggal) hari,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
 					TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) AS durasi_istirahat_menit,
@@ -339,6 +340,7 @@
 				
 				FROM htsprrd a
 				INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
+				LEFT JOIN htoxxrd spkl on spkl.id_hemxxmh = a.id_hemxxmh and spkl.tanggal = a.tanggal
 				
 				INNER JOIN (
 					SELECT
