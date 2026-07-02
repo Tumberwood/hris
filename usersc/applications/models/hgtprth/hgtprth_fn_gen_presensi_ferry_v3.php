@@ -945,11 +945,15 @@
                                     LEFT JOIN htlxxrh ij ON ij.id_hemxxmh = jadwal.id_hemxxmh
                                     	AND ij.tanggal = jadwal.tanggal
                                         
-                                        AND ij.jam_awal BETWEEN shift.jam_awal_istirahat 
-                                        AND shift.jam_akhir_istirahat
+                                        AND (
+                                            ij.jam_awal BETWEEN shift.jam_awal_istirahat
+                                            AND shift.jam_akhir_istirahat
 
-                                        AND ij.jam_akhir BETWEEN shift.jam_awal_istirahat 
-                                        AND DATE_ADD(shift.jam_akhir_istirahat, INTERVAL 1 HOUR)
+                                            OR
+
+                                            ij.jam_akhir BETWEEN shift.jam_awal_istirahat
+                                            AND DATE_ADD(shift.jam_akhir_istirahat, INTERVAL 1 HOUR)
+                                        )
                                    
                                     WHERE jadwal.is_active = 1
                                     AND jadwal.tanggal = :tanggal
