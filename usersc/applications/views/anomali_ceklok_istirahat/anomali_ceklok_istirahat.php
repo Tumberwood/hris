@@ -201,7 +201,7 @@
 			$('#end_date').datepicker('setDate', tanggal_akhir);
 
 		});
-		
+
 		$(document).ready(function() {
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
@@ -314,14 +314,7 @@
 						}
 					}
 
-					notifyprogress = $.notify({
-						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
-					},{
-						z_index: 9999,
-						allow_dismiss: false,
-						type: 'info',
-						delay: 0
-					});
+					notifyLoadingDomba();
 
 					tblanomali_ceklok_istirahat.rows().deselect();
 					tblanomali_ceklok_istirahat.ajax.reload(function ( json ) {
