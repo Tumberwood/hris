@@ -261,11 +261,13 @@
 					{ 
 						data: "kode_spkl",
 						render: function(data, type, row) {
-							var id_hemxxmh = row.id_hemxxmh;
-							var tanggal = row.tanggal;
-							var url = "../htlxxrh/htlxxrh.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
-							var link = '<a href="' + url + '" target="_blank"> '+data+' </a>';
-							return link;
+							if (!data) {
+								return '-';
+							} else {
+								var url = "../htoxxth/htoxxth.php?kode_hto=" + data;
+								var link = '<a href="' + url + '" target="_blank"> '+data+' </a>';
+								return link;
+							}
 						}
 					},
 					{ data: "masuk" },
