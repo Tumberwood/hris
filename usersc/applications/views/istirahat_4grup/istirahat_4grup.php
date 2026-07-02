@@ -261,6 +261,7 @@
 					{ 
 						data: "kode_spkl",
 						render: function(data, type, row) {
+							var tanggal = row.tanggal;
 							if (!data) {
 								return '-';
 							} else {
