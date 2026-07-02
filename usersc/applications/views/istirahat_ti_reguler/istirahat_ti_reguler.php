@@ -324,14 +324,7 @@
 						}
 					}
 
-					notifyprogress = $.notify({
-						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
-					},{
-						z_index: 9999,
-						allow_dismiss: false,
-						type: 'info',
-						delay: 0
-					});
+					notifyLoadingDomba();
 
 					tblistirahat_tidak_sah.rows().deselect();
 					tblistirahat_tidak_sah.ajax.reload(function ( json ) {
