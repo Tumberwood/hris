@@ -209,7 +209,7 @@ function notifyLoadingJerapah() {
 
 			<div style="width:100%;display:flex;justify-content:center;align-items:center;overflow:hidden;">
 				<img
-					src="https://media.tenor.com/YD9_T5T9buQAAAAi/giraffe-comic.gif"
+					src="https://media1.tenor.com/m/5NspfDPCF6UAAAAC/no-dont.gif"
 					alt="Running Sheep"
 					style="
 						width:180px;
