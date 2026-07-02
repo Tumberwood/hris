@@ -414,7 +414,7 @@
 						}
 					}
 
-					notifyLoading();
+					notifyLoadingDomba();
 
 					tblpot_jam_r.rows().deselect();
 					tblpot_jam_r.ajax.reload(function ( json ) {

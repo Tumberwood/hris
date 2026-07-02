@@ -1258,7 +1258,7 @@
 
 									var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
 
-									notifyLoadingDomba();
+									notifyLoadingJerapah();
 
 									$.ajax({
 										url: "../../models/hpyxxth/fn_gen_payroll_new_2026.php",

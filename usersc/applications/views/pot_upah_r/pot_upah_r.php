@@ -414,7 +414,7 @@
 						}
 					}
 
-					notifyLoading();
+					notifyLoadingDomba();
 
 					tblpot_upah_r.rows().deselect();
 					tblpot_upah_r.ajax.reload(function ( json ) {
