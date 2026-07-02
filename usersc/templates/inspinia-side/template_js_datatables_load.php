@@ -137,25 +137,26 @@ function notifyLoadingDomba() {
 	let timerInterval;
 
 	Swal.fire({
-		title: 'Processing...',
+		title: '🐑 Processing...',
 		html: `
-    <div style="text-align:center">
+			<div style="text-align:center;">
 
-        <img
-            src="https://media.giphy.com/media/3o7TKO9uZAFeuQllo4/giphy.gif"
-            style="width:180px;height:auto"
-        >
+				<div style="font-size:15px;margin-bottom:8px;">
+					Jangan tutup halaman sampai proses selesai
+				</div>
 
-        <div style="margin-top:10px;font-size:15px">
-            Jangan tutup halaman sampai proses selesai
-        </div>
+				<div style="font-size:18px;font-weight:bold;margin-bottom:15px;">
+					⏱️ Waktu: <span id="elapsed">0</span> detik
+				</div>
 
-        <div style="margin-top:15px;font-size:18px;font-weight:bold">
-            ⏱️ <span id="elapsed">0</span> detik
-        </div>
+				<img
+					src="https://media.giphy.com/media/26BRQTezZrKak4BeE/giphy.gif"
+					alt="Running Sheep"
+					style="width:220px;height:auto;border-radius:8px;"
+				>
 
-    </div>
-`
+			</div>
+		`,
 		allowOutsideClick: false,
 		allowEscapeKey: false,
 		showConfirmButton: false,
