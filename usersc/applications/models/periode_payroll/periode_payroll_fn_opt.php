@@ -61,6 +61,7 @@
                 ->where('DATE_FORMAT(tanggal_awal, "%d %b %Y")', '%' . $q . '%', 'LIKE' )
                 ->or_where('DATE_FORMAT(tanggal_akhir, "%d %b %Y")', '%' . $q . '%', 'LIKE' );
         } )
+        ->order('id', 'Desc')
         ->limit($resultCount)
         ->offset($offset)
         ->exec();
