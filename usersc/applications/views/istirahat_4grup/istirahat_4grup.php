@@ -80,11 +80,12 @@
 								<th>Area Kerja</th>
 								<th>Tanggal</th>
 								<th>Jadwal</th>
+								<th>SPKL</th>
 								<th>Jam Masuk</th>
 								<th>Istirahat In</th>
 								<th>Istirahat Out</th>
-								<th>Makan</th>
-								<th>Pulang</th>
+								<th>Jam Makan</th>
+								<th>Jam Pulang</th>
 								<th>Kategori</th>
 							</tr>
 						</thead>
@@ -257,6 +258,16 @@
 					{ data: "area" },
 					{ data: "tanggal" },
 					{ data: "st_jadwal" },
+					{ 
+						data: "kode_spkl",
+						render: function(data, type, row) {
+							var id_hemxxmh = row.id_hemxxmh;
+							var tanggal = row.tanggal;
+							var url = "../htlxxrh/htlxxrh.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+							var link = '<a href="' + url + '" target="_blank"> '+data+' </a>';
+							return link;
+						}
+					},
 					{ data: "masuk" },
 					{ data: "break_in" },
 					{ data: "break_out" },

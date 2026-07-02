@@ -30,6 +30,7 @@
 					a.id_hemxxmh,
 					b.kode AS nik,
 					b.nama,
+					spkl.kode AS kode_spkl,
 					d.nama AS dep,
 					e.nama AS jab,
 					f.nama AS area,
@@ -65,6 +66,7 @@
 				
 				FROM htsprrd a
 				INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
+				LEFT JOIN htoxxrd spkl on spkl.id_hemxxmh = a.id_hemxxmh and spkl.tanggal = a.tanggal
 				
 				LEFT JOIN (
 					SELECT
