@@ -264,7 +264,7 @@
 							if (!data) {
 								return '-';
 							} else {
-								var url = "../htoxxth/htoxxth.php?kode_hto=" + data;
+								var url = "../htoxxth/htoxxth.php?kode_hto=" + datakode_spkl + "&start_date=" + tanggal;
 								var link = '<a href="' + url + '" target="_blank"> '+data+' </a>';
 								return link;
 							}
