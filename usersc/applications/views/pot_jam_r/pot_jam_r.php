@@ -375,14 +375,22 @@
 						}
 					}
 
-					notifyprogress = $.notify({
-						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
-					},{
-						z_index: 9999,
-						allow_dismiss: false,
-						type: 'info',
-						delay: 0
+					Swal.fire({
+						title: 'Processing...',
+						html: 'Jangan tutup halaman sampai proses selesai',
+						allowOutsideClick: false,
+						allowEscapeKey: false,
+						showConfirmButton: false,
+						didOpen: () => {
+							Swal.showLoading();
+						}
 					});
+
+					notifyprogress = {
+						close: function(){
+							Swal.close();
+						}
+					};
 
 					tblpot_jam_r.rows().deselect();
 					tblpot_jam_r.ajax.reload(function ( json ) {
