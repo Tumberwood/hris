@@ -131,4 +131,69 @@ function notifyLoading(){
 		}
 	};
 }
+
+function notifyLoadingDomba() {
+	let startTime = Date.now();
+	let timerInterval;
+
+	Swal.fire({
+		title: 'Processing...',
+		html: `
+			<style>
+				.sheep-loader{
+					font-size:70px;
+					animation: sheepJump 0.8s infinite ease-in-out;
+					display:inline-block;
+				}
+
+				@keyframes sheepJump{
+					0%,100%{
+						transform:translateY(0);
+					}
+					50%{
+						transform:translateY(-20px);
+					}
+				}
+
+				.loader-text{
+					margin-top:10px;
+					font-size:15px;
+				}
+			</style>
+
+			<div class="sheep-loader">🐑</div>
+
+			<div class="loader-text">
+				Jangan tutup halaman sampai proses selesai
+			</div>
+
+			<div style="margin-top:12px;font-size:16px;font-weight:bold">
+				Waktu: <span id="elapsed">0</span> detik
+			</div>
+		`,
+		allowOutsideClick: false,
+		allowEscapeKey: false,
+		showConfirmButton: false,
+		didOpen: () => {
+
+			timerInterval = setInterval(() => {
+				const seconds = Math.floor((Date.now() - startTime) / 1000);
+				const el = Swal.getHtmlContainer().querySelector('#elapsed');
+				if (el) {
+					el.textContent = seconds;
+				}
+			}, 1000);
+
+		},
+		willClose: () => {
+			clearInterval(timerInterval);
+		}
+	});
+
+	notifyprogress = {
+		close: function () {
+			Swal.close();
+		}
+	};
+}
 </script>

@@ -264,7 +264,7 @@
 							if (!data) {
 								return '-';
 							} else {
-								var url = "../htoxxth/htoxxth.php?kode_hto=" + datakode_spkl + "&start_date=" + tanggal;
+								var url = "../htoxxth/htoxxth.php?kode_hto=" + data + "&start_date=" + tanggal;
 								var link = '<a href="' + url + '" target="_blank"> '+data+' </a>';
 								return link;
 							}
@@ -321,7 +321,7 @@
 						}
 					}
 
-					notifyLoading();
+					notifyLoadingDomba();
 
 					tblistirahat_4grup.rows().deselect();
 					tblistirahat_4grup.ajax.reload(function ( json ) {
