@@ -80,8 +80,6 @@
 								<th>Area Kerja</th>
 								<th>Tanggal</th>
 								<th>Jadwal</th>
-								<th>Makan</th>
-								<th>Keterangan</th>
 							</tr>
 						</thead>
                     </table>
@@ -214,7 +212,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [1,3,4,5,6,9]
+						targets: [1,3,4,5,6]
 					},
 					{
 						searchPanes:{
@@ -253,8 +251,6 @@
 					{ data: "area" },
 					{ data: "tanggal" },
 					{ data: "st_jadwal" },
-					{ data: "makan" },
-					{ data: "keterangan" },
 				],
 				buttons: [
 					// BEGIN breaking generate button

@@ -26,113 +26,205 @@
 		->bind(':start_date', $start_date)
 		->bind(':end_date', $end_date)
 		->exec('SELECT
-					a.id,
-					a.id_hemxxmh,
-					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
-					jb.id_heyxxmh,
-					hem.kode nik,
-					hem.nama,
-					d.nama AS dep,
+					jadwal.id,
+					DATE_FORMAT(jadwal.tanggal, "%d %b %Y") tanggal,
+					DAYNAME(jadwal.tanggal) hari,
+					b.kode nik,
+					b.nama,
+					shift.kode shift,
+					pr.pot_jam_istirahat,
+					ij.keterangan ijin,
+					jadwal.id_hemxxmh,
+					
+					dep.nama AS dep,
 					e.nama AS jab,
 					f.nama AS area,
-					a.st_jadwal,
-					a.cek,
-					-- b.jam_awal jam_awal_lembur,
-					-- b.jam_akhir jam_akhir_lembur,
-					DATE_FORMAT(ceklok.tanggal_jam, "%d %b %Y %H:%i:%s") makan,
-					"CEKLOK DILUAR RANGE LEMBUR" keterangan
-				FROM htsprrd a
-				JOIN hemxxmh hem ON hem.id = a.id_hemxxmh
-				JOIN hemjbmh jb ON jb.id_hemxxmh = a.id_hemxxmh
+					pr.st_jadwal,
+					
+					COUNT(
+						DISTINCT
+						CASE
+							-- 🔹 PAKAI RANGE OVERRIDE (htoXXrd)
+							WHEN d.id IS NOT NULL
+								AND jadwal.id_htsxxmh = 1
+								AND c.tanggal_jam BETWEEN
+									CONCAT(d.tanggal, " ", d.jam_awal)
+									AND CONCAT(
+										IF(d.jam_awal > d.jam_akhir,
+											DATE_ADD(d.tanggal, INTERVAL 1 DAY),
+											d.tanggal
+										),
+										" ",
+										d.jam_akhir
+									)
+								AND (
+									-- 🔹 Istirahat Gedung 3
+									(
+										jadwal.tanggal > "2025-07-27" 
+										AND jb.id_holxxmd_2 = 1 
 
-				LEFT JOIN hodxxmh d ON d.id = jb.id_hodxxmh
+										AND (
+											-- Filter jika gedung 3 dan 4 Grup
+											(
+												jumlah_grup = 2 
+												AND c.nama NOT IN ("Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
+											)
+											OR jumlah_grup <> 2
+										)
+
+										AND (
+											-- 1. Gedung 3 selalu lolos
+											c.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+
+											OR (
+
+												-- 2. selain gedung 3 (OS, PMI, dll)
+												c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
+
+												-- hanya kalau tidak ada pasangan gedung 3 di waktu yg sama
+												AND NOT EXISTS (
+													SELECT 1
+													FROM htsprtd c2
+													WHERE c2.kode = c.kode
+													AND c2.tanggal_jam = c.tanggal_jam
+													AND c2.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+												)
+											)
+										)
+									)
+
+									-- 🔹 Istirahat Selain Gedung 3
+									OR (
+										jadwal.tanggal > "2025-07-27"
+										AND jb.id_holxxmd_2 <> 1 
+										AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual")
+									)
+
+									OR (
+										jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
+										AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
+									)
+
+									OR (
+										jadwal.tanggal < "2025-04-14"
+										AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan")
+									)
+								)
+							THEN CONCAT(c.tanggal_jam,"|",c.nama)
+
+							-- 🔹 DEFAULT RANGE ISTIRAHAT (jadwal)
+							WHEN (d.id IS NULL OR is_istirahat = 2)
+								AND ij.keterangan IS NULL -- JIKA ADA IZIN DI JAM ISTIRAHAT
+								AND c.tanggal_jam BETWEEN
+									jadwal.tanggaljam_awal_istirahat
+									AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+								AND (
+									-- 🔹 Istirahat Gedung 3
+									(
+										jadwal.tanggal > "2025-07-27" 
+										AND jb.id_holxxmd_2 = 1 
+
+										AND (
+											-- Filter jika gedung 3 dan 4 Grup
+											(
+												jumlah_grup = 2 
+												AND c.nama NOT IN ("Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
+											)
+											OR jumlah_grup <> 2
+										)
+
+										AND (
+											-- 1. Gedung 3 selalu lolos
+											c.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+
+											OR (
+
+												-- 2. selain gedung 3 (OS, PMI, dll)
+												c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
+
+												-- hanya kalau tidak ada pasangan gedung 3 di waktu yg sama
+												AND NOT EXISTS (
+													SELECT 1
+													FROM htsprtd c2
+													WHERE c2.kode = c.kode
+													AND c2.tanggal_jam = c.tanggal_jam
+													AND c2.nama IN ("PMI-Gedung-3","OS-Gedung-3")
+												)
+											)
+										)
+									)
+
+									-- 🔹 Istirahat Selain Gedung 3
+									OR (
+										jadwal.tanggal > "2025-07-27"
+										AND jb.id_holxxmd_2 <> 1 
+										AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual")
+									)
+
+									OR (
+										jadwal.tanggal BETWEEN "2025-04-14" AND "2025-07-27"
+										AND c.nama IN ("os","out","staff","PMI","PMI-Gedung-3","OS-Gedung-3","istirahat","istirahat manual","makan")
+									)
+
+									OR (
+										jadwal.tanggal < "2025-04-14"
+										AND c.nama IN ("istirahat","istirahat manual","os","out","staff","PMI","makan")
+									)
+								)
+							THEN CONCAT(c.tanggal_jam,"|",c.nama)
+						END
+					) AS count_break
+
+				FROM htssctd AS jadwal
+				INNER JOIN hemxxmh AS b ON b.id = jadwal.id_hemxxmh AND b.is_active = 1
+				INNER JOIN hemjbmh jb on jb.id_hemxxmh = b.id
+
+				LEFT JOIN htoxxrd d ON d.id_hemxxmh = jadwal.id_hemxxmh AND d.tanggal = jadwal.tanggal
+				LEFT JOIN htsprtd c ON c.kode = b.kode_finger
+				AND c.tanggal_jam >= IF(
+					d.id_hemxxmh IS NOT NULL AND jadwal.id_htsxxmh = 1,
+					CONCAT(d.tanggal, " ", d.jam_awal),
+					jadwal.tanggaljam_awal_t1
+				)
+
+				AND c.tanggal_jam <= IF(
+					d.id_hemxxmh IS NOT NULL AND jadwal.id_htsxxmh = 1,
+					CONCAT(
+						IF(
+							d.jam_awal > d.jam_akhir,
+							DATE_ADD(d.tanggal, INTERVAL 1 DAY),
+							d.tanggal
+						),
+						" ",
+						d.jam_akhir
+					),
+					DATE_ADD(jadwal.tanggaljam_akhir_t2, INTERVAL 1 DAY)
+				)
+
+				LEFT JOIN htsxxmh shift ON shift.id = jadwal.id_htsxxmh
+
+				-- CEK APAKAH ADA IZIN DI JAM ISTIRAHAT
+				LEFT JOIN htlxxrh ij ON ij.id_hemxxmh = jadwal.id_hemxxmh
+					AND ij.tanggal = jadwal.tanggal
+					
+					AND ij.jam_awal BETWEEN shift.jam_awal_istirahat 
+					AND shift.jam_akhir_istirahat
+
+					AND ij.jam_akhir BETWEEN shift.jam_awal_istirahat 
+					AND DATE_ADD(shift.jam_akhir_istirahat, INTERVAL 1 HOUR)
+					
+				LEFT JOIN htsprrd pr ON pr.tanggal = jadwal.tanggal AND pr.id_hemxxmh = jadwal.id_hemxxmh
+
+				LEFT JOIN hodxxmh dep ON dep.id = jb.id_hodxxmh
 				LEFT JOIN hetxxmh e ON e.id = jb.id_hetxxmh
-				LEFT JOIN holxxmd_2 f ON f.id = a.id_holxxmd_2
+				LEFT JOIN holxxmd_2 f ON f.id = pr.id_holxxmd_2
 
-				JOIN htoxxrd b ON b.tanggal = a.tanggal AND a.id_hemxxmh = b.id_hemxxmh
-				LEFT JOIN (
-					SELECT
-						ck.tanggal_jam,
-						ck.id_hemxxmh,
-						ck.kode
-					FROM htsprtd ck
-					WHERE ck.nama IN ("makan", "makan manual")
-						AND ck.tanggal BETWEEN :start_date
-										AND DATE_ADD(:end_date, INTERVAL 1 DAY)
-					GROUP BY
-						ck.kode,
-						ck.tanggal_jam
-				) ceklok
-					ON ceklok.kode = hem.kode_finger
-					AND ceklok.tanggal_jam BETWEEN
-						CONCAT(b.tanggal, " ", b.jam_awal)
-					AND
-						DATE_ADD(
-							CONCAT(
-								IF(
-									b.jam_awal > b.jam_akhir,
-									DATE_ADD(b.tanggal, INTERVAL 1 DAY),
-									b.tanggal
-								),
-								" ",
-								b.jam_akhir
-							),
-							INTERVAL 15 MINUTE
-						)
-				WHERE 1
-					AND a.tanggal BETWEEN :start_date AND :end_date
-					AND a.is_makan = 0
-					AND a.durasi_lembur_final > 0
-					AND ceklok.tanggal_jam IS NOT NULL
-
-				UNION ALL
-
-				SELECT
-					a.id,
-					a.id_hemxxmh,
-					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
-					jb.id_heyxxmh,
-					hem.kode nik,
-					hem.nama,
-					d.nama AS dep,
-					e.nama AS jab,
-					f.nama AS area,
-					a.st_jadwal,
-					a.cek,
-					DATE_FORMAT(ceklok.tanggal_jam, "%d %b %Y %H:%i:%s") makan,
-					"OFF - TIDAK ADA LEMBUR - ADA CEKLOK MAKAN" keterangan
-				FROM htsprrd a
-				JOIN hemxxmh hem ON hem.id = a.id_hemxxmh
-				JOIN hemjbmh jb ON jb.id_hemxxmh = a.id_hemxxmh
-
-				LEFT JOIN hodxxmh d ON d.id = jb.id_hodxxmh
-				LEFT JOIN hetxxmh e ON e.id = jb.id_hetxxmh
-				LEFT JOIN holxxmd_2 f ON f.id = a.id_holxxmd_2
-
-				LEFT JOIN (
-					SELECT
-						ck.tanggal_jam,
-						ck.id_hemxxmh,
-						ck.kode
-					FROM htsprtd ck
-					WHERE ck.nama IN ("makan", "makan manual")
-						AND ck.tanggal BETWEEN :start_date
-							AND DATE_ADD(:end_date, INTERVAL 1 DAY)
-					GROUP BY
-						ck.kode,
-						ck.tanggal_jam
-				) ceklok
-					ON ceklok.kode = hem.kode_finger
-					AND ceklok.tanggal_jam BETWEEN
-						CONCAT(a.tanggal, " 07:00")
-					AND 
-						CONCAT(a.tanggal, " 23:59")
-				WHERE 1
-					AND a.tanggal BETWEEN :start_date AND :end_date
-					AND a.is_makan = 0
-					AND a.durasi_lembur_final = 0
-					AND a.st_jadwal = "OFF"
-					AND ceklok.tanggal_jam IS NOT NULL
+				WHERE jadwal.is_active = 1
+					AND jadwal.tanggal BETWEEN :start_date AND :end_date
+					AND pr.pot_jam_istirahat >= 1
+				GROUP BY jadwal.id
+				HAVING count_break > 2
+				ORDER BY jadwal.id
 				' 
 				);
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
