@@ -131,13 +131,12 @@ function notifyLoading(){
 		}
 	};
 }
-
 function notifyLoadingDomba() {
 	let startTime = Date.now();
 	let timerInterval;
 
 	Swal.fire({
-		title: '🐑 Processing...',
+		title: 'Processing...',
 		html: `
 			<div style="text-align:center;">
 
@@ -150,7 +149,7 @@ function notifyLoadingDomba() {
 				</div>
 
 				<img
-					src="https://media.giphy.com/media/26BRQTezZrKak4BeE/giphy.gif"
+					src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExazZqb2FxN2xncWdvczJodWU2anI0cWQwcm5jbjIxcTBjaW9kNXZlOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TGoZcBJXNjRYuJOBcD/giphy.gif"
 					alt="Running Sheep"
 					style="width:220px;height:auto;border-radius:8px;"
 				>
