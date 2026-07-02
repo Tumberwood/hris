@@ -154,10 +154,10 @@ function notifyLoadingDomba() {
 					src="https://media.tenor.com/qMhzJcj_lgMAAAAj/home-sheep-home-shaun-the-sheep.gif"
 					alt="Running Sheep"
 					style="
-						width:125px;
+						width:100px;
 						height:auto;
 						display:block;
-						transform:translate(-20px, -20px);
+						transform:translate(-20px, 0px);
 					"
 				/>
 			</div>
@@ -212,10 +212,10 @@ function notifyLoadingJerapah() {
 					src="https://media1.tenor.com/m/5NspfDPCF6UAAAAC/no-dont.gif"
 					alt="Running Sheep"
 					style="
-						width:125px;
+						width:100px;
 						height:auto;
 						display:block;
-						transform:translate(-20px, -20px);
+						transform:translate(-20px, 0px);
 					"
 				/>
 			</div>
