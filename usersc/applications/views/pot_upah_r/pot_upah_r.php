@@ -87,9 +87,9 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<th class="text-right">Jumlah Orang</th>
+								<th colspan="2" class="text-right">Jumlah Orang</th>
 								<th class="text-right" id="c_orang">Jumlah Orang</th>
-								<th colspan="8" class="text-right">Grand Total</th>
+								<th colspan="7" class="text-right">Grand Total</th>
 								<th class="text-right bg-primary" id="grand_total_ip"></th>
 							</tr>
 						</tfoot>
@@ -369,7 +369,7 @@ api.column(1, { search: 'applied' }).data().each(function (nik) {
 	}
 });
 
-$(api.column(1).footer()).html(
+$(api.column(2).footer()).html(
 	uniqueNik.size.toLocaleString('id-ID')
 );
 				}
