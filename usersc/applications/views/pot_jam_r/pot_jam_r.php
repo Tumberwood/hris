@@ -48,7 +48,7 @@
                     </div>
                     <div class="form-group row">												
                         <label class="col-sm-2 col-form-label">Periode Payroll</label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-5">
                             <select class="form-control" id="select_periode_payroll" name="select_periode_payroll"></select>
                         </div>
                     </div>
