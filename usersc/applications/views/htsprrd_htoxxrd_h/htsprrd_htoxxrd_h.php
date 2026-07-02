@@ -50,6 +50,37 @@
 		</div>
 	</div>
 </div>
+ 
+<div class="modal" id="modalUpload_lembur" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content animated bounceInRight">
+			<form class="form-horizontal" id="frmUploadMaster_lembur" enctype="multipart/form-data">
+				<div class="modal-header">
+					<h4 class="modal-title">Upload Excel Lembur Detail</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<label class="col-lg-2 col-form-label">File Excel Lembur Detail</label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input type="file" name="filename" class="form-control" id="frmUploadItem_lembur">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/monitoring_overtime_detail.xlsx');">
+								<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+					<button class="btn btn-primary" type="submit" id="submitUpload_lembur">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 <div class="row">
     <div class="col">
@@ -485,6 +516,15 @@
 						action: function ( e, dt, node, config ) {
 							$('#modalUpload').modal('toggle');
 						}
+					},
+					{
+						name: 'btnUpload_lembur',
+						text: 'Upload Lembur Excel',
+						className: 'btn btn-primary',
+						titleAttr: 'Upload Excel Lembur',
+						action: function ( e, dt, node, config ) {
+							$('#modalUpload_lembur').modal('toggle');
+						}
 					}
 					// END breaking generate button
 				],
@@ -869,6 +909,63 @@
 								tblhtsprrd_htoxxrd_d.ajax.reload(null,false);
 								$('#modalUpload').modal('toggle'); 
 								$('#submitUpload').show();
+							},
+							error: function (xhr, Status, err){
+								// console.log('x');
+							}
+						} );
+					}
+				}
+			});
+			
+			var frmUploadMaster_lembur = $("#frmUploadMaster_lembur").submit(function(e) {
+				e.preventDefault();
+				// $('#submit_ceklok').hide();
+			}).validate({
+				rules: {
+					filename: "required"
+				},
+				messages: {
+					filename: "Pilih file yang akan di-upload!"
+				},
+				submitHandler: function(form) { 
+					$('#submitUpload_lembur').hide();
+					let notifyprogress = $.notify({
+						message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
+					},{
+						allow_dismiss: false,
+						type: 'danger',
+						delay: 0,
+						element: 'body',
+					});
+
+					//item
+					var fd_item = new FormData();
+					var item = $('#frmUploadItem_lembur')[0].files[0];
+					if (item != undefined) {
+						fd_item.append('filename',item);
+			
+						$.ajax( {
+							url: "../../models/htsprrd_htoxxrd_h/htoxxrd_monitor_upload.php",
+							type: 'POST',
+							dataType: 'json',
+							data: fd_item,
+							contentType: false,
+							processData: false,
+							success: function ( json ) {
+								notifyprogress.close();
+
+								$.notify({
+									message: json.data.message
+								},{
+									type: json.data.type_message
+								});
+
+								$("#frmUploadItem_lembur").val('');
+								tblhtsprrd_htoxxrd_h.ajax.reload(null,false);
+								tblhtsprrd_htoxxrd_d.ajax.reload(null,false);
+								$('#modalUpload_lembur').modal('toggle'); 
+								$('#submitUpload_lembur').show();
 							},
 							error: function (xhr, Status, err){
 								// console.log('x');
