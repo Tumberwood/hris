@@ -87,7 +87,9 @@
 						</thead>
 						<tfoot>
 							<tr>
-								<th colspan="10" class="text-right">Grand Total</th>
+								<th colspan="2" class="text-right">Jumlah Orang</th>
+								<th class="text-right bg-primary" id="c_orang">Jumlah Orang</th>
+								<th colspan="7" class="text-right">Grand Total</th>
 								<th class="text-right bg-primary" id="grand_total_ip"></th>
 							</tr>
 						</tfoot>
@@ -339,7 +341,9 @@
 						return parseFloat(value) || 0;
 					};
 
-					// Kolom ke-10 = Proporsional Jam (IP)
+					// =========================
+					// Total kolom 10
+					// =========================
 					const total = api
 						.column(10, { search: 'applied' })
 						.data()
@@ -347,10 +351,27 @@
 							return parseNumber(a) + parseNumber(b);
 						}, 0);
 
-					$(api.column(10).footer()).html(total.toLocaleString('id-ID', {
-						minimumFractionDigits: 2,
-						maximumFractionDigits: 2
-					}));
+					$(api.column(10).footer()).html(
+						total.toLocaleString('id-ID', {
+							minimumFractionDigits: 0,
+							maximumFractionDigits: 0
+						})
+					);
+
+					// =========================
+					// Count NIK unik kolom 1
+					// =========================
+					const uniqueNik = new Set();
+
+					api.column(1, { search: 'applied' }).data().each(function (nik) {
+						if (nik !== null && nik !== undefined && nik !== '') {
+							uniqueNik.add(String(nik).trim());
+						}
+					});
+
+					$(api.column(2).footer()).html(
+						uniqueNik.size.toLocaleString('id-ID')
+					);
 				}
 			} );
 
