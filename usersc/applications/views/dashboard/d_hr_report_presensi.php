@@ -262,42 +262,9 @@
         // END select2 init
 
 		function generateTable(counter) {
-			let startTime = Date.now();
-let timerInterval;
-
-Swal.fire({
-    title: 'Processing...',
-    html: `
-        <div>Jangan tutup halaman sampai proses selesai</div>
-        <div style="margin-top:10px;font-size:16px;font-weight:bold">
-            Waktu: <b id="elapsed">0</b> detik
-        </div>
-    `,
-    allowOutsideClick: false,
-    allowEscapeKey: false,
-    showConfirmButton: false,
-    didOpen: () => {
-        Swal.showLoading();
-
-        timerInterval = setInterval(() => {
-            const seconds = Math.floor((Date.now() - startTime) / 1000);
-            const el = Swal.getHtmlContainer().querySelector('#elapsed');
-            if (el) {
-                el.textContent = seconds;
-            }
-        }, 1000);
-    },
-    willClose: () => {
-        clearInterval(timerInterval);
-    }
-});
-
-notifyprogress = {
-    close: function () {
-        Swal.close();
-    }
-};
-
+			
+			notifyLoading();
+			
 			if ($('#select_hemxxmh').val() > 0) {
 				id_hemxxmh = $('#select_hemxxmh').val();
 			} else {
