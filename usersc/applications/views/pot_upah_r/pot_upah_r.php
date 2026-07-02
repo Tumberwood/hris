@@ -375,22 +375,7 @@
 						}
 					}
 
-					Swal.fire({
-						title: 'Processing...',
-						html: 'Jangan tutup halaman sampai proses selesai',
-						allowOutsideClick: false,
-						allowEscapeKey: false,
-						showConfirmButton: false,
-						didOpen: () => {
-							Swal.showLoading();
-						}
-					});
-
-					notifyprogress = {
-						close: function(){
-							Swal.close();
-						}
-					};
+					notifyLoading();
 
 					tblpot_upah_r.rows().deselect();
 					tblpot_upah_r.ajax.reload(function ( json ) {

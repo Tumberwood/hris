@@ -375,22 +375,7 @@
 						}
 					}
 
-					Swal.fire({
-						title: 'Processing...',
-						html: 'Jangan tutup halaman sampai proses selesai',
-						allowOutsideClick: false,
-						allowEscapeKey: false,
-						showConfirmButton: false,
-						didOpen: () => {
-							Swal.showLoading();
-						}
-					});
-
-					notifyprogress = {
-						close: function(){
-							Swal.close();
-						}
-					};
+					notifyLoading();
 
 					tblpot_jam_r.rows().deselect();
 					tblpot_jam_r.ajax.reload(function ( json ) {
