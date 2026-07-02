@@ -184,6 +184,24 @@
 		});
         // END select2 init
 		
+		// Override tanggal ketika periode payroll dipilih
+		$('#select_periode_payroll').on('select2:select', async function (e) {
+			const val = $(this).val();
+
+			await autofillField(
+				'periode_payroll',
+				val,
+				'DATE_FORMAT(tanggal_awal, "%d %b %Y") AS tanggal_awal, DATE_FORMAT(tanggal_akhir, "%d %b %Y") AS tanggal_akhir'
+			);
+
+			const tanggal_awal = autofillData.tanggal_awal;
+			const tanggal_akhir = autofillData.tanggal_akhir;
+
+			$('#start_date').datepicker('setDate', tanggal_awal);
+			$('#end_date').datepicker('setDate', tanggal_akhir);
+
+		});
+		
 		$(document).ready(function() {
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
