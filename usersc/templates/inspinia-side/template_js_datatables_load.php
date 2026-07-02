@@ -149,7 +149,7 @@ function notifyLoadingDomba() {
 				</div>
 
 				<img
-					src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExazZqb2FxN2xncWdvczJodWU2anI0cWQwcm5jbjIxcTBjaW9kNXZlOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/TGoZcBJXNjRYuJOBcD/giphy.gif"
+					src="https://media.tenor.com/qMhzJcj_lgMAAAAj/home-sheep-home-shaun-the-sheep.gif"
 					alt="Running Sheep"
 					style="width:220px;height:auto;border-radius:8px;"
 				>
