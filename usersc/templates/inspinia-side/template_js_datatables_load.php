@@ -138,23 +138,30 @@ function notifyLoadingDomba() {
 	Swal.fire({
 		title: 'Processing...',
 		html: `
-			<div style="text-align:center;">
+		<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%;">
 
-				<div style="font-size:15px;margin-bottom:8px;">
-					Jangan tutup halaman sampai proses selesai
-				</div>
+			<div style="font-size:15px;">
+				Jangan tutup halaman sampai proses selesai
+			</div>
 
-				<div style="font-size:18px;font-weight:bold;margin-bottom:15px;">
-					⏱️ Waktu: <span id="elapsed">0</span> detik
-				</div>
+			<div style="font-size:18px;font-weight:bold;margin:10px 0 15px;">
+				⏱️ Waktu: <span id="elapsed">0</span> detik
+			</div>
 
+			<div style="width:100%;display:flex;justify-content:center;align-items:center;overflow:hidden;">
 				<img
 					src="https://media.tenor.com/qMhzJcj_lgMAAAAj/home-sheep-home-shaun-the-sheep.gif"
 					alt="Running Sheep"
-					style="width:220px;height:auto;border-radius:8px;"
-				>
-
+					style="
+						width:180px;
+						height:auto;
+						display:block;
+						transform:translate(-20px, -20px);
+					"
+				/>
 			</div>
+
+		</div>
 		`,
 		allowOutsideClick: false,
 		allowEscapeKey: false,
