@@ -185,8 +185,36 @@
       <div class="modal-body">
 		<div class="table-responsive" id="proteksi">
 			<div class="row">
-				<div class="col-12 col-lg-12 col-md-12 col-sm-12">
+				<div class="col-12 col-lg-6 col-md-6 col-sm-12">
 					<table id="lembur_presensi" class="table table-striped table-bordered table-hover nowrap" width="100%">
+						<thead>
+							<tr>
+								<th>Tanggal</th>
+								<th>NIP</th>
+								<th>Nama</th>
+								<th>Lembur SPKL</th>
+								<th>Pot Jam</th>
+								<th>Lembur Final</th>
+								<th>Lembur 1,5</th>
+								<th>Lembur 2</th>
+								<th>Lembur 3</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th colspan="3">Total</th>
+								<th id="subtotal_3"></th>
+								<th id="subtotal_4"></th>
+								<th id="subtotal_5"></th>
+								<th id="subtotal_6"></th>
+								<th id="subtotal_7"></th>
+								<th id="subtotal_8"></th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="col-12 col-lg-6 col-md-6 col-sm-12">
+					<table id="lembur_excel" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
 							<tr>
 								<th>Tanggal</th>

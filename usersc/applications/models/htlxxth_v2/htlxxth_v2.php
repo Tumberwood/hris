@@ -125,8 +125,8 @@
 			} );
 	}
 
-	include( "htlxxth_v2_extra.php" );
 	include( "../../../helpers/kode_fn_generate_c.php" );
+	include( "htlxxth_v2_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
 	$editor
