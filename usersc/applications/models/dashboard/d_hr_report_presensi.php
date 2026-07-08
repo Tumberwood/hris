@@ -318,7 +318,8 @@
 					*
 				FROM (
 					SELECT DISTINCT
-						a.id
+						a.id,
+						tanggal_jam
 					FROM htssctd AS e
 					LEFT JOIN hemxxmh AS b ON b.id = e.id_hemxxmh
 					LEFT JOIN (
@@ -340,7 +341,8 @@
 					UNION ALL
 				
 					SELECT DISTINCT
-						c.id
+						c.id,
+						tanggal_jam
 					FROM htssctd AS a
 					INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
 					LEFT JOIN (
