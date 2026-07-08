@@ -25,6 +25,7 @@
 	}
 
 	$start_date = $awal->format('Y-m-d');
+	$start = microtime(true);
 
 	$qs_cek_satu_all = $db
 	->raw()
@@ -38,6 +39,8 @@
 			'
 			);
 	$rs_cek_satu_all = $qs_cek_satu_all->fetchAll();
+	$time_cek_satu_all = round((microtime(true) - $start) * 1000, 2);
+
 	$c_cek_satu = count($rs_cek_satu_all) - 1;
 
 	$peg_cek = array();
@@ -139,6 +142,7 @@
 				'
 				);
 	$rs_report_presensi = $qs_report_presensi->fetchAll();
+	$time_report_presensi = round((microtime(true) - $start) * 1000, 2);
 
 	$qs_orang = $db
 		->raw()
@@ -216,6 +220,7 @@
 				'
 				);
 	$rs_orang = $qs_orang->fetch();
+	$time_orang = round((microtime(true) - $start) * 1000, 2);
 
 	$qs_riwayat_ceklok = $db
 		->raw()
@@ -290,6 +295,7 @@
 				'
 				);
 	$rs_riwayat_ceklok = $qs_riwayat_ceklok->fetchAll();
+	$time_riwayat_ceklok = round((microtime(true) - $start) * 1000, 2);
 
 	$qs_makan = $db
 		->raw()
@@ -309,6 +315,7 @@
 				'
 				);
 	$rs_makan = $qs_makan->fetchAll();
+	$time_makan = round((microtime(true) - $start) * 1000, 2);
 
 	$qs_istirahat = $db
 		->raw()
@@ -370,6 +377,7 @@
 				'
 				);
 	$rs_istirahat = $qs_istirahat->fetchAll();
+	$time_istirahat = round((microtime(true) - $start) * 1000, 2);
 	
 	$qs_jadwal = $db
 		->raw()
@@ -387,6 +395,7 @@
 				'
 				);
 	$rs_jadwal = $qs_jadwal->fetch();
+	$time_jadwal = round((microtime(true) - $start) * 1000, 2);
 
 	$results = array();
 
@@ -455,6 +464,16 @@
 		$results['data7'] = [];
 		$results['columns'] = [];
 	}
+	
+	$results['profiling'] = [
+		'cek_satu_all'     => $time_cek_satu_all . ' ms',
+		'report_presensi'  => $time_report_presensi . ' ms',
+		'orang'            => $time_orang . ' ms',
+		'riwayat_ceklok'   => $time_riwayat_ceklok . ' ms',
+		'makan'            => $time_makan . ' ms',
+		'istirahat'        => $time_istirahat . ' ms',
+		'jadwal'           => $time_jadwal . ' ms',
+	];
 
 	echo json_encode($results);
 ?>
