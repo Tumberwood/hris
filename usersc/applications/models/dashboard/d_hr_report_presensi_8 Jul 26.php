@@ -231,7 +231,7 @@
 				LEFT JOIN htsprtd AS a ON a.kode = b.kode_finger 
 				WHERE 
 				e.is_active = 1
-				-- AND a.tanggal_jam NOT BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+				-- AND CONCAT(a.tanggal, " ", a.jam) NOT BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 				AND a.id NOT IN (
 					SELECT DISTINCT
 						*
@@ -243,57 +243,26 @@
 						LEFT JOIN htsprtd AS a ON a.kode = b.kode_finger 
 						WHERE 
 						e.is_active = 1
-						AND a.tanggal_jam BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+						AND CONCAT(a.tanggal, " ", a.jam) BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 						AND a.tanggal BETWEEN :start_date AND DATE_ADD(:start_date, INTERVAL 2 DAY) 
 						AND b.id = :id_hemxxmh
 						AND a.is_active = 1
 					
 					
+						UNION ALL
+					
 						SELECT DISTINCT
-						a.id
-					FROM htssctd AS e
-					LEFT JOIN hemxxmh AS b ON b.id = e.id_hemxxmh
-					LEFT JOIN (
-						SELECT DISTINCT
-							id,
-							nama, 
-							kode, 
-							is_active, 
-							tanggal_jam
-						FROM htsprtd
-						WHERE is_active = 1 AND tanggal BETWEEN :start_date AND DATE_ADD(:start_date , INTERVAL 2 DAY)
-					) AS a ON a.kode = b.kode_finger 
-					WHERE 
-						e.is_active = 1
-						AND a.tanggal_jam BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-						AND b.id = :id_hemxxmh
-						AND a.is_active = 1
-				
-				
-					UNION ALL
-				
-					SELECT DISTINCT
-						c.id
-					FROM htssctd AS a
-					INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
-					LEFT JOIN (
-						SELECT DISTINCT
-							id,
-							nama, 
-							tanggal,
-							kode, 
-							is_active, 
-							tanggal_jam
-						FROM htsprtd
-						WHERE is_active = 1 AND tanggal BETWEEN :start_date AND DATE_ADD(:start_date , INTERVAL 1 DAY)
-					) AS c ON c.kode = b.kode_finger
-					INNER JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
-					WHERE a.tanggal = :start_date AND a.is_active = 1 AND b.is_active = 1
-						AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI")
-						AND c.tanggal_jam BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
-						AND CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir) 
-						AND a.id_hemxxmh = :id_hemxxmh
-						AND a.id_htsxxmh = 1
+							c.id
+						FROM htssctd AS a
+						INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
+						INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
+						INNER JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
+						WHERE a.tanggal = :start_date AND a.is_active = 1 AND b.is_active = 1
+							AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI")
+							AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
+							AND CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir) 
+							AND a.id_hemxxmh = :id_hemxxmh
+							AND a.id_htsxxmh = 1
 					) ceklok_istirahat
 				)
 				AND a.tanggal BETWEEN :start_date AND DATE_ADD(:start_date, INTERVAL 2 DAY) 
@@ -334,47 +303,37 @@
 					*
 				FROM (
 					SELECT DISTINCT
-						a.id
+						a.id_hemxxmh,
+						concat(a.tanggal, " " , a.jam) tanggal_jam,
+						DATE_FORMAT(a.tanggal, "%d %b %Y") as tanggal,
+						a.jam,
+						a.nama as mesin
 					FROM htssctd AS e
 					LEFT JOIN hemxxmh AS b ON b.id = e.id_hemxxmh
-					LEFT JOIN (
-						SELECT DISTINCT
-							id,
-							nama, 
-							kode, 
-							is_active, 
-							tanggal_jam
-						FROM htsprtd
-						WHERE is_active = 1 AND tanggal BETWEEN :start_date AND DATE_ADD(:start_date , INTERVAL 2 DAY)
-					) AS a ON a.kode = b.kode_finger 
+					LEFT JOIN htsprtd AS a ON a.kode = b.kode_finger 
 					WHERE 
-						e.is_active = 1
-						AND a.tanggal_jam BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-						AND b.id = :id_hemxxmh
-						AND a.is_active = 1
+					e.is_active = 1
+					AND CONCAT(a.tanggal, " ", a.jam) BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+					AND a.tanggal BETWEEN :start_date AND DATE_ADD(:start_date, INTERVAL 2 DAY) 
+					AND b.id = :id_hemxxmh
+					AND a.is_active = 1
 				
 				
 					UNION ALL
 				
 					SELECT DISTINCT
-						c.id
+						c.id_hemxxmh,
+						concat(c.tanggal, " " , c.jam) tanggal_jam,
+						DATE_FORMAT(c.tanggal, "%d %b %Y") as tanggal,
+						c.jam,
+						c.nama as mesin
 					FROM htssctd AS a
 					INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
-					LEFT JOIN (
-						SELECT DISTINCT
-							id,
-							nama, 
-							tanggal,
-							kode, 
-							is_active, 
-							tanggal_jam
-						FROM htsprtd
-						WHERE is_active = 1 AND tanggal BETWEEN :start_date AND DATE_ADD(:start_date , INTERVAL 1 DAY)
-					) AS c ON c.kode = b.kode_finger
+					INNER JOIN htsprtd AS c ON c.kode = b.kode_finger
 					INNER JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
 					WHERE a.tanggal = :start_date AND a.is_active = 1 AND b.is_active = 1
 						AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI")
-						AND c.tanggal_jam BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
+						AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
 						AND CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir) 
 						AND a.id_hemxxmh = :id_hemxxmh
 						AND a.id_htsxxmh = 1
