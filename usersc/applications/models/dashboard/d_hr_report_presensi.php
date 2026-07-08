@@ -25,8 +25,8 @@
 	}
 
 	$start_date = $awal->format('Y-m-d');
-	$start = microtime(true);
 
+	$start = microtime(true);
 	$qs_cek_satu_all = $db
 	->raw()
 	->bind(':start_date', $start_date)
@@ -58,6 +58,7 @@
 	}
 	// print_r($id_hemxxmh);
 
+	$start = microtime(true);
 	$qs_report_presensi = $db
 		->raw()
 		->bind(':start_date', $start_date)
@@ -144,6 +145,7 @@
 	$rs_report_presensi = $qs_report_presensi->fetchAll();
 	$time_report_presensi = round((microtime(true) - $start) * 1000, 2);
 
+	$start = microtime(true);
 	$qs_orang = $db
 		->raw()
 		->bind(':id_hemxxmh', $id_hemxxmh)
@@ -222,6 +224,7 @@
 	$rs_orang = $qs_orang->fetch();
 	$time_orang = round((microtime(true) - $start) * 1000, 2);
 
+	$start = microtime(true);
 	$qs_riwayat_ceklok = $db
 		->raw()
 		->bind(':start_date', $start_date)
@@ -308,6 +311,7 @@
 	$rs_riwayat_ceklok = $qs_riwayat_ceklok->fetchAll();
 	$time_riwayat_ceklok = round((microtime(true) - $start) * 1000, 2);
 
+	$start = microtime(true);
 	$qs_makan = $db
 		->raw()
 		->bind(':start_date', $start_date)
@@ -328,6 +332,7 @@
 	$rs_makan = $qs_makan->fetchAll();
 	$time_makan = round((microtime(true) - $start) * 1000, 2);
 
+	$start = microtime(true);
 	$qs_istirahat = $db
 		->raw()
 		->bind(':start_date', $start_date)
@@ -336,8 +341,11 @@
 					*
 				FROM (
 					SELECT DISTINCT
-						a.id,
-						tanggal_jam
+						a.id_hemxxmh,
+						tanggal_jam,
+						DATE_FORMAT(a.tanggal, "%d %b %Y") as tanggal,
+						a.jam,
+						a.nama as mesin
 					FROM htssctd AS e
 					LEFT JOIN hemxxmh AS b ON b.id = e.id_hemxxmh
 					LEFT JOIN (
@@ -359,8 +367,11 @@
 					UNION ALL
 				
 					SELECT DISTINCT
-						c.id,
-						tanggal_jam
+						a.id_hemxxmh,
+						tanggal_jam,
+						DATE_FORMAT(a.tanggal, "%d %b %Y") as tanggal,
+						a.jam,
+						a.nama as mesin
 					FROM htssctd AS a
 					INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
 					LEFT JOIN (
@@ -390,6 +401,7 @@
 	$rs_istirahat = $qs_istirahat->fetchAll();
 	$time_istirahat = round((microtime(true) - $start) * 1000, 2);
 	
+	$start = microtime(true);
 	$qs_jadwal = $db
 		->raw()
 		->bind(':start_date', $start_date)
