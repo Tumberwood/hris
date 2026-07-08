@@ -105,8 +105,11 @@
 				FROM htssctd a
 				INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
 				LEFT JOIN (
-					SELECT
-						*
+					SELECT DISTINCT
+						nama, 
+						kode, 
+						is_active, 
+						tanggal_jam
 					FROM htsprtd
 					WHERE is_active = 1 AND tanggal BETWEEN :start_date AND DATE_ADD(:start_date , INTERVAL 1 DAY)
 				) c ON c.kode = b.kode_finger
