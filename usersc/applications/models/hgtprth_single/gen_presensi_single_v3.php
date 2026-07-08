@@ -893,7 +893,7 @@
                                         is_active, 
                                         tanggal_jam
                                     FROM htsprtd
-                                    WHERE is_active = 1 AND tanggal BETWEEN :start_date AND DATE_ADD(:start_date , INTERVAL 1 DAY)
+                                    WHERE is_active = 1 AND tanggal BETWEEN :tanggal AND DATE_ADD(:tanggal , INTERVAL 1 DAY)
                                 ) c ON c.kode = b.kode_finger
                                 AND c.tanggal_jam >= IF(
                                     d.id_hemxxmh IS NOT NULL AND jadwal.id_htsxxmh = 1,
