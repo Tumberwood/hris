@@ -352,6 +352,7 @@
 						SELECT DISTINCT
 							id,
 							nama, 
+							tanggal,
 							kode, 
 							is_active, 
 							tanggal_jam
