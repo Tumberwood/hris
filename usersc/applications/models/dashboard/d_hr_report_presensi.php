@@ -227,13 +227,24 @@
 		->bind(':start_date', $start_date)
 		->bind(':id_hemxxmh', $id_hemxxmh)
 		->exec('SELECT DISTINCT
-					a.id_hemxxmh,
+					b.id id_hemxxmh,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") as tanggal,
 					a.jam,
 					a.nama as mesin
 				FROM htssctd AS e
 				LEFT JOIN hemxxmh AS b ON b.id = e.id_hemxxmh
-				LEFT JOIN htsprtd AS a ON a.kode = b.kode_finger 
+				LEFT JOIN (
+					SELECT DISTINCT
+						id,
+						nama, 
+						tanggal,
+						jam,
+						kode, 
+						is_active, 
+						tanggal_jam
+					FROM htsprtd
+					WHERE is_active = 1 AND tanggal BETWEEN :start_date AND DATE_ADD(:start_date , INTERVAL 2 DAY)
+				) AS a ON a.kode = b.kode_finger 
 				WHERE 
 				e.is_active = 1
 				-- AND a.tanggal_jam NOT BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
@@ -464,7 +475,7 @@
 		$results['data7'] = [];
 		$results['columns'] = [];
 	}
-	
+
 	$results['profiling'] = [
 		'cek_satu_all'     => $time_cek_satu_all . ' ms',
 		'report_presensi'  => $time_report_presensi . ' ms',
