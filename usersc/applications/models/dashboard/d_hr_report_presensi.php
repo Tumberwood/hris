@@ -259,7 +259,7 @@
 						INNER JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
 						WHERE a.tanggal = :start_date AND a.is_active = 1 AND b.is_active = 1
 							AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI")
-							AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
+							AND c.tanggal_jam BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
 							AND CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir) 
 							AND a.id_hemxxmh = :id_hemxxmh
 							AND a.id_htsxxmh = 1
@@ -333,7 +333,7 @@
 					INNER JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
 					WHERE a.tanggal = :start_date AND a.is_active = 1 AND b.is_active = 1
 						AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI")
-						AND CONCAT(c.tanggal, " ", c.jam) BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
+						AND c.tanggal_jam BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
 						AND CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir) 
 						AND a.id_hemxxmh = :id_hemxxmh
 						AND a.id_htsxxmh = 1
