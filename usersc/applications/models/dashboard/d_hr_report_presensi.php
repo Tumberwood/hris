@@ -284,7 +284,7 @@
 				AND a.nama NOT IN ("makan", "makan manual") 
 				AND b.id = :id_hemxxmh
 				AND a.is_active = 1
-				ORDER BY concat(a.tanggal, " " , a.jam) ASC
+				ORDER BY a.tanggal_jam ASC
 				LIMIT 10
 				;
 				'
@@ -304,7 +304,7 @@
 				FROM htsprtd AS a
 				LEFT JOIN hemxxmh AS b ON b.kode_finger = a.kode
 				WHERE a.tanggal BETWEEN :start_date AND CURDATE() AND b.id = :id_hemxxmh AND a.nama IN ("makan", "makan manual") AND a.is_active = 1
-				ORDER BY concat(a.tanggal, " " , a.jam) ASC
+				ORDER BY a.tanggal_jam ASC
 				LIMIT 10;
 				'
 				);
