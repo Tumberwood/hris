@@ -548,7 +548,7 @@
 					{
 						name: 'btnUpload_lembur',
 						text: 'Upload Lembur Per Tanggal',
-						className: 'btn btn-primary',
+						className: 'btn btn-warning',
 						titleAttr: 'Upload Excel Lembur',
 						action: function ( e, dt, node, config ) {
 							$('#modalUpload_lembur').modal('toggle');
