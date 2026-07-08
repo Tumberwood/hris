@@ -538,7 +538,7 @@
 					?>
 					{
 						name: 'btnUpload',
-						text: '<i class="fa fa-file-excel-o"></i>',
+						text: '<i class="fa fa-file-excel-o"></i> Upload Summary',
 						className: 'btn btn-primary',
 						titleAttr: 'Upload Excel',
 						action: function ( e, dt, node, config ) {
@@ -547,7 +547,7 @@
 					},
 					{
 						name: 'btnUpload_lembur',
-						text: 'Upload Lembur Excel',
+						text: 'Upload Lembur Per Tanggal',
 						className: 'btn btn-primary',
 						titleAttr: 'Upload Excel Lembur',
 						action: function ( e, dt, node, config ) {
