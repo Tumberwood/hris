@@ -233,23 +233,8 @@
 				e.is_active = 1
 				-- AND a.tanggal_jam NOT BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 				AND a.id NOT IN (
+					
 					SELECT DISTINCT
-						*
-					FROM (
-						SELECT DISTINCT
-							a.id
-						FROM htssctd AS e
-						LEFT JOIN hemxxmh AS b ON b.id = e.id_hemxxmh
-						LEFT JOIN htsprtd AS a ON a.kode = b.kode_finger 
-						WHERE 
-						e.is_active = 1
-						AND a.tanggal_jam BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-						AND a.tanggal BETWEEN :start_date AND DATE_ADD(:start_date, INTERVAL 2 DAY) 
-						AND b.id = :id_hemxxmh
-						AND a.is_active = 1
-					
-					
-						SELECT DISTINCT
 						a.id
 					FROM htssctd AS e
 					LEFT JOIN hemxxmh AS b ON b.id = e.id_hemxxmh
@@ -294,7 +279,6 @@
 						AND CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir) 
 						AND a.id_hemxxmh = :id_hemxxmh
 						AND a.id_htsxxmh = 1
-					) ceklok_istirahat
 				)
 				AND a.tanggal BETWEEN :start_date AND DATE_ADD(:start_date, INTERVAL 2 DAY) 
 				AND a.nama NOT IN ("makan", "makan manual") 
@@ -352,7 +336,6 @@
 						AND a.tanggal_jam BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 						AND b.id = :id_hemxxmh
 						AND a.is_active = 1
-				
 				
 					UNION ALL
 				
