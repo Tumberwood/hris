@@ -5,7 +5,7 @@
         die();
     }
 ?>
-<link href="<?=$us_url_root?>usersc/templates/<?=$settings->template?>/assets/css/plugins/pivottable/pivot.min.css" rel="stylesheet">
+<!-- <link href="<?=$us_url_root?>usersc/templates/<?=$settings->template?>/assets/css/plugins/pivottable/pivot.min.css" rel="stylesheet"> -->
 
 <?php
 	$nama_tabel    = 'htsprrd';
