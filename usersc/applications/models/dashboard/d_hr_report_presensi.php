@@ -341,7 +341,7 @@
 					*
 				FROM (
 					SELECT DISTINCT
-						a.id_hemxxmh,
+						e.id_hemxxmh,
 						tanggal_jam,
 						DATE_FORMAT(a.tanggal, "%d %b %Y") as tanggal,
 						a.jam,
@@ -367,7 +367,7 @@
 					UNION ALL
 				
 					SELECT DISTINCT
-						a.id_hemxxmh,
+						e.id_hemxxmh,
 						tanggal_jam,
 						DATE_FORMAT(a.tanggal, "%d %b %Y") as tanggal,
 						a.jam,
