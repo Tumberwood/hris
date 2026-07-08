@@ -919,7 +919,18 @@
                                     INNER JOIN hemjbmh jb on jb.id_hemxxmh = b.id
 
                                     LEFT JOIN htoxxrd d ON d.id_hemxxmh = jadwal.id_hemxxmh AND d.tanggal = jadwal.tanggal
-                                    LEFT JOIN htsprtd c ON c.kode = b.kode_finger
+                                    LEFT JOIN (
+                                        SELECT DISTINCT
+                                            id,
+                                            nama, 
+                                            tanggal,
+                                            jam,
+                                            kode, 
+                                            is_active, 
+                                            tanggal_jam
+                                        FROM htsprtd
+                                        WHERE is_active = 1 AND tanggal BETWEEN :start_date AND DATE_ADD(:start_date , INTERVAL 1 DAY)
+                                    ) c ON c.kode = b.kode_finger
                                     AND c.tanggal_jam >= IF(
                                         d.id_hemxxmh IS NOT NULL AND jadwal.id_htsxxmh = 1,
                                         CONCAT(d.tanggal, " ", d.jam_awal),
