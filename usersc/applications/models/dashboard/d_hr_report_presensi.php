@@ -353,6 +353,7 @@
 							id,
 							nama, 
 							tanggal,
+							jam,
 							kode, 
 							is_active, 
 							tanggal_jam
@@ -380,6 +381,7 @@
 							id,
 							nama, 
 							tanggal,
+							jam,
 							kode, 
 							is_active, 
 							tanggal_jam
