@@ -1580,7 +1580,7 @@
                                     ),
                                     0,
                                     IF(
-                                        tanggal_jam_izin_awal_mid < IF(
+                                        tanggal_jam_izin_awal_mid > IF(
                                             DAY(tanggaljam_akhir_istirahat) < DAY(tanggaljam_akhir),
                                             DATE_ADD(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),
                                             tanggaljam_akhir_istirahat
