@@ -1969,8 +1969,8 @@
 					url: "../../models/htpxxth_v2/htpxxth_v2.php",
 					type: 'POST',
 					data: function (d){
-						d.start_date = start_date;
-						d.end_date = start_date;
+						d.start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
+						d.end_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 						d.show_inactive_status_htpxxth = show_inactive_status_htpxxth;
 					}
 				},
@@ -2257,8 +2257,8 @@
 					url: "../../models/htpxxth_v2/htpxxth_v2.php",
 					type: 'POST',
 					data: function (d){
-						d.start_date = start_date;
-						d.end_date = start_date;
+						d.start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
+						d.end_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 						d.show_inactive_status_htpxxth = show_inactive_status_htpxxth;
 					}
 				},
