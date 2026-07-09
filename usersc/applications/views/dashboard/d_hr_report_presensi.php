@@ -1956,7 +1956,7 @@
 			});
 //////////// END OF CEKLOK /////////////
 			
-
+//////////// START OF IZIN /////////////
 			//start datatables editor
 			edthtpxxth = new $.fn.dataTable.Editor( {
 				formOptions: {
@@ -2031,7 +2031,6 @@
 								data: function (params) {
 									var query = {
 										id_hemxxmh_old: id_hemxxmh_old,
-										id_heyxxmh: id_heyxxmh,
 										search: params.term || '',
 										page: params.page || 1
 									}
@@ -2251,29 +2250,6 @@
 
 			//start datatables
 			tblhtpxxth = $('#tblhtpxxth').DataTable( {
-				searchPanes:{
-					layout: 'columns-4',
-				},
-				dom: 
-					"<P>"+
-					"<lf>"+
-					"<B>"+
-					"<rt>"+
-					"<'row'<'col-sm-4'i><'col-sm-8'p>>",
-				columnDefs:[
-					{
-						searchPanes:{
-							show: true,
-						},
-						targets: [2,3,4,5,6]
-					},
-					{
-						searchPanes:{
-							show: false,
-						},
-						targets: [0,1,7,8,9,10]
-					}
-				],
 				ajax: {
 					url: "../../models/htpxxth_v2/htpxxth_v2.php",
 					type: 'POST',
@@ -2332,14 +2308,9 @@
 					if ( data.htpxxth.is_active == 0 ) {
 						$('td', row).addClass('text-danger');
 					}
-				},
-				initComplete: function() {
-					this.api().searchPanes.rebuildPane();
 				}
 			} );
 			
-			tblhtpxxth.searchPanes.container().appendTo( '#searchPanes1' );
-
 			tblhtpxxth.on( 'init', function () {
 				// atur hak akses
 				CekInitHeaderH(tblhtpxxth);
@@ -2371,7 +2342,8 @@
 				// atur hak akses
 				CekDeselectHeaderH(tblhtpxxth);
 			} );
-			
+//////////// END OF IZIN /////////////
+
 		} );// end of document.ready
 	
 	</script>
