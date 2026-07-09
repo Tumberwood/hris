@@ -87,13 +87,54 @@
 					a.lembur4,
 					a.is_pot_upah,
 					a.is_pot_premi,
-					IF(if(a.st_jadwal = "OFF", 0,(IF(jumlah_grup = 4, TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)), TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)) - 1))) > 0,
-                        if(a.st_jadwal = "OFF", 0,(IF(jumlah_grup = 4, TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)), TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)) - 1))),
-                        if(a.st_jadwal = "OFF", 0,
-                            TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir) - 1
-                        )
-                    ) 
-                    AS jam_wajib,
+					-- IF(if(a.st_jadwal = "OFF", 0,(IF(jumlah_grup = 4, TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)), TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)) - 1))) > 0,
+                    --     if(a.st_jadwal = "OFF", 0,(IF(jumlah_grup = 4, TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)), TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)) - 1))),
+                    --     if(a.st_jadwal = "OFF", 0,
+                    --         TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir) - 1
+                    --     )
+                    -- ) 
+                    -- AS jam_wajib,
+					CASE
+						WHEN TIMESTAMPDIFF(
+							HOUR,
+							CONCAT(b.tanggal, " ", b.jam_awal),
+							CONCAT(
+								IF(
+									a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00",
+									DATE_ADD(b.tanggal, INTERVAL 1 DAY),
+									b.tanggal
+								),
+								" ",
+								b.jam_akhir
+							)
+						) = 5
+						THEN TIMESTAMPDIFF(
+							HOUR,
+							CONCAT(b.tanggal, " ", b.jam_awal),
+							CONCAT(
+								IF(
+									a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00",
+									DATE_ADD(b.tanggal, INTERVAL 1 DAY),
+									b.tanggal
+								),
+								" ",
+								b.jam_akhir
+							)
+						)
+						ELSE TIMESTAMPDIFF(
+							HOUR,
+							CONCAT(b.tanggal, " ", b.jam_awal),
+							CONCAT(
+								IF(
+									a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00",
+									DATE_ADD(b.tanggal, INTERVAL 1 DAY),
+									b.tanggal
+								),
+								" ",
+								b.jam_akhir
+							)
+						) - 1
+					END AS jam_wajib,
 
                     IF(if(a.st_jadwal = "OFF" OR a.status_presensi_in = "AL", 0,(IF(jumlah_grup = 4, TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)), TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)) - 1)) - a.pot_hk) > 0,
                         if(a.st_jadwal = "OFF" OR a.status_presensi_in = "AL", 0,(IF(jumlah_grup = 4, TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)), TIMESTAMPDIFF(HOUR, CONCAT(b.tanggal, " ", b.jam_awal), CONCAT(IF(a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00", DATE_ADD(b.tanggal, INTERVAL 1 DAY), b.tanggal), " ", b.jam_akhir)) - 1)) - a.pot_hk),
