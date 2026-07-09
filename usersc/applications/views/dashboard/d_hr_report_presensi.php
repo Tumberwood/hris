@@ -2010,7 +2010,7 @@
 						name: "htpxxth.tanggal",
 						type: "datetime",
 						def: function () { 
-							return moment($('#end_date').val()).format('DD MMM YYYY'); 
+							return moment($('#start_date').val()).format('DD MMM YYYY'); 
 						},
 						opts:{
 							minDate: new Date('1900-01-01'),
