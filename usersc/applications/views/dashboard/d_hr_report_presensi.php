@@ -23,6 +23,24 @@
 	}
 ?>
 
+<style>
+#section_ijin{
+    width:100%;
+    height:700px;
+    overflow:hidden;
+    position:relative;
+}
+
+#section_ijin iframe{
+    position:absolute;
+    top:-110px;          /* Geser ke atas untuk menyembunyikan header */
+    left:0;
+    width:100%;
+    height:1500px;       /* Perbesar agar bagian bawah tetap tampil */
+    border:0;
+}
+</style>
+
 <!-- begin content here -->
 
 <div class="row">
@@ -151,15 +169,11 @@
 				</div>
 				<div id="tabel_cek_finger"></div>
 				<div id="section_ijin">
-					<iframe
-						src="https://hrispmi3.solusioke.my.id/usersc/applications/views/hgtprth_v2/hgtprth_v2.php"
-						width="100%"
-						height="700"
-						frameborder="0"
-						style="border:0;"
-						loading="lazy">
-					</iframe>
-				</div>
+    <iframe
+        src="https://hrispmi3.solusioke.my.id/usersc/applications/views/hgtprth_v2/hgtprth_v2.php"
+        loading="lazy">
+    </iframe>
+</div>
 				<div class="row">
 					<div class="col-md-6">
 						<button id="prevButton" class="btn btn-primary">Previous</button>
