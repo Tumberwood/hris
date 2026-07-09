@@ -325,7 +325,7 @@ function notifyLoadingKucing() {
 
 			<div style="width:100%;display:flex;justify-content:center;align-items:center;overflow:hidden;">
 				<img
-					src="../../files/uploads/kucing kicau mania.gif"
+					src="../../../files/uploads/kucing kicau mania.gif"
 					alt="Running Sheep"
 					style="
 						width:100px;
