@@ -218,6 +218,21 @@
 		var id_htsxxmh_old = 0;
 		var id_hemxxmh_filter = 0, tanggal_old = '';
 		var id_htpxxmh_old = 0;
+
+		function get_htpxxmh (){
+			$.ajax( {
+				url: "../../models/htpxxth/htpxxth_fn_htpxxmh.php",
+				dataType: 'json',
+				type: 'POST',
+				async: false,
+				data: {
+					id_htpxxmh: id_htpxxmh
+				},
+				success: function ( json ) {
+					jenis_jam = json.data.rs_htpxxmh.jenis_jam;
+				}
+			} );
+		};
 		
 		// BEGIN datepicker init
 		$('#periode').datepicker({
