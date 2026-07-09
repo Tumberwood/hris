@@ -150,6 +150,7 @@
 					</div>
 				</div>
 				<div class="table-responsive">
+					<h3>Izin</h3>
                     <table id="tblhtpxxth" class="table table-striped table-bordered table-hover nowrap" width="100%">
                         <thead>
                             <tr>
