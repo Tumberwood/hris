@@ -1504,12 +1504,24 @@
                             )
                             AS pot_jam_early,
 
-                            IF(
-                                carbon_mid BETWEEN tanggaljam_awal_istirahat
-                                AND IF(
-                                    DAY(tanggaljam_akhir_istirahat) < DAY(tanggaljam_akhir),
-                                    DATE_ADD(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),
-                                    tanggaljam_akhir_istirahat
+                            IF( 
+                                -- Cek kalau izin nya dalam range istirahat, maka tidak dipotong
+                                (
+                                    carbon_mid BETWEEN tanggaljam_awal_istirahat
+                                    AND IF(
+                                        DAY(tanggaljam_akhir_istirahat) < DAY(tanggaljam_akhir),
+                                        DATE_ADD(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),
+                                        tanggaljam_akhir_istirahat
+                                    )
+                                )
+                                AND
+                                (
+                                    tanggal_jam_izin_awal_mid BETWEEN tanggaljam_awal_istirahat
+                                    AND IF(
+                                        DAY(tanggaljam_akhir_istirahat) < DAY(tanggaljam_akhir),
+                                        DATE_ADD(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),
+                                        tanggaljam_akhir_istirahat
+                                    )
                                 ),
                                 0,
                                 IF(
