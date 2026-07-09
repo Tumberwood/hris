@@ -263,7 +263,8 @@
 
 		function generateTable(counter) {
 			
-			notifyLoadingJerapah();
+			// notifyLoadingJerapah();
+			notifyLoadingKucing();
 			
 			if ($('#select_hemxxmh').val() > 0) {
 				id_hemxxmh = $('#select_hemxxmh').val();
