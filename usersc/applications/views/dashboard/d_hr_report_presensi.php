@@ -963,7 +963,6 @@
 			});
 			
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
-			end_date   = moment($('#start_date').val()).format('YYYY-MM-DD');
 
 			$("#frmhtsprrd").submit(function(e) {
 				e.preventDefault();
@@ -1970,7 +1969,7 @@
 					type: 'POST',
 					data: function (d){
 						d.start_date = start_date;
-						d.end_date = end_date;
+						d.end_date = start_date;
 						d.show_inactive_status_htpxxth = show_inactive_status_htpxxth;
 					}
 				},
@@ -2258,7 +2257,7 @@
 					type: 'POST',
 					data: function (d){
 						d.start_date = start_date;
-						d.end_date = end_date;
+						d.end_date = start_date;
 						d.show_inactive_status_htpxxth = show_inactive_status_htpxxth;
 					}
 				},
