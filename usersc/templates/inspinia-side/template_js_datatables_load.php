@@ -325,7 +325,7 @@ function notifyLoadingKucing() {
 
 			<div style="width:100%;display:flex;justify-content:center;align-items:center;overflow:hidden;">
 				<img
-					src="../../files/uploads/Data Lembur & Makan Periode 18 12 2024 - 20 01 2025.xls'"
+					src="../../files/uploads/kucing kicau mania.gif"
 					alt="Running Sheep"
 					style="
 						width:100px;
