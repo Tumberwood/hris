@@ -216,6 +216,7 @@
 		var tanggal_get = "<?php echo $awal ?>";
 		var id_htsxxmh_old = 0;
 		var id_hemxxmh_filter = 0, tanggal_old = '';
+		var id_htpxxmh_old = 0;
 		
 		// BEGIN datepicker init
 		$('#periode').datepicker({
