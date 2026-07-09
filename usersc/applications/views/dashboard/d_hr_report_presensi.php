@@ -149,7 +149,6 @@
 						<div id="tabel_makan"></div>
 					</div>
 				</div>
-				<div id="tabel_cek_finger"></div>
 				<div class="table-responsive">
                     <table id="tblhtpxxth" class="table table-striped table-bordered table-hover nowrap" width="100%">
                         <thead>
@@ -169,6 +168,7 @@
                         </thead>
                     </table>
 				</div>
+				<div id="tabel_cek_finger"></div>
 				<div class="row">
 					<div class="col-md-6">
 						<button id="prevButton" class="btn btn-primary">Previous</button>
