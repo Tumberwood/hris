@@ -111,6 +111,11 @@
 		$editor
 			->where( 'htpxxth.is_active', 1);
 	}
+
+	if (isset($_POST['id_hemxxmh']) && $_POST['id_hemxxmh'] > 0){
+		$editor
+			->where( 'htpxxth.id_hemxxmh', $_POST['id_hemxxmh']);
+	}
 	
 	if ($_SESSION['user'] > 100){
 		$editor

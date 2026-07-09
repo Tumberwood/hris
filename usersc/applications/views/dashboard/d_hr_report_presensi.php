@@ -1987,6 +1987,7 @@
 						d.start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 						d.end_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 						d.show_inactive_status_htpxxth = show_inactive_status_htpxxth;
+						d.id_hemxxmh = id_hemxxmh_old;
 					}
 				},
 				table: "#tblhtpxxth",
@@ -2275,6 +2276,7 @@
 						d.start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 						d.end_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 						d.show_inactive_status_htpxxth = show_inactive_status_htpxxth;
+						d.id_hemxxmh = id_hemxxmh_old;
 					}
 				},
 				scrollX: true,
