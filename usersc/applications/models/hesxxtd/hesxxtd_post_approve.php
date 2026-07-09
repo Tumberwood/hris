@@ -283,6 +283,9 @@
 						ktp_no,
 						no_bpjs_tk,
 						ktp_alamat,
+						is_npwp,
+						npwp_alamat,
+						npwp_no,
 						alamat,
 
 						id_gctxxmh_ktp,
@@ -300,6 +303,9 @@
 						a.ktp_no,
 						a.no_bpjs_tk,
 						a.ktp_alamat,
+						a.is_npwp,
+						a.npwp_alamat,
+						a.npwp_no,
 						a.alamat,
 						
 						id_gctxxmh_ktp,
