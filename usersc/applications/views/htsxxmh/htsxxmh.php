@@ -96,10 +96,8 @@
 					},	{
 						label: "Kode <sup class='text-danger'>*<sup>",
 						name: "htsxxmh.kode"
-					}, 	{
-						label: "Nama <sup class='text-danger'>*<sup>",
-						name: "htsxxmh.nama"
-					}, 	{
+					}, 	
+					{
 						label: "Jam Awal <sup class='text-danger'>*<sup>",
 						name: "htsxxmh.jam_awal",
 						type: "datetime",
@@ -211,39 +209,6 @@
 					}
 					// END of validasi htsxxmh.kode
 					
-					// BEGIN of validasi htsxxmh.nama
-					if ( ! edthtsxxmh.field('htsxxmh.nama').isMultiValue() ) {
-						nama = edthtsxxmh.field('htsxxmh.nama').val();
-						if(!nama || nama == ''){
-							edthtsxxmh.field('htsxxmh.nama').error( 'Wajib diisi!' );
-						}
-
-						// BEGIN of cek unik htsxxmh.nama
-						if(action == 'create'){
-							id_htsxxmh = 0;
-						}
-						
-						
-						$.ajax( {
-							url: '../../../helpers/validate_fn_unique.php',
-							dataType: 'json',
-							type: 'POST',
-							async: false,
-							data: {
-								table_name       : 'htsxxmh',
-								nama_field       : 'nama',
-								nama_field_value : '"' + nama + '"',
-								id_transaksi     : id_htsxxmh
-							},
-							success: function ( json ) {
-								if(json.data.count == 1){
-									edthtsxxmh.field('htsxxmh.nama').error( 'Data tidak boleh kembar!' );
-								}
-							}
-						} );
-						// END of cek unik htsxxmh.nama
-					}
-					// END of validasi htsxxmh.nama
 
 					// BEGIN of validasi htsxxmh.jam_awal
 					if ( ! edthtsxxmh.field('htsxxmh.jam_awal').isMultiValue() ) {
