@@ -1000,7 +1000,7 @@
 					start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 
 					generateTable(counter);
-					// tblhtpxxth.ajax.reload(null, false);
+					tblhtpxxth.ajax.reload(null, false);
 					// addCeklok();
 					return false;
 				}
