@@ -219,7 +219,7 @@
 		var id_hemxxmh_filter = 0, tanggal_old = '';
 		var id_htpxxmh_old = 0;
 
-		function get_htpxxmh (){
+		function get_htpxxmh(){
 			$.ajax( {
 				url: "../../models/htpxxth/htpxxth_fn_htpxxmh.php",
 				dataType: 'json',
