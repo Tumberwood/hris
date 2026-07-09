@@ -1478,7 +1478,8 @@
                             AS pot_jam_late,
 
                             -- kalau ada lembur, maka cek late lembur, pastikan bukan long shift lembur
-                            IF(IFNULL(tanggaljam_awal_toleransi_lembur, "") != "" AND jam_awal_lembur != jam_akhir_schedule,
+                            -- 9 JUL 26, FIX BUG LEMBUR AWAL
+                            IF(durasi_lembur_awal_jam = 0 AND IFNULL(tanggaljam_awal_toleransi_lembur, "") != "" AND jam_awal_lembur != jam_akhir_schedule,
                                 IF(CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60) > 7,
                                     0,
                                     IF(CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60) < 1,
