@@ -213,7 +213,7 @@
 						</tfoot>
 					</table>
 				</div>
-				<div class="col-12 col-lg-6 col-md-6 col-sm-12">
+				<!-- <div class="col-12 col-lg-6 col-md-6 col-sm-12">
 					<table id="lembur_excel" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
 							<tr>
@@ -240,7 +240,7 @@
 							</tr>
 						</tfoot>
 					</table>
-				</div>
+				</div> -->
 			</div>
 		</div>
       </div>
