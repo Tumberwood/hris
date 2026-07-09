@@ -108,19 +108,7 @@
 								b.jam_akhir
 							)
 						) = 5
-						THEN TIMESTAMPDIFF(
-							HOUR,
-							CONCAT(b.tanggal, " ", b.jam_awal),
-							CONCAT(
-								IF(
-									a.st_jadwal LIKE "%malam%" AND b.jam_akhir < "12:00",
-									DATE_ADD(b.tanggal, INTERVAL 1 DAY),
-									b.tanggal
-								),
-								" ",
-								b.jam_akhir
-							)
-						)
+						THEN 5
 						ELSE TIMESTAMPDIFF(
 							HOUR,
 							CONCAT(b.tanggal, " ", b.jam_awal),
