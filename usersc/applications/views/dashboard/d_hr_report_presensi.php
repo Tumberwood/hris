@@ -2116,6 +2116,8 @@
 			edthtpxxth.on( 'preOpen', function( e, mode, action ) {
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthtpxxth.field('start_on').val(start_on);
+				edthtpxxth.field('htpxxth.id_hemxxmh').val(id_hemxxmh_old);
+				edthtpxxth.field('htpxxth.id_hemxxmh').disable();
 				
 				if(action == 'create'){
 					tblhtpxxth.rows().deselect();
