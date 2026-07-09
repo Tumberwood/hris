@@ -247,4 +247,62 @@ function notifyLoadingJerapah() {
 		}
 	};
 }
+
+function notifyLoadingJerapah_v2() {
+	let startTime = Date.now();
+	let timerInterval;
+
+	Swal.fire({
+		title: 'Processing...',
+		html: `
+		<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%;">
+
+			<div style="font-size:15px;">
+				Jangan tutup halaman sampai proses selesai
+			</div>
+
+			<div style="font-size:18px;font-weight:bold;margin:10px 0 15px;">
+				⏱️ Waktu: <span id="elapsed">0</span> detik
+			</div>
+
+			<div style="width:100%;display:flex;justify-content:center;align-items:center;overflow:hidden;">
+				<img
+					src="https://solusiprogram.top/file_gif/jerapah_anim.gif"
+					alt="Running Sheep"
+					style="
+						width:100px;
+						height:auto;
+						display:block;
+						transform:translate(-20px, 0px);
+					"
+				/>
+			</div>
+
+		</div>
+		`,
+		allowOutsideClick: false,
+		allowEscapeKey: false,
+		showConfirmButton: false,
+		didOpen: () => {
+
+			timerInterval = setInterval(() => {
+				const seconds = Math.floor((Date.now() - startTime) / 1000);
+				const el = Swal.getHtmlContainer().querySelector('#elapsed');
+				if (el) {
+					el.textContent = seconds;
+				}
+			}, 1000);
+
+		},
+		willClose: () => {
+			clearInterval(timerInterval);
+		}
+	});
+
+	notifyprogress = {
+		close: function () {
+			Swal.close();
+		}
+	};
+}
 </script>
