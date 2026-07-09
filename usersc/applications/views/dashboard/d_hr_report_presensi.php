@@ -963,7 +963,7 @@
 			});
 			
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
-			start_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
+			end_date   = moment($('#start_date').val()).format('YYYY-MM-DD');
 
 			$("#frmhtsprrd").submit(function(e) {
 				e.preventDefault();
