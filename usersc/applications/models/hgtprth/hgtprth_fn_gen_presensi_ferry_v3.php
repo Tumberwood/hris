@@ -1367,7 +1367,7 @@
                                     
                                     -- 🔥 break harus di range 11:30 - 13:00
                                     AND break_in >= CONCAT(tanggal, " 11:30:00")
-                                    AND break_out <= CONCAT(tanggal, " 13:00:00")
+                                    AND break_out <= CONCAT(tanggal, " 13:05:00")
                                 THEN 0
 
                                 -- -> Hari Jumat -> Laki2 -> Shift Pagi
@@ -1378,7 +1378,7 @@
                                     
                                     -- 🔥 break harus di range 11:30 - 13:00
                                     AND break_in >= CONCAT(tanggal, " 11:30:00")
-                                    AND break_out <= CONCAT(tanggal, " 13:00:00")
+                                    AND break_out <= CONCAT(tanggal, " 13:05:00")
                                 THEN 0
                                 
                                 -- [16.06, 12/6/2025] +62 895-6326-78236: Iya pak. Karena jam istirahat normal kan 1 jam. Otomatis jika>1 jam, meskipun tdk ada lembur juga tetap dipotong 1jam.
@@ -1410,7 +1410,7 @@
                                     
                                     -- 🔥 break harus di range 11:30 - 13:00
                                     AND break_in >= CONCAT(tanggal, " 11:30:00")
-                                    AND break_out <= CONCAT(tanggal, " 13:00:00")
+                                    AND break_out <= CONCAT(tanggal, " 13:05:00")
                                 THEN 0
                                 
                                 -- -> Hari Jumat -> Laki2 -> Shift Pagi
@@ -1421,7 +1421,7 @@
                                     
                                     -- 🔥 break harus di range 11:30 - 13:00
                                     AND break_in >= CONCAT(tanggal, " 11:30:00")
-                                    AND break_out <= CONCAT(tanggal, " 13:00:00")
+                                    AND break_out <= CONCAT(tanggal, " 13:05:00")
                                 THEN 0
 
                                 -- 4 Grup -> Dept Maintenance -> lembur hari libur -> istirahat max 1 jam termasuk ada makan
