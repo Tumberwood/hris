@@ -23,24 +23,6 @@
 	}
 ?>
 
-<style>
-#section_ijin{
-    width:100%;
-    height:700px;
-    overflow:hidden;
-    position:relative;
-}
-
-#section_ijin iframe{
-    position:absolute;
-    top:-110px;          /* Geser ke atas untuk menyembunyikan header */
-    left:0;
-    width:100%;
-    height:1500px;       /* Perbesar agar bagian bawah tetap tampil */
-    border:0;
-}
-</style>
-
 <!-- begin content here -->
 
 <div class="row">
@@ -168,12 +150,25 @@
 					</div>
 				</div>
 				<div id="tabel_cek_finger"></div>
-				<div id="section_ijin">
-    <iframe
-        src="https://hrispmi3.solusioke.my.id/usersc/applications/views/hgtprth_v2/hgtprth_v2.php"
-        loading="lazy">
-    </iframe>
-</div>
+				<div class="table-responsive">
+                    <table id="tblhtpxxth" class="table table-striped table-bordered table-hover nowrap" width="100%">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+								<th>Nomor</th>
+								<th>Tanggal </th>
+								<th>Employee</th>
+								<th>Jenis</th>
+								<th>Jabatan</th>
+								<th>Department</th>
+								<th>Keterangan </th>
+								<th>Jam Awal</th>
+								<th>Jam Akhir</th>
+								<th>Approve</th>
+                            </tr>
+                        </thead>
+                    </table>
+				</div>
 				<div class="row">
 					<div class="col-md-6">
 						<button id="prevButton" class="btn btn-primary">Previous</button>
@@ -212,6 +207,7 @@
 		var tblhtsprrd, show_inactive_status_htsprrd = 0;
 		var edthtssctd, tblhtssctd, show_inactive_status_htssctd = 0, id_htssctd;
 		var edthtsprtd, tblhtsprtd, show_inactive_status_htsprtd = 0, id_htsprtd;
+		var edthtpxxth, tblhtpxxth, show_inactive_status_htpxxth = 0, id_htpxxth;
 		// ------------- end of default variable
 		var notifyprogress = '';
 		var id_hemxxmh_old = 0;
