@@ -95,7 +95,8 @@
 			Field::inst( 'htsxxmh.menit_toleransi_awal_in' ),
 			Field::inst( 'htsxxmh.menit_toleransi_akhir_in' ),
 			Field::inst( 'htsxxmh.menit_toleransi_awal_out' ),
-			Field::inst( 'htsxxmh.menit_toleransi_akhir_out' )
+			Field::inst( 'htsxxmh.menit_toleransi_akhir_out' ),
+			Field::inst( 'htsxxmh.menit_toleransi_istirahat_out' ),
 		);
 	
 	// do not erase

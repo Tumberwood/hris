@@ -27,6 +27,7 @@
                                 <th colspan="2">Istirahat</th>
                                 <th colspan="2">Durasi Toleransi Masuk</th>
                                 <th colspan="2">Durasi Toleransi Pulang</th>
+                                <th rowspan="2">Toleransi Isirahat</th>
                                 <th rowspan="2">Keterangan</th>
                                 <th rowspan="2">Non Shift</th>
                                 <th rowspan="2">Pengecualian Late</th>
@@ -126,9 +127,14 @@
 					},	{
 						label: "Toleransi Awal Pulang (menit) <sup class='text-danger'>*<sup>",
 						name: "htsxxmh.menit_toleransi_awal_out"
-					},	{
+					},	
+					{
 						label: "Toleransi Akhir Pulang (menit) <sup class='text-danger'>*<sup>",
 						name: "htsxxmh.menit_toleransi_akhir_out"
+					},
+					{
+						label: "Toleransi Istirahat (menit) <sup class='text-danger'>*<sup>",
+						name: "htsxxmh.menit_toleransi_istirahat_out"
 					},
 					{
 						label: "Non Shift",
@@ -292,6 +298,22 @@
 					}
 					// END of validasi htsxxmh.menit_toleransi_akhir_out
 
+					// BEGIN of validasi htsxxmh.menit_toleransi_istirahat_out
+					if ( ! edthtsxxmh.field('htsxxmh.menit_toleransi_istirahat_out').isMultiValue() ) {
+						menit_toleransi_istirahat_out = edthtsxxmh.field('htsxxmh.menit_toleransi_istirahat_out').val();
+						if(!menit_toleransi_istirahat_out || menit_toleransi_istirahat_out == ''){
+							edthtsxxmh.field('htsxxmh.menit_toleransi_istirahat_out').error( 'Wajib diisi!' );
+						}
+
+						if(menit_toleransi_istirahat_out < 0 ){
+							edthtsxxmh.field('htsxxmh.menit_toleransi_istirahat_out').error( 'Inputan minimal 0' );
+						}
+						if(isNaN(menit_toleransi_istirahat_out) ){
+							edthtsxxmh.field('htsxxmh.menit_toleransi_istirahat_out').error( 'Inputan harus berupa Angka!' );
+						}
+					}
+					// END of validasi htsxxmh.menit_toleransi_istirahat_out
+
 				}
 				
 				if ( edthtsxxmh.inError() ) {
@@ -325,6 +347,7 @@
 					{ data: "htsxxmh.menit_toleransi_akhir_in" },
 					{ data: "htsxxmh.menit_toleransi_awal_out" },
 					{ data: "htsxxmh.menit_toleransi_akhir_out" },
+					{ data: "htsxxmh.menit_toleransi_istirahat_out" },
 					{ data: "htsxxmh.keterangan" },
 					{
 						data: "htsxxmh.is_non_shift",
