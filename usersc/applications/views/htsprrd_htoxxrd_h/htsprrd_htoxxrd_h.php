@@ -304,7 +304,7 @@
 								<th class="text-center" colspan="5">HRIS</th>
 								<th class="text-center" colspan="5">Excel</th>
 								<th rowspan="2">Sesuai</th>
-								<!-- <th rowspan="2">Penyesuaian</th> -->
+								<th rowspan="2">Penyesuaian</th>
 							</tr>
 							<tr>
 								<th>Lembur 1.5</th>
@@ -668,6 +668,16 @@
 						data: "is_tidak_sesuai",
 						render: function (data, type, row) {
 							if (data == 0	) {
+								return `<span class="badge bg-primary">Ya</span>`;
+							} else {
+								return `<span class="badge bg-danger">Tidak</span>`;
+							}
+						}
+					},
+					{
+						data: "is_sesuai",
+						render: function (data, type, row) {
+							if (data == 1) {
 								return `<span class="badge bg-primary">Ya</span>`;
 							} else {
 								return `<span class="badge bg-danger">Tidak</span>`;

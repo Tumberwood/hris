@@ -968,14 +968,7 @@
 						$('#dayname').hide();
 					}
 					
-					notifyprogress = $.notify({
-						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
-					},{
-						z_index: 9999,
-						allow_dismiss: false,
-						type: 'info',
-						delay: 0
-					});
+					notifyLoadingKucing();
 
 					tblhtsprrd.ajax.reload(function ( json ) {
 						notifyprogress.close();
