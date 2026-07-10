@@ -83,6 +83,7 @@
 								<th>Tanggal</th>
 								<th>Jadwal</th>
 								<th>Potongan Upah</th>
+								<th>Kondite</th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -91,6 +92,7 @@
 								<th class="text-right bg-primary" id="c_orang">Jumlah Orang</th>
 								<th colspan="7" class="text-right">Grand Total</th>
 								<th class="text-right bg-primary" id="grand_total_ip"></th>
+								<th></th>
 							</tr>
 						</tfoot>
                     </table>
@@ -283,6 +285,7 @@
 					{ data: "tanggal" },
 					{ data: "st_jadwal" },
 					{ data: "is_pot_upah", class: "text-right" },
+					{ data: "status_presensi_in" },
 				],
 				rowGroup: {
 					dataSrc: function (row) {

@@ -38,6 +38,7 @@
 					sub.nama AS sub_tipe,
 					st.nama AS status_peg,
 					a.st_jadwal,
+					a.status_presensi_in,
 					a.is_pot_upah
 				FROM htsprrd a
 				JOIN hemxxmh hem ON hem.id = a.id_hemxxmh
