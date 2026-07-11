@@ -378,7 +378,7 @@
 						tanggal_jam,
 						DATE_FORMAT(c.tanggal, "%d %b %Y") as tanggal,
 						c.jam,
-						a.nama as mesin
+						c.nama as mesin
 					FROM htssctd AS a
 					INNER JOIN hemxxmh AS b ON b.id = a.id_hemxxmh
 					LEFT JOIN (
