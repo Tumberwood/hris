@@ -685,7 +685,7 @@
                                                                 d.tanggal
                                                             ),
                                                             " ",
-                                                            d.jam_akhir
+                                                            DATE_SUB(d.jam_akhir, INTERVAL 1 HOUR)
                                                         )
                                                     AND (
                                                         -- 🔹 Istirahat Gedung 3
