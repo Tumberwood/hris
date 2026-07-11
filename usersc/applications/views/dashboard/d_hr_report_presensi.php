@@ -2335,6 +2335,7 @@
 			tblhtpxxth.on( 'init', function () {
 				// atur hak akses
 				CekInitHeaderH(tblhtpxxth);
+				tblhtpxxth.button('btnCreate:name').enable();
 			} );
 			
 			tblhtpxxth.on( 'select', function( e, dt, type, indexes ) {
@@ -2362,6 +2363,7 @@
 
 				// atur hak akses
 				CekDeselectHeaderH(tblhtpxxth);
+				tblhtpxxth.button('btnEdit:name').disable();
 			} );
 //////////// END OF IZIN /////////////
 
