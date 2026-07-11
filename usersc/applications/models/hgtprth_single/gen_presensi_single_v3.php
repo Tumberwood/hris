@@ -821,7 +821,8 @@
                                                 AND (
                                                     -- 🔹 Istirahat Gedung 3
                                                     (
-                                                        id_holxxmd_2 = 1 
+                                                        -- id_holxxmd_2 = 1
+                                                        1 
                                                         AND (
                                                             -- Filter jika gedung 3 dan 4 Grup
                                                             (
@@ -857,7 +858,8 @@
                                                 AND (
                                                     -- 🔹 Istirahat Gedung 3
                                                     (
-                                                        id_holxxmd_2 = 1 
+                                                        -- id_holxxmd_2 = 1 
+                                                        1
                                                         AND (
                                                             -- Filter jika gedung 3 dan 4 Grup
                                                             (
