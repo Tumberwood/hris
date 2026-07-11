@@ -649,7 +649,7 @@
                                                             d.tanggal
                                                         ),
                                                         " ",
-                                                        DATE_SUB(d.jam_akhir, INTERVAL 1 HOUR)
+                                                        d.jam_akhir
                                                     )
                                                 AND (
                                                     -- 🔹 Istirahat Gedung 3
@@ -663,7 +663,11 @@
                                                                 jumlah_grup = 2 
                                                                 AND c.nama NOT IN ("Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
                                                             )
-                                                            OR jumlah_grup <> 2
+                                                            -- OR jumlah_grup <> 2
+                                                            OR (
+                                                                jumlah_grup = 1
+                                                                AND c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                            )
                                                         )
 
                                                         AND (
