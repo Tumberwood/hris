@@ -51,8 +51,9 @@
 						SUM(IFNULL(a.is_makan,0)) AS sum_makan
 					FROM htsprrd a
 					LEFT JOIN hemxxmh b ON b.id = a.id_hemxxmh
-					WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND a.is_active = 1
-					GROUP BY a.id_hemxxmh
+					WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir 
+					AND a.is_active = 1
+					AND a.id_hemxxmh = :id_hemxxmh
 				) pr ON pr.id_hemxxmh = d.id_hemxxmh
 				SET
 					d.sesuai_on = now(),
