@@ -733,14 +733,7 @@
 
 								var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
 
-								notifyprogress = $.notify({
-									message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
-								},{
-									z_index: 9999,
-									allow_dismiss: false,
-									type: 'info',
-									delay: 0
-								});
+								notifyLoadingKucing();
 
 								fn_sesuai(
 									id_htsprrd_htoxxrd_h,
