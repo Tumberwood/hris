@@ -110,6 +110,29 @@
 			
 			//start datatables
 			tblhgtprth = $('#tblhgtprth').DataTable( {
+				searchPanes:{
+					layout: 'columns-2',
+				},
+				dom: 
+					"<P>"+
+					"<lf>"+
+					"<B>"+
+					"<rt>"+
+					"<'row'<'col-sm-4'i><'col-sm-8'p>>",
+				columnDefs:[
+					{
+						searchPanes:{
+							show: true,
+						},
+						targets: [2,3]
+					},
+					{
+						searchPanes:{
+							show: false,
+						},
+						targets: '_all'
+					}
+				],
 				ajax: {
 					url: "../../models/jadwal_dan_ceklok/jadwal_dan_ceklok.php",
 					type: 'POST',
@@ -195,8 +218,13 @@
 					?>
 				],
 				rowCallback: function( row, data, index ) {
-				}
+				},
+				initComplete: function() {
+					this.api().searchPanes.rebuildPane();
+				},
 			} );
+			
+			tblhgtprth.searchPanes.container().appendTo( '#searchPanes1' );
 			
 			$("#frmhgtprth").submit(function(e) {
 				e.preventDefault();
