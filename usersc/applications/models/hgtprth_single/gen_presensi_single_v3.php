@@ -213,6 +213,9 @@
                             menit_toleransi_keluar_istirahat,
                             
                             b.id_heyxxmd,
+                            
+                            b.jumlah_grup AS jumlah_grup_asli,
+
                             CASE 
                                 WHEN b.jumlah_grup = 1 THEN 3
                                 WHEN b.jumlah_grup = 2 THEN 4
