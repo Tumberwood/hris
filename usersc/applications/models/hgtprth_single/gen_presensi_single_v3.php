@@ -1818,7 +1818,9 @@
                         
                         break_in,
                         break_out,
-                        jam_makan
+                        jam_makan,
+                        jumlah_grup_render,
+                        jumlah_grup_asli
                     
                     FROM hitung_lembur_final
 
