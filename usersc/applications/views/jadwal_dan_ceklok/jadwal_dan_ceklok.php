@@ -55,7 +55,6 @@
                     <table id="tblhgtprth" class="table table-striped table-bordered table-hover nowrap" width="100%">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>NIK</th>
                                 <th>Nama</th>
                                 <th>Tanggal</th>
@@ -119,7 +118,9 @@
   					dataSrc: 'data.result'
 				},
 				order: [[ 1, "asc" ]],
+				responsive: false,
 				columns: [
+
 					{
 						data: "nik"
 					},
