@@ -1403,9 +1403,9 @@
                                 WHEN is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_ti, 0) THEN 0.5
 
                                 -- BARU: Jika pegawai Gedung 3 ada TI dan ceklok istirahatnya tidak dalam Gedung-3 maka dipotong 0.5
-                                -- WHEN is_istirahat = 2 AND id_holxxmd_2 = 1 AND durasi_break_menit > 0 AND mesin NOT LIKE "%Gedung-3%" 
-                                -- AND id_hetxxmh <> 55
-                                -- THEN 0.5
+                                WHEN is_istirahat = 2 AND id_holxxmd_2 = 1 AND durasi_break_menit > 0 AND mesin NOT LIKE "%Gedung-3%" 
+                                AND id_hetxxmh <> 55
+                                THEN 0.5
 
                                 ELSE 0
                             END AS potongan_ti_jam,
