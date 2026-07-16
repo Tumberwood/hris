@@ -21,8 +21,8 @@
 
     $qs_hemxxmh = $db
     ->raw()
-    ->bind(':start_date', $start_date)
-    // ->bind(':end_date', $end_date)
+    // ->bind(':start_date', $start_date)
+    ->bind(':end_date', $end_date)
     ->exec(' SELECT
                 cek.*,
                 CASE
