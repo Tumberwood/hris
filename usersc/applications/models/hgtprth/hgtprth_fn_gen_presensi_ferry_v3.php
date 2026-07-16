@@ -249,7 +249,11 @@
                                 menit_toleransi_keluar_istirahat,
                                 
                                 b.id_heyxxmd,
-                                IF(b.jumlah_grup = 1, 3, 4) AS jumlah_grup,
+                                CASE 
+                                    WHEN b.jumlah_grup = 1 THEN 3
+                                    WHEN b.jumlah_grup = 2 THEN 4
+                                    ELSE b.jumlah_grup -- atau berikan nilai default lain seperti 0 / 1
+                                END AS jumlah_grup,
                                 b.id_hesxxmh,
                                 COALESCE(kode_shift, "NJ") AS kode_shift,
                                 jadwal.tanggal AS tanggal,
