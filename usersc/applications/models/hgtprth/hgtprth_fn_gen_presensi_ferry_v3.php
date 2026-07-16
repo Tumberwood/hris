@@ -535,14 +535,15 @@
                                         
                                         -- Ceklok In: min tanggal_jam sesuai range shift
                                         MIN(CASE 
-                                            WHEN c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "pocan")
+                                            WHEN c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "pocan", "istirahat")
+                                            -- kecuali peg gedung 3 maka tidak boleh ada ceklok in out di mesin istirahat
                                             AND c.tanggal_jam BETWEEN jadwal.tanggaljam_awal_t1 AND jadwal.tanggaljam_awal_t2
                                             THEN c.tanggal_jam
                                         END) AS ceklok_in,
                                         
                                         -- Ceklok Out: max tanggal_jam sesuai range shift
                                         MAX(CASE 
-                                            WHEN c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "pocan")
+                                            WHEN c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "pocan", "istirahat")
                                             AND c.tanggal_jam BETWEEN jadwal.tanggaljam_akhir_t1 AND jadwal.tanggaljam_akhir_t2
                                             THEN c.tanggal_jam
                                         END) AS ceklok_out,
