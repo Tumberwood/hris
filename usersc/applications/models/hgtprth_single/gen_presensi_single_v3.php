@@ -1519,6 +1519,24 @@
                             )
                             AS pot_jam_early,
 
+                            -- 16 JUL 26, Lembur tapi Pulang akhir
+                            IF(
+                                durasi_lembur_akhir_jam > 0
+                                AND ceklok_out < CONCAT(DATE(ceklok_out), " ", jam_akhir_lembur_akhir),
+                                IF(
+                                    is_istirahat = 2,
+                                    0.5,
+                                    CEIL(
+                                        TIMESTAMPDIFF(
+                                            MINUTE,
+                                            ceklok_out,
+                                            CONCAT(DATE(ceklok_out), " ", jam_akhir_lembur_akhir)
+                                        ) / 60
+                                    )
+                                ),
+                                0
+                            ) AS pot_jam_early_lembur,
+
                             IF( 
                                 -- Cek kalau izin nya dalam range istirahat, maka tidak dipotong
                                 (
@@ -1574,6 +1592,7 @@
                                 IFNULL(pot_jam_late, 0) + 
                                 IFNULL(pot_jam_late_lembur, 0) + 
                                 IFNULL(pot_jam_early, 0) + 
+                                IFNULL(pot_jam_early_lembur, 0) + 
                                 IFNULL(pot_jam_izin,0) + 
                                 IF(potongan_ti_jam > 0 AND IFNULL(pot_jam_late_lembur, 0) = 0, 
                                     potongan_ti_jam,
@@ -1803,6 +1822,7 @@
                         id_holxxmd_2,
 
                         IFNULL(pot_jam_late, 0) + IFNULL(pot_jam_late_lembur, 0) AS pot_jam_late,
+                        IFNULL(pot_jam_early, 0) + IFNULL(pot_jam_early_lembur, 0) AS pot_jam_early,
                         IFNULL(pot_jam_early, 0) AS pot_jam_early,
                         IFNULL(pot_jam_izin, 0) AS pot_jam_izin,
                         IFNULL(pot_abnormal_istirahat, 0) AS pot_abnormal_istirahat,
