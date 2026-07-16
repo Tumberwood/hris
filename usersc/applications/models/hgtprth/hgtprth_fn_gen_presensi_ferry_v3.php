@@ -1473,6 +1473,7 @@
                                     WHEN kode_absen IS NOT NULL AND keterangan <> "" AND id_htsxxmh <> 1 THEN kode_kondite
                                     WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND ceklok_luar IS NOT NULL AND durasi_lembur_libur_jam = 0 THEN "Jadwal Salah"
                                     WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND id_htsxxmh <> 1 AND ceklok_luar IS NULL THEN "AL"
+                                    WHEN id_htsxxmh = 1 AND kode_kondite = "CK" THEN kode_kondite
                                     WHEN st_clock_in = "NO CI" AND st_clock_out = "NO CO" AND id_htsxxmh = 1 THEN "OFF"
                                     WHEN st_clock_in = "OK" AND st_clock_out = "OK" THEN "HK"
                                     WHEN kode_izin_in IS NOT NULL AND keterangan <> "" AND id_htsxxmh <> 1 THEN kode_kondite
@@ -1488,6 +1489,7 @@
                                     WHEN kode_absen IS NOT NULL AND keterangan <> "" AND id_htsxxmh <> 1 THEN kode_kondite
                                     WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND ceklok_luar IS NOT NULL AND durasi_lembur_libur_jam = 0 THEN "Jadwal Salah"
                                     WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" AND keterangan = "" AND id_htsxxmh <> 1 AND ceklok_luar IS NULL THEN "AL"
+                                    WHEN id_htsxxmh = 1 AND kode_kondite = "CK" THEN kode_kondite
                                     WHEN st_clock_in = "NO CI" AND st_clock_out = "NO CO" AND id_htsxxmh = 1 THEN "OFF"
                                     WHEN st_clock_in = "OK" AND st_clock_out = "OK" THEN "HK"
                                     WHEN kode_izin_out IS NOT NULL AND keterangan <> "" AND id_htsxxmh <> 1 THEN kode_kondite
