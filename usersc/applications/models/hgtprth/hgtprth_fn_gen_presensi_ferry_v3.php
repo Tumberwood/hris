@@ -446,18 +446,19 @@
                                     IFNULL(history.grup_hk, j.grup_hk) grup_hk
                                 FROM hemjbmh j
                                 LEFT JOIN (
-                                    SELECT
-                                        *
+                                    SELECT *
                                     FROM (
                                         SELECT
                                             *,
-                                            ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
+                                            ROW_NUMBER() OVER (
+                                                PARTITION BY id_hemxxmh
+                                                ORDER BY tanggal_awal DESC, id DESC
+                                            ) AS rn
                                         FROM hemjbrd
-                                        WHERE
-                                            tanggal_awal <= :tanggal
-                                            AND id_harxxmh <> 1
-                                    ) AS subquery
-                                    WHERE row_num = 1
+                                        WHERE tanggal_awal <= :tanggal
+                                        AND id_harxxmh <> 1
+                                    ) t
+                                    WHERE rn = 1
                                 ) history ON history.id_hemxxmh = j.id_hemxxmh
                             ) b ON b.id_hemxxmh = a.id
 
