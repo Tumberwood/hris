@@ -82,7 +82,9 @@
                             WHEN c.nama IN ("makan","makan manual")
                             THEN c.tanggal_jam
                         END
-                    ) AS cek_makan
+                    ) AS cek_makan,
+                    bag.nama bag,
+                    dep.nama dep
 
                 FROM htssctd jadwal
                 JOIN hemxxmh b
@@ -90,6 +92,8 @@
                 AND b.is_active = 1
                 JOIN hemjbmh jb
                     ON jb.id_hemxxmh = b.id
+                LEFT JOIN hodxxmh dep ON dep.id = jb.id_hodxxmh
+                LEFT JOIN hobxxmh bag ON bag.id = jb.id_hobxxmh
                 JOIN htsxxmh shift
                     ON shift.id = jadwal.id_htsxxmh
 

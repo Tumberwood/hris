@@ -57,6 +57,8 @@
                             <tr>
                                 <th>NIK</th>
                                 <th>Nama</th>
+                                <th>Departemen</th>
+                                <th>Bagian</th>
                                 <th>Tanggal</th>
                                 <th>Shift</th>
                                 <th>Ceklok Min</th>
@@ -127,6 +129,8 @@
 					{
 						data: "nama"
 					},
+					{ data: "dep" },
+					{ data: "bag" },
 					{
 						data: "tanggal",
 						render: function(data) {
