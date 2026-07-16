@@ -59,6 +59,7 @@
                                 <th>NIK</th>
                                 <th>Nama</th>
                                 <th>Tanggal</th>
+                                <th>Shift</th>
                                 <th>Ceklok In</th>
                                 <th>Ceklok Out</th>
                                 <th>Ceklok Istirahat</th>
@@ -130,6 +131,9 @@
 						render: function(data) {
 							return data ? moment(data).format('DD MMM YYYY') : '';
 						}
+					},
+					{
+						data: "shift",
 					},
 					{
 						data: "cek_in",
