@@ -59,8 +59,8 @@
                                 <th>Nama</th>
                                 <th>Tanggal</th>
                                 <th>Shift</th>
-                                <th>Ceklok In</th>
-                                <th>Ceklok Out</th>
+                                <th>Ceklok Min</th>
+                                <th>Ceklok Max</th>
                                 <th>Ceklok Istirahat</th>
                                 <th>Ceklok Makan</th>
                                 <th>Keterangan</th>
