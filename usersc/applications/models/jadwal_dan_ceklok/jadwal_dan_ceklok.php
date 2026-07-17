@@ -40,7 +40,7 @@
                     jadwal.tanggaljam_awal_istirahat,
                     jadwal.tanggaljam_akhir_istirahat,
                     
-                    jadwal.tanggal,
+                    DATE_FORMAT(jadwal.tanggal, "%d %b %Y") tanggal,
                     b.kode AS nik,
                     b.nama,
                     shift.kode AS shift,
@@ -84,7 +84,9 @@
                         END
                     ) AS cek_makan,
                     bag.nama bag,
-                    dep.nama dep
+                    dep.nama dep,
+                    lembur,
+                    durasi_lembur_jam
 
                 FROM htssctd jadwal
                 JOIN hemxxmh b
@@ -111,6 +113,18 @@
                     AND tanggal = :end_date
                 ) c
                     ON c.kode = b.kode_finger
+                LEFT JOIN (
+                    SELECT
+                        id_hemxxmh,
+                        jam_awal,
+                        jam_akhir,
+                        CONCAT(jam_awal, " - ", jam_akhir) lembur,
+                        l.is_istirahat,
+                        l.durasi_lembur_jam
+                    FROM htoxxrd l
+                    WHERE tanggal = :end_date
+                    GROUP BY id_hemxxmh
+                ) lembur on lembur.id_hemxxmh = jadwal.id_hemxxmh
 
                 WHERE jadwal.tanggal = :end_date
                 AND jadwal.is_active = 1

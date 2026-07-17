@@ -65,6 +65,7 @@
                                 <th>Ceklok Max</th>
                                 <th>Ceklok Istirahat</th>
                                 <th>Ceklok Makan</th>
+                                <th>Lembur</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -149,16 +150,20 @@
 					{
 						data: "nik"
 					},
-					{
-						data: "nama"
+					{ 
+						data: "nama",
+						render: function(data, type, row) {
+							var id_hemxxmh = row.id_hemxxmh;
+							var tanggal = row.tanggal;
+							var url = "../dashboard/d_hr_report_presensi.php?id_hemxxmh=" + id_hemxxmh + "&start_date=" + tanggal;
+							var link = '<a href="' + url + '" target="_blank"> '+data+' </a>';
+							return link;
+						}
 					},
 					{ data: "dep" },
 					{ data: "bag" },
 					{
-						data: "tanggal",
-						render: function(data) {
-							return data ? moment(data).format('DD MMM YYYY') : '';
-						}
+						data: "tanggal"
 					},
 					{
 						data: "shift",
@@ -187,6 +192,7 @@
 							return data ? moment(data).format('DD MMM YYYY HH:mm:ss') : '';
 						}
 					},
+					{ data: "lembur" },
 					{
 						data: "status_cek_in",
 						className: "text-center",
@@ -200,7 +206,7 @@
 							}
 							return data || '';
 						}
-					}
+					},
 				],
 				buttons: [
 					// BEGIN breaking generate button
