@@ -27,7 +27,7 @@
                                 <th>Nama</th>
                                 <th>Jumlah Grup</th>
                                 <th>Keterangan</th>
-                                <th>Tukar Jadwal</th>
+                                <!-- <th>Tukar Jadwal</th> -->
                             </tr>
                         </thead>
                     </table>
@@ -117,15 +117,6 @@
 						label: "Keterangan <sup class='text-danger'>*<sup>",
 						name: "htsptth_v3.keterangan",
 						type: "textarea"
-					}, {
-						label: "Tukar Jadwal",
-						name: "htsptth_v3.is_tukar",
-						type: "select",
-						placeholder : "Select",
-						options: [
-							{ "label": "Yes", "value": 1 },
-							{ "label": "No", "value": 0 }
-						]
 					},
 				]
 			} );
@@ -231,16 +222,17 @@
 						class: "text-right"
 					},
 					{ data: "htsptth_v3.keterangan" },
-					{ 
-						data: "htsptth_v3.is_tukar",
-						render: function (data){
-							if (data == 0){
-								return 'Tidak';
-							}else if(data == 1){
-								return 'Ya';
-							}
-						} 
-					}
+					// { 
+					// 	data: "htsptth_v3.is_tukar",
+					// 	visible: false,
+					// 	render: function (data){
+					// 		if (data == 0){
+					// 			return 'Tidak';
+					// 		}else if(data == 1){
+					// 			return 'Ya';
+					// 		}
+					// 	} 
+					// }
 				],
 				buttons: [
 
