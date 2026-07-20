@@ -1395,6 +1395,7 @@
                                 AND IFNULL(ceklok_makan, 0) > 0 
                                 AND (break_in IS NOT NULL AND durasi_break_menit > 1) 
                                 AND mesin NOT LIKE "%Gedung-3%"
+                                AND mesin NOT LIKE "%Makan%"
                             THEN 1
 
                             -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
