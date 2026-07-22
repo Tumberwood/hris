@@ -494,7 +494,7 @@
                                     jadwal.id_hemxxmh,
                                     b.kode nrp,
                                     b.nama,
-                                    d.is_istirahat,
+                                    MAX(is_istirahat) AS is_istirahat,
                                     
                                     -- Ceklok In: min tanggal_jam sesuai range shift
                                     MIN(CASE 
