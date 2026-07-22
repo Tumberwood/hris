@@ -85,6 +85,7 @@
                     ) AS cek_makan,
                     bag.nama bag,
                     dep.nama dep,
+                    sub.nama sub,
                     lembur,
                     durasi_lembur_jam
 
@@ -95,6 +96,7 @@
                 JOIN hemjbmh jb
                     ON jb.id_hemxxmh = b.id
                 LEFT JOIN hodxxmh dep ON dep.id = jb.id_hodxxmh
+                LEFT JOIN heyxxmd sub ON sub.id = jb.id_heyxxmd
                 LEFT JOIN hobxxmh bag ON bag.id = jb.id_hobxxmh
                 JOIN htsxxmh shift
                     ON shift.id = jadwal.id_htsxxmh

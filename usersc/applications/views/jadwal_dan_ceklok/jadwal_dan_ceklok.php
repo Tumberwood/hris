@@ -59,6 +59,7 @@
                                 <th>Nama</th>
                                 <th>Departemen</th>
                                 <th>Bagian</th>
+                                <th>Sub Tipe</th>
                                 <th>Tanggal</th>
                                 <th>Shift</th>
                                 <th>Ceklok Min</th>
@@ -112,7 +113,7 @@
 			//start datatables
 			tblhgtprth = $('#tblhgtprth').DataTable( {
 				searchPanes:{
-					layout: 'columns-2',
+					layout: 'columns-3',
 				},
 				dom: 
 					"<P>"+
@@ -125,7 +126,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [2,3]
+						targets: [2,3,4]
 					},
 					{
 						searchPanes:{
@@ -162,6 +163,7 @@
 					},
 					{ data: "dep" },
 					{ data: "bag" },
+					{ data: "sub" },
 					{
 						data: "tanggal"
 					},

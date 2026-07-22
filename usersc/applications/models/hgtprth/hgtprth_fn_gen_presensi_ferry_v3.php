@@ -624,7 +624,10 @@
                                                     AND ij.keterangan IS NULL -- JIKA ADA IZIN DI JAM ISTIRAHAT
                                                     AND c.tanggal_jam BETWEEN
                                                         jadwal.tanggaljam_awal_istirahat
-                                                        AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                                                        -- AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+
+                                                        -- 21 Jul 2026, tanpa toleransi 1 jam akhir
+                                                        AND jadwal.tanggaljam_akhir_istirahat
                                                     AND (
                                                         -- 🔹 Istirahat Gedung 3
                                                         (
@@ -761,7 +764,10 @@
                                                     AND ij.keterangan IS NULL -- JIKA ADA IZIN DI JAM ISTIRAHAT
                                                     AND c.tanggal_jam BETWEEN
                                                         jadwal.tanggaljam_awal_istirahat
-                                                        AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                                                        -- AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+
+                                                        -- 21 Jul 2026, tanpa toleransi 1 jam akhir
+                                                        AND jadwal.tanggaljam_akhir_istirahat
                                                     AND (
                                                         -- 🔹 Istirahat Gedung 3
                                                         (
@@ -862,7 +868,10 @@
                                                 WHEN 1
                                                     AND c.tanggal_jam BETWEEN
                                                         jadwal.tanggaljam_awal_istirahat
-                                                        AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                                                        -- AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+
+                                                        -- 21 Jul 2026, tanpa toleransi 1 jam akhir
+                                                        AND jadwal.tanggaljam_akhir_istirahat
 
                                                     AND (
                                                         -- 🔹 Istirahat Gedung 3
@@ -899,7 +908,10 @@
                                                 WHEN 1
                                                     AND c.tanggal_jam BETWEEN
                                                         jadwal.tanggaljam_awal_istirahat
-                                                        AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                                                        -- AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+
+                                                        -- 21 Jul 2026, tanpa toleransi 1 jam akhir
+                                                        AND jadwal.tanggaljam_akhir_istirahat
 
                                                     AND (
                                                         -- 🔹 Istirahat Gedung 3
@@ -1621,6 +1633,8 @@
                                     TIMESTAMPDIFF(HOUR, DATE(tanggal_jam_izin_awal_mid), carbon_mid)
                                         - TIMESTAMPDIFF(HOUR, DATE(tanggal_jam_izin_awal_mid), tanggal_jam_izin_awal_mid)
                                         + IF(MINUTE(carbon_mid) > 5, 1, 0)
+
+                                    -- tambahkan pengecekan jika izin akhir nya ada di dalam range istirahat, maka -1 
                                 ) AS pot_jam_izin
                                 
                             FROM status_presensi
