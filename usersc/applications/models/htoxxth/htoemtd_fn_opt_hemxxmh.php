@@ -3,6 +3,7 @@
 	require_once( "../../../../usersc/lib/DataTables.php" );
 	require_once( "../../../../usersc/helpers/datatables_fn_debug.php" );
 
+	use Carbon\Carbon;
     // BEGIN definisi variable untuk fn_ajax_results.php
     $data      = array();
     $rs_opt    = array();
