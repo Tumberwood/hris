@@ -32,9 +32,9 @@
 					peg.nama nama,
 					a.tanggal,
 					a.st_jadwal,
-					a.break_in,
-					a.break_out,
-					a.jam_makan,
+					DATE_FORMAT(a.break_in, "%d %b %Y %H:%i") AS break_in,
+					DATE_FORMAT(a.break_out, "%d %b %Y %H:%i") AS break_out,
+					DATE_FORMAT(a.jam_makan, "%d %b %Y %H:%i") AS jam_makan,
 					(
 						SELECT DISTINCT
 							ck.nama
