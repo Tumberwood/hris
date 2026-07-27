@@ -92,6 +92,7 @@
 				AND a.break_out <> a.jam_makan
 
 				HAVING mesin_break_in IN ("ISTIRAHAT", "OS", "PMI")
+				AND is_anomali = 1
 				' 
 				);
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
