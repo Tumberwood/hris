@@ -307,36 +307,7 @@
 						);
 					},
 					endRender: function (rows, group) {
-
-						const total_pot_upah = rows
-							.data()
-							.pluck('is_pot_upah')
-							.toArray()
-							.reduce((acc, v) => acc + (parseFloat(v) || 0), 0);
-
-						const $tr = $('<tr/>')
-							.append('<td></td>')
-							.append('<td></td>')
-							.append('<td></td>')
-							.append('<td></td>')
-							.append('<td></td>')
-							.append('<td></td>')
-							.append('<td></td>')
-							.append('<td></td>')
-							.append(
-								$('<td/>', {
-									class: 'text-end fw-bold bg-danger text-white',
-									html: 'Total Pot Upah (Hari)'
-								})
-							)
-							.append(
-								$('<td/>', {
-									class: 'text-right fw-bold bg-danger text-white',
-									html: total_pot_upah
-								})
-							);
-
-						return $tr;
+						
 					}
 				},   
 				buttons: [
