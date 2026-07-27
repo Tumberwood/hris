@@ -26,6 +26,7 @@
 		->bind(':start_date', $start_date)
 		->bind(':end_date', $end_date)
 		->exec('SELECT
+					a.id,
 					peg.kode nik,
 					peg.nama nama,
 					a.tanggal,
