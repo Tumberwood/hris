@@ -32,7 +32,7 @@
                 END AS status_cek_in
             FROM (
                 SELECT
-
+                    jadwal.id_hemxxmh,
                     jadwal.tanggaljam_awal_t1,
                     jadwal.tanggaljam_awal_t2,
                     jadwal.tanggaljam_akhir_t1,
