@@ -30,7 +30,7 @@
 					a.id_hemxxmh,
 					peg.kode nik,
 					peg.nama nama,
-					a.tanggal,
+					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
 					a.st_jadwal,
 					DATE_FORMAT(a.break_in, "%d %b %Y %H:%i") AS break_in,
 					DATE_FORMAT(a.break_out, "%d %b %Y %H:%i") AS break_out,
