@@ -80,7 +80,7 @@
 				WHERE 
 					a.tanggal BETWEEN :start_date AND :end_date
 					AND a.durasi_lembur_total_jam > 0
-					AND a.pot_ti > 0
+					AND (a.pot_ti > 0 OR a.pot_overtime = 0.5)
 				' . $where
 				);
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
