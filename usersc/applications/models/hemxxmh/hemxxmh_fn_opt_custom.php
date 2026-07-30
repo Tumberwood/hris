@@ -22,6 +22,8 @@
         $id_hemxxmh_old = 0;
     }
 
+    $input_is_active = $_GET['is_active'];
+
     if (isset($_GET['is_active'])) {
         $is_active = $_GET['is_active'];
         if ($is_active > 0) {
@@ -82,6 +84,13 @@
                 ->where('hemxxmh.kode', '%' . $q . '%', 'LIKE' )
                 ->or_where('hemxxmh.nama', '%' . $q . '%', 'LIKE' )
                 ->or_where('hetxxmh.nama', '%' . $q . '%', 'LIKE' );
+        } )
+        ->where( function ( $r ) use ($input_is_active) {
+            if ($input_is_active == 1) {
+                $r
+                    ->where( 'hemjbmh.tanggal_keluar', NULL)
+                    ->or_where( 'hemjbmh.tanggal_keluar', date('Y-m-d') , '>=');
+            }
         } )
         ->order('hemxxmh.id', 'Desc')
         ->limit($resultCount)
