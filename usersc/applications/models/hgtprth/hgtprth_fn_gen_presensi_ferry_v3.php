@@ -701,7 +701,9 @@
                                                                 d.tanggal
                                                             ),
                                                             " ",
-                                                            d.jam_akhir
+                                                            -- d.jam_akhir
+                                                            -- 30 Jul 2026, range istirahat Lembur -1 jam supaya tidak salah ambil ceklok out sebagai istirahat
+                                                            DATE_SUB(d.jam_akhir, INTERVAL 1 HOUR)
                                                         )
                                                     AND (
                                                         -- 🔹 Istirahat Gedung 3
