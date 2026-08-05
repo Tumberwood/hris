@@ -1873,7 +1873,7 @@
 				columns: [
 					{ data: "hpyemtd_cocokan.id", visible:false },
 					{ data: "hpyemtd_cocokan.nrp" },
-					{ data: "hpyemtd_cocokan.nama" },
+					{ data: "nama" },
 					
 					{ data: "hovxxmh.nama" },	//divisi
 					{ data: "hodxxmh.nama" },	//dep
@@ -2679,7 +2679,7 @@
 				columns: [
 					{ data: "hpyemtd_cocokan.id", visible:false },
 					{ data: "hpyemtd_cocokan.nrp" },
-					{ data: "hpyemtd_cocokan.nama" },
+					{ data: "nama" },
 					
 					{ data: "hovxxmh.nama" },	//divisi
 					{ data: "hodxxmh.nama" },	//dep
@@ -3473,7 +3473,7 @@
 				columns: [
 					{ data: "hpyemtd_cocokan.id", visible:false },
 					{ data: "hpyemtd_cocokan.nrp" },
-					{ data: "hpyemtd_cocokan.nama" },
+					{ data: "nama" },
 					
 					{ data: "hovxxmh.nama" },	//divisi
 					{ data: "hodxxmh.nama" },	//dep
