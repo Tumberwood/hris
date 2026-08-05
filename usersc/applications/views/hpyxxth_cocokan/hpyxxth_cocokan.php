@@ -1681,7 +1681,7 @@
 
 				tblhpyemtd_karyawan.button('btnExcelBerwarna:name').disable();
 				tblhpyemtd_kbm_reg.button('btnExcelBerwarna:name').disable();
-				tblhpyemtd_kbm_kontrak.button('btnExcelBerwarna:name').disable();
+				tblhpyemtd_kontrak.button('btnExcelBerwarna:name').disable();
 				
 			} );
 			
@@ -1726,7 +1726,7 @@
 				tblhpyxxth.button('btnUpload:name').enable();
 				tblhpyemtd_karyawan.button('btnExcelBerwarna:name').enable();
 				tblhpyemtd_kbm_reg.button('btnExcelBerwarna:name').enable();
-				tblhpyemtd_kbm_kontrak.button('btnExcelBerwarna:name').enable();
+				tblhpyemtd_kontrak.button('btnExcelBerwarna:name').enable();
 			} );
 			
 			tblhpyxxth.on( 'deselect', function () {
@@ -1755,7 +1755,7 @@
 				tblhpyxxth.button('btnUpload:name').disable();
 				tblhpyemtd_karyawan.button('btnExcelBerwarna:name').disable();
 				tblhpyemtd_kbm_reg.button('btnExcelBerwarna:name').disable();
-				tblhpyemtd_kbm_kontrak.button('btnExcelBerwarna:name').disable();
+				tblhpyemtd_kontrak.button('btnExcelBerwarna:name').disable();
 			} );
 
 				
