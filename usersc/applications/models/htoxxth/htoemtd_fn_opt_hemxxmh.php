@@ -27,7 +27,7 @@
     }
 
     if($_GET['tanggal'] > 0){
-        $tanggal = $_GET['tanggal'];
+        $tanggal = new Carbon($_GET['tanggal']);
     }else{
         $tanggal = 0;
     }
