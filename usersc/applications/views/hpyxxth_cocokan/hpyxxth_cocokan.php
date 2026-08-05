@@ -172,6 +172,7 @@
 							<div role="tabpanel" id="tabhpyemtd_karyawan" class="tab-pane active">
 								<div class="panel-body">
 									<div class="table-responsive">
+										<h3 class="keterangan_payroll"></h3>
 										<table id="tblhpyemtd_karyawan" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
 												<tr>
@@ -495,6 +496,7 @@
 							<div role="tabpanel" id="tabhpyemtd_kontrak" class="tab-pane">
 								<div class="panel-body">
 									<div class="table-responsive">
+										<h3 class="keterangan_payroll"></h3>
 										<table id="tblhpyemtd_kontrak" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
 												<tr>
@@ -818,6 +820,7 @@
 							<div role="tabpanel" id="tabhpyemtd_kbm_reg" class="tab-pane">
 								<div class="panel-body">
 									<div class="table-responsive">
+										<h3 class="keterangan_payroll"></h3>
 										<table id="tblhpyemtd_kbm_reg" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
 												<tr>
@@ -1141,6 +1144,7 @@
 							<div role="tabpanel" id="tabhpyemtd_kbm_tr" class="tab-pane">
 								<div class="panel-body">
 									<div class="table-responsive">
+										<h3 class="keterangan_payroll"></h3>
 										<table id="tblhpyemtd_kbm_tr" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
 												<tr>
@@ -1697,11 +1701,13 @@
 				tanggal_awal_select        = data_hpyxxth.tanggal_awal;
 				tanggal_akhir_select        = data_hpyxxth.tanggal_akhir;
 				id_heyxxmh_select        = data_hpyxxth.id_heyxxmh;
+				keterangan_header        = data_hpyxxth.keterangan;
 
 				id_heyxxmh_old = data_hpyxxth.id_heyxxmh;
 				id_periode_payroll_old = data_hpyxxth.id_periode_payroll;
 				
 				notifyLoadingKucing();
+				$('.keterangan_payroll').text(keterangan_header);
 
 				// atur hak akses
 				tbl_details = [tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
