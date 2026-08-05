@@ -75,6 +75,7 @@
                                 <th>Tanggal Efektif</th>
                                 <th>Komponen</th>
                                 <th>Nominal</th>
+                                <th>Add By</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -575,7 +576,8 @@
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right"
 					},
-					{ data: "htpr_hemxxmh.keterangan" }
+					{ data: "users.fname" },
+					{ data: "htpr_hemxxmh.keterangan" },
 				],
 				buttons: [
 					// BEGIN breaking generate button

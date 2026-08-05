@@ -54,9 +54,11 @@
 						'to' =>   'Y-m-d'
 					) ),
 			 	Field::inst( 'htpr_hemxxmh.nominal' ),
-			 	Field::inst( 'hpcxxmh.nama' )
+			 	Field::inst( 'hpcxxmh.nama' ),
+			 	Field::inst( 'users.fname' ),
 			)
 			->leftJoin( 'hpcxxmh','hpcxxmh.id','=','htpr_hemxxmh.id_hpcxxmh' )
+			->leftJoin( 'users','users.id','=','htpr_hemxxmh.created_by' )
 			->where('htpr_hemxxmh.id_hemxxmh',$_POST['id_hemxxmh']);
 		
 		// do not erase
