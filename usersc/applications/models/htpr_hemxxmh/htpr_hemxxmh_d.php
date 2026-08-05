@@ -55,7 +55,7 @@
 					) ),
 			 	Field::inst( 'htpr_hemxxmh.nominal' ),
 			 	Field::inst( 'hpcxxmh.nama' ),
-			 	Field::inst( 'users.fname' ),
+			 	Field::inst( 'concat(users.fname, " ", users.lname) nama_user' ),
 			)
 			->leftJoin( 'hpcxxmh','hpcxxmh.id','=','htpr_hemxxmh.id_hpcxxmh' )
 			->leftJoin( 'users','users.id','=','htpr_hemxxmh.created_by' )

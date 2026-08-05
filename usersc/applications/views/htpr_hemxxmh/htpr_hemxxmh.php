@@ -576,7 +576,7 @@
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right"
 					},
-					{ data: "users.fname" },
+					{ data: "nama_user" },
 					{ data: "htpr_hemxxmh.keterangan" },
 				],
 				buttons: [
