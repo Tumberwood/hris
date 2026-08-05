@@ -1913,7 +1913,7 @@
 							const potJamBaru      = num(row.hpyemtd?.pot_jam);
 
 							// Hitung sesuai rumus:
-							const terimaLainBaru = premiAbsBaru + lemburLama + lemburBaru + potUpahLama - potJamBaru;
+							const terimaLainBaru = premiAbsBaru - lemburLama + lemburBaru + potUpahLama - potJamBaru;
 
 							// Jika dipanggil untuk Sorting / Filtering DataTables, kembalikan angka murni
 							if (type === 'sort' || type === 'type') {
@@ -2744,7 +2744,7 @@
 							const potJamBaru      = num(row.hpyemtd?.pot_jam);
 
 							// Hitung sesuai rumus:
-							const terimaLainBaru = premiAbsBaru + lemburLama + lemburBaru + potUpahLama - potJamBaru;
+							const terimaLainBaru = premiAbsBaru - lemburLama + lemburBaru + potUpahLama - potJamBaru;
 
 							// Jika dipanggil untuk Sorting / Filtering DataTables, kembalikan angka murni
 							if (type === 'sort' || type === 'type') {
@@ -3563,7 +3563,7 @@
 							const potJamBaru      = num(row.hpyemtd?.pot_jam);
 
 							// Hitung sesuai rumus:
-							const terimaLainBaru = premiAbsBaru + lemburLama + lemburBaru + potUpahLama - potJamBaru;
+							const terimaLainBaru = premiAbsBaru - lemburLama + lemburBaru + potUpahLama - potJamBaru;
 
 							// Jika dipanggil untuk Sorting / Filtering DataTables, kembalikan angka murni
 							if (type === 'sort' || type === 'type') {
