@@ -1906,18 +1906,19 @@
 							// Helper fungsi untuk convert ke float & antisipasi nilai undefined/null/NaN
 							const num = v => (parseFloat(v) || 0);
 
-							const premiAbsBaru    = num(row.hpyemtd?.premi_abs);
-							const lemburLama      = num(row.hpyemtd_cocokan?.total_rp_lembur);
-							const lemburBaru      = num(row.hpyemtd?.total_rp_lembur);
-							const potUpahLama     = num(row.hpyemtd_cocokan?.pot_upah);
-							const potJamBaru      = num(row.hpyemtd?.pot_jam);
+							const premiAbsBaru        = num(row.hpyemtd?.premi_abs);
+							const lemburLama          = num(row.hpyemtd_cocokan?.total_rp_lembur);
+							const lemburBaru          = num(row.hpyemtd?.total_rp_lembur);
+							const potUpahLama         = num(row.hpyemtd_cocokan?.pot_upah);
+							const potJamBaru          = num(row.hpyemtd?.pot_jam);
+							const potLainBeforePphBaru = num(row.hpyemtd?.pot_lain_before_pph);
 
-							// Hitung sesuai rumus:
-							const terimaLainBaru = premiAbsBaru - lemburLama + lemburBaru + potUpahLama - potJamBaru;
+							// Hitung sesuai rumus (termasuk pengurangan pot_lain_before_pph)
+							const terimaLainBaru = premiAbsBaru - lemburLama + lemburBaru + potUpahLama - potJamBaru - potLainBeforePphBaru;
 
 							// Jika dipanggil untuk Sorting / Filtering DataTables, kembalikan angka murni
 							if (type === 'sort' || type === 'type') {
-							return terimaLainBaru;
+								return terimaLainBaru;
 							}
 
 							// Tampilan ke HTML dengan format ribuan
@@ -2737,18 +2738,19 @@
 							// Helper fungsi untuk convert ke float & antisipasi nilai undefined/null/NaN
 							const num = v => (parseFloat(v) || 0);
 
-							const premiAbsBaru    = num(row.hpyemtd?.premi_abs);
-							const lemburLama      = num(row.hpyemtd_cocokan?.total_rp_lembur);
-							const lemburBaru      = num(row.hpyemtd?.total_rp_lembur);
-							const potUpahLama     = num(row.hpyemtd_cocokan?.pot_upah);
-							const potJamBaru      = num(row.hpyemtd?.pot_jam);
+							const premiAbsBaru        = num(row.hpyemtd?.premi_abs);
+							const lemburLama          = num(row.hpyemtd_cocokan?.total_rp_lembur);
+							const lemburBaru          = num(row.hpyemtd?.total_rp_lembur);
+							const potUpahLama         = num(row.hpyemtd_cocokan?.pot_upah);
+							const potJamBaru          = num(row.hpyemtd?.pot_jam);
+							const potLainBeforePphBaru = num(row.hpyemtd?.pot_lain_before_pph);
 
-							// Hitung sesuai rumus:
-							const terimaLainBaru = premiAbsBaru - lemburLama + lemburBaru + potUpahLama - potJamBaru;
+							// Hitung sesuai rumus (termasuk pengurangan pot_lain_before_pph)
+							const terimaLainBaru = premiAbsBaru - lemburLama + lemburBaru + potUpahLama - potJamBaru - potLainBeforePphBaru;
 
 							// Jika dipanggil untuk Sorting / Filtering DataTables, kembalikan angka murni
 							if (type === 'sort' || type === 'type') {
-							return terimaLainBaru;
+								return terimaLainBaru;
 							}
 
 							// Tampilan ke HTML dengan format ribuan
@@ -3556,18 +3558,19 @@
 							// Helper fungsi untuk convert ke float & antisipasi nilai undefined/null/NaN
 							const num = v => (parseFloat(v) || 0);
 
-							const premiAbsBaru    = num(row.hpyemtd?.premi_abs);
-							const lemburLama      = num(row.hpyemtd_cocokan?.total_rp_lembur);
-							const lemburBaru      = num(row.hpyemtd?.total_rp_lembur);
-							const potUpahLama     = num(row.hpyemtd_cocokan?.pot_upah);
-							const potJamBaru      = num(row.hpyemtd?.pot_jam);
+							const premiAbsBaru        = num(row.hpyemtd?.premi_abs);
+							const lemburLama          = num(row.hpyemtd_cocokan?.total_rp_lembur);
+							const lemburBaru          = num(row.hpyemtd?.total_rp_lembur);
+							const potUpahLama         = num(row.hpyemtd_cocokan?.pot_upah);
+							const potJamBaru          = num(row.hpyemtd?.pot_jam);
+							const potLainBeforePphBaru = num(row.hpyemtd?.pot_lain_before_pph);
 
-							// Hitung sesuai rumus:
-							const terimaLainBaru = premiAbsBaru - lemburLama + lemburBaru + potUpahLama - potJamBaru;
+							// Hitung sesuai rumus (termasuk pengurangan pot_lain_before_pph)
+							const terimaLainBaru = premiAbsBaru - lemburLama + lemburBaru + potUpahLama - potJamBaru - potLainBeforePphBaru;
 
 							// Jika dipanggil untuk Sorting / Filtering DataTables, kembalikan angka murni
 							if (type === 'sort' || type === 'type') {
-							return terimaLainBaru;
+								return terimaLainBaru;
 							}
 
 							// Tampilan ke HTML dengan format ribuan
