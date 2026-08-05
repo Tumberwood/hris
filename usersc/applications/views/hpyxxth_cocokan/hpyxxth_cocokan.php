@@ -1449,6 +1449,7 @@
         var edthpyemtd_kbm_reg, tblhpyemtd_kbm_reg, show_inactive_status_hpyemtd = 0, id_hpyemtd;
 		// ------------- end of default variable
 		var id_heyxxmh_old = 0, id_periode_payroll_old = 0;
+		var notifyprogress = '';
 		
 		$(document).ready(function() {
 			$('[data-toggle="tooltip"]').tooltip();
@@ -1700,6 +1701,8 @@
 				id_heyxxmh_old = data_hpyxxth.id_heyxxmh;
 				id_periode_payroll_old = data_hpyxxth.id_periode_payroll;
 				
+				notifyLoadingKucing();
+
 				// atur hak akses
 				tbl_details = [tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
 				CekSelectHeaderHD(tblhpyxxth, tbl_details);
@@ -4170,6 +4173,9 @@
 				cek_c_detail= 1;
 				CekDrawDetailHD(tblhpyxxth, tblhpyemtd_kbm_tr, 'hpyemtd' );
 				CekDrawDetailHDFinal(tblhpyxxth);
+				if(notifyprogress != ''){
+					notifyprogress.close();
+				}
 			} );
 
 			tblhpyemtd_kbm_tr.on( 'select', function( e, dt, type, indexes ) {
