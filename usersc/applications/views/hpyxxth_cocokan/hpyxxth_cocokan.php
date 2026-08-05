@@ -2746,6 +2746,341 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+,{
+    text: '<span class="fa fa-file-excel-o">&nbsp;&nbsp;Excel Berwarna</span>',
+    className: 'btn btn-success',
+	name: 'btnExcelBerwarna',
+    action: async function () {
+
+		Swal.fire({
+			title: 'Processing...',
+			html: 'Jangan tutup halaman sampai proses selesai',
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+			showConfirmButton: false,
+			didOpen: () => {
+				Swal.showLoading();
+			}
+		});
+
+		await new Promise(resolve => requestAnimationFrame(resolve));
+		await new Promise(resolve => setTimeout(resolve, 50));
+
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Payroll');
+
+        const dt = $('#tblhpyemtd_kontrak').DataTable();
+
+        // =========================
+        // MAPPING compareField()
+        // =========================
+        const compareMap = {
+            18: 'gp',
+            20: 't_jab',
+            22: 'terima_lain',
+            24: 'var_cost',
+            26: 'tj_khusus',
+            28: 'fix_cost',
+            30: 'premi_abs',
+            32: 'lembur15',
+            34: 'rp_lembur15',
+            36: 'lembur2',
+            38: 'rp_lembur2',
+            40: 'lembur3',
+            42: 'rp_lembur3',
+            44: 'total_lembur_jam_final',
+            46: 'total_rp_lembur',
+            48: 'komp_rekontrak',
+            50: 'cuti_tahunan',
+            52: 'cuti_bersama',
+            54: 'sisa_cuti_hari',
+            56: 'komp_sisa_cuti',
+            58: 'thr',
+            60: 'pot_makan',
+            62: 'c_pot_upah',
+            64: 'pot_upah',
+			66: 'c_pot_resign',
+			68: 'pot_resign',
+			70: 'c_pot_jam',
+			72: 'pot_jam',
+			74: 'pendapatan_lain_before_pph',
+			76: 'pot_lain_before_pph',
+			78: 'bpjs_kes_perusahaan',
+			80: 'jkk',
+			82: 'jkm',
+			84: 'bruto',
+			86: 'persen_ter',
+			88: 'pot_pph21',
+			90: 'after_pph21',
+			92: 'jht_perusahaan',
+			94: 'jp_perusahaan',
+			96: 'pot_jht_karyawan',
+			98: 'pot_jp_karyawan',
+			100: 'bpjs_kes_karyawan',
+			102: 'bpjs_kes_perusahaan',
+			104: 'jkk',
+			106: 'jkm',
+			108: 'pot_piutang',
+			110: 'denda_apd',
+			112: 'iuran_spsi',
+			114: 'pendapatan_lain_after_pph',
+			116: 'pot_lain_after_pph',
+			118: 'gaji_bersih',
+			120: 'bulat',
+			122: 'gaji_terima'
+        };
+
+        // =========================
+        // HEADER
+        // =========================
+        const headers = [];
+
+        $('#tblhpyemtd_kontrak thead th').each(function () {
+            headers.push($(this).text().trim());
+        });
+
+        worksheet.addRow(headers);
+
+        const headerRow = worksheet.getRow(1);
+
+        $('#tblhpyemtd_kontrak thead th').each(function (idx) {
+
+            const cell = headerRow.getCell(idx + 1);
+
+            cell.font = {
+                bold: true,
+                color: { argb: 'FF000000' }
+            };
+
+            cell.alignment = {
+                horizontal: 'center',
+                vertical: 'middle',
+                wrapText: true
+            };
+
+            cell.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' }
+            };
+
+            if ($(this).hasClass('lama')) {
+
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFFFEBAA' }
+                };
+
+            } else if ($(this).hasClass('baru')) {
+
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFC3E6CB' }
+                };
+
+            } else {
+
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFE9ECEF' }
+                };
+            }
+
+            if ($(this).hasClass('text-danger')) {
+
+                cell.font = {
+                    bold: true,
+                    color: { argb: 'FFFF0000' }
+                };
+
+            }
+
+        });
+
+        // =========================
+		// DATA SEMUA PAGE
+		// =========================
+		const allRows = dt.rows({ search: 'applied' }).indexes().toArray();
+
+		allRows.forEach(function (data) {
+
+			const rowData = [];
+
+			dt.columns(':visible').every(function () {
+
+				let value = dt.cell(data, this.index()).render('display');
+
+				if (value === null || value === undefined) {
+					value = '';
+				}
+
+				value = $('<div>')
+					.html(value)
+					.text()
+					.trim();
+
+				rowData.push(value);
+
+			});
+
+			if (rowData.length === 0) {
+				return;
+			}
+
+			const excelRow = worksheet.addRow(rowData);
+
+			excelRow.eachCell(function (cell) {
+
+				cell.border = {
+					top: { style: 'thin' },
+					left: { style: 'thin' },
+					bottom: { style: 'thin' },
+					right: { style: 'thin' }
+				};
+
+			});
+
+			const rowObj = dt.row(data).data();
+
+			// =========================
+			// compareField() -> bg-danger
+			// =========================
+			Object.entries(compareMap).forEach(([colIndex, field]) => {
+
+				const nilaiCocokan =
+					Number(rowObj?.hpyemtd_cocokan?.[field] ?? 0);
+
+				const nilaiAsli =
+					Number(rowObj?.hpyemtd?.[field] ?? 0);
+
+				if (nilaiCocokan !== nilaiAsli) {
+
+					const cell =
+						excelRow.getCell(Number(colIndex) + 1);
+
+					cell.fill = {
+						type: 'pattern',
+						pattern: 'solid',
+						fgColor: {
+							argb: 'FFDC3545'
+						}
+					};
+
+					cell.font = {
+						color: {
+							argb: 'FFFFFFFF'
+						},
+						bold: true
+					};
+
+					const selisih =
+						nilaiCocokan - nilaiAsli;
+
+					cell.note =
+						`Selisih : ${formatNumber(selisih)}`;
+				}
+
+			});
+
+		});
+
+        // =========================
+        // STYLE KOLOM
+        // =========================
+        $('#tblhpyemtd_kontrak thead th').each(function (idx) {
+
+            const th = $(this);
+            const col = worksheet.getColumn(idx + 1);
+
+            col.width = Math.max(
+                15,
+                Math.min(
+                    40,
+                    th.text().length + 5
+                )
+            );
+
+            if (th.hasClass('text-right')) {
+
+                col.alignment = {
+                    horizontal: 'right'
+                };
+
+            }
+
+            if (th.hasClass('text-center')) {
+
+                col.alignment = {
+                    horizontal: 'center'
+                };
+
+            }
+
+            if (th.hasClass('text-danger')) {
+
+				col.eachCell(function (cell, rowNumber) {
+
+					if (
+						rowNumber > 1 &&
+						!(
+							cell.fill &&
+							cell.fill.fgColor &&
+							cell.fill.fgColor.argb === 'FFDC3545'
+						)
+					) {
+
+						cell.font = {
+							color: {
+								argb: 'FFFF0000'
+							}
+						};
+
+					}
+
+				});
+
+			}
+
+        });
+
+        // =========================
+        // FREEZE HEADER
+        // =========================
+        worksheet.views = [
+            {
+                state: 'frozen',
+                ySplit: 1
+            }
+        ];
+
+        // =========================
+        // AUTO FILTER
+        // =========================
+        worksheet.autoFilter = {
+            from: 'A1',
+            to: worksheet.getRow(1).getCell(headers.length)._address
+        };
+
+        const buffer = await workbook.xlsx.writeBuffer();
+
+        saveAs(
+            new Blob(
+                [buffer],
+                {
+                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                }
+            ),
+            'Payroll.xlsx'
+        );
+		
+		Swal.close();
+
+    }
+}
 				],
 				footerCallback: function ( row, data, start, end, display ) {
 					var api = this.api();
@@ -3129,6 +3464,341 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+,{
+    text: '<span class="fa fa-file-excel-o">&nbsp;&nbsp;Excel Berwarna</span>',
+    className: 'btn btn-success',
+	name: 'btnExcelBerwarna',
+    action: async function () {
+
+		Swal.fire({
+			title: 'Processing...',
+			html: 'Jangan tutup halaman sampai proses selesai',
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+			showConfirmButton: false,
+			didOpen: () => {
+				Swal.showLoading();
+			}
+		});
+
+		await new Promise(resolve => requestAnimationFrame(resolve));
+		await new Promise(resolve => setTimeout(resolve, 50));
+
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Payroll');
+
+        const dt = $('#tblhpyemtd_kontrak').DataTable();
+
+        // =========================
+        // MAPPING compareField()
+        // =========================
+        const compareMap = {
+            18: 'gp',
+            20: 't_jab',
+            22: 'terima_lain',
+            24: 'var_cost',
+            26: 'tj_khusus',
+            28: 'fix_cost',
+            30: 'premi_abs',
+            32: 'lembur15',
+            34: 'rp_lembur15',
+            36: 'lembur2',
+            38: 'rp_lembur2',
+            40: 'lembur3',
+            42: 'rp_lembur3',
+            44: 'total_lembur_jam_final',
+            46: 'total_rp_lembur',
+            48: 'komp_rekontrak',
+            50: 'cuti_tahunan',
+            52: 'cuti_bersama',
+            54: 'sisa_cuti_hari',
+            56: 'komp_sisa_cuti',
+            58: 'thr',
+            60: 'pot_makan',
+            62: 'c_pot_upah',
+            64: 'pot_upah',
+			66: 'c_pot_resign',
+			68: 'pot_resign',
+			70: 'c_pot_jam',
+			72: 'pot_jam',
+			74: 'pendapatan_lain_before_pph',
+			76: 'pot_lain_before_pph',
+			78: 'bpjs_kes_perusahaan',
+			80: 'jkk',
+			82: 'jkm',
+			84: 'bruto',
+			86: 'persen_ter',
+			88: 'pot_pph21',
+			90: 'after_pph21',
+			92: 'jht_perusahaan',
+			94: 'jp_perusahaan',
+			96: 'pot_jht_karyawan',
+			98: 'pot_jp_karyawan',
+			100: 'bpjs_kes_karyawan',
+			102: 'bpjs_kes_perusahaan',
+			104: 'jkk',
+			106: 'jkm',
+			108: 'pot_piutang',
+			110: 'denda_apd',
+			112: 'iuran_spsi',
+			114: 'pendapatan_lain_after_pph',
+			116: 'pot_lain_after_pph',
+			118: 'gaji_bersih',
+			120: 'bulat',
+			122: 'gaji_terima'
+        };
+
+        // =========================
+        // HEADER
+        // =========================
+        const headers = [];
+
+        $('#tblhpyemtd_kontrak thead th').each(function () {
+            headers.push($(this).text().trim());
+        });
+
+        worksheet.addRow(headers);
+
+        const headerRow = worksheet.getRow(1);
+
+        $('#tblhpyemtd_kontrak thead th').each(function (idx) {
+
+            const cell = headerRow.getCell(idx + 1);
+
+            cell.font = {
+                bold: true,
+                color: { argb: 'FF000000' }
+            };
+
+            cell.alignment = {
+                horizontal: 'center',
+                vertical: 'middle',
+                wrapText: true
+            };
+
+            cell.border = {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' }
+            };
+
+            if ($(this).hasClass('lama')) {
+
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFFFEBAA' }
+                };
+
+            } else if ($(this).hasClass('baru')) {
+
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFC3E6CB' }
+                };
+
+            } else {
+
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFE9ECEF' }
+                };
+            }
+
+            if ($(this).hasClass('text-danger')) {
+
+                cell.font = {
+                    bold: true,
+                    color: { argb: 'FFFF0000' }
+                };
+
+            }
+
+        });
+
+        // =========================
+		// DATA SEMUA PAGE
+		// =========================
+		const allRows = dt.rows({ search: 'applied' }).indexes().toArray();
+
+		allRows.forEach(function (data) {
+
+			const rowData = [];
+
+			dt.columns(':visible').every(function () {
+
+				let value = dt.cell(data, this.index()).render('display');
+
+				if (value === null || value === undefined) {
+					value = '';
+				}
+
+				value = $('<div>')
+					.html(value)
+					.text()
+					.trim();
+
+				rowData.push(value);
+
+			});
+
+			if (rowData.length === 0) {
+				return;
+			}
+
+			const excelRow = worksheet.addRow(rowData);
+
+			excelRow.eachCell(function (cell) {
+
+				cell.border = {
+					top: { style: 'thin' },
+					left: { style: 'thin' },
+					bottom: { style: 'thin' },
+					right: { style: 'thin' }
+				};
+
+			});
+
+			const rowObj = dt.row(data).data();
+
+			// =========================
+			// compareField() -> bg-danger
+			// =========================
+			Object.entries(compareMap).forEach(([colIndex, field]) => {
+
+				const nilaiCocokan =
+					Number(rowObj?.hpyemtd_cocokan?.[field] ?? 0);
+
+				const nilaiAsli =
+					Number(rowObj?.hpyemtd?.[field] ?? 0);
+
+				if (nilaiCocokan !== nilaiAsli) {
+
+					const cell =
+						excelRow.getCell(Number(colIndex) + 1);
+
+					cell.fill = {
+						type: 'pattern',
+						pattern: 'solid',
+						fgColor: {
+							argb: 'FFDC3545'
+						}
+					};
+
+					cell.font = {
+						color: {
+							argb: 'FFFFFFFF'
+						},
+						bold: true
+					};
+
+					const selisih =
+						nilaiCocokan - nilaiAsli;
+
+					cell.note =
+						`Selisih : ${formatNumber(selisih)}`;
+				}
+
+			});
+
+		});
+
+        // =========================
+        // STYLE KOLOM
+        // =========================
+        $('#tblhpyemtd_kontrak thead th').each(function (idx) {
+
+            const th = $(this);
+            const col = worksheet.getColumn(idx + 1);
+
+            col.width = Math.max(
+                15,
+                Math.min(
+                    40,
+                    th.text().length + 5
+                )
+            );
+
+            if (th.hasClass('text-right')) {
+
+                col.alignment = {
+                    horizontal: 'right'
+                };
+
+            }
+
+            if (th.hasClass('text-center')) {
+
+                col.alignment = {
+                    horizontal: 'center'
+                };
+
+            }
+
+            if (th.hasClass('text-danger')) {
+
+				col.eachCell(function (cell, rowNumber) {
+
+					if (
+						rowNumber > 1 &&
+						!(
+							cell.fill &&
+							cell.fill.fgColor &&
+							cell.fill.fgColor.argb === 'FFDC3545'
+						)
+					) {
+
+						cell.font = {
+							color: {
+								argb: 'FFFF0000'
+							}
+						};
+
+					}
+
+				});
+
+			}
+
+        });
+
+        // =========================
+        // FREEZE HEADER
+        // =========================
+        worksheet.views = [
+            {
+                state: 'frozen',
+                ySplit: 1
+            }
+        ];
+
+        // =========================
+        // AUTO FILTER
+        // =========================
+        worksheet.autoFilter = {
+            from: 'A1',
+            to: worksheet.getRow(1).getCell(headers.length)._address
+        };
+
+        const buffer = await workbook.xlsx.writeBuffer();
+
+        saveAs(
+            new Blob(
+                [buffer],
+                {
+                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                }
+            ),
+            'Payroll.xlsx'
+        );
+		
+		Swal.close();
+
+    }
+}
 				],
 				footerCallback: function ( row, data, start, end, display ) {
 					var api = this.api();
