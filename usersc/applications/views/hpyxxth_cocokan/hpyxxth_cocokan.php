@@ -178,7 +178,7 @@
 												<tr>
 													<!-- TAMBAHAN -->
 													<th class="text-center align-middle">ID</th>
-													<th class="text-center align-middle">NIK</th>
+													<th class="text-center align-middle">NIP</th>
 													<th class="text-center align-middle">Nama</th>
 
 													<th class="text-center align-middle">Divisi</th>
@@ -502,7 +502,7 @@
 												<tr>
 													<!-- TAMBAHAN -->
 													<th class="text-center align-middle">ID</th>
-													<th class="text-center align-middle">NIK</th>
+													<th class="text-center align-middle">NIP</th>
 													<th class="text-center align-middle">Nama</th>
 													
 													<th class="text-center align-middle">Divisi</th>
@@ -826,7 +826,7 @@
 												<tr>
 													<!-- TAMBAHAN -->
 													<th class="text-center align-middle">ID</th>
-													<th class="text-center align-middle">NIK</th>
+													<th class="text-center align-middle">NIP</th>
 													<th class="text-center align-middle">Nama</th>
 													
 													<th class="text-center align-middle">Divisi</th>
@@ -1150,7 +1150,7 @@
 												<tr>
 													<th>ID</th>
 													<th>id_hpyxxth</th>
-													<th>NIK</th>
+													<th>NIP</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -1215,7 +1215,7 @@
 												<tr>
 													<th>ID</th>
 													<th>id_hpyxxth</th>
-													<th>NIK</th>
+													<th>NIP</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -1325,7 +1325,7 @@
 												<tr>
 													<th>ID</th>
 													<th>id_hpyxxth</th>
-													<th>NIK</th>
+													<th>NIP</th>
 													<th>Nama</th>
 													<th>Department</th>
 													<th>Jabatan</th>
@@ -2370,19 +2370,95 @@
 
     // END breaking generate button
 ],
-				footerCallback: function ( row, data, start, end, display ) {
+				footerCallback: function (row, data, start, end, display) {
 					var api = this.api();
-					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
+					var numFormat = $.fn.dataTable.render.number(',', '.', 2, '').display; 
 
+					// 1. Render seluruh total kolom seperti biasa
 					for (var i = 10; i <= 123; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
-						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
-						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
+						
+						// Render ke elemen HTML footer
 						$('#karyawan_' + columnIndex).html(numFormat(sum_all));
-
-						// console.log('Number of Pages: ' + api.page.info().pages);
 					}
+
+					// 2. Fungsi Helper untuk Membandingkan Total Footer Pasangan Kolom (misal col1 vs col2)
+					function compareFooterSum(colIndex1, colIndex2) {
+						// Ambil nilai sum murni (numerik) dari masing-masing kolom
+						var sum1 = api.column(colIndex1).data().sum();
+						var sum2 = api.column(colIndex2).data().sum();
+
+						// Ambil elemen jQuery footer-nya
+						var $elem1 = $('#karyawan_' + colIndex1);
+						var $elem2 = $('#karyawan_' + colIndex2);
+
+						// Toleransi kecil selisih floating point (misal < 0.01 dianggap sama)
+						if (Math.abs(sum1 - sum2) > 0.01) {
+							// Jika BEDA -> Beri warna merah pada teks / background
+							$elem1.css({ 'color': 'red', 'font-weight': 'bold' });
+							$elem2.css({ 'color': 'red', 'font-weight': 'bold' });
+						} else {
+							// Jika SAMA -> Kembalikan ke warna normal (misal hitam/default)
+							$elem1.css({ 'color': '', 'font-weight': '' });
+							$elem2.css({ 'color': '', 'font-weight': '' });
+						}
+					}
+
+					// 3. Jalankan Perbandingan Footer Sesuai Pasangan Kolom yang Diinginkan
+					compareFooterSum(18, 19); // Membandingkan subtotal kolom 18 dan 19
+					compareFooterSum(20, 21); // Membandingkan subtotal kolom 20 dan 21
+					compareFooterSum(22, 23);
+					compareFooterSum(24, 25);
+					compareFooterSum(26, 27);
+					compareFooterSum(28, 29);
+					compareFooterSum(30, 31);
+					compareFooterSum(32, 33);
+					compareFooterSum(34, 35);
+					compareFooterSum(36, 37);
+					compareFooterSum(38, 39);
+					compareFooterSum(40, 41);
+					compareFooterSum(42, 43);
+					compareFooterSum(44, 45);
+					compareFooterSum(46, 47);
+					compareFooterSum(48, 49);
+					compareFooterSum(50, 51);
+					compareFooterSum(52, 53);
+					compareFooterSum(54, 55);
+					compareFooterSum(56, 57);
+					compareFooterSum(58, 59);
+					compareFooterSum(60, 61);
+					compareFooterSum(62, 63);
+					compareFooterSum(64, 65);
+					compareFooterSum(66, 67);
+					compareFooterSum(68, 69);
+					compareFooterSum(70, 71);
+					compareFooterSum(72, 73);
+					compareFooterSum(74, 75);
+					compareFooterSum(76, 77);
+					compareFooterSum(78, 79);
+					compareFooterSum(80, 81);
+					compareFooterSum(82, 83);
+					compareFooterSum(84, 85);
+					compareFooterSum(86, 87);
+					compareFooterSum(88, 89);
+					compareFooterSum(90, 91);
+					compareFooterSum(92, 93);
+					compareFooterSum(94, 95);
+					compareFooterSum(96, 97);
+					compareFooterSum(98, 99);
+					compareFooterSum(100, 101);
+					compareFooterSum(102, 103);
+					compareFooterSum(104, 105);
+					compareFooterSum(106, 107);
+					compareFooterSum(108, 109);
+					compareFooterSum(110, 111);
+					compareFooterSum(112, 113);
+					compareFooterSum(114, 115);
+					compareFooterSum(116, 117);
+					compareFooterSum(118, 119);
+					compareFooterSum(120, 121);
+					compareFooterSum(122, 123);
 				},
 				rowCallback: function( row, data, index ) {
 					compareField(row, data, 18, 'gp');
@@ -3097,19 +3173,95 @@
     }
 }
 				],
-				footerCallback: function ( row, data, start, end, display ) {
+				footerCallback: function (row, data, start, end, display) {
 					var api = this.api();
-					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
+					var numFormat = $.fn.dataTable.render.number(',', '.', 2, '').display; 
 
+					// 1. Render seluruh total kolom seperti biasa
 					for (var i = 10; i <= 123; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
-						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
-						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
+						
+						// Render ke elemen HTML footer
 						$('#kontrak_' + columnIndex).html(numFormat(sum_all));
-
-						// console.log('Number of Pages: ' + api.page.info().pages);
 					}
+
+					// 2. Fungsi Helper untuk Membandingkan Total Footer Pasangan Kolom (misal col1 vs col2)
+					function compareFooterSum(colIndex1, colIndex2) {
+						// Ambil nilai sum murni (numerik) dari masing-masing kolom
+						var sum1 = api.column(colIndex1).data().sum();
+						var sum2 = api.column(colIndex2).data().sum();
+
+						// Ambil elemen jQuery footer-nya
+						var $elem1 = $('#kontrak_' + colIndex1);
+						var $elem2 = $('#kontrak_' + colIndex2);
+
+						// Toleransi kecil selisih floating point (misal < 0.01 dianggap sama)
+						if (Math.abs(sum1 - sum2) > 0.01) {
+							// Jika BEDA -> Beri warna merah pada teks / background
+							$elem1.css({ 'color': 'red', 'font-weight': 'bold' });
+							$elem2.css({ 'color': 'red', 'font-weight': 'bold' });
+						} else {
+							// Jika SAMA -> Kembalikan ke warna normal (misal hitam/default)
+							$elem1.css({ 'color': '', 'font-weight': '' });
+							$elem2.css({ 'color': '', 'font-weight': '' });
+						}
+					}
+
+					// 3. Jalankan Perbandingan Footer Sesuai Pasangan Kolom yang Diinginkan
+					compareFooterSum(18, 19); // Membandingkan subtotal kolom 18 dan 19
+					compareFooterSum(20, 21); // Membandingkan subtotal kolom 20 dan 21
+					compareFooterSum(22, 23);
+					compareFooterSum(24, 25);
+					compareFooterSum(26, 27);
+					compareFooterSum(28, 29);
+					compareFooterSum(30, 31);
+					compareFooterSum(32, 33);
+					compareFooterSum(34, 35);
+					compareFooterSum(36, 37);
+					compareFooterSum(38, 39);
+					compareFooterSum(40, 41);
+					compareFooterSum(42, 43);
+					compareFooterSum(44, 45);
+					compareFooterSum(46, 47);
+					compareFooterSum(48, 49);
+					compareFooterSum(50, 51);
+					compareFooterSum(52, 53);
+					compareFooterSum(54, 55);
+					compareFooterSum(56, 57);
+					compareFooterSum(58, 59);
+					compareFooterSum(60, 61);
+					compareFooterSum(62, 63);
+					compareFooterSum(64, 65);
+					compareFooterSum(66, 67);
+					compareFooterSum(68, 69);
+					compareFooterSum(70, 71);
+					compareFooterSum(72, 73);
+					compareFooterSum(74, 75);
+					compareFooterSum(76, 77);
+					compareFooterSum(78, 79);
+					compareFooterSum(80, 81);
+					compareFooterSum(82, 83);
+					compareFooterSum(84, 85);
+					compareFooterSum(86, 87);
+					compareFooterSum(88, 89);
+					compareFooterSum(90, 91);
+					compareFooterSum(92, 93);
+					compareFooterSum(94, 95);
+					compareFooterSum(96, 97);
+					compareFooterSum(98, 99);
+					compareFooterSum(100, 101);
+					compareFooterSum(102, 103);
+					compareFooterSum(104, 105);
+					compareFooterSum(106, 107);
+					compareFooterSum(108, 109);
+					compareFooterSum(110, 111);
+					compareFooterSum(112, 113);
+					compareFooterSum(114, 115);
+					compareFooterSum(116, 117);
+					compareFooterSum(118, 119);
+					compareFooterSum(120, 121);
+					compareFooterSum(122, 123);
 				},
 				rowCallback: function( row, data, index ) {
 					compareField(row, data, 18, 'gp');
@@ -3815,19 +3967,95 @@
     }
 }
 				],
-				footerCallback: function ( row, data, start, end, display ) {
+				footerCallback: function (row, data, start, end, display) {
 					var api = this.api();
-					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
+					var numFormat = $.fn.dataTable.render.number(',', '.', 2, '').display; 
 
+					// 1. Render seluruh total kolom seperti biasa
 					for (var i = 10; i <= 123; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
-						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
-						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
+						
+						// Render ke elemen HTML footer
 						$('#kbm_reg_' + columnIndex).html(numFormat(sum_all));
-
-						// console.log('Number of Pages: ' + api.page.info().pages);
 					}
+
+					// 2. Fungsi Helper untuk Membandingkan Total Footer Pasangan Kolom (misal col1 vs col2)
+					function compareFooterSum(colIndex1, colIndex2) {
+						// Ambil nilai sum murni (numerik) dari masing-masing kolom
+						var sum1 = api.column(colIndex1).data().sum();
+						var sum2 = api.column(colIndex2).data().sum();
+
+						// Ambil elemen jQuery footer-nya
+						var $elem1 = $('#kbm_reg_' + colIndex1);
+						var $elem2 = $('#kbm_reg_' + colIndex2);
+
+						// Toleransi kecil selisih floating point (misal < 0.01 dianggap sama)
+						if (Math.abs(sum1 - sum2) > 0.01) {
+							// Jika BEDA -> Beri warna merah pada teks / background
+							$elem1.css({ 'color': 'red', 'font-weight': 'bold' });
+							$elem2.css({ 'color': 'red', 'font-weight': 'bold' });
+						} else {
+							// Jika SAMA -> Kembalikan ke warna normal (misal hitam/default)
+							$elem1.css({ 'color': '', 'font-weight': '' });
+							$elem2.css({ 'color': '', 'font-weight': '' });
+						}
+					}
+
+					// 3. Jalankan Perbandingan Footer Sesuai Pasangan Kolom yang Diinginkan
+					compareFooterSum(18, 19); // Membandingkan subtotal kolom 18 dan 19
+					compareFooterSum(20, 21); // Membandingkan subtotal kolom 20 dan 21
+					compareFooterSum(22, 23);
+					compareFooterSum(24, 25);
+					compareFooterSum(26, 27);
+					compareFooterSum(28, 29);
+					compareFooterSum(30, 31);
+					compareFooterSum(32, 33);
+					compareFooterSum(34, 35);
+					compareFooterSum(36, 37);
+					compareFooterSum(38, 39);
+					compareFooterSum(40, 41);
+					compareFooterSum(42, 43);
+					compareFooterSum(44, 45);
+					compareFooterSum(46, 47);
+					compareFooterSum(48, 49);
+					compareFooterSum(50, 51);
+					compareFooterSum(52, 53);
+					compareFooterSum(54, 55);
+					compareFooterSum(56, 57);
+					compareFooterSum(58, 59);
+					compareFooterSum(60, 61);
+					compareFooterSum(62, 63);
+					compareFooterSum(64, 65);
+					compareFooterSum(66, 67);
+					compareFooterSum(68, 69);
+					compareFooterSum(70, 71);
+					compareFooterSum(72, 73);
+					compareFooterSum(74, 75);
+					compareFooterSum(76, 77);
+					compareFooterSum(78, 79);
+					compareFooterSum(80, 81);
+					compareFooterSum(82, 83);
+					compareFooterSum(84, 85);
+					compareFooterSum(86, 87);
+					compareFooterSum(88, 89);
+					compareFooterSum(90, 91);
+					compareFooterSum(92, 93);
+					compareFooterSum(94, 95);
+					compareFooterSum(96, 97);
+					compareFooterSum(98, 99);
+					compareFooterSum(100, 101);
+					compareFooterSum(102, 103);
+					compareFooterSum(104, 105);
+					compareFooterSum(106, 107);
+					compareFooterSum(108, 109);
+					compareFooterSum(110, 111);
+					compareFooterSum(112, 113);
+					compareFooterSum(114, 115);
+					compareFooterSum(116, 117);
+					compareFooterSum(118, 119);
+					compareFooterSum(120, 121);
+					compareFooterSum(122, 123);
 				},
 				rowCallback: function( row, data, index ) {
 					compareField(row, data, 18, 'gp');
