@@ -672,6 +672,7 @@
 									var query = {
 										id_heyxxmh: id_heyxxmh,
 										id_hemxxmh_old: id_hemxxmh_old,
+										tanggal: tanggal,
 										search: params.term || '',
 										page: params.page || 1
 									}

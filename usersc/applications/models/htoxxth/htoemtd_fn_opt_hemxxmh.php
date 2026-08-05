@@ -25,7 +25,12 @@
     }else{
         $id_hemxxmh_old = 0;
     }
-    $tanggal_akhir = new Carbon();
+
+    if($_GET['tanggal'] > 0){
+        $tanggal = $_GET['tanggal'];
+    }else{
+        $tanggal = 0;
+    }
 
     // BEGIN query options self.
     // Hanya dipanggil jika field ada nilai id nya
@@ -66,10 +71,10 @@
                 ->or_where('hemxxmh.nama', '%' . $q . '%', 'LIKE' )
                 ->or_where('hetxxmh.nama', '%' . $q . '%', 'LIKE' );
         } )
-        ->where( function ( $r ) use ($tanggal_akhir) {
+        ->where( function ( $r ) use ($tanggal) {
             $r
                 ->where( 'hemjbmh.tanggal_keluar', NULL)
-                ->or_where( 'hemjbmh.tanggal_keluar', $tanggal_akhir->format('Y-m-d') , '>=');
+                ->or_where( 'hemjbmh.tanggal_keluar', $tanggal->format('Y-m-d') , '>=');
         } )
         ->order('hemxxmh.nama')
         ->limit($resultCount)
