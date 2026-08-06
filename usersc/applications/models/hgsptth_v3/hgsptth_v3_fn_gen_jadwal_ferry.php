@@ -76,7 +76,7 @@
             ->bind(':tanggal_awal', $tanggal_awal)
             ->bind(':tanggal_akhir', $tanggal_akhir)
             ->exec('UPDATE htssctd AS b
-                    LEFT JOIN hgsemtd_v3 AS a ON a.id_hemxxmh = b.id_hemxxmh
+                    LEFT JOIN hgsemtd_v3 AS a ON a.id_hemxxmh = b.id_hemxxmh AND a.id_hgsptth_v3 = :id_hgsptth_v3
                     SET 
                         b.is_active = 0
                     WHERE tanggal BETWEEN :tanggal_awal AND :tanggal_akhir AND a.id_hgsptth_v3 = :id_hgsptth_v3
