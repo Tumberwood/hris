@@ -431,7 +431,7 @@
 								return;
 							}
 
-							// Format tampilan untuk SweetAlert (misal: "1 Agustus 2026 s/d 6 Agustus 2026")
+							// Format tampilan untuk SweetAlert
 							var displayStart = moment(start_date).format('DD MMM YYYY');
 							var displayEnd   = moment(end_date).format('DD MMM YYYY');
 
@@ -445,7 +445,10 @@
 								currDate.add(1, 'days');
 							}
 
-							// 3. Konfirmasi SweetAlert2
+							// 3. Array untuk ID heyxxmh (1 dan 2)
+							var arrayHeyxxmh = [1, 2];
+
+							// 4. Konfirmasi SweetAlert2
 							Swal.fire({
 								title: 'Generate Presensi?',
 								text: 'Apakah anda yakin ingin generate presensi dengan range tanggal ' + displayStart + ' s/d ' + displayEnd + '?',
@@ -458,12 +461,14 @@
 
 									notifyLoadingDomba();
 
-									var index = 0; // Pointer looping
+									var dateIndex = 0; // Pointer index tanggal
+									var heyIndex  = 0; // Pointer index heyxxmh (0 = ID 1, 1 = ID 2)
 
-									// 4. Fungsi Rekursif AJAX
+									// 5. Fungsi Rekursif AJAX (Nested Looping)
 									function sendAjaxLooping() {
-										var currentTanggal = arrayTanggal[index];
-										var timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
+										var currentTanggal = arrayTanggal[dateIndex];
+										var currentHeyId   = arrayHeyxxmh[heyIndex];
+										var timestamp      = moment().format('YYYY-MM-DD HH:mm:ss');
 
 										$.ajax({
 											url: "../../models/hgtprth/hgtprth_fn_gen_presensi_ferry_v3.php",
@@ -472,16 +477,24 @@
 											data: {
 												id_hgtprth: id_hgtprth,
 												tanggal_select: currentTanggal,
-												id_heyxxmh_select: id_heyxxmh_select,
+												id_heyxxmh_select: currentHeyId, // Mengirim 1, lalu 2
 												timestamp: timestamp
 											},
 											success: function ( json ) {
-												index++;
+												// Increment index heyxxmh dulu
+												heyIndex++;
 
-												if (index < arrayTanggal.length) {
-													sendAjaxLooping(); // Lanjut ke tanggal berikutnya
+												// Jika ID 1 dan 2 sudah dijalankan untuk tanggal ini
+												if (heyIndex >= arrayHeyxxmh.length) {
+													heyIndex = 0;   // Reset index heyxxmh ke 0 (kembali ke ID 1)
+													dateIndex++;    // Pindah ke tanggal berikutnya
+												}
+
+												// Cek apakah masih ada tanggal yang tersisa
+												if (dateIndex < arrayTanggal.length) {
+													sendAjaxLooping(); // Lanjut loop berikutnya
 												} else {
-													// SELESAI SEMUA LOOPING
+													// SELESAI SEMUA LOOPING (Tanggal & ID)
 													notifyprogress.close();
 													
 													$.notify({
@@ -497,7 +510,7 @@
 												notifyprogress.close();
 												
 												$.notify({
-													message: 'Gagal memproses tanggal: ' + currentTanggal
+													message: 'Gagal memproses tanggal: ' + currentTanggal + ' (ID: ' + currentHeyId + ')'
 												},{
 													type: 'danger'
 												});
