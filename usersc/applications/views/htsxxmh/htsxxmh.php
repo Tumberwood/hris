@@ -136,17 +136,17 @@
 						label: "Toleransi Istirahat (menit) <sup class='text-danger'>*<sup>",
 						name: "htsxxmh.menit_toleransi_istirahat_out"
 					},
-					{
-						label: "Non Shift",
-						name: "htsxxmh.is_non_shift",
-						type: "select",
-						placeholder : "Select",
-						fieldInfo: "Flag Non Shift",
-						options: [
-							{ "label": "Ya", "value": 1 },
-							{ "label": "Tidak", "value": 0 }
-						]
-					},	
+					// {
+					// 	label: "Non Shift",
+					// 	name: "htsxxmh.is_non_shift",
+					// 	type: "select",
+					// 	placeholder : "Select",
+					// 	fieldInfo: "Flag Non Shift",
+					// 	options: [
+					// 		{ "label": "Ya", "value": 1 },
+					// 		{ "label": "Tidak", "value": 0 }
+					// 	]
+					// },	
 					{
 						label: "Pengecualian Late",
 						name: "htsxxmh.is_pengecualian_late",
@@ -351,6 +351,7 @@
 					{ data: "htsxxmh.keterangan" },
 					{
 						data: "htsxxmh.is_non_shift",
+						visible: false,
 						render: function (data) {
 							return data == 1
 								? '<span class="badge badge-success">YA</span>'

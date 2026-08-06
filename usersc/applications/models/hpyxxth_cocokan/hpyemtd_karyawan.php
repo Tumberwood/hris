@@ -207,6 +207,20 @@
 				// TAMBAHAN GAJI
 				// Field::inst( 'hpyemtd.terima_lain' ),
 				Field::inst( 'hpyemtd.premi_abs - hpyemtd_cocokan.total_rp_lembur + hpyemtd.total_rp_lembur + hpyemtd_cocokan.pot_upah - hpyemtd.pot_jam - hpyemtd.pot_lain_before_pph AS terima_lain_baru' ),
+				
+				// Field::inst( "
+				// 	IF(
+				// 		IFNULL(hpyemtd.premi_abs, 0) - IFNULL(hpyemtd_cocokan.premi_abs, 0) = 0,
+				// 		0,
+				// 		IFNULL(hpyemtd.premi_abs, 0)
+				// 	) 
+				// 	- IFNULL(hpyemtd_cocokan.total_rp_lembur, 0) 
+				// 	+ IFNULL(hpyemtd.total_rp_lembur, 0) 
+				// 	+ IFNULL(hpyemtd_cocokan.pot_upah, 0) 
+				// 	- IFNULL(hpyemtd.pot_jam, 0) 
+				// 	- IFNULL(hpyemtd.pot_lain_before_pph, 0) 
+				// 	AS terima_lain_baru
+				// " ),
 
 				Field::inst( 'hpyemtd.lembur15_final' ),
 				Field::inst( 'hpyemtd.lembur2_final' ),
