@@ -2732,7 +2732,7 @@
 					{ data: "hpyemtd.t_jab", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd_cocokan.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					// { data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-					{ data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "terima_lain_baru", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					{ data: "hpyemtd_cocokan.var_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.var_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
@@ -3528,7 +3528,7 @@
 					{ data: "hpyemtd.t_jab", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd_cocokan.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					// { data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-					{ data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "terima_lain_baru", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					
 					{ data: "hpyemtd_cocokan.var_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.var_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
