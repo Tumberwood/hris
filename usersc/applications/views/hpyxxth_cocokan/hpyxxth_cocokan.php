@@ -2065,16 +2065,7 @@
 	name: 'btnExcelBerwarna',
     action: async function () {
 
-		Swal.fire({
-			title: 'Processing...',
-			html: 'Jangan tutup halaman sampai proses selesai',
-			allowOutsideClick: false,
-			allowEscapeKey: false,
-			showConfirmButton: false,
-			didOpen: () => {
-				Swal.showLoading();
-			}
-		});
+		notifyLoadingJerapah();
 
 		await new Promise(resolve => requestAnimationFrame(resolve));
 		await new Promise(resolve => setTimeout(resolve, 50));
@@ -2872,16 +2863,17 @@
 	name: 'btnExcelBerwarna',
     action: async function () {
 
-		Swal.fire({
-			title: 'Processing...',
-			html: 'Jangan tutup halaman sampai proses selesai',
-			allowOutsideClick: false,
-			allowEscapeKey: false,
-			showConfirmButton: false,
-			didOpen: () => {
-				Swal.showLoading();
-			}
-		});
+		// Swal.fire({
+		// 	title: 'Processing...',
+		// 	html: 'Jangan tutup halaman sampai proses selesai',
+		// 	allowOutsideClick: false,
+		// 	allowEscapeKey: false,
+		// 	showConfirmButton: false,
+		// 	didOpen: () => {
+		// 		Swal.showLoading();
+		// 	}
+		// });
+		notifyLoadingJerapah();
 
 		await new Promise(resolve => requestAnimationFrame(resolve));
 		await new Promise(resolve => setTimeout(resolve, 50));
@@ -3668,16 +3660,17 @@
 	name: 'btnExcelBerwarna',
     action: async function () {
 
-		Swal.fire({
-			title: 'Processing...',
-			html: 'Jangan tutup halaman sampai proses selesai',
-			allowOutsideClick: false,
-			allowEscapeKey: false,
-			showConfirmButton: false,
-			didOpen: () => {
-				Swal.showLoading();
-			}
-		});
+		// Swal.fire({
+		// 	title: 'Processing...',
+		// 	html: 'Jangan tutup halaman sampai proses selesai',
+		// 	allowOutsideClick: false,
+		// 	allowEscapeKey: false,
+		// 	showConfirmButton: false,
+		// 	didOpen: () => {
+		// 		Swal.showLoading();
+		// 	}
+		// });
+		notifyLoadingJerapah();
 
 		await new Promise(resolve => requestAnimationFrame(resolve));
 		await new Promise(resolve => setTimeout(resolve, 50));
