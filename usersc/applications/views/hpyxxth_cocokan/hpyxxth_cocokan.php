@@ -2065,7 +2065,55 @@
 	name: 'btnExcelBerwarna',
     action: async function () {
 
-		notifyLoadingJerapah();
+		let startTime = Date.now();
+		let timerInterval;
+
+		Swal.fire({
+			title: 'Processing...',
+			html: `
+			<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%;">
+
+				<div style="font-size:15px;">
+					Jangan tutup halaman sampai proses selesai
+				</div>
+
+				<div style="font-size:18px;font-weight:bold;margin:10px 0 15px;">
+					⏱️ Waktu: <span id="elapsed">0</span> detik
+				</div>
+
+				<div style="width:100%;display:flex;justify-content:center;align-items:center;overflow:hidden;">
+					<img
+						src="https://media1.tenor.com/m/5NspfDPCF6UAAAAC/no-dont.gif"
+						alt="Running Sheep"
+						style="
+							width:100px;
+							height:auto;
+							display:block;
+							transform:translate(-20px, 0px);
+						"
+					/>
+				</div>
+
+			</div>
+			`,
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+			showConfirmButton: false,
+			didOpen: () => {
+
+				timerInterval = setInterval(() => {
+					const seconds = Math.floor((Date.now() - startTime) / 1000);
+					const el = Swal.getHtmlContainer().querySelector('#elapsed');
+					if (el) {
+						el.textContent = seconds;
+					}
+				}, 1000);
+
+			},
+			willClose: () => {
+				clearInterval(timerInterval);
+			}
+		});
 
 		await new Promise(resolve => requestAnimationFrame(resolve));
 		await new Promise(resolve => setTimeout(resolve, 50));
@@ -2863,17 +2911,55 @@
 	name: 'btnExcelBerwarna',
     action: async function () {
 
-		// Swal.fire({
-		// 	title: 'Processing...',
-		// 	html: 'Jangan tutup halaman sampai proses selesai',
-		// 	allowOutsideClick: false,
-		// 	allowEscapeKey: false,
-		// 	showConfirmButton: false,
-		// 	didOpen: () => {
-		// 		Swal.showLoading();
-		// 	}
-		// });
-		notifyLoadingJerapah();
+		let startTime = Date.now();
+		let timerInterval;
+
+		Swal.fire({
+			title: 'Processing...',
+			html: `
+			<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%;">
+
+				<div style="font-size:15px;">
+					Jangan tutup halaman sampai proses selesai
+				</div>
+
+				<div style="font-size:18px;font-weight:bold;margin:10px 0 15px;">
+					⏱️ Waktu: <span id="elapsed">0</span> detik
+				</div>
+
+				<div style="width:100%;display:flex;justify-content:center;align-items:center;overflow:hidden;">
+					<img
+						src="https://media1.tenor.com/m/5NspfDPCF6UAAAAC/no-dont.gif"
+						alt="Running Sheep"
+						style="
+							width:100px;
+							height:auto;
+							display:block;
+							transform:translate(-20px, 0px);
+						"
+					/>
+				</div>
+
+			</div>
+			`,
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+			showConfirmButton: false,
+			didOpen: () => {
+
+				timerInterval = setInterval(() => {
+					const seconds = Math.floor((Date.now() - startTime) / 1000);
+					const el = Swal.getHtmlContainer().querySelector('#elapsed');
+					if (el) {
+						el.textContent = seconds;
+					}
+				}, 1000);
+
+			},
+			willClose: () => {
+				clearInterval(timerInterval);
+			}
+		});
 
 		await new Promise(resolve => requestAnimationFrame(resolve));
 		await new Promise(resolve => setTimeout(resolve, 50));
@@ -3670,7 +3756,57 @@
 		// 		Swal.showLoading();
 		// 	}
 		// });
-		notifyLoadingJerapah();
+		// notifyLoadingJerapah();
+
+		let startTime = Date.now();
+		let timerInterval;
+
+		Swal.fire({
+			title: 'Processing...',
+			html: `
+			<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%;">
+
+				<div style="font-size:15px;">
+					Jangan tutup halaman sampai proses selesai
+				</div>
+
+				<div style="font-size:18px;font-weight:bold;margin:10px 0 15px;">
+					⏱️ Waktu: <span id="elapsed">0</span> detik
+				</div>
+
+				<div style="width:100%;display:flex;justify-content:center;align-items:center;overflow:hidden;">
+					<img
+						src="https://media1.tenor.com/m/5NspfDPCF6UAAAAC/no-dont.gif"
+						alt="Running Sheep"
+						style="
+							width:100px;
+							height:auto;
+							display:block;
+							transform:translate(-20px, 0px);
+						"
+					/>
+				</div>
+
+			</div>
+			`,
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+			showConfirmButton: false,
+			didOpen: () => {
+
+				timerInterval = setInterval(() => {
+					const seconds = Math.floor((Date.now() - startTime) / 1000);
+					const el = Swal.getHtmlContainer().querySelector('#elapsed');
+					if (el) {
+						el.textContent = seconds;
+					}
+				}, 1000);
+
+			},
+			willClose: () => {
+				clearInterval(timerInterval);
+			}
+		});
 
 		await new Promise(resolve => requestAnimationFrame(resolve));
 		await new Promise(resolve => setTimeout(resolve, 50));
