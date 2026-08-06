@@ -412,11 +412,10 @@
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
 
-							// 1. Tangkap tanggal langsung dari elemen Input
+							// 1. Tangkap tanggal dari input
 							var valStart = $('#start_date').val();
 							var valEnd   = $('#end_date').val();
 
-							// Validasi jika input tanggal belum diisi
 							if (!valStart || !valEnd) {
 								Swal.fire('Peringatan', 'Harap pilih Tanggal Awal dan Tanggal Akhir terlebih dahulu!', 'warning');
 								return;
@@ -425,24 +424,33 @@
 							var start_date = moment(valStart).format('YYYY-MM-DD');
 							var end_date   = moment(valEnd).format('YYYY-MM-DD');
 
-							// Validasi jika tanggal akhir lebih kecil dari tanggal awal
 							if (moment(end_date).isBefore(start_date)) {
 								Swal.fire('Peringatan', 'Tanggal Akhir tidak boleh lebih kecil dari Tanggal Awal!', 'warning');
 								return;
 							}
 
-							// Format tampilan untuk SweetAlert
 							var displayStart = moment(start_date).format('DD MMM YYYY');
 							var displayEnd   = moment(end_date).format('DD MMM YYYY');
 
-							// 2. Generate Array Tanggal dari start_date s/d end_date
-							var arrayTanggal = [];
-							var currDate = moment(start_date);
-							var lastDate = moment(end_date);
+							// 2. Panggil autofillField (variabel global autofillData akan otomatis terisi)
+							autofillField(
+								`(
+									SELECT
+										1 AS id,
+										a.id AS id_hgtprth,
+										a.tanggal
+									FROM hgtprth a
+									WHERE a.tanggal BETWEEN '${start_date}' AND '${end_date}'
+									AND a.is_active = 1
+								) AS gen`,
+								1,
+								'id_hgtprth, tanggal'
+							);
 
-							while (currDate <= lastDate) {
-								arrayTanggal.push(currDate.format('YYYY-MM-DD'));
-								currDate.add(1, 'days');
+							// Validasi jika autofillData kosong
+							if (!autofillData || autofillData.length === 0) {
+								Swal.fire('Informasi', 'Tidak ada data presensi aktif pada rentang tanggal tersebut.', 'info');
+								return;
 							}
 
 							// 3. Array untuk ID heyxxmh (1 dan 2)
@@ -461,13 +469,15 @@
 
 									notifyLoadingDomba();
 
-									var dateIndex = 0; // Pointer index tanggal
-									var heyIndex  = 0; // Pointer index heyxxmh (0 = ID 1, 1 = ID 2)
+									var dataIndex = 0; // Pointer index untuk autofillData
+									var heyIndex  = 0; // Pointer index untuk ID heyxxmh (0 = ID 1, 1 = ID 2)
 
-									// 5. Fungsi Rekursif AJAX (Nested Looping)
+									// 5. Fungsi Rekursif AJAX (Nested Loop)
 									function sendAjaxLooping() {
-										var currentTanggal = arrayTanggal[dateIndex];
-										var currentHeyId   = arrayHeyxxmh[heyIndex];
+										var currentItem    = autofillData[dataIndex];
+										var currentHgtId   = currentItem.id_hgtprth; // Ambil id_hgtprth dari autofillData
+										var currentTanggal = currentItem.tanggal;    // Ambil tanggal dari autofillData
+										var currentHeyId   = arrayHeyxxmh[heyIndex]; // ID 1 lalu 2
 										var timestamp      = moment().format('YYYY-MM-DD HH:mm:ss');
 
 										$.ajax({
@@ -475,26 +485,25 @@
 											dataType: 'json',
 											type: 'POST',
 											data: {
-												id_hgtprth: id_hgtprth,
+												id_hgtprth: currentHgtId,
 												tanggal_select: currentTanggal,
-												id_heyxxmh_select: currentHeyId, // Mengirim 1, lalu 2
+												id_heyxxmh_select: currentHeyId,
 												timestamp: timestamp
 											},
 											success: function ( json ) {
-												// Increment index heyxxmh dulu
 												heyIndex++;
 
-												// Jika ID 1 dan 2 sudah dijalankan untuk tanggal ini
+												// Jika ID 1 dan 2 sudah selesai untuk item ini, lanjut ke baris autofillData berikutnya
 												if (heyIndex >= arrayHeyxxmh.length) {
-													heyIndex = 0;   // Reset index heyxxmh ke 0 (kembali ke ID 1)
-													dateIndex++;    // Pindah ke tanggal berikutnya
+													heyIndex = 0;
+													dataIndex++;
 												}
 
-												// Cek apakah masih ada tanggal yang tersisa
-												if (dateIndex < arrayTanggal.length) {
-													sendAjaxLooping(); // Lanjut loop berikutnya
+												// Cek apakah masih ada data autofillData
+												if (dataIndex < autofillData.length) {
+													sendAjaxLooping();
 												} else {
-													// SELESAI SEMUA LOOPING (Tanggal & ID)
+													// SELESAI
 													notifyprogress.close();
 													
 													$.notify({
@@ -520,7 +529,7 @@
 										});
 									}
 
-									// Jalankan proses looping pertamanya
+									// Jalankan looping pertama
 									sendAjaxLooping();
 
 								}
