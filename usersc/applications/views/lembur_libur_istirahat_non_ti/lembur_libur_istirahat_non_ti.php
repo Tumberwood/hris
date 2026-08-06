@@ -357,11 +357,11 @@
 					);
 
 					// =========================
-					// Count NIK unik kolom 1
+					// Count NIK unik kolom 2
 					// =========================
 					const uniqueNik = new Set();
 
-					api.column(1, { search: 'applied' }).data().each(function (nik) {
+					api.column(2, { search: 'applied' }).data().each(function (nik) {
 						if (nik !== null && nik !== undefined && nik !== '') {
 							uniqueNik.add(String(nik).trim());
 						}
