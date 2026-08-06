@@ -3218,7 +3218,7 @@
 						var $elem2 = $('#kontrak_' + colIndex2);
 
 						// Toleransi kecil selisih floating point (misal < 0.01 dianggap sama)
-						if (Math.abs(sum1 - sum2) > 0.01) {
+						if (Math.abs(sum1 - sum2) > 1) {
 							// Jika BEDA -> Beri warna merah pada teks / background
 							$elem1.css({ 'color': 'red', 'font-weight': 'bold' });
 							$elem2.css({ 'color': 'red', 'font-weight': 'bold' });
