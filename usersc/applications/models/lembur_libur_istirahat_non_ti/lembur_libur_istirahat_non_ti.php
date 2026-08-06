@@ -40,9 +40,9 @@
 					a.st_jadwal,
 					a.durasi_lembur_total_jam,
 					a.durasi_lembur_final,
-					a.break_in,
-					a.break_out,
-					a.jam_makan,
+					DATE_FORMAT(a.break_in, "%d %b %Y %H:%i") break_in,
+					DATE_FORMAT(a.break_out, "%d %b %Y %H:%i") break_out,
+					DATE_FORMAT(a.jam_makan, "%d %b %Y %H:%i") jam_makan,
 					CONCAT(spkl.jam_awal, " - ", spkl.jam_akhir) jam_lembur,
 					CASE spkl.is_istirahat
 					    WHEN 1 THEN "Ya"
