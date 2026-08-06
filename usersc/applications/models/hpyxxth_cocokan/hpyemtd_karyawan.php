@@ -208,6 +208,8 @@
 				// Field::inst( 'hpyemtd.terima_lain' ),
 				//Field::inst( 'hpyemtd.premi_abs - hpyemtd_cocokan.total_rp_lembur + hpyemtd.total_rp_lembur + hpyemtd_cocokan.pot_upah - hpyemtd.pot_jam - hpyemtd.pot_lain_before_pph AS hpyemtd.terima_lain' ),
 				
+				Field::inst( 'IF( IFNULL(hpyemtd.premi_abs, 0) - IFNULL(hpyemtd_cocokan.premi_abs, 0) = 0, 0, IFNULL(hpyemtd.premi_abs, 0) ) - hpyemtd_cocokan.total_rp_lembur + hpyemtd.total_rp_lembur + hpyemtd_cocokan.pot_upah - hpyemtd.pot_jam - hpyemtd.pot_lain_before_pph AS hpyemtd.terima_lain' ),
+
 				Field::inst( 'hpyemtd.lembur15_final' ),
 				Field::inst( 'hpyemtd.lembur2_final' ),
 				Field::inst( 'hpyemtd.lembur3_final' ),
@@ -278,8 +280,6 @@
 				Field::inst( 'hobxxmh.nama' ),
 				Field::inst( 'hovxxmh.nama' ),
 				Field::inst( 'hosxxmh.nama' ),
-
-				Field::inst( 'IF( IFNULL(hpyemtd.premi_abs, 0) - IFNULL(hpyemtd_cocokan.premi_abs, 0) = 0, 0, IFNULL(hpyemtd.premi_abs, 0) ) - hpyemtd_cocokan.total_rp_lembur + hpyemtd.total_rp_lembur + IF( hpyemtd.pot_upah - hpyemtd_cocokan.pot_upah = 0, 0, hpyemtd_cocokan.pot_upah ) - hpyemtd.pot_jam - hpyemtd.pot_lain_before_pph AS hpyemtd.terima_lain' ),
 			)
 			->leftJoin( 'hemxxmh','hemxxmh.id','=','hpyemtd_cocokan.id_hemxxmh' )
 			->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
