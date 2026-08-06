@@ -2065,14 +2065,12 @@
 	name: 'btnExcelBerwarna',
     action: async function () {
 
-		let startTime = Date.now();
 		let timerInterval;
 
 		Swal.fire({
 			title: 'Processing...',
 			html: `
 			<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%;">
-
 				<div style="font-size:15px;">
 					Jangan tutup halaman sampai proses selesai
 				</div>
@@ -2093,22 +2091,38 @@
 						"
 					/>
 				</div>
-
 			</div>
 			`,
 			allowOutsideClick: false,
 			allowEscapeKey: false,
 			showConfirmButton: false,
 			didOpen: () => {
+				// Reset startTime persis saat modal popup terbuka
+				const startTime = Date.now();
 
 				timerInterval = setInterval(() => {
 					const seconds = Math.floor((Date.now() - startTime) / 1000);
-					const el = Swal.getHtmlContainer().querySelector('#elapsed');
+					const el = Swal.getHtmlContainer()?.querySelector('#elapsed');
 					if (el) {
 						el.textContent = seconds;
 					}
 				}, 1000);
 
+				// DELAY PROSES BERAT AGAR TIMER BISA BERJALAN
+				setTimeout(async () => {
+					try {
+						const workbook = new ExcelJS.Workbook();
+						const worksheet = workbook.addWorksheet('Payroll');
+						const dt = $('#tblhpyemtd_karyawan').DataTable();
+
+						// === MASUKKAN KODE PROSES EKSPOR EXCEL KAMU DI SINI ===
+						
+						// Jika proses selesai, tutup Swal & bersihkan interval
+						// Swal.close(); 
+					} catch (error) {
+						console.error(error);
+					}
+				}, 100);
 			},
 			willClose: () => {
 				clearInterval(timerInterval);
@@ -2911,14 +2925,12 @@
 	name: 'btnExcelBerwarna',
     action: async function () {
 
-		let startTime = Date.now();
 		let timerInterval;
 
 		Swal.fire({
 			title: 'Processing...',
 			html: `
 			<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%;">
-
 				<div style="font-size:15px;">
 					Jangan tutup halaman sampai proses selesai
 				</div>
@@ -2939,22 +2951,38 @@
 						"
 					/>
 				</div>
-
 			</div>
 			`,
 			allowOutsideClick: false,
 			allowEscapeKey: false,
 			showConfirmButton: false,
 			didOpen: () => {
+				// Reset startTime persis saat modal popup terbuka
+				const startTime = Date.now();
 
 				timerInterval = setInterval(() => {
 					const seconds = Math.floor((Date.now() - startTime) / 1000);
-					const el = Swal.getHtmlContainer().querySelector('#elapsed');
+					const el = Swal.getHtmlContainer()?.querySelector('#elapsed');
 					if (el) {
 						el.textContent = seconds;
 					}
 				}, 1000);
 
+				// DELAY PROSES BERAT AGAR TIMER BISA BERJALAN
+				setTimeout(async () => {
+					try {
+						const workbook = new ExcelJS.Workbook();
+						const worksheet = workbook.addWorksheet('Payroll');
+						const dt = $('#tblhpyemtd_karyawan').DataTable();
+
+						// === MASUKKAN KODE PROSES EKSPOR EXCEL KAMU DI SINI ===
+						
+						// Jika proses selesai, tutup Swal & bersihkan interval
+						// Swal.close(); 
+					} catch (error) {
+						console.error(error);
+					}
+				}, 100);
 			},
 			willClose: () => {
 				clearInterval(timerInterval);
@@ -3758,14 +3786,12 @@
 		// });
 		// notifyLoadingJerapah();
 
-		let startTime = Date.now();
 		let timerInterval;
 
 		Swal.fire({
 			title: 'Processing...',
 			html: `
 			<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%;">
-
 				<div style="font-size:15px;">
 					Jangan tutup halaman sampai proses selesai
 				</div>
@@ -3786,22 +3812,38 @@
 						"
 					/>
 				</div>
-
 			</div>
 			`,
 			allowOutsideClick: false,
 			allowEscapeKey: false,
 			showConfirmButton: false,
 			didOpen: () => {
+				// Reset startTime persis saat modal popup terbuka
+				const startTime = Date.now();
 
 				timerInterval = setInterval(() => {
 					const seconds = Math.floor((Date.now() - startTime) / 1000);
-					const el = Swal.getHtmlContainer().querySelector('#elapsed');
+					const el = Swal.getHtmlContainer()?.querySelector('#elapsed');
 					if (el) {
 						el.textContent = seconds;
 					}
 				}, 1000);
 
+				// DELAY PROSES BERAT AGAR TIMER BISA BERJALAN
+				setTimeout(async () => {
+					try {
+						const workbook = new ExcelJS.Workbook();
+						const worksheet = workbook.addWorksheet('Payroll');
+						const dt = $('#tblhpyemtd_karyawan').DataTable();
+
+						// === MASUKKAN KODE PROSES EKSPOR EXCEL KAMU DI SINI ===
+						
+						// Jika proses selesai, tutup Swal & bersihkan interval
+						// Swal.close(); 
+					} catch (error) {
+						console.error(error);
+					}
+				}, 100);
 			},
 			willClose: () => {
 				clearInterval(timerInterval);
