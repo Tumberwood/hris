@@ -537,7 +537,11 @@
                                                                 jumlah_grup = 2 
                                                                 AND c.nama NOT IN ("Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
                                                             )
-                                                            OR jumlah_grup <> 2
+                                                            -- OR jumlah_grup <> 2
+                                                            OR (
+                                                                jumlah_grup = 1
+                                                                AND c.nama NOT IN ("Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
+                                                            )
                                                         )
 
                                                         AND (
@@ -599,7 +603,11 @@
                                                                 jumlah_grup = 2 
                                                                 AND c.nama NOT IN ("Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
                                                             )
-                                                            OR jumlah_grup <> 2
+                                                            -- OR jumlah_grup <> 2
+                                                            OR (
+                                                                jumlah_grup = 1
+                                                                AND c.nama NOT IN ("Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
+                                                            )
                                                         )
 
                                                         AND (
@@ -738,7 +746,11 @@
                                                                 jumlah_grup = 2 
                                                                 AND c.nama NOT IN ("Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
                                                             )
-                                                            OR jumlah_grup <> 2
+                                                            -- OR jumlah_grup <> 2
+                                                            OR (
+                                                                jumlah_grup = 1
+                                                                AND c.nama NOT IN ("Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
+                                                            )
                                                         )
 
                                                         AND (
