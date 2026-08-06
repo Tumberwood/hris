@@ -627,10 +627,10 @@
                                                         -- AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 
                                                         -- 21 Jul 2026, tanpa toleransi 1 jam akhir
-                                                        -- AND jadwal.tanggaljam_akhir_istirahat
+                                                        AND jadwal.tanggaljam_akhir_istirahat
 
                                                         -- 23 Jul 2026, request bu Cia, dikembalikan range istirahat + 1 jam supaya terbaca
-                                                        AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                                                        -- AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                     AND (
                                                         -- 🔹 Istirahat Gedung 3
                                                         (
@@ -772,10 +772,10 @@
                                                         -- AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 
                                                         -- 21 Jul 2026, tanpa toleransi 1 jam akhir
-                                                        -- AND jadwal.tanggaljam_akhir_istirahat
+                                                        AND jadwal.tanggaljam_akhir_istirahat
 
                                                         -- 23 Jul 2026, request bu Cia, dikembalikan range istirahat + 1 jam supaya terbaca
-                                                        AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                                                        -- AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                     AND (
                                                         -- 🔹 Istirahat Gedung 3
                                                         (
@@ -879,10 +879,10 @@
                                                         -- AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 
                                                         -- 21 Jul 2026, tanpa toleransi 1 jam akhir
-                                                        -- AND jadwal.tanggaljam_akhir_istirahat
+                                                        AND jadwal.tanggaljam_akhir_istirahat
 
                                                         -- 23 Jul 2026, request bu Cia, dikembalikan range istirahat + 1 jam supaya terbaca
-                                                        AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                                                        -- AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 
                                                     AND (
                                                         -- 🔹 Istirahat Gedung 3
@@ -922,10 +922,10 @@
                                                         -- AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 
                                                         -- 21 Jul 2026, tanpa toleransi 1 jam akhir
-                                                        -- AND jadwal.tanggaljam_akhir_istirahat
+                                                        AND jadwal.tanggaljam_akhir_istirahat
 
                                                         -- 23 Jul 2026, request bu Cia, dikembalikan range istirahat + 1 jam supaya terbaca
-                                                        AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                                                        -- AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
 
                                                     AND (
                                                         -- 🔹 Istirahat Gedung 3
