@@ -1900,7 +1900,7 @@
 					{ data: "hpyemtd_cocokan.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					// { data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{
-						data: "hpyemtd.terima_lain",
+						data: null,
 						class: "text-right",
 						render: function (data, type, row) {
 							// Helper fungsi untuk convert ke float & antisipasi nilai undefined/null/NaN
@@ -2732,7 +2732,7 @@
 					{ data: "hpyemtd_cocokan.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					// { data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{
-						data: "hpyemtd.terima_lain",
+						data: null,
 						class: "text-right",
 						render: function (data, type, row) {
 							// Helper fungsi untuk convert ke float & antisipasi nilai undefined/null/NaN
@@ -3552,7 +3552,7 @@
 					{ data: "hpyemtd_cocokan.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					// { data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{
-						data: "hpyemtd.terima_lain",
+						data: null,
 						class: "text-right",
 						render: function (data, type, row) {
 							// Helper fungsi untuk convert ke float & antisipasi nilai undefined/null/NaN
