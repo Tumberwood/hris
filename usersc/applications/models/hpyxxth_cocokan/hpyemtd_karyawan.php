@@ -206,7 +206,7 @@
 
 				// TAMBAHAN GAJI
 				// Field::inst( 'hpyemtd.terima_lain' ),
-				Field::inst( 'hpyemtd.premi_abs - hpyemtd_cocokan.total_rp_lembur + hpyemtd.total_rp_lembur + hpyemtd_cocokan.pot_upah - hpyemtd.pot_jam - hpyemtd.pot_lain_before_pph AS terima_lain_baru' ),
+				Field::inst( 'hpyemtd.premi_abs - hpyemtd_cocokan.total_rp_lembur + hpyemtd.total_rp_lembur + hpyemtd_cocokan.pot_upah - hpyemtd.pot_jam - hpyemtd.pot_lain_before_pph AS hpyemtd.terima_lain' ),
 				
 				// Field::inst( "
 				// 	IF(
