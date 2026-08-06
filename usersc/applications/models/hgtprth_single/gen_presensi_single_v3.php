@@ -676,7 +676,7 @@
                                                             -- OR jumlah_grup <> 2
                                                             OR (
                                                                 jumlah_grup = 1
-                                                                AND c.nama NOT IN ("PMI-Gedung-3","OS-Gedung-3")
+                                                                AND c.nama NOT IN ("Makan Manual", "PMI-Gedung-3","OS-Gedung-3")
                                                             )
                                                         )
 
@@ -1397,7 +1397,15 @@
                                 AND IFNULL(ceklok_makan, 0) > 0 
                                 AND (break_in IS NOT NULL AND durasi_break_menit > 1) 
                                 AND mesin NOT LIKE "%Gedung-3%"
-                                AND mesin NOT LIKE "%Makan%"
+                                -- AND mesin NOT LIKE "%Makan%"
+                                AND 
+                                (
+                                    mesin LIKE "%istirahat%" 
+                                    OR
+                                    mesin LIKE "%os%" 
+                                    OR
+                                    mesin LIKE "%pmi%" 
+                                )
                             THEN 1
 
                             -- Mulai 1/3/24  toleransi istirahat TI menjadi 30 menit, bukan 20 menit lagi
