@@ -2065,69 +2065,7 @@
 	name: 'btnExcelBerwarna',
     action: async function () {
 
-		let timerInterval;
-
-		Swal.fire({
-			title: 'Processing...',
-			html: `
-			<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%;">
-				<div style="font-size:15px;">
-					Jangan tutup halaman sampai proses selesai
-				</div>
-
-				<div style="font-size:18px;font-weight:bold;margin:10px 0 15px;">
-					⏱️ Waktu: <span id="elapsed">0</span> detik
-				</div>
-
-				<div style="width:100%;display:flex;justify-content:center;align-items:center;overflow:hidden;">
-					<img
-						src="https://media1.tenor.com/m/5NspfDPCF6UAAAAC/no-dont.gif"
-						alt="Running Sheep"
-						style="
-							width:100px;
-							height:auto;
-							display:block;
-							transform:translate(-20px, 0px);
-						"
-					/>
-				</div>
-			</div>
-			`,
-			allowOutsideClick: false,
-			allowEscapeKey: false,
-			showConfirmButton: false,
-			didOpen: () => {
-				// Reset startTime persis saat modal popup terbuka
-				const startTime = Date.now();
-
-				timerInterval = setInterval(() => {
-					const seconds = Math.floor((Date.now() - startTime) / 1000);
-					const el = Swal.getHtmlContainer()?.querySelector('#elapsed');
-					if (el) {
-						el.textContent = seconds;
-					}
-				}, 1000);
-
-				// DELAY PROSES BERAT AGAR TIMER BISA BERJALAN
-				setTimeout(async () => {
-					try {
-						const workbook = new ExcelJS.Workbook();
-						const worksheet = workbook.addWorksheet('Payroll');
-						const dt = $('#tblhpyemtd_karyawan').DataTable();
-
-						// === MASUKKAN KODE PROSES EKSPOR EXCEL KAMU DI SINI ===
-						
-						// Jika proses selesai, tutup Swal & bersihkan interval
-						// Swal.close(); 
-					} catch (error) {
-						console.error(error);
-					}
-				}, 100);
-			},
-			willClose: () => {
-				clearInterval(timerInterval);
-			}
-		});
+		notifyLoadingJerapah();
 
 		await new Promise(resolve => requestAnimationFrame(resolve));
 		await new Promise(resolve => setTimeout(resolve, 50));
@@ -2925,69 +2863,17 @@
 	name: 'btnExcelBerwarna',
     action: async function () {
 
-		let timerInterval;
-
-		Swal.fire({
-			title: 'Processing...',
-			html: `
-			<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%;">
-				<div style="font-size:15px;">
-					Jangan tutup halaman sampai proses selesai
-				</div>
-
-				<div style="font-size:18px;font-weight:bold;margin:10px 0 15px;">
-					⏱️ Waktu: <span id="elapsed">0</span> detik
-				</div>
-
-				<div style="width:100%;display:flex;justify-content:center;align-items:center;overflow:hidden;">
-					<img
-						src="https://media1.tenor.com/m/5NspfDPCF6UAAAAC/no-dont.gif"
-						alt="Running Sheep"
-						style="
-							width:100px;
-							height:auto;
-							display:block;
-							transform:translate(-20px, 0px);
-						"
-					/>
-				</div>
-			</div>
-			`,
-			allowOutsideClick: false,
-			allowEscapeKey: false,
-			showConfirmButton: false,
-			didOpen: () => {
-				// Reset startTime persis saat modal popup terbuka
-				const startTime = Date.now();
-
-				timerInterval = setInterval(() => {
-					const seconds = Math.floor((Date.now() - startTime) / 1000);
-					const el = Swal.getHtmlContainer()?.querySelector('#elapsed');
-					if (el) {
-						el.textContent = seconds;
-					}
-				}, 1000);
-
-				// DELAY PROSES BERAT AGAR TIMER BISA BERJALAN
-				setTimeout(async () => {
-					try {
-						const workbook = new ExcelJS.Workbook();
-						const worksheet = workbook.addWorksheet('Payroll');
-						const dt = $('#tblhpyemtd_karyawan').DataTable();
-
-						// === MASUKKAN KODE PROSES EKSPOR EXCEL KAMU DI SINI ===
-						
-						// Jika proses selesai, tutup Swal & bersihkan interval
-						// Swal.close(); 
-					} catch (error) {
-						console.error(error);
-					}
-				}, 100);
-			},
-			willClose: () => {
-				clearInterval(timerInterval);
-			}
-		});
+		// Swal.fire({
+		// 	title: 'Processing...',
+		// 	html: 'Jangan tutup halaman sampai proses selesai',
+		// 	allowOutsideClick: false,
+		// 	allowEscapeKey: false,
+		// 	showConfirmButton: false,
+		// 	didOpen: () => {
+		// 		Swal.showLoading();
+		// 	}
+		// });
+		notifyLoadingJerapah();
 
 		await new Promise(resolve => requestAnimationFrame(resolve));
 		await new Promise(resolve => setTimeout(resolve, 50));
@@ -3784,71 +3670,7 @@
 		// 		Swal.showLoading();
 		// 	}
 		// });
-		// notifyLoadingJerapah();
-
-		let timerInterval;
-
-		Swal.fire({
-			title: 'Processing...',
-			html: `
-			<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%;">
-				<div style="font-size:15px;">
-					Jangan tutup halaman sampai proses selesai
-				</div>
-
-				<div style="font-size:18px;font-weight:bold;margin:10px 0 15px;">
-					⏱️ Waktu: <span id="elapsed">0</span> detik
-				</div>
-
-				<div style="width:100%;display:flex;justify-content:center;align-items:center;overflow:hidden;">
-					<img
-						src="https://media1.tenor.com/m/5NspfDPCF6UAAAAC/no-dont.gif"
-						alt="Running Sheep"
-						style="
-							width:100px;
-							height:auto;
-							display:block;
-							transform:translate(-20px, 0px);
-						"
-					/>
-				</div>
-			</div>
-			`,
-			allowOutsideClick: false,
-			allowEscapeKey: false,
-			showConfirmButton: false,
-			didOpen: () => {
-				// Reset startTime persis saat modal popup terbuka
-				const startTime = Date.now();
-
-				timerInterval = setInterval(() => {
-					const seconds = Math.floor((Date.now() - startTime) / 1000);
-					const el = Swal.getHtmlContainer()?.querySelector('#elapsed');
-					if (el) {
-						el.textContent = seconds;
-					}
-				}, 1000);
-
-				// DELAY PROSES BERAT AGAR TIMER BISA BERJALAN
-				setTimeout(async () => {
-					try {
-						const workbook = new ExcelJS.Workbook();
-						const worksheet = workbook.addWorksheet('Payroll');
-						const dt = $('#tblhpyemtd_karyawan').DataTable();
-
-						// === MASUKKAN KODE PROSES EKSPOR EXCEL KAMU DI SINI ===
-						
-						// Jika proses selesai, tutup Swal & bersihkan interval
-						// Swal.close(); 
-					} catch (error) {
-						console.error(error);
-					}
-				}, 100);
-			},
-			willClose: () => {
-				clearInterval(timerInterval);
-			}
-		});
+		notifyLoadingJerapah();
 
 		await new Promise(resolve => requestAnimationFrame(resolve));
 		await new Promise(resolve => setTimeout(resolve, 50));
