@@ -404,6 +404,116 @@
 							} );
 						}
 					},
+					{
+						text: '<i class="fa fa-cogs"></i> Generate Multi Tanggal',
+						name: 'btnGeneratePresensiMulti',
+						className: 'btn btn-xs btn-outline',
+						titleAttr: 'Generate Presensi Rentang Tanggal',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+
+							// 1. Tangkap tanggal langsung dari elemen Input
+							var valStart = $('#start_date').val();
+							var valEnd   = $('#end_date').val();
+
+							// Validasi jika input tanggal belum diisi
+							if (!valStart || !valEnd) {
+								Swal.fire('Peringatan', 'Harap pilih Tanggal Awal dan Tanggal Akhir terlebih dahulu!', 'warning');
+								return;
+							}
+
+							var start_date = moment(valStart).format('YYYY-MM-DD');
+							var end_date   = moment(valEnd).format('YYYY-MM-DD');
+
+							// Validasi jika tanggal akhir lebih kecil dari tanggal awal
+							if (moment(end_date).isBefore(start_date)) {
+								Swal.fire('Peringatan', 'Tanggal Akhir tidak boleh lebih kecil dari Tanggal Awal!', 'warning');
+								return;
+							}
+
+							// Format tampilan untuk SweetAlert (misal: "1 Agustus 2026 s/d 6 Agustus 2026")
+							var displayStart = moment(start_date).format('DD MMM YYYY');
+							var displayEnd   = moment(end_date).format('DD MMM YYYY');
+
+							// 2. Generate Array Tanggal dari start_date s/d end_date
+							var arrayTanggal = [];
+							var currDate = moment(start_date);
+							var lastDate = moment(end_date);
+
+							while (currDate <= lastDate) {
+								arrayTanggal.push(currDate.format('YYYY-MM-DD'));
+								currDate.add(1, 'days');
+							}
+
+							// 3. Konfirmasi SweetAlert2
+							Swal.fire({
+								title: 'Generate Presensi?',
+								text: 'Apakah anda yakin ingin generate presensi dengan range tanggal ' + displayStart + ' s/d ' + displayEnd + '?',
+								icon: 'question',
+								showCancelButton: true,
+								confirmButtonText: 'Yes',
+								cancelButtonText: 'No'
+							}).then((result) => {
+								if (result.isConfirmed) {
+
+									notifyLoadingDomba();
+
+									var index = 0; // Pointer looping
+
+									// 4. Fungsi Rekursif AJAX
+									function sendAjaxLooping() {
+										var currentTanggal = arrayTanggal[index];
+										var timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
+
+										$.ajax({
+											url: "../../models/hgtprth/hgtprth_fn_gen_presensi_ferry_v3.php",
+											dataType: 'json',
+											type: 'POST',
+											data: {
+												id_hgtprth: id_hgtprth,
+												tanggal_select: currentTanggal,
+												id_heyxxmh_select: id_heyxxmh_select,
+												timestamp: timestamp
+											},
+											success: function ( json ) {
+												index++;
+
+												if (index < arrayTanggal.length) {
+													sendAjaxLooping(); // Lanjut ke tanggal berikutnya
+												} else {
+													// SELESAI SEMUA LOOPING
+													notifyprogress.close();
+													
+													$.notify({
+														message: 'Berhasil generate presensi dari ' + displayStart + ' s/d ' + displayEnd
+													},{
+														type: 'success'
+													});
+
+													tblhgtprth.ajax.reload(null, false);
+												}
+											},
+											error: function ( xhr, status, error ) {
+												notifyprogress.close();
+												
+												$.notify({
+													message: 'Gagal memproses tanggal: ' + currentTanggal
+												},{
+													type: 'danger'
+												});
+
+												tblhgtprth.ajax.reload(null, false);
+											}
+										});
+									}
+
+									// Jalankan proses looping pertamanya
+									sendAjaxLooping();
+
+								}
+							});
+						}
+					}
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.hgtprth.is_active == 0 ) {
