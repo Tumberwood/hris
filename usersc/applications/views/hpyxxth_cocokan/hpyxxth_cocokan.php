@@ -2399,7 +2399,7 @@
 ],
 				footerCallback: function (row, data, start, end, display) {
 					var api = this.api();
-					var numFormat = $.fn.dataTable.render.number(',', '.', 2, '').display; 
+					var numFormat = $.fn.dataTable.render.number(',', '.', 0, '').display; 
 
 					// 1. Render seluruh total kolom seperti biasa
 					for (var i = 10; i <= 123; i++) {
@@ -3204,7 +3204,7 @@
 				],
 				footerCallback: function (row, data, start, end, display) {
 					var api = this.api();
-					var numFormat = $.fn.dataTable.render.number(',', '.', 2, '').display; 
+					var numFormat = $.fn.dataTable.render.number(',', '.', 0, '').display; 
 
 					// 1. Render seluruh total kolom seperti biasa
 					for (var i = 10; i <= 123; i++) {
@@ -4000,7 +4000,7 @@
 				],
 				footerCallback: function (row, data, start, end, display) {
 					var api = this.api();
-					var numFormat = $.fn.dataTable.render.number(',', '.', 2, '').display; 
+					var numFormat = $.fn.dataTable.render.number(',', '.', 0, '').display; 
 
 					// 1. Render seluruh total kolom seperti biasa
 					for (var i = 10; i <= 123; i++) {
