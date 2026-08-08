@@ -41,18 +41,46 @@
         $arr_kode = "";
         for($i = 1;$i < count($sheetData);$i++){
             // Str pad 4 digit dengan 0 sebagai default,
+            
             //jadi jika 0 tidak terbaca di excel, maka bisa di akali dengan str pad
+            // if ($sheetData[$i]['0'] != '') {
+            //     $kode = str_pad($sheetData[$i]['0'], 4, '0', STR_PAD_LEFT);
+    
+            //     $dt = explode(" ", $sheetData[$i]['2']);
+            //     $str_tanggal = $dt[0];
+            //     $tahun = substr($str_tanggal, 6, 4);
+            //     $bulan = substr($str_tanggal, 3, 2);
+            //     $tgl = substr($str_tanggal, 0, 2);
+            //     $tanggal = $tahun . '-' . $bulan . '-' . $tgl;
+            //     $jam = $dt[1];
+    
+            //     if ($i == 1) {
+            //         $arr_kode = 'SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" AS excel_value ';
+            //     } else {
+            //         $arr_kode .= 'UNION ALL SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" ';
+            //     }
+            // }
+
+            //8 Aug 2026, diubah karena gagal insert ceklok istirahat info by Bu Cia, karena format tanggalnya
             if ($sheetData[$i]['0'] != '') {
                 $kode = str_pad($sheetData[$i]['0'], 4, '0', STR_PAD_LEFT);
-    
-                $dt = explode(" ", $sheetData[$i]['2']);
-                $str_tanggal = $dt[0];
-                $tahun = substr($str_tanggal, 6, 4);
-                $bulan = substr($str_tanggal, 3, 2);
-                $tgl = substr($str_tanggal, 0, 2);
-                $tanggal = $tahun . '-' . $bulan . '-' . $tgl;
-                $jam = $dt[1];
-    
+
+                // Ambil string tanggal dan jam dari kolom
+                $raw_datetime = trim($sheetData[$i]['2']); // misal: "7/31/2026 12:48"
+
+                // Parse format m/d/Y H:i (Bulan/Tanggal/Tahun Jam:Menit)
+                $dateObj = DateTime::createFromFormat('n/j/Y H:i', $raw_datetime);
+
+                if ($dateObj) {
+                    $tanggal = $dateObj->format('Y-m-d'); // Hasil: "2026-07-31"
+                    $jam     = $dateObj->format('H:i:s'); // Hasil: "12:48:00"
+                } else {
+                    // Fallback jika ada format yang sedikit berbeda (misal dengan detik)
+                    $timestamp = strtotime($raw_datetime);
+                    $tanggal   = date('Y-m-d', $timestamp);
+                    $jam       = date('H:i:s', $timestamp);
+                }
+
                 if ($i == 1) {
                     $arr_kode = 'SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" AS excel_value ';
                 } else {
