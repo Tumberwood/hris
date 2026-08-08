@@ -22,7 +22,7 @@
         ->bind(':end_date', $end_date)
         ->exec(' SELECT
                     a.id AS id_hgtprth,
-                    id_heyxxmh
+                    id_heyxxmh,
                     a.tanggal
                 FROM hgtprth a
                 WHERE a.tanggal BETWEEN :start_date AND :end_date
