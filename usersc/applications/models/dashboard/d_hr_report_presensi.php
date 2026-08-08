@@ -299,8 +299,12 @@
 					INNER JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
 					WHERE a.tanggal = :start_date AND a.is_active = 1 AND b.is_active = 1
 						AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3")
-						AND c.tanggal_jam BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
-						AND CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir) 
+						
+						-- 8 Aug 2026, Istirahat awal + 30 menit supaya tidak salah ambil finger In pada Lembur
+						AND c.tanggal_jam BETWEEN DATE_ADD(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 30 MINUTE)
+						-- 8 Aug 2026, Istirahat akhir - 1 Jam, supaya tidak salah ambil finger In pada Lembur
+						AND DATE_SUB(CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir), INTERVAL 1 HOUR)
+						
 						AND a.id_hemxxmh = :id_hemxxmh
 						AND a.id_htsxxmh = 1
 				)
@@ -396,8 +400,12 @@
 					INNER JOIN htoxxrd AS d ON d.id_hemxxmh = a.id_hemxxmh AND d.tanggal = a.tanggal
 					WHERE a.tanggal = :start_date AND a.is_active = 1 AND b.is_active = 1
 						AND c.nama IN ("istirahat", "istirahat manual", "os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3")
-						AND c.tanggal_jam BETWEEN CONCAT(d.tanggal, " ", d.jam_awal) 
-						AND CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir) 
+						
+						-- 8 Aug 2026, Istirahat awal + 30 menit supaya tidak salah ambil finger In pada Lembur
+						AND c.tanggal_jam BETWEEN DATE_ADD(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 30 MINUTE)
+						-- 8 Aug 2026, Istirahat akhir - 1 Jam, supaya tidak salah ambil finger In pada Lembur
+						AND DATE_SUB(CONCAT(IF(d.jam_awal > d.jam_akhir, DATE_ADD(d.tanggal, INTERVAL 1 DAY), d.tanggal), " ", d.jam_akhir), INTERVAL 1 HOUR)
+						
 						AND a.id_hemxxmh = :id_hemxxmh
 						AND a.id_htsxxmh = 1
 				) ceklok_istirahat
