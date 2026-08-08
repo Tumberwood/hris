@@ -578,7 +578,7 @@
                     return;
                 }
 
-                // Hitung total tanggal unik untuk info progress
+                // Hitung total tanggal unik
                 var uniqueDates = [...new Set(autofillData.map(item => item.tanggal))];
                 var totalDates  = uniqueDates.length;
 
@@ -593,10 +593,19 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
 
-                        // Tampilkan Loading Alert dengan konten dinamis agar user tidak bingung
+                        // Pop-up Loading Rapi & Terstruktur
                         Swal.fire({
-                            title: 'Memproses Generate Presensi...',
-                            html: '<b id="swal-progress-text">Menyiapkan data...</b>',
+                            title: 'Memproses Generate Presensi',
+                            html: `
+                                <div style="margin-top: 10px; font-size: 14px; color: #555;">
+                                    <div id="swal-date-text" style="font-weight: 600; font-size: 15px; color: #333; margin-bottom: 6px;">
+                                        Menyiapkan data...
+                                    </div>
+                                    <div id="swal-counter-text" style="font-size: 13px; color: #777;">
+                                        0 dari ${totalDates} Tanggal
+                                    </div>
+                                </div>
+                            `,
                             allowOutsideClick: false,
                             allowEscapeKey: false,
                             didOpen: () => {
@@ -604,9 +613,9 @@
                             }
                         });
 
-                        var dataIndex = 0; // Pointer index autofillData
-                        var completedForDate = {}; // Counter per tanggal (karena 1 tanggal ada 2 data)
-                        var processedDatesCount = 0; // Menghitung berapa tanggal yang sudah selesai sepenuhnya
+                        var dataIndex = 0; 
+                        var completedForDate = {}; 
+                        var processedDatesCount = 0; 
 
                         // 4. Rekursif AJAX Loop
                         function sendAjaxLooping() {
@@ -617,16 +626,14 @@
                             var displayTanggal = moment(currentTanggal).format('DD MMM YYYY');
                             var timestamp      = moment().format('YYYY-MM-DD HH:mm:ss');
 
-                            // Inisialisasi counter per tanggal jika belum ada
                             if (!completedForDate[currentTanggal]) {
                                 completedForDate[currentTanggal] = 0;
                             }
 
-                            // Update text di dalam SweetAlert agar user tahu sistem sedang bekerja
+                            // Update text UI secara bersih per baris
                             var currentProgressNum = processedDatesCount + 1;
-                            $('#swal-progress-text').html(
-                                'Sedang memproses tanggal: <b>' + displayTanggal + '</b> (' + currentProgressNum + ' dari ' + totalDates + ' tanggal)'
-                            );
+                            $('#swal-date-text').html('Sedang memproses: <span style="color:#0275d8;">' + displayTanggal + '</span>');
+                            $('#swal-counter-text').html('Progres: <b>' + currentProgressNum + '</b> dari <b>' + totalDates + '</b> Tanggal');
 
                             $.ajax({
                                 url: "../../models/hgtprth/hgtprth_fn_gen_presensi_ferry_v3.php",
@@ -641,15 +648,15 @@
                                 success: function ( json ) {
                                     completedForDate[currentTanggal]++;
 
-                                    // KETENTUAN: Jika 1 tanggal sudah memproses 2 data (keduanya selesai)
+                                    // Jika 2 request untuk tanggal tsb sudah selesai
                                     if (completedForDate[currentTanggal] === 2) {
                                         processedDatesCount++;
                                         
-                                        // Beri notifikasi toast kecil di pojok bahwa tanggal tsb selesai
+                                        // Notifikasi Toast Hijau (Success)
                                         $.notify({
                                             message: 'Tanggal ' + displayTanggal + ' berhasil di-generate!'
                                         },{
-                                            type: 'info',
+                                            type: 'success',
                                             timer: 1500,
                                             placement: { from: "top", align: "right" }
                                         });
@@ -657,11 +664,10 @@
 
                                     dataIndex++;
 
-                                    // Lanjut ke baris berikutnya
                                     if (dataIndex < autofillData.length) {
                                         sendAjaxLooping();
                                     } else {
-                                        // --- SELESAI SEMUA ---
+                                        // SELESAI
                                         Swal.fire({
                                             icon: 'success',
                                             title: 'Selesai!',
@@ -683,7 +689,7 @@
                             });
                         }
 
-                        // Jalankan pemrosesan
+                        // Jalankan proses
                         sendAjaxLooping();
 
                     }
@@ -694,7 +700,7 @@
             }
         });
     }
-},
+}
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.hgtprth.is_active == 0 ) {
