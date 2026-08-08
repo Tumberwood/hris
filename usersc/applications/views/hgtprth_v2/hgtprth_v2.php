@@ -404,138 +404,146 @@
 							} );
 						}
 					},
-					// {
-					// 	text: '<i class="fa fa-cogs"></i> Generate Multi Tanggal',
-					// 	name: 'btnGeneratePresensiMulti',
-					// 	className: 'btn btn-xs btn-outline',
-					// 	titleAttr: 'Generate Presensi Rentang Tanggal',
-					// 	action: function ( e, dt, node, config ) {
-					// 		e.preventDefault(); 
+					{
+						text: '<i class="fa fa-cogs"></i> Generate Multi Tanggal',
+						name: 'btnGeneratePresensiMulti',
+						className: 'btn btn-xs btn-outline',
+						titleAttr: 'Generate Presensi Rentang Tanggal',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
 
-					// 		// 1. Tangkap tanggal dari input
-					// 		var valStart = $('#start_date').val();
-					// 		var valEnd   = $('#end_date').val();
+							// 1. Tangkap tanggal dari input
+							var valStart = $('#start_date').val();
+							var valEnd   = $('#end_date').val();
 
-					// 		if (!valStart || !valEnd) {
-					// 			Swal.fire('Peringatan', 'Harap pilih Tanggal Awal dan Tanggal Akhir terlebih dahulu!', 'warning');
-					// 			return;
-					// 		}
+							if (!valStart || !valEnd) {
+								Swal.fire('Peringatan', 'Harap pilih Tanggal Awal dan Tanggal Akhir terlebih dahulu!', 'warning');
+								return;
+							}
 
-					// 		var start_date = moment(valStart).format('YYYY-MM-DD');
-					// 		var end_date   = moment(valEnd).format('YYYY-MM-DD');
+							var start_date = moment(valStart).format('YYYY-MM-DD');
+							var end_date   = moment(valEnd).format('YYYY-MM-DD');
 
-					// 		if (moment(end_date).isBefore(start_date)) {
-					// 			Swal.fire('Peringatan', 'Tanggal Akhir tidak boleh lebih kecil dari Tanggal Awal!', 'warning');
-					// 			return;
-					// 		}
+							if (moment(end_date).isBefore(start_date)) {
+								Swal.fire('Peringatan', 'Tanggal Akhir tidak boleh lebih kecil dari Tanggal Awal!', 'warning');
+								return;
+							}
 
-					// 		var displayStart = moment(start_date).format('DD MMM YYYY');
-					// 		var displayEnd   = moment(end_date).format('DD MMM YYYY');
+							var displayStart = moment(start_date).format('DD MMM YYYY');
+							var displayEnd   = moment(end_date).format('DD MMM YYYY');
 
-					// 		// 2. Panggil autofillField (variabel global autofillData akan otomatis terisi)
-					// 		autofillField(
-					// 			`(
-					// 				SELECT
-					// 					1 AS id,
-					// 					a.id AS id_hgtprth,
-					// 					a.tanggal
-					// 				FROM hgtprth a
-					// 				WHERE a.tanggal BETWEEN '${start_date}' AND '${end_date}'
-					// 				AND a.is_active = 1
-					// 			) AS gen`,
-					// 			1,
-					// 			'id_hgtprth, tanggal'
-					// 		);
+							// 2. Ambil data presensi dari fn_semua.php
+							$.ajax({
+								url: "../../models/hgtprth/fn_semua.php",
+								dataType: 'json',
+								type: 'POST',
+								data: {
+									start_date: start_date,
+									end_date: end_date
+								},
+								success: function ( json ) {
+									var autofillData = (json && json.data && json.data.rs_presensi) ? json.data.rs_presensi : [];
 
-					// 		// Validasi jika autofillData kosong
-					// 		if (!autofillData || autofillData.length === 0) {
-					// 			Swal.fire('Informasi', 'Tidak ada data presensi aktif pada rentang tanggal tersebut.', 'info');
-					// 			return;
-					// 		}
+									// Validasi jika autofillData kosong
+									if (!autofillData || autofillData.length === 0) {
+										Swal.fire('Informasi', 'Tidak ada data presensi aktif pada rentang tanggal tersebut.', 'info');
+										return;
+									}
 
-					// 		// 3. Array untuk ID heyxxmh (1 dan 2)
-					// 		var arrayHeyxxmh = [1, 2];
+									// 3. Array untuk ID heyxxmh (1 dan 2)
+									var arrayHeyxxmh = [1, 2];
 
-					// 		// 4. Konfirmasi SweetAlert2
-					// 		Swal.fire({
-					// 			title: 'Generate Presensi?',
-					// 			text: 'Apakah anda yakin ingin generate presensi dengan range tanggal ' + displayStart + ' s/d ' + displayEnd + '?',
-					// 			icon: 'question',
-					// 			showCancelButton: true,
-					// 			confirmButtonText: 'Yes',
-					// 			cancelButtonText: 'No'
-					// 		}).then((result) => {
-					// 			if (result.isConfirmed) {
+									// 4. Konfirmasi SweetAlert2
+									Swal.fire({
+										title: 'Generate Presensi?',
+										text: 'Apakah anda yakin ingin generate presensi dengan range tanggal ' + displayStart + ' s/d ' + displayEnd + '?',
+										icon: 'question',
+										showCancelButton: true,
+										confirmButtonText: 'Yes',
+										cancelButtonText: 'No'
+									}).then((result) => {
+										if (result.isConfirmed) {
 
-					// 				notifyLoadingDomba();
+											if (typeof notifyLoadingDomba === 'function') {
+												notifyLoadingDomba();
+											}
 
-					// 				var dataIndex = 0; // Pointer index untuk autofillData
-					// 				var heyIndex  = 0; // Pointer index untuk ID heyxxmh (0 = ID 1, 1 = ID 2)
+											var dataIndex = 0; // Pointer index untuk autofillData
+											var heyIndex  = 0; // Pointer index untuk ID heyxxmh (0 = ID 1, 1 = ID 2)
 
-					// 				// 5. Fungsi Rekursif AJAX (Nested Loop)
-					// 				function sendAjaxLooping() {
-					// 					var currentItem    = autofillData[dataIndex];
-					// 					var currentHgtId   = currentItem.id_hgtprth; // Ambil id_hgtprth dari autofillData
-					// 					var currentTanggal = currentItem.tanggal;    // Ambil tanggal dari autofillData
-					// 					var currentHeyId   = arrayHeyxxmh[heyIndex]; // ID 1 lalu 2
-					// 					var timestamp      = moment().format('YYYY-MM-DD HH:mm:ss');
+											// 5. Fungsi Rekursif AJAX (Nested Loop)
+											function sendAjaxLooping() {
+												var currentItem    = autofillData[dataIndex];
+												var currentHgtId   = currentItem.id_hgtprth; // Ambil id_hgtprth dari autofillData
+												var currentTanggal = currentItem.tanggal;    // Ambil tanggal dari autofillData
+												var currentHeyId   = arrayHeyxxmh[heyIndex]; // ID 1 lalu 2
+												var timestamp      = moment().format('YYYY-MM-DD HH:mm:ss');
 
-					// 					$.ajax({
-					// 						url: "../../models/hgtprth/hgtprth_fn_gen_presensi_ferry_v3.php",
-					// 						dataType: 'json',
-					// 						type: 'POST',
-					// 						data: {
-					// 							id_hgtprth: currentHgtId,
-					// 							tanggal_select: currentTanggal,
-					// 							id_heyxxmh_select: currentHeyId,
-					// 							timestamp: timestamp
-					// 						},
-					// 						success: function ( json ) {
-					// 							heyIndex++;
+												$.ajax({
+													url: "../../models/hgtprth/hgtprth_fn_gen_presensi_ferry_v3.php",
+													dataType: 'json',
+													type: 'POST',
+													data: {
+														id_hgtprth: currentHgtId,
+														tanggal_select: currentTanggal,
+														id_heyxxmh_select: currentHeyId,
+														timestamp: timestamp
+													},
+													success: function ( json ) {
+														heyIndex++;
 
-					// 							// Jika ID 1 dan 2 sudah selesai untuk item ini, lanjut ke baris autofillData berikutnya
-					// 							if (heyIndex >= arrayHeyxxmh.length) {
-					// 								heyIndex = 0;
-					// 								dataIndex++;
-					// 							}
+														// Jika ID 1 dan 2 sudah selesai untuk item ini, lanjut ke baris autofillData berikutnya
+														if (heyIndex >= arrayHeyxxmh.length) {
+															heyIndex = 0;
+															dataIndex++;
+														}
 
-					// 							// Cek apakah masih ada data autofillData
-					// 							if (dataIndex < autofillData.length) {
-					// 								sendAjaxLooping();
-					// 							} else {
-					// 								// SELESAI
-					// 								notifyprogress.close();
-													
-					// 								$.notify({
-					// 									message: 'Berhasil generate presensi dari ' + displayStart + ' s/d ' + displayEnd
-					// 								},{
-					// 									type: 'success'
-					// 								});
+														// Cek apakah masih ada data autofillData
+														if (dataIndex < autofillData.length) {
+															sendAjaxLooping();
+														} else {
+															// SELESAI
+															if (typeof notifyprogress !== 'undefined' && notifyprogress.close) {
+																notifyprogress.close();
+															}
+															
+															$.notify({
+																message: 'Berhasil generate presensi dari ' + displayStart + ' s/d ' + displayEnd
+															},{
+																type: 'success'
+															});
 
-					// 								tblhgtprth.ajax.reload(null, false);
-					// 							}
-					// 						},
-					// 						error: function ( xhr, status, error ) {
-					// 							notifyprogress.close();
-												
-					// 							$.notify({
-					// 								message: 'Gagal memproses tanggal: ' + currentTanggal + ' (ID: ' + currentHeyId + ')'
-					// 							},{
-					// 								type: 'danger'
-					// 							});
+															tblhgtprth.ajax.reload(null, false);
+														}
+													},
+													error: function ( xhr, status, error ) {
+														if (typeof notifyprogress !== 'undefined' && notifyprogress.close) {
+															notifyprogress.close();
+														}
+														
+														$.notify({
+															message: 'Gagal memproses tanggal: ' + currentTanggal + ' (ID: ' + currentHeyId + ')'
+														},{
+															type: 'danger'
+														});
 
-					// 							tblhgtprth.ajax.reload(null, false);
-					// 						}
-					// 					});
-					// 				}
+														tblhgtprth.ajax.reload(null, false);
+													}
+												});
+											}
 
-					// 				// Jalankan looping pertama
-					// 				sendAjaxLooping();
+											// Jalankan looping pertama
+											sendAjaxLooping();
 
-					// 			}
-					// 		});
-					// 	}
-					// }
+										}
+									});
+								},
+								error: function (xhr, status, error) {
+									Swal.fire('Error', 'Gagal mengambil data presensi dari server.', 'error');
+								}
+							});
+						}
+					}
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.hgtprth.is_active == 0 ) {
