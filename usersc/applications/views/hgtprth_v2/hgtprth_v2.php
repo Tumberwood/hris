@@ -404,135 +404,6 @@
 							} );
 						}
 					},
-// {
-//     text: '<i class="fa fa-cogs"></i> Generate Multi Tanggal',
-//     name: 'btnGeneratePresensiMulti',
-//     className: 'btn btn-xs btn-outline',
-//     titleAttr: 'Generate Presensi Rentang Tanggal',
-//     action: function ( e, dt, node, config ) {
-//         e.preventDefault(); 
-
-//         // 1. Validasi Input Tanggal
-//         var valStart = $('#start_date').val();
-//         var valEnd   = $('#end_date').val();
-
-//         if (!valStart || !valEnd) {
-//             Swal.fire('Peringatan', 'Harap pilih Tanggal Awal dan Tanggal Akhir terlebih dahulu!', 'warning');
-//             return;
-//         }
-
-//         var start_date = moment(valStart).format('YYYY-MM-DD');
-//         var end_date   = moment(valEnd).format('YYYY-MM-DD');
-
-//         if (moment(end_date).isBefore(start_date)) {
-//             Swal.fire('Peringatan', 'Tanggal Akhir tidak boleh lebih kecil dari Tanggal Awal!', 'warning');
-//             return;
-//         }
-
-//         var displayStart = moment(start_date).format('DD MMM YYYY');
-//         var displayEnd   = moment(end_date).format('DD MMM YYYY');
-
-//         // 2. Fetch Data dari fn_semua.php
-//         $.ajax({
-//             url: "../../models/hgtprth/fn_semua.php",
-//             dataType: 'json',
-//             type: 'POST',
-//             data: {
-//                 start_date: start_date,
-//                 end_date: end_date
-//             },
-//             success: function ( json ) {
-//                 var autofillData = (json && json.data && json.data.rs_presensi) ? json.data.rs_presensi : [];
-
-//                 if (!autofillData || autofillData.length === 0) {
-//                     Swal.fire('Informasi', 'Tidak ada data presensi aktif pada rentang tanggal tersebut.', 'info');
-//                     return;
-//                 }
-
-//                 // 3. Konfirmasi SweetAlert2
-//                 Swal.fire({
-//                     title: 'Generate Presensi?',
-//                     text: 'Apakah anda yakin ingin generate presensi dengan range tanggal ' + displayStart + ' s/d ' + displayEnd + '?',
-//                     icon: 'question',
-//                     showCancelButton: true,
-//                     confirmButtonText: 'Yes',
-//                     cancelButtonText: 'No'
-//                 }).then((result) => {
-//                     if (result.isConfirmed) {
-
-//                         if (typeof notifyLoadingDomba === 'function') {
-//                             notifyLoadingDomba();
-//                         }
-
-//                         var dataIndex = 0; // Single pointer index untuk loop autofillData
-
-//                         // 4. Rekursif AJAX Loop (Linear 1-by-1)
-//                         function sendAjaxLooping() {
-//                             var currentItem    = autofillData[dataIndex];
-//                             var currentHgtId   = currentItem.id_hgtprth;
-//                             var currentHeyId   = currentItem.id_heyxxmh;
-//                             var currentTanggal = currentItem.tanggal;
-//                             var timestamp      = moment().format('YYYY-MM-DD HH:mm:ss');
-
-//                             $.ajax({
-//                                 url: "../../models/hgtprth/hgtprth_fn_gen_presensi_ferry_v3.php",
-//                                 dataType: 'json',
-//                                 type: 'POST',
-//                                 data: {
-//                                     id_hgtprth: currentHgtId,
-//                                     tanggal_select: currentTanggal,
-//                                     id_heyxxmh_select: currentHeyId,
-//                                     timestamp: timestamp
-//                                 },
-//                                 success: function ( json ) {
-//                                     dataIndex++;
-
-//                                     // Jika masih ada baris data, lanjutkan ke baris berikutnya
-//                                     if (dataIndex < autofillData.length) {
-//                                         sendAjaxLooping();
-//                                     } else {
-//                                         // SELESAI
-//                                         if (typeof notifyprogress !== 'undefined' && notifyprogress.close) {
-//                                             notifyprogress.close();
-//                                         }
-                                        
-//                                         $.notify({
-//                                             message: 'Berhasil generate presensi dari ' + displayStart + ' s/d ' + displayEnd
-//                                         },{
-//                                             type: 'success'
-//                                         });
-
-//                                         tblhgtprth.ajax.reload(null, false);
-//                                     }
-//                                 },
-//                                 error: function ( xhr, status, error ) {
-//                                     if (typeof notifyprogress !== 'undefined' && notifyprogress.close) {
-//                                         notifyprogress.close();
-//                                     }
-                                    
-//                                     $.notify({
-//                                         message: 'Gagal memproses tanggal: ' + currentTanggal + ' (ID Hey: ' + currentHeyId + ')'
-//                                     },{
-//                                         type: 'danger'
-//                                     });
-
-//                                     tblhgtprth.ajax.reload(null, false);
-//                                 }
-//                             });
-//                         }
-
-//                         // Jalankan pemrosesan
-//                         sendAjaxLooping();
-
-//                     }
-//                 });
-//             },
-//             error: function (xhr, status, error) {
-//                 Swal.fire('Error', 'Gagal mengambil data dari server.', 'error');
-//             }
-//         });
-//     }
-// },
 {
     text: '<i class="fa fa-cogs"></i> Generate Multi Tanggal',
     name: 'btnGeneratePresensiMulti',
@@ -593,7 +464,10 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
 
-                        // Pop-up Loading Rapi & Terstruktur
+                        var secondsElapsed = 0;
+                        var stopwatchInterval = null;
+
+                        // Pop-up Loading dengan Stopwatch
                         Swal.fire({
                             title: 'Memproses Generate Presensi',
                             html: `
@@ -601,8 +475,11 @@
                                     <div id="swal-date-text" style="font-weight: 600; font-size: 15px; color: #333; margin-bottom: 6px;">
                                         Menyiapkan data...
                                     </div>
-                                    <div id="swal-counter-text" style="font-size: 13px; color: #777;">
+                                    <div id="swal-counter-text" style="font-size: 13px; color: #777; margin-bottom: 6px;">
                                         0 dari ${totalDates} Tanggal
+                                    </div>
+                                    <div id="swal-timer-text" style="font-size: 12px; color: #888; font-style: italic;">
+                                        Waktu berjalan: <b style="color: #d9534f;">0</b> detik
                                     </div>
                                 </div>
                             `,
@@ -610,6 +487,18 @@
                             allowEscapeKey: false,
                             didOpen: () => {
                                 Swal.showLoading();
+
+                                // Jalankan Stopwatch setiap 1 detik
+                                stopwatchInterval = setInterval(() => {
+                                    secondsElapsed++;
+                                    $('#swal-timer-text b').text(secondsElapsed);
+                                }, 1000);
+                            },
+                            willClose: () => {
+                                // Bersihkan interval saat modal ditutup
+                                if (stopwatchInterval) {
+                                    clearInterval(stopwatchInterval);
+                                }
                             }
                         });
 
@@ -630,7 +519,7 @@
                                 completedForDate[currentTanggal] = 0;
                             }
 
-                            // Update text UI secara bersih per baris
+                            // Update UI tanggal & progress
                             var currentProgressNum = processedDatesCount + 1;
                             $('#swal-date-text').html('Sedang memproses: <span style="color:#0275d8;">' + displayTanggal + '</span>');
                             $('#swal-counter-text').html('Progres: <b>' + currentProgressNum + '</b> dari <b>' + totalDates + '</b> Tanggal');
@@ -648,11 +537,11 @@
                                 success: function ( json ) {
                                     completedForDate[currentTanggal]++;
 
-                                    // Jika 2 request untuk tanggal tsb sudah selesai
+                                    // Jika 2 request per tanggal selesai
                                     if (completedForDate[currentTanggal] === 2) {
                                         processedDatesCount++;
                                         
-                                        // Notifikasi Toast Hijau (Success)
+                                        // Toast Success Hijau
                                         $.notify({
                                             message: 'Tanggal ' + displayTanggal + ' berhasil di-generate!'
                                         },{
@@ -667,17 +556,21 @@
                                     if (dataIndex < autofillData.length) {
                                         sendAjaxLooping();
                                     } else {
-                                        // SELESAI
+                                        // SELESAI SEMUA
+                                        clearInterval(stopwatchInterval); // Hentikan timer
+
                                         Swal.fire({
                                             icon: 'success',
                                             title: 'Selesai!',
-                                            text: 'Berhasil generate presensi dari ' + displayStart + ' s/d ' + displayEnd
+                                            text: 'Berhasil generate presensi dari ' + displayStart + ' s/d ' + displayEnd + ' (Total waktu: ' + secondsElapsed + ' detik)'
                                         });
 
                                         tblhgtprth.ajax.reload(null, false);
                                     }
                                 },
                                 error: function ( xhr, status, error ) {
+                                    clearInterval(stopwatchInterval); // Hentikan timer jika error
+
                                     Swal.fire({
                                         icon: 'error',
                                         title: 'Gagal',
