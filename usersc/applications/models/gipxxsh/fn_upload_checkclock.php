@@ -41,7 +41,7 @@
         $arr_kode = "";
         for($i = 1;$i < count($sheetData);$i++){
             // Str pad 4 digit dengan 0 sebagai default,
-            
+
             //jadi jika 0 tidak terbaca di excel, maka bisa di akali dengan str pad
             // if ($sheetData[$i]['0'] != '') {
             //     $kode = str_pad($sheetData[$i]['0'], 4, '0', STR_PAD_LEFT);
@@ -73,12 +73,12 @@
 
                 if ($dateObj) {
                     $tanggal = $dateObj->format('Y-m-d'); // Hasil: "2026-07-31"
-                    $jam     = $dateObj->format('H:i:s'); // Hasil: "12:48:00"
+                    $jam     = $dateObj->format('H:i'); // Hasil: "12:48:00"
                 } else {
                     // Fallback jika ada format yang sedikit berbeda (misal dengan detik)
                     $timestamp = strtotime($raw_datetime);
                     $tanggal   = date('Y-m-d', $timestamp);
-                    $jam       = date('H:i:s', $timestamp);
+                    $jam       = date('H:i', $timestamp);
                 }
 
                 if ($i == 1) {
