@@ -274,7 +274,7 @@
 					) AS a ON a.kode = b.kode_finger 
 					WHERE 
 						e.is_active = 1
-						AND a.tanggal_jam BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+						AND a.tanggal_jam BETWEEN e.tanggaljam_awal_istirahat AND e.tanggaljam_akhir_istirahat
 						AND b.id = :id_hemxxmh
 						AND a.is_active = 1
 				
@@ -371,7 +371,7 @@
 					) AS a ON a.kode = b.kode_finger 
 					WHERE 
 						e.is_active = 1
-						AND a.tanggal_jam BETWEEN e.tanggaljam_awal_istirahat AND DATE_ADD(e.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+						AND a.tanggal_jam BETWEEN e.tanggaljam_awal_istirahat AND e.tanggaljam_akhir_istirahat
 						AND b.id = :id_hemxxmh
 						AND a.is_active = 1
 				
