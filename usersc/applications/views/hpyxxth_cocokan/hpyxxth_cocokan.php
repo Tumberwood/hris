@@ -167,6 +167,8 @@
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_tr"> KBM Pelatihan</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kmj" style="display: none"> KMJ</a></li>
 							<li id="tab_freelance"><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_freelance" style="display: none"> Freelance</a></li>
+							
+							<li><a class="nav-link" data-toggle="tab" href="#tabpentunjuk"> Petunjuk</a></li>
 						</ul>
 						<div class="tab-content">
 							<div role="tabpanel" id="tabhpyemtd_karyawan" class="tab-pane active">
@@ -1427,6 +1429,15 @@
 									</div> <!-- end of table -->
 								</div>
 							</div>
+							
+							<div role="tabpanel" id="tabpentunjuk" class="tab-pane">
+								<div class="panel-body">
+									<div class="table-responsive">
+										<h3>Petunjuk Payroll</h3>
+									</div>
+								</div>
+							</div>
+
 						</div>
 
 					</div>
