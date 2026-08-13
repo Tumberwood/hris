@@ -1501,7 +1501,11 @@
                                 + COALESCE(premi_abs,0)
                                 + COALESCE(total_rp_lembur,0)
                                 + COALESCE(komp_rekontrak,0)
-                                + COALESCE(komp_sisa_cuti,0)
+                                -- + COALESCE(komp_sisa_cuti,0)
+                                IF(MONTH(:tanggal_akhir) = 1, 
+                                    IFNULL(komp_sisa_cuti,0 ),
+                                    0
+                                )
                                 + 0
                                 + COALESCE(pendapatan_lain_before_pph,0)
                                 + COALESCE(bpjs_kes_perusahaan,0)
