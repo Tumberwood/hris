@@ -934,7 +934,7 @@
                                         * pr.pot_hk
                                     ),
 
-                                    -- Rumus: ( (gp + tjab + fix_cost(masa kerja) + (tj lain) ) / grup_hk (21 / 25) ) * pot_hk
+                                    -- Rumus: ( (gp + tjab + fix_cost(masa kerja) + (tj lain) ) / 173 ) * pot_hk
                                     (
                                         (
                                             (
