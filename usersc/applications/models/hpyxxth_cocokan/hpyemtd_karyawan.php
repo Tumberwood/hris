@@ -208,8 +208,36 @@
 				// Field::inst( 'hpyemtd.terima_lain' ),
 				//Field::inst( 'hpyemtd.premi_abs - hpyemtd_cocokan.total_rp_lembur + hpyemtd.total_rp_lembur + hpyemtd_cocokan.pot_upah - hpyemtd.pot_jam - hpyemtd.pot_lain_before_pph AS hpyemtd.terima_lain' ),
 				
-				Field::inst( 'IF( IFNULL(hpyemtd.premi_abs, 0) - IFNULL(hpyemtd_cocokan.premi_abs, 0) = 0, 0, IFNULL(hpyemtd.premi_abs, 0) ) - hpyemtd_cocokan.total_rp_lembur + hpyemtd.total_rp_lembur + hpyemtd_cocokan.pot_upah - hpyemtd.pot_jam - hpyemtd.pot_lain_before_pph AS hpyemtd.terima_lain' ),
+				// Field::inst( 'IF( IFNULL(hpyemtd.premi_abs, 0) - IFNULL(hpyemtd_cocokan.premi_abs, 0) = 0, 0, IFNULL(hpyemtd.premi_abs, 0) ) - hpyemtd_cocokan.total_rp_lembur + hpyemtd.total_rp_lembur + hpyemtd_cocokan.pot_upah - hpyemtd.pot_jam - hpyemtd.pot_lain_before_pph AS hpyemtd.terima_lain' ),
 
+				Field::inst( 'hpyemtd.terima_lain' )
+					->set( false ) // Jangan di-insert/update ke DB
+					->getFormatter( function ( $val, $data ) {
+						// Ambil data dari hpyemtd
+						$p_abs_hpyemtd   = floatval($data['hpyemtd']['premi_abs'] ?? 0);
+						$total_rp_lembur = floatval($data['hpyemtd']['total_rp_lembur'] ?? 0);
+						$pot_jam         = floatval($data['hpyemtd']['pot_jam'] ?? 0);
+						$pot_lain_before = floatval($data['hpyemtd']['pot_lain_before_pph'] ?? 0);
+
+						// Ambil data dari hpyemtd_cocokan
+						$p_abs_cocokan   = floatval($data['hpyemtd_cocokan']['premi_abs'] ?? 0);
+						$tot_rp_lembur_c = floatval($data['hpyemtd_cocokan']['total_rp_lembur'] ?? 0);
+						$pot_upah_c      = floatval($data['hpyemtd_cocokan']['pot_upah'] ?? 0);
+
+						// Logika IF( premi_abs - premi_abs_cocokan = 0, 0, premi_abs )
+						$hasil_if = (($p_abs_hpyemtd - $p_abs_cocokan) == 0) ? 0 : $p_abs_hpyemtd;
+
+						// Eksekusi Rumus Akhir
+						$terima_lain = $hasil_if 
+									- $tot_rp_lembur_c 
+									+ $total_rp_lembur 
+									+ $pot_upah_c 
+									- $pot_jam 
+									- $pot_lain_before;
+
+						return $terima_lain;
+					} ),
+					
 				Field::inst( 'hpyemtd.lembur15_final' ),
 				Field::inst( 'hpyemtd.lembur2_final' ),
 				Field::inst( 'hpyemtd.lembur3_final' ),
