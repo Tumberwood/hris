@@ -276,8 +276,15 @@
 				Field::inst( 'hemxxmh.nama as nama' ),
 				Field::inst( 'hemxxmh.gender' ),
 
-				Field::inst( 'IF( IFNULL(hpyemtd.premi_abs, 0) - IFNULL(hpyemtd_cocokan.premi_abs, 0) = 0, 0, IFNULL(hpyemtd.premi_abs, 0) ) - hpyemtd_cocokan.total_rp_lembur + hpyemtd.total_rp_lembur + IF(ABS(hpyemtd_cocokan.pot_upah - hpyemtd.pot_upah) < 2, hpyemtd_cocokan.pot_upah, 0) - hpyemtd.pot_jam - hpyemtd.pot_lain_before_pph', 'hpyemtd.terima_lain' ),
-				
+				Field::inst( 
+    'IF( IFNULL(hpyemtd.premi_abs, 0) - IFNULL(hpyemtd_cocokan.premi_abs, 0) = 0, 0, IFNULL(hpyemtd.premi_abs, 0) ) 
+    - IFNULL(hpyemtd_cocokan.total_rp_lembur, 0) 
+    + IFNULL(hpyemtd.total_rp_lembur, 0) 
+    + IF(ABS(IFNULL(hpyemtd_cocokan.pot_upah, 0) - IFNULL(hpyemtd.pot_upah, 0)) > 2, IFNULL(hpyemtd_cocokan.pot_upah, 0), 0) 
+    - IFNULL(hpyemtd.pot_jam, 0) 
+    - IFNULL(hpyemtd.pot_lain_before_pph, 0)', 
+    'hpyemtd.terima_lain' 
+),
 				Field::inst( 'hevgrmh.nama' ),
 				Field::inst( 'hobxxmh.nama' ),
 				Field::inst( 'hovxxmh.nama' ),
