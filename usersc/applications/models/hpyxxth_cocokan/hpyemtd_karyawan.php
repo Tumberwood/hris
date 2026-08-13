@@ -277,14 +277,17 @@
 				Field::inst( 'hemxxmh.gender' ),
 
 				Field::inst( 
-    'IF( IFNULL(hpyemtd.premi_abs, 0) - IFNULL(hpyemtd_cocokan.premi_abs, 0) = 0, 0, IFNULL(hpyemtd.premi_abs, 0) ) 
-    - IFNULL(hpyemtd_cocokan.total_rp_lembur, 0) 
-    + IFNULL(hpyemtd.total_rp_lembur, 0) 
-    + IF(ABS(IFNULL(hpyemtd_cocokan.pot_upah, 0) - IFNULL(hpyemtd.pot_upah, 0)) > 2, IFNULL(hpyemtd_cocokan.pot_upah, 0), 0) 
-    - IFNULL(hpyemtd.pot_jam, 0) 
-    - IFNULL(hpyemtd.pot_lain_before_pph, 0)', 
-    'terima_lain' // <-- Ubah dari 'hpyemtd.terima_lain' jadi 'terima_lain'
-),
+    '( 
+        IF( IFNULL(hpyemtd.premi_abs, 0) - IFNULL(hpyemtd_cocokan.premi_abs, 0) = 0, 0, IFNULL(hpyemtd.premi_abs, 0) ) 
+        - IFNULL(hpyemtd_cocokan.total_rp_lembur, 0) 
+        + IFNULL(hpyemtd.total_rp_lembur, 0) 
+        + IF(ABS(IFNULL(hpyemtd_cocokan.pot_upah, 0) - IFNULL(hpyemtd.pot_upah, 0)) > 2, IFNULL(hpyemtd_cocokan.pot_upah, 0), 0) 
+        - IFNULL(hpyemtd.pot_jam, 0) 
+        - IFNULL(hpyemtd.pot_lain_before_pph, 0)
+    ) AS terima_lain' 
+)
+->set( false ),
+
 				Field::inst( 'hevgrmh.nama' ),
 				Field::inst( 'hobxxmh.nama' ),
 				Field::inst( 'hovxxmh.nama' ),
