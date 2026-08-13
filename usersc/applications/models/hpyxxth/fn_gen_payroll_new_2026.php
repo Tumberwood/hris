@@ -736,7 +736,7 @@
                                         * pr.is_pot_upah
                                     ),
 
-                                    -- Rumus: ( (gp + tjab + fix_cost) / grup_hk (21 / 25) ) * is_pot_upah
+                                    -- Rumus: ( (gp + tjab + fix_cost(masa kerja) + (tj lain)) / grup_hk (21 / 25) ) * is_pot_upah
                                     (
                                         (
                                             (
@@ -773,6 +773,20 @@
                                                     SELECT a.nominal
                                                     FROM htpr_hemxxmh a
                                                     WHERE a.id_hpcxxmh = 133
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
+
+                                                +
+
+                                                -- TJ lain
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 102
                                                         AND a.id_hemxxmh = pr.id_hemxxmh
                                                         AND a.tanggal_efektif <= pr.tanggal
                                                         AND a.is_active = 1
@@ -920,7 +934,7 @@
                                         * pr.pot_hk
                                     ),
 
-                                    -- Rumus: ( (gp + tjab + fix_cost) / grup_hk (21 / 25) ) * pot_hk
+                                    -- Rumus: ( (gp + tjab + fix_cost(masa kerja) + (tj lain) ) / grup_hk (21 / 25) ) * pot_hk
                                     (
                                         (
                                             (
@@ -957,6 +971,20 @@
                                                     SELECT a.nominal
                                                     FROM htpr_hemxxmh a
                                                     WHERE a.id_hpcxxmh = 133
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
+
+                                                +
+
+                                                -- TJ lain
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 102
                                                         AND a.id_hemxxmh = pr.id_hemxxmh
                                                         AND a.tanggal_efektif <= pr.tanggal
                                                         AND a.is_active = 1
