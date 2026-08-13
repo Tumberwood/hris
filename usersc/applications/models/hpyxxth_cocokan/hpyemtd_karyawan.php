@@ -233,7 +233,9 @@
                      + $total_rp_lembur 
                      + $pot_upah_c 
                      - $pot_jam 
-                     - $pot_lain_before;
+                     - $pot_lain_before
+					 +99
+					 ;
 
         return $terima_lain;
     } ),
