@@ -309,6 +309,7 @@
 			->leftJoin( 'hemdcmh','hemdcmh.id_hemxxmh','=','hemxxmh.id' )
 			->leftJoin( 'gtxpkmh','gtxpkmh.id','=','hemdcmh.id_gtxpkmh' )
 
+			// ->leftJoin( 'hpyemtd','hpyemtd.id_hpyxxth = hpyemtd_cocokan.id_hpyxxth AND hpyemtd.id_hemxxmh = hpyemtd_cocokan.id_hemxxmh','','' )
 			->leftJoin( 'hpyemtd','hpyemtd.id_hpyxxth = hpyemtd_cocokan.id_hpyxxth AND hpyemtd.id_hemxxmh = hpyemtd_cocokan.id_hemxxmh','','' )
 
 			->where('hpyemtd_cocokan.id_hpyxxth',$_POST['id_hpyxxth'])
