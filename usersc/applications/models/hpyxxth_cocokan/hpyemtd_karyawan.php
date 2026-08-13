@@ -208,7 +208,7 @@
 				// Field::inst( 'hpyemtd.terima_lain' ),
 				//Field::inst( 'hpyemtd.premi_abs - hpyemtd_cocokan.total_rp_lembur + hpyemtd.total_rp_lembur + hpyemtd_cocokan.pot_upah - hpyemtd.pot_jam - hpyemtd.pot_lain_before_pph AS hpyemtd.terima_lain' ),
 				
-				Field::inst( 'IF( IFNULL(hpyemtd.premi_abs, 0) - IFNULL(hpyemtd_cocokan.premi_abs, 0) = 0, 0, IFNULL(hpyemtd.premi_abs, 0) ) - hpyemtd_cocokan.total_rp_lembur + hpyemtd.total_rp_lembur + hpyemtd.pot_upah - hpyemtd.pot_jam - hpyemtd.pot_lain_before_pph AS hpyemtd.terima_lain' ),
+				Field::inst( 'IF( IFNULL(hpyemtd.premi_abs, 0) - IFNULL(hpyemtd_cocokan.premi_abs, 0) = 0, 0, IFNULL(hpyemtd.premi_abs, 0) ) - hpyemtd_cocokan.total_rp_lembur + hpyemtd.total_rp_lembur + (hpyemtd_cocokan.pot_upah) - hpyemtd.pot_jam - hpyemtd.pot_lain_before_pph AS hpyemtd.terima_lain' ),
 
 				Field::inst( 'hpyemtd.lembur15_final' ),
 				Field::inst( 'hpyemtd.lembur2_final' ),
