@@ -259,7 +259,7 @@
 
         // 4. Logika IF( ABS(pot_upah_cocokan - pot_upah_hpyemtd) > 2, pot_upah_cocokan, 0 )
         $selisih_pot_upah = abs($pot_upah_c - $pot_upah_hpy);
-        $nilai_pot_upah   = ($selisih_pot_upah < 2) ? $pot_upah_c : 0;
+        $nilai_pot_upah   = ($selisih_pot_upah > 2) ? $pot_upah_c : 0;
 
         // 5. Kalkulasi Rumus Akhir
         $terima_lain = $hasil_if_premi 
@@ -271,7 +271,7 @@
 
         return $terima_lain;
     } ),
-
+	
 				Field::inst( 'hpyemtd.lembur15_final' ),
 				Field::inst( 'hpyemtd.lembur2_final' ),
 				Field::inst( 'hpyemtd.lembur3_final' ),
