@@ -283,7 +283,7 @@
     + IF(ABS(IFNULL(hpyemtd_cocokan.pot_upah, 0) - IFNULL(hpyemtd.pot_upah, 0)) > 2, IFNULL(hpyemtd_cocokan.pot_upah, 0), 0) 
     - IFNULL(hpyemtd.pot_jam, 0) 
     - IFNULL(hpyemtd.pot_lain_before_pph, 0)', 
-    'hpyemtd.terima_lain' 
+    'terima_lain' // <-- Ubah dari 'hpyemtd.terima_lain' jadi 'terima_lain'
 ),
 				Field::inst( 'hevgrmh.nama' ),
 				Field::inst( 'hobxxmh.nama' ),
