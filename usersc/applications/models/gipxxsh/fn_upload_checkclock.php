@@ -76,16 +76,16 @@
                     if (is_numeric($raw_datetime)) {
                         $dateObj = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($raw_datetime);
                         $tanggal = $dateObj->format('Y-m-d');
-                        $jam     = $dateObj->format('H:i:s');
+                        $jam     = $dateObj->format('H:i'); // Hanya jam:menit
                     } 
-                    // 2. Jika berupa String Tanggal (Hari-Bulan-Tahun)
+                    // 2. Jika berupa String Tanggal
                     else {
                         $formats = [
-                            'd/m/Y H:i:s', // 05/08/2026 08:02:00
-                            'd/m/Y H:i',   // 05/08/2026 08:02
-                            'd-m-Y H:i:s', // 29-06-2026 07:10:00
-                            'd-m-Y H:i',   // 29-06-2026 07:10
-                            'Y-m-d H:i:s', // 2026-08-05 08:02:00 (jika sudah format ISO)
+                            'd/m/Y H:i:s', // Tetap bisa baca input jika Excel mengirim detik...
+                            'd/m/Y H:i',   
+                            'd-m-Y H:i:s', 
+                            'd-m-Y H:i',   
+                            'Y-m-d H:i:s', 
                             'Y-m-d H:i'
                         ];
 
@@ -101,19 +101,20 @@
 
                         if ($dateObj) {
                             $tanggal = $dateObj->format('Y-m-d');
-                            $jam     = $dateObj->format('H:i:s');
+                            $jam     = $dateObj->format('H:i'); // Output tanpa detik
                         } else {
-                            // Fallback: ubah '/' ke '-' agar strtotime konsisten baca (Hari-Bulan-Tahun)
+                            // Fallback: paksa ubah '/' ke '-' agar strtotime baca d-m-Y
                             $normalized = str_replace('/', '-', $raw_datetime);
                             $timestamp  = strtotime($normalized);
 
                             if ($timestamp !== false) {
                                 $tanggal = date('Y-m-d', $timestamp);
-                                $jam     = date('H:i:s', $timestamp);
+                                $jam     = date('H:i', $timestamp); // Output tanpa detik
                             }
                         }
                     }
                 }
+                
                 if ($i == 1) {
                     $arr_kode = 'SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" AS excel_value ';
                 } else {
