@@ -65,55 +65,22 @@
             if ($sheetData[$i]['0'] != '') {
                 $kode = str_pad($sheetData[$i]['0'], 4, '0', STR_PAD_LEFT);
 
-                // Ambil data dari kolom Excel
-                $raw_datetime = trim($sheetData[$i]['2'] ?? '');
+                // Ambil string tanggal dan jam dari kolom
+                $raw_datetime = trim($sheetData[$i]['2']); // misal: "7/31/2026 12:48"
 
-                $tanggal = null;
-                $jam     = null;
+                // Parse format m/d/Y H:i (Bulan/Tanggal/Tahun Jam:Menit)
+                $dateObj = DateTime::createFromFormat('n/j/Y H:i', $raw_datetime);
 
-                if (!empty($raw_datetime)) {
-                    // 1. Jika berupa Serial Number dari Excel (misal: 46239.3347)
-                    if (is_numeric($raw_datetime)) {
-                        $dateObj = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($raw_datetime);
-                        $tanggal = $dateObj->format('Y-m-d');
-                        $jam     = $dateObj->format('H:i:s');
-                    } 
-                    // 2. Jika berupa String Tanggal (Hari-Bulan-Tahun)
-                    else {
-                        $formats = [
-                            'd/m/Y H:i:s', // 05/08/2026 08:02:00
-                            'd/m/Y H:i',   // 05/08/2026 08:02
-                            'd-m-Y H:i:s', // 29-06-2026 07:10:00
-                            'd-m-Y H:i',   // 29-06-2026 07:10
-                            'Y-m-d H:i:s', // 2026-08-05 08:02:00 (jika sudah format ISO)
-                            'Y-m-d H:i'
-                        ];
-
-                        $dateObj = false;
-
-                        foreach ($formats as $fmt) {
-                            $d = DateTime::createFromFormat($fmt, $raw_datetime);
-                            if ($d && $d->format($fmt) === $raw_datetime) {
-                                $dateObj = $d;
-                                break;
-                            }
-                        }
-
-                        if ($dateObj) {
-                            $tanggal = $dateObj->format('Y-m-d');
-                            $jam     = $dateObj->format('H:i:s');
-                        } else {
-                            // Fallback: ubah '/' ke '-' agar strtotime konsisten baca (Hari-Bulan-Tahun)
-                            $normalized = str_replace('/', '-', $raw_datetime);
-                            $timestamp  = strtotime($normalized);
-
-                            if ($timestamp !== false) {
-                                $tanggal = date('Y-m-d', $timestamp);
-                                $jam     = date('H:i:s', $timestamp);
-                            }
-                        }
-                    }
+                if ($dateObj) {
+                    $tanggal = $dateObj->format('Y-m-d'); // Hasil: "2026-07-31"
+                    $jam     = $dateObj->format('H:i'); // Hasil: "12:48:00"
+                } else {
+                    // Fallback jika ada format yang sedikit berbeda (misal dengan detik)
+                    $timestamp = strtotime($raw_datetime);
+                    $tanggal   = date('Y-m-d', $timestamp);
+                    $jam       = date('H:i', $timestamp);
                 }
+
                 if ($i == 1) {
                     $arr_kode = 'SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" AS excel_value ';
                 } else {
