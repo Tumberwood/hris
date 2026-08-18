@@ -83,7 +83,7 @@
 					} else if ($shift == "3") {
 						$id_htsxxmh = 86; //MALAM 23:00-07:00 (NEW)
 					} else {
-						$id_htsxxmh = 1;
+						$id_htsxxmh = 1; //OFF
 					}
 					
 					$bagian 		= strtoupper($sheetData[$i]['4']) ;
