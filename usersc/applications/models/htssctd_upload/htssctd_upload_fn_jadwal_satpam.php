@@ -65,12 +65,23 @@
 					$tanggal = $tanggal_excel->format('Y-m-d'); //format jadi 2023-09-12
 					
 					$shift 		= $sheetData[$i]['3'] ;
+					// if ($shift == "1") {
+					// 	$id_htsxxmh = 6;
+					// } else if ($shift == "2") {
+					// 	$id_htsxxmh = 17;
+					// } else if ($shift == "3") {
+					// 	$id_htsxxmh = 23;
+					// } else {
+					// 	$id_htsxxmh = 1;
+					// }
+
+					//18 Aug 2026, 4 grup pakai shift new info dari Bu Cia dan Pak Rian
 					if ($shift == "1") {
-						$id_htsxxmh = 6;
+						$id_htsxxmh = 72; //PAGI 07:00-15:00 (NEW)
 					} else if ($shift == "2") {
-						$id_htsxxmh = 17;
+						$id_htsxxmh = 81; //SORE 15:00-23:00 (NEW)
 					} else if ($shift == "3") {
-						$id_htsxxmh = 23;
+						$id_htsxxmh = 86; //MALAM 23:00-07:00 (NEW)
 					} else {
 						$id_htsxxmh = 1;
 					}
