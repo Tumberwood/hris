@@ -93,7 +93,7 @@
 					IF(a.st_jadwal = "OFF", 0, 
 						IF(TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir) = 5, 
 							5, 
-							GREATEST(0, TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir) - IF(a.jumlah_grup = 4, 0, 1))
+							GREATEST(0, TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir) - IF(jumlah_grup = 4, 0, 1))
 						)
 					) AS jam_wajib,
 
@@ -101,7 +101,7 @@
 					IF(a.st_jadwal = "OFF", 0, 
 						IF(TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir) = 5, 
 							5, 
-							GREATEST(0, TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir) - IF(a.jumlah_grup = 4, 0, 1))
+							GREATEST(0, TIMESTAMPDIFF(HOUR, b.tanggaljam_awal, b.tanggaljam_akhir) - IF(jumlah_grup = 4, 0, 1))
 						) - IFNULL(a.pot_hk, 0)
 					) AS jam_kerja,
 
