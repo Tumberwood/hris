@@ -54,7 +54,12 @@
         ])
         ->where('is_active',1)
         ->where('id', $id_htsxxmh_old, '<>' )
-        ->where('kode', '%NEW%', 'LIKE' )
+        // 18 Aug 2026 - KONDISI KODE LIKE '%NEW%' OR KODE = 'OFF'
+        ->where(function($q_kode) {
+            $q_kode
+                ->where('kode', '%NEW%', 'LIKE')
+                ->or_where('kode', 'OFF');
+        })
         ->where( function ( $r ) {
             $q = $_GET['search'];
             $r
