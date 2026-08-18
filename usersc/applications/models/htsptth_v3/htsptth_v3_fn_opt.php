@@ -54,6 +54,7 @@
         ])
         ->where('is_active',1)
         ->where('id', $id_htsptth_v3_old, '<>' )
+        ->where('nama', 'v2%', 'LIKE')
         ->where( function ( $r ) {
             $q = $_GET['search'];
             $r
