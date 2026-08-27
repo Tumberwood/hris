@@ -410,28 +410,27 @@
 			// 	}
 			// }
 
-			if ($keputusan == 'Tetap') {
+			if ($keputusan == 'Tetap' || $keputusan == 'Kontrak') {
 				$qu_hemxxmh = $db
 					->query('update', 'hemjbmh')
 					->set('tanggal_keluar', $tanggal_mulai)
 					->where('id_hemxxmh', $id_hemxxmh )
 					->exec()
 				;
-			} 
-			// else {
-			// 	//Update masih muncul di cek 1, padahal ybs sudah naik ke reguler (nik baru) sejak 12/4. Bu Cia 27 Apr 2024 WA Grup HRIS PMI
-			// 	$qs_keluar = $db
-			// 		->raw()
-			// 		->bind(':id_hemxxmh', $id_hemxxmh)
-			// 		->exec(' UPDATE hemjbmh b
-			// 				SET 
-			// 					b.tanggal_keluar =  IF(b.tanggal_keluar IS NULL, DATE_SUB(DATE_ADD(b.tanggal_masuk, INTERVAL 6 MONTH), INTERVAL 1 DAY), b.tanggal_keluar)
-			// 				WHERE
-			// 					b.id_hemxxmh = :id_hemxxmh;
+			} else {
+				//Update masih muncul di cek 1, padahal ybs sudah naik ke reguler (nik baru) sejak 12/4. Bu Cia 27 Apr 2024 WA Grup HRIS PMI
+				$qs_keluar = $db
+					->raw()
+					->bind(':id_hemxxmh', $id_hemxxmh)
+					->exec(' UPDATE hemjbmh b
+							SET 
+								b.tanggal_keluar =  IF(b.tanggal_keluar IS NULL, DATE_SUB(DATE_ADD(b.tanggal_masuk, INTERVAL 6 MONTH), INTERVAL 1 DAY), b.tanggal_keluar)
+							WHERE
+								b.id_hemxxmh = :id_hemxxmh;
 					
-			// 				'
-			// 	);
-			// }
+							'
+				);
+			}
 			
 			
 			// Untuk rekontrak dapat tambahan kompensasi
