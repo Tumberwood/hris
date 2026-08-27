@@ -85,6 +85,7 @@
 				'hemxxmh.is_tukar as is_tukar',
 				'hemxxmh.is_pot_makan as is_pot_makan',
 				'hemxxmh.no_rekening as no_rekening',
+				'hemxxmh.jumlah_anak as jumlah_anak',
 				'hemxxmh.perkawinan as perkawinan'
 			] )
 			->where('hemxxmh.id', $id_hemxxmh )
