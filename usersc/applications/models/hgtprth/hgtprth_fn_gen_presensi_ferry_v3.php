@@ -1329,7 +1329,7 @@
                                 GROUP BY a.id_hemxxmh
                             ) AS abnormal_istirahat ON abnormal_istirahat.id_hemxxmh = a.id
 
-                            WHERE tanggal_masuk <= :tanggal AND (b.tanggal_keluar IS NULL OR b.tanggal_keluar > :tanggal) AND id_heyxxmh = :id_heyxxmh AND is_checkclock = 1
+                            WHERE tanggal_masuk <= :tanggal AND (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= :tanggal) AND id_heyxxmh = :id_heyxxmh AND is_checkclock = 1
 
                         ),
                         status_presensi AS (
