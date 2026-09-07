@@ -30,11 +30,11 @@
 		$end_date = $rs_htsprrd_htoxxrd_h['end_date'];
 
 		$user = $_SESSION['user'];
-        if ($user > 100) {
-            $w_id_heyxxmh_session = ' AND b.id_heyxxmh IN (' . $_SESSION['str_arr_ha_heyxxmh'] . ')';
-        } else {
+        // if ($user > 100) {
+        //     $w_id_heyxxmh_session = ' AND b.id_heyxxmh IN (' . $_SESSION['str_arr_ha_heyxxmh'] . ')';
+        // } else {
             $w_id_heyxxmh_session = ' AND b.id_heyxxmh NOT IN (-1)';
-        }
+        // }
 		
 		$qs_detail_upload = $db
 			->raw()
