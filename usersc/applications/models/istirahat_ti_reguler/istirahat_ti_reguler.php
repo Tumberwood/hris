@@ -22,378 +22,249 @@
 	}
 
 	$qs_htsprrd = $db
+	
 		->raw()
 		->bind(':start_date', $start_date)
 		->bind(':end_date', $end_date)
-		->exec('WITH history AS (
-					SELECT *
-					FROM (
-						SELECT hemjbrd.*,
-							ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_awal DESC) AS row_num
-						FROM hemjbrd
-						LEFT JOIN hemxxmh ON hemxxmh.id = hemjbrd.id_hemxxmh
-						WHERE tanggal_awal <= :end_date AND hemxxmh.is_active = 1
-					) AS sub
-					WHERE row_num = 1
-				)
+		->exec('
+			SELECT
+				a.id,
+				a.id_hemxxmh,
+				b.kode AS nik,
+				b.nama,
+				spkl.kode AS kode_spkl,
+				d.nama AS dep,
+				e.nama AS jab,
+				f.nama AS area,
+				NULL AS tipe,
+				DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
+				a.st_jadwal,
+				DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i") AS masuk,
+				DATE_FORMAT(a.break_in, "%d %b %Y %H:%i") AS break_in,
+				DATE_FORMAT(a.break_out, "%d %b %Y %H:%i") AS break_out,
+				(
+					SELECT
+						DATE_FORMAT(x.tanggal_jam, "%d %b %Y %H:%i")
+					FROM htsprtd x
+					LEFT JOIN hemxxmh hx
+						ON hx.kode_finger = x.kode
+					WHERE hx.id = a.id_hemxxmh
+						AND x.nama IN ("MAKAN", "MAKAN MANUAL")
+						AND x.tanggal_jam BETWEEN a.clock_in AND a.clock_out
+					LIMIT 1
+				) AS makan,
+				a.is_makan,
+				DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i") AS pulang,
+
+				TIMESTAMPDIFF(
+					MINUTE,
+					a.break_in,
+					a.break_out
+				) AS durasi_istirahat_menit,
+
+				CASE
+					WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 0
+						AND IFNULL(a.is_makan, 0) = 1
+					THEN "Istirahat + Makan"
+
+					WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30
+					THEN "Istirahat > 30 menit"
+
+					WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) <= 30
+						AND IFNULL(a.is_makan, 0) = 1
+					THEN "Istirahat ≤ 30 + Makan"
+
+					ELSE "Tidak Masuk Kategori"
+				END AS kategori,
+
+				a.durasi_lembur_total_jam,
+				a.pot_ti,
+				a.durasi_lembur_final
+
+			FROM htsprrd a
+
+			INNER JOIN hemxxmh b
+				ON b.id = a.id_hemxxmh
+
+			LEFT JOIN htoxxrd spkl
+				ON spkl.id_hemxxmh = a.id_hemxxmh
+				AND spkl.tanggal = a.tanggal
+
+			LEFT JOIN (
 				SELECT
-					a.id,
-					a.id_hemxxmh,
-					b.kode AS nik,
-					b.nama,
-					spkl.kode AS kode_spkl,
-					DAYNAME(a.tanggal) hari,
-					DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
-					TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) AS durasi_istirahat_menit,
-					a.break_in awal,
-					a.break_out akhir,
-					tanggaljam_awal_istirahat,
-					tanggaljam_akhir_istirahat,
-					is_makan,
-					makan,
-					d.nama AS dep,
-					e.nama AS jab,
-					f.nama AS area,
-					a.st_jadwal,
-					DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i" ) AS masuk,
-					DATE_FORMAT(a.break_in, "%d %b %Y %H:%i" ) break_in,
-					DATE_FORMAT(a.break_out, "%d %b %Y %H:%i" ) break_out,
-					
-					DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i" ) AS pulang,
-				
-					TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) AS durasi_istirahat_menit,
-				
-					CASE
-						WHEN DAYNAME(a.tanggal) = "Friday" AND a.st_jadwal LIKE "%PAGI%" THEN "AMAN"
-						WHEN c.jumlah_grup = 2 AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30 AND IF(mesin = "MAKAN MANUAL", break_in <> makan_ymd, 1) AND a.pot_jam > 0 THEN "4 Grup > 30 Menit"
-						WHEN a.pot_jam_istirahat > 0 AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 0 AND IFNULL(is_makan, 0) = 1 THEN "Istirahat + Makan"
-						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 60 AND IF(mesin = "MAKAN MANUAL", break_in <> makan_ymd, 1) AND a.pot_jam > 0 THEN "Istirahat > 60 Menit"
-						
-                        -- QC SHIFT 1
-                        WHEN id_hodxxmh = 9 AND st_jadwal LIKE "%06:00-%" AND 
-                        (
-							a.break_in BETWEEN jad.tanggaljam_awal_istirahat AND DATE_SUB(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-							OR
-							a.break_out BETWEEN jad.tanggaljam_awal_istirahat AND DATE_SUB(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-						)
-                        THEN "Aman"
+					j.id_hemxxmh,
+					j.id_holxxmd_2,
+					j.id_heyxxmh,
+					j.id_hevxxmh,
+					j.id_hetxxmh,
+					j.id_hosxxmh,
+					j.id_hodxxmh,
+					j.id_heyxxmd,
+					j.is_checkclock,
+					j.tanggal_masuk,
+					j.tanggal_keluar,
+					IFNULL(j.id_hesxxmh, 0) AS id_hesxxmh,
+					IFNULL(j.jumlah_grup, 0) AS jumlah_grup,
+					IFNULL(j.grup_hk, 0) AS grup_hk
+				FROM hemjbmh j
+			) c
+				ON c.id_hemxxmh = b.id
+				AND (
+					c.tanggal_masuk IS NULL
+					OR a.tanggal >= c.tanggal_masuk
+				)
 
-						WHEN id_hodxxmh = 9 AND st_jadwal LIKE "%06:00-%" AND 
-                        (
-							a.break_in NOT BETWEEN jad.tanggaljam_awal_istirahat AND DATE_SUB(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-							OR
-							a.break_out NOT BETWEEN jad.tanggaljam_awal_istirahat AND DATE_SUB(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-						)
-                        THEN "QC - Shift 1, Istirahat Reguler Tidak Sesuai"
-						
-						-- SHIFT 1 ADA LEMBUR TI
-						when ot.is_istirahat = 2 AND a.st_jadwal LIKE "%PAGI%"
-						AND (
-							TIME(a.break_in) NOT BETWEEN "11:00:00" AND "12:00:00"
-							OR
-							TIME(a.break_out) NOT BETWEEN "11:00:00" AND "12:00:00"
-						)
-				
-						then "Shift 1 Lembur TI, Istirahat TI Tidak Sesuai"
-						
-						-- SHIFT 1 TIDAK ADA LEMBUR TI
-						when ot.id is null AND a.st_jadwal LIKE "%PAGI%" 
-						AND (
-							TIME(a.break_in) NOT BETWEEN "12:00:00" AND "13:00:00"
-							OR
-							TIME(a.break_out) NOT BETWEEN "12:00:00" AND "13:00:00"
-						)
-						
-						then "Shift 1, Istirahat Reguler Tidak Sesuai"
-						
-						-- SHIFT 2 ADA LEMBUR TI
-						when ot.is_istirahat = 2 AND (a.st_jadwal LIKE "%SIANG%" OR a.st_jadwal LIKE "%SORE%") 
-						AND jad.jam_awal_istirahat <> "00:00:00"
-						AND (
+			INNER JOIN hodxxmh d
+				ON d.id = c.id_hodxxmh
 
-							-- ================= NORMAL (SEBELUM RAMADAN)
-							(
-								jad.tanggal < "2026-02-19"
-								AND (
-									a.break_in NOT BETWEEN
-										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
-									AND
-										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-									OR
-									a.break_out NOT BETWEEN
-										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
-									AND
-										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-								)
-							)
+			INNER JOIN hetxxmh e
+				ON e.id = c.id_hetxxmh
 
-							OR
+			LEFT JOIN holxxmd_2 f
+				ON f.id = a.id_holxxmd_2
 
-							-- ================= RAMADAN
-							(
-								jad.tanggal BETWEEN "2026-02-19" AND "2026-03-19"
-								AND (
-									TIME(a.break_in) NOT BETWEEN "17:45:00" AND "19:00:00"
-									OR
-									TIME(a.break_out) NOT BETWEEN "17:45:00" AND "19:00:00"
-								)
-							)
+			WHERE
+				a.tanggal BETWEEN :start_date AND :end_date
+				AND a.pot_jam > 0
+				AND c.jumlah_grup = 2
 
-							OR
+				-- AND a.is_pot_premi <> 1
+				-- yang potongan jam karena early, late dsb ini agar tidak masuk
 
-							-- ================= SETELAH RAMADAN (BALIK NORMAL)
-							(
-								jad.tanggal >= "2026-03-20"
-								AND (
-									TIME(a.break_in) NOT BETWEEN "18:00:00" AND "19:00:00"
-									OR
-									TIME(a.break_out) NOT BETWEEN "18:00:00" AND "19:00:00"
-								)
-							)
+				AND (
+					a.is_pot_premi <> 1
+					OR a.pot_jam_istirahat > 0
+				)
 
-						)
-						then "Shift 2 Lembur TI, Istirahat TI Tidak Sesuai"
-						
-						-- SHIFT 2 TIDAK ADA LEMBUR TI
-						WHEN ot.id IS NULL
-						AND (a.st_jadwal LIKE "%SIANG%" OR a.st_jadwal LIKE "%SORE%")
-						AND jad.keterangan NOT LIKE "%TJ%"
-						AND (
+				AND a.htlxxrh_kode = ""
+				' . $where . '
 
-							-- ================= NORMAL (SEBELUM RAMADAN)
-							(
-								jad.tanggal < "2026-02-19"
-								AND (
-									a.break_in NOT BETWEEN
-										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
-									AND
-										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-									OR
-									a.break_out NOT BETWEEN
-										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
-									AND
-										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-								)
-							)
+			HAVING
+				durasi_istirahat_menit > 30
+				OR (
+					durasi_istirahat_menit BETWEEN 1 AND 30
+					AND IFNULL(is_makan, 0) = 1
+				)
 
-							OR
+			UNION ALL
 
-							-- ================= RAMADAN
-							(
-								jad.tanggal BETWEEN "2026-02-19" AND "2026-03-19"
-								AND (
-									TIME(a.break_in) NOT BETWEEN "17:45:00" AND "19:00:00"
-									OR
-									TIME(a.break_out) NOT BETWEEN "17:45:00" AND "19:00:00"
-								)
-							)
+			SELECT
+				a.id,
+				a.id_hemxxmh,
+				b.kode AS nik,
+				b.nama,
+				NULL AS kode_spkl,
+				d.nama AS dep,
+				e.nama AS jab,
+				f.nama AS area,
+				g.nama AS tipe,
+				DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
+				a.st_jadwal,
+				DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i") AS masuk,
+				DATE_FORMAT(a.break_in, "%d %b %Y %H:%i") AS break_in,
+				DATE_FORMAT(a.break_out, "%d %b %Y %H:%i") AS break_out,
+				mk.makan AS makan,
+				a.is_makan,
+				DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i") AS pulang,
 
-							OR
+				TIMESTAMPDIFF(
+					MINUTE,
+					a.break_in,
+					a.break_out
+				) AS durasi_istirahat_menit,
 
-							-- ================= SETELAH RAMADAN (BALIK NORMAL)
-							(
-								jad.tanggal >= "2026-03-20"
-								AND (
-									TIME(a.break_in) NOT BETWEEN "19:00:00" AND "20:00:00"
-									OR
-									TIME(a.break_out) NOT BETWEEN "19:00:00" AND "20:00:00"
-								)
-							)
+				CASE
+					WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30
+					THEN "Istirahat > 30 menit"
 
-						)
-						THEN "Shift 2, Istirahat Reguler Tidak Sesuai"
-						
-                        -- SHIFT 3 ADA LEMBUR TI
-                        WHEN ot.is_istirahat = 2 
-                        AND a.st_jadwal LIKE "%MALAM%" 
-						AND (
-							
-							-- 1. SEBELUM 18 AGUSTUS 2025
-							(
-								jad.tanggal < "2025-08-18"
-								AND (
-									a.break_in NOT BETWEEN
-										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
-									AND
-										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-									OR
-									a.break_out NOT BETWEEN
-										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
-									AND
-										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-								)
-							)
+					WHEN a.pot_ti > 0
+						AND f.id = 1
+						AND a.htlxxrh_kode = ""
+						AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) < 30
+					THEN "TI Gedung 3 Tidak Sah"
 
-							OR
+					WHEN a.pot_ti > 0
+						AND f.id = 1
+						AND a.htlxxrh_kode = ""
+						AND a.break_in IS NOT NULL
+					THEN "TI Gedung 3 Tidak Sah"
 
-							-- 2. NORMAL (18 Aug 2025 s/d sebelum Ramadan)
-							(
-								jad.tanggal BETWEEN "2025-08-18" AND "2026-02-18"
-								AND (
-									TIME(a.break_in) NOT BETWEEN "02:00:00" AND "03:00:00"
-									OR
-									TIME(a.break_out) NOT BETWEEN "02:00:00" AND "03:00:00"
-								)
-							)
+					WHEN a.pot_jam = 0.5
+						AND f.id = 1
+						AND a.htlxxrh_kode = ""
+						AND a.break_in IS NOT NULL
+					THEN "TI Gedung 3 Tidak Sah"
 
-							OR
+					WHEN a.pot_jam > 0
+					THEN "Jam Kerja (durasi kerja < 7/8 jam)"
 
-							-- 3. RAMADAN (Jam Puasa)
-							(
-								jad.tanggal BETWEEN "2026-02-19" AND "2026-03-19"
-								AND (
-									TIME(a.break_in) NOT BETWEEN "03:00:00" AND "04:00:00"
-									OR
-									TIME(a.break_out) NOT BETWEEN "03:00:00" AND "04:00:00"
-								)
-							)
+					ELSE "Normal"
+				END AS kategori,
 
-							OR
+				a.durasi_lembur_total_jam,
+				a.pot_ti,
+				a.durasi_lembur_final
 
-							-- 4. SETELAH RAMADAN (kembali normal)
-							(
-								jad.tanggal >= "2026-03-20"
-								AND (
-									TIME(a.break_in) NOT BETWEEN "01:00:00" AND "02:00:00"
-									OR
-									TIME(a.break_out) NOT BETWEEN "01:00:00" AND "02:00:00"
-								)
-							)
+			FROM htsprrd a
 
-						)
-                        THEN "Shift 3 Lembur TI, Istirahat TI Tidak Sesuai"
+			INNER JOIN hemxxmh b
+				ON b.id = a.id_hemxxmh
 
-						-- SHIFt 3 TIDAK ADA LEMBUR TI
-						WHEN ot.id IS NULL AND a.st_jadwal LIKE "%MALAM%"
-						AND (
-							
-							-- 1. SEBELUM 18 AGUSTUS 2025
-							(
-								jad.tanggal < "2025-08-18"
-								AND (
-									a.break_in NOT BETWEEN
-										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
-									AND
-										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-									OR
-									a.break_out NOT BETWEEN
-										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
-									AND
-										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-								)
-							)
+			INNER JOIN hemjbmh c
+				ON c.id_hemxxmh = b.id
 
-							OR
+			INNER JOIN hodxxmh d
+				ON d.id = c.id_hodxxmh
 
-							-- 2. NORMAL (18 Aug 2025 s/d sebelum Ramadan)
-							(
-								jad.tanggal BETWEEN "2025-08-18" AND "2026-02-18"
-								AND (
-									TIME(a.break_in) NOT BETWEEN "02:00:00" AND "03:00:00"
-									OR
-									TIME(a.break_out) NOT BETWEEN "02:00:00" AND "03:00:00"
-								)
-							)
+			INNER JOIN hetxxmh e
+				ON e.id = c.id_hetxxmh
 
-							OR
+			LEFT JOIN holxxmd_2 f
+				ON f.id = a.id_holxxmd_2
 
-							-- 3. RAMADAN (Jam Puasa)
-							(
-								jad.tanggal BETWEEN "2026-02-19" AND "2026-03-19"
-								AND (
-									TIME(a.break_in) NOT BETWEEN "03:00:00" AND "04:00:00"
-									OR
-									TIME(a.break_out) NOT BETWEEN "03:00:00" AND "04:00:00"
-								)
-							)
+			LEFT JOIN heyxxmh g
+				ON g.id = c.id_heyxxmh
 
-							OR
+			LEFT JOIN (
+				SELECT
+					b.id AS id_hemxxmh,
+					a.tanggal,
+					CONCAT(a.tanggal, " ", a.jam) AS ceklok,
+					DATE_FORMAT(
+						CONCAT(a.tanggal, " ", a.jam),
+						"%d %b %Y %H:%i"
+					) AS makan
 
-							-- 4. SETELAH RAMADAN (kembali normal)
-							(
-								jad.tanggal >= "2026-03-20"
-								AND (
-									TIME(a.break_in) NOT BETWEEN "02:00:00" AND "03:00:00"
-									OR
-									TIME(a.break_out) NOT BETWEEN "02:00:00" AND "03:00:00"
-								)
-							)
+				FROM htsprtd a
 
-						)
-						then "Shift 3, Istirahat Reguler Tidak Sesuai"
+				LEFT JOIN hemxxmh AS b
+					ON b.kode_finger = a.kode
 
-						-- Yang break_in atau break_out di luar rentang istirahat
-						WHEN g.jam_awal_istirahat <> "00:00:00" AND jad.keterangan NOT LIKE "%TJ%" AND   
-                        (
-							a.break_in NOT BETWEEN jad.tanggaljam_awal_istirahat AND DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-							OR
-							a.break_out NOT BETWEEN jad.tanggaljam_awal_istirahat AND DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
-						) THEN "Istirahat di luar jam reguler"
-			
-						WHEN DAYNAME(a.tanggal) = "Friday" AND st_jadwal LIKE "%PAGI%" AND gender = "Laki-laki" THEN "AMAN"
-						ELSE "AMAN"
-					END AS kategori,
-					a.durasi_lembur_total_jam,
-					a.pot_ti,
-					hey.nama type,
-					a.durasi_lembur_final
-				
-				FROM htsprrd a
-				INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
-				LEFT JOIN htoxxrd spkl on spkl.id_hemxxmh = a.id_hemxxmh and spkl.tanggal = a.tanggal
-				
-				INNER JOIN (
-					SELECT
-						j.id_hemxxmh,
-						j.id_holxxmd_2,
-						j.id_heyxxmh,
-						j.id_hevxxmh,
-						j.id_hetxxmh,
-						j.id_hosxxmh,
-						j.id_hodxxmh,
-						j.id_heyxxmd,
-						j.is_checkclock,
-						j.tanggal_masuk,
-						j.tanggal_keluar,
-						IFNULL(h.id_hesxxmh, j.id_hesxxmh) AS id_hesxxmh,
-						IFNULL(h.jumlah_grup, j.jumlah_grup) AS jumlah_grup,
-						IFNULL(h.grup_hk, j.grup_hk) AS grup_hk
-					FROM hemjbmh j
-					LEFT JOIN history h ON h.id_hemxxmh = j.id_hemxxmh
-				) c ON c.id_hemxxmh = b.id AND (c.tanggal_masuk IS NULL OR a.tanggal >= c.tanggal_masuk)
-				
-				LEFT JOIN heyxxmd hey ON hey.id = c.id_heyxxmd
-				LEFT JOIN hodxxmh d ON d.id = c.id_hodxxmh
-				LEFT JOIN hetxxmh e ON e.id = c.id_hetxxmh
-				LEFT JOIN holxxmd_2 f ON f.id = c.id_holxxmd_2
-				LEFT JOIN htsxxmh g on g.kode = a.st_jadwal
-				LEFT JOIN htssctd jad on jad.id_hemxxmh = a.id_hemxxmh AND jad.tanggal = a.tanggal AND jad.is_active = 1
-				LEFT JOIN htoxxrd ot ON ot.tanggal = a.tanggal AND ot.id_hemxxmh = a.id_hemxxmh
-				LEFT JOIN (
-					SELECT
-						b.id id_hemxxmh,
-						a.tanggal,
-						a.nama AS mesin,
-						CONCAT(a.tanggal, " ", a.jam) AS ceklok,
-						DATE_FORMAT(CONCAT(a.tanggal, " ", a.jam), "%d %b %Y %H:%i") as makan,
-						CONCAT(a.tanggal, " ", a.jam) makan_ymd
-					FROM htsprtd a
-					LEFT JOIN hemxxmh b ON b.kode_finger = a.kode
-					WHERE a.tanggal BETWEEN :start_date AND DATE_ADD(:end_date, INTERVAL 1 DAY)
-						AND a.nama IN ("MAKAN", "MAKAN MANUAL")
-					GROUP BY b.id, a.tanggal
-				) mk ON mk.ceklok BETWEEN a.clock_in AND a.clock_out AND mk.id_hemxxmh = a.id_hemxxmh
-				
-				WHERE 
-					a.tanggal BETWEEN :start_date AND :end_date
-					AND (a.is_pot_premi <> 1 OR a.pot_jam_istirahat > 0) -- yang potongan jam karena early, late dsb ini agar tidak masuk
-				--	AND a.durasi_lembur_total_jam = 0
-				-- AND a.pot_jam > 0
-					'.$where.'
-				HAVING durasi_istirahat_menit > 0 AND kategori <> "AMAN"
-				ORDER BY a.tanggal
-				' 
-				);
+				WHERE
+					a.tanggal BETWEEN :start_date
+					AND DATE_ADD(:end_date, INTERVAL 1 DAY)
+					AND a.nama IN ("MAKAN", "MAKAN MANUAL")
+
+				GROUP BY
+					b.id,
+					a.tanggal
+			) mk
+				ON mk.ceklok BETWEEN a.clock_in AND a.clock_out
+				AND mk.id_hemxxmh = a.id_hemxxmh
+
+			WHERE
+				a.tanggal BETWEEN :start_date AND :end_date
+				AND a.durasi_lembur_total_jam > 0
+				AND (
+					a.pot_ti > 0
+					OR a.pot_overtime = 0.5
+				)
+				' . $where . '
+
+			ORDER BY
+				tanggal
+		');
+
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
 
 	$results = array();
