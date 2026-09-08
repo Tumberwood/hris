@@ -1545,8 +1545,8 @@
                             END AS pot_jam_keluar_istirahat,
 
                             CASE 
-                                WHEN tanggal = "2026-08-17" AND (id_hetxxmh IN (99,31) OR ket_jadwal LIKE "%satpam%") AND is_makan_manual = 1 THEN 0
-                                WHEN tanggal = "2026-08-16" AND (id_hetxxmh IN (99,31) OR ket_jadwal LIKE "%satpam%") AND is_makan_manual = 1 AND shift LIKE "%MALAM%" THEN 0
+                                WHEN tanggal = "2026-08-17" AND (id_hetxxmh IN (99,48,131) OR ket_jadwal LIKE "%satpam%") AND is_makan_manual = 1 THEN 0
+                                WHEN tanggal = "2026-08-16" AND (id_hetxxmh IN (99,48,131) OR ket_jadwal LIKE "%satpam%") AND is_makan_manual = 1 AND shift LIKE "%MALAM%" THEN 0
                                 WHEN tanggal >= "2026-07-23" AND is_makan_manual = 1 THEN 1
                                 ELSE 0
                             END AS pot_jam_makan_manual,
