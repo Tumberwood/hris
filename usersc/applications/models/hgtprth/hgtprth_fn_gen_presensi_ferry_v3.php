@@ -395,6 +395,7 @@
                                 jadwal.tanggaljam_akhir_t2, 
                                 -- IF(a.is_pot_makan = 1 AND ceklok_makan > 0, ceklok_makan, 0) AS is_makan,
                                 IF(a.is_pot_makan = 1 AND ceklok_makan > 0, 1, 0) AS is_makan,
+                                is_makan_manual,
                                 break_in,
                                 break_out,
                                 jam_makan,
@@ -491,6 +492,7 @@
                                     STR_TO_DATE(SUBSTRING_INDEX(concat_break_in,  "|",  1), "%Y-%m-%d %H:%i") AS break_in,
                                     STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i") AS break_out,
                                     IF(jam_makan IS NOT NULL, 1, 0) ceklok_makan,
+                                    IF(makan_manual IS NOT NULL, 1, 0) is_makan_manual,
 
                                     CONCAT(
                                         SUBSTRING_INDEX(concat_break_in,  "|", -1),
@@ -847,6 +849,36 @@
                                             AND c.tanggal_jam BETWEEN CONCAT(jadwal.tanggal," 09:00:00") AND DATE_ADD(CONCAT(jadwal.tanggal," 04:00:00"), INTERVAL 1 DAY)
                                             THEN c.tanggal_jam
                                         END) AS ceklok_luar,
+                                        
+                                        -- AMBIL JAM CEKLOK MAKAN MANUAL untuk potongan 1 jam
+                                        MIN(
+                                            DISTINCT
+                                            CASE
+                                                -- 🔹 PAKAI RANGE OVERRIDE (htoXXrd)
+                                                WHEN d.id IS NOT NULL
+                                                    AND jadwal.id_htsxxmh = 1
+                                                    AND c.nama IN ("makan manual")
+                                                    AND c.tanggal_jam BETWEEN
+                                                        CONCAT(d.tanggal, " ", d.jam_awal)
+                                                        AND CONCAT(
+                                                            IF(d.jam_awal > d.jam_akhir,
+                                                                DATE_ADD(d.tanggal, INTERVAL 1 DAY),
+                                                                d.tanggal
+                                                            ),
+                                                            " ",
+                                                            d.jam_akhir
+                                                        )
+                                                THEN c.tanggal_jam
+
+                                                -- 🔹 DEFAULT RANGE (jadwal)
+                                                WHEN 1
+                                                    AND c.nama IN ("makan manual")
+                                                    AND c.tanggal_jam BETWEEN
+                                                        jadwal.tanggaljam_awal_t1
+                                                        AND DATE_SUB(jadwal.tanggaljam_akhir_t2, INTERVAL 60 MINUTE)
+                                                THEN c.tanggal_jam
+                                            END
+                                        ) AS makan_manual,
                                         
                                         -- AMBIL JAM CEKLOK MAKAN
                                         MIN(
@@ -1511,6 +1543,13 @@
 
                                 ELSE 0
                             END AS pot_jam_keluar_istirahat,
+
+                            CASE 
+                                WHEN tanggal = "2026-08-17" AND id_hetxxmh IN (99,31) AND is_makan_manual = 1 THEN 0
+                                WHEN tanggal = "2026-08-16" AND id_hetxxmh IN (99,31) AND is_makan_manual = 1 AND shift LIKE "%MALAM%" THEN 0
+                                WHEN tanggal >= "2026-07-23" AND is_makan_manual = 1 THEN 1
+                                ELSE 0
+                            END AS pot_jam_makan_manual,
                                 
                                 -- STATUS PRESENSI IN
                                 CASE
@@ -1704,6 +1743,7 @@
                                         ifnull(pot_jam_keluar_istirahat,0)
                                     ) +
                                     pot_abnormal_istirahat
+                                    + pot_jam_makan_manual
                                 )
                                 AS total_pot_jam
                             FROM perhitungan
@@ -1933,7 +1973,8 @@
                             IF(IFNULL(potongan_ti_jam,0) > 0 AND IFNULL(pot_jam_late_lembur, 0) = 0, 
                                 IFNULL(potongan_ti_jam,0),
                                 ifnull(pot_jam_keluar_istirahat,0)
-                            ) AS pot_jam_istirahat,
+                            ) + pot_jam_makan_manual 
+                            AS pot_jam_istirahat,
                             
                             break_in,
                             break_out,
