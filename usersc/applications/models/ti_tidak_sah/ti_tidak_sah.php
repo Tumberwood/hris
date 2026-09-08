@@ -66,7 +66,7 @@
 				INNER JOIN hodxxmh d ON d.id = c.id_hodxxmh
 				INNER JOIN hetxxmh e ON e.id = c.id_hetxxmh
 				LEFT JOIN holxxmd_2 f ON f.id = a.id_holxxmd_2
-				INNER JOIN heyxxmh g ON g.id = c.id_heyxxmh
+				LEFT JOIN heyxxmh g ON g.id = c.id_heyxxmh
 
 				LEFT JOIN (
 					SELECT
