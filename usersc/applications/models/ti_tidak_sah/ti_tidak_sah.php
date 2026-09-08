@@ -33,6 +33,7 @@
 					d.nama AS dep,
 					e.nama AS jab,
 					f.nama AS area,
+					g.nama as tipe,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
 					a.st_jadwal,
 					DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i" ) AS masuk,
@@ -65,6 +66,7 @@
 				INNER JOIN hodxxmh d ON d.id = c.id_hodxxmh
 				INNER JOIN hetxxmh e ON e.id = c.id_hetxxmh
 				LEFT JOIN holxxmd_2 f ON f.id = a.id_holxxmd_2
+				INNER JOIN heyxxmh g ON g.id = c.id_heyxxmh
 
 				LEFT JOIN (
 					SELECT
