@@ -22,7 +22,7 @@
 	}
 
 	$qs_htsprrd = $db
-	
+
 		->raw()
 		->bind(':start_date', $start_date)
 		->bind(':end_date', $end_date)
@@ -36,7 +36,7 @@
 				d.nama AS dep,
 				e.nama AS jab,
 				f.nama AS area,
-				NULL AS tipe,
+				g.nama AS type,
 				DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
 				a.st_jadwal,
 				DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i") AS masuk,
@@ -123,6 +123,9 @@
 			LEFT JOIN holxxmd_2 f
 				ON f.id = a.id_holxxmd_2
 
+			LEFT JOIN heyxxmh g
+				ON g.id = c.id_heyxxmh
+
 			WHERE
 				a.tanggal BETWEEN :start_date AND :end_date
 				AND a.pot_jam > 0
@@ -157,7 +160,7 @@
 				d.nama AS dep,
 				e.nama AS jab,
 				f.nama AS area,
-				g.nama AS tipe,
+				g.nama AS type,
 				DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
 				a.st_jadwal,
 				DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i") AS masuk,
