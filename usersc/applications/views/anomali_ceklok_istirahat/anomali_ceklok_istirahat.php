@@ -338,6 +338,7 @@
 				data_anomali_ceklok_istirahat = tblanomali_ceklok_istirahat.row( { selected: true } ).data();
 				id_hemxxmh      = data_anomali_ceklok_istirahat.id_hemxxmh;
 				tanggal       	= data_anomali_ceklok_istirahat.tanggal;		
+				is_sesuai       	= data_anomali_ceklok_istirahat.tanggal;		
 
 				console.log('tanggal: '+tanggal);
 				console.log('id_hemxxmh: '+id_hemxxmh);
@@ -352,6 +353,7 @@
 			tblanomali_ceklok_istirahat.on( 'deselect', function () {
 				// reload dipanggil di function CekDeselectHeader
 				id_hemxxmh = 0;
+				is_sesuai = 0;
 				tanggal = '';
 
 				tblanomali_ceklok_istirahat.button('btnSesuai:name').disable();
