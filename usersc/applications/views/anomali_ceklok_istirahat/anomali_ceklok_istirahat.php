@@ -285,6 +285,33 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					{
+						text: 'Sesuai',
+						name: 'btnSesuai',
+						className: 'btn btn-xs btn-primary',
+						titleAttr: '',
+						action: function ( e, dt, node, config ) {
+
+							e.preventDefault();
+
+							if (confirm('Apakah anda yakin?')) {
+
+								var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+
+								notifyLoadingKucing();
+
+								fn_sesuai(
+									tanggal,
+									id_hemxxmh,
+									1
+								)
+
+							} else {
+
+							}
+
+						}
+					},
 				],
 				rowCallback: function( row, data, index ) {
 				},
@@ -294,6 +321,27 @@
 			} );
 
 			tblanomali_ceklok_istirahat.searchPanes.container().appendTo( '#searchPanes1' );
+			
+			tblanomali_ceklok_istirahat.on( 'init', function () {
+				tblanomali_ceklok_istirahat.button('btnSesuai:name').disable();
+			} );
+			
+			tblanomali_ceklok_istirahat.on( 'select', function( e, dt, type, indexes ) {
+				data_anomali_ceklok_istirahat = tblanomali_ceklok_istirahat.row( { selected: true } ).data();
+				id_hemxxmh      = data_anomali_ceklok_istirahat.id_hemxxmh;
+				tanggal       	= data_anomali_ceklok_istirahat.tanggal;		
+				
+				tblanomali_ceklok_istirahat.button('btnSesuai:name').enable();
+			} );
+			
+			tblanomali_ceklok_istirahat.on( 'deselect', function () {
+				// reload dipanggil di function CekDeselectHeader
+				id_hemxxmh = 0;
+				tanggal = '';
+
+				tblanomali_ceklok_istirahat.button('btnSesuai:name').disable();
+
+			} );
 
 			$("#frmanomali_ceklok_istirahat").submit(function(e) {
 				e.preventDefault();
