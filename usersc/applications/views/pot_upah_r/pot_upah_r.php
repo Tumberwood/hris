@@ -312,13 +312,13 @@
 							.append('<td></td>')
 							.append(
 								$('<td/>', {
-									class: 'text-end fw-bold text-white',
+									class: 'text-end fw-bold',
 									html: 'Total Pot Upah (Hari)'
 								})
 							)
 							.append(
 								$('<td/>', {
-									class: 'text-right fw-bold text-white',
+									class: 'text-right fw-bold',
 									html: total_pot_upah
 								})
 							);
