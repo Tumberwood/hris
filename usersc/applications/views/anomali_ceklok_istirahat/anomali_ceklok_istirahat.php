@@ -342,6 +342,7 @@
 
 				console.log('tanggal: '+tanggal);
 				console.log('id_hemxxmh: '+id_hemxxmh);
+				console.log('is_sesuai: '+is_sesuai);
 				
 				if(is_sesuai > 0) {
 					tblanomali_ceklok_istirahat.button('btnSesuai:name').disable();
