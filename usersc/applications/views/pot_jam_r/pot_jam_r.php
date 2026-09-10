@@ -88,9 +88,9 @@
 						<tfoot>
 							<tr>
 								<th colspan="2" class="text-right">Jumlah Orang</th>
-								<th class="text-right" id="c_orang">Jumlah Orang</th>
+								<th class="text-right fw-bold" id="c_orang">Jumlah Orang</th>
 								<th colspan="7" class="text-right">Grand Total</th>
-								<th class="text-right" id="grand_total_ip"></th>
+								<th class="text-right fw-bold" id="grand_total_ip"></th>
 							</tr>
 						</tfoot>
                     </table>
