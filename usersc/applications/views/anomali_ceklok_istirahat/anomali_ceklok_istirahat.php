@@ -338,7 +338,7 @@
 				data_anomali_ceklok_istirahat = tblanomali_ceklok_istirahat.row( { selected: true } ).data();
 				id_hemxxmh      = data_anomali_ceklok_istirahat.id_hemxxmh;
 				tanggal       	= data_anomali_ceklok_istirahat.tanggal;		
-				is_sesuai       	= data_anomali_ceklok_istirahat.tanggal;		
+				is_sesuai       	= data_anomali_ceklok_istirahat.is_sesuai;		
 
 				console.log('tanggal: '+tanggal);
 				console.log('id_hemxxmh: '+id_hemxxmh);
