@@ -89,9 +89,9 @@
 						<tfoot>
 							<tr>
 								<th colspan="2" class="text-right">Jumlah Orang</th>
-								<th class="text-right bg-primary" id="c_orang">Jumlah Orang</th>
+								<th class="text-right fw-bold" id="c_orang">Jumlah Orang</th>
 								<th colspan="7" class="text-right">Grand Total</th>
-								<th class="text-right bg-primary" id="grand_total_ip"></th>
+								<th class="text-right fw-bold" id="grand_total_ip"></th>
 								<th></th>
 							</tr>
 						</tfoot>
@@ -312,13 +312,13 @@
 							.append('<td></td>')
 							.append(
 								$('<td/>', {
-									class: 'text-end fw-bold bg-danger text-white',
+									class: 'text-end fw-bold text-white',
 									html: 'Total Pot Upah (Hari)'
 								})
 							)
 							.append(
 								$('<td/>', {
-									class: 'text-right fw-bold bg-danger text-white',
+									class: 'text-right fw-bold text-white',
 									html: total_pot_upah
 								})
 							);
