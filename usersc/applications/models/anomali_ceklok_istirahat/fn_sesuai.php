@@ -21,6 +21,7 @@
 		->query('insert', 'cek_anomali_istirahat')
 		->set('id_hemxxmh',$id_hemxxmh)
 		->set('tanggal',$tanggal)
+		->set('kode','Anomali Ceklok Istirahat')
 		->set('created_by',$id_users)
 		->exec();
 	

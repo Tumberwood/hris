@@ -80,6 +80,7 @@
 								<th>Area Kerja</th>
 								<th>Tanggal</th>
 								<th>Jadwal</th>
+								<th>Sesuai</th>
 							</tr>
 						</thead>
                     </table>
@@ -270,6 +271,12 @@
 					{ data: "area" },
 					{ data: "tanggal" },
 					{ data: "st_jadwal" },
+					{ 
+						data: "is_sesuai",
+						render: function (data, type, row) {
+							return parseInt(data) > 0 ? "Sesuai" : "";
+						}
+					}
 				],
 				buttons: [
 					// BEGIN breaking generate button
@@ -335,8 +342,11 @@
 				console.log('tanggal: '+tanggal);
 				console.log('id_hemxxmh: '+id_hemxxmh);
 				
-				
-				tblanomali_ceklok_istirahat.button('btnSesuai:name').enable();
+				if(is_sesuai == 0) {
+					tblanomali_ceklok_istirahat.button('btnSesuai:name').enable();
+				} else {
+					tblanomali_ceklok_istirahat.button('btnSesuai:name').disable();
+				}
 			} );
 			
 			tblanomali_ceklok_istirahat.on( 'deselect', function () {

@@ -173,7 +173,12 @@
 								)
 							THEN CONCAT(c.tanggal_jam,"|",c.nama)
 						END
-					) AS count_break
+					) AS count_break,
+
+					CASE
+						WHEN IFNULL(cek.id, 0) > 0 THEN 1
+						ELSE 0
+					END AS is_sesuai
 
 				FROM htssctd AS jadwal
 				INNER JOIN hemxxmh AS b ON b.id = jadwal.id_hemxxmh AND b.is_active = 1
@@ -218,6 +223,9 @@
 				LEFT JOIN hodxxmh dep ON dep.id = jb.id_hodxxmh
 				LEFT JOIN hetxxmh e ON e.id = jb.id_hetxxmh
 				LEFT JOIN holxxmd_2 f ON f.id = pr.id_holxxmd_2
+
+				LEFT JOIN cek_anomali_istirahat cek ON cek.id_hemxxmh = pr.id_hemxxmh
+				AND cek.tanggal = pr.tanggal
 
 				WHERE jadwal.is_active = 1
 					AND jadwal.tanggal BETWEEN :start_date AND :end_date
