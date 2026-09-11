@@ -79,6 +79,7 @@
 
 				a.durasi_lembur_total_jam,
 				a.pot_ti,
+				bag.nama bagian,
 				a.durasi_lembur_final
 
 			FROM htsprrd a
@@ -125,6 +126,7 @@
 
 			LEFT JOIN heyxxmh g
 				ON g.id = c.id_heyxxmh
+			LEFT JOIN hobxxmh bag ON bag.id = c.id_hobxxmh
 
 			WHERE
 				a.tanggal BETWEEN :start_date AND :end_date
