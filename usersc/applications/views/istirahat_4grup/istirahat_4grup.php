@@ -221,7 +221,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [3,4,15]
+						targets: [3,4,18]
 					},
 					{
 						searchPanes:{
