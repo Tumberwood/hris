@@ -410,7 +410,7 @@
 			// 	}
 			// }
 
-			if ($keputusan == 'Tetap' || $keputusan == 'Kontrak') {
+			if ($keputusan == 'Tetap' || $keputusan == 'Kontrak' || $keputusan == 'Rekontrak') {
 				$qu_hemxxmh = $db
 					->query('update', 'hemjbmh')
 					->set('tanggal_keluar', $tanggal_mulai)
