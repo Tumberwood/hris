@@ -75,6 +75,7 @@
 								<th>ID</th>
 								<th>NIK</th>
 								<th>Nama</th>
+								<th>Tipe</th>
 								<th>Department</th>
 								<th>Jabatan</th>
 								<th>Area Kerja</th>
@@ -219,7 +220,7 @@
 			//start datatables
 			tblanomali_ceklok_istirahat = $('#tblanomali_ceklok_istirahat').DataTable( {
 				searchPanes:{
-					layout: 'columns-3',
+					layout: 'columns-1',
 				},
 				dom: 
 					"<P>"+
@@ -232,7 +233,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [1,3,4,5,6]
+						targets: [3]
 					},
 					{
 						searchPanes:{
@@ -266,6 +267,7 @@
 							return link;
 						}
 					},
+					{ data: "tipe" },
 					{ data: "dep" },
 					{ data: "jab" },
 					{ data: "area" },

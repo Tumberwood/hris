@@ -175,6 +175,8 @@
 						END
 					) AS count_break,
 
+					tipe.nama as tipe,
+
 					CASE
 						WHEN IFNULL(cek.id, 0) > 0 THEN 1
 						ELSE 0
@@ -223,6 +225,7 @@
 				LEFT JOIN hodxxmh dep ON dep.id = jb.id_hodxxmh
 				LEFT JOIN hetxxmh e ON e.id = jb.id_hetxxmh
 				LEFT JOIN holxxmd_2 f ON f.id = pr.id_holxxmd_2
+				LEFT JOIN heyxxmh tipe ON tipe.id = pr.id_heyxxmh
 
 				LEFT JOIN cek_anomali_istirahat cek ON cek.id_hemxxmh = pr.id_hemxxmh
 				AND cek.tanggal = pr.tanggal
