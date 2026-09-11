@@ -1686,7 +1686,7 @@
                                 
                                 -- 16 JUL 26, Lembur tapi Pulang akhir
                                 IF(
-                                    durasi_lembur_akhir_jam > 0
+                                    durasi_lembur_akhir_jam > 1
                                     AND ceklok_out < CONCAT(DATE(ceklok_out), " ", jam_akhir_lembur_akhir),
                                     IF(
                                         is_istirahat = 2,
