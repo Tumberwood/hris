@@ -75,10 +75,11 @@
 								<th>ID</th>
 								<th>NIK</th>
 								<th>Nama</th>
+								<th>Tipe</th>
+								<th>Bagian</th>
 								<th>Department</th>
 								<th>Jabatan</th>
 								<th>Area Kerja</th>
-								<th>Type</th>
 								<th>Tanggal</th>
 								<th>Jadwal</th>
 								<th>SPKL</th>
@@ -220,7 +221,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [1,15,3,4,5,6]
+						targets: [3,4,16]
 					},
 					{
 						searchPanes:{
@@ -254,10 +255,11 @@
 							return link;
 						}
 					},
+					{ data: "type" },
+					{ data: "bagian" },
 					{ data: "dep" },
 					{ data: "jab" },
 					{ data: "area" },
-					{ data: "type" },
 					{ data: "tanggal" },
 					{ data: "st_jadwal" },
 					{ 

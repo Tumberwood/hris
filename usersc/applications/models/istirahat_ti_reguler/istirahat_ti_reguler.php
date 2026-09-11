@@ -206,6 +206,7 @@
 
 				a.durasi_lembur_total_jam,
 				a.pot_ti,
+				bag.nama bagian,
 				a.durasi_lembur_final
 
 			FROM htsprrd a
@@ -225,8 +226,8 @@
 			LEFT JOIN holxxmd_2 f
 				ON f.id = a.id_holxxmd_2
 
-			LEFT JOIN heyxxmh g
-				ON g.id = c.id_heyxxmh
+			LEFT JOIN heyxxmh g ON g.id = c.id_heyxxmh
+			LEFT JOIN hobxxmh bag ON bag.id = c.id_hobxxmh
 
 			LEFT JOIN (
 				SELECT
