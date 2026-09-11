@@ -92,8 +92,8 @@
 				INNER JOIN hodxxmh d ON d.id = c.id_hodxxmh
 				INNER JOIN hetxxmh e ON e.id = c.id_hetxxmh
 				LEFT JOIN holxxmd_2 f ON f.id = a.id_holxxmd_2
-				LEFT JOIN heyxxmh hey ON hey.id = a.id_heyxxmh
-				LEFT JOIN hobxxmh bag ON bag.id = a.id_hobxxmh
+				LEFT JOIN heyxxmh hey ON hey.id = c.id_heyxxmh
+				LEFT JOIN hobxxmh bag ON bag.id = c.id_hobxxmh
 				
 				WHERE 
 					a.tanggal BETWEEN :start_date AND :end_date
