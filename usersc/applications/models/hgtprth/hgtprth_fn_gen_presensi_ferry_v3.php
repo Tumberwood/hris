@@ -403,6 +403,7 @@
                                 jam_awal_lembur,
                                 pot_hk_jadwal,
                                 jam_akhir_schedule,
+                                id_harxxmh,
                                 diff_menit_pegawai_gedung3_ceklok_gedung1
 
                             FROM hemxxmh AS a
@@ -416,6 +417,7 @@
                                     j.tanggal_masuk,
                                     j.tanggal_keluar,
                                     IFNULL(history.id_hesxxmh, j.id_hesxxmh) id_hesxxmh,
+                                    IFNULL(history.id_harxxmh, 0) id_harxxmh,
                                     IFNULL(history.jumlah_grup, j.jumlah_grup) jumlah_grup,
                                     IF(
                                         IFNULL(history.id_holxxmd_2_akhir, 0) > 0,
@@ -1361,7 +1363,18 @@
                                 GROUP BY a.id_hemxxmh
                             ) AS abnormal_istirahat ON abnormal_istirahat.id_hemxxmh = a.id
 
-                            WHERE tanggal_masuk <= :tanggal AND (b.tanggal_keluar IS NULL OR b.tanggal_keluar > :tanggal) AND id_heyxxmh = :id_heyxxmh AND is_checkclock = 1
+                            WHERE tanggal_masuk <= :tanggal 
+                            AND (
+                                    b.tanggal_keluar IS NULL 
+                                    OR (
+                                        CASE 
+                                            WHEN id_harxxmh = 4 THEN b.tanggal_keluar >= :tanggal
+                                            ELSE b.tanggal_keluar > :tanggal
+                                        END
+                                    )
+                                )
+                            AND id_heyxxmh = :id_heyxxmh 
+                            AND is_checkclock = 1
 
                         ),
                         status_presensi AS (
