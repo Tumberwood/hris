@@ -1496,11 +1496,7 @@
                                 WHEN is_istirahat = 2 AND id_holxxmd_2 = 1 AND durasi_break_menit > 0 AND mesin NOT LIKE "%Gedung-3%" 
                                 AND id_hetxxmh <> 55
                                 THEN 0.5
-
                                 
-                                -- 22 Mar 2025, 0077 istirahat > 1 jam maka dipotong 1jam
-                                WHEN is_istirahat = 2 AND durasi_break_menit > ifnull(menit_toleransi_ti, 0) THEN 0.5
-
                                 -- 11/09/2026, Jika TI tapi tidak full jam kerja, maka potong 0.5
                                 WHEN is_istirahat = 2 AND id_htsxxmh <> 1 AND keterangan <> "" THEN 0.5
 
