@@ -403,7 +403,7 @@
                                 jam_awal_lembur,
                                 pot_hk_jadwal,
                                 jam_akhir_schedule,
-                                id_harxxmh,
+                                is_resign,
                                 diff_menit_pegawai_gedung3_ceklok_gedung1
 
                             FROM hemxxmh AS a
@@ -417,8 +417,8 @@
                                     j.tanggal_masuk,
                                     j.tanggal_keluar,
                                     IFNULL(history.id_hesxxmh, j.id_hesxxmh) id_hesxxmh,
-                                    IFNULL(history.id_harxxmh, 0) id_harxxmh,
                                     IFNULL(history.jumlah_grup, j.jumlah_grup) jumlah_grup,
+                                    IFNULL(is_resign, 0) is_resign,
                                     IF(
                                         IFNULL(history.id_holxxmd_2_akhir, 0) > 0,
                                         history.id_holxxmd_2_akhir,
@@ -463,6 +463,16 @@
                                     ) t
                                     WHERE rn = 1
                                 ) history ON history.id_hemxxmh = j.id_hemxxmh
+                                
+                                LEFT JOIN (
+                                    SELECT
+                                        rs.id_hemxxmh,
+                                        COUNT(rs.id) is_resign
+                                    FROM hemjbrd rs
+                                    WHERE rs.id_harxxmh IN (3,4)
+                                    GROUP BY rs.id_hemxxmh
+                                ) resgn ON resgn.id_hemxxmh = j.id_hemxxmh
+
                             ) b ON b.id_hemxxmh = a.id
 
                             LEFT JOIN hosxxmh bagian on bagian.id = b.id_hosxxmh
@@ -1368,12 +1378,12 @@
                                     b.tanggal_keluar IS NULL 
                                     OR (
                                         CASE 
-                                            WHEN id_harxxmh = 4 THEN b.tanggal_keluar >= :tanggal
-                                            ELSE b.tanggal_keluar > :tanggal
+                                            WHEN is_resign > 0 THEN b.tanggal_keluar > :tanggal
+                                            ELSE b.tanggal_keluar >= :tanggal
                                         END
                                     )
                                 )
-                            AND id_heyxxmh = :id_heyxxmh 
+                            AND id_heyxxmh = :id_heyxxmh
                             AND is_checkclock = 1
 
                         ),
