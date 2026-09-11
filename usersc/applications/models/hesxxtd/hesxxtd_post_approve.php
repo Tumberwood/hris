@@ -77,7 +77,6 @@
 				'hemxxmh.id_gctxxmh_lahir as id_gctxxmh_lahir',
 				'hemxxmh.id_users as id_users',
 				'hemxxmh.nama as nama',
-				'hemxxmh.kode_finger as kode_finger',
 				'hemxxmh.nama_panggilan as nama_panggilan',
 				'hemxxmh.tanggal_lahir as tanggal_lahir',
 				'hemxxmh.gender as gender',
@@ -165,6 +164,7 @@
 				->query('insert', 'hemxxmh')
 				->set($rs_hemxxmh)
 				->set('kode', $nik_baru )
+				->set('kode_finger', substr($nik_baru, -4))
 				->exec();
 			$id_insert_hemx = $qi_hemxxmh->insertId();
 
