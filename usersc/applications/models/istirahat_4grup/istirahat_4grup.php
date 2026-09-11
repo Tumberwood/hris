@@ -80,6 +80,7 @@
 						j.id_hosxxmh,
 						j.id_hodxxmh,
 						j.id_heyxxmd,
+						j.id_hobxxmh,
 						j.is_checkclock,
 						j.tanggal_masuk,
 						j.tanggal_keluar,
