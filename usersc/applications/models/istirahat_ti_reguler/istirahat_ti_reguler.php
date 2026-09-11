@@ -100,6 +100,7 @@
 					j.id_hetxxmh,
 					j.id_hosxxmh,
 					j.id_hodxxmh,
+					j.id_hobxxmh,
 					j.id_heyxxmd,
 					j.is_checkclock,
 					j.tanggal_masuk,
