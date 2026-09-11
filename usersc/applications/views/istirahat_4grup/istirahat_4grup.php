@@ -75,6 +75,8 @@
 								<th>ID</th>
 								<th>NIK</th>
 								<th>Nama</th>
+								<th>Tipe</th>
+								<th>Bagian</th>
 								<th>Department</th>
 								<th>Jabatan</th>
 								<th>Area Kerja</th>
@@ -219,7 +221,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [1,13,3,4,5,6]
+						targets: [3,4,15]
 					},
 					{
 						searchPanes:{
@@ -253,6 +255,8 @@
 							return link;
 						}
 					},
+					{ data: "bagian" },
+					{ data: "tipe" },
 					{ data: "dep" },
 					{ data: "jab" },
 					{ data: "area" },
