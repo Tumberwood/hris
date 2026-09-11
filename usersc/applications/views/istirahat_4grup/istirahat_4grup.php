@@ -255,8 +255,8 @@
 							return link;
 						}
 					},
-					{ data: "bagian" },
 					{ data: "tipe" },
+					{ data: "bagian" },
 					{ data: "dep" },
 					{ data: "jab" },
 					{ data: "area" },
