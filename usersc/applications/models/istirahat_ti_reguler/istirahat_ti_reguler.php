@@ -229,7 +229,7 @@ $qs_htsprrd = $db
 				kategori <> "Tidak Masuk Kategori"
 
 			UNION ALL
-
+			
 			SELECT
 				a.id,
 				a.id_hemxxmh,
@@ -240,14 +240,35 @@ $qs_htsprrd = $db
 				e.nama AS jab,
 				f.nama AS area,
 				g.nama AS type,
-				DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
+				DATE_FORMAT(
+					a.tanggal,
+					"%d %b %Y"
+				) AS tanggal,
 				a.st_jadwal,
-				DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i") AS masuk,
-				DATE_FORMAT(a.break_in, "%d %b %Y %H:%i") AS break_in,
-				DATE_FORMAT(a.break_out, "%d %b %Y %H:%i") AS break_out,
+
+				DATE_FORMAT(
+					a.clock_in,
+					"%d %b %Y %H:%i"
+				) AS masuk,
+
+				DATE_FORMAT(
+					a.break_in,
+					"%d %b %Y %H:%i"
+				) AS break_in,
+
+				DATE_FORMAT(
+					a.break_out,
+					"%d %b %Y %H:%i"
+				) AS break_out,
+
 				mk.makan AS makan,
+
 				a.is_makan,
-				DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i") AS pulang,
+
+				DATE_FORMAT(
+					a.clock_out,
+					"%d %b %Y %H:%i"
+				) AS pulang,
 
 				TIMESTAMPDIFF(
 					MINUTE,
@@ -256,13 +277,21 @@ $qs_htsprrd = $db
 				) AS durasi_istirahat_menit,
 
 				CASE
-					WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30
+					WHEN TIMESTAMPDIFF(
+						MINUTE,
+						a.break_in,
+						a.break_out
+					) > 30
 					THEN "Istirahat > 30 menit"
 
 					WHEN a.pot_ti > 0
 						AND f.id = 1
 						AND a.htlxxrh_kode = ""
-						AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) < 30
+						AND TIMESTAMPDIFF(
+							MINUTE,
+							a.break_in,
+							a.break_out
+						) < 30
 					THEN "TI Gedung 3 Tidak Sah"
 
 					WHEN a.pot_ti > 0
@@ -285,8 +314,11 @@ $qs_htsprrd = $db
 
 				a.durasi_lembur_total_jam,
 				a.pot_ti,
-				bag.nama bagian,
-				a.durasi_lembur_final
+				bag.nama AS bagian,
+				a.durasi_lembur_final,
+
+				DATE(a.tanggal) AS tanggal_raw,
+				3 AS source_priority
 
 			FROM htsprrd a
 
@@ -305,16 +337,28 @@ $qs_htsprrd = $db
 			LEFT JOIN holxxmd_2 f
 				ON f.id = a.id_holxxmd_2
 
-			LEFT JOIN heyxxmh g ON g.id = c.id_heyxxmh
-			LEFT JOIN hobxxmh bag ON bag.id = c.id_hobxxmh
+			LEFT JOIN heyxxmh g
+				ON g.id = c.id_heyxxmh
+
+			LEFT JOIN hobxxmh bag
+				ON bag.id = c.id_hobxxmh
 
 			LEFT JOIN (
 				SELECT
 					b.id AS id_hemxxmh,
 					a.tanggal,
-					CONCAT(a.tanggal, " ", a.jam) AS ceklok,
+					CONCAT(
+						a.tanggal,
+						" ",
+						a.jam
+					) AS ceklok,
+
 					DATE_FORMAT(
-						CONCAT(a.tanggal, " ", a.jam),
+						CONCAT(
+							a.tanggal,
+							" ",
+							a.jam
+						),
 						"%d %b %Y %H:%i"
 					) AS makan
 
@@ -324,24 +368,42 @@ $qs_htsprrd = $db
 					ON b.kode_finger = a.kode
 
 				WHERE
-					a.tanggal BETWEEN :start_date
-					AND DATE_ADD(:end_date, INTERVAL 1 DAY)
-					AND a.nama IN ("MAKAN", "MAKAN MANUAL")
+					a.tanggal BETWEEN
+						:start_date
+						AND DATE_ADD(
+							:end_date,
+							INTERVAL 1 DAY
+						)
+
+					AND a.nama IN (
+						"MAKAN",
+						"MAKAN MANUAL"
+					)
 
 				GROUP BY
 					b.id,
 					a.tanggal
+
 			) mk
-				ON mk.ceklok BETWEEN a.clock_in AND a.clock_out
-				AND mk.id_hemxxmh = a.id_hemxxmh
+				ON mk.ceklok BETWEEN
+					a.clock_in
+					AND a.clock_out
+
+				AND mk.id_hemxxmh =
+					a.id_hemxxmh
 
 			WHERE
-				a.tanggal BETWEEN :start_date AND :end_date
+				a.tanggal BETWEEN
+					:start_date
+					AND :end_date
+
 				AND a.durasi_lembur_total_jam > 0
+
 				AND (
 					a.pot_ti > 0
 					OR a.pot_overtime = 0.5
 				)
+
 				' . $where . '
 
 
