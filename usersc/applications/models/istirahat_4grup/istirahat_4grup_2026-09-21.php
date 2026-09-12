@@ -103,9 +103,13 @@
 					AND jumlah_grup = 2
 					-- AND a.is_pot_premi <> 1 -- yang potongan jam karena early, late dsb ini agar tidak masuk
 					AND (a.is_pot_premi <> 1 OR a.pot_jam_istirahat > 0)
-					-- AND a.htlxxrh_kode = ""
+					AND a.htlxxrh_kode = ""
 					'. $where .'
-				HAVING kategori <> "Tidak Masuk Kategori"
+				HAVING (
+				durasi_istirahat_menit > 30 
+				OR 
+				(durasi_istirahat_menit BETWEEN 1 AND 30 AND IFNULL(is_makan, 0) = 1)
+				)
 				ORDER BY a.tanggal
 				' 
 				);
