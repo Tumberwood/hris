@@ -74,6 +74,8 @@
 						AND IFNULL(a.is_makan, 0) = 1
 					THEN "Istirahat ≤ 30 + Makan"
 
+					WHEN pot_jam_istirahat > 0 THEN "durasi kerja < 7/8 jam"
+
 					ELSE "Tidak Masuk Kategori"
 				END AS kategori,
 
