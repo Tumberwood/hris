@@ -263,6 +263,138 @@
 				)
 				' . $where . '
 
+			UNION ALL
+
+			SELECT
+				a.id,
+				a.id_hemxxmh,
+				b.kode AS nik,
+				b.nama,
+				spkl.kode AS kode_spkl,
+				d.nama AS dep,
+				e.nama AS jab,
+				f.nama AS area,
+				hey.nama AS type,
+				DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
+				a.st_jadwal,
+				DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i") AS masuk,
+				DATE_FORMAT(a.break_in, "%d %b %Y %H:%i") AS break_in,
+				DATE_FORMAT(a.break_out, "%d %b %Y %H:%i") AS break_out,
+				mk.makan AS makan,
+				a.is_makan,
+				DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i") AS pulang,
+
+				TIMESTAMPDIFF(
+					MINUTE,
+					a.break_in,
+					a.break_out
+				) AS durasi_istirahat_menit,
+
+				CASE
+					/* SEMUA CASE KATEGORI QUERY KEDUA TETAP DI SINI */
+				END AS kategori,
+
+				a.durasi_lembur_total_jam,
+				a.pot_ti,
+				NULL AS bagian,
+				a.durasi_lembur_final
+
+			FROM htsprrd a
+
+			INNER JOIN hemxxmh b
+				ON b.id = a.id_hemxxmh
+
+			LEFT JOIN htoxxrd spkl
+				ON spkl.id_hemxxmh = a.id_hemxxmh
+				AND spkl.tanggal = a.tanggal
+
+			INNER JOIN (
+				SELECT
+					j.id_hemxxmh,
+					j.id_holxxmd_2,
+					j.id_heyxxmh,
+					j.id_hevxxmh,
+					j.id_hetxxmh,
+					j.id_hosxxmh,
+					j.id_hodxxmh,
+					j.id_heyxxmd,
+					j.is_checkclock,
+					j.tanggal_masuk,
+					j.tanggal_keluar,
+					IFNULL(h.id_hesxxmh, j.id_hesxxmh) AS id_hesxxmh,
+					IFNULL(h.jumlah_grup, j.jumlah_grup) AS jumlah_grup,
+					IFNULL(h.grup_hk, j.grup_hk) AS grup_hk
+				FROM hemjbmh j
+				LEFT JOIN history h
+					ON h.id_hemxxmh = j.id_hemxxmh
+			) c
+				ON c.id_hemxxmh = b.id
+				AND (
+					c.tanggal_masuk IS NULL
+					OR a.tanggal >= c.tanggal_masuk
+				)
+
+			LEFT JOIN heyxxmd hey
+				ON hey.id = c.id_heyxxmd
+
+			LEFT JOIN hodxxmh d
+				ON d.id = c.id_hodxxmh
+
+			LEFT JOIN hetxxmh e
+				ON e.id = c.id_hetxxmh
+
+			LEFT JOIN holxxmd_2 f
+				ON f.id = c.id_holxxmd_2
+
+			LEFT JOIN htsxxmh g
+				ON g.kode = a.st_jadwal
+
+			LEFT JOIN htssctd jad
+				ON jad.id_hemxxmh = a.id_hemxxmh
+				AND jad.tanggal = a.tanggal
+				AND jad.is_active = 1
+
+			LEFT JOIN htoxxrd ot
+				ON ot.tanggal = a.tanggal
+				AND ot.id_hemxxmh = a.id_hemxxmh
+
+			LEFT JOIN (
+				SELECT
+					b.id AS id_hemxxmh,
+					a.tanggal,
+					a.nama AS mesin,
+					CONCAT(a.tanggal, " ", a.jam) AS ceklok,
+					DATE_FORMAT(
+						CONCAT(a.tanggal, " ", a.jam),
+						"%d %b %Y %H:%i"
+					) AS makan,
+					CONCAT(a.tanggal, " ", a.jam) AS makan_ymd
+				FROM htsprtd a
+				LEFT JOIN hemxxmh b
+					ON b.kode_finger = a.kode
+				WHERE
+					a.tanggal BETWEEN :start_date
+					AND DATE_ADD(:end_date, INTERVAL 1 DAY)
+					AND a.nama IN ("MAKAN", "MAKAN MANUAL")
+				GROUP BY
+					b.id,
+					a.tanggal
+			) mk
+				ON mk.ceklok BETWEEN a.clock_in AND a.clock_out
+				AND mk.id_hemxxmh = a.id_hemxxmh
+
+			WHERE
+				a.tanggal BETWEEN :start_date AND :end_date
+				AND (
+					a.is_pot_premi <> 1
+					OR a.pot_jam_istirahat > 0
+				)
+				'.$where.'
+
+			HAVING
+				durasi_istirahat_menit > 0
+				AND kategori <> "AMAN"
+
 			ORDER BY
 				tanggal
 		');
