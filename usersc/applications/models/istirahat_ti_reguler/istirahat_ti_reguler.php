@@ -143,16 +143,9 @@
 					a.is_pot_premi <> 1
 					OR a.pot_jam_istirahat > 0
 				)
-
-				AND a.htlxxrh_kode = ""
 				' . $where . '
 
-			HAVING
-				durasi_istirahat_menit > 30
-				OR (
-					durasi_istirahat_menit BETWEEN 1 AND 30
-					AND IFNULL(is_makan, 0) = 1
-				)
+			HAVING kategori <> "Tidak Masuk Kategori"
 
 			UNION ALL
 
