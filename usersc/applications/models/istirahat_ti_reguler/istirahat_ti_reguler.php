@@ -290,9 +290,276 @@
 					a.break_out
 				) AS durasi_istirahat_menit,
 
-				CASE
-					/* SEMUA CASE KATEGORI QUERY KEDUA TETAP DI SINI */
-				END AS kategori,
+					CASE
+						WHEN DAYNAME(a.tanggal) = "Friday" AND a.st_jadwal LIKE "%PAGI%" THEN "AMAN"
+						WHEN c.jumlah_grup = 2 AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30 AND IF(mesin = "MAKAN MANUAL", break_in <> makan_ymd, 1) AND a.pot_jam > 0 THEN "4 Grup > 30 Menit"
+						WHEN a.pot_jam_istirahat > 0 AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 0 AND IFNULL(is_makan, 0) = 1 THEN "Istirahat + Makan"
+						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 60 AND IF(mesin = "MAKAN MANUAL", break_in <> makan_ymd, 1) AND a.pot_jam > 0 THEN "Istirahat > 60 Menit"
+						
+                        -- QC SHIFT 1
+                        WHEN id_hodxxmh = 9 AND st_jadwal LIKE "%06:00-%" AND 
+                        (
+							a.break_in BETWEEN jad.tanggaljam_awal_istirahat AND DATE_SUB(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+							OR
+							a.break_out BETWEEN jad.tanggaljam_awal_istirahat AND DATE_SUB(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+						)
+                        THEN "Aman"
+
+						WHEN id_hodxxmh = 9 AND st_jadwal LIKE "%06:00-%" AND 
+                        (
+							a.break_in NOT BETWEEN jad.tanggaljam_awal_istirahat AND DATE_SUB(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+							OR
+							a.break_out NOT BETWEEN jad.tanggaljam_awal_istirahat AND DATE_SUB(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+						)
+                        THEN "QC - Shift 1, Istirahat Reguler Tidak Sesuai"
+						
+						-- SHIFT 1 ADA LEMBUR TI
+						when ot.is_istirahat = 2 AND a.st_jadwal LIKE "%PAGI%"
+						AND (
+							TIME(a.break_in) NOT BETWEEN "11:00:00" AND "12:00:00"
+							OR
+							TIME(a.break_out) NOT BETWEEN "11:00:00" AND "12:00:00"
+						)
+				
+						then "Shift 1 Lembur TI, Istirahat TI Tidak Sesuai"
+						
+						-- SHIFT 1 TIDAK ADA LEMBUR TI
+						when ot.id is null AND a.st_jadwal LIKE "%PAGI%" 
+						AND (
+							TIME(a.break_in) NOT BETWEEN "12:00:00" AND "13:00:00"
+							OR
+							TIME(a.break_out) NOT BETWEEN "12:00:00" AND "13:00:00"
+						)
+						
+						then "Shift 1, Istirahat Reguler Tidak Sesuai"
+						
+						-- SHIFT 2 ADA LEMBUR TI
+						when ot.is_istirahat = 2 AND (a.st_jadwal LIKE "%SIANG%" OR a.st_jadwal LIKE "%SORE%") 
+						AND jad.jam_awal_istirahat <> "00:00:00"
+						AND (
+
+							-- ================= NORMAL (SEBELUM RAMADAN)
+							(
+								jad.tanggal < "2026-02-19"
+								AND (
+									a.break_in NOT BETWEEN
+										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
+									AND
+										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+									OR
+									a.break_out NOT BETWEEN
+										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
+									AND
+										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+								)
+							)
+
+							OR
+
+							-- ================= RAMADAN
+							(
+								jad.tanggal BETWEEN "2026-02-19" AND "2026-03-19"
+								AND (
+									TIME(a.break_in) NOT BETWEEN "17:45:00" AND "19:00:00"
+									OR
+									TIME(a.break_out) NOT BETWEEN "17:45:00" AND "19:00:00"
+								)
+							)
+
+							OR
+
+							-- ================= SETELAH RAMADAN (BALIK NORMAL)
+							(
+								jad.tanggal >= "2026-03-20"
+								AND (
+									TIME(a.break_in) NOT BETWEEN "18:00:00" AND "19:00:00"
+									OR
+									TIME(a.break_out) NOT BETWEEN "18:00:00" AND "19:00:00"
+								)
+							)
+
+						)
+						then "Shift 2 Lembur TI, Istirahat TI Tidak Sesuai"
+						
+						-- SHIFT 2 TIDAK ADA LEMBUR TI
+						WHEN ot.id IS NULL
+						AND (a.st_jadwal LIKE "%SIANG%" OR a.st_jadwal LIKE "%SORE%")
+						AND jad.keterangan NOT LIKE "%TJ%"
+						AND (
+
+							-- ================= NORMAL (SEBELUM RAMADAN)
+							(
+								jad.tanggal < "2026-02-19"
+								AND (
+									a.break_in NOT BETWEEN
+										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
+									AND
+										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+									OR
+									a.break_out NOT BETWEEN
+										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
+									AND
+										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+								)
+							)
+
+							OR
+
+							-- ================= RAMADAN
+							(
+								jad.tanggal BETWEEN "2026-02-19" AND "2026-03-19"
+								AND (
+									TIME(a.break_in) NOT BETWEEN "17:45:00" AND "19:00:00"
+									OR
+									TIME(a.break_out) NOT BETWEEN "17:45:00" AND "19:00:00"
+								)
+							)
+
+							OR
+
+							-- ================= SETELAH RAMADAN (BALIK NORMAL)
+							(
+								jad.tanggal >= "2026-03-20"
+								AND (
+									TIME(a.break_in) NOT BETWEEN "19:00:00" AND "20:00:00"
+									OR
+									TIME(a.break_out) NOT BETWEEN "19:00:00" AND "20:00:00"
+								)
+							)
+
+						)
+						THEN "Shift 2, Istirahat Reguler Tidak Sesuai"
+						
+                        -- SHIFT 3 ADA LEMBUR TI
+                        WHEN ot.is_istirahat = 2 
+                        AND a.st_jadwal LIKE "%MALAM%" 
+						AND (
+							
+							-- 1. SEBELUM 18 AGUSTUS 2025
+							(
+								jad.tanggal < "2025-08-18"
+								AND (
+									a.break_in NOT BETWEEN
+										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
+									AND
+										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+									OR
+									a.break_out NOT BETWEEN
+										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
+									AND
+										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+								)
+							)
+
+							OR
+
+							-- 2. NORMAL (18 Aug 2025 s/d sebelum Ramadan)
+							(
+								jad.tanggal BETWEEN "2025-08-18" AND "2026-02-18"
+								AND (
+									TIME(a.break_in) NOT BETWEEN "02:00:00" AND "03:00:00"
+									OR
+									TIME(a.break_out) NOT BETWEEN "02:00:00" AND "03:00:00"
+								)
+							)
+
+							OR
+
+							-- 3. RAMADAN (Jam Puasa)
+							(
+								jad.tanggal BETWEEN "2026-02-19" AND "2026-03-19"
+								AND (
+									TIME(a.break_in) NOT BETWEEN "03:00:00" AND "04:00:00"
+									OR
+									TIME(a.break_out) NOT BETWEEN "03:00:00" AND "04:00:00"
+								)
+							)
+
+							OR
+
+							-- 4. SETELAH RAMADAN (kembali normal)
+							(
+								jad.tanggal >= "2026-03-20"
+								AND (
+									TIME(a.break_in) NOT BETWEEN "01:00:00" AND "02:00:00"
+									OR
+									TIME(a.break_out) NOT BETWEEN "01:00:00" AND "02:00:00"
+								)
+							)
+
+						)
+                        THEN "Shift 3 Lembur TI, Istirahat TI Tidak Sesuai"
+
+						-- SHIFt 3 TIDAK ADA LEMBUR TI
+						WHEN ot.id IS NULL AND a.st_jadwal LIKE "%MALAM%"
+						AND (
+							
+							-- 1. SEBELUM 18 AGUSTUS 2025
+							(
+								jad.tanggal < "2025-08-18"
+								AND (
+									a.break_in NOT BETWEEN
+										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
+									AND
+										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+									OR
+									a.break_out NOT BETWEEN
+										DATE_ADD(jad.tanggaljam_awal_istirahat, INTERVAL 2 HOUR)
+									AND
+										DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+								)
+							)
+
+							OR
+
+							-- 2. NORMAL (18 Aug 2025 s/d sebelum Ramadan)
+							(
+								jad.tanggal BETWEEN "2025-08-18" AND "2026-02-18"
+								AND (
+									TIME(a.break_in) NOT BETWEEN "02:00:00" AND "03:00:00"
+									OR
+									TIME(a.break_out) NOT BETWEEN "02:00:00" AND "03:00:00"
+								)
+							)
+
+							OR
+
+							-- 3. RAMADAN (Jam Puasa)
+							(
+								jad.tanggal BETWEEN "2026-02-19" AND "2026-03-19"
+								AND (
+									TIME(a.break_in) NOT BETWEEN "03:00:00" AND "04:00:00"
+									OR
+									TIME(a.break_out) NOT BETWEEN "03:00:00" AND "04:00:00"
+								)
+							)
+
+							OR
+
+							-- 4. SETELAH RAMADAN (kembali normal)
+							(
+								jad.tanggal >= "2026-03-20"
+								AND (
+									TIME(a.break_in) NOT BETWEEN "02:00:00" AND "03:00:00"
+									OR
+									TIME(a.break_out) NOT BETWEEN "02:00:00" AND "03:00:00"
+								)
+							)
+
+						)
+						then "Shift 3, Istirahat Reguler Tidak Sesuai"
+
+						-- Yang break_in atau break_out di luar rentang istirahat
+						WHEN g.jam_awal_istirahat <> "00:00:00" AND jad.keterangan NOT LIKE "%TJ%" AND   
+                        (
+							a.break_in NOT BETWEEN jad.tanggaljam_awal_istirahat AND DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+							OR
+							a.break_out NOT BETWEEN jad.tanggaljam_awal_istirahat AND DATE_ADD(jad.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+						) THEN "Istirahat di luar jam reguler"
+			
+						WHEN DAYNAME(a.tanggal) = "Friday" AND st_jadwal LIKE "%PAGI%" AND gender = "Laki-laki" THEN "AMAN"
+						ELSE "AMAN"
+					END AS kategori,
 
 				a.durasi_lembur_total_jam,
 				a.pot_ti,
