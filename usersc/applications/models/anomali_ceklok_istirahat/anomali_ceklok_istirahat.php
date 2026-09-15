@@ -198,7 +198,7 @@
 						) AS count_break,
 						
 						MIN(
-							DISTINCT
+							
 							CASE
 								-- 🔹 PAKAI RANGE OVERRIDE (htoXXrd)
 								WHEN d.id IS NOT NULL
@@ -332,7 +332,7 @@
 						) AS break_in,
 						
 						MAX(
-							DISTINCT
+							
 							CASE
 								-- 🔹 PAKAI RANGE OVERRIDE (htoXXrd)
 								WHEN d.id IS NOT NULL
