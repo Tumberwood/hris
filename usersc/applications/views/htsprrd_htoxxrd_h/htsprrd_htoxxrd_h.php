@@ -196,8 +196,12 @@
 								<th rowspan="2">Pot Jam</th>
 								<th rowspan="2">Lembur Final</th>
 								<th class="text-center" colspan="3">HRIS</th>
+								<th class="text-center" colspan="3">Excel</th>
 							</tr>
 							<tr>
+								<th>Lembur 1,5</th>
+								<th>Lembur 2</th>
+								<th>Lembur 3</th>
 								<th>Lembur 1,5</th>
 								<th>Lembur 2</th>
 								<th>Lembur 3</th>
@@ -212,6 +216,10 @@
 								<th id="subtotal_6"></th>
 								<th id="subtotal_7"></th>
 								<th id="subtotal_8"></th>
+
+								<th id="subtotal_9"></th>
+								<th id="subtotal_10"></th>
+								<th id="subtotal_11"></th>
 							</tr>
 						</tfoot>
 					</table>

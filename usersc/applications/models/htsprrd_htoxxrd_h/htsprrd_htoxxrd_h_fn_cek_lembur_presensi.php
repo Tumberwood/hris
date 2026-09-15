@@ -32,9 +32,13 @@
 					a.durasi_lembur_final,
 					a.lembur15,
 					a.lembur2,
-					a.lembur3	
+					a.lembur3,
+					ex.lembur15 AS lembur15_excel,
+					ex.lembur2 AS lembur2_excel,
+					ex.lembur3 AS lembur3_excel
 				FROM htsprrd a
 				INNER JOIN hemxxmh b ON b.id = a.id_hemxxmh
+				LEFT JOIN htoxxrd_monitor ex ON ex.id_hemxxmh = a.id_hemxxmh AND ex.tanggal = a.tanggal
 				WHERE a.tanggal BETWEEN :start_date AND :end_date 
 				AND a.id_hemxxmh = :id_hemxxmh
 				AND a.durasi_lembur_total_jam > 0

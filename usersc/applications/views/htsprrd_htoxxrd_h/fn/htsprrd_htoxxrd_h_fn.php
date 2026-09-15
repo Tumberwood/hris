@@ -161,6 +161,21 @@
                     render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
                     class: "text-right"
                 },
+                { 
+                    data: 'lembur15_excel',
+                    render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+                    class: "text-right"
+                },
+                { 
+                    data: 'lembur2_excel',
+                    render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+                    class: "text-right"
+                },
+                { 
+                    data: 'lembur3_excel',
+                    render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
+                    class: "text-right"
+                },
             ],
             rowCallback: function( row, data, index ) {
                 if ( data.durasi_lembur_final == 0 ) {
@@ -171,7 +186,7 @@
                 var api       = this.api(), data;
                 var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
                 // hitung jumlah 
-                for (let i = 3; i <= 8; i++) {
+                for (let i = 3; i <= 11; i++) {
                     sum_durasi_lembur_jam = api.column( i ).data().sum();
                     $( '#subtotal_'+i ).html( numFormat(sum_durasi_lembur_jam) );
                 }
