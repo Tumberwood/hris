@@ -67,7 +67,7 @@
                                 <th>Ceklok Istirahat</th>
                                 <th>Ceklok Makan</th>
                                 <th>Lembur</th>
-                                <th style="display: none">Keterangan</th>
+                                <th>Keterangan</th>
                             </tr>
                         </thead>
                     </table>
@@ -197,6 +197,7 @@
 					{ data: "lembur" },
 					{
 						data: "status_cek_in",
+						visible: false,
 						className: "text-center",
 						render: function(data) {
 							if (data === "OK") {
