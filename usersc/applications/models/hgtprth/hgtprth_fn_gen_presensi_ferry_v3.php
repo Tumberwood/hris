@@ -1705,44 +1705,31 @@
                                     0
                                 ) AS pot_jam_early_lembur,
 
-                                GREATEST(
-                                    0,
-
-                                    -- Potongan Izin
-                                    IF( 
-                                        -- Cek kalau izin nya dalam range istirahat, maka tidak dipotong
-                                        (
-                                            carbon_mid BETWEEN tanggaljam_awal_istirahat
-                                            AND IF(
-                                                DAY(tanggaljam_akhir_istirahat) < DAY(tanggaljam_akhir),
-                                                DATE_ADD(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),
-                                                tanggaljam_akhir_istirahat
-                                            )
+                                IF( 
+                                    -- Cek kalau izin nya dalam range istirahat, maka tidak dipotong
+                                    (
+                                        carbon_mid BETWEEN tanggaljam_awal_istirahat
+                                        AND IF(
+                                            DAY(tanggaljam_akhir_istirahat) < DAY(tanggaljam_akhir),
+                                            DATE_ADD(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),
+                                            tanggaljam_akhir_istirahat
                                         )
-                                        AND
-                                        (
-                                            tanggal_jam_izin_awal_mid BETWEEN tanggaljam_awal_istirahat
-                                            AND IF(
-                                                DAY(tanggaljam_akhir_istirahat) < DAY(tanggaljam_akhir),
-                                                DATE_ADD(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),
-                                                tanggaljam_akhir_istirahat
-                                            )
-                                        ),
-                                        0,
-                                        TIMESTAMPDIFF(HOUR, DATE(tanggal_jam_izin_awal_mid), carbon_mid)
-                                            - TIMESTAMPDIFF(HOUR, DATE(tanggal_jam_izin_awal_mid), tanggal_jam_izin_awal_mid)
-                                            + IF(MINUTE(carbon_mid) > 5, 1, 0)
-
-                                        -- tambahkan pengecekan jika izin akhir nya ada di dalam range istirahat, maka -1 
-                                    ) 
-
-                                    -- Dikurangi Jam Berlebih Pulang (Kelebihan Menit / 60)
-                                    - IF(
-                                        IFNULL(durasi_lembur_total_jam, 0) = 0 
-                                        AND TIMESTAMPDIFF(MINUTE, tanggaljam_akhir, ceklok_out) > 60,
-                                        (TIMESTAMPDIFF(MINUTE, tanggaljam_akhir, ceklok_out) / 60),
-                                        0
                                     )
+                                    AND
+                                    (
+                                        tanggal_jam_izin_awal_mid BETWEEN tanggaljam_awal_istirahat
+                                        AND IF(
+                                            DAY(tanggaljam_akhir_istirahat) < DAY(tanggaljam_akhir),
+                                            DATE_ADD(tanggaljam_akhir_istirahat, INTERVAL 1 DAY),
+                                            tanggaljam_akhir_istirahat
+                                        )
+                                    ),
+                                    0,
+                                    TIMESTAMPDIFF(HOUR, DATE(tanggal_jam_izin_awal_mid), carbon_mid)
+                                        - TIMESTAMPDIFF(HOUR, DATE(tanggal_jam_izin_awal_mid), tanggal_jam_izin_awal_mid)
+                                        + IF(MINUTE(carbon_mid) > 5, 1, 0)
+
+                                    -- tambahkan pengecekan jika izin akhir nya ada di dalam range istirahat, maka -1 
                                 ) AS pot_jam_izin
                                 
                             FROM status_presensi
