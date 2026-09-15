@@ -78,16 +78,15 @@ $qs_outstanding_pr = $db
 				if(htoxxrd.id_htotpmh = 7, htsprrd.jam_akhir_lembur_istirahat3, null) AS jam_akhir_lembur_istirahat3,
 				if(htoxxrd.id_htotpmh = 7, htsprrd.durasi_lembur_istirahat3, 0) AS durasi_lembur_istirahat3,
 
-				-- Jika row_num = 1 tampilkan nilai asli (atau jika c_id null/1), jika row_num > 1 berikan nilai 0
-				ROUND(IF(COALESCE(htoxxrd.row_num, 1) = 1, htsprrd.durasi_lembur_total_jam, 0), 1) AS durasi_lembur_total_jam,
-				ROUND(IF(COALESCE(htoxxrd.row_num, 1) = 1, htsprrd.lembur15, 0), 1) AS lembur15,
-				ROUND(IF(COALESCE(htoxxrd.row_num, 1) = 1, htsprrd.lembur2, 0), 1) AS lembur2,
-				ROUND(IF(COALESCE(htoxxrd.row_num, 1) = 1, htsprrd.lembur3, 0), 1) AS lembur3,
-				ROUND(IF(COALESCE(htoxxrd.row_num, 1) = 1, htsprrd.lembur4, 0), 1) AS lembur4,
-				ROUND(IF(COALESCE(htoxxrd.row_num, 1) = 1, htsprrd.pot_jam, 0), 1) AS pot_jam,
-				ROUND(IF(COALESCE(htoxxrd.row_num, 1) = 1, htsprrd.pot_ti, 0), 1) AS pot_ti,
-				ROUND(IF(COALESCE(htoxxrd.row_num, 1) = 1, htsprrd.pot_overtime, 0), 1) AS pot_overtime,
-				ROUND(IF(COALESCE(htoxxrd.row_num, 1) = 1, htsprrd.durasi_lembur_final, 0), 1) AS durasi_lembur_final,
+				ROUND(if(c.c_id = 1, htsprrd.durasi_lembur_total_jam, htsprrd.durasi_lembur_total_jam / c.c_id),1)  AS durasi_lembur_total_jam,
+				ROUND(if(c.c_id = 1, htsprrd.lembur15, htsprrd.lembur15 / c.c_id),1)  AS lembur15,
+				ROUND(if(c.c_id = 1, htsprrd.lembur2, htsprrd.lembur2 / c.c_id),1)  AS lembur2,
+				ROUND(if(c.c_id = 1, htsprrd.lembur3, htsprrd.lembur3 / c.c_id),1)  AS lembur3,
+				ROUND(if(c.c_id = 1, htsprrd.lembur4, htsprrd.lembur4 / c.c_id),1)  AS lembur4,
+				ROUND(if(c.c_id = 1, htsprrd.pot_jam, htsprrd.pot_jam / c.c_id),1)  AS pot_jam,
+				ROUND(if(c.c_id = 1, htsprrd.pot_ti, htsprrd.pot_ti / c.c_id),1)  AS pot_ti,
+				ROUND(if(c.c_id = 1, htsprrd.pot_overtime, htsprrd.pot_overtime / c.c_id),1)  AS pot_overtime,
+				ROUND(if(c.c_id = 1, htsprrd.durasi_lembur_final, htsprrd.durasi_lembur_final / c.c_id),1)  AS durasi_lembur_final,
 
 				htsprrd.nominal_lembur_jam,
 				hodxxmh.nama AS hodxxmh_nama,
@@ -109,14 +108,15 @@ $qs_outstanding_pr = $db
 			LEFT JOIN holxxmd_2 ON holxxmd_2.id = hemjbmh.id_holxxmd_2
 			LEFT JOIN hesxxmh ON hesxxmh.id = hemjbmh.id_hesxxmh
 			LEFT JOIN hetxxmh ON hetxxmh.id = hemjbmh.id_hetxxmh
-
-			-- Subquery JOIN htoxxrd dengan nomor urut (row_num)
+			LEFT JOIN htoxxrd ON htoxxrd.id_hemxxmh = htsprrd.id_hemxxmh AND htoxxrd.tanggal = htsprrd.tanggal
 			LEFT JOIN (
-				SELECT 
-					*,
-					ROW_NUMBER() OVER(PARTITION BY id_hemxxmh, tanggal ORDER BY id ASC) AS row_num
+				SELECT
+					count(id) AS c_id,
+					id_hemxxmh,
+					tanggal
 				FROM htoxxrd
-			) AS htoxxrd ON htoxxrd.id_hemxxmh = htsprrd.id_hemxxmh AND htoxxrd.tanggal = htsprrd.tanggal
+				GROUP BY id_hemxxmh, tanggal
+			) AS c ON c.id_hemxxmh = htsprrd.id_hemxxmh AND c.tanggal = htsprrd.tanggal
 
 			'.$where.'
 			;
