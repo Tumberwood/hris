@@ -55,17 +55,11 @@
     }
 
     //ambil status pegawai (ex: kontrak , tetap , ect)
-    if (isset($_GET['id_hesxxmh'])) {
-        $id_hesxxmh = $_GET['id_hesxxmh'];
-        if ($id_hesxxmh != '') {
-            $w_id_hesxxmh = $id_hesxxmh;
-            $s_id_hesxxmh = '=';
-        } else {
-            $w_id_hesxxmh = -1;
-            $s_id_hesxxmh = '<>';
-        }
+    $id_hesxxmh = $_GET['id_hesxxmh'];
+    if ($id_hesxxmh != '') {
+        $w_id_hesxxmh = $id_hesxxmh;
+        $s_id_hesxxmh = '=';
     } else {
-        // Handle the case where id_hesxxmh is not defined
         $w_id_hesxxmh = -1;
         $s_id_hesxxmh = '<>';
     }
