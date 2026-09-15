@@ -511,15 +511,16 @@
 					?>
 					// END breaking generate button
 				],
-				footerCallback: function ( row, data, start, end, display ) {
-					var api       = this.api(), data;
-					var numFormat = $.fn.dataTable.render.number( '\,', '.', 1, '' ).display; 
+				footerCallback: function (row, data, start, end, display) {
+					var api       = this.api();
+					var numFormat = $.fn.dataTable.render.number(',', '.', 1, '').display; 
 					
 					for (var i = 18; i <= 29; i++) {
 						var columnIndex = i;
-						var sum = api.column(columnIndex).data().sum();
-						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
-						// var sum = api.column(columnIndex, { page: 'current' }).data().sum();
+						
+						// TAMBAHKAN { search: 'applied' } agar hanya menghitung data yang tersaring
+						var sum = api.column(columnIndex, { search: 'applied' }).data().sum();
+						
 						$('#s_' + columnIndex).html(numFormat(sum));
 					}
 				},
