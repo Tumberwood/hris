@@ -75,6 +75,19 @@
                             WHEN c.nama IN ("istirahat","istirahat manual")
                             THEN c.tanggal_jam
                         END
+                    ) AS cek_break_in,
+
+                    MIN(
+                        CASE
+                            WHEN c.nama IN ("istirahat","istirahat manual")
+                            THEN c.tanggal_jam
+                        END
+                    ) AS cek_break_out,
+                    MIN(
+                        CASE
+                            WHEN c.nama IN ("istirahat","istirahat manual")
+                            THEN c.tanggal_jam
+                        END
                     ) AS cek_break,
 
                     MIN(

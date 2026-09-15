@@ -64,7 +64,8 @@
                                 <th>Shift</th>
                                 <th>Ceklok Min</th>
                                 <th>Ceklok Max</th>
-                                <th>Ceklok Istirahat</th>
+                                <th>Ceklok Istirahat Awal</th>
+                                <th>Ceklok Istirahat Akhir</th>
                                 <th>Ceklok Makan</th>
                                 <th>Lembur</th>
                                 <th>Keterangan</th>
@@ -183,7 +184,13 @@
 						}
 					},
 					{
-						data: "cek_break",
+						data: "cek_break_in",
+						render: function(data) {
+							return data ? moment(data).format('DD MMM YYYY HH:mm:ss') : '';
+						}
+					},
+					{
+						data: "cek_break_out",
 						render: function(data) {
 							return data ? moment(data).format('DD MMM YYYY HH:mm:ss') : '';
 						}
