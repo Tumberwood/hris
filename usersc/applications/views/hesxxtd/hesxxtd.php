@@ -172,7 +172,7 @@
 							allowClear: true,
 							multiple: false,
 							ajax: {
-								url: "../../models/hesxxtd/hemxxmh_fn_opt.php",
+								url: "../../models/hesxxtd/hemxxmh_fn_opt_jenis.php",
 								dataType: 'json',
 								data: function (params) {
 									id_hesxxmh = edthesxxtd.field('hesxxtd.id_hesxxmh').val();
