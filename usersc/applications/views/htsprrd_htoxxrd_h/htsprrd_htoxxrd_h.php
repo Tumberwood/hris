@@ -276,7 +276,15 @@
 	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 p-w-xs">
 		<div class="ibox ">
 			<div class="ibox-title">
-				<h5>Detail</h5>
+				<h5>
+					Detail 
+					<i class="fa fa-info-circle info-icon" 
+					data-bs-toggle="tooltip" 
+					data-bs-placement="top" 
+					data-bs-html="true"
+					title="Monitoring Overtime Detail bagian dari Monitoring Overtime (u), muncul saat klik tombol Lembur. Ada 2 tampilan popupnya kiri detail lembur dari HRIS, kanan detail lembur upload.">
+					</i>
+				</h5>
 			</div>
 			<div class="ibox-content">
 				<div class="row">
