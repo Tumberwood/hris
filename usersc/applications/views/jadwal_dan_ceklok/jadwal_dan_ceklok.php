@@ -67,7 +67,7 @@
                                 <th>Ceklok Istirahat</th>
                                 <th>Ceklok Makan</th>
                                 <th>Lembur</th>
-                                <th>Keterangan</th>
+                                <th style="display: none">Keterangan</th>
                             </tr>
                         </thead>
                     </table>
