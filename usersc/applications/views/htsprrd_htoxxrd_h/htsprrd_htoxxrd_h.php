@@ -172,7 +172,7 @@
 
 <!-- Breakdown Lembur -->
 <div class="modal fade" id="modalBreakdownLembur" tabindex="-1" role="dialog" aria-labelledby="myModal1Label" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
+  <div class="modal-dialog modal-xxl" role="document">
     <div class="modal-content">
       
       <div class="modal-header">
