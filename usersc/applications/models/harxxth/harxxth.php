@@ -101,8 +101,8 @@
 		->leftJoin( 'harxxmh','harxxmh.id','=','harxxth.id_harxxmh' )
 		->leftJoin( 'hemxxmh','hemxxmh.id','=','harxxth.id_hemxxmh' )
 		
-		->where( 'harxxth.tanggal', $start_date, '>=' )
-		->where( 'harxxth.tanggal', $end_date, '<=' )
+		->where( 'harxxth.tanggal_efektif', $start_date, '>=' )
+		->where( 'harxxth.tanggal_efektif', $end_date, '<=' )
 		;
 	
 	// do not erase
