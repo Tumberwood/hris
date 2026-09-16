@@ -298,7 +298,7 @@
 				fixedColumns:   {
 					left: 3
 				},
-				order: [[ 1, "desc" ]],
+				order: [[ 2, "desc" ]],
 				columns: [
 					{ data: "hemxxmh.id",visible:false },
 					{ data: "hemjbmh.tanggal_keluar" },
