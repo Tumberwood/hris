@@ -1443,7 +1443,8 @@
         <span class="text-danger">Potongan Jam Rp (Baru)</span> - 
         <span class="text-danger">Potongan Sebelum PPh 21 (Baru)</span>
     </div>
-    <small class="text-muted">*Catatan: Komponen yang bernilai 0 tidak akan ditambahkan ke perhitungan.</small>
+    <small class="text-muted">*Catatan: jika Premi Absensi (Lama) - Premi Absensi (Baru) = 0, maka tidak ditambahkan		.</small>
+    <small class="text-muted">*Catatan: jika Potongan Upah (Rp) (Lama) - Potongan Upah (Rp) (baru) < 2 maka tidak ditambahkan		.</small>
 </div>
 								</div>
 							</div>
