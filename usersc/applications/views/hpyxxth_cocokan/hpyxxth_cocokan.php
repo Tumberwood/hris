@@ -2449,7 +2449,13 @@
 					// 1. Render seluruh total kolom seperti biasa
 					for (var i = 10; i <= 123; i++) {
 						var columnIndex = i;
-						var sum_all = api.column(columnIndex).data().sum();
+						// var sum_all = api.column(columnIndex).data().sum();
+						var sum_all = api
+    .column(columnIndex, { search: 'applied' })
+    .data()
+    .reduce(function (a, b) {
+        return (parseFloat(a) || 0) + (parseFloat(b) || 0);
+    }, 0);
 						
 						// Render ke elemen HTML footer
 						$('#karyawan_' + columnIndex).html(numFormat(sum_all));
