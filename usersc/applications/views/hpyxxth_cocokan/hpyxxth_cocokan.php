@@ -1444,6 +1444,7 @@
         <span class="text-danger">Potongan Sebelum PPh 21 (Baru)</span>
     </div>
     <small class="text-muted">*Catatan: jika Premi Absensi (Lama) - Premi Absensi (Baru) = 0, maka tidak ditambahkan		.</small>
+	<br>
     <small class="text-muted">*Catatan: jika Potongan Upah (Rp) (Lama) - Potongan Upah (Rp) (baru) < 2 maka tidak ditambahkan		.</small>
 </div>
 								</div>
