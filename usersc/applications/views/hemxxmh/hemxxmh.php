@@ -1498,6 +1498,25 @@
 					if(!nama || nama == ''){
 						edthemxxmh.field('hemxxmh.nama').error( 'Wajib diisi!' );
 					}
+					
+					//Validasi nama unik
+					// $.ajax( {
+					// 	url: '../../../helpers/validate_fn_unique.php',
+					// 	dataType: 'json',
+					// 	type: 'POST',
+					// 	async: false,
+					// 	data: {
+					// 		table_name: 'hemxxmh',
+					// 		nama_field: 'nama',
+					// 		nama_field_value: '"'+nama+'"',
+					// 		id_transaksi: id_hemxxmh
+					// 	},
+					// 	success: function ( json ) {
+					// 		if(json.data.count == 1){
+					// 			edthemxxmh.field('hemxxmh.nama').error( 'Data tidak boleh kembar!' );
+					// 		}
+					// 	}
+					// } );
 					// END of validasi hemxxmh.nama 
 					
 					// BEGIN of validasi hemxxmh.is_pot_makan 
