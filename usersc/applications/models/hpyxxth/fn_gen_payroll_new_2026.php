@@ -1122,6 +1122,7 @@
                                     pe.nama,
                                     SUM(nominal) as nominal
                                 FROM hpy_piutang_d as a
+                                JOIN hemxxmh pe on pe.id = a.id_hemxxmh
                                 WHERE
                                     a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                     AND id_hpcxxmh = 105
