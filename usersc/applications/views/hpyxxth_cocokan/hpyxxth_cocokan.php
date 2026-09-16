@@ -1433,12 +1433,12 @@
 							<div role="tabpanel" id="tabpentunjuk" class="tab-pane">
 								<div class="panel-body">
 									<div class="alert alert-info">
-    <b>📌 Petunjuk Rumus Payroll:</b><br>
-    <b>Terima Lain (Baru)</b> = Premi Absensi (Baru) - Lembur Total (rp) (Lama) + Lembur Total (rp) (Baru) + Potongan Upah (Rp) (Lama) - Potongan Jam (Rp) (Baru) - Potongan Sebelum PPh 21 (Baru)
-    <br><br>
-    <small>* Catatan 1: jika Premi Absensi (Lama) - Premi Absensi (Baru) = 0, maka Premi Absensi (Baru) tidak ditambahkan.</small><br>
-    <small>* Catatan 2: jika Potongan Upah (Rp) (Lama) - Potongan Upah (Rp) (Baru) &lt; 2, maka Potongan Upah (Rp) (Lama) tidak ditambahkan.</small>
-</div>
+										<b>📌 Petunjuk Rumus Payroll:</b><br>
+										<b>Terima Lain (Baru)</b> = Premi Absensi (Baru) - Lembur Total (rp) (Lama) + Lembur Total (rp) (Baru) + Potongan Upah (Rp) (Lama) - Potongan Jam (Rp) (Baru) - Potongan Sebelum PPh 21 (Baru)
+										<br><br>
+										<small>* Catatan 1: jika Premi Absensi (Lama) - Premi Absensi (Baru) = 0, maka Premi Absensi (Baru) tidak ditambahkan.</small><br>
+										<small>* Catatan 2: jika Potongan Upah (Rp) (Lama) - Potongan Upah (Rp) (Baru) &lt; 2, maka Potongan Upah (Rp) (Lama) tidak ditambahkan.</small>
+									</div>
 								</div>
 							</div>
 
