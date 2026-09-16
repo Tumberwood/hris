@@ -1885,6 +1885,45 @@
 				fixedColumns:   {
 					left: 2
 				},
+				colReorder: {
+    order: [
+        0,      // ID
+        122,    // Gaji Diterima Lama
+        123,    // Gaji Diterima Baru
+        1,      // NIP
+        2,      // Nama
+        3,      // Divisi
+        4,      // Department
+        5,      // Unit Kerja
+        6,      // Jabatan
+        7,      // Grup Jabatan
+        8,      // Bagian
+        9,      // Skala Upah
+        10,     // Sub Tipe
+        11,     // Status
+        12,     // Tipe
+        13,     // Gender
+        14,     // PTKP
+        15,     // No Rek
+        16,     // No KTP
+        17,     // No NPWP
+
+        // lanjutkan 18 sampai 121
+        18, 19, 20, 21, 22, 23, 24, 25,
+        26, 27, 28, 29, 30, 31, 32, 33,
+        34, 35, 36, 37, 38, 39, 40, 41,
+        42, 43, 44, 45, 46, 47, 48, 49,
+        50, 51, 52, 53, 54, 55, 56, 57,
+        58, 59, 60, 61, 62, 63, 64, 65,
+        66, 67, 68, 69, 70, 71, 72, 73,
+        74, 75, 76, 77, 78, 79, 80, 81,
+        82, 83, 84, 85, 86, 87, 88, 89,
+        90, 91, 92, 93, 94, 95, 96, 97,
+        98, 99, 100, 101, 102, 103, 104, 105,
+        106, 107, 108, 109, 110, 111, 112, 113,
+        114, 115, 116, 117, 118, 119, 120, 121
+    ]
+},
 				columns: [
 					{ data: "hpyemtd_cocokan.id", visible:false },
 					{ data: "hpyemtd_cocokan.nrp" },
