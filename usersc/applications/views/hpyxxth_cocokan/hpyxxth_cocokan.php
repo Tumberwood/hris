@@ -180,7 +180,7 @@
 												<tr>
 													<!-- TAMBAHAN -->
 													<th class="text-center align-middle">ID</th>
-													<th class="text-center align-middle">NIP</th>
+													<th class="text-center align-middle" data-priority="3">NIP</th>
 													<th class="text-center align-middle">Nama</th>
 
 													<th class="text-center align-middle">Divisi</th>
@@ -358,8 +358,8 @@
 													<th class="text-center align-middle lama">Bulat (Lama)</th>
 													<th class="text-center align-middle baru">Bulat (Baru)</th>
 
-													<th class="text-center align-middle lama" data-priority="1">>Gaji Diterima (Lama)</th>
-													<th class="text-center align-middle baru" data-priority="2">>Gaji Diterima (Baru)</th>
+													<th class="text-center align-middle lama" data-priority="1">Gaji Diterima (Lama)</th>
+													<th class="text-center align-middle baru" data-priority="2">Gaji Diterima (Baru)</th>
 												</tr>
 											</thead>
 											<tfoot>
@@ -504,7 +504,7 @@
 												<tr>
 													<!-- TAMBAHAN -->
 													<th class="text-center align-middle">ID</th>
-													<th class="text-center align-middle">NIP</th>
+													<th class="text-center align-middle" data-priority="3">NIP</th>
 													<th class="text-center align-middle">Nama</th>
 													
 													<th class="text-center align-middle">Divisi</th>
@@ -682,8 +682,8 @@
 													<th class="text-center align-middle lama">Bulat (Lama)</th>
 													<th class="text-center align-middle baru">Bulat (Baru)</th>
 
-													<th class="text-center align-middle lama" data-priority="1">>Gaji Diterima (Lama)</th>
-													<th class="text-center align-middle baru" data-priority="2">>Gaji Diterima (Baru)</th>
+													<th class="text-center align-middle lama" data-priority="1">Gaji Diterima (Lama)</th>
+													<th class="text-center align-middle baru" data-priority="2">Gaji Diterima (Baru)</th>
 												</tr>
 											</thead>
 											<tfoot>
@@ -828,7 +828,7 @@
 												<tr>
 													<!-- TAMBAHAN -->
 													<th class="text-center align-middle">ID</th>
-													<th class="text-center align-middle">NIP</th>
+													<th class="text-center align-middle" data-priority="3">NIP</th>
 													<th class="text-center align-middle">Nama</th>
 													
 													<th class="text-center align-middle">Divisi</th>
@@ -1006,8 +1006,8 @@
 													<th class="text-center align-middle lama">Bulat (Lama)</th>
 													<th class="text-center align-middle baru">Bulat (Baru)</th>
 
-													<th class="text-center align-middle lama" data-priority="1">>Gaji Diterima (Lama)</th>
-													<th class="text-center align-middle baru" data-priority="2">>Gaji Diterima (Baru)</th>
+													<th class="text-center align-middle lama" data-priority="1">Gaji Diterima (Lama)</th>
+													<th class="text-center align-middle baru" data-priority="2">Gaji Diterima (Baru)</th>
 												</tr>
 											</thead>
 											<tfoot>
