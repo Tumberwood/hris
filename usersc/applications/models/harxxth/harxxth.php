@@ -18,6 +18,9 @@
 	$show_inactive_status = $_POST['show_inactive_status_harxxth'];
 	// -----------
 	
+	$start_date = $_POST['start_date'];
+	$end_date = $_POST['end_date'];
+	
 	$editor = Editor::inst( $db, 'harxxth' )
 		->debug(true)
 		->fields(
