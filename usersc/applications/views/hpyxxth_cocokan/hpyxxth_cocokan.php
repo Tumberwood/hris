@@ -182,6 +182,9 @@
 													<th class="text-center align-middle">ID</th>
 													<th class="text-center align-middle">NIP</th>
 													<th class="text-center align-middle">Nama</th>
+													
+													<th class="text-center align-middle lama">Gaji Diterima (Lama)</th>
+													<th class="text-center align-middle baru">Gaji Diterima (Baru)</th>
 
 													<th class="text-center align-middle">Divisi</th>
 													<th class="text-center align-middle">Department</th>
@@ -357,9 +360,6 @@
 
 													<th class="text-center align-middle lama">Bulat (Lama)</th>
 													<th class="text-center align-middle baru">Bulat (Baru)</th>
-
-													<th class="text-center align-middle lama">Gaji Diterima (Lama)</th>
-													<th class="text-center align-middle baru">Gaji Diterima (Baru)</th>
 												</tr>
 											</thead>
 											<tfoot>
@@ -367,6 +367,8 @@
 													<th></th>
 													<th></th>
 													<th></th>
+													<th id="karyawan_3"></th>
+													<th id="karyawan_4"></th>
 													<th></th>
 													<th></th>
 													<th></th>
@@ -382,8 +384,6 @@
 													<th></th>
 													<th></th>
 													<th>Total</th>
-													<th id="karyawan_18"></th>
-													<th id="karyawan_19"></th>
 													<th id="karyawan_20"></th>
 													<th id="karyawan_21"></th>
 													<th id="karyawan_22"></th>
@@ -1883,12 +1883,16 @@
 				responsive: false,
 				// scrollX: true,
 				fixedColumns:   {
-					left: 2
+					left: 2 //buat hanya NIK dan nama aja yg di freeze
 				},
 				columns: [
 					{ data: "hpyemtd_cocokan.id", visible:false },
+					
 					{ data: "hpyemtd_cocokan.nrp" },
 					{ data: "nama" },
+					
+					{ data: "hpyemtd_cocokan.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					
 					{ data: "hovxxmh.nama" },	//divisi
 					{ data: "hodxxmh.nama" },	//dep
@@ -1914,33 +1918,8 @@
 					{ data: "hpyemtd.t_jab", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd_cocokan.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-					// { data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-					// {
-					// 	data: null,
-					// 	class: "text-right",
-					// 	render: function (data, type, row) {
-					// 		// Helper fungsi untuk convert ke float & antisipasi nilai undefined/null/NaN
-					// 		const num = v => (parseFloat(v) || 0);
-
-					// 		const premiAbsBaru        = num(row.hpyemtd?.premi_abs);
-					// 		const lemburLama          = num(row.hpyemtd_cocokan?.total_rp_lembur);
-					// 		const lemburBaru          = num(row.hpyemtd?.total_rp_lembur);
-					// 		const potUpahLama         = num(row.hpyemtd_cocokan?.pot_upah);
-					// 		const potJamBaru          = num(row.hpyemtd?.pot_jam);
-					// 		const potLainBeforePphBaru = num(row.hpyemtd?.pot_lain_before_pph);
-
-					// 		// Hitung sesuai rumus (termasuk pengurangan pot_lain_before_pph)
-					// 		const terimaLainBaru = premiAbsBaru - lemburLama + lemburBaru + potUpahLama - potJamBaru - potLainBeforePphBaru;
-
-					// 		// Jika dipanggil untuk Sorting / Filtering DataTables, kembalikan angka murni
-					// 		if (type === 'sort' || type === 'type') {
-					// 			return terimaLainBaru;
-					// 		}
-
-					// 		// Tampilan ke HTML dengan format ribuan
-					// 		return $.fn.dataTable.render.number(',', '.', 0).display(terimaLainBaru);
-					// 	}
-					// },
+					
+					
 					{ data: "hpyemtd_cocokan.var_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.var_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd_cocokan.tj_khusus", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
@@ -2055,8 +2034,6 @@
 					{ data: "hpyemtd.gaji_bersih", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd_cocokan.bulat", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.bulat", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-					{ data: "hpyemtd_cocokan.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-					{ data: "hpyemtd.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 				],
 				buttons: [
     // BEGIN breaking generate button
@@ -2093,61 +2070,76 @@
         // =========================
         // MAPPING compareField()
         // =========================
-        const compareMap = {
-            18: 'gp',
-            20: 't_jab',
-            22: 'terima_lain',
-            24: 'var_cost',
-            26: 'tj_khusus',
-            28: 'fix_cost',
-            30: 'premi_abs',
-            32: 'lembur15',
-            34: 'rp_lembur15',
-            36: 'lembur2',
-            38: 'rp_lembur2',
-            40: 'lembur3',
-            42: 'rp_lembur3',
-            44: 'total_lembur_jam_final',
-            46: 'total_rp_lembur',
-            48: 'komp_rekontrak',
-            50: 'cuti_tahunan',
-            52: 'cuti_bersama',
-            54: 'sisa_cuti_hari',
-            56: 'komp_sisa_cuti',
-            58: 'thr',
-            60: 'pot_makan',
-            62: 'c_pot_upah',
-            64: 'pot_upah',
-			66: 'c_pot_resign',
-			68: 'pot_resign',
-			70: 'c_pot_jam',
-			72: 'pot_jam',
-			74: 'pendapatan_lain_before_pph',
-			76: 'pot_lain_before_pph',
-			78: 'bpjs_kes_perusahaan',
-			80: 'jkk',
-			82: 'jkm',
-			84: 'bruto',
-			86: 'persen_ter',
-			88: 'pot_pph21',
-			90: 'after_pph21',
-			92: 'jht_perusahaan',
-			94: 'jp_perusahaan',
-			96: 'pot_jht_karyawan',
-			98: 'pot_jp_karyawan',
-			100: 'bpjs_kes_karyawan',
-			102: 'bpjs_kes_perusahaan',
-			104: 'jkk',
-			106: 'jkm',
-			108: 'pot_piutang',
-			110: 'denda_apd',
-			112: 'iuran_spsi',
-			114: 'pendapatan_lain_after_pph',
-			116: 'pot_lain_after_pph',
-			118: 'gaji_bersih',
-			120: 'bulat',
-			122: 'gaji_terima'
-        };
+       const compareMap = {
+    3: 'gaji_terima',
+
+    20: 'gp',
+    22: 't_jab',
+    24: 'terima_lain',
+    26: 'var_cost',
+    28: 'tj_khusus',
+    30: 'fix_cost',
+    32: 'premi_abs',
+
+    34: 'lembur15',
+    36: 'rp_lembur15',
+    38: 'lembur2',
+    40: 'rp_lembur2',
+    42: 'lembur3',
+    44: 'rp_lembur3',
+
+    46: 'total_lembur_jam_final',
+    48: 'total_rp_lembur',
+
+    50: 'komp_rekontrak',
+    52: 'cuti_tahunan',
+    54: 'cuti_bersama',
+    56: 'sisa_cuti_hari',
+    58: 'komp_sisa_cuti',
+    60: 'thr',
+
+    62: 'pot_makan',
+    64: 'c_pot_upah',
+    66: 'pot_upah',
+
+    68: 'c_pot_resign',
+    70: 'pot_resign',
+    72: 'c_pot_jam',
+    74: 'pot_jam',
+
+    76: 'pendapatan_lain_before_pph',
+    78: 'pot_lain_before_pph',
+
+    80: 'bpjs_kes_perusahaan',
+    82: 'jkk',
+    84: 'jkm',
+
+    86: 'bruto',
+    88: 'persen_ter',
+    90: 'pot_pph21',
+    92: 'after_pph21',
+
+    94: 'jht_perusahaan',
+    96: 'jp_perusahaan',
+
+    98: 'pot_jht_karyawan',
+    100: 'pot_jp_karyawan',
+    102: 'bpjs_kes_karyawan',
+
+    104: 'bpjs_kes_perusahaan',
+    106: 'jkk',
+    108: 'jkm',
+
+    110: 'pot_piutang',
+    112: 'denda_apd',
+    114: 'iuran_spsi',
+
+    116: 'pendapatan_lain_after_pph',
+    118: 'pot_lain_after_pph',
+
+    120: 'gaji_bersih',
+    122: 'bulat'
+};
 
         // =========================
         // HEADER
@@ -2408,7 +2400,7 @@
 					var numFormat = $.fn.dataTable.render.number(',', '.', 0, '').display; 
 
 					// 1. Render seluruh total kolom seperti biasa
-					for (var i = 10; i <= 123; i++) {
+					for (var i = 3; i <= 123; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						
@@ -2439,7 +2431,7 @@
 					}
 
 					// 3. Jalankan Perbandingan Footer Sesuai Pasangan Kolom yang Diinginkan
-					compareFooterSum(18, 19); // Membandingkan subtotal kolom 18 dan 19
+					compareFooterSum(3, 4); // Membandingkan subtotal kolom 18 dan 19
 					compareFooterSum(20, 21); // Membandingkan subtotal kolom 20 dan 21
 					compareFooterSum(22, 23);
 					compareFooterSum(24, 25);
@@ -2494,75 +2486,76 @@
 					compareFooterSum(122, 123);
 				},
 				rowCallback: function( row, data, index ) {
-					compareField(row, data, 18, 'gp');
-					compareField(row, data, 20, 't_jab');
-					compareField(row, data, 22, 'terima_lain');
-					compareField(row, data, 24, 'var_cost');
-					compareField(row, data, 26, 'tj_khusus');
-					compareField(row, data, 28, 'fix_cost');
-					compareField(row, data, 30, 'premi_abs');
+					compareField(row, data, 20, 'gp');
+					compareField(row, data, 22, 't_jab');
+					compareField(row, data, 24, 'terima_lain');
+					compareField(row, data, 26, 'var_cost');
+					compareField(row, data, 28, 'tj_khusus');
+					compareField(row, data, 30, 'fix_cost');
+					compareField(row, data, 32, 'premi_abs');
 
-					compareField(row, data, 32, 'lembur15');
-					compareField(row, data, 34, 'rp_lembur15');
-					compareField(row, data, 36, 'lembur2');
-					compareField(row, data, 38, 'rp_lembur2');
-					compareField(row, data, 40, 'lembur3');
-					compareField(row, data, 42, 'rp_lembur3');
+					compareField(row, data, 34, 'lembur15');
+					compareField(row, data, 36, 'rp_lembur15');
+					compareField(row, data, 38, 'lembur2');
+					compareField(row, data, 40, 'rp_lembur2');
+					compareField(row, data, 42, 'lembur3');
+					compareField(row, data, 44, 'rp_lembur3');
 
-					compareField(row, data, 44, 'total_lembur_jam_final');
-					compareField(row, data, 46, 'total_rp_lembur');
+					compareField(row, data, 46, 'total_lembur_jam_final');
+					compareField(row, data, 48, 'total_rp_lembur');
 
-					compareField(row, data, 48, 'komp_rekontrak');
-					compareField(row, data, 50, 'cuti_tahunan');
-					compareField(row, data, 52, 'cuti_bersama');
-					compareField(row, data, 54, 'sisa_cuti_hari');
-					compareField(row, data, 56, 'komp_sisa_cuti');
-					compareField(row, data, 58, 'thr');
+					compareField(row, data, 50, 'komp_rekontrak');
+					compareField(row, data, 52, 'cuti_tahunan');
+					compareField(row, data, 54, 'cuti_bersama');
+					compareField(row, data, 56, 'sisa_cuti_hari');
+					compareField(row, data, 58, 'komp_sisa_cuti');
+					compareField(row, data, 60, 'thr');
 
-					compareField(row, data, 60, 'pot_makan');
-					compareField(row, data, 62, 'c_pot_upah');
-					compareField(row, data, 64, 'pot_upah');
+					compareField(row, data, 62, 'pot_makan');
+					compareField(row, data, 64, 'c_pot_upah');
+					compareField(row, data, 66, 'pot_upah');
 
-					compareField(row, data, 66, 'c_pot_resign');
-					compareField(row, data, 68, 'pot_resign');
-					compareField(row, data, 70, 'c_pot_jam');
-					compareField(row, data, 72, 'pot_jam');
+					compareField(row, data, 68, 'c_pot_resign');
+					compareField(row, data, 70, 'pot_resign');
+					compareField(row, data, 72, 'c_pot_jam');
+					compareField(row, data, 74, 'pot_jam');
 
-					compareField(row, data, 74, 'pendapatan_lain_before_pph');
-					compareField(row, data, 76, 'pot_lain_before_pph');
+					compareField(row, data, 76, 'pendapatan_lain_before_pph');
+					compareField(row, data, 78, 'pot_lain_before_pph');
 
-					compareField(row, data, 78, 'bpjs_kes_perusahaan');
-					compareField(row, data, 80, 'jkk');
-					compareField(row, data, 82, 'jkm');
+					compareField(row, data, 80, 'bpjs_kes_perusahaan');
+					compareField(row, data, 82, 'jkk');
+					compareField(row, data, 84, 'jkm');
 
-					compareField(row, data, 84, 'bruto');
-					compareField(row, data, 86, 'persen_ter');
+					compareField(row, data, 86, 'bruto');
+					compareField(row, data, 88, 'persen_ter');
 
-					compareField(row, data, 88, 'pot_pph21');
+					compareField(row, data, 90, 'pot_pph21');
 
-					compareField(row, data, 90, 'after_pph21');
+					compareField(row, data, 92, 'after_pph21');
 
-					compareField(row, data, 92, 'jht_perusahaan');
-					compareField(row, data, 94, 'jp_perusahaan');
+					compareField(row, data, 94, 'jht_perusahaan');
+					compareField(row, data, 96, 'jp_perusahaan');
 
-					compareField(row, data, 96, 'pot_jht_karyawan');
-					compareField(row, data, 98, 'pot_jp_karyawan');
-					compareField(row, data, 100, 'bpjs_kes_karyawan');
+					compareField(row, data, 98, 'pot_jht_karyawan');
+					compareField(row, data, 100, 'pot_jp_karyawan');
+					compareField(row, data, 102, 'bpjs_kes_karyawan');
 
-					compareField(row, data, 102, 'bpjs_kes_perusahaan');
-					compareField(row, data, 104, 'jkk');
-					compareField(row, data, 106, 'jkm');
+					compareField(row, data, 104, 'bpjs_kes_perusahaan');
+					compareField(row, data, 106, 'jkk');
+					compareField(row, data, 108, 'jkm');
 
-					compareField(row, data, 108, 'pot_piutang');
-					compareField(row, data, 110, 'denda_apd');
-					compareField(row, data, 112, 'iuran_spsi');
+					compareField(row, data, 110, 'pot_piutang');
+					compareField(row, data, 112, 'denda_apd');
+					compareField(row, data, 114, 'iuran_spsi');
 
-					compareField(row, data, 114, 'pendapatan_lain_after_pph');
-					compareField(row, data, 116, 'pot_lain_after_pph');
+					compareField(row, data, 116, 'pendapatan_lain_after_pph');
+					compareField(row, data, 118, 'pot_lain_after_pph');
 
-					compareField(row, data, 118, 'gaji_bersih');
-					compareField(row, data, 120, 'bulat');
-					compareField(row, data, 122, 'gaji_terima');
+					compareField(row, data, 120, 'gaji_bersih');
+					compareField(row, data, 122, 'bulat');
+
+					compareField(row, data, 3, 'gaji_terima');
 				},
 				drawCallback: function () {
 					$('[data-toggle="tooltip"]').tooltip({
