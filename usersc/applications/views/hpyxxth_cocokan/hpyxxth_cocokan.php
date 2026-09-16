@@ -1885,6 +1885,8 @@
 				fixedColumns:   {
 					left: 2
 				},
+				colReorder: true,
+
 				columns: [
 					{ data: "hpyemtd_cocokan.id", visible:false },
 					{ data: "hpyemtd_cocokan.nrp" },
@@ -2058,6 +2060,20 @@
 					{ data: "hpyemtd_cocokan.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 				],
+				initComplete: function () {
+        var table = this.api();
+
+        // Gaji Diterima Lama: index asli 122
+        table.colReorder.move(122, 0, false);
+
+        // Gaji Diterima Baru: setelah perpindahan pertama,
+        // index kolom kedua menjadi 123
+        table.colReorder.move(123, 1, false);
+
+        table.columns.adjust();
+        table.fixedColumns().relayout();
+    },
+
 				buttons: [
     // BEGIN breaking generate button
     <?php
