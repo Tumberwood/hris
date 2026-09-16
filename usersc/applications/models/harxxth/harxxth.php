@@ -20,7 +20,7 @@
 	
 	$start_date = $_POST['start_date'];
 	$end_date = $_POST['end_date'];
-	
+
 	$editor = Editor::inst( $db, 'harxxth' )
 		->debug(true)
 		->fields(
@@ -101,8 +101,8 @@
 		->leftJoin( 'harxxmh','harxxmh.id','=','harxxth.id_harxxmh' )
 		->leftJoin( 'hemxxmh','hemxxmh.id','=','harxxth.id_hemxxmh' )
 		
-		->where( 'htoxxth.tanggal', $start_date, '>=' )
-		->where( 'htoxxth.tanggal', $end_date, '<=' )
+		->where( 'harxxth.tanggal', $start_date, '>=' )
+		->where( 'harxxth.tanggal', $end_date, '<=' )
 		;
 	
 	// do not erase
