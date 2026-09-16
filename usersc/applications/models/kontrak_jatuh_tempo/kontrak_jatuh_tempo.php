@@ -26,6 +26,7 @@
 		// ->bind(':start_date', $start_date)
 		// ->bind(':end_date', $end_date)
 		->exec('SELECT
+					a.id,
 					a.kode AS nik,
 					a.nama,
 					DATE_FORMAT(b.tanggal_masuk, "%d %b %Y") AS tanggal_masuk,
