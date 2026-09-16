@@ -14,6 +14,39 @@
 <!-- begin content here -->
 
 <div class="row">
+    <div class="col">
+        <div class="ibox collapsed" id="iboxfilter">
+            <div class="ibox-title">
+                <h5 class="text-navy">Filter</h5>&nbsp
+                <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+            </div>
+            <div class="ibox-content">
+                <form class="form-horizontal" id="frmFilter">
+                    <div class="form-group row">
+						<label class="col-lg-2 col-form-label">Periode</label>
+                        <div class="col-lg-5">
+                            <div class="input-group input-daterange" id="periode">
+                                <input type="text" id="start_date" class="form-control">
+                                <span class="input-group-addon">to</span>
+                                <input type="text" id="end_date" class="form-control">
+                                <div class="input-group-addon">
+                                    <span class="fa fa-calendar"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-4">
+                            <button class="btn btn-primary" type="submit" id="go">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-content">
@@ -136,7 +169,23 @@
 		var id_hevgrmh_awal_old = 0, id_hevgrmh_akhir_old = 0;
 		var is_need_approval = 1, id_harxxmh_old = 0, id_hodxxmh = 0;
 
+		// BEGIN datepicker init
+		$('#periode').datepicker({
+			setDate: new Date(),
+			autoclose: true,
+			todayHighlight: true,
+			clearBtn: true,
+			format: "dd M yyyy",
+			minViewMode: 'month' 
+		});
+
+		$('#start_date').datepicker('setDate', awal_bulan_dmy);
+		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		
 		$(document).ready(function() {
+			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
+			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
+
 			//start datatables editor
 			edtharxxth = new $.fn.dataTable.Editor( {
 				formOptions: {
@@ -149,6 +198,8 @@
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_harxxth = show_inactive_status_harxxth;
+						d.start_date = start_date;
+						d.end_date = end_date;
 					}
 				},
 				table: "#tblharxxth",
@@ -689,6 +740,8 @@
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_harxxth = show_inactive_status_harxxth;
+						d.start_date = start_date;
+						d.end_date = end_date;
 					}
 				},
 				order: [[ 1, "desc" ]],
@@ -792,6 +845,72 @@
 				// atur hak akses
 				CekDeselectHeaderH(tblharxxth);
 			} );
+
+			
+			$("#frmFilter").submit(function(e) {
+				e.preventDefault();
+			}).validate({
+				rules: {
+					
+				},
+				submitHandler: function(frmFilter) {
+					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
+					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
+					kode_hto
+					notifyprogress = $.notify({
+						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
+					},{
+						z_index: 9999,
+						allow_dismiss: false,
+						type: 'info',
+						delay: 0
+					});
+
+					//Jika tanggal sama, maka munculin
+					if(start_date == end_date) {
+						dayname = moment($('#start_date').val()).format('dddd');
+						let hari = '';
+						if (dayname == 'Monday') {
+							hari = 'Senin';
+						} else if (dayname == 'Tuesday') {
+							hari = 'Selasa';
+						} else if (dayname == 'Wednesday') {
+							hari = 'Rabu';
+						} else if (dayname == 'Thursday') {
+							hari = 'Kamis';
+						} else if (dayname == 'Friday') {
+							hari = 'Jumat';
+						} else if (dayname == 'Saturday') {
+							hari = 'Sabtu';
+						} else if (dayname == 'Sunday') {
+							hari = 'Minggu';
+						}
+
+						tanggal_merah(start_date);
+
+						if (is_holiday == 1) {
+							$('#dayname')
+								.html(hari)
+								.addClass('text-danger');
+						} else {
+							$('#dayname')
+								.html(hari)
+								.removeClass('text-danger');
+						}
+
+						$('#dayname').show();
+					} else {
+						$('#dayname').hide();
+					}
+
+					tblharxxth.rows().deselect();
+					tblharxxth.ajax.reload(function ( json ) {
+						notifyprogress.close();
+					}, false);
+					cekApproveTanggal()
+					return false; 
+				}
+			});
 			
 		} );// end of document.ready
 	
