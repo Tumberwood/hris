@@ -180,7 +180,7 @@
 												<tr>
 													<!-- TAMBAHAN -->
 													<th class="text-center align-middle">ID</th>
-													<th class="text-center align-middle" data-priority="3">NIP</th>
+													<th class="text-center align-middle">NIP</th>
 													<th class="text-center align-middle">Nama</th>
 
 													<th class="text-center align-middle">Divisi</th>
@@ -358,8 +358,8 @@
 													<th class="text-center align-middle lama">Bulat (Lama)</th>
 													<th class="text-center align-middle baru">Bulat (Baru)</th>
 
-													<th class="text-center align-middle lama" data-priority="1">Gaji Diterima (Lama)</th>
-													<th class="text-center align-middle baru" data-priority="2">Gaji Diterima (Baru)</th>
+													<th class="text-center align-middle lama">Gaji Diterima (Lama)</th>
+													<th class="text-center align-middle baru">Gaji Diterima (Baru)</th>
 												</tr>
 											</thead>
 											<tfoot>
@@ -504,7 +504,7 @@
 												<tr>
 													<!-- TAMBAHAN -->
 													<th class="text-center align-middle">ID</th>
-													<th class="text-center align-middle" data-priority="3">NIP</th>
+													<th class="text-center align-middle">NIP</th>
 													<th class="text-center align-middle">Nama</th>
 													
 													<th class="text-center align-middle">Divisi</th>
@@ -682,8 +682,8 @@
 													<th class="text-center align-middle lama">Bulat (Lama)</th>
 													<th class="text-center align-middle baru">Bulat (Baru)</th>
 
-													<th class="text-center align-middle lama" data-priority="1">Gaji Diterima (Lama)</th>
-													<th class="text-center align-middle baru" data-priority="2">Gaji Diterima (Baru)</th>
+													<th class="text-center align-middle lama">Gaji Diterima (Lama)</th>
+													<th class="text-center align-middle baru">Gaji Diterima (Baru)</th>
 												</tr>
 											</thead>
 											<tfoot>
@@ -828,7 +828,7 @@
 												<tr>
 													<!-- TAMBAHAN -->
 													<th class="text-center align-middle">ID</th>
-													<th class="text-center align-middle" data-priority="3">NIP</th>
+													<th class="text-center align-middle">NIP</th>
 													<th class="text-center align-middle">Nama</th>
 													
 													<th class="text-center align-middle">Divisi</th>
@@ -1006,8 +1006,8 @@
 													<th class="text-center align-middle lama">Bulat (Lama)</th>
 													<th class="text-center align-middle baru">Bulat (Baru)</th>
 
-													<th class="text-center align-middle lama" data-priority="1">Gaji Diterima (Lama)</th>
-													<th class="text-center align-middle baru" data-priority="2">Gaji Diterima (Baru)</th>
+													<th class="text-center align-middle lama">Gaji Diterima (Lama)</th>
+													<th class="text-center align-middle baru">Gaji Diterima (Baru)</th>
 												</tr>
 											</thead>
 											<tfoot>
@@ -1885,7 +1885,18 @@
 				fixedColumns:   {
 					left: 2
 				},
-				colReorder: true,
+				colReorder: {
+            // Urutan visual kolom (Indeks berbasis 0)
+            // 0=ID, 1=NIP, 2=Nama, 74=Gaji Diterima (Lama), 75=Gaji Diterima (Baru), dilanjutkan sisanya...
+            order: [
+                0, 1, 2, 74, 75, 
+                3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 
+                20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 
+                36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 
+                52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 
+                68, 69, 70, 71, 72, 73
+            ]
+        },
 				columns: [
 					{ data: "hpyemtd_cocokan.id", visible:false },
 					{ data: "hpyemtd_cocokan.nrp" },
@@ -2059,33 +2070,6 @@
 					{ data: "hpyemtd_cocokan.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 				],
-				initComplete: function () {
-
-    var table = this.api();
-
-    // Ambil urutan kolom ORIGINAL
-    var order = table.colReorder.order();
-
-    // Gaji Diterima Lama = original index 122
-    // Gaji Diterima Baru = original index 123
-    //
-    // Hapus keduanya dari posisi lama
-    order = order.filter(function (idx) {
-        return idx !== 122 && idx !== 123;
-    });
-
-    // Masukkan Gaji Diterima ke paling kiri
-    order.unshift(123, 122);
-
-    // Terapkan berdasarkan ORIGINAL INDEX
-    table.colReorder.order(order, true);
-
-    table.columns.adjust();
-
-    if (table.fixedColumns) {
-        table.fixedColumns().relayout();
-    }
-},
 				buttons: [
     // BEGIN breaking generate button
     <?php
