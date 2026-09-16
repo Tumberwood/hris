@@ -1885,8 +1885,6 @@
 				fixedColumns:   {
 					left: 2
 				},
-				colReorder: true,
-
 				columns: [
 					{ data: "hpyemtd_cocokan.id", visible:false },
 					{ data: "hpyemtd_cocokan.nrp" },
@@ -2059,21 +2057,31 @@
 					{ data: "hpyemtd.bulat", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd_cocokan.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-				],
-				initComplete: function () {
-        var table = this.api();
+				],initComplete: function () {
+    var table = this.api();
 
-        // Gaji Diterima Lama: index asli 122
-        table.colReorder.move(122, 0, false);
+    var $table = $('#tblhpyemtd_karyawan');
 
-        // Gaji Diterima Baru: setelah perpindahan pertama,
-        // index kolom kedua menjadi 123
-        table.colReorder.move(123, 1, false);
+    // Ambil kolom Gaji Diterima
+    var $header = $table.find('thead tr th').slice(-2);
+    var $footer = $table.find('tfoot tr th').slice(-2);
 
-        table.columns.adjust();
-        table.fixedColumns().relayout();
-    },
+    // Pindahkan Gaji Diterima ke paling kiri secara DOM
+    // tanpa mengubah index internal DataTables
+    $table.find('thead tr').prepend($header);
+    $table.find('tfoot tr').prepend($footer);
 
+    // Pindahkan cell data setiap row
+    $table.find('tbody tr').each(function () {
+        var $row = $(this);
+        var $cells = $row.children('td').slice(-2);
+
+        $row.prepend($cells);
+    });
+
+    table.columns.adjust();
+    table.fixedColumns().relayout();
+},
 				buttons: [
     // BEGIN breaking generate button
     <?php
