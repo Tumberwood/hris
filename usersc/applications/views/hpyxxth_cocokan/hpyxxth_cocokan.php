@@ -1432,9 +1432,19 @@
 							
 							<div role="tabpanel" id="tabpentunjuk" class="tab-pane">
 								<div class="panel-body">
-									<div class="table-responsive">
-										<h3>Petunjuk Payroll</h3>
-									</div>
+									<div class="alert alert-info shadow-sm p-3 mb-3 border">
+    <div class="fw-bold mb-2">📌 Petunjuk Rumus Payroll:</div>
+    <div class="font-monospace text-dark mb-2">
+        <b>Terima Lain (Baru)</b> = 
+        <span class="text-primary">(Premi Absensi Lama - Baru == 0 ? 0 : Premi Absensi Baru)</span> - 
+        <span class="text-danger">Lembur Total Rp (Lama)</span> + 
+        <span class="text-success">Lembur Total Rp (Baru)</span> + 
+        <span class="text-success">(Potongan Upah Lama - Baru &lt; 2 ? 0 : Potongan Upah Lama)</span> - 
+        <span class="text-danger">Potongan Jam Rp (Baru)</span> - 
+        <span class="text-danger">Potongan Sebelum PPh 21 (Baru)</span>
+    </div>
+    <small class="text-muted">*Catatan: Komponen yang bernilai 0 tidak akan ditambahkan ke perhitungan.</small>
+</div>
 								</div>
 							</div>
 
