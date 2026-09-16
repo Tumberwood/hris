@@ -1887,28 +1887,28 @@
 				},
 				colReorder: {
     order: [
-        0,      // ID
-        122,    // Gaji Diterima Lama
-        123,    // Gaji Diterima Baru
-        1,      // NIP
-        2,      // Nama
-        3,      // Divisi
-        4,      // Department
-        5,      // Unit Kerja
-        6,      // Jabatan
-        7,      // Grup Jabatan
-        8,      // Bagian
-        9,      // Skala Upah
-        10,     // Sub Tipe
-        11,     // Status
-        12,     // Tipe
-        13,     // Gender
-        14,     // PTKP
-        15,     // No Rek
-        16,     // No KTP
-        17,     // No NPWP
+        122, // Gaji Diterima Lama
+        123, // Gaji Diterima Baru
 
-        // lanjutkan 18 sampai 121
+        0,   // ID
+        1,   // NIP
+        2,   // Nama
+        3,   // Divisi
+        4,   // Department
+        5,   // Unit Kerja
+        6,   // Jabatan
+        7,   // Grup Jabatan
+        8,   // Bagian
+        9,   // Skala Upah
+        10,  // Sub Tipe
+        11,  // Status
+        12,  // Tipe
+        13,  // Gender
+        14,  // PTKP
+        15,  // No Rek
+        16,  // No KTP
+        17,  // No NPWP
+
         18, 19, 20, 21, 22, 23, 24, 25,
         26, 27, 28, 29, 30, 31, 32, 33,
         34, 35, 36, 37, 38, 39, 40, 41,
