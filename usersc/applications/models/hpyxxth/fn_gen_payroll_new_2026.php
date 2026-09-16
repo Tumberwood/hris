@@ -1114,10 +1114,12 @@
                         LEFT JOIN (
                             SELECT
                                 id_hemxxmh,
+                                nama,
                                 IFNULL(nominal, 0) AS nominal_piutang
                             FROM (
                                 SELECT
                                     a.id_hemxxmh,
+                                    pe.nama,
                                     SUM(nominal) as nominal
                                 FROM hpy_piutang_d as a
                                 WHERE
@@ -1126,7 +1128,7 @@
                                     AND is_approve = 1
                                 GROUP BY id_hemxxmh
                             ) AS subquery
-                        ) piutang ON piutang.id_hemxxmh = p.id_hemxxmh
+                        ) piutang ON piutang.id_hemxxmh = p.id_hemxxmh OR piutang.nama = p.nama
                     ),
                     komp_rekontrak AS (
                         SELECT
