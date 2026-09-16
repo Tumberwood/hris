@@ -213,6 +213,35 @@
 				Field::inst( 'hpyemtd.terima_lain' )
 					->set( false ) // Mencegah DataTables mencoba insert/update kolom ini
 					->getFormatter( function ( $val, $data ) {
+						// // 1. Ambil data dari hpyemtd (Pakai format 'tabel.kolom')
+						// $p_abs_hpyemtd   = floatval($data['hpyemtd.premi_abs'] ?? 0);
+						// $total_rp_lembur = floatval($data['hpyemtd.total_rp_lembur'] ?? 0);
+						// $pot_upah_hpy    = floatval($data['hpyemtd.pot_upah'] ?? 0);
+						// $pot_jam         = floatval($data['hpyemtd.pot_jam'] ?? 0);
+						// $pot_lain_before = floatval($data['hpyemtd.pot_lain_before_pph'] ?? 0);
+
+						// // 2. Ambil data dari hpyemtd_cocokan (Pakai format 'tabel.kolom')
+						// $p_abs_cocokan   = floatval($data['hpyemtd_cocokan.premi_abs'] ?? 0);
+						// $tot_rp_lembur_c = floatval($data['hpyemtd_cocokan.total_rp_lembur'] ?? 0);
+						// $pot_upah_c      = floatval($data['hpyemtd_cocokan.pot_upah'] ?? 0);
+
+						// // 3. Logika IF( premi_abs - premi_abs_cocokan = 0, 0, premi_abs )
+						// $hasil_if_premi = (($p_abs_hpyemtd - $p_abs_cocokan) == 0) ? 0 : $p_abs_hpyemtd;
+
+						// // 4. Logika IF( ABS(pot_upah_cocokan - pot_upah_hpyemtd) > 2, pot_upah_cocokan, 0 )
+						// $selisih_pot_upah = abs($pot_upah_c - $pot_upah_hpy);
+						// $nilai_pot_upah   = ($selisih_pot_upah > 2) ? $pot_upah_c : 0;
+
+						// // 5. Kalkulasi Rumus Akhir
+						// $terima_lain = $hasil_if_premi 
+						// 			- $tot_rp_lembur_c 
+						// 			+ $total_rp_lembur 
+						// 			+ $nilai_pot_upah 
+						// 			- $pot_jam 
+						// 			- $pot_lain_before;
+
+						// return $terima_lain;
+
 						// 1. Ambil data dari hpyemtd (Pakai format 'tabel.kolom')
 						$p_abs_hpyemtd   = floatval($data['hpyemtd.premi_abs'] ?? 0);
 						$total_rp_lembur = floatval($data['hpyemtd.total_rp_lembur'] ?? 0);
@@ -228,6 +257,9 @@
 						// 3. Logika IF( premi_abs - premi_abs_cocokan = 0, 0, premi_abs )
 						$hasil_if_premi = (($p_abs_hpyemtd - $p_abs_cocokan) == 0) ? 0 : $p_abs_hpyemtd;
 
+						// 3.b Logika IF( total_rp_lembur - total_rp_lembur_cocokan = 0, 0, total_rp_lembur )
+						$hasil_if_lembur = (($total_rp_lembur - $tot_rp_lembur_c) == 0) ? 0 : $total_rp_lembur;
+
 						// 4. Logika IF( ABS(pot_upah_cocokan - pot_upah_hpyemtd) > 2, pot_upah_cocokan, 0 )
 						$selisih_pot_upah = abs($pot_upah_c - $pot_upah_hpy);
 						$nilai_pot_upah   = ($selisih_pot_upah > 2) ? $pot_upah_c : 0;
@@ -235,7 +267,7 @@
 						// 5. Kalkulasi Rumus Akhir
 						$terima_lain = $hasil_if_premi 
 									- $tot_rp_lembur_c 
-									+ $total_rp_lembur 
+									+ $hasil_if_lembur 
 									+ $nilai_pot_upah 
 									- $pot_jam 
 									- $pot_lain_before;
