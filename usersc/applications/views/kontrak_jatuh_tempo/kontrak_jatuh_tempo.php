@@ -215,7 +215,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [3,6,14]
+						targets: [3,4,7]
 					},
 					{
 						searchPanes:{
@@ -239,7 +239,7 @@
 				columns: [
 					{ data: "id" },
 					{ data: "nik" },
-					{ data: "nik" },
+					{ data: "nama" },
 					{ data: "tipe" },
 					{ data: "sub_tipe" },
 					{ data: "dep" },
