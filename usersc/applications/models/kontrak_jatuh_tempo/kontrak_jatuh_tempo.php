@@ -40,7 +40,7 @@
 					st.nama stat,
 					dep.nama dep,
 					jab.nama jab,
-					ar.nama are
+					ar.nama area
 					
 				FROM hemxxmh a
 				JOIN hemjbmh b ON b.id_hemxxmh = a.id
