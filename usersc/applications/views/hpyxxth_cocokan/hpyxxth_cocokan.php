@@ -2290,7 +2290,22 @@
                     fgColor: { argb: 'FFC3E6CB' }
                 };
 
-            } else {
+            } else if ($(this).hasClass('satu')) {
+
+				cell.fill = {
+					type: 'pattern',
+					pattern: 'solid',
+					fgColor: { argb: 'FFC3D7E6' }
+				};
+
+			} else if ($(this).hasClass('dua')) {
+
+				cell.fill = {
+					type: 'pattern',
+					pattern: 'solid',
+					fgColor: { argb: 'FFCCE6C3' }
+				};
+			} else {
 
                 cell.fill = {
                     type: 'pattern',
