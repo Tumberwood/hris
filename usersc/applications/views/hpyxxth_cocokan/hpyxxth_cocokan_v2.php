@@ -32,16 +32,6 @@
 		background: #c3e6cb !important;
 		/* color: #155724 !important; */
 	}
-
-	table.dataTable thead th.satu {
-		background: #c3d7e6 !important;
-		/* color: #155724 !important; */
-	}
-
-	table.dataTable thead th.dua {
-		background: #cce6c3 !important;
-		/* color: #155724 !important; */
-	}
 </style>
 <!-- begin content here -->
 
@@ -217,57 +207,47 @@
 													<th class="text-center align-middle lama">Gaji Pokok (Lama)</th>
 													<th class="text-center align-middle baru">Gaji Pokok (Baru)</th>
 
-													<th class="text-center align-middle satu">Tj. Jabatan (Lama)</th>
-													<th class="text-center align-middle satu">Tj. Jabatan (Baru)</th>
-													<th class="text-center align-middle satu">Tj. Khusus (Lama)</th>
-													<th class="text-center align-middle satu">Tj. Khusus (Baru)</th>
+													<th class="text-center align-middle lama">Tj. Jabatan (Lama)</th>
+													<th class="text-center align-middle baru">Tj. Jabatan (Baru)</th>
 
-													<!-- START Terima Lain -->
-													<th class="text-center align-middle dua">Terima Lain (Lama)</th>
-													<th class="text-center align-middle dua">Terima Lain (Baru)</th>
-													<th class="text-center align-middle dua">Premi Absensi (Lama)</th>
-													<th class="text-center align-middle dua">Premi Absensi (Baru)</th>
-													
-													<th class="text-center align-middle dua">Lembur x1.5 (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x1.5 (jam) (Baru)</th>
-
-													<th class="text-center align-middle dua">Lembur x1.5 (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x1.5 (rp) (Baru)</th>
-
-													<th class="text-center align-middle dua">Lembur x2 (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x2 (jam) (Baru)</th>
-
-													<th class="text-center align-middle dua">Lembur x2 (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x2 (rp) (Baru)</th>
-
-													<th class="text-center align-middle dua">Lembur x3 (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x3 (jam) (Baru)</th>
-
-													<th class="text-center align-middle dua">Lembur x3 (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x3 (rp) (Baru)</th>
-
-													<th class="text-center align-middle dua">Lembur Total (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur Total (jam) (Baru)</th>
-
-													<th class="text-center align-middle dua">Lembur Total (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur Total (rp) (Baru)</th>
-													
-													<th class="text-center align-middle text-danger dua">Potongan Upah (Rp) (Lama)</th>
-													<th class="text-center align-middle text-danger dua">Potongan Upah (Rp) (Baru)</th>
-													
-													<th class="text-center align-middle text-danger dua">Potongan Jam (Rp) (Lama)</th>
-													<th class="text-center align-middle text-danger dua">Potongan Jam (Rp) (Baru)</th>
-													
-													<th class="text-center align-middle text-danger dua">Potongan Sebelum PPh 21 (Lama)</th>
-													<th class="text-center align-middle text-danger dua">Potongan Sebelum PPh 21 (Baru)</th>
-
-													<!-- END Terima Lain -->
+													<th class="text-center align-middle lama">Terima Lain (Lama)</th>
+													<th class="text-center align-middle baru">Terima Lain (Baru)</th>
 
 													<th class="text-center align-middle lama">Tj. Lain-lain (Lama)</th>
 													<th class="text-center align-middle baru">Tj. Lain-lain (Baru)</th>
 
+													<th class="text-center align-middle lama">Tj. Khusus (Lama)</th>
+													<th class="text-center align-middle baru">Tj. Khusus (Baru)</th>
+
 													<th class="text-center align-middle lama">Tj. Masa Kerja (Lama)</th>
 													<th class="text-center align-middle baru">Tj. Masa Kerja (Baru)</th>
+
+													<th class="text-center align-middle lama">Premi Absensi (Lama)</th>
+													<th class="text-center align-middle baru">Premi Absensi (Baru)</th>
+
+													<th class="text-center align-middle lama">Lembur x1.5 (jam) (Lama)</th>
+													<th class="text-center align-middle baru">Lembur x1.5 (jam) (Baru)</th>
+
+													<th class="text-center align-middle lama">Lembur x1.5 (rp) (Lama)</th>
+													<th class="text-center align-middle baru">Lembur x1.5 (rp) (Baru)</th>
+
+													<th class="text-center align-middle lama">Lembur x2 (jam) (Lama)</th>
+													<th class="text-center align-middle baru">Lembur x2 (jam) (Baru)</th>
+
+													<th class="text-center align-middle lama">Lembur x2 (rp) (Lama)</th>
+													<th class="text-center align-middle baru">Lembur x2 (rp) (Baru)</th>
+
+													<th class="text-center align-middle lama">Lembur x3 (jam) (Lama)</th>
+													<th class="text-center align-middle baru">Lembur x3 (jam) (Baru)</th>
+
+													<th class="text-center align-middle lama">Lembur x3 (rp) (Lama)</th>
+													<th class="text-center align-middle baru">Lembur x3 (rp) (Baru)</th>
+
+													<th class="text-center align-middle lama">Lembur Total (jam) (Lama)</th>
+													<th class="text-center align-middle baru">Lembur Total (jam) (Baru)</th>
+
+													<th class="text-center align-middle lama">Lembur Total (rp) (Lama)</th>
+													<th class="text-center align-middle baru">Lembur Total (rp) (Baru)</th>
 
 													<th class="text-center align-middle lama">Kompensasi Kontrak Berakhir (Lama)</th>
 													<th class="text-center align-middle baru">Kompensasi Kontrak Berakhir (Baru)</th>
@@ -294,6 +274,9 @@
 													<th class="text-center align-middle text-danger lama">Total Pot Upah (Lama)</th>
 													<th class="text-center align-middle text-danger baru">Total Pot Upah (Baru)</th>
 
+													<th class="text-center align-middle text-danger lama">Potongan Upah (Rp) (Lama)</th>
+													<th class="text-center align-middle text-danger baru">Potongan Upah (Rp) (Baru)</th>
+
 													<th class="text-center align-middle text-danger lama">Total Pot Resign (Lama)</th>
 													<th class="text-center align-middle text-danger baru">Total Pot Resign (Baru)</th>
 
@@ -303,8 +286,14 @@
 													<th class="text-center align-middle text-danger lama">Total Pot Jam (Lama)</th>
 													<th class="text-center align-middle text-danger baru">Total Pot Jam (Baru)</th>
 
+													<th class="text-center align-middle text-danger lama">Potongan Jam (Rp) (Lama)</th>
+													<th class="text-center align-middle text-danger baru">Potongan Jam (Rp) (Baru)</th>
+
 													<th class="text-center align-middle lama">Penghasilan Sebelum PPh 21 (Lama)</th>
 													<th class="text-center align-middle baru">Penghasilan Sebelum PPh 21 (Baru)</th>
+
+													<th class="text-center align-middle text-danger lama">Potongan Sebelum PPh 21 (Lama)</th>
+													<th class="text-center align-middle text-danger baru">Potongan Sebelum PPh 21 (Baru)</th>
 
 													<th class="text-center align-middle lama">BPJS Kes Perusahaan (Lama)</th>
 													<th class="text-center align-middle baru">BPJS Kes Perusahaan (Baru)</th>
@@ -1897,241 +1886,154 @@
 					left: 2 //buat hanya NIK dan nama aja yg di freeze
 				},
 				columns: [
-					{ data: "hpyemtd_cocokan.id", visible: false },
-
+					{ data: "hpyemtd_cocokan.id", visible:false },
+					
 					{ data: "hpyemtd_cocokan.nrp" },
 					{ data: "nama" },
-
-					// 3-4
+					
 					{ data: "hpyemtd_cocokan.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					
+					{ data: "hovxxmh.nama" },	//divisi
+					{ data: "hodxxmh.nama" },	//dep
+					{ data: "hosxxmh.nama" },	//unit
+					{ data: "hetxxmh.nama" },	//jab
+					{ data: "hevgrmh.nama" },	//grup
+					{ data: "hobxxmh.nama" },	//Bagian
+					{ data: "hevxxmh.nama" },	//Skala
+					{ data: "heyxxmd.nama" },	//Sub Tipe
+					{ data: "hesxxmh.nama" },	//Status
+					{ data: "heyxxmh.nama" },	//Tipe
+					{ data: "hemxxmh.gender" },	//Gender
 
-					// 5-15
-					{ data: "hovxxmh.nama" },
-					{ data: "hodxxmh.nama" },
-					{ data: "hosxxmh.nama" },
-					{ data: "hetxxmh.nama" },
-					{ data: "hevgrmh.nama" },
-					{ data: "hobxxmh.nama" },
-					{ data: "hevxxmh.nama" },
-					{ data: "heyxxmd.nama" },
-					{ data: "hesxxmh.nama" },
-					{ data: "heyxxmh.nama" },
-					{ data: "hemxxmh.gender" },
-
-					// 16-19
 					{ data: "hpyemtd_cocokan.ptkp" },
 					{ data: "hpyemtd_cocokan.no_rekening" },
 					{ data: "hpyemtd_cocokan.ktp" },
 					{ data: "hpyemtd_cocokan.npwp" },
 
-					// 20-21 Gaji Pokok
+					// GAJI
 					{ data: "hpyemtd_cocokan.gp", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.gp", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 22-23 Tj Jabatan
 					{ data: "hpyemtd_cocokan.t_jab", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.t_jab", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 24-25 Tj Khusus
-					{ data: "hpyemtd_cocokan.tj_khusus", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-					{ data: "hpyemtd.tj_khusus", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 26-27 Terima Lain
 					{ data: "hpyemtd_cocokan.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.terima_lain", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 28-29 Premi Absensi
+					
+					
+					{ data: "hpyemtd_cocokan.var_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.var_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd_cocokan.tj_khusus", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.tj_khusus", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd_cocokan.fix_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.fix_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd_cocokan.premi_abs", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.premi_abs", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					// 30-31 Lembur x1.5 jam
 					{ data: "hpyemtd_cocokan.lembur15", class: "text-right" },
 					{ data: "hpyemtd.lembur15", class: "text-right" },
-
-					// 32-33 Lembur x1.5 rp
 					{ data: "hpyemtd_cocokan.rp_lembur15", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.rp_lembur15", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 34-35 Lembur x2 jam
 					{ data: "hpyemtd_cocokan.lembur2", class: "text-right" },
 					{ data: "hpyemtd.lembur2", class: "text-right" },
-
-					// 36-37 Lembur x2 rp
 					{ data: "hpyemtd_cocokan.rp_lembur2", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.rp_lembur2", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 38-39 Lembur x3 jam
 					{ data: "hpyemtd_cocokan.lembur3", class: "text-right" },
 					{ data: "hpyemtd.lembur3", class: "text-right" },
-
-					// 40-41 Lembur x3 rp
 					{ data: "hpyemtd_cocokan.rp_lembur3", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.rp_lembur3", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					// 42-43 Lembur Total jam
 					{ data: "hpyemtd_cocokan.total_lembur_jam_final", class: "text-right" },
 					{ data: "hpyemtd.total_lembur_jam_final", class: "text-right" },
-
-					// 44-45 Lembur Total rp
 					{ data: "hpyemtd_cocokan.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					// 46-47 Potongan Upah
-					{ data: "hpyemtd_cocokan.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-
-					// 48-49 Potongan Jam
-					{ data: "hpyemtd_cocokan.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-
-					// 50-51 Potongan Sebelum PPh
-					{ data: "hpyemtd_cocokan.pot_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-
-					// 52-53 Tj Lain-lain
-					{ data: "hpyemtd_cocokan.var_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-					{ data: "hpyemtd.var_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 54-55 Tj Masa Kerja
-					{ data: "hpyemtd_cocokan.fix_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-					{ data: "hpyemtd.fix_cost", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 56-57 Kompensasi Kontrak
 					{ data: "hpyemtd_cocokan.komp_rekontrak", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.komp_rekontrak", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 58-59 Cuti Tahunan
 					{ data: "hpyemtd_cocokan.cuti_tahunan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.cuti_tahunan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 60-61 Cuti Bersama
 					{ data: "hpyemtd_cocokan.cuti_bersama", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.cuti_bersama", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 62-63 Hari Sisa Cuti
 					{ data: "hpyemtd_cocokan.sisa_cuti_hari", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.sisa_cuti_hari", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 64-65 Kompensasi Sisa Cuti
 					{ data: "hpyemtd_cocokan.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 66-67 THR
 					{ data: "hpyemtd_cocokan.thr", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.thr", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					// 68-69 Potongan Makan
+					// POTONGAN
 					{ data: "hpyemtd_cocokan.pot_makan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_makan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-
-					// 70-71 Total Pot Upah
+					{ data: "hpyemtd_cocokan.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd_cocokan.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-
-					// 72-73 Total Pot Resign
 					{ data: "hpyemtd_cocokan.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-
-					// 74-75 Potongan Resign
 					{ data: "hpyemtd_cocokan.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-
-					// 76-77 Total Pot Jam
+					{ data: "hpyemtd_cocokan.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd_cocokan.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					// 78-79 Penghasilan Sebelum PPh
 					{ data: "hpyemtd_cocokan.pendapatan_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.pendapatan_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd_cocokan.pot_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					// 80-81 BPJS Kes Perusahaan
 					{ data: "hpyemtd_cocokan.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 82-83 JKK
 					{ data: "hpyemtd_cocokan.jkk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.jkk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 84-85 JKM
 					{ data: "hpyemtd_cocokan.jkm", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					// 86-87 Bruto
 					{ data: "hpyemtd_cocokan.bruto", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.bruto", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 88-89 TER
 					{ data: "hpyemtd_cocokan.persen_ter", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 					{ data: "hpyemtd.persen_ter", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
-					// 90-91 PPh21
 					{ data: "hpyemtd_cocokan.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					// 92-93 After PPh21
 					{ data: "hpyemtd_cocokan.after_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.after_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					// 94-95 JHT Perusahaan
 					{ data: "hpyemtd_cocokan.jht_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.jht_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 96-97 JP Perusahaan
 					{ data: "hpyemtd_cocokan.jp_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.jp_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					// 98-99 JHT Karyawan
 					{ data: "hpyemtd_cocokan.pot_jht_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_jht_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-
-					// 100-101 JP Karyawan
 					{ data: "hpyemtd_cocokan.pot_jp_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_jp_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-
-					// 102-103 BPJS Kes Karyawan
 					{ data: "hpyemtd_cocokan.bpjs_kes_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.bpjs_kes_karyawan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					
+					{ data: "hpyemtd_cocokan.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd_cocokan.jkk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd_cocokan.jkm", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					// 104-105 Pot BPJS Kes Perusahaan
-					{ data: "hpyemtd_cocokan.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-
-					// 106-107 Pot JKK Perusahaan
-					{ data: "hpyemtd_cocokan.jkk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.jkk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-
-					// 108-109 Pot JKM Perusahaan
-					{ data: "hpyemtd_cocokan.jkm", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-
-					// 110-111 Piutang
 					{ data: "hpyemtd_cocokan.pot_piutang", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_piutang", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-
-					// 112-113 Denda APD
 					{ data: "hpyemtd_cocokan.denda_apd", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.denda_apd", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-
-					// 114-115 SPSI
 					{ data: "hpyemtd_cocokan.iuran_spsi", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.iuran_spsi", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					// 116-117 Pendapatan Setelah PPh
 					{ data: "hpyemtd_cocokan.pendapatan_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.pendapatan_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 118-119 Potongan Setelah PPh
 					{ data: "hpyemtd_cocokan.pot_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
-					// 120-121 Gaji Bersih
 					{ data: "hpyemtd_cocokan.gaji_bersih", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.gaji_bersih", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-
-					// 122-123 Bulat
 					{ data: "hpyemtd_cocokan.bulat", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-					{ data: "hpyemtd.bulat", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" }
+					{ data: "hpyemtd.bulat", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 				],
 				buttons: [
     // BEGIN breaking generate button
@@ -2173,40 +2075,40 @@
 
 			20: 'gp',
 			22: 't_jab',
-			24: 'tj_khusus',
-			26: 'terima_lain',
-			28: 'premi_abs',
+			24: 'terima_lain',
+			26: 'var_cost',
+			28: 'tj_khusus',
+			30: 'fix_cost',
+			32: 'premi_abs',
 
-			30: 'lembur15',
-			32: 'rp_lembur15',
-			34: 'lembur2',
-			36: 'rp_lembur2',
-			38: 'lembur3',
-			40: 'rp_lembur3',
-			42: 'total_lembur_jam_final',
-			44: 'total_rp_lembur',
+			34: 'lembur15',
+			36: 'rp_lembur15',
+			38: 'lembur2',
+			40: 'rp_lembur2',
+			42: 'lembur3',
+			44: 'rp_lembur3',
 
-			46: 'c_pot_upah',
-			48: 'c_pot_jam',
-			50: 'pot_lain_before_pph',
+			46: 'total_lembur_jam_final',
+			48: 'total_rp_lembur',
 
-			52: 'var_cost',
-			54: 'fix_cost',
+			50: 'komp_rekontrak',
+			52: 'cuti_tahunan',
+			54: 'cuti_bersama',
+			56: 'sisa_cuti_hari',
+			58: 'komp_sisa_cuti',
+			60: 'thr',
 
-			56: 'komp_rekontrak',
-			58: 'cuti_tahunan',
-			60: 'cuti_bersama',
-			62: 'sisa_cuti_hari',
-			64: 'komp_sisa_cuti',
-			66: 'thr',
+			62: 'pot_makan',
+			64: 'c_pot_upah',
+			66: 'pot_upah',
 
-			68: 'pot_makan',
-			70: 'pot_upah',
-			72: 'c_pot_resign',
-			74: 'pot_resign',
-			76: 'pot_jam',
+			68: 'c_pot_resign',
+			70: 'pot_resign',
+			72: 'c_pot_jam',
+			74: 'pot_jam',
 
-			78: 'pendapatan_lain_before_pph',
+			76: 'pendapatan_lain_before_pph',
+			78: 'pot_lain_before_pph',
 
 			80: 'bpjs_kes_perusahaan',
 			82: 'jkk',
@@ -2583,47 +2485,43 @@
 					compareFooterSum(120, 121);
 					compareFooterSum(122, 123);
 				},
-				rowCallback: function(row, data, index) {
-
-					compareField(row, data, 3, 'gaji_terima');
-
+				rowCallback: function( row, data, index ) {
 					compareField(row, data, 20, 'gp');
 					compareField(row, data, 22, 't_jab');
-					compareField(row, data, 24, 'tj_khusus');
-					compareField(row, data, 26, 'terima_lain');
-					compareField(row, data, 28, 'premi_abs');
+					compareField(row, data, 24, 'terima_lain');
+					compareField(row, data, 26, 'var_cost');
+					compareField(row, data, 28, 'tj_khusus');
+					compareField(row, data, 30, 'fix_cost');
+					compareField(row, data, 32, 'premi_abs');
 
-					compareField(row, data, 30, 'lembur15');
-					compareField(row, data, 32, 'rp_lembur15');
-					compareField(row, data, 34, 'lembur2');
-					compareField(row, data, 36, 'rp_lembur2');
-					compareField(row, data, 38, 'lembur3');
-					compareField(row, data, 40, 'rp_lembur3');
+					compareField(row, data, 34, 'lembur15');
+					compareField(row, data, 36, 'rp_lembur15');
+					compareField(row, data, 38, 'lembur2');
+					compareField(row, data, 40, 'rp_lembur2');
+					compareField(row, data, 42, 'lembur3');
+					compareField(row, data, 44, 'rp_lembur3');
 
-					compareField(row, data, 42, 'total_lembur_jam_final');
-					compareField(row, data, 44, 'total_rp_lembur');
+					compareField(row, data, 46, 'total_lembur_jam_final');
+					compareField(row, data, 48, 'total_rp_lembur');
 
-					compareField(row, data, 46, 'c_pot_upah');
-					compareField(row, data, 48, 'c_pot_jam');
-					compareField(row, data, 50, 'pot_lain_before_pph');
+					compareField(row, data, 50, 'komp_rekontrak');
+					compareField(row, data, 52, 'cuti_tahunan');
+					compareField(row, data, 54, 'cuti_bersama');
+					compareField(row, data, 56, 'sisa_cuti_hari');
+					compareField(row, data, 58, 'komp_sisa_cuti');
+					compareField(row, data, 60, 'thr');
 
-					compareField(row, data, 52, 'var_cost');
-					compareField(row, data, 54, 'fix_cost');
+					compareField(row, data, 62, 'pot_makan');
+					compareField(row, data, 64, 'c_pot_upah');
+					compareField(row, data, 66, 'pot_upah');
 
-					compareField(row, data, 56, 'komp_rekontrak');
-					compareField(row, data, 58, 'cuti_tahunan');
-					compareField(row, data, 60, 'cuti_bersama');
-					compareField(row, data, 62, 'sisa_cuti_hari');
-					compareField(row, data, 64, 'komp_sisa_cuti');
-					compareField(row, data, 66, 'thr');
+					compareField(row, data, 68, 'c_pot_resign');
+					compareField(row, data, 70, 'pot_resign');
+					compareField(row, data, 72, 'c_pot_jam');
+					compareField(row, data, 74, 'pot_jam');
 
-					compareField(row, data, 68, 'pot_makan');
-					compareField(row, data, 70, 'pot_upah');
-					compareField(row, data, 72, 'c_pot_resign');
-					compareField(row, data, 74, 'pot_resign');
-					compareField(row, data, 76, 'pot_jam');
-
-					compareField(row, data, 78, 'pendapatan_lain_before_pph');
+					compareField(row, data, 76, 'pendapatan_lain_before_pph');
+					compareField(row, data, 78, 'pot_lain_before_pph');
 
 					compareField(row, data, 80, 'bpjs_kes_perusahaan');
 					compareField(row, data, 82, 'jkk');
@@ -2631,7 +2529,9 @@
 
 					compareField(row, data, 86, 'bruto');
 					compareField(row, data, 88, 'persen_ter');
+
 					compareField(row, data, 90, 'pot_pph21');
+
 					compareField(row, data, 92, 'after_pph21');
 
 					compareField(row, data, 94, 'jht_perusahaan');
@@ -2654,6 +2554,8 @@
 
 					compareField(row, data, 120, 'gaji_bersih');
 					compareField(row, data, 122, 'bulat');
+
+					compareField(row, data, 3, 'gaji_terima');
 				},
 				drawCallback: function () {
 					$('[data-toggle="tooltip"]').tooltip({
