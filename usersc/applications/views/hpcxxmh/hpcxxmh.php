@@ -28,6 +28,7 @@
                                 <th>Periode</th>
                                 <th>Komp Tetap</th>
                                 <th>Lain-lain</th>
+                                <th>Input Pada Menu</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -135,10 +136,14 @@
 						name: "hpcxxmh.nominal"
 					},
 					{
+						label: "Input Pada Menu",
+						name: "hpcxxmh.input_pada_menu",
+					},
+					{
 						label: "Keterangan",
 						name: "hpcxxmh.keterangan",
 						type: "textarea"
-					}
+					},
 				]
 			} );
 
@@ -324,7 +329,8 @@
 							}
 						}
 					},
-					{ data: "hpcxxmh.keterangan" }
+					{ data: "hpcxxmh.input_pada_menu" },
+					{ data: "hpcxxmh.keterangan" },
 				],
 				buttons: [
 					// BEGIN breaking generate button

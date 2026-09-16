@@ -31,6 +31,7 @@
 					return ucwords($val);
 				} ),
 			Field::inst( 'hpcxxmh.keterangan' ),
+			Field::inst( 'hpcxxmh.input_pada_menu' ),
 			Field::inst( 'hpcxxmh.is_active' ),
 			Field::inst( 'hpcxxmh.created_by' )
 				->set( Field::SET_CREATE )
@@ -47,7 +48,7 @@
 			Field::inst( 'hpcxxmh.periode' ),
 			Field::inst( 'hpcxxmh.nominal' ),
 			Field::inst( 'hpcxxmh.is_lain' ),
-			Field::inst( 'hpcxxmh.is_fix' )
+			Field::inst( 'hpcxxmh.is_fix' ),
 		);
 	
 	// do not erase
