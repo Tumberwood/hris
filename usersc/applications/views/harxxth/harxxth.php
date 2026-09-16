@@ -259,7 +259,7 @@
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 			
-			id_periode_payroll_old = id_hem_get;
+			id_periode_payroll_old = 0;
 			
 			$('#select_periode_payroll').select2('open');
 
