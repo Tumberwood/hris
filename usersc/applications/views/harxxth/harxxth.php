@@ -907,7 +907,7 @@
 					tblharxxth.ajax.reload(function ( json ) {
 						notifyprogress.close();
 					}, false);
-					cekApproveTanggal()
+					
 					return false; 
 				}
 			});
