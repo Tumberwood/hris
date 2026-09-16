@@ -24,7 +24,7 @@
 
 <!-- begin content here -->
 
-<div class="row" style="visible: false">
+<div class="row" hidden>
     <div class="col">
         <div class="ibox collapsed" id="iboxfilter">
             <div class="ibox-title">
