@@ -35,6 +35,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Tanggal Keluar</th>
                                 <th>NIP</th>
                                 <th>Nama</th>
                                 
@@ -51,7 +52,6 @@
 								<th>Area Kerja</th>
 
                                 <th>Grup HK</th>
-                                <th>Tanggal Keluar</th>
                             </tr>
                         </thead>
                     </table>
@@ -296,11 +296,12 @@
 				},
 				responsive: false,
 				fixedColumns:   {
-					left: 2
+					left: 3
 				},
 				order: [[ 1, "desc" ]],
 				columns: [
 					{ data: "hemxxmh.id",visible:false },
+					{ data: "hemjbmh.tanggal_keluar" },
 					{ data: "hemxxmh.kode" },
 					{ data: "hemxxmh.nama" },
 					
@@ -330,7 +331,6 @@
 							}
 						}
 					},
-					{ data: "hemjbmh.tanggal_keluar" },
 				],
 				buttons: [
 
