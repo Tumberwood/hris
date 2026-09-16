@@ -24,7 +24,7 @@
 
 <!-- begin content here -->
 
-<div class="row" hidden>
+<div class="row">
     <div class="col">
         <div class="ibox collapsed" id="iboxfilter">
             <div class="ibox-title">
@@ -32,7 +32,7 @@
                 <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
             </div>
             <div class="ibox-content">
-                <form class="form-horizontal" id="frmkontrak_jatuh_tempo">
+                <form class="form-horizontal" id="frmkontrak_jatuh_tempo" hidden>
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label">Periode</label>
                         <div class="col-lg-5">
