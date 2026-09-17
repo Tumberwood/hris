@@ -202,7 +202,7 @@
                             WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
                             THEN (
                                 SELECT
-                                    SUM(1 / if(pr.jumlah_grup_render = 1, 21, 25) * 
+                                    SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
                                     -- GP
                                         IFNULL((
                                             SELECT a.nominal
@@ -217,7 +217,7 @@
                                             ) 
                                             AS c_id
                                 FROM htsprrd pr
-                                WHERE pr.tanggal BETWEEN :tanggal_awal AND p.tanggal_keluar
+                                WHERE pr.tanggal BETWEEN DATE_FORMAT(tanggal_awal, "%Y-%m-01") AND p.tanggal_keluar
                                 AND pr.id_hemxxmh = p.id_hemxxmh
                                 AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL"
                             )
@@ -225,7 +225,7 @@
                             WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
                             THEN (
                                 SELECT
-                                    SUM(1 / if(pr.jumlah_grup_render = 1, 21, 25) * 
+                                    SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
                                     -- GP
                                         IFNULL((
                                             SELECT a.nominal
