@@ -1420,6 +1420,7 @@
                     payroll AS (
                         SELECT
                             -- :id_hpyxxth,
+                            id_heyxxmd,
                             p.id_hemxxmh,
                             id_gtxpkmh,
                             kategori_kelas,
