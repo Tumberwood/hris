@@ -3885,16 +3885,16 @@
 					{ data: "hpyemtd.bruto", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					// 88-89 TER
-					{ data: "hpyemtd_cocokan.persen_ter", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
-					{ data: "hpyemtd.persen_ter", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ visible: false, data: "hpyemtd_cocokan.persen_ter", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
+					{ visible: false, data: "hpyemtd.persen_ter", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
 					// 90-91 PPh21
-					{ data: "hpyemtd_cocokan.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ visible: false, data: "hpyemtd_cocokan.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ visible: false, data: "hpyemtd.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 92-93 After PPh21
-					{ data: "hpyemtd_cocokan.after_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-					{ data: "hpyemtd.after_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ visible: false, data: "hpyemtd_cocokan.after_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ visible: false, data: "hpyemtd.after_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					// 94-95 JHT Perusahaan
 					{ data: "hpyemtd_cocokan.jht_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
