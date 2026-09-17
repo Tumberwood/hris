@@ -1643,7 +1643,7 @@
                             pot_lain_after_pph,
 
                             -- GAJI BERSIH
-                            IF(id_heyxxmd = 1, 0, ( bruto - ( bruto * (IFNULL(ter.persen,0) / 100) ) ) )
+                            ( bruto - ( bruto * (IFNULL(ter.persen,0) / 100) ) )
                             -- + (jht_perusahaan + jp_perusahaan)
                             - (
                                 pot_jht_karyawan
