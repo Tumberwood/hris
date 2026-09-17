@@ -135,6 +135,22 @@
                             c.id_heyxxmd
                         FROM hemxxmh b
                         JOIN hemjbmh c  ON c.id_hemxxmh = b.id AND c.id_heyxxmd <> 2
+                        LEFT JOIN (
+                            SELECT *
+                            FROM (
+                                SELECT
+                                    *,
+                                    ROW_NUMBER() OVER (
+                                        PARTITION BY id_hemxxmh
+                                        ORDER BY tanggal_awal DESC, id DESC
+                                    ) AS rn
+                                FROM hemjbrd
+                                WHERE 1
+                                AND id_harxxmh <> 1
+                            ) t
+                            WHERE rn = 1
+                        ) history ON history.id_hemxxmh = c.id_hemxxmh
+
                         LEFT JOIN hemdcmh d on d.id_hemxxmh = b.id
                         LEFT JOIN hodxxmh departemen on departemen.id = c.id_hodxxmh
                         LEFT JOIN hetxxmh jabatan on jabatan.id = c.id_hetxxmh
@@ -181,7 +197,56 @@
                     gaji_pokok AS (
                         SELECT
                             p.id_hemxxmh,
-                            COALESCE(nominal_gp, 0) AS gp
+                            -- COALESCE(nominal_gp, 0) AS gp,
+        CASE
+                            WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
+                            THEN (
+                                SELECT
+                                    SUM(1 / if(pr.jumlah_grup_render = 1, 21, 25) * 
+                                    -- GP
+                                        IFNULL((
+                                            SELECT a.nominal
+                                            FROM htpr_hemxxmh a
+                                            WHERE a.id_hpcxxmh = 1
+                                                AND a.id_hemxxmh = pr.id_hemxxmh
+                                                AND a.tanggal_efektif <= pr.tanggal
+                                                AND a.is_active = 1
+                                            ORDER BY a.tanggal_efektif DESC
+                                            LIMIT 1
+                                        ),0)
+                                            ) 
+                                            AS c_id
+                                FROM htsprrd pr
+                                WHERE pr.tanggal BETWEEN :tanggal_awal AND p.tanggal_keluar
+                                AND pr.id_hemxxmh = p.id_hemxxmh
+                                AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL"
+                            )
+                            
+                            WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                            THEN (
+                                SELECT
+                                    SUM(1 / if(pr.jumlah_grup_render = 1, 21, 25) * 
+                                    -- GP
+                                        IFNULL((
+                                            SELECT a.nominal
+                                            FROM htpr_hemxxmh a
+                                            WHERE a.id_hpcxxmh = 1
+                                                AND a.id_hemxxmh = pr.id_hemxxmh
+                                                AND a.tanggal_efektif <= pr.tanggal
+                                                AND a.is_active = 1
+                                            ORDER BY a.tanggal_efektif DESC
+                                            LIMIT 1
+                                        ),0)
+                                            ) 
+                                            AS c_id
+                                FROM htsprrd pr
+                                WHERE pr.tanggal BETWEEN p.tanggal_masuk AND LAST_DAY(:tanggal_akhir)
+                                AND pr.id_hemxxmh = p.id_hemxxmh
+                                AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL"
+                            )
+
+                            ELSE COALESCE(nominal_gp, 0)
+                        END AS gp
                         FROM pegawai p
 
                         LEFT JOIN (

@@ -1127,7 +1127,7 @@
                                     a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                     AND id_hpcxxmh = 105
                                     AND a.is_approve = 1
-                                GROUP BY id_hemxxmh
+                                GROUP BY pe.nama
                             ) AS subquery
                         ) piutang ON piutang.id_hemxxmh = p.id_hemxxmh OR piutang.nama = p.nama
                     ),
@@ -1420,6 +1420,7 @@
                     payroll AS (
                         SELECT
                             -- :id_hpyxxth,
+                            id_heyxxmd,
                             p.id_hemxxmh,
                             id_gtxpkmh,
                             kategori_kelas,
@@ -1519,12 +1520,12 @@
                             )
                             -
                             (
-                                COALESCE(pot_makan,0)
-                                + COALESCE(pot_upah,0)
-                                + COALESCE(pot_resign,0)
+                                
+                                COALESCE(pot_upah,0)
                                 + COALESCE(pot_jam,0)
                                 + COALESCE(pot_lain_before_pph,0)
-                            ) AS bruto,
+                            ) 
+                            AS bruto,
 
                             jht_perusahaan,
                             jp_perusahaan,
@@ -1624,9 +1625,14 @@
                             
                             bruto,
                             kategori_kelas,
-                            ter.persen persen_ter,
-                            bruto * (IFNULL(ter.persen,0) / 100) AS pot_pph21,
-                            bruto - ( bruto * (IFNULL(ter.persen,0) / 100) ) AS after_pph21,
+                            IF(id_heyxxmd = 1, 0, ter.persen ) AS persen_ter,
+                            IF(id_heyxxmd = 1, 0, bruto * (IFNULL(ter.persen,0) / 100) ) AS pot_pph21,
+                            bruto - 
+                            IF(id_heyxxmd = 1, 
+                                0, 
+                                ( bruto * (IFNULL(ter.persen,0) / 100) ) 
+                            )
+                            AS after_pph21,
                             
                             jht_perusahaan,
                             jp_perusahaan,
@@ -1642,7 +1648,12 @@
                             pot_lain_after_pph,
 
                             -- GAJI BERSIH
-                            ( bruto - ( bruto * (IFNULL(ter.persen,0) / 100) ) )
+                            ( bruto - 
+                                IF(id_heyxxmd = 1, 
+                                    0, 
+                                    ( bruto * (IFNULL(ter.persen,0) / 100) ) 
+                                )
+                            )
                             -- + (jht_perusahaan + jp_perusahaan)
                             - (
                                 pot_jht_karyawan
@@ -1654,6 +1665,8 @@
                                 + COALESCE(bpjs_kes_perusahaan,0)
                                 + COALESCE(jkk,0)
                                 + COALESCE(jkm,0)
+                                
+                                + COALESCE(pot_makan,0)
                             )
                             + pendapatan_lain_after_pph
                             - pot_lain_after_pph
