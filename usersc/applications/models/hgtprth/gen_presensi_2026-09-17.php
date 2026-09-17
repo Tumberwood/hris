@@ -552,55 +552,12 @@
                                         MAX(is_istirahat) AS is_istirahat,
                                         
                                         -- Ceklok In: min tanggal_jam sesuai range shift
-                                        MIN(
-                                            CASE
-                                                WHEN c.nama IN (
-                                                    "os",
-                                                    "out",
-                                                    "staff",
-                                                    "PMI",
-                                                    "PMI-Gedung-3",
-                                                    "OS-Gedung-3",
-                                                    "pocan",
-                                                    "istirahat"
-                                                )
-
-                                                AND (
-                                                    /* Jadwal normal */
-                                                    (
-                                                        jadwal.id_htsxxmh <> 1
-                                                        AND c.tanggal_jam BETWEEN
-                                                            jadwal.tanggaljam_awal_t1
-                                                            AND jadwal.tanggaljam_awal_t2
-                                                    )
-
-                                                    OR
-
-                                                    /* Jadwal OFF */
-                                                    (
-                                                        jadwal.id_htsxxmh = 1
-                                                        AND d.id IS NOT NULL
-                                                        AND c.tanggal_jam BETWEEN
-                                                            DATE_SUB(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 30 MINUTE)
-                                                            AND
-                                                            DATE_ADD(
-                                                                CONCAT(
-                                                                    IF(
-                                                                        d.jam_awal > d.jam_akhir,
-                                                                        DATE_ADD(d.tanggal, INTERVAL 1 DAY),
-                                                                        d.tanggal
-                                                                    ),
-                                                                    " ",
-                                                                    d.jam_akhir
-                                                                ),
-                                                                INTERVAL 60 MINUTE
-                                                            )
-                                                    )
-                                                )
-
-                                                THEN c.tanggal_jam
-                                            END
-                                        ) AS ceklok_in,
+                                        MIN(CASE 
+                                            WHEN c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "pocan", "istirahat")
+                                            -- kecuali peg gedung 3 maka tidak boleh ada ceklok in out di mesin istirahat
+                                            AND c.tanggal_jam BETWEEN jadwal.tanggaljam_awal_t1 AND jadwal.tanggaljam_awal_t2
+                                            THEN c.tanggal_jam
+                                        END) AS ceklok_in,
                                         
                                         -- Ceklok Out: max tanggal_jam sesuai range shift
                                         MAX(CASE 
@@ -1094,23 +1051,20 @@
                                     ) c ON c.kode = b.kode_finger
                                     AND c.tanggal_jam >= IF(
                                         d.id_hemxxmh IS NOT NULL AND jadwal.id_htsxxmh = 1,
-                                        -- CONCAT(d.tanggal, " ", d.jam_awal),
-                                        DATE_SUB(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 30 MINUTE),
+                                        CONCAT(d.tanggal, " ", d.jam_awal),
                                         jadwal.tanggaljam_awal_t1
                                     )
 
                                     AND c.tanggal_jam <= IF(
                                         d.id_hemxxmh IS NOT NULL AND jadwal.id_htsxxmh = 1,
-                                        DATE_ADD(
-                                            CONCAT(
-                                                IF(
-                                                    d.jam_awal > d.jam_akhir,
-                                                    DATE_ADD(d.tanggal, INTERVAL 1 DAY),
-                                                    d.tanggal
-                                                ),
-                                                " ",
-                                                d.jam_akhir
-                                            ), INTERVAL 30 MINUTE
+                                        CONCAT(
+                                            IF(
+                                                d.jam_awal > d.jam_akhir,
+                                                DATE_ADD(d.tanggal, INTERVAL 1 DAY),
+                                                d.tanggal
+                                            ),
+                                            " ",
+                                            d.jam_akhir
                                         ),
                                         DATE_ADD(jadwal.tanggaljam_akhir_t2, INTERVAL 1 DAY)
                                     )
