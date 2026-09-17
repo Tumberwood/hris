@@ -2032,12 +2032,12 @@
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 72-73 Total Pot Resign
-					{ data: "hpyemtd_cocokan.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ visible: false, data: "hpyemtd_cocokan.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ visible: false, data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 74-75 Potongan Resign
-					{ data: "hpyemtd_cocokan.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ visible: false, data: "hpyemtd_cocokan.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ visible: false, data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 76-77 Total Pot Jam
 					{ data: "hpyemtd_cocokan.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -2951,12 +2951,12 @@
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 72-73 Total Pot Resign
-					{ data: "hpyemtd_cocokan.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ visible: false, data: "hpyemtd_cocokan.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ visible: false, data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 74-75 Potongan Resign
-					{ data: "hpyemtd_cocokan.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ visible: false, data: "hpyemtd_cocokan.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ visible: false, data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 76-77 Total Pot Jam
 					{ data: "hpyemtd_cocokan.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -3853,12 +3853,12 @@
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 72-73 Total Pot Resign
-					{ data: "hpyemtd_cocokan.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ visible: false, data: "hpyemtd_cocokan.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ visible: false, data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 74-75 Potongan Resign
-					{ data: "hpyemtd_cocokan.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ visible: false, data: "hpyemtd_cocokan.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ visible: false, data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 76-77 Total Pot Jam
 					{ data: "hpyemtd_cocokan.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
