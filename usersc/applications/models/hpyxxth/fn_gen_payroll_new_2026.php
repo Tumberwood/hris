@@ -116,6 +116,10 @@
             ->exec('WITH pegawai AS (
                         SELECT
                             b.id AS id_hemxxmh,
+                            history.id_harxxmh,
+                            c.tanggal_masuk,
+                            c.grup_hk,
+                            c.tanggal_keluar,
                             id_gtxpkmh,
                             kategori_kelas,
                             b.kode nrp,
