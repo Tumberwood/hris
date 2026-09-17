@@ -1922,10 +1922,10 @@
 					{ data: "hemxxmh.gender" },
 
 					// 16-19
-					{ data: "hpyemtd_cocokan.ptkp" },
-					{ data: "hpyemtd_cocokan.no_rekening" },
-					{ data: "hpyemtd_cocokan.ktp" },
-					{ data: "hpyemtd_cocokan.npwp" },
+					{ data: "hpyemtd.ptkp" },
+					{ data: "hpyemtd.no_rekening" },
+					{ data: "hpyemtd.ktp" },
+					{ data: "hpyemtd.npwp" },
 
 					// 20-21 Gaji Pokok
 					{ data: "hpyemtd_cocokan.gp", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
@@ -2841,10 +2841,10 @@
 					{ data: "hemxxmh.gender" },
 
 					// 16-19
-					{ data: "hpyemtd_cocokan.ptkp" },
-					{ data: "hpyemtd_cocokan.no_rekening" },
-					{ data: "hpyemtd_cocokan.ktp" },
-					{ data: "hpyemtd_cocokan.npwp" },
+					{ data: "hpyemtd.ptkp" },
+					{ data: "hpyemtd.no_rekening" },
+					{ data: "hpyemtd.ktp" },
+					{ data: "hpyemtd.npwp" },
 
 					// 20-21 Gaji Pokok
 					{ data: "hpyemtd_cocokan.gp", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
@@ -3743,10 +3743,10 @@
 					{ data: "hemxxmh.gender" },
 
 					// 16-19
-					{ data: "hpyemtd_cocokan.ptkp" },
-					{ data: "hpyemtd_cocokan.no_rekening" },
-					{ data: "hpyemtd_cocokan.ktp" },
-					{ data: "hpyemtd_cocokan.npwp" },
+					{ data: "hpyemtd.ptkp" },
+					{ data: "hpyemtd.no_rekening" },
+					{ data: "hpyemtd.ktp" },
+					{ data: "hpyemtd.npwp" },
 
 					// 20-21 Gaji Pokok
 					{ data: "hpyemtd_cocokan.gp", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
