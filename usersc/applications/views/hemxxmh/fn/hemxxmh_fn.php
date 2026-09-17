@@ -61,7 +61,10 @@
         } else {
             edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').show();
             if (tanggal_keluar_old == null) {
-                tanggal_akhir = moment(tanggal_masuk).add('month', 6).format('DD MMM YYYY');
+                tanggal_akhir = moment(tanggal_masuk)
+                    .add(6, 'month')
+                    .subtract(1, 'day')
+                    .format('DD MMM YYYY');
                 edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').val(tanggal_akhir);
             } else {
                 edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').val(tanggal_keluar_old);
