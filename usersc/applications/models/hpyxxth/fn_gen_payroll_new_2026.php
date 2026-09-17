@@ -1627,7 +1627,12 @@
                             kategori_kelas,
                             IF(id_heyxxmd = 1, 0, ter.persen ) AS persen_ter,
                             IF(id_heyxxmd = 1, 0, bruto * (IFNULL(ter.persen,0) / 100) ) AS pot_pph21,
-                            IF(id_heyxxmd = 1, 0, bruto - ( bruto * (IFNULL(ter.persen,0) / 100) ) ) AS after_pph21,
+                            bruto - 
+                            IF(id_heyxxmd = 1, 
+                                0, 
+                                ( bruto * (IFNULL(ter.persen,0) / 100) ) 
+                            )
+                            AS after_pph21,
                             
                             jht_perusahaan,
                             jp_perusahaan,
