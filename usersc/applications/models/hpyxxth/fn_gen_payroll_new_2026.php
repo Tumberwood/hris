@@ -1127,7 +1127,7 @@
                                     a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                                     AND id_hpcxxmh = 105
                                     AND a.is_approve = 1
-                                GROUP BY id_hemxxmh
+                                GROUP BY pe.nama
                             ) AS subquery
                         ) piutang ON piutang.id_hemxxmh = p.id_hemxxmh OR piutang.nama = p.nama
                     ),
