@@ -1519,12 +1519,12 @@
                             )
                             -
                             (
-                                COALESCE(pot_makan,0)
-                                + COALESCE(pot_upah,0)
-                                + COALESCE(pot_resign,0)
+                                
+                                COALESCE(pot_upah,0)
                                 + COALESCE(pot_jam,0)
                                 + COALESCE(pot_lain_before_pph,0)
-                            ) AS bruto,
+                            ) 
+                            AS bruto,
 
                             jht_perusahaan,
                             jp_perusahaan,
@@ -1654,6 +1654,9 @@
                                 + COALESCE(bpjs_kes_perusahaan,0)
                                 + COALESCE(jkk,0)
                                 + COALESCE(jkm,0)
+                                
+                                + COALESCE(pot_makan,0)
+                                + COALESCE(pot_resign,0)
                             )
                             + pendapatan_lain_after_pph
                             - pot_lain_after_pph
