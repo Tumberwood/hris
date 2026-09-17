@@ -1980,8 +1980,8 @@
 					{ data: "hpyemtd.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					// 46-47 Potongan Upah
-					{ data: "hpyemtd_cocokan.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 48-49 Potongan Jam
 					{ data: "hpyemtd_cocokan.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -2028,8 +2028,8 @@
 					{ data: "hpyemtd.pot_makan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 70-71 Total Pot Upah
-					{ data: "hpyemtd_cocokan.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 72-73 Total Pot Resign
 					{ visible: false, data: "hpyemtd_cocokan.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -2040,8 +2040,8 @@
 					{ visible: false, data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 76-77 Total Pot Jam
-					{ data: "hpyemtd_cocokan.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 78-79 Penghasilan Sebelum PPh
 					{ data: "hpyemtd_cocokan.pendapatan_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
@@ -2188,8 +2188,8 @@
 			42: 'total_lembur_jam_final',
 			44: 'total_rp_lembur',
 
-			46: 'c_pot_upah',
-			48: 'c_pot_jam',
+			46: 'pot_upah',
+			48: 'pot_jam',
 			50: 'pot_lain_before_pph',
 
 			52: 'var_cost',
@@ -2203,10 +2203,10 @@
 			66: 'thr',
 
 			68: 'pot_makan',
-			70: 'pot_upah',
+			70: 'c_pot_upah',
 			72: 'c_pot_resign',
 			74: 'pot_resign',
-			76: 'pot_jam',
+			76: 'c_pot_jam',
 
 			78: 'pendapatan_lain_before_pph',
 
@@ -2620,8 +2620,8 @@
 					compareField(row, data, 42, 'total_lembur_jam_final');
 					compareField(row, data, 44, 'total_rp_lembur');
 
-					compareField(row, data, 46, 'c_pot_upah');
-					compareField(row, data, 48, 'c_pot_jam');
+					compareField(row, data, 46, 'pot_upah');
+					compareField(row, data, 48, 'pot_jam');
 					compareField(row, data, 50, 'pot_lain_before_pph');
 
 					compareField(row, data, 52, 'var_cost');
@@ -2635,10 +2635,10 @@
 					compareField(row, data, 66, 'thr');
 
 					compareField(row, data, 68, 'pot_makan');
-					compareField(row, data, 70, 'pot_upah');
+					compareField(row, data, 70, 'c_pot_upah');
 					compareField(row, data, 72, 'c_pot_resign');
 					compareField(row, data, 74, 'pot_resign');
-					compareField(row, data, 76, 'pot_jam');
+					compareField(row, data, 76, 'c_pot_jam');
 
 					compareField(row, data, 78, 'pendapatan_lain_before_pph');
 
@@ -2899,8 +2899,8 @@
 					{ data: "hpyemtd.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					// 46-47 Potongan Upah
-					{ data: "hpyemtd_cocokan.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 48-49 Potongan Jam
 					{ data: "hpyemtd_cocokan.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -2947,8 +2947,8 @@
 					{ data: "hpyemtd.pot_makan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 70-71 Total Pot Upah
-					{ data: "hpyemtd_cocokan.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 72-73 Total Pot Resign
 					{ visible: false, data: "hpyemtd_cocokan.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -2959,8 +2959,8 @@
 					{ visible: false, data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 76-77 Total Pot Jam
-					{ data: "hpyemtd_cocokan.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 78-79 Penghasilan Sebelum PPh
 					{ data: "hpyemtd_cocokan.pendapatan_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
@@ -3116,8 +3116,8 @@
 			42: 'total_lembur_jam_final',
 			44: 'total_rp_lembur',
 
-			46: 'c_pot_upah',
-			48: 'c_pot_jam',
+			46: 'pot_upah',
+			48: 'pot_jam',
 			50: 'pot_lain_before_pph',
 
 			52: 'var_cost',
@@ -3131,10 +3131,10 @@
 			66: 'thr',
 
 			68: 'pot_makan',
-			70: 'pot_upah',
+			70: 'c_pot_upah',
 			72: 'c_pot_resign',
 			74: 'pot_resign',
-			76: 'pot_jam',
+			76: 'c_pot_jam',
 
 			78: 'pendapatan_lain_before_pph',
 
@@ -3531,8 +3531,8 @@
 					compareField(row, data, 42, 'total_lembur_jam_final');
 					compareField(row, data, 44, 'total_rp_lembur');
 
-					compareField(row, data, 46, 'c_pot_upah');
-					compareField(row, data, 48, 'c_pot_jam');
+					compareField(row, data, 46, 'pot_upah');
+					compareField(row, data, 48, 'pot_jam');
 					compareField(row, data, 50, 'pot_lain_before_pph');
 
 					compareField(row, data, 52, 'var_cost');
@@ -3546,10 +3546,10 @@
 					compareField(row, data, 66, 'thr');
 
 					compareField(row, data, 68, 'pot_makan');
-					compareField(row, data, 70, 'pot_upah');
+					compareField(row, data, 70, 'c_pot_upah');
 					compareField(row, data, 72, 'c_pot_resign');
 					compareField(row, data, 74, 'pot_resign');
-					compareField(row, data, 76, 'pot_jam');
+					compareField(row, data, 76, 'c_pot_jam');
 
 					compareField(row, data, 78, 'pendapatan_lain_before_pph');
 
@@ -3801,8 +3801,8 @@
 					{ data: "hpyemtd.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					// 46-47 Potongan Upah
-					{ data: "hpyemtd_cocokan.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 48-49 Potongan Jam
 					{ data: "hpyemtd_cocokan.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -3849,8 +3849,8 @@
 					{ data: "hpyemtd.pot_makan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 70-71 Total Pot Upah
-					{ data: "hpyemtd_cocokan.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 72-73 Total Pot Resign
 					{ visible: false, data: "hpyemtd_cocokan.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
@@ -3861,8 +3861,8 @@
 					{ visible: false, data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 76-77 Total Pot Jam
-					{ data: "hpyemtd_cocokan.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd_cocokan.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					// 78-79 Penghasilan Sebelum PPh
 					{ data: "hpyemtd_cocokan.pendapatan_lain_before_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
@@ -4018,8 +4018,8 @@
 			42: 'total_lembur_jam_final',
 			44: 'total_rp_lembur',
 
-			46: 'c_pot_upah',
-			48: 'c_pot_jam',
+			46: 'pot_upah',
+			48: 'pot_jam',
 			50: 'pot_lain_before_pph',
 
 			52: 'var_cost',
@@ -4033,10 +4033,10 @@
 			66: 'thr',
 
 			68: 'pot_makan',
-			70: 'pot_upah',
+			70: 'c_pot_upah',
 			72: 'c_pot_resign',
 			74: 'pot_resign',
-			76: 'pot_jam',
+			76: 'c_pot_jam',
 
 			78: 'pendapatan_lain_before_pph',
 
@@ -4433,8 +4433,8 @@
 					compareField(row, data, 42, 'total_lembur_jam_final');
 					compareField(row, data, 44, 'total_rp_lembur');
 
-					compareField(row, data, 46, 'c_pot_upah');
-					compareField(row, data, 48, 'c_pot_jam');
+					compareField(row, data, 46, 'pot_upah');
+					compareField(row, data, 48, 'pot_jam');
 					compareField(row, data, 50, 'pot_lain_before_pph');
 
 					compareField(row, data, 52, 'var_cost');
@@ -4448,10 +4448,10 @@
 					compareField(row, data, 66, 'thr');
 
 					compareField(row, data, 68, 'pot_makan');
-					compareField(row, data, 70, 'pot_upah');
+					compareField(row, data, 70, 'c_pot_upah');
 					compareField(row, data, 72, 'c_pot_resign');
 					compareField(row, data, 74, 'pot_resign');
-					compareField(row, data, 76, 'pot_jam');
+					compareField(row, data, 76, 'c_pot_jam');
 
 					compareField(row, data, 78, 'pendapatan_lain_before_pph');
 
