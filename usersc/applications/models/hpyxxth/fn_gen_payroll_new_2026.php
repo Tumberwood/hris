@@ -1624,9 +1624,9 @@
                             
                             bruto,
                             kategori_kelas,
-                            ter.persen persen_ter,
-                            bruto * (IFNULL(ter.persen,0) / 100) AS pot_pph21,
-                            bruto - ( bruto * (IFNULL(ter.persen,0) / 100) ) AS after_pph21,
+                            IF(id_heyxxmd = 1, 0, ter.persen ) AS persen_ter,
+                            IF(id_heyxxmd = 1, 0, bruto * (IFNULL(ter.persen,0) / 100) ) AS pot_pph21,
+                            IF(id_heyxxmd = 1, 0, bruto - ( bruto * (IFNULL(ter.persen,0) / 100) ) ) AS after_pph21,
                             
                             jht_perusahaan,
                             jp_perusahaan,
@@ -1642,7 +1642,7 @@
                             pot_lain_after_pph,
 
                             -- GAJI BERSIH
-                            ( bruto - ( bruto * (IFNULL(ter.persen,0) / 100) ) )
+                            IF(id_heyxxmd = 1, 0, ( bruto - ( bruto * (IFNULL(ter.persen,0) / 100) ) ) )
                             -- + (jht_perusahaan + jp_perusahaan)
                             - (
                                 pot_jht_karyawan
@@ -1656,7 +1656,6 @@
                                 + COALESCE(jkm,0)
                                 
                                 + COALESCE(pot_makan,0)
-                                + COALESCE(pot_resign,0)
                             )
                             + pendapatan_lain_after_pph
                             - pot_lain_after_pph
