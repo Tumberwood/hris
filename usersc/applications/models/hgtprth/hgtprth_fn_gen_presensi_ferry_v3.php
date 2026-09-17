@@ -281,8 +281,8 @@
                                             "Late", 
                                             IF(jadwal.id_htsxxmh = 1 
                                                 AND durasi_lembur_libur_jam > 0
-                                                AND ceklok_in BETWEEN tanggaljam_awal_toleransi_lembur_premi 
-                                                AND tanggaljam_awal_toleransi_lembur, 
+                                                AND ceklok_in > tanggaljam_awal_toleransi_lembur_premi 
+                                                AND ceklok_in <= tanggaljam_awal_toleransi_lembur, 
                                                     "Late 1",
                                                     "No CI"
                                             )
