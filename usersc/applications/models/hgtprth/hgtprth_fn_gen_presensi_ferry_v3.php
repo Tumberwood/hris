@@ -713,7 +713,7 @@
                                                 WHEN c.nama IN ("istirahat")
                                                     AND c.tanggal_jam BETWEEN
                                                         jadwal.tanggaljam_awal_istirahat
-                                                        DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
+                                                    AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                 THEN CONCAT(c.tanggal_jam,"|",c.nama)
 
                                             END
