@@ -221,7 +221,7 @@
                                             ) 
                                             AS c_id
                                 FROM htsprrd pr
-                                WHERE pr.tanggal BETWEEN DATE_FORMAT(tanggal_awal, "%Y-%m-01") AND p.tanggal_keluar
+                                WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND p.tanggal_keluar
                                 AND pr.id_hemxxmh = p.id_hemxxmh
                                 AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL"
                             )
