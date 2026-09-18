@@ -1855,7 +1855,7 @@
                                 -- CEK KONDITE 1 / 0
                                 CASE 
                                     -- WHEN st_clock_in = "No CI" AND st_clock_out = "No CO" THEN 1
-                                    WHEN status_presensi_in = "TL1" AND status_presensi_out = "OFF" THEN 0
+                                    WHEN status_presensi_in = "TL 1" AND status_presensi_out = "OFF" THEN 0
                                     WHEN status_presensi_in = "OFF" AND status_presensi_out = "OFF" THEN 0
                                     WHEN status_presensi_in = "Izin Belum Disetujui" THEN 1
                                     WHEN status_presensi_in = "Belum Ada Izin" THEN 1
