@@ -152,6 +152,7 @@
 					a.pot_jam_izin,
 					a.pot_abnormal_istirahat,
 					a.pot_jam_istirahat,
+					a.pot_jam_makan_manual,
 					c.jam_akhir
 				FROM htsprrd AS a
 				LEFT JOIN htssctd AS b ON b.id_hemxxmh = a.id_hemxxmh AND b.tanggal = a.tanggal 

@@ -767,6 +767,8 @@
 										str6 += '<th class="text-danger text-center">ABNORMAL ISTIRAHAT</th>';
 									} else if (colObj6.name == 'pot_jam_istirahat') {
 										str6 += '<th class="text-danger text-center">POTONGAN ISTIRAHAT</th>';
+									} else if (colObj6.name == 'pot_jam_makan_manual') {
+										str6 += '<th class="text-danger text-center">POT MAKAN MANUAL</th>';
 									}
 								});
 								str6 += '</tr>';
