@@ -911,12 +911,8 @@
                                                 -- CEK untuk ceklok mesin istirahat yang diluar range istirahat jadwal
                                                 WHEN c.nama IN ("istirahat")
                                                     AND c.tanggal_jam BETWEEN
-                                                        jadwal.tanggaljam_awal_t1
-                                                        AND jadwal.tanggaljam_akhir_t2
-                                                        
-                                                    AND c.tanggal_jam NOT BETWEEN
                                                         jadwal.tanggaljam_awal_istirahat
-                                                        AND jadwal.tanggaljam_akhir_istirahat
+                                                    AND DATE_ADD(jadwal.tanggaljam_akhir_istirahat, INTERVAL 1 HOUR)
                                                 THEN CONCAT(c.tanggal_jam,"|",c.nama)
 
                                             END
