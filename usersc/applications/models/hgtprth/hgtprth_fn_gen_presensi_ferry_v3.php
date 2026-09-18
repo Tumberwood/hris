@@ -1761,7 +1761,10 @@
                                 
                                 -- 16 JUL 26, Lembur tapi Pulang akhir
                                 IF(
-                                    durasi_lembur_akhir_jam > 1
+                                    -- durasi_lembur_akhir_jam > 1
+
+                                    -- diubah jadi > 0 karena case 07010059 - JONI - 03 Sep 2026 (Kamis)
+                                    durasi_lembur_akhir_jam > 0
                                     AND ceklok_out < CONCAT(DATE(ceklok_out), " ", jam_akhir_lembur_akhir),
                                     IF(
                                         is_istirahat = 2,
