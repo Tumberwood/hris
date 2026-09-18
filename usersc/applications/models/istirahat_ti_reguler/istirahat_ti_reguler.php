@@ -277,6 +277,8 @@ $qs_htsprrd = $db
 				) AS durasi_istirahat_menit,
 
 				CASE
+					WHEN pot_jam_makan_manual > 0 THEN "Potongan Makan Manual"
+					
 					WHEN TIMESTAMPDIFF(
 						MINUTE,
 						a.break_in,
