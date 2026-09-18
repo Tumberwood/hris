@@ -2115,8 +2115,10 @@
                             IF(IFNULL(potongan_ti_jam,0) > 0 AND IFNULL(pot_jam_late_lembur, 0) = 0, 
                                 IFNULL(potongan_ti_jam,0),
                                 ifnull(pot_jam_keluar_istirahat,0)
-                            ) + pot_jam_makan_manual 
+                            )
                             AS pot_jam_istirahat,
+
+                            pot_jam_makan_manual,
                             
                             break_in,
                             break_out,
