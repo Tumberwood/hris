@@ -603,11 +603,55 @@
                                         ) AS ceklok_in,
                                         
                                         -- Ceklok Out: max tanggal_jam sesuai range shift
-                                        MAX(CASE 
-                                            WHEN c.nama IN ("os", "out", "staff", "PMI", "PMI-Gedung-3", "OS-Gedung-3", "pocan", "istirahat")
-                                            AND c.tanggal_jam BETWEEN jadwal.tanggaljam_akhir_t1 AND jadwal.tanggaljam_akhir_t2
-                                            THEN c.tanggal_jam
-                                        END) AS ceklok_out,
+                                        MAX(
+                                            CASE
+                                                WHEN c.nama IN (
+                                                    "os",
+                                                    "out",
+                                                    "staff",
+                                                    "PMI",
+                                                    "PMI-Gedung-3",
+                                                    "OS-Gedung-3",
+                                                    "pocan",
+                                                    "istirahat"
+                                                )
+
+                                                AND (
+                                                    /* Jadwal normal */
+                                                    (
+                                                        jadwal.id_htsxxmh <> 1
+                                                        AND c.tanggal_jam BETWEEN
+                                                            jadwal.tanggaljam_awal_t1
+                                                            AND jadwal.tanggaljam_awal_t2
+                                                    )
+
+                                                    OR
+
+                                                    /* Jadwal OFF */
+                                                    (
+                                                        jadwal.id_htsxxmh = 1
+                                                        AND d.id IS NOT NULL
+                                                        AND c.tanggal_jam BETWEEN
+                                                            DATE_SUB(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 30 MINUTE)
+                                                            AND
+                                                            DATE_ADD(
+                                                                CONCAT(
+                                                                    IF(
+                                                                        d.jam_awal > d.jam_akhir,
+                                                                        DATE_ADD(d.tanggal, INTERVAL 1 DAY),
+                                                                        d.tanggal
+                                                                    ),
+                                                                    " ",
+                                                                    d.jam_akhir
+                                                                ),
+                                                                INTERVAL 60 MINUTE
+                                                            )
+                                                    )
+                                                )
+
+                                                THEN c.tanggal_jam
+                                            END
+                                        ) AS ceklok_out,
                                         
                                         MIN(
                                             CASE
@@ -1741,7 +1785,7 @@
                                 ) AS pot_jam_late_lembur,
 
                                 -- hitung pot_early
-                                IF( (tanggal_jam_izin_akhir_out IS NOT NULL AND is_potong_gaji_out = 0) OR (kode_absen IS NOT NULL), 0, -- KALAU ADA IZIN TIDAK POT GAJI, MAKA 0
+                                IF( (tanggal_jam_izin_akhir_out IS NOT NULL AND is_potong_gaji_out = 0) OR (kode_absen IS NOT NULL) OR id_htsxxmh = 1, 0, -- KALAU ADA IZIN TIDAK POT GAJI, MAKA 0
                                     IF(id_htsxxmh IN (5, 12) AND is_sabtu = 1,
                                         CEIL(TIMESTAMPDIFF(MINUTE, carbon_co, tanggaljam_akhir) / 60),
                                         IF(jumlah_grup <> 4 AND TIME(tanggaljam_awal_istirahat) <> "00:00:00",
