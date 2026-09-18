@@ -518,6 +518,7 @@
 			['data' => 'pot_jam_izin', 'name' => 'pot_jam_izin'],
 			['data' => 'pot_abnormal_istirahat', 'name' => 'pot_abnormal_istirahat'],
 			['data' => 'pot_jam_istirahat', 'name' => 'pot_jam_istirahat'],
+			['data' => 'pot_jam_makan_manual', 'name' => 'pot_jam_makan_manual'],
 		];
 		
 	} else {
