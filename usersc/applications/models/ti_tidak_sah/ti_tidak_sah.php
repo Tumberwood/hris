@@ -48,6 +48,7 @@
 
 					-- Kategori berdasarkan istirahat dan jam kerja
 					CASE
+						WHEN pot_jam_makan_manual > 0 THEN "Potongan Makan Manual"
 						WHEN TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) > 30 THEN "Istirahat > 30 menit"
 						WHEN a.pot_ti > 0 AND f.id = 1 AND a.htlxxrh_kode = "" AND TIMESTAMPDIFF(MINUTE, a.break_in, a.break_out) < 30 THEN "TI Gedung 3 Tidak Sah"
 						WHEN a.pot_ti > 0 AND f.id = 1 AND a.htlxxrh_kode = "" AND a.break_in IS NOT NULL THEN "TI Gedung 3 Tidak Sah"
