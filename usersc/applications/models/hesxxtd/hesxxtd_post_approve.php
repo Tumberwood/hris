@@ -424,7 +424,7 @@
 					->bind(':id_hemxxmh', $id_hemxxmh)
 					->exec(' UPDATE hemjbmh b
 							SET 
-								b.tanggal_keluar =  IF(b.tanggal_keluar IS NULL, DATE_ADD(b.tanggal_masuk, INTERVAL 6 MONTH), b.tanggal_keluar)
+								b.tanggal_keluar =  IF(b.tanggal_keluar IS NULL, DATE_SUB(DATE_ADD(b.tanggal_masuk, INTERVAL 6 MONTH), INTERVAL 1 DAY), b.tanggal_keluar)
 							WHERE
 								b.id_hemxxmh = :id_hemxxmh;
 					
