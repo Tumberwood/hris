@@ -137,7 +137,7 @@
 				dataType: 'json',
 				data: function (params) {
 					var query = {
-						id_periode_payroll_old: id_periode_payroll_old,
+						id_periode_payroll_old: 0,
 						search: params.term || '',
 						page: params.page || 1
 					}
