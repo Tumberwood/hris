@@ -232,7 +232,7 @@
 					},
 					dataSrc: 'data.htsprrd'
 				},
-				order: [[3, "asc"], [ 1, "asc" ]],
+				order: [[3, "asc"], [ 0, "asc" ]],
 				responsive: false,
 				columns: [
 					{ 
