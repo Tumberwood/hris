@@ -231,7 +231,7 @@
 					},
 					dataSrc: 'data.htsprrd'
 				},
-				order: [[ 1, "asc" ]],
+				// order: [[ 1, "asc" ]],
 				responsive: false,
 				columns: [
 					{ 
