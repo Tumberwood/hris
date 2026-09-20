@@ -47,9 +47,9 @@
                         </div>
                     </div>
                     <div class="form-group row">												
-                        <label class="col-sm-2 col-form-label">Employee</label>
-                        <div class="col-sm-4">
-                            <select class="form-control" id="select_hemxxmh" name="select_hemxxmh"></select>
+                        <label class="col-sm-2 col-form-label">Periode Payroll</label>
+                        <div class="col-sm-5">
+                            <select class="form-control" id="select_periode_payroll" name="select_periode_payroll"></select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -129,15 +129,15 @@
         // END datepicker init
 
 		//Select2 init
-        $("#select_hemxxmh").select2({
+        $("#select_periode_payroll").select2({
 			placeholder: 'Ketik atau TekanTanda Panah Kanan',
 			allowClear: true,
 			ajax: {
-				url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+				url: "../../models/periode_payroll/periode_payroll_fn_opt.php",
 				dataType: 'json',
 				data: function (params) {
 					var query = {
-						id_hemxxmh_old: id_hemxxmh_old,
+						id_periode_payroll_old: id_periode_payroll_old,
 						search: params.term || '',
 						page: params.page || 1
 					}
@@ -154,9 +154,9 @@
 
 						//add by ferry agar auto select 07 sep 23
 						if (params.page && params.page === 1) {
-							$('#select_hemxxmh').empty().select2({ data: options });
+							$('#select_periode_payroll').empty().select2({ data: options });
 						} else {
-							$('#select_hemxxmh').append(new Option(options[0].text, options[0].id, false, false)).trigger('change');
+							$('#select_periode_payroll').append(new Option(options[0].text, options[0].id, false, false)).trigger('change');
 						}
 
 						return {
@@ -184,6 +184,24 @@
 			
 		});
         // END select2 init
+
+		// Override tanggal ketika periode payroll dipilih
+		$('#select_periode_payroll').on('select2:select', async function (e) {
+			const val = $(this).val();
+
+			await autofillField(
+				'periode_payroll',
+				val,
+				'DATE_FORMAT(tanggal_awal, "%d %b %Y") AS tanggal_awal, DATE_FORMAT(tanggal_akhir, "%d %b %Y") AS tanggal_akhir'
+			);
+
+			const tanggal_awal = autofillData.tanggal_awal;
+			const tanggal_akhir = autofillData.tanggal_akhir;
+
+			$('#start_date').datepicker('setDate', tanggal_awal);
+			$('#end_date').datepicker('setDate', tanggal_akhir);
+
+		});
 		
 		$(document).ready(function() {
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
@@ -191,10 +209,10 @@
 			
 			id_hemxxmh_old = id_hem_get;
 			
-			$('#select_hemxxmh').select2('open');
+			$('#select_periode_payroll').select2('open');
 
 			setTimeout(function() {
-				$('#select_hemxxmh').select2('close');
+				$('#select_periode_payroll').select2('close');
 			}, 5);
 
 			//start datatables
@@ -288,15 +306,6 @@
 				submitHandler: function(frmlap_absensi_kmj) {
 					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
 					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
-					if ($('#select_hemxxmh').val() > 0) {
-						id_hemxxmh = $('#select_hemxxmh').val();
-					} else {
-						if (id_hem_get != 0) {
-							id_hemxxmh = id_hem_get;
-						} else {
-							id_hemxxmh = $('#select_hemxxmh').val();
-						}
-					}
 
 					notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
