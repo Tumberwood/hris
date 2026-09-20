@@ -75,6 +75,7 @@
 								<th>NIK</th>
 								<th>Nama</th>
 								<th>Sub Tipe</th>
+								<th>Tanggal</th>
 								<th>Shift</th>
 								<th>Check In</th>
 								<th>Check Out</th>
@@ -199,7 +200,7 @@
 			//start datatables
 			tbllap_absensi_kmj = $('#tbllap_absensi_kmj').DataTable( {
 				searchPanes:{
-					layout: 'columns-1',
+					layout: 'columns-2',
 				},
 				dom: 
 					"<P>"+
@@ -212,7 +213,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [3]
+						targets: [3,4]
 					},
 					{
 						searchPanes:{
@@ -231,7 +232,7 @@
 					},
 					dataSrc: 'data.htsprrd'
 				},
-				// order: [[ 1, "asc" ]],
+				order: [[ 1, "asc" ]],
 				responsive: false,
 				columns: [
 					{ 
@@ -246,6 +247,7 @@
 					},
 					{ data: "Nama" },
 					{ data: "Sub Tipe" },
+					{ data: "tanggal" },
 					{ data: "Shift" },
 					{ data: "Check In" },
 					{ data: "Check Out" },
