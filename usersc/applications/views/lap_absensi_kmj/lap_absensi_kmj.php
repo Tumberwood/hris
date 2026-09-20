@@ -199,7 +199,7 @@
 			//start datatables
 			tbllap_absensi_kmj = $('#tbllap_absensi_kmj').DataTable( {
 				searchPanes:{
-					layout: 'columns-3',
+					layout: 'columns-1',
 				},
 				dom: 
 					"<P>"+
@@ -212,7 +212,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [3,6,14]
+						targets: [3]
 					},
 					{
 						searchPanes:{
