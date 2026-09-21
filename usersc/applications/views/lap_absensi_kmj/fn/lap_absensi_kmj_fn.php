@@ -2441,4 +2441,1569 @@ function generateGanttAbsensiV4(start_date, end_date) {
     });
 
 }
+
+function generateGanttAbsensiV5(start_date, end_date) {
+
+    var $container = $('#gantt_absensi_kmj');
+
+    $container.empty();
+
+    /*
+    |--------------------------------------------------------------------------
+    | NORMALIZE DATE FILTER
+    |--------------------------------------------------------------------------
+    */
+
+    function normalizeDateKey(value) {
+
+        if (!value) {
+            return null;
+        }
+
+        value = String(value).trim();
+
+        /*
+        |--------------------------------------------------------------------------
+        | YYYY-MM-DD
+        |--------------------------------------------------------------------------
+        */
+
+        var m = value.match(
+            /^(\d{4})-(\d{1,2})-(\d{1,2})/
+        );
+
+        if (m) {
+
+            return (
+                m[1] +
+                '-' +
+                String(m[2]).padStart(2, '0') +
+                '-' +
+                String(m[3]).padStart(2, '0')
+            );
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DD-MM-YYYY
+        |--------------------------------------------------------------------------
+        */
+
+        m = value.match(
+            /^(\d{1,2})-(\d{1,2})-(\d{4})/
+        );
+
+        if (m) {
+
+            return (
+                m[3] +
+                '-' +
+                String(m[2]).padStart(2, '0') +
+                '-' +
+                String(m[1]).padStart(2, '0')
+            );
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DD/MM/YYYY
+        |--------------------------------------------------------------------------
+        */
+
+        m = value.match(
+            /^(\d{1,2})\/(\d{1,2})\/(\d{4})/
+        );
+
+        if (m) {
+
+            return (
+                m[3] +
+                '-' +
+                String(m[2]).padStart(2, '0') +
+                '-' +
+                String(m[1]).padStart(2, '0')
+            );
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DATE OBJECT / STRING LAIN
+        |--------------------------------------------------------------------------
+        */
+
+        var d = new Date(value);
+
+        if (!isNaN(d.getTime())) {
+
+            return (
+                d.getFullYear() +
+                '-' +
+                String(d.getMonth() + 1).padStart(2, '0') +
+                '-' +
+                String(d.getDate()).padStart(2, '0')
+            );
+
+        }
+
+        return null;
+
+    }
+
+
+    var filterStart =
+        normalizeDateKey(start_date);
+
+    var filterEnd =
+        normalizeDateKey(end_date);
+
+
+    if (!filterStart || !filterEnd) {
+
+        $container.html(
+            '<div class="alert alert-danger">' +
+                'Tanggal filter tidak valid.' +
+            '</div>'
+        );
+
+        return;
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | DATE OBJECT LOCAL
+    |--------------------------------------------------------------------------
+    */
+
+    function dateFromKey(key, hour) {
+
+        var p = key.split('-');
+
+        return new Date(
+            parseInt(p[0], 10),
+            parseInt(p[1], 10) - 1,
+            parseInt(p[2], 10),
+            hour || 0,
+            0,
+            0,
+            0
+        );
+
+    }
+
+
+    function addDays(date, days) {
+
+        var d = new Date(date);
+
+        d.setDate(
+            d.getDate() + days
+        );
+
+        return d;
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | MONTH
+    |--------------------------------------------------------------------------
+    */
+
+    var monthMap = {
+
+        Jan: 0,
+        Feb: 1,
+        Mar: 2,
+        Apr: 3,
+        May: 4,
+        Jun: 5,
+        Jul: 6,
+        Aug: 7,
+        Sep: 8,
+        Oct: 9,
+        Nov: 10,
+        Dec: 11
+
+    };
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | PARSE DATETIME
+    |--------------------------------------------------------------------------
+    */
+
+    function parseDate(value) {
+
+        if (!value) {
+            return null;
+        }
+
+        value =
+            String(value)
+                .trim();
+
+        /*
+        |--------------------------------------------------------------------------
+        | FORMAT:
+        | 06 Sep 2026 07:00
+        |--------------------------------------------------------------------------
+        */
+
+        var p =
+            value.split(/\s+/);
+
+        if (p.length >= 4) {
+
+            var day =
+                parseInt(
+                    p[0],
+                    10
+                );
+
+            var month =
+                monthMap[p[1]];
+
+            var year =
+                parseInt(
+                    p[2],
+                    10
+                );
+
+            var time =
+                p[3].split(':');
+
+            if (
+                !isNaN(day) &&
+                month !== undefined &&
+                !isNaN(year)
+            ) {
+
+                return new Date(
+                    year,
+                    month,
+                    day,
+                    parseInt(
+                        time[0],
+                        10
+                    ) || 0,
+                    parseInt(
+                        time[1],
+                        10
+                    ) || 0,
+                    0,
+                    0
+                );
+
+            }
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | FALLBACK JS DATE
+        |--------------------------------------------------------------------------
+        */
+
+        var d =
+            new Date(value);
+
+        if (!isNaN(d.getTime())) {
+
+            return d;
+
+        }
+
+        return null;
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | GET BUSINESS DATE
+    |--------------------------------------------------------------------------
+    */
+
+    function getBusinessDateKey(row) {
+
+        /*
+        |--------------------------------------------------------------------------
+        | PRIORITAS:
+        | row.tanggal
+        |--------------------------------------------------------------------------
+        */
+
+        if (row.tanggal) {
+
+            var key =
+                normalizeDateKey(
+                    row.tanggal
+                );
+
+            if (key) {
+                return key;
+            }
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | FALLBACK CHECK IN
+        |--------------------------------------------------------------------------
+        */
+
+        var checkIn =
+            parseDate(
+                row['Check In']
+            );
+
+        if (!checkIn) {
+            return null;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Jika jam < 07:00,
+        | dianggap bagian dari business date sebelumnya.
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            checkIn.getHours() < 7
+        ) {
+
+            checkIn.setDate(
+                checkIn.getDate() - 1
+            );
+
+        }
+
+
+        return (
+            checkIn.getFullYear() +
+            '-' +
+            String(
+                checkIn.getMonth() + 1
+            ).padStart(2, '0') +
+            '-' +
+            String(
+                checkIn.getDate()
+            ).padStart(2, '0')
+        );
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | AJAX
+    |--------------------------------------------------------------------------
+    */
+
+    $.ajax({
+
+        url:
+            "../../models/lap_absensi_kmj/lap_absensi_kmj.php",
+
+        type:
+            "POST",
+
+        dataType:
+            "json",
+
+        data: {
+
+            start_date:
+                start_date,
+
+            end_date:
+                end_date,
+
+            id_hemxxmh:
+                0
+
+        },
+
+
+        success:
+            function (json) {
+
+                var rows = [];
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | GET DATA
+                |--------------------------------------------------------------------------
+                */
+
+                if (
+                    json &&
+                    json.data &&
+                    json.data.htsprrd
+                ) {
+
+                    rows =
+                        json.data.htsprrd;
+
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | FILTER ABSENSI
+                |
+                | PENTING:
+                | Filter berdasarkan business date yang dipilih.
+                |
+                | Jadi kalau filter 6:
+                |   hanya 6
+                |
+                | Kalau filter 6-7:
+                |   hanya 6 dan 7
+                |
+                | Tidak peduli backend mengembalikan
+                | data tambahan tanggal berikutnya.
+                |--------------------------------------------------------------------------
+                */
+
+                rows =
+                    rows.filter(
+                        function (row) {
+
+                            if (
+                                !row['Check In'] ||
+                                !row['Check Out']
+                            ) {
+
+                                return false;
+
+                            }
+
+
+                            if (
+                                row.Shift === 'OFF'
+                            ) {
+
+                                return false;
+
+                            }
+
+
+                            var businessDate =
+                                getBusinessDateKey(
+                                    row
+                                );
+
+
+                            if (!businessDate) {
+                                return false;
+                            }
+
+
+                            return (
+                                businessDate >=
+                                    filterStart &&
+                                businessDate <=
+                                    filterEnd
+                            );
+
+                        }
+                    );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | NO DATA
+                |--------------------------------------------------------------------------
+                */
+
+                if (
+                    rows.length === 0
+                ) {
+
+                    $container.html(
+
+                        '<div class="alert alert-warning">' +
+                            'Tidak ada data absensi pada tanggal yang dipilih.' +
+                        '</div>'
+
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | TIMELINE
+                |
+                | BUSINESS DAY:
+                |
+                | 06 Sep 07:00
+                | sampai
+                | 07 Sep 07:00
+                |
+                | Jadi shift malam boleh checkout tanggal
+                | kalender berikutnya, tetapi tidak membuat
+                | tanggal baru di header.
+                |--------------------------------------------------------------------------
+                */
+
+                var timelineStart =
+                    dateFromKey(
+                        filterStart,
+                        7
+                    );
+
+
+                var nextFilterEnd =
+                    addDays(
+                        dateFromKey(
+                            filterEnd,
+                            7
+                        ),
+                        1
+                    );
+
+
+                var timelineEnd =
+                    nextFilterEnd;
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | PEOPLE
+                |--------------------------------------------------------------------------
+                */
+
+                var people = [];
+
+                var peopleMap = {};
+
+
+                $.each(
+                    rows,
+                    function (
+                        index,
+                        row
+                    ) {
+
+                        var nik =
+                            row.NIK;
+
+
+                        if (
+                            nik &&
+                            peopleMap[nik] === undefined
+                        ) {
+
+                            peopleMap[nik] =
+                                people.length;
+
+
+                            people.push({
+
+                                NIK:
+                                    nik,
+
+                                Nama:
+                                    $.trim(
+                                        row.Nama ||
+                                        '-'
+                                    )
+
+                            });
+
+                        }
+
+                    }
+                );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | SORT NAMA
+                |--------------------------------------------------------------------------
+                */
+
+                people.sort(
+                    function (
+                        a,
+                        b
+                    ) {
+
+                        return a.Nama.localeCompare(
+                            b.Nama
+                        );
+
+                    }
+                );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | REBUILD INDEX
+                |--------------------------------------------------------------------------
+                */
+
+                peopleMap = {};
+
+
+                $.each(
+                    people,
+                    function (
+                        index,
+                        person
+                    ) {
+
+                        peopleMap[
+                            person.NIK
+                        ] = index;
+
+                    }
+                );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | GANTT DATA
+                |--------------------------------------------------------------------------
+                */
+
+                var ganttData = [];
+
+
+                $.each(
+                    rows,
+                    function (
+                        index,
+                        row
+                    ) {
+
+                        var start =
+                            parseDate(
+                                row['Check In']
+                            );
+
+
+                        var end =
+                            parseDate(
+                                row['Check Out']
+                            );
+
+
+                        if (
+                            !start ||
+                            !end
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | MALAM
+                        |--------------------------------------------------------------------------
+                        */
+
+                        if (
+                            row.Shift === 'Malam' &&
+                            end <= start
+                        ) {
+
+                            end.setDate(
+                                end.getDate() + 1
+                            );
+
+                        }
+
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | WARNA
+                        |--------------------------------------------------------------------------
+                        */
+
+                        var color =
+                            '#ffc107';
+
+
+                        if (
+                            row.Shift === 'Siang'
+                        ) {
+
+                            color =
+                                '#ff9800';
+
+                        }
+
+
+                        if (
+                            row.Shift === 'Malam'
+                        ) {
+
+                            color =
+                                '#795548';
+
+                        }
+
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | CLIP BAR KE TIMELINE
+                        |
+                        | Ini penting supaya shift yang checkout
+                        | setelah tanggal filter tidak merusak range chart.
+                        |--------------------------------------------------------------------------
+                        */
+
+                        var displayStart =
+                            new Date(start);
+
+
+                        var displayEnd =
+                            new Date(end);
+
+
+                        if (
+                            displayStart <
+                            timelineStart
+                        ) {
+
+                            displayStart =
+                                new Date(
+                                    timelineStart
+                                );
+
+                        }
+
+
+                        if (
+                            displayEnd >
+                            timelineEnd
+                        ) {
+
+                            displayEnd =
+                                new Date(
+                                    timelineEnd
+                                );
+
+                        }
+
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Jangan tampilkan bar kalau seluruhnya
+                        | berada di luar timeline.
+                        |--------------------------------------------------------------------------
+                        */
+
+                        if (
+                            displayEnd <=
+                            timelineStart
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        if (
+                            displayStart >=
+                            timelineEnd
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        ganttData.push({
+
+                            id:
+                                row.NIK +
+                                '-' +
+                                row.tanggal +
+                                '-' +
+                                row.Shift +
+                                '-' +
+                                index,
+
+                            name:
+                                row.Shift,
+
+                            start:
+                                displayStart.getTime(),
+
+                            end:
+                                displayEnd.getTime(),
+
+                            y:
+                                peopleMap[
+                                    row.NIK
+                                ],
+
+                            color:
+                                color,
+
+                            custom: {
+
+                                nik:
+                                    row.NIK,
+
+                                nama:
+                                    $.trim(
+                                        row.Nama ||
+                                        '-'
+                                    ),
+
+                                tanggal:
+                                    row.tanggal,
+
+                                shift:
+                                    row.Shift,
+
+                                checkIn:
+                                    row['Check In'],
+
+                                checkOut:
+                                    row['Check Out'],
+
+                                durasi:
+                                    row['Durasi (Jam)']
+
+                            }
+
+                        });
+
+                    }
+                );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | CHART ELEMENT
+                |--------------------------------------------------------------------------
+                */
+
+                $container.html(
+
+                    '<div id="gantt_absensi_kmj_chart" ' +
+                        'class="gantt-v5-chart">' +
+                    '</div>'
+
+                );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | CHART SIZE
+                |
+                | Semakin banyak tanggal, semakin lebar.
+                | Container akan scroll horizontal.
+                |--------------------------------------------------------------------------
+                */
+
+                var totalDays =
+                    Math.round(
+                        (
+                            timelineEnd.getTime() -
+                            timelineStart.getTime()
+                        ) /
+                        (
+                            24 *
+                            60 *
+                            60 *
+                            1000
+                        )
+                    );
+
+
+                var chartWidth =
+                    Math.max(
+                        1100,
+                        totalDays * 620
+                    );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | HEIGHT
+                |
+                | Container luar yang melakukan vertical scroll.
+                |--------------------------------------------------------------------------
+                */
+
+                var chartHeight =
+                    Math.max(
+                        500,
+                        people.length * 48 + 170
+                    );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | DATE BAND
+                |
+                | Satu band = satu tanggal filter.
+                |
+                | Kalau filter:
+                | 6
+                |
+                | hanya ada:
+                | Sunday, September 6
+                |
+                | Kalau filter:
+                | 6 - 7
+                |
+                | hanya ada:
+                | Sunday, September 6
+                | Monday, September 7
+                |--------------------------------------------------------------------------
+                */
+
+                var plotBands = [];
+
+
+                var bandDate =
+                    new Date(
+                        timelineStart
+                    );
+
+
+                while (
+                    bandDate <
+                    timelineEnd
+                ) {
+
+                    var bandStart =
+                        new Date(
+                            bandDate
+                        );
+
+
+                    var bandEnd =
+                        new Date(
+                            bandDate
+                        );
+
+                    bandEnd.setDate(
+                        bandEnd.getDate() + 1
+                    );
+
+
+                    if (
+                        bandEnd >
+                        timelineEnd
+                    ) {
+
+                        bandEnd =
+                            new Date(
+                                timelineEnd
+                            );
+
+                    }
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Format nama tanggal
+                    |--------------------------------------------------------------------------
+                    */
+
+                    var dayName =
+                        bandStart.toLocaleDateString(
+                            'en-US',
+                            {
+                                weekday:
+                                    'long',
+
+                                month:
+                                    'long',
+
+                                day:
+                                    'numeric'
+                            }
+                        );
+
+
+                    plotBands.push({
+
+                        from:
+                            bandStart.getTime(),
+
+                        to:
+                            bandEnd.getTime(),
+
+                        color:
+                            'rgba(255,255,255,0.005)',
+
+                        borderColor:
+                            '#333',
+
+                        borderWidth:
+                            1,
+
+                        zIndex:
+                            0,
+
+                        label: {
+
+                            text:
+                                dayName,
+
+                            align:
+                                'center',
+
+                            verticalAlign:
+                                'top',
+
+                            y:
+                                12,
+
+                            className:
+                                'gantt-v5-date-band'
+
+                        }
+
+                    });
+
+
+                    bandDate =
+                        bandEnd;
+
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | X AXIS TICKS
+                |
+                | 07:00
+                | 13:00
+                | 19:00
+                | 01:00
+                |
+                | Setiap 6 jam.
+                |--------------------------------------------------------------------------
+                */
+
+                var tickInterval =
+                    6 *
+                    60 *
+                    60 *
+                    1000;
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | HIGHCHARTS
+                |--------------------------------------------------------------------------
+                */
+
+                Highcharts.ganttChart(
+
+                    'gantt_absensi_kmj_chart',
+
+                    {
+
+                        chart: {
+
+                            width:
+                                chartWidth,
+
+                            height:
+                                chartHeight,
+
+                            backgroundColor:
+                                '#111',
+
+                            spacingTop:
+                                55,
+
+                            spacingRight:
+                                20,
+
+                            spacingBottom:
+                                20,
+
+                            spacingLeft:
+                                10,
+
+                            style: {
+
+                                fontFamily:
+                                    'Arial, sans-serif'
+
+                            }
+
+                        },
+
+
+                        title: {
+
+                            text:
+                                'Gantt Chart Absensi KMJ',
+
+                            align:
+                                'left',
+
+                            x:
+                                10,
+
+                            y:
+                                20,
+
+                            style: {
+
+                                color:
+                                    '#e5e5e5',
+
+                                fontSize:
+                                    '16px',
+
+                                fontWeight:
+                                    '700'
+
+                            }
+
+                        },
+
+
+                        subtitle: {
+
+                            text:
+                                filterStart +
+                                ' — ' +
+                                filterEnd,
+
+                            align:
+                                'left',
+
+                            x:
+                                10,
+
+                            y:
+                                40,
+
+                            style: {
+
+                                color:
+                                    '#777',
+
+                                fontSize:
+                                    '11px'
+
+                            }
+
+                        },
+
+
+                        xAxis: {
+
+                            type:
+                                'datetime',
+
+                            min:
+                                timelineStart.getTime(),
+
+                            max:
+                                timelineEnd.getTime(),
+
+                            tickInterval:
+                                tickInterval,
+
+                            opposite:
+                                true,
+
+                            startOnTick:
+                                false,
+
+                            endOnTick:
+                                false,
+
+                            grid: {
+
+                                enabled:
+                                    true,
+
+                                cellWidth:
+                                    105
+
+                            },
+
+                            plotBands:
+                                plotBands,
+
+                            labels: {
+
+                                useHTML:
+                                    true,
+
+                                y:
+                                    25,
+
+                                formatter:
+                                    function () {
+
+                                        var d =
+                                            new Date(
+                                                this.value
+                                            );
+
+
+                                        var hour =
+                                            String(
+                                                d.getHours()
+                                            ).padStart(
+                                                2,
+                                                '0'
+                                            );
+
+
+                                        var minute =
+                                            String(
+                                                d.getMinutes()
+                                            ).padStart(
+                                                2,
+                                                '0'
+                                            );
+
+
+                                        return (
+
+                                            '<div class="gantt-v5-time">' +
+
+                                                '<b>' +
+                                                    hour +
+                                                    ':' +
+                                                    minute +
+                                                '</b>' +
+
+                                            '</div>'
+
+                                        );
+
+                                    }
+
+                            }
+
+                        },
+
+
+                        yAxis: {
+
+                            type:
+                                'category',
+
+                            categories:
+                                people.map(
+                                    function (
+                                        person
+                                    ) {
+
+                                        return person.Nama;
+
+                                    }
+                                ),
+
+                            reversed:
+                                true,
+
+                            title: {
+
+                                text:
+                                    'Nama',
+
+                                style: {
+
+                                    color:
+                                        '#aaa',
+
+                                    fontSize:
+                                        '11px'
+
+                                }
+
+                            },
+
+                            grid: {
+
+                                enabled:
+                                    true
+
+                            },
+
+                            labels: {
+
+                                useHTML:
+                                    true,
+
+                                formatter:
+                                    function () {
+
+                                        var person =
+                                            people[
+                                                this.pos
+                                            ];
+
+
+                                        if (!person) {
+                                            return '';
+                                        }
+
+
+                                        var initial =
+                                            person.Nama
+                                                .charAt(0)
+                                                .toUpperCase();
+
+
+                                        return (
+
+                                            '<div class="gantt-v5-person">' +
+
+                                                '<span class="gantt-v5-avatar">' +
+                                                    initial +
+                                                '</span>' +
+
+                                                '<span class="gantt-v5-name">' +
+                                                    Highcharts
+                                                        .escapeHTML(
+                                                            person.Nama
+                                                        ) +
+                                                '</span>' +
+
+                                            '</div>'
+
+                                        );
+
+                                    }
+
+                            }
+
+                        },
+
+
+                        tooltip: {
+
+                            useHTML:
+                                true,
+
+                            backgroundColor:
+                                '#fff',
+
+                            borderColor:
+                                '#ddd',
+
+                            borderRadius:
+                                5,
+
+                            shadow:
+                                true,
+
+                            formatter:
+                                function () {
+
+                                    var c =
+                                        this.point.custom;
+
+
+                                    return (
+
+                                        '<div class="gantt-v5-tooltip">' +
+
+                                            '<div class="gantt-v5-tooltip-name">' +
+                                                Highcharts.escapeHTML(
+                                                    c.nama
+                                                ) +
+                                            '</div>' +
+
+                                            '<div class="gantt-v5-tooltip-row">' +
+                                                '<span>NIK</span>' +
+                                                '<b>' +
+                                                    Highcharts.escapeHTML(
+                                                        String(c.nik || '-')
+                                                    ) +
+                                                '</b>' +
+                                            '</div>' +
+
+                                            '<div class="gantt-v5-tooltip-row">' +
+                                                '<span>Tanggal</span>' +
+                                                '<b>' +
+                                                    Highcharts.escapeHTML(
+                                                        String(c.tanggal || '-')
+                                                    ) +
+                                                '</b>' +
+                                            '</div>' +
+
+                                            '<div class="gantt-v5-tooltip-row">' +
+                                                '<span>Shift</span>' +
+                                                '<b>' +
+                                                    Highcharts.escapeHTML(
+                                                        String(c.shift || '-')
+                                                    ) +
+                                                '</b>' +
+                                            '</div>' +
+
+                                            '<div class="gantt-v5-tooltip-row">' +
+                                                '<span>Check In</span>' +
+                                                '<b>' +
+                                                    Highcharts.escapeHTML(
+                                                        String(c.checkIn || '-')
+                                                    ) +
+                                                '</b>' +
+                                            '</div>' +
+
+                                            '<div class="gantt-v5-tooltip-row">' +
+                                                '<span>Check Out</span>' +
+                                                '<b>' +
+                                                    Highcharts.escapeHTML(
+                                                        String(c.checkOut || '-')
+                                                    ) +
+                                                '</b>' +
+                                            '</div>' +
+
+                                            '<div class="gantt-v5-tooltip-duration">' +
+                                                Highcharts.escapeHTML(
+                                                    String(c.durasi || '-')
+                                                ) +
+                                                ' jam' +
+                                            '</div>' +
+
+                                        '</div>'
+
+                                    );
+
+                                }
+
+                        },
+
+
+                        navigator: {
+
+                            enabled:
+                                false
+
+                        },
+
+
+                        scrollbar: {
+
+                            enabled:
+                                false
+
+                        },
+
+
+                        rangeSelector: {
+
+                            enabled:
+                                false
+
+                        },
+
+
+                        legend: {
+
+                            enabled:
+                                false
+
+                        },
+
+
+                        credits: {
+
+                            enabled:
+                                false
+
+                        },
+
+
+                        series: [
+
+                            {
+
+                                name:
+                                    'Absensi',
+
+                                data:
+                                    ganttData,
+
+                                dataLabels: {
+
+                                    enabled:
+                                        true,
+
+                                    format:
+                                        '{point.name}',
+
+                                    style: {
+
+                                        fontSize:
+                                            '9px',
+
+                                        fontWeight:
+                                            '600',
+
+                                        color:
+                                            '#111',
+
+                                        textOutline:
+                                            'none'
+
+                                    }
+
+                                }
+
+                            }
+
+                        ]
+
+                    }
+
+                );
+
+            },
+
+
+        error:
+            function (xhr) {
+
+                console.log(
+                    'Gantt V5 Error:',
+                    xhr.responseText
+                );
+
+
+                $container.html(
+
+                    '<div class="alert alert-danger">' +
+                        'Gagal mengambil data Gantt V5.' +
+                    '</div>'
+
+                );
+
+            }
+
+    });
+
+}
 </script>
