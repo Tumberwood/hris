@@ -283,16 +283,14 @@
 </script>
 
 <script>
+function generateGanttAbsensi(start_date, end_date) {
 
-function generateDetailGantt(start_date, end_date) {
-
-    $('#tabel_detail_gantt').empty();
+    $('#gantt_absensi_kmj').empty();
 
     $.ajax({
         url: "../../models/lap_absensi_kmj/lap_absensi_kmj.php",
-        dataType: 'json',
-        type: 'POST',
-
+        type: "POST",
+        dataType: "json",
         data: {
             start_date: start_date,
             end_date: end_date,
@@ -311,11 +309,27 @@ function generateDetailGantt(start_date, end_date) {
                 rows = json.data.htsprrd;
             }
 
+            /*
+            |--------------------------------------------------------------------------
+            | HANYA DATA YANG ADA CHECK IN / CHECK OUT
+            |--------------------------------------------------------------------------
+            */
+
+            rows = rows.filter(function (row) {
+
+                return (
+                    row['Check In'] &&
+                    row['Check Out'] &&
+                    row.Shift !== 'OFF'
+                );
+
+            });
+
             if (rows.length === 0) {
 
-                $('#tabel_detail_gantt').html(
+                $('#gantt_absensi_kmj').html(
                     '<div class="alert alert-warning">' +
-                        'Tidak ada data detail pada tanggal tersebut.' +
+                        'Tidak ada data absensi untuk ditampilkan.' +
                     '</div>'
                 );
 
@@ -325,57 +339,366 @@ function generateDetailGantt(start_date, end_date) {
 
             /*
             |--------------------------------------------------------------------------
-            | GROUP BERDASARKAN TANGGAL
+            | CATEGORY = NAMA
             |--------------------------------------------------------------------------
             */
 
-            var groupedData = {};
+            var categories = [];
+
+            var categoryMap = {};
 
             $.each(rows, function (index, row) {
 
-                var tanggal = row.tanggal;
+                var nik = row.NIK;
 
-                if (!groupedData[tanggal]) {
-                    groupedData[tanggal] = [];
+                if (categoryMap[nik] === undefined) {
+
+                    categoryMap[nik] = categories.length;
+
+                    categories.push(
+                        $.trim(row.Nama)
+                    );
+
                 }
-
-                groupedData[tanggal].push(row);
 
             });
 
 
             /*
             |--------------------------------------------------------------------------
-            | BUILD HTML
+            | DATA GANTT
             |--------------------------------------------------------------------------
             */
 
-            var html = '';
+            var seriesData = [];
 
-            $.each(groupedData, function (tanggal, rowsTanggal) {
 
-                html += buildGanttTanggal(
-                    tanggal,
-                    rowsTanggal
+            $.each(rows, function (index, row) {
+
+                /*
+                |--------------------------------------------------------------------------
+                | PARSE CHECK IN
+                |--------------------------------------------------------------------------
+                */
+
+                var checkIn = row['Check In'];
+
+                var checkOut = row['Check Out'];
+
+                var inParts = checkIn.split(' ');
+
+                var outParts = checkOut.split(' ');
+
+
+                var monthMap = {
+                    Jan: 0,
+                    Feb: 1,
+                    Mar: 2,
+                    Apr: 3,
+                    May: 4,
+                    Jun: 5,
+                    Jul: 6,
+                    Aug: 7,
+                    Sep: 8,
+                    Oct: 9,
+                    Nov: 10,
+                    Dec: 11
+                };
+
+
+                var inDate = new Date(
+                    parseInt(inParts[2]),
+                    monthMap[inParts[1]],
+                    parseInt(inParts[0]),
+                    parseInt(inParts[3].split(':')[0]),
+                    parseInt(inParts[3].split(':')[1]),
+                    0
                 );
+
+
+                var outDate = new Date(
+                    parseInt(outParts[2]),
+                    monthMap[outParts[1]],
+                    parseInt(outParts[0]),
+                    parseInt(outParts[3].split(':')[0]),
+                    parseInt(outParts[3].split(':')[1]),
+                    0
+                );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | WARNA
+                |--------------------------------------------------------------------------
+                */
+
+                var color = '#ffc107';
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | GANTT DATA
+                |--------------------------------------------------------------------------
+                */
+
+                seriesData.push({
+
+                    id:
+                        row.NIK +
+                        '_' +
+                        row.tanggal +
+                        '_' +
+                        index,
+
+                    name:
+                        row.Shift,
+
+                    start:
+                        inDate.getTime(),
+
+                    end:
+                        outDate.getTime(),
+
+                    y:
+                        categoryMap[row.NIK],
+
+                    color:
+                        color,
+
+                    custom: {
+
+                        nik:
+                            row.NIK,
+
+                        nama:
+                            $.trim(row.Nama),
+
+                        tanggal:
+                            row.tanggal,
+
+                        shift:
+                            row.Shift,
+
+                        checkIn:
+                            row['Check In'],
+
+                        checkOut:
+                            row['Check Out'],
+
+                        durasi:
+                            row['Durasi (Jam)']
+
+                    }
+
+                });
 
             });
 
 
-            $('#tabel_detail_gantt').html(html);
+            /*
+            |--------------------------------------------------------------------------
+            | RENDER GANTT
+            |--------------------------------------------------------------------------
+            */
+
+            Highcharts.ganttChart(
+                'gantt_absensi_kmj',
+                {
+
+                    chart: {
+
+                        height:
+                            Math.max(
+                                500,
+                                categories.length * 45 + 180
+                            ),
+
+                        spacingLeft: 10,
+
+                        spacingRight: 20
+
+                    },
+
+
+                    title: {
+
+                        text:
+                            'Gantt Chart Absensi KMJ'
+
+                    },
+
+
+                    subtitle: {
+
+                        text:
+                            start_date +
+                            ' s/d ' +
+                            end_date
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | X AXIS = WAKTU KE KANAN
+                    |--------------------------------------------------------------------------
+                    */
+
+                    xAxis: {
+
+                        type: 'datetime',
+
+                        grid: {
+
+                            enabled: true
+
+                        },
+
+                        labels: {
+
+                            format:
+                                '{value:%d-%b %H:%M}'
+
+                        }
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Y AXIS = NAMA
+                    |--------------------------------------------------------------------------
+                    */
+
+                    yAxis: {
+
+                        type: 'category',
+
+                        categories:
+                            categories,
+
+                        reversed:
+                            true,
+
+                        title: {
+
+                            text:
+                                'Nama'
+
+                        }
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | TOOLTIP
+                    |--------------------------------------------------------------------------
+                    */
+
+                    tooltip: {
+
+                        useHTML: true,
+
+                        pointFormatter: function () {
+
+                            var c =
+                                this.custom;
+
+                            return (
+
+                                '<div style="padding:5px;">' +
+
+                                '<b>' +
+                                    c.nama +
+                                '</b><br>' +
+
+                                'NIK: ' +
+                                    c.nik +
+                                '<br>' +
+
+                                'Tanggal: ' +
+                                    c.tanggal +
+                                '<br>' +
+
+                                'Shift: ' +
+                                    c.shift +
+                                '<br>' +
+
+                                'Check In: ' +
+                                    c.checkIn +
+                                '<br>' +
+
+                                'Check Out: ' +
+                                    c.checkOut +
+                                '<br>' +
+
+                                'Durasi: ' +
+                                    c.durasi +
+                                    ' jam' +
+
+                                '</div>'
+
+                            );
+
+                        }
+
+                    },
+
+
+                    legend: {
+
+                        enabled: false
+
+                    },
+
+
+                    navigator: {
+
+                        enabled: true,
+
+                        liveRedraw: true
+
+                    },
+
+
+                    scrollbar: {
+
+                        enabled: true
+
+                    },
+
+
+                    series: [
+
+                        {
+
+                            name:
+                                'Absensi',
+
+                            data:
+                                seriesData
+
+                        }
+
+                    ]
+
+                }
+            );
 
         },
 
-        error: function (xhr, status, error) {
+
+        error: function (xhr) {
 
             console.log(
-                'Gantt Detail Error:',
+                'Gantt Error:',
                 xhr.responseText
             );
 
-            $('#tabel_detail_gantt').html(
+            $('#gantt_absensi_kmj').html(
                 '<div class="alert alert-danger">' +
-                    'Terjadi kesalahan saat mengambil data detail.' +
+                    'Gagal mengambil data Gantt.' +
                 '</div>'
             );
 
@@ -384,679 +707,4 @@ function generateDetailGantt(start_date, end_date) {
     });
 
 }
-
-
-/*
-|--------------------------------------------------------------------------
-| BUILD GANTT PER TANGGAL
-|--------------------------------------------------------------------------
-*/
-
-function buildGanttTanggal(tanggal, rows) {
-
-    var html = '';
-
-    html += '<div class="gantt-wrapper mb-4">';
-
-    html += '<table class="table table-bordered table-sm gantt-table">';
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | HEADER
-    |--------------------------------------------------------------------------
-    */
-
-    html += '<thead>';
-
-    html += '<tr>';
-
-    html +=
-        '<th rowspan="2" style="width:70px;">' +
-            'Tanggal' +
-        '</th>';
-
-    html +=
-        '<th rowspan="2" style="width:70px;">' +
-            'Shift' +
-        '</th>';
-
-    html +=
-        '<th rowspan="2" style="width:250px;">' +
-            'Nama' +
-        '</th>';
-
-    html +=
-        '<th rowspan="2" style="width:140px;">' +
-            'Check In' +
-        '</th>';
-
-    html +=
-        '<th rowspan="2" style="width:140px;">' +
-            'Check Out' +
-        '</th>';
-
-    html +=
-        '<th rowspan="2" style="width:80px;">' +
-            'Durasi' +
-        '</th>';
-
-    html +=
-        '<th colspan="24" class="text-center">' +
-            'Bar Chart' +
-        '</th>';
-
-    html += '</tr>';
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | JAM
-    |--------------------------------------------------------------------------
-    */
-
-    html += '<tr>';
-
-    for (var hour = 7; hour < 31; hour++) {
-
-        var displayHour = hour % 24;
-
-        var hourText =
-            String(displayHour).padStart(2, '0') +
-            ':00';
-
-        html +=
-            '<th class="gantt-hour">' +
-                hourText +
-            '</th>';
-
-    }
-
-    html += '</tr>';
-
-    html += '</thead>';
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | BODY
-    |--------------------------------------------------------------------------
-    */
-
-    html += '<tbody>';
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | GROUP SHIFT
-    |--------------------------------------------------------------------------
-    */
-
-    var groupedShift = {
-        'Pagi': [],
-        'Siang': [],
-        'Malam': [],
-        'OFF': []
-    };
-
-
-    $.each(rows, function (index, row) {
-
-        var shift = row.Shift;
-
-        if (!groupedShift[shift]) {
-
-            groupedShift[shift] = [];
-
-        }
-
-        groupedShift[shift].push(row);
-
-    });
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | URUTAN SHIFT
-    |--------------------------------------------------------------------------
-    */
-
-    var shiftOrder = [
-        'Pagi',
-        'Siang',
-        'Malam',
-        'OFF'
-    ];
-
-
-    $.each(shiftOrder, function (index, shiftName) {
-
-        var shiftRows = groupedShift[shiftName];
-
-        if (!shiftRows || shiftRows.length === 0) {
-            return;
-        }
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | ROW
-        |--------------------------------------------------------------------------
-        */
-
-        $.each(shiftRows, function (rowIndex, row) {
-
-            html += '<tr>';
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | TANGGAL
-            |--------------------------------------------------------------------------
-            */
-
-            if (rowIndex === 0) {
-
-                html +=
-                    '<td rowspan="' +
-                        shiftRows.length +
-                    '" class="font-weight-bold text-center">' +
-                        escapeHtml(tanggal) +
-                    '</td>';
-
-            }
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | SHIFT
-            |--------------------------------------------------------------------------
-            */
-
-            if (rowIndex === 0) {
-
-                html +=
-                    '<td rowspan="' +
-                        shiftRows.length +
-                    '" class="font-weight-bold">' +
-                        escapeHtml(shiftName) +
-                    '</td>';
-
-            }
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | NAMA
-            |--------------------------------------------------------------------------
-            */
-
-            html +=
-                '<td>' +
-                    escapeHtml(row.Nama || '-') +
-                '</td>';
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | CHECK IN
-            |--------------------------------------------------------------------------
-            */
-
-            html +=
-                '<td>' +
-                    escapeHtml(row['Check In'] || '-') +
-                '</td>';
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | CHECK OUT
-            |--------------------------------------------------------------------------
-            */
-
-            html +=
-                '<td>' +
-                    escapeHtml(row['Check Out'] || '-') +
-                '</td>';
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | DURASI
-            |--------------------------------------------------------------------------
-            */
-
-            html +=
-                '<td class="text-center">' +
-                    (
-                        row['Durasi (Jam)'] !== null &&
-                        row['Durasi (Jam)'] !== undefined
-                            ? row['Durasi (Jam)']
-                            : '-'
-                    ) +
-                '</td>';
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | GANTT BAR
-            |--------------------------------------------------------------------------
-            */
-
-            html += buildGanttBar(row);
-
-
-            html += '</tr>';
-
-        });
-
-    });
-
-
-    html += '</tbody>';
-
-    html += '</table>';
-
-    html += '</div>';
-
-
-    return html;
-
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| BUILD BAR
-|--------------------------------------------------------------------------
-*/
-
-function buildGanttBar(row) {
-
-    var checkIn = row['Check In'];
-
-    var checkOut = row['Check Out'];
-
-
-    var html = '';
-
-    html +=
-        '<td colspan="24" class="gantt-cell">';
-
-    html +=
-        '<div class="gantt-track">';
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | GRID 24 JAM
-    |--------------------------------------------------------------------------
-    */
-
-    for (var i = 0; i < 24; i++) {
-
-        html +=
-            '<div class="gantt-grid"></div>';
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | OFF / TIDAK ADA ABSENSI
-    |--------------------------------------------------------------------------
-    */
-
-    if (!checkIn || !checkOut) {
-
-        html += '</div></td>';
-
-        return html;
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | PARSE
-    |--------------------------------------------------------------------------
-    */
-
-    var start = parseGanttDate(checkIn);
-
-    var end = parseGanttDate(checkOut);
-
-
-    if (!start || !end) {
-
-        html += '</div></td>';
-
-        return html;
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | TIMELINE:
-    |
-    | 07:00 hari ini
-    | sampai
-    | 07:00 hari berikutnya
-    |--------------------------------------------------------------------------
-    */
-
-    var base = new Date(start);
-
-    base.setHours(7, 0, 0, 0);
-
-
-    var nextDay = new Date(base);
-
-    nextDay.setDate(
-        nextDay.getDate() + 1
-    );
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | CHECK IN
-    |--------------------------------------------------------------------------
-    */
-
-    var startTime = new Date(start);
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | CHECK IN SEBELUM 07:00
-    |--------------------------------------------------------------------------
-    */
-
-    if (startTime < base) {
-
-        startTime = new Date(base);
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | CHECK OUT
-    |--------------------------------------------------------------------------
-    */
-
-    var endTime = new Date(end);
-
-
-    /*
-    | Jika checkout <= base,
-    | berarti checkout hari berikutnya.
-    */
-
-    if (endTime <= base) {
-
-        endTime.setDate(
-            endTime.getDate() + 1
-        );
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | BATAS TIMELINE
-    |--------------------------------------------------------------------------
-    */
-
-    if (endTime > nextDay) {
-
-        endTime = new Date(nextDay);
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | HITUNG MENIT
-    |--------------------------------------------------------------------------
-    */
-
-    var totalMinutes = 1440;
-
-
-    var startMinutes =
-        (startTime.getTime() - base.getTime()) /
-        60000;
-
-
-    var endMinutes =
-        (endTime.getTime() - base.getTime()) /
-        60000;
-
-
-    var durationMinutes =
-        endMinutes - startMinutes;
-
-
-    if (durationMinutes <= 0) {
-
-        html += '</div></td>';
-
-        return html;
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | PERSENTASE
-    |--------------------------------------------------------------------------
-    */
-
-    var left =
-        (startMinutes / totalMinutes) * 100;
-
-
-    var width =
-        (durationMinutes / totalMinutes) * 100;
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | CLASS SHIFT
-    |--------------------------------------------------------------------------
-    */
-
-    var shiftClass =
-        'gantt-bar-default';
-
-
-    if (row.Shift === 'Pagi') {
-
-        shiftClass =
-            'gantt-bar-pagi';
-
-    } else if (row.Shift === 'Siang') {
-
-        shiftClass =
-            'gantt-bar-siang';
-
-    } else if (row.Shift === 'Malam') {
-
-        shiftClass =
-            'gantt-bar-malam';
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | BAR
-    |--------------------------------------------------------------------------
-    */
-
-    html +=
-        '<div class="gantt-bar ' +
-            shiftClass +
-        '" ' +
-        'style="' +
-            'left:' + left + '%;' +
-            'width:' + width + '%;' +
-        '">' +
-
-            '<span>' +
-                formatGanttJam(start) +
-                ' - ' +
-                formatGanttJam(end) +
-            '</span>' +
-
-        '</div>';
-
-
-    html += '</div>';
-
-    html += '</td>';
-
-
-    return html;
-
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| PARSE:
-| 06 Sep 2026 14:46
-|--------------------------------------------------------------------------
-*/
-
-function parseGanttDate(value) {
-
-    if (!value) {
-        return null;
-    }
-
-
-    var parts =
-        value.trim().split(' ');
-
-
-    if (parts.length < 4) {
-        return null;
-    }
-
-
-    var day =
-        parseInt(parts[0], 10);
-
-
-    var monthText =
-        parts[1];
-
-
-    var year =
-        parseInt(parts[2], 10);
-
-
-    var timeParts =
-        parts[3].split(':');
-
-
-    var monthMap = {
-
-        Jan: 0,
-        Feb: 1,
-        Mar: 2,
-        Apr: 3,
-        May: 4,
-        Jun: 5,
-        Jul: 6,
-        Aug: 7,
-        Sep: 8,
-        Oct: 9,
-        Nov: 10,
-        Dec: 11
-
-    };
-
-
-    if (
-        monthMap[monthText] === undefined
-    ) {
-
-        return null;
-
-    }
-
-
-    return new Date(
-
-        year,
-
-        monthMap[monthText],
-
-        day,
-
-        parseInt(timeParts[0], 10),
-
-        parseInt(timeParts[1], 10),
-
-        0,
-
-        0
-
-    );
-
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| FORMAT JAM
-|--------------------------------------------------------------------------
-*/
-
-function formatGanttJam(date) {
-
-    if (!date) {
-        return '-';
-    }
-
-
-    return (
-        String(date.getHours()).padStart(2, '0') +
-        ':' +
-        String(date.getMinutes()).padStart(2, '0')
-    );
-
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| ESCAPE HTML
-|--------------------------------------------------------------------------
-*/
-
-function escapeHtml(value) {
-
-    if (
-        value === null ||
-        value === undefined
-    ) {
-        return '';
-    }
-
-
-    return String(value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-
-}
-
 </script>

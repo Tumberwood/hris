@@ -73,7 +73,7 @@
 					<h3>Resume</h3>
 					<div id="tabel_atas"></div>
 
-					<div id="tabel_detail_gantt" class="mt-3"></div>
+					<div id="gantt_absensi_kmj" style="margin-top:20px;"></div>
 				</div>
 			</div>
 		</div>
@@ -114,6 +114,7 @@
 <script src="<?=$us_url_root?>usersc/helpers/hakaksescrud_hd_fn.js"></script>
 
 <?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/lap_absensi_kmj/fn/lap_absensi_kmj_fn.php'; ?>
+<script src="https://code.highcharts.com/gantt/highcharts-gantt.js"></script>
 
 <!-- BEGIN datatables here -->
 <script type="text/javascript">
