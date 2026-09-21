@@ -57,7 +57,7 @@
 				$sheetData = $spreadsheet->getSheet($sheetIndex)->toArray();
 				
 				if ($sheetData[0][1] == "no_induk") {
-					for ($i = 2; $i < count($sheetData); $i++) {
+					for ($i = 1; $i < count($sheetData); $i++) {
 
 						if ($sheetName == 'TETAP') {
 
@@ -79,7 +79,8 @@
 							$fix_cost               = strtoupper($sheetData[$i][13]);
 							$premi_abs              = strtoupper($sheetData[$i][14]);
 
-							$bpjs_kes_perusahaan    = strtoupper($sheetData[$i][15]);
+							// $bpjs_kes_perusahaan    = strtoupper($sheetData[$i][15]);
+							$bpjs_kes_perusahaan    = 0;
 
 							$lembur15               = strtoupper($sheetData[$i][16]);
 							$rp_lembur15            = strtoupper($sheetData[$i][17]);
