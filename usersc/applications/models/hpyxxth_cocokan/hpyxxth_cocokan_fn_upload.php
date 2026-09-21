@@ -58,6 +58,9 @@
 				
 				if ($sheetData[0][1] == "no_induk") {
 					for ($i = 1; $i < count($sheetData); $i++) {
+						
+						$komp_sisa_cuti 		= 0;
+						$komp_rekontrak 		= 0;
 
 						if ($sheetName == 'TETAP') {
 
@@ -73,7 +76,6 @@
 							$t_jab                  = strtoupper($sheetData[$i][8]);
 
 							$uniform                = strtoupper($sheetData[$i][9]);
-							$komp_rekontrak         = strtoupper($sheetData[$i][10]);
 							$terima_lain            = strtoupper($sheetData[$i][11]);
 							$var_cost               = strtoupper($sheetData[$i][12]);
 							$fix_cost               = strtoupper($sheetData[$i][13]);
@@ -136,7 +138,7 @@
 							$t_jab                  = strtoupper($sheetData[$i][8]);
 
 							$uniform                = strtoupper($sheetData[$i][9]);
-							$komp_rekontrak         = strtoupper($sheetData[$i][10]);
+
 							$terima_lain            = strtoupper($sheetData[$i][11]);
 							$var_cost               = strtoupper($sheetData[$i][12]);
 							$fix_cost               = strtoupper($sheetData[$i][13]);
@@ -183,7 +185,7 @@
 							$cek_nik                = strtoupper($sheetData[$i][41]);
 							$cek_nama               = strtoupper($sheetData[$i][42]);
 
-							$komp_sisa_cuti         = '';
+							$komp_rekontrak         = strtoupper($sheetData[$i][43]);
 
 						} elseif ($sheetName == 'KBM REG') {
 
@@ -199,7 +201,7 @@
 							$t_jab                  = strtoupper($sheetData[$i][7]);
 
 							$uniform                = strtoupper($sheetData[$i][8]);
-							$komp_rekontrak         = strtoupper($sheetData[$i][9]);
+
 							$terima_lain            = strtoupper($sheetData[$i][10]);
 							$var_cost               = strtoupper($sheetData[$i][11]);
 							$fix_cost               = strtoupper($sheetData[$i][12]);

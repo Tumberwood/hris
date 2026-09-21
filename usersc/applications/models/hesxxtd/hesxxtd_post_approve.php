@@ -488,24 +488,24 @@
 							-- t jabatan
 							LEFT JOIN (
 							SELECT
-								id_hevxxmh,
+								id_hemxxmh,
 								tanggal_efektif,
-								IFNULL(nominal, 0) AS nominal_t_jab
+								IFNULL(nominal, 0) AS nominal_gp
 							FROM (
 								SELECT
 									id,
-									id_hevxxmh,
+									id_hemxxmh,
 									tanggal_efektif,
 									nominal,
-									ROW_NUMBER() OVER (PARTITION BY id_hevxxmh ORDER BY tanggal_efektif DESC) AS row_num
-								FROM htpr_hevxxmh
+									ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+								FROM htpr_hemxxmh
 								WHERE
-									htpr_hevxxmh.id_hpcxxmh = 32
+									htpr_hemxxmh.id_hpcxxmh = 32
 									AND tanggal_efektif < :tanggal_keluar
 									AND is_active = 1
 							) AS subquery
 							WHERE row_num = 1
-							) t_jabatan ON t_jabatan.id_hevxxmh = a.id_hevxxmh
+							) t_jabatan ON t_jabatan.id_hemxxmh = a.id_hemxxmh
 							WHERE a.id_hemxxmh = :id_hemxxmh
 							'
 							);
