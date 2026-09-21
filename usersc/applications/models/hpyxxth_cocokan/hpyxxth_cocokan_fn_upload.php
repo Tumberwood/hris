@@ -319,6 +319,7 @@
 							->set('gaji_terima', $gaji_terima)
 
 							->set('komp_sisa_cuti', $komp_sisa_cuti)
+							->set('komp_rekontrak', $komp_rekontrak)
 							->exec()
 						;
 					}
