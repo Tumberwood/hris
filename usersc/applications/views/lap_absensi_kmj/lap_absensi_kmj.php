@@ -259,7 +259,7 @@
 
 </style> -->
 
-<style>
+<!-- <style>
 
 	#gantt_absensi_kmj {
 
@@ -282,7 +282,7 @@
 	|--------------------------------------------------------------------------
 	*/
 
-	.gantt-v4-axis {
+	.gantt-V5-axis {
 
 		text-align: center;
 
@@ -293,7 +293,7 @@
 	}
 
 
-	.gantt-v4-axis b {
+	.gantt-V5-axis b {
 
 		display: block;
 
@@ -304,7 +304,7 @@
 	}
 
 
-	.gantt-v4-axis span {
+	.gantt-V5-axis span {
 
 		display: block;
 
@@ -319,7 +319,7 @@
 	}
 
 
-	.gantt-v4-axis small {
+	.gantt-V5-axis small {
 
 		display: block;
 
@@ -338,7 +338,7 @@
 	|--------------------------------------------------------------------------
 	*/
 
-	.gantt-v4-person {
+	.gantt-V5-person {
 
 		display: flex;
 
@@ -357,7 +357,7 @@
 	}
 
 
-	.gantt-v4-avatar {
+	.gantt-V5-avatar {
 
 		width: 25px;
 
@@ -410,7 +410,7 @@
 	|--------------------------------------------------------------------------
 	*/
 
-	.gantt-v4-tooltip {
+	.gantt-V5-tooltip {
 
 		width: 240px;
 
@@ -419,7 +419,7 @@
 	}
 
 
-	.gantt-v4-tooltip-name {
+	.gantt-V5-tooltip-name {
 
 		margin-bottom: 8px;
 
@@ -434,7 +434,7 @@
 	}
 
 
-	.gantt-v4-tooltip-row {
+	.gantt-V5-tooltip-row {
 
 		display: flex;
 
@@ -447,21 +447,21 @@
 	}
 
 
-	.gantt-v4-tooltip-row span {
+	.gantt-V5-tooltip-row span {
 
 		color: #888;
 
 	}
 
 
-	.gantt-v4-tooltip-row b {
+	.gantt-V5-tooltip-row b {
 
 		text-align: right;
 
 	}
 
 
-	.gantt-v4-tooltip-duration {
+	.gantt-V5-tooltip-duration {
 
 		margin-top: 7px;
 
@@ -517,6 +517,517 @@
 	/*
 	|--------------------------------------------------------------------------
 	| MOBILE
+	|--------------------------------------------------------------------------
+	*/
+
+	@media (max-width: 768px) {
+
+		#gantt_absensi_kmj {
+
+			min-width: 850px;
+
+		}
+
+	}
+
+</style> -->
+
+<style>
+
+	/*
+	|--------------------------------------------------------------------------
+	| CONTAINER
+	|--------------------------------------------------------------------------
+	*/
+
+	#gantt_absensi_kmj {
+
+		width: 100%;
+
+		border: 1px solid #dee2e6;
+
+		border-radius: 8px;
+
+		overflow: hidden;
+
+		background: #ffffff !important;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| HIGHCHARTS BACKGROUND
+	|--------------------------------------------------------------------------
+	*/
+
+	#gantt_absensi_kmj
+	.highcharts-container {
+
+		background: #ffffff !important;
+
+	}
+
+
+	#gantt_absensi_kmj
+	.highcharts-background {
+
+		fill: #ffffff !important;
+
+	}
+
+
+	#gantt_absensi_kmj
+	.highcharts-plot-background {
+
+		fill: #ffffff !important;
+
+	}
+
+
+	#gantt_absensi_kmj
+	.highcharts-plot-border {
+
+		stroke: #dee2e6 !important;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| GRID
+	|--------------------------------------------------------------------------
+	*/
+
+	#gantt_absensi_kmj
+	.highcharts-grid-line {
+
+		stroke: #e9ecef !important;
+
+	}
+
+
+	#gantt_absensi_kmj
+	.highcharts-minor-grid-line {
+
+		stroke: #f5f5f5 !important;
+
+	}
+
+
+	#gantt_absensi_kmj
+	.highcharts-axis-line {
+
+		stroke: #dee2e6 !important;
+
+	}
+
+
+	#gantt_absensi_kmj
+	.highcharts-tick {
+
+		stroke: #dee2e6 !important;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| TITLE
+	|--------------------------------------------------------------------------
+	*/
+
+	#gantt_absensi_kmj
+	.highcharts-title {
+
+		fill: #212529 !important;
+
+	}
+
+
+	#gantt_absensi_kmj
+	.highcharts-subtitle {
+
+		fill: #6c757d !important;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| DATE HEADER
+	|--------------------------------------------------------------------------
+	*/
+
+	.gantt-v5-date {
+
+		min-width: 95px;
+
+		text-align: center;
+
+		white-space: nowrap;
+
+		padding: 3px 8px;
+
+	}
+
+
+	.gantt-v5-date b {
+
+		display: block;
+
+		font-size: 12px;
+
+		font-weight: 600;
+
+		color: #343a40;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| HOUR HEADER
+	|--------------------------------------------------------------------------
+	*/
+
+	.gantt-v5-hour {
+
+		width: 100%;
+
+		text-align: center;
+
+		white-space: nowrap;
+
+		font-size: 10px;
+
+		font-weight: 500;
+
+		color: #6c757d;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| Y AXIS
+	|--------------------------------------------------------------------------
+	*/
+
+	#gantt_absensi_kmj
+	.highcharts-yaxis-labels {
+
+		overflow: visible !important;
+
+	}
+
+
+	#gantt_absensi_kmj
+	.highcharts-yaxis-labels
+	div {
+
+		text-align: left !important;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| PERSON
+	|--------------------------------------------------------------------------
+	*/
+
+	.gantt-v5-person {
+
+		display: flex;
+
+		align-items: center;
+
+		justify-content: flex-start;
+
+		width: 310px;
+
+		height: 32px;
+
+		gap: 8px;
+
+		white-space: nowrap;
+
+		text-align: left !important;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| AVATAR
+	|--------------------------------------------------------------------------
+	*/
+
+	.gantt-v5-avatar {
+
+		display: inline-flex;
+
+		align-items: center;
+
+		justify-content: center;
+
+		width: 25px;
+
+		height: 25px;
+
+		min-width: 25px;
+
+		border-radius: 50%;
+
+		background: #f1f3f5;
+
+		color: #495057;
+
+		font-size: 10px;
+
+		font-weight: 700;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| NAME
+	|--------------------------------------------------------------------------
+	*/
+
+	.gantt-v5-name {
+
+		display: block;
+
+		overflow: hidden;
+
+		text-overflow: ellipsis;
+
+		white-space: nowrap;
+
+		color: #343a40;
+
+		font-size: 13px;
+
+		font-weight: 500;
+
+		text-align: left !important;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| TOOLTIP
+	|--------------------------------------------------------------------------
+	*/
+
+	.gantt-v5-tooltip {
+
+		width: 240px;
+
+		padding: 10px;
+
+		background: #ffffff;
+
+		color: #212529;
+
+	}
+
+
+	.gantt-v5-tooltip-name {
+
+		margin-bottom: 8px;
+
+		padding-bottom: 7px;
+
+		border-bottom: 1px solid #eeeeee;
+
+		font-size: 13px;
+
+		font-weight: 700;
+
+		color: #212529;
+
+	}
+
+
+	.gantt-v5-tooltip-row {
+
+		display: flex;
+
+		justify-content: space-between;
+
+		gap: 15px;
+
+		padding: 3px 0;
+
+	}
+
+
+	.gantt-v5-tooltip-row span {
+
+		color: #888888;
+
+	}
+
+
+	.gantt-v5-tooltip-row b {
+
+		color: #212529;
+
+		text-align: right;
+
+	}
+
+
+	.gantt-v5-tooltip-duration {
+
+		margin-top: 7px;
+
+		padding-top: 7px;
+
+		border-top: 1px solid #eeeeee;
+
+		color: #ff9800;
+
+		font-weight: 700;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| GANTT BAR
+	|--------------------------------------------------------------------------
+	*/
+
+	.highcharts-gantt-series
+	.highcharts-point {
+
+		rx: 5;
+
+		ry: 5;
+
+		stroke-width: 0;
+
+		transition:
+			filter .15s ease;
+
+	}
+
+
+	.highcharts-gantt-series
+	.highcharts-point:hover {
+
+		filter:
+			brightness(1.05)
+			drop-shadow(
+				0 3px 5px
+				rgba(
+					0,
+					0,
+					0,
+					.18
+				)
+			);
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| DATA LABEL
+	|--------------------------------------------------------------------------
+	*/
+
+	#gantt_absensi_kmj
+	.highcharts-data-label text {
+
+		fill: #212529 !important;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| NAVIGATOR
+	|--------------------------------------------------------------------------
+	*/
+
+	#gantt_absensi_kmj
+	.highcharts-navigator-mask {
+
+		fill:
+			rgba(
+				108,
+				117,
+				125,
+				.10
+			) !important;
+
+	}
+
+
+	#gantt_absensi_kmj
+	.highcharts-navigator-outline {
+
+		stroke: #adb5bd !important;
+
+	}
+
+
+	#gantt_absensi_kmj
+	.highcharts-navigator-series {
+
+		fill: #adb5bd !important;
+
+		stroke: #868e96 !important;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| SCROLLBAR
+	|--------------------------------------------------------------------------
+	*/
+
+	#gantt_absensi_kmj
+	.highcharts-scrollbar-track {
+
+		fill: #f1f3f5 !important;
+
+		stroke: #dee2e6 !important;
+
+	}
+
+
+	#gantt_absensi_kmj
+	.highcharts-scrollbar-thumb {
+
+		fill: #adb5bd !important;
+
+		stroke: #868e96 !important;
+
+	}
+
+
+	#gantt_absensi_kmj
+	.highcharts-scrollbar-button {
+
+		fill: #ffffff !important;
+
+		stroke: #dee2e6 !important;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| RESPONSIVE
 	|--------------------------------------------------------------------------
 	*/
 
@@ -738,7 +1249,7 @@
 
 			generateTable(start_date, end_date);
 			// generateGanttAbsensiV2(start_date, end_date);
-			generateGanttAbsensiV4(start_date, end_date);
+			generateGanttAbsensiV5(start_date, end_date);
 			
 			id_hemxxmh_old = id_hem_get;
 			
@@ -851,7 +1362,7 @@
 
 					generateTable(start_date, end_date);
 					// generateGanttAbsensiV2(start_date, end_date);
-					generateGanttAbsensiV4(start_date, end_date);
+					generateGanttAbsensiV5(start_date, end_date);
 
 					tbllap_absensi_kmj.rows().deselect();
 					tbllap_absensi_kmj.ajax.reload(function ( json ) {
