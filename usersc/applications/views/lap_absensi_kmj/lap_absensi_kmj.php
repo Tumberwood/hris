@@ -342,9 +342,17 @@
 
 		display: flex;
 
+		align-items: center;
+
+		justify-content: flex-start;
+
 		gap: 7px;
 
+		width: 100%;
+
 		white-space: nowrap;
+
+		text-align: left;
 
 	}
 
@@ -372,6 +380,26 @@
 		font-size: 10px;
 
 		font-weight: 700;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| HIGHCHARTS Y AXIS
+	|--------------------------------------------------------------------------
+	*/
+
+	#gantt_absensi_kmj .highcharts-yaxis-labels {
+
+		text-align: left !important;
+
+	}
+
+
+	#gantt_absensi_kmj .highcharts-yaxis-labels text {
+
+		text-anchor: start !important;
 
 	}
 
