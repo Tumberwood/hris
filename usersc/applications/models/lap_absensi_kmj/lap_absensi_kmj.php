@@ -42,7 +42,7 @@
 					DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i") AS `Check Out`,
 					ROUND(TIMESTAMPDIFF(MINUTE, a.clock_in, a.clock_out) / 60.0, 2) AS `Durasi (Jam)`,
 					CASE
-						WHEN TIMESTAMPDIFF(MINUTE, a.clock_in, a.clock_out) / 60.0, 2) > 0 THEN 1
+						WHEN ( TIMESTAMPDIFF(MINUTE, a.clock_in, a.clock_out) / 60.0) > 0 THEN 1
 						ELSE 0
 					END AS `Count orang`
 				FROM htsprrd a
