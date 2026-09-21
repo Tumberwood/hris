@@ -347,6 +347,7 @@
 		gap: 7px;
 
 		white-space: nowrap;
+		text-align: left;
 
 	}
 
