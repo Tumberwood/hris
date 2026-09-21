@@ -711,7 +711,8 @@
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 
 			generateTable(start_date, end_date);
-			generateGanttAbsensiV2(start_date, end_date);
+			// generateGanttAbsensiV2(start_date, end_date);
+			generateGanttAbsensiV4(start_date, end_date);
 			
 			id_hemxxmh_old = id_hem_get;
 			
@@ -823,7 +824,8 @@
 					});
 
 					generateTable(start_date, end_date);
-					generateGanttAbsensiV2(start_date, end_date);
+					// generateGanttAbsensiV2(start_date, end_date);
+					generateGanttAbsensiV4(start_date, end_date);
 
 					tbllap_absensi_kmj.rows().deselect();
 					tbllap_absensi_kmj.ajax.reload(function ( json ) {
