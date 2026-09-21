@@ -904,9 +904,16 @@
                                         :tanggal_awal
                                         AND LAST_DAY(:tanggal_awal)
                                 )
-                                OR
-                                (
-                                    pr.tanggal BETWEEN
+                                OR (
+                                    (
+                                        job.tanggal_keluar IS NULL
+                                        OR NOT (
+                                            job.tanggal_keluar BETWEEN
+                                                DATE_FORMAT(:tanggal_akhir, "%Y-%m-01")
+                                                AND :tanggal_akhir
+                                        )
+                                    )
+                                    AND pr.tanggal BETWEEN
                                         :tanggal_awal
                                         AND :tanggal_akhir
                                 )
