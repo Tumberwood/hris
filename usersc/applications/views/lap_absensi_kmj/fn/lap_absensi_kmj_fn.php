@@ -282,12 +282,6 @@
     }
 </script> -->
 
-<style>
-    .text-navy {
-        color: #001f3f !important;
-    }
-</style>
-
 <script>
 
     var tblhtsprrd1 = null;
