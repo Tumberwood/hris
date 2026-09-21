@@ -456,7 +456,7 @@
 								a.tanggal_keluar,
 								ROUND(
 									( 
-									TIMESTAMPDIFF(MONTH, a.tanggal_masuk, a.tanggal_keluar) / 12
+										(TIMESTAMPDIFF(MONTH, a.tanggal_masuk, a.tanggal_keluar) + 1) / 12
 									) *
 									(ifnull(nominal_gp, 0) + ifnull(nominal_t_jab, 0))
 								, 0
