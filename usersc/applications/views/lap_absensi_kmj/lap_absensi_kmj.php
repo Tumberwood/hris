@@ -270,92 +270,214 @@
 </style> -->
 
 <style>
+
 /* ============================================================
    GANTT ABSENSI KMJ V5
    ============================================================ */
 
 #gantt_absensi_kmj {
+
     width: 100%;
+
     height: 720px;
+
     max-height: 720px;
 
     border: 1px solid #333;
+
     border-radius: 8px;
 
     background: #111;
-
-    overflow: auto;
 
     position: relative;
 
     box-sizing: border-box;
 
-    scrollbar-width: thin;
+    overflow-x: auto;
+
+    overflow-y: auto;
+
+    scrollbar-width: auto;
+
     scrollbar-color: #666 #1a1a1a;
 }
 
 
-/* SCROLLBAR */
+/* ============================================================
+   SCROLL CONTENT
+   ============================================================ */
 
-#gantt_absensi_kmj::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
+#gantt_absensi_kmj .gantt-v5-scroll-content {
 
-#gantt_absensi_kmj::-webkit-scrollbar-track {
-    background: #1a1a1a;
-}
+    position: relative;
 
-#gantt_absensi_kmj::-webkit-scrollbar-thumb {
-    background: #666;
-    border-radius: 6px;
-}
+    display: block;
 
-#gantt_absensi_kmj::-webkit-scrollbar-thumb:hover {
-    background: #888;
+    min-width: max-content;
+
 }
 
 
-/* CHART */
+/* ============================================================
+   CHART
+   ============================================================ */
 
 #gantt_absensi_kmj_chart {
+
     position: relative;
+
+    display: block;
+
     background: #111;
+
 }
 
 
-/* AXIS JAM */
+/* ============================================================
+   SCROLLBAR CHROME
+   ============================================================ */
+
+#gantt_absensi_kmj::-webkit-scrollbar {
+
+    width: 13px;
+
+    height: 15px;
+
+}
+
+
+#gantt_absensi_kmj::-webkit-scrollbar-track {
+
+    background: #1a1a1a;
+
+}
+
+
+#gantt_absensi_kmj::-webkit-scrollbar-thumb {
+
+    background: #666;
+
+    border-radius: 8px;
+
+    border: 2px solid #1a1a1a;
+
+}
+
+
+#gantt_absensi_kmj::-webkit-scrollbar-thumb:hover {
+
+    background: #888;
+
+}
+
+
+#gantt_absensi_kmj::-webkit-scrollbar-corner {
+
+    background: #1a1a1a;
+
+}
+
+
+/* ============================================================
+   TITLE
+   ============================================================ */
+
+#gantt_absensi_kmj .highcharts-title {
+
+    fill: #e5e5e5 !important;
+
+}
+
+
+/* ============================================================
+   SUBTITLE
+   ============================================================ */
+
+#gantt_absensi_kmj .highcharts-subtitle {
+
+    fill: #777 !important;
+
+}
+
+
+/* ============================================================
+   AXIS TIME
+   ============================================================ */
 
 .gantt-v5-time {
-    width: 90px;
+
+    width: 95px;
+
+    min-width: 95px;
+
     text-align: center;
+
     line-height: 1.2;
+
 }
+
 
 .gantt-v5-time b {
+
     display: block;
+
     color: #aaa;
+
     font-size: 10px;
+
     font-weight: 600;
+
 }
 
 
-/* NAMA */
+/* ============================================================
+   DATE HEADER
+   ============================================================ */
+
+.gantt-v5-date {
+
+    width: 100%;
+
+    text-align: center;
+
+    color: #d5d5d5;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+}
+
+
+/* ============================================================
+   PERSON
+   ============================================================ */
 
 .gantt-v5-person {
+
     display: flex;
+
     align-items: center;
 
     width: 280px;
+
     min-width: 280px;
 
     gap: 8px;
 
     white-space: nowrap;
+
+    overflow: hidden;
+
 }
 
+
 .gantt-v5-avatar {
+
     width: 25px;
+
     height: 25px;
 
     min-width: 25px;
@@ -363,48 +485,172 @@
     border-radius: 50%;
 
     display: inline-flex;
+
     align-items: center;
+
     justify-content: center;
 
     background: #f1f3f5;
+
     color: #343a40;
 
     font-size: 10px;
+
     font-weight: 700;
+
 }
 
+
 .gantt-v5-name {
+
     color: #ccc;
 
     font-size: 12px;
 
+    font-weight: 500;
+
     overflow: hidden;
+
     text-overflow: ellipsis;
+
 }
 
 
-/* TOOLTIP */
+/* ============================================================
+   HIGHCHART GRID
+   ============================================================ */
+
+#gantt_absensi_kmj .highcharts-background {
+
+    fill: #111;
+
+}
+
+
+#gantt_absensi_kmj .highcharts-grid-line {
+
+    stroke: #292929;
+
+}
+
+
+#gantt_absensi_kmj .highcharts-axis-line {
+
+    stroke: #444;
+
+}
+
+
+#gantt_absensi_kmj .highcharts-tick {
+
+    stroke: #444;
+
+}
+
+
+/* ============================================================
+   GANTT ROW
+   ============================================================ */
+
+#gantt_absensi_kmj .highcharts-grid-axis .highcharts-grid-line {
+
+    stroke: #292929;
+
+}
+
+
+/* ============================================================
+   BAR
+   ============================================================ */
+
+#gantt_absensi_kmj
+.highcharts-gantt-series
+.highcharts-point {
+
+    rx: 5;
+
+    ry: 5;
+
+    stroke-width: 0;
+
+    transition: filter .15s ease;
+
+}
+
+
+#gantt_absensi_kmj
+.highcharts-gantt-series
+.highcharts-point:hover {
+
+    filter:
+
+        brightness(1.08)
+
+        drop-shadow(
+            0 3px 4px
+            rgba(
+                0,
+                0,
+                0,
+                .30
+            )
+        );
+
+}
+
+
+/* ============================================================
+   DATA LABEL
+   ============================================================ */
+
+#gantt_absensi_kmj
+.highcharts-data-label text {
+
+    font-size: 9px !important;
+
+    font-weight: 600;
+
+    text-outline: none !important;
+
+}
+
+
+/* ============================================================
+   TOOLTIP
+   ============================================================ */
 
 .gantt-v5-tooltip {
+
     width: 245px;
+
     padding: 10px;
 
     background: #fff;
+
     color: #222;
+
 }
 
+
 .gantt-v5-tooltip-name {
+
     margin-bottom: 8px;
+
     padding-bottom: 7px;
 
     border-bottom: 1px solid #ddd;
 
     font-size: 13px;
+
     font-weight: 700;
+
 }
 
+
 .gantt-v5-tooltip-row {
+
     display: flex;
+
     justify-content: space-between;
 
     gap: 15px;
@@ -412,19 +658,30 @@
     padding: 3px 0;
 
     font-size: 11px;
+
 }
+
 
 .gantt-v5-tooltip-row span {
+
     color: #888;
+
 }
+
 
 .gantt-v5-tooltip-row b {
+
     color: #222;
+
     text-align: right;
+
 }
 
+
 .gantt-v5-tooltip-duration {
+
     margin-top: 7px;
+
     padding-top: 7px;
 
     border-top: 1px solid #ddd;
@@ -432,52 +689,28 @@
     color: #ff9800;
 
     font-weight: 700;
+
 }
 
 
-/* BAR */
-
-.highcharts-gantt-series .highcharts-point {
-    rx: 5;
-    ry: 5;
-
-    stroke-width: 0;
-}
-
-.highcharts-gantt-series .highcharts-point:hover {
-    filter: brightness(1.08);
-}
-
-
-/* DARK */
-
-#gantt_absensi_kmj .highcharts-background {
-    fill: #111;
-}
-
-#gantt_absensi_kmj .highcharts-grid-line {
-    stroke: #292929;
-}
-
-#gantt_absensi_kmj .highcharts-axis-line {
-    stroke: #444;
-}
-
-#gantt_absensi_kmj .highcharts-tick {
-    stroke: #444;
-}
-
-
-/* MOBILE */
+/* ============================================================
+   MOBILE
+   ============================================================ */
 
 @media (max-width: 768px) {
 
     #gantt_absensi_kmj {
+
         height: 600px;
+
         max-height: 600px;
+
+        border-radius: 6px;
+
     }
 
 }
+
 </style>
 <!-- begin content here -->
 
