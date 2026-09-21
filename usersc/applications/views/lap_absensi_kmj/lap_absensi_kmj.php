@@ -347,20 +347,6 @@
 		gap: 7px;
 
 		white-space: nowrap;
-		text-align: left;
-
-	}
-
-	#gantt_absensi_kmj .highcharts-yaxis-labels {
-
-		text-align: left !important;
-
-	}
-
-
-	#gantt_absensi_kmj .highcharts-yaxis-labels text {
-
-		text-anchor: start !important;
 
 	}
 
