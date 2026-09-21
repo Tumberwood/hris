@@ -10,7 +10,7 @@ use
 $start_date = isset($_POST['start_date']) ?$_POST['start_date'] : date('Y-m-d');
 $end_date   = isset($_POST['end_date']) ? $_POST['end_date'] : date('Y-m-d', strtotime('+6 days', strtotime($start_date)));
 
-// Generate kolom Pivot secara dinamis berdasarkan rentang tanggal
+// Generate Loop Tanggal Dinamis
 $period = new DatePeriod(
     new DateTime($start_date),
     new DateInterval('P1D'),
@@ -18,7 +18,7 @@ $period = new DatePeriod(
 );
 
 $select_fields = [];
-foreach ($period as $dt) {$tgl = $dt->format('Y-m-d');$label = $dt->format('d-M-y'); // Format label misal: 06-Sep-26$select_fields[] = "COUNT(CASE WHEN a.tanggal = '{$tgl}' THEN 1 END) AS `{$label}_Jml_Orang`";
+foreach ($period as $dt) {$tgl = $dt->format('Y-m-d');$label = $dt->format('d-M-y'); // Format key: 06-Sep-26          // Pilih Jml Orang DAN Durasi Total$select_fields[] = "COUNT(CASE WHEN a.tanggal = '{$tgl}' THEN 1 END) AS `{$label}_Jml_Orang`";
     $select_fields[] = "ROUND(SUM(CASE WHEN a.tanggal = '{$tgl}' THEN COALESCE(TIMESTAMPDIFF(MINUTE, a.clock_in, a.clock_out)/60.0, 0) ELSE 0 END), 2) AS `{$label}_Durasi_Total`";
 }
 
