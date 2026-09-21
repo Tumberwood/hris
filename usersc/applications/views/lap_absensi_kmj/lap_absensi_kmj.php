@@ -64,6 +64,19 @@
     </div>
 </div>
 
+<!-- PIVOT -->
+<div class="row">
+	<div class="col">
+		<div class="ibox ">
+			<div class="ibox-content">
+				<div class="table-responsive">
+					<div id="tabel_atas"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="row">
 	<div class="col">
 		<div class="ibox ">
@@ -207,6 +220,8 @@
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 			
+			generateTable(start_date, end_date);
+			
 			id_hemxxmh_old = id_hem_get;
 			
 			$('#select_periode_payroll').select2('open');
@@ -315,6 +330,8 @@
 						type: 'info',
 						delay: 0
 					});
+
+					generateTable(start_date, end_date);
 
 					tbllap_absensi_kmj.rows().deselect();
 					tbllap_absensi_kmj.ajax.reload(function ( json ) {
