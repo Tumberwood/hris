@@ -1235,7 +1235,7 @@
                         SELECT
                             a.id,
                             b.id AS id_hemxxmh_lama,
-                            hl.id_hemxxmh,
+                            hl.id_hemxxmh_baru as id_hemxxmh,
                             c.tanggal_keluar,
                             (
                                 (TIMESTAMPDIFF(MONTH, c.tanggal_masuk, c.tanggal_keluar) + 1) / 12.0
