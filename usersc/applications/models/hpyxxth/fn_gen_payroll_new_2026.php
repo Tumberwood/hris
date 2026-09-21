@@ -1695,7 +1695,7 @@
                             bruto,
                             kategori_kelas,
                             IF(id_heyxxmd = 1, 0, ter.persen ) AS persen_ter,
-                            IF(id_heyxxmd = 1, 0, bruto * (IFNULL(ter.persen,0) / 100) ) AS pot_pph21,
+                            ROUND( IF(id_heyxxmd = 1, 0, bruto * (IFNULL(ter.persen,0) / 100) ), 0 ) AS pot_pph21,
                             bruto - 
                             IF(id_heyxxmd = 1, 
                                 0, 
@@ -1718,9 +1718,11 @@
 
                             -- GAJI BERSIH
                             ( bruto - 
-                                IF(id_heyxxmd = 1, 
-                                    0, 
-                                    ( bruto * (IFNULL(ter.persen,0) / 100) ) 
+                                ROUND(
+                                    IF(id_heyxxmd = 1, 
+                                        0, 
+                                        ( bruto * (IFNULL(ter.persen,0) / 100) ) 
+                                    )
                                 )
                             )
                             -- + (jht_perusahaan + jp_perusahaan)
