@@ -27,6 +27,7 @@
 		->bind(':end_date', $end_date)
 		->exec('SELECT
 					b.kode AS NIK,
+					a.id_hemxxmh,
 					b.nama AS Nama,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
 					-- Sesuaikan "KMJ" jika ada kolom khusus sub tipe di tabel Anda (misal: c.sub_tipe)
