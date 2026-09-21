@@ -2442,14 +2442,16 @@ function generateGanttAbsensiV4(start_date, end_date) {
 
 }
 
-function generateGanttAbsensiV5(start_date, end_date) {
+window.generateGanttAbsensiV5 = function(start_date, end_date) {
 
-    var $container =
-        $('#gantt_absensi_kmj');
+    var $container = $('#gantt_absensi_kmj');
 
+    if (!$container.length) {
+        console.error('GANTT V5: #gantt_absensi_kmj tidak ditemukan.');
+        return;
+    }
 
     $container.empty();
-
 
     /*
     |--------------------------------------------------------------------------
@@ -2459,8 +2461,7 @@ function generateGanttAbsensiV5(start_date, end_date) {
 
     function pad(value) {
 
-        return String(value)
-            .padStart(2, '0');
+        return String(value).padStart(2, '0');
 
     }
 
@@ -2474,9 +2475,7 @@ function generateGanttAbsensiV5(start_date, end_date) {
     function escapeHtml(value) {
 
         return String(
-            value == null
-                ? ''
-                : value
+            value == null ? '' : value
         )
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
@@ -2496,15 +2495,10 @@ function generateGanttAbsensiV5(start_date, end_date) {
     function normalizeDate(value) {
 
         if (!value) {
-
             return null;
-
         }
 
-
-        value =
-            String(value)
-                .trim();
+        value = String(value).trim();
 
 
         /*
@@ -2513,22 +2507,18 @@ function generateGanttAbsensiV5(start_date, end_date) {
         |--------------------------------------------------------------------------
         */
 
-        var m =
-            value.match(
-                /^(\d{4})-(\d{1,2})-(\d{1,2})/
-            );
-
+        var m = value.match(
+            /^(\d{4})-(\d{1,2})-(\d{1,2})/
+        );
 
         if (m) {
 
             return (
-
                 m[1] +
                 '-' +
                 pad(m[2]) +
                 '-' +
                 pad(m[3])
-
             );
 
         }
@@ -2540,22 +2530,18 @@ function generateGanttAbsensiV5(start_date, end_date) {
         |--------------------------------------------------------------------------
         */
 
-        m =
-            value.match(
-                /^(\d{1,2})-(\d{1,2})-(\d{4})/
-            );
-
+        m = value.match(
+            /^(\d{1,2})-(\d{1,2})-(\d{4})/
+        );
 
         if (m) {
 
             return (
-
                 m[3] +
                 '-' +
                 pad(m[2]) +
                 '-' +
                 pad(m[1])
-
             );
 
         }
@@ -2567,22 +2553,18 @@ function generateGanttAbsensiV5(start_date, end_date) {
         |--------------------------------------------------------------------------
         */
 
-        m =
-            value.match(
-                /^(\d{1,2})\/(\d{1,2})\/(\d{4})/
-            );
-
+        m = value.match(
+            /^(\d{1,2})\/(\d{1,2})\/(\d{4})/
+        );
 
         if (m) {
 
             return (
-
                 m[3] +
                 '-' +
                 pad(m[2]) +
                 '-' +
                 pad(m[1])
-
             );
 
         }
@@ -2594,32 +2576,19 @@ function generateGanttAbsensiV5(start_date, end_date) {
         |--------------------------------------------------------------------------
         */
 
-        var d =
-            new Date(value);
+        var d = new Date(value);
 
-
-        if (
-            !isNaN(
-                d.getTime()
-            )
-        ) {
+        if (!isNaN(d.getTime())) {
 
             return (
-
                 d.getFullYear() +
                 '-' +
-                pad(
-                    d.getMonth() + 1
-                ) +
+                pad(d.getMonth() + 1) +
                 '-' +
-                pad(
-                    d.getDate()
-                )
-
+                pad(d.getDate())
             );
 
         }
-
 
         return null;
 
@@ -2632,40 +2601,18 @@ function generateGanttAbsensiV5(start_date, end_date) {
     |--------------------------------------------------------------------------
     */
 
-    function makeDate(
-        dateString,
-        hour
-    ) {
+    function makeDate(dateString, hour) {
 
-        var p =
-            dateString.split('-');
-
+        var p = dateString.split('-');
 
         return new Date(
-
-            parseInt(
-                p[0],
-                10
-            ),
-
-            parseInt(
-                p[1],
-                10
-            ) - 1,
-
-            parseInt(
-                p[2],
-                10
-            ),
-
+            parseInt(p[0], 10),
+            parseInt(p[1], 10) - 1,
+            parseInt(p[2], 10),
             hour || 0,
-
             0,
-
             0,
-
             0
-
         );
 
     }
@@ -2680,19 +2627,12 @@ function generateGanttAbsensiV5(start_date, end_date) {
     function parseDate(value) {
 
         if (!value) {
-
             return null;
-
         }
 
-
-        value =
-            String(value)
-                .trim();
-
+        value = String(value).trim();
 
         var monthMap = {
-
             Jan: 0,
             Feb: 1,
             Mar: 2,
@@ -2705,84 +2645,42 @@ function generateGanttAbsensiV5(start_date, end_date) {
             Oct: 9,
             Nov: 10,
             Dec: 11
-
         };
 
 
         /*
         |--------------------------------------------------------------------------
         | FORMAT:
-        |
         | 06 Sep 2026 07:00
         |--------------------------------------------------------------------------
         */
 
-        var p =
-            value.split(
-                /\s+/
-            );
+        var p = value.split(/\s+/);
 
+        if (p.length >= 4) {
 
-        if (
-            p.length >= 4
-        ) {
+            var day = parseInt(p[0], 10);
 
-            var day =
-                parseInt(
-                    p[0],
-                    10
-                );
+            var month = monthMap[p[1]];
 
+            var year = parseInt(p[2], 10);
 
-            var month =
-                monthMap[
-                    p[1]
-                ];
-
-
-            var year =
-                parseInt(
-                    p[2],
-                    10
-                );
-
-
-            var time =
-                p[3].split(':');
-
+            var time = p[3].split(':');
 
             if (
-
                 !isNaN(day) &&
-
                 month !== undefined &&
-
                 !isNaN(year)
-
             ) {
 
                 return new Date(
-
                     year,
-
                     month,
-
                     day,
-
-                    parseInt(
-                        time[0],
-                        10
-                    ) || 0,
-
-                    parseInt(
-                        time[1],
-                        10
-                    ) || 0,
-
+                    parseInt(time[0], 10) || 0,
+                    parseInt(time[1], 10) || 0,
                     0,
-
                     0
-
                 );
 
             }
@@ -2796,20 +2694,11 @@ function generateGanttAbsensiV5(start_date, end_date) {
         |--------------------------------------------------------------------------
         */
 
-        var d =
-            new Date(value);
+        var d = new Date(value);
 
-
-        if (
-            !isNaN(
-                d.getTime()
-            )
-        ) {
-
+        if (!isNaN(d.getTime())) {
             return d;
-
         }
-
 
         return null;
 
@@ -2825,21 +2714,11 @@ function generateGanttAbsensiV5(start_date, end_date) {
     function formatDate(date) {
 
         return (
-
             date.getFullYear() +
-
             '-' +
-
-            pad(
-                date.getMonth() + 1
-            ) +
-
+            pad(date.getMonth() + 1) +
             '-' +
-
-            pad(
-                date.getDate()
-            )
-
+            pad(date.getDate())
         );
 
     }
@@ -2851,31 +2730,16 @@ function generateGanttAbsensiV5(start_date, end_date) {
     |--------------------------------------------------------------------------
     */
 
-    var filterStart =
-        normalizeDate(
-            start_date
-        );
+    var filterStart = normalizeDate(start_date);
 
+    var filterEnd = normalizeDate(end_date);
 
-    var filterEnd =
-        normalizeDate(
-            end_date
-        );
-
-
-    if (
-        !filterStart ||
-        !filterEnd
-    ) {
+    if (!filterStart || !filterEnd) {
 
         $container.html(
-
             '<div class="alert alert-danger">' +
-
                 'Tanggal filter tidak valid.' +
-
             '</div>'
-
         );
 
         return;
@@ -2891,768 +2755,892 @@ function generateGanttAbsensiV5(start_date, end_date) {
 
     $.ajax({
 
-        url:
-            "../../models/lap_absensi_kmj/lap_absensi_kmj.php",
+        url: "../../models/lap_absensi_kmj/lap_absensi_kmj.php",
 
-        type:
-            "POST",
+        type: "POST",
 
-        dataType:
-            "json",
+        dataType: "json",
 
         data: {
 
-            start_date:
-                start_date,
+            start_date: start_date,
 
-            end_date:
-                end_date,
+            end_date: end_date,
 
-            id_hemxxmh:
-                0
+            id_hemxxmh: 0
 
         },
 
 
-        success:
-            function(json) {
+        /*
+        |--------------------------------------------------------------------------
+        | SUCCESS
+        |--------------------------------------------------------------------------
+        */
+
+        success: function(json) {
+
+            /*
+            |--------------------------------------------------------------------------
+            | GET DATA
+            |--------------------------------------------------------------------------
+            */
+
+            var rows = [];
+
+            if (
+                json &&
+                json.data &&
+                json.data.htsprrd
+            ) {
+
+                rows = json.data.htsprrd;
+
+            }
+
+            console.log(
+                'GANTT V5 RAW:',
+                rows
+            );
 
 
-                /*
-                |--------------------------------------------------------------------------
-                | GET DATA
-                |--------------------------------------------------------------------------
-                */
+            /*
+            |--------------------------------------------------------------------------
+            | FILTER DATA
+            |--------------------------------------------------------------------------
+            |
+            | Hanya ambil absensi yang tanggal bisnisnya
+            | masuk ke filter.
+            |
+            |--------------------------------------------------------------------------
+            */
 
-                var rows = [];
-
-
-                if (
-
-                    json &&
-
-                    json.data &&
-
-                    json.data.htsprrd
-
-                ) {
-
-                    rows =
-                        json.data.htsprrd;
-
-                }
-
-
-                console.log(
-                    'GANTT V5 RAW:',
-                    rows
-                );
-
-
-                /*
-                |--------------------------------------------------------------------------
-                | FILTER DATA
-                |--------------------------------------------------------------------------
-                |
-                | Tanggal ABSENSI harus berada dalam tanggal filter.
-                |--------------------------------------------------------------------------
-                */
-
-                rows =
-                    rows.filter(
-                        function(row) {
-
-
-                            /*
-                            |--------------------------------------------------------------------------
-                            | HARUS PUNYA CHECK IN / OUT
-                            |--------------------------------------------------------------------------
-                            */
-
-                            if (
-
-                                !row['Check In'] ||
-
-                                !row['Check Out']
-
-                            ) {
-
-                                return false;
-
-                            }
-
-
-                            /*
-                            |--------------------------------------------------------------------------
-                            | OFF DIABAIKAN
-                            |--------------------------------------------------------------------------
-                            */
-
-                            if (
-                                row.Shift === 'OFF'
-                            ) {
-
-                                return false;
-
-                            }
-
-
-                            /*
-                            |--------------------------------------------------------------------------
-                            | AMBIL TANGGAL DARI row.tanggal
-                            |--------------------------------------------------------------------------
-                            */
-
-                            var tanggal =
-                                normalizeDate(
-                                    row.tanggal
-                                );
-
-
-                            /*
-                            |--------------------------------------------------------------------------
-                            | FALLBACK KE CHECK IN
-                            |--------------------------------------------------------------------------
-                            */
-
-                            if (!tanggal) {
-
-                                var checkIn =
-                                    parseDate(
-                                        row['Check In']
-                                    );
-
-
-                                if (!checkIn) {
-
-                                    return false;
-
-                                }
-
-
-                                /*
-                                |--------------------------------------------------------------------------
-                                | BUSINESS DATE DIMULAI JAM 07:00
-                                |--------------------------------------------------------------------------
-                                */
-
-                                if (
-                                    checkIn.getHours() < 7
-                                ) {
-
-                                    checkIn.setDate(
-
-                                        checkIn.getDate() - 1
-
-                                    );
-
-                                }
-
-
-                                tanggal =
-                                    formatDate(
-                                        checkIn
-                                    );
-
-                            }
-
-
-                            /*
-                            |--------------------------------------------------------------------------
-                            | STRICT FILTER
-                            |--------------------------------------------------------------------------
-                            */
-
-                            return (
-
-                                tanggal >=
-                                    filterStart &&
-
-                                tanggal <=
-                                    filterEnd
-
-                            );
-
-                        }
-                    );
-
-
-                console.log(
-                    'GANTT V5 FILTERED:',
-                    rows
-                );
-
+            rows = rows.filter(function(row) {
 
                 /*
                 |--------------------------------------------------------------------------
-                | NO DATA
+                | HARUS PUNYA CHECK IN / OUT
                 |--------------------------------------------------------------------------
                 */
 
                 if (
-                    rows.length === 0
+                    !row['Check In'] ||
+                    !row['Check Out']
                 ) {
 
-                    $container.html(
-
-                        '<div class="alert alert-warning">' +
-
-                            'Tidak ada data absensi pada tanggal yang dipilih.' +
-
-                        '</div>'
-
-                    );
-
-                    return;
+                    return false;
 
                 }
 
 
                 /*
                 |--------------------------------------------------------------------------
-                | TIMELINE
-                |--------------------------------------------------------------------------
-                |
-                | BUSINESS DAY:
-                |
-                | 06 Sep 07:00
-                | sampai
-                | 07 Sep 07:00
-                |
-                | Untuk filter 6-7:
-                |
-                | 06 Sep 07:00
-                | sampai
-                | 08 Sep 07:00
-                |
+                | OFF DIABAIKAN
                 |--------------------------------------------------------------------------
                 */
 
-                var timelineStart =
-                    makeDate(
-                        filterStart,
-                        7
-                    );
+                if (row.Shift === 'OFF') {
+
+                    return false;
+
+                }
 
 
-                var timelineEnd =
-                    makeDate(
-                        filterEnd,
-                        7
-                    );
+                /*
+                |--------------------------------------------------------------------------
+                | AMBIL TANGGAL DARI row.tanggal
+                |--------------------------------------------------------------------------
+                */
 
-
-                timelineEnd.setDate(
-
-                    timelineEnd.getDate() + 1
-
+                var tanggal = normalizeDate(
+                    row.tanggal
                 );
 
 
                 /*
                 |--------------------------------------------------------------------------
-                | PEOPLE
+                | FALLBACK KE CHECK IN
                 |--------------------------------------------------------------------------
                 */
 
-                var people = [];
+                if (!tanggal) {
 
-                var peopleMap = {};
+                    var checkIn = parseDate(
+                        row['Check In']
+                    );
 
-
-                $.each(
-
-                    rows,
-
-                    function(
-                        index,
-                        row
-                    ) {
-
-
-                        var nik =
-                            row.NIK;
-
-
-                        if (
-
-                            nik &&
-
-                            peopleMap[nik] === undefined
-
-                        ) {
-
-                            peopleMap[nik] =
-                                people.length;
-
-
-                            people.push({
-
-                                NIK:
-                                    nik,
-
-                                Nama:
-                                    $.trim(
-                                        row.Nama ||
-                                        '-'
-                                    )
-
-                            });
-
-                        }
-
+                    if (!checkIn) {
+                        return false;
                     }
 
-                );
 
+                    /*
+                    |--------------------------------------------------------------------------
+                    | BUSINESS DATE DIMULAI JAM 07:00
+                    |--------------------------------------------------------------------------
+                    */
 
-                /*
-                |--------------------------------------------------------------------------
-                | SORT NAMA
-                |--------------------------------------------------------------------------
-                */
+                    if (checkIn.getHours() < 7) {
 
-                people.sort(
-
-                    function(
-                        a,
-                        b
-                    ) {
-
-                        return (
-
-                            a.Nama.localeCompare(
-                                b.Nama
-                            )
-
+                        checkIn.setDate(
+                            checkIn.getDate() - 1
                         );
 
                     }
 
-                );
+                    tanggal = formatDate(checkIn);
+
+                }
 
 
                 /*
                 |--------------------------------------------------------------------------
-                | REBUILD MAP
+                | STRICT FILTER
                 |--------------------------------------------------------------------------
                 */
 
-                peopleMap = {};
+                return (
+                    tanggal >= filterStart &&
+                    tanggal <= filterEnd
+                );
+
+            });
 
 
-                $.each(
+            console.log(
+                'GANTT V5 FILTERED:',
+                rows
+            );
 
-                    people,
 
-                    function(
-                        index,
-                        person
-                    ) {
+            /*
+            |--------------------------------------------------------------------------
+            | NO DATA
+            |--------------------------------------------------------------------------
+            */
 
-                        peopleMap[
-                            person.NIK
-                        ] = index;
+            if (rows.length === 0) {
 
-                    }
+                $container.html(
+
+                    '<div class="alert alert-warning">' +
+                        'Tidak ada data absensi pada tanggal yang dipilih.' +
+                    '</div>'
 
                 );
 
+                return;
 
-                /*
-                |--------------------------------------------------------------------------
-                | GANTT DATA
-                |--------------------------------------------------------------------------
-                */
-
-                var ganttData = [];
+            }
 
 
-                $.each(
+            /*
+            |--------------------------------------------------------------------------
+            | TIMELINE
+            |--------------------------------------------------------------------------
+            |
+            | Contoh filter:
+            |
+            | 06 Sep - 07 Sep
+            |
+            | Timeline:
+            |
+            | 06 Sep 07:00
+            | sampai
+            | 08 Sep 07:00
+            |
+            |--------------------------------------------------------------------------
+            */
 
-                    rows,
+            var timelineStart = makeDate(
+                filterStart,
+                7
+            );
 
-                    function(
-                        index,
-                        row
+            var timelineEnd = makeDate(
+                filterEnd,
+                7
+            );
+
+            timelineEnd.setDate(
+                timelineEnd.getDate() + 1
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | PEOPLE
+            |--------------------------------------------------------------------------
+            */
+
+            var people = [];
+
+            var peopleMap = {};
+
+
+            $.each(
+                rows,
+                function(index, row) {
+
+                    var nik = row.NIK;
+
+                    if (
+                        nik &&
+                        peopleMap[nik] === undefined
                     ) {
 
+                        peopleMap[nik] = people.length;
 
-                        var start =
-                            parseDate(
-                                row['Check In']
-                            );
+                        people.push({
 
+                            NIK: nik,
 
-                        var end =
-                            parseDate(
-                                row['Check Out']
-                            );
-
-
-                        if (
-                            !start ||
-                            !end
-                        ) {
-
-                            return;
-
-                        }
-
-
-                        /*
-                        |--------------------------------------------------------------------------
-                        | SHIFT MALAM
-                        |--------------------------------------------------------------------------
-                        */
-
-                        if (
-
-                            row.Shift === 'Malam' &&
-
-                            end <= start
-
-                        ) {
-
-                            end.setDate(
-
-                                end.getDate() + 1
-
-                            );
-
-                        }
-
-
-                        /*
-                        |--------------------------------------------------------------------------
-                        | WARNA
-                        |--------------------------------------------------------------------------
-                        */
-
-                        var color =
-                            '#ffc107';
-
-
-                        if (
-                            row.Shift === 'Siang'
-                        ) {
-
-                            color =
-                                '#ff9800';
-
-                        }
-
-
-                        if (
-                            row.Shift === 'Malam'
-                        ) {
-
-                            color =
-                                '#795548';
-
-                        }
-
-
-                        /*
-                        |--------------------------------------------------------------------------
-                        | DATA POINT
-                        |--------------------------------------------------------------------------
-                        */
-
-                        ganttData.push({
-
-                            id:
-
-                                'gantt-' +
-
-                                row.NIK +
-
-                                '-' +
-
-                                index,
-
-
-                            name:
-
-                                row.Shift,
-
-
-                            start:
-
-                                start.getTime(),
-
-
-                            end:
-
-                                end.getTime(),
-
-
-                            y:
-
-                                peopleMap[
-                                    row.NIK
-                                ],
-
-
-                            color:
-
-                                color,
-
-
-                            custom: {
-
-                                nik:
-                                    row.NIK,
-
-                                nama:
-                                    $.trim(
-                                        row.Nama ||
-                                        '-'
-                                    ),
-
-                                tanggal:
-                                    row.tanggal,
-
-                                shift:
-                                    row.Shift,
-
-                                checkIn:
-                                    row['Check In'],
-
-                                checkOut:
-                                    row['Check Out'],
-
-                                durasi:
-                                    row['Durasi (Jam)']
-
-                            }
+                            Nama: $.trim(
+                                row.Nama || '-'
+                            )
 
                         });
 
                     }
 
-                );
+                }
+            );
 
 
-                console.log(
-                    'GANTT V5 SERIES:',
-                    ganttData
-                );
+            /*
+            |--------------------------------------------------------------------------
+            | SORT NAMA
+            |--------------------------------------------------------------------------
+            */
+
+            people.sort(
+                function(a, b) {
+
+                    return a.Nama.localeCompare(
+                        b.Nama
+                    );
+
+                }
+            );
 
 
-                /*
-                |--------------------------------------------------------------------------
-                | JUMLAH HARI
-                |--------------------------------------------------------------------------
-                */
+            /*
+            |--------------------------------------------------------------------------
+            | REBUILD MAP
+            |--------------------------------------------------------------------------
+            */
 
-                var totalDays =
+            peopleMap = {};
 
-                    Math.round(
+            $.each(
+                people,
+                function(index, person) {
 
-                        (
+                    peopleMap[
+                        person.NIK
+                    ] = index;
 
-                            timelineEnd.getTime() -
+                }
+            );
 
-                            timelineStart.getTime()
 
-                        ) /
+            /*
+            |--------------------------------------------------------------------------
+            | GANTT DATA
+            |--------------------------------------------------------------------------
+            */
 
-                        86400000
+            var ganttData = [];
 
+
+            $.each(
+                rows,
+                function(index, row) {
+
+                    var start = parseDate(
+                        row['Check In']
+                    );
+
+                    var end = parseDate(
+                        row['Check Out']
                     );
 
 
-                /*
-                |--------------------------------------------------------------------------
-                | CHART WIDTH
-                |--------------------------------------------------------------------------
-                |
-                | TIDAK MENGECIL.
-                |
-                | 1 hari  = 620px
-                | 7 hari  = 4340px
-                | 30 hari = 18600px
-                |
-                |--------------------------------------------------------------------------
-                */
-
-                var chartWidth =
-
-                    Math.max(
-
-                        1400,
-
-                        totalDays * 620
-
-                    );
+                    if (!start || !end) {
+                        return;
+                    }
 
 
-                /*
-                |--------------------------------------------------------------------------
-                | CHART HEIGHT
-                |--------------------------------------------------------------------------
-                */
+                    /*
+                    |--------------------------------------------------------------------------
+                    | SHIFT MALAM
+                    |--------------------------------------------------------------------------
+                    */
 
-                var chartHeight =
+                    if (
+                        row.Shift === 'Malam' &&
+                        end <= start
+                    ) {
 
-                    Math.max(
+                        end.setDate(
+                            end.getDate() + 1
+                        );
 
-                        500,
-
-                        people.length * 48 + 160
-
-                    );
+                    }
 
 
-                /*
-                |--------------------------------------------------------------------------
-                | CREATE SCROLL CONTENT
-                |--------------------------------------------------------------------------
-                */
+                    /*
+                    |--------------------------------------------------------------------------
+                    | WARNA
+                    |--------------------------------------------------------------------------
+                    */
 
-                $container.html(
+                    var color = '#ffc107';
+
+                    if (row.Shift === 'Siang') {
+
+                        color = '#ff9800';
+
+                    }
+
+                    if (row.Shift === 'Malam') {
+
+                        color = '#795548';
+
+                    }
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | DATA POINT
+                    |--------------------------------------------------------------------------
+                    */
+
+                    ganttData.push({
+
+                        id:
+                            'gantt-' +
+                            row.NIK +
+                            '-' +
+                            index,
+
+                        name:
+                            row.Shift,
+
+                        start:
+                            start.getTime(),
+
+                        end:
+                            end.getTime(),
+
+                        y:
+                            peopleMap[row.NIK],
+
+                        color:
+                            color,
+
+                        custom: {
+
+                            nik:
+                                row.NIK,
+
+                            nama:
+                                $.trim(
+                                    row.Nama || '-'
+                                ),
+
+                            tanggal:
+                                row.tanggal,
+
+                            shift:
+                                row.Shift,
+
+                            checkIn:
+                                row['Check In'],
+
+                            checkOut:
+                                row['Check Out'],
+
+                            durasi:
+                                row['Durasi (Jam)']
+
+                        }
+
+                    });
+
+                }
+            );
+
+
+            console.log(
+                'GANTT V5 SERIES:',
+                ganttData
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | JUMLAH HARI
+            |--------------------------------------------------------------------------
+            */
+
+            var totalDays = Math.round(
+
+                (
+                    timelineEnd.getTime() -
+                    timelineStart.getTime()
+                ) / 86400000
+
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CHART WIDTH
+            |--------------------------------------------------------------------------
+            |
+            | Chart TIDAK mengecil.
+            |
+            | 1 hari  = 620px
+            | 7 hari  = 4340px
+            | 30 hari = 18600px
+            |
+            |--------------------------------------------------------------------------
+            */
+
+            var chartWidth = Math.max(
+                1400,
+                totalDays * 620
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CHART HEIGHT
+            |--------------------------------------------------------------------------
+            */
+
+            var chartHeight = Math.max(
+                500,
+                people.length * 48 + 160
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CREATE SCROLL CONTENT
+            |--------------------------------------------------------------------------
+            */
+
+            $container.html(
+
+                '<div ' +
+                    'class="gantt-v5-scroll-content" ' +
+                    'style="width:' +
+                        chartWidth +
+                    'px;">' +
 
                     '<div ' +
-
-                        'class="gantt-v5-scroll-content" ' +
-
+                        'id="gantt_absensi_kmj_chart" ' +
                         'style="width:' +
                             chartWidth +
                         'px;">' +
 
-                        '<div ' +
+                    '</div>' +
 
-                            'id="gantt_absensi_kmj_chart" +
+                '</div>'
 
-                            'style="width:' +
-                                chartWidth +
-                            'px;">' +
-
-                        '</div>' +
-
-                    '</div>'
-
-                );
+            );
 
 
-                /*
-                |--------------------------------------------------------------------------
-                | HIGHCHART GANTT
-                |--------------------------------------------------------------------------
-                */
+            /*
+            |--------------------------------------------------------------------------
+            | HIGHCHART GANTT
+            |--------------------------------------------------------------------------
+            */
 
-                Highcharts.ganttChart(
+            Highcharts.ganttChart(
 
-                    'gantt_absensi_kmj_chart',
+                'gantt_absensi_kmj_chart',
 
-                    {
+                {
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | CHART
+                    |--------------------------------------------------------------------------
+                    */
+
+                    chart: {
+
+                        width:
+                            chartWidth,
+
+                        height:
+                            chartHeight,
+
+                        backgroundColor:
+                            '#ffffff',
+
+                        spacingTop:
+                            70,
+
+                        spacingRight:
+                            20,
+
+                        spacingBottom:
+                            20,
+
+                        spacingLeft:
+                            10,
+
+                        style: {
+
+                            fontFamily:
+                                'Arial, sans-serif'
+
+                        }
+
+                    },
 
 
-                        /*
-                        |--------------------------------------------------------------------------
-                        | CHART
-                        |--------------------------------------------------------------------------
-                        */
+                    /*
+                    |--------------------------------------------------------------------------
+                    | TITLE
+                    |--------------------------------------------------------------------------
+                    */
 
-                        chart: {
+                    title: {
 
-                            width:
-                                chartWidth,
+                        text:
+                            'Gantt Chart Absensi KMJ',
 
-                            height:
-                                chartHeight,
+                        align:
+                            'left',
 
-                            backgroundColor:
-                                '#111',
+                        x:
+                            10,
 
-                            spacingTop:
-                                70,
+                        y:
+                            20,
 
-                            spacingRight:
-                                20,
+                        style: {
 
-                            spacingBottom:
-                                20,
+                            color:
+                                '#222',
 
-                            spacingLeft:
-                                10,
+                            fontSize:
+                                '16px',
 
-                            style: {
+                            fontWeight:
+                                '700'
 
-                                fontFamily:
-                                    'Arial, sans-serif'
+                        }
 
-                            }
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | SUBTITLE
+                    |--------------------------------------------------------------------------
+                    */
+
+                    subtitle: {
+
+                        text:
+                            filterStart +
+                            ' — ' +
+                            filterEnd,
+
+                        align:
+                            'left',
+
+                        x:
+                            10,
+
+                        y:
+                            42,
+
+                        style: {
+
+                            color:
+                                '#777',
+
+                            fontSize:
+                                '11px'
+
+                        }
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | X AXIS
+                    |--------------------------------------------------------------------------
+                    */
+
+                    xAxis: {
+
+                        type:
+                            'datetime',
+
+                        min:
+                            timelineStart.getTime(),
+
+                        max:
+                            timelineEnd.getTime(),
+
+                        tickInterval:
+                            6 *
+                            60 *
+                            60 *
+                            1000,
+
+                        opposite:
+                            true,
+
+                        startOnTick:
+                            false,
+
+                        endOnTick:
+                            false,
+
+                        grid: {
+
+                            enabled:
+                                true,
+
+                            cellWidth:
+                                100
 
                         },
 
 
                         /*
                         |--------------------------------------------------------------------------
-                        | TITLE
+                        | DATE BANDS
                         |--------------------------------------------------------------------------
                         */
+
+                        plotBands:
+                            (function() {
+
+                                var bands = [];
+
+                                var current =
+                                    new Date(
+                                        timelineStart
+                                    );
+
+
+                                while (
+                                    current <
+                                    timelineEnd
+                                ) {
+
+                                    var bandStart =
+                                        new Date(
+                                            current
+                                        );
+
+                                    var bandEnd =
+                                        new Date(
+                                            current
+                                        );
+
+                                    bandEnd.setDate(
+                                        bandEnd.getDate() + 1
+                                    );
+
+
+                                    if (
+                                        bandEnd >
+                                        timelineEnd
+                                    ) {
+
+                                        bandEnd =
+                                            new Date(
+                                                timelineEnd
+                                            );
+
+                                    }
+
+
+                                    /*
+                                    |--------------------------------------------------------------------------
+                                    | FORMAT TANGGAL
+                                    |--------------------------------------------------------------------------
+                                    */
+
+                                    var dateText =
+                                        bandStart.toLocaleDateString(
+                                            'id-ID',
+                                            {
+
+                                                weekday:
+                                                    'long',
+
+                                                day:
+                                                    'numeric',
+
+                                                month:
+                                                    'long',
+
+                                                year:
+                                                    'numeric'
+
+                                            }
+                                        );
+
+
+                                    bands.push({
+
+                                        from:
+                                            bandStart.getTime(),
+
+                                        to:
+                                            bandEnd.getTime(),
+
+                                        color:
+                                            'rgba(255,255,255,0.8)',
+
+                                        borderColor:
+                                            '#d9d9d9',
+
+                                        borderWidth:
+                                            1,
+
+                                        zIndex:
+                                            0,
+
+                                        label: {
+
+                                            text:
+                                                dateText,
+
+                                            align:
+                                                'center',
+
+                                            verticalAlign:
+                                                'top',
+
+                                            y:
+                                                12,
+
+                                            style: {
+
+                                                color:
+                                                    '#333',
+
+                                                fontSize:
+                                                    '12px',
+
+                                                fontWeight:
+                                                    '600'
+
+                                            }
+
+                                        }
+
+                                    });
+
+
+                                    current =
+                                        bandEnd;
+
+                                }
+
+
+                                return bands;
+
+                            })(),
+
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | JAM
+                        |--------------------------------------------------------------------------
+                        */
+
+                        labels: {
+
+                            useHTML:
+                                true,
+
+                            y:
+                                25,
+
+                            formatter:
+                                function() {
+
+                                    var d =
+                                        new Date(
+                                            this.value
+                                        );
+
+                                    return (
+
+                                        '<div class="gantt-v5-time">' +
+
+                                            '<b>' +
+
+                                                pad(
+                                                    d.getHours()
+                                                ) +
+
+                                                ':' +
+
+                                                pad(
+                                                    d.getMinutes()
+                                                ) +
+
+                                            '</b>' +
+
+                                        '</div>'
+
+                                    );
+
+                                }
+
+                        }
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Y AXIS
+                    |--------------------------------------------------------------------------
+                    */
+
+                    yAxis: {
+
+                        type:
+                            'category',
+
+                        categories:
+                            people.map(
+                                function(person) {
+
+                                    return person.Nama;
+
+                                }
+                            ),
+
+                        reversed:
+                            true,
 
                         title: {
 
                             text:
-                                'Gantt Chart Absensi KMJ',
-
-                            align:
-                                'left',
-
-                            x:
-                                10,
-
-                            y:
-                                20,
+                                'Nama',
 
                             style: {
 
                                 color:
-                                    '#e5e5e5',
-
-                                fontSize:
-                                    '16px',
-
-                                fontWeight:
-                                    '700'
-
-                            }
-
-                        },
-
-
-                        /*
-                        |--------------------------------------------------------------------------
-                        | SUBTITLE
-                        |--------------------------------------------------------------------------
-                        */
-
-                        subtitle: {
-
-                            text:
-
-                                filterStart +
-
-                                ' — ' +
-
-                                filterEnd,
-
-                            align:
-                                'left',
-
-                            x:
-                                10,
-
-                            y:
-                                42,
-
-                            style: {
-
-                                color:
-                                    '#777',
+                                    '#333',
 
                                 fontSize:
                                     '11px'
@@ -3661,505 +3649,57 @@ function generateGanttAbsensiV5(start_date, end_date) {
 
                         },
 
+                        grid: {
 
-                        /*
-                        |--------------------------------------------------------------------------
-                        | X AXIS
-                        |--------------------------------------------------------------------------
-                        */
-
-                        xAxis: {
-
-                            type:
-                                'datetime',
-
-                            min:
-                                timelineStart.getTime(),
-
-                            max:
-                                timelineEnd.getTime(),
-
-                            tickInterval:
-
-                                6 *
-
-                                60 *
-
-                                60 *
-
-                                1000,
-
-
-                            opposite:
-                                true,
-
-
-                            startOnTick:
-                                false,
-
-
-                            endOnTick:
-                                false,
-
-
-                            grid: {
-
-                                enabled:
-                                    true,
-
-                                cellWidth:
-                                    100
-
-                            },
-
-
-                            /*
-                            |--------------------------------------------------------------------------
-                            | DATE BANDS
-                            |--------------------------------------------------------------------------
-                            */
-
-                            plotBands:
-                                (function() {
-
-                                    var bands = [];
-
-
-                                    var current =
-                                        new Date(
-                                            timelineStart
-                                        );
-
-
-                                    /*
-                                    |--------------------------------------------------------------------------
-                                    | Hanya membuat band berdasarkan tanggal FILTER.
-                                    |--------------------------------------------------------------------------
-                                    */
-
-                                    while (
-
-                                        current <
-                                        timelineEnd
-
-                                    ) {
-
-                                        var bandStart =
-                                            new Date(
-                                                current
-                                            );
-
-
-                                        var bandEnd =
-                                            new Date(
-                                                current
-                                            );
-
-
-                                        bandEnd.setDate(
-
-                                            bandEnd.getDate() + 1
-
-                                        );
-
-
-                                        if (
-                                            bandEnd >
-                                            timelineEnd
-                                        ) {
-
-                                            bandEnd =
-                                                new Date(
-                                                    timelineEnd
-                                                );
-
-                                        }
-
-
-                                        /*
-                                        |--------------------------------------------------------------------------
-                                        | Nama tanggal
-                                        |--------------------------------------------------------------------------
-                                        */
-
-                                        var dateText =
-
-                                            bandStart.toLocaleDateString(
-
-                                                'en-US',
-
-                                                {
-
-                                                    weekday:
-                                                        'long',
-
-                                                    month:
-                                                        'long',
-
-                                                    day:
-                                                        'numeric'
-
-                                                }
-
-                                            );
-
-
-                                        bands.push({
-
-                                            from:
-                                                bandStart.getTime(),
-
-                                            to:
-                                                bandEnd.getTime(),
-
-                                            color:
-                                                'rgba(255,255,255,0.005)',
-
-                                            borderColor:
-                                                '#333',
-
-                                            borderWidth:
-                                                1,
-
-                                            zIndex:
-                                                0,
-
-                                            label: {
-
-                                                text:
-                                                    dateText,
-
-                                                align:
-                                                    'center',
-
-                                                verticalAlign:
-                                                    'top',
-
-                                                y:
-                                                    12,
-
-                                                style: {
-
-                                                    color:
-                                                        '#d5d5d5',
-
-                                                    fontSize:
-                                                        '12px',
-
-                                                    fontWeight:
-                                                        '600'
-
-                                                }
-
-                                            }
-
-                                        });
-
-
-                                        current =
-                                            bandEnd;
-
-                                    }
-
-
-                                    return bands;
-
-                                })(),
-
-
-                            /*
-                            |--------------------------------------------------------------------------
-                            | JAM
-                            |--------------------------------------------------------------------------
-                            */
-
-                            labels: {
-
-                                useHTML:
-                                    true,
-
-                                y:
-                                    25,
-
-                                formatter:
-                                    function() {
-
-                                        var d =
-                                            new Date(
-                                                this.value
-                                            );
-
-
-                                        return (
-
-                                            '<div class="gantt-v5-time">' +
-
-                                                '<b>' +
-
-                                                    pad(
-                                                        d.getHours()
-                                                    ) +
-
-                                                    ':' +
-
-                                                    pad(
-                                                        d.getMinutes()
-                                                    ) +
-
-                                                '</b>' +
-
-                                            '</div>'
-
-                                        );
-
-                                    }
-
-                            }
+                            enabled:
+                                true
 
                         },
 
-
-                        /*
-                        |--------------------------------------------------------------------------
-                        | Y AXIS
-                        |--------------------------------------------------------------------------
-                        */
-
-                        yAxis: {
-
-                            type:
-                                'category',
-
-                            categories:
-
-                                people.map(
-
-                                    function(person) {
-
-                                        return person.Nama;
-
-                                    }
-
-                                ),
-
-
-                            reversed:
-                                true,
-
-
-                            title: {
-
-                                text:
-                                    'Nama',
-
-                                style: {
-
-                                    color:
-                                        '#aaa',
-
-                                    fontSize:
-                                        '11px'
-
-                                }
-
-                            },
-
-
-                            grid: {
-
-                                enabled:
-                                    true
-
-                            },
-
-
-                            labels: {
-
-                                useHTML:
-                                    true,
-
-                                formatter:
-                                    function() {
-
-                                        var person =
-                                            people[
-                                                this.pos
-                                            ];
-
-
-                                        if (!person) {
-
-                                            return '';
-
-                                        }
-
-
-                                        var initial =
-
-                                            person.Nama
-                                                .charAt(0)
-                                                .toUpperCase();
-
-
-                                        return (
-
-                                            '<div class="gantt-v5-person">' +
-
-                                                '<span class="gantt-v5-avatar">' +
-
-                                                    escapeHtml(
-                                                        initial
-                                                    ) +
-
-                                                '</span>' +
-
-                                                '<span class="gantt-v5-name">' +
-
-                                                    escapeHtml(
-                                                        person.Nama
-                                                    ) +
-
-                                                '</span>' +
-
-                                            '</div>'
-
-                                        );
-
-                                    }
-
-                            }
-
-                        },
-
-
-                        /*
-                        |--------------------------------------------------------------------------
-                        | TOOLTIP
-                        |--------------------------------------------------------------------------
-                        */
-
-                        tooltip: {
+                        labels: {
 
                             useHTML:
                                 true,
 
-                            backgroundColor:
-                                '#fff',
-
-                            borderColor:
-                                '#ddd',
-
-                            borderRadius:
-                                5,
-
-                            shadow:
-                                true,
-
-
                             formatter:
                                 function() {
 
-                                    var c =
-                                        this.point.custom;
+                                    var person =
+                                        people[
+                                            this.pos
+                                        ];
+
+
+                                    if (!person) {
+                                        return '';
+                                    }
+
+
+                                    var initial =
+                                        person.Nama
+                                            .charAt(0)
+                                            .toUpperCase();
 
 
                                     return (
 
-                                        '<div class="gantt-v5-tooltip">' +
+                                        '<div class="gantt-v5-person">' +
 
-                                            '<div class="gantt-v5-tooltip-name">' +
-
-                                                escapeHtml(
-                                                    c.nama
-                                                ) +
-
-                                            '</div>' +
-
-
-                                            '<div class="gantt-v5-tooltip-row">' +
-
-                                                '<span>NIK</span>' +
-
-                                                '<b>' +
-
-                                                    escapeHtml(
-                                                        c.nik
-                                                    ) +
-
-                                                '</b>' +
-
-                                            '</div>' +
-
-
-                                            '<div class="gantt-v5-tooltip-row">' +
-
-                                                '<span>Tanggal</span>' +
-
-                                                '<b>' +
-
-                                                    escapeHtml(
-                                                        c.tanggal
-                                                    ) +
-
-                                                '</b>' +
-
-                                            '</div>' +
-
-
-                                            '<div class="gantt-v5-tooltip-row">' +
-
-                                                '<span>Shift</span>' +
-
-                                                '<b>' +
-
-                                                    escapeHtml(
-                                                        c.shift
-                                                    ) +
-
-                                                '</b>' +
-
-                                            '</div>' +
-
-
-                                            '<div class="gantt-v5-tooltip-row">' +
-
-                                                '<span>Check In</span>' +
-
-                                                '<b>' +
-
-                                                    escapeHtml(
-                                                        c.checkIn
-                                                    ) +
-
-                                                '</b>' +
-
-                                            '</div>' +
-
-
-                                            '<div class="gantt-v5-tooltip-row">' +
-
-                                                '<span>Check Out</span>' +
-
-                                                '<b>' +
-
-                                                    escapeHtml(
-                                                        c.checkOut
-                                                    ) +
-
-                                                '</b>' +
-
-                                            '</div>' +
-
-
-                                            '<div class="gantt-v5-tooltip-duration">' +
+                                            '<span class="gantt-v5-avatar">' +
 
                                                 escapeHtml(
-                                                    c.durasi
+                                                    initial
                                                 ) +
 
-                                                ' jam' +
+                                            '</span>' +
 
-                                            '</div>' +
+                                            '<span class="gantt-v5-name">' +
+
+                                                escapeHtml(
+                                                    person.Nama
+                                                ) +
+
+                                            '</span>' +
 
                                         '</div>'
 
@@ -4167,137 +3707,274 @@ function generateGanttAbsensiV5(start_date, end_date) {
 
                                 }
 
-                        },
+                        }
+
+                    },
 
 
-                        /*
-                        |--------------------------------------------------------------------------
-                        | HIGHCHART NAVIGATOR
-                        |--------------------------------------------------------------------------
-                        */
+                    /*
+                    |--------------------------------------------------------------------------
+                    | TOOLTIP
+                    |--------------------------------------------------------------------------
+                    */
 
-                        navigator: {
+                    tooltip: {
 
-                            enabled:
-                                false
+                        useHTML:
+                            true,
 
-                        },
+                        backgroundColor:
+                            '#fff',
 
+                        borderColor:
+                            '#ddd',
 
-                        /*
-                        |--------------------------------------------------------------------------
-                        | HIGHCHART SCROLLBAR
-                        |--------------------------------------------------------------------------
-                        |
-                        | DIMATIKAN.
-                        |
-                        | Scroll horizontal sekarang dilakukan oleh
-                        | #gantt_absensi_kmj.
-                        |--------------------------------------------------------------------------
-                        */
+                        borderRadius:
+                            5,
 
-                        scrollbar: {
+                        shadow:
+                            true,
 
-                            enabled:
-                                false
+                        formatter:
+                            function() {
 
-                        },
+                                var c =
+                                    this.point.custom;
 
 
-                        /*
-                        |--------------------------------------------------------------------------
-                        | RANGE SELECTOR
-                        |--------------------------------------------------------------------------
-                        */
+                                return (
 
-                        rangeSelector: {
+                                    '<div class="gantt-v5-tooltip">' +
 
-                            enabled:
-                                false
+                                        '<div class="gantt-v5-tooltip-name">' +
 
-                        },
+                                            escapeHtml(
+                                                c.nama
+                                            ) +
 
-
-                        /*
-                        |--------------------------------------------------------------------------
-                        | LEGEND
-                        |--------------------------------------------------------------------------
-                        */
-
-                        legend: {
-
-                            enabled:
-                                false
-
-                        },
+                                        '</div>' +
 
 
-                        /*
-                        |--------------------------------------------------------------------------
-                        | CREDITS
-                        |--------------------------------------------------------------------------
-                        */
+                                        '<div class="gantt-v5-tooltip-row">' +
 
-                        credits: {
+                                            '<span>NIK</span>' +
 
-                            enabled:
-                                false
+                                            '<b>' +
 
-                        },
+                                                escapeHtml(
+                                                    c.nik
+                                                ) +
 
+                                            '</b>' +
 
-                        /*
-                        |--------------------------------------------------------------------------
-                        | SERIES
-                        |--------------------------------------------------------------------------
-                        */
-
-                        series: [
-
-                            {
-
-                                name:
-                                    'Absensi',
-
-                                data:
-                                    ganttData,
+                                        '</div>' +
 
 
-                                dataLabels: {
+                                        '<div class="gantt-v5-tooltip-row">' +
 
-                                    enabled:
-                                        true,
+                                            '<span>Tanggal</span>' +
 
-                                    format:
-                                        '{point.name}',
+                                            '<b>' +
 
-                                    style: {
+                                                escapeHtml(
+                                                    c.tanggal
+                                                ) +
 
-                                        fontSize:
-                                            '9px',
+                                            '</b>' +
 
-                                        fontWeight:
-                                            '600',
+                                        '</div>' +
 
-                                        color:
-                                            '#111',
 
-                                        textOutline:
-                                            'none'
+                                        '<div class="gantt-v5-tooltip-row">' +
 
-                                    }
+                                            '<span>Shift</span>' +
+
+                                            '<b>' +
+
+                                                escapeHtml(
+                                                    c.shift
+                                                ) +
+
+                                            '</b>' +
+
+                                        '</div>' +
+
+
+                                        '<div class="gantt-v5-tooltip-row">' +
+
+                                            '<span>Check In</span>' +
+
+                                            '<b>' +
+
+                                                escapeHtml(
+                                                    c.checkIn
+                                                ) +
+
+                                            '</b>' +
+
+                                        '</div>' +
+
+
+                                        '<div class="gantt-v5-tooltip-row">' +
+
+                                            '<span>Check Out</span>' +
+
+                                            '<b>' +
+
+                                                escapeHtml(
+                                                    c.checkOut
+                                                ) +
+
+                                            '</b>' +
+
+                                        '</div>' +
+
+
+                                        '<div class="gantt-v5-tooltip-duration">' +
+
+                                            escapeHtml(
+                                                c.durasi
+                                            ) +
+
+                                            ' jam' +
+
+                                        '</div>' +
+
+                                    '</div>'
+
+                                );
+
+                            }
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | NAVIGATOR
+                    |--------------------------------------------------------------------------
+                    */
+
+                    navigator: {
+
+                        enabled:
+                            false
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | HIGHCHART SCROLLBAR
+                    |--------------------------------------------------------------------------
+                    |
+                    | Dimatikan.
+                    | Scroll X menggunakan container luar.
+                    |
+                    |--------------------------------------------------------------------------
+                    */
+
+                    scrollbar: {
+
+                        enabled:
+                            false
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | RANGE SELECTOR
+                    |--------------------------------------------------------------------------
+                    */
+
+                    rangeSelector: {
+
+                        enabled:
+                            false
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | LEGEND
+                    |--------------------------------------------------------------------------
+                    */
+
+                    legend: {
+
+                        enabled:
+                            false
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | CREDITS
+                    |--------------------------------------------------------------------------
+                    */
+
+                    credits: {
+
+                        enabled:
+                            false
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | SERIES
+                    |--------------------------------------------------------------------------
+                    */
+
+                    series: [
+
+                        {
+
+                            name:
+                                'Absensi',
+
+                            data:
+                                ganttData,
+
+                            dataLabels: {
+
+                                enabled:
+                                    true,
+
+                                format:
+                                    '{point.name}',
+
+                                style: {
+
+                                    fontSize:
+                                        '9px',
+
+                                    fontWeight:
+                                        '600',
+
+                                    color:
+                                        '#111',
+
+                                    textOutline:
+                                        'none'
 
                                 }
 
                             }
 
-                        ]
+                        }
 
-                    }
+                    ]
 
-                );
+                }
 
-            },
+            );
+
+        },
 
 
         /*
@@ -4306,34 +3983,31 @@ function generateGanttAbsensiV5(start_date, end_date) {
         |--------------------------------------------------------------------------
         */
 
-        error:
-            function(
-                xhr,
+        error: function(
+            xhr,
+            status,
+            error
+        ) {
+
+            console.error(
+                'GANTT V5 AJAX ERROR:',
                 status,
-                error
-            ) {
-
-                console.error(
-                    'GANTT V5 AJAX ERROR:',
-                    status,
-                    error,
-                    xhr.responseText
-                );
+                error,
+                xhr.responseText
+            );
 
 
-                $container.html(
+            $container.html(
 
-                    '<div class="alert alert-danger">' +
+                '<div class="alert alert-danger">' +
+                    'Gagal mengambil data Gantt.' +
+                '</div>'
 
-                        'Gagal mengambil data Gantt.' +
+            );
 
-                    '</div>'
-
-                );
-
-            }
+        }
 
     });
 
-}
+};
 </script>
