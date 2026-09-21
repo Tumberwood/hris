@@ -2448,19 +2448,34 @@ function generateGanttAbsensiV5(start_date, end_date) {
 
     $container.empty();
 
+
     /*
     |--------------------------------------------------------------------------
-    | NORMALIZE DATE FILTER
+    | HELPER
     |--------------------------------------------------------------------------
     */
 
-    function normalizeDateKey(value) {
+    function pad(n) {
+
+        return String(n).padStart(2, '0');
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | NORMALIZE DATE
+    |--------------------------------------------------------------------------
+    */
+
+    function normalizeDate(value) {
 
         if (!value) {
             return null;
         }
 
         value = String(value).trim();
+
 
         /*
         |--------------------------------------------------------------------------
@@ -2477,9 +2492,9 @@ function generateGanttAbsensiV5(start_date, end_date) {
             return (
                 m[1] +
                 '-' +
-                String(m[2]).padStart(2, '0') +
+                pad(m[2]) +
                 '-' +
-                String(m[3]).padStart(2, '0')
+                pad(m[3])
             );
 
         }
@@ -2500,9 +2515,9 @@ function generateGanttAbsensiV5(start_date, end_date) {
             return (
                 m[3] +
                 '-' +
-                String(m[2]).padStart(2, '0') +
+                pad(m[2]) +
                 '-' +
-                String(m[1]).padStart(2, '0')
+                pad(m[1])
             );
 
         }
@@ -2523,9 +2538,9 @@ function generateGanttAbsensiV5(start_date, end_date) {
             return (
                 m[3] +
                 '-' +
-                String(m[2]).padStart(2, '0') +
+                pad(m[2]) +
                 '-' +
-                String(m[1]).padStart(2, '0')
+                pad(m[1])
             );
 
         }
@@ -2533,7 +2548,7 @@ function generateGanttAbsensiV5(start_date, end_date) {
 
         /*
         |--------------------------------------------------------------------------
-        | DATE OBJECT / STRING LAIN
+        | FALLBACK
         |--------------------------------------------------------------------------
         */
 
@@ -2544,9 +2559,9 @@ function generateGanttAbsensiV5(start_date, end_date) {
             return (
                 d.getFullYear() +
                 '-' +
-                String(d.getMonth() + 1).padStart(2, '0') +
+                pad(d.getMonth() + 1) +
                 '-' +
-                String(d.getDate()).padStart(2, '0')
+                pad(d.getDate())
             );
 
         }
@@ -2556,35 +2571,15 @@ function generateGanttAbsensiV5(start_date, end_date) {
     }
 
 
-    var filterStart =
-        normalizeDateKey(start_date);
-
-    var filterEnd =
-        normalizeDateKey(end_date);
-
-
-    if (!filterStart || !filterEnd) {
-
-        $container.html(
-            '<div class="alert alert-danger">' +
-                'Tanggal filter tidak valid.' +
-            '</div>'
-        );
-
-        return;
-
-    }
-
-
     /*
     |--------------------------------------------------------------------------
-    | DATE OBJECT LOCAL
+    | DATE OBJECT
     |--------------------------------------------------------------------------
     */
 
-    function dateFromKey(key, hour) {
+    function makeDate(dateString, hour) {
 
-        var p = key.split('-');
+        var p = dateString.split('-');
 
         return new Date(
             parseInt(p[0], 10),
@@ -2599,46 +2594,9 @@ function generateGanttAbsensiV5(start_date, end_date) {
     }
 
 
-    function addDays(date, days) {
-
-        var d = new Date(date);
-
-        d.setDate(
-            d.getDate() + days
-        );
-
-        return d;
-
-    }
-
-
     /*
     |--------------------------------------------------------------------------
-    | MONTH
-    |--------------------------------------------------------------------------
-    */
-
-    var monthMap = {
-
-        Jan: 0,
-        Feb: 1,
-        Mar: 2,
-        Apr: 3,
-        May: 4,
-        Jun: 5,
-        Jul: 6,
-        Aug: 7,
-        Sep: 8,
-        Oct: 9,
-        Nov: 10,
-        Dec: 11
-
-    };
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | PARSE DATETIME
+    | PARSE CHECK IN / CHECK OUT
     |--------------------------------------------------------------------------
     */
 
@@ -2648,39 +2606,50 @@ function generateGanttAbsensiV5(start_date, end_date) {
             return null;
         }
 
-        value =
-            String(value)
-                .trim();
+        value = String(value).trim();
+
 
         /*
         |--------------------------------------------------------------------------
-        | FORMAT:
+        | CONTOH:
         | 06 Sep 2026 07:00
         |--------------------------------------------------------------------------
         */
 
-        var p =
-            value.split(/\s+/);
+        var p = value.split(/\s+/);
+
+        var monthMap = {
+
+            Jan: 0,
+            Feb: 1,
+            Mar: 2,
+            Apr: 3,
+            May: 4,
+            Jun: 5,
+            Jul: 6,
+            Aug: 7,
+            Sep: 8,
+            Oct: 9,
+            Nov: 10,
+            Dec: 11
+
+        };
+
 
         if (p.length >= 4) {
 
             var day =
-                parseInt(
-                    p[0],
-                    10
-                );
+                parseInt(p[0], 10);
 
             var month =
                 monthMap[p[1]];
 
             var year =
-                parseInt(
-                    p[2],
-                    10
-                );
+                parseInt(p[2], 10);
 
             var time =
                 p[3].split(':');
+
 
             if (
                 !isNaN(day) &&
@@ -2692,14 +2661,8 @@ function generateGanttAbsensiV5(start_date, end_date) {
                     year,
                     month,
                     day,
-                    parseInt(
-                        time[0],
-                        10
-                    ) || 0,
-                    parseInt(
-                        time[1],
-                        10
-                    ) || 0,
+                    parseInt(time[0], 10) || 0,
+                    parseInt(time[1], 10) || 0,
                     0,
                     0
                 );
@@ -2711,12 +2674,11 @@ function generateGanttAbsensiV5(start_date, end_date) {
 
         /*
         |--------------------------------------------------------------------------
-        | FALLBACK JS DATE
+        | FALLBACK
         |--------------------------------------------------------------------------
         */
 
-        var d =
-            new Date(value);
+        var d = new Date(value);
 
         if (!isNaN(d.getTime())) {
 
@@ -2731,78 +2693,71 @@ function generateGanttAbsensiV5(start_date, end_date) {
 
     /*
     |--------------------------------------------------------------------------
-    | GET BUSINESS DATE
+    | FORMAT DATE
     |--------------------------------------------------------------------------
     */
 
-    function getBusinessDateKey(row) {
-
-        /*
-        |--------------------------------------------------------------------------
-        | PRIORITAS:
-        | row.tanggal
-        |--------------------------------------------------------------------------
-        */
-
-        if (row.tanggal) {
-
-            var key =
-                normalizeDateKey(
-                    row.tanggal
-                );
-
-            if (key) {
-                return key;
-            }
-
-        }
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | FALLBACK CHECK IN
-        |--------------------------------------------------------------------------
-        */
-
-        var checkIn =
-            parseDate(
-                row['Check In']
-            );
-
-        if (!checkIn) {
-            return null;
-        }
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Jika jam < 07:00,
-        | dianggap bagian dari business date sebelumnya.
-        |--------------------------------------------------------------------------
-        */
-
-        if (
-            checkIn.getHours() < 7
-        ) {
-
-            checkIn.setDate(
-                checkIn.getDate() - 1
-            );
-
-        }
-
+    function formatDate(date) {
 
         return (
-            checkIn.getFullYear() +
+            date.getFullYear() +
             '-' +
-            String(
-                checkIn.getMonth() + 1
-            ).padStart(2, '0') +
+            pad(date.getMonth() + 1) +
             '-' +
-            String(
-                checkIn.getDate()
-            ).padStart(2, '0')
+            pad(date.getDate())
         );
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | ESCAPE HTML
+    |--------------------------------------------------------------------------
+    |
+    | Jangan menggunakan Highcharts.escapeHTML karena versi Highcharts
+    | di server belum tentu menyediakan function tersebut.
+    |
+    |--------------------------------------------------------------------------
+    */
+
+    function escapeHtml(value) {
+
+        return String(value == null ? '' : value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | FILTER DATE
+    |--------------------------------------------------------------------------
+    */
+
+    var filterStart =
+        normalizeDate(start_date);
+
+    var filterEnd =
+        normalizeDate(end_date);
+
+
+    if (
+        !filterStart ||
+        !filterEnd
+    ) {
+
+        $container.html(
+            '<div class="alert alert-danger">' +
+                'Tanggal filter tidak valid.' +
+            '</div>'
+        );
+
+        return;
 
     }
 
@@ -2862,67 +2817,119 @@ function generateGanttAbsensiV5(start_date, end_date) {
                 }
 
 
+                console.log(
+                    'GANTT V5 DATA:',
+                    rows
+                );
+
+
                 /*
                 |--------------------------------------------------------------------------
-                | FILTER ABSENSI
-                |
-                | PENTING:
-                | Filter berdasarkan business date yang dipilih.
-                |
-                | Jadi kalau filter 6:
-                |   hanya 6
-                |
-                | Kalau filter 6-7:
-                |   hanya 6 dan 7
-                |
-                | Tidak peduli backend mengembalikan
-                | data tambahan tanggal berikutnya.
+                | FILTER DATA
                 |--------------------------------------------------------------------------
                 */
 
-                rows =
-                    rows.filter(
-                        function (row) {
+                rows = rows.filter(
+                    function (row) {
 
-                            if (
-                                !row['Check In'] ||
-                                !row['Check Out']
-                            ) {
+                        if (
+                            !row['Check In'] ||
+                            !row['Check Out']
+                        ) {
 
-                                return false;
+                            return false;
 
-                            }
-
-
-                            if (
-                                row.Shift === 'OFF'
-                            ) {
-
-                                return false;
-
-                            }
+                        }
 
 
-                            var businessDate =
-                                getBusinessDateKey(
-                                    row
+                        if (
+                            row.Shift === 'OFF'
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | TANGGAL DATA
+                        |--------------------------------------------------------------------------
+                        */
+
+                        var tanggal =
+                            normalizeDate(
+                                row.tanggal
+                            );
+
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Jika row.tanggal tidak valid,
+                        | ambil dari Check In.
+                        |--------------------------------------------------------------------------
+                        */
+
+                        if (!tanggal) {
+
+                            var checkIn =
+                                parseDate(
+                                    row['Check In']
                                 );
 
 
-                            if (!businessDate) {
+                            if (!checkIn) {
                                 return false;
                             }
 
 
-                            return (
-                                businessDate >=
-                                    filterStart &&
-                                businessDate <=
-                                    filterEnd
-                            );
+                            /*
+                            |--------------------------------------------------------------------------
+                            | Shift sebelum jam 07 dianggap
+                            | business date sebelumnya.
+                            |--------------------------------------------------------------------------
+                            */
+
+                            if (
+                                checkIn.getHours() < 7
+                            ) {
+
+                                checkIn.setDate(
+                                    checkIn.getDate() - 1
+                                );
+
+                            }
+
+
+                            tanggal =
+                                formatDate(
+                                    checkIn
+                                );
 
                         }
-                    );
+
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | STRICT FILTER
+                        |--------------------------------------------------------------------------
+                        */
+
+                        return (
+                            tanggal >=
+                                filterStart &&
+                            tanggal <=
+                                filterEnd
+                        );
+
+                    }
+                );
+
+
+                console.log(
+                    'GANTT V5 FILTERED:',
+                    rows
+                );
 
 
                 /*
@@ -2931,9 +2938,7 @@ function generateGanttAbsensiV5(start_date, end_date) {
                 |--------------------------------------------------------------------------
                 */
 
-                if (
-                    rows.length === 0
-                ) {
+                if (!rows.length) {
 
                     $container.html(
 
@@ -2951,38 +2956,39 @@ function generateGanttAbsensiV5(start_date, end_date) {
                 /*
                 |--------------------------------------------------------------------------
                 | TIMELINE
+                |--------------------------------------------------------------------------
                 |
-                | BUSINESS DAY:
+                | SELALU MENGIKUTI FILTER.
                 |
-                | 06 Sep 07:00
-                | sampai
-                | 07 Sep 07:00
+                | Filter 6:
+                | 06 07:00 -> 07 07:00
                 |
-                | Jadi shift malam boleh checkout tanggal
-                | kalender berikutnya, tetapi tidak membuat
-                | tanggal baru di header.
+                | Filter 6-7:
+                | 06 07:00 -> 08 07:00
+                |
+                | Jadi tanggal 8 tidak pernah dibuat
+                | sebagai tanggal header.
+                |
                 |--------------------------------------------------------------------------
                 */
 
                 var timelineStart =
-                    dateFromKey(
+                    makeDate(
                         filterStart,
                         7
                     );
 
 
-                var nextFilterEnd =
-                    addDays(
-                        dateFromKey(
-                            filterEnd,
-                            7
-                        ),
-                        1
+                var timelineEnd =
+                    makeDate(
+                        filterEnd,
+                        7
                     );
 
 
-                var timelineEnd =
-                    nextFilterEnd;
+                timelineEnd.setDate(
+                    timelineEnd.getDate() + 1
+                );
 
 
                 /*
@@ -3037,15 +3043,12 @@ function generateGanttAbsensiV5(start_date, end_date) {
 
                 /*
                 |--------------------------------------------------------------------------
-                | SORT NAMA
+                | SORT
                 |--------------------------------------------------------------------------
                 */
 
                 people.sort(
-                    function (
-                        a,
-                        b
-                    ) {
+                    function (a, b) {
 
                         return a.Nama.localeCompare(
                             b.Nama
@@ -3119,7 +3122,7 @@ function generateGanttAbsensiV5(start_date, end_date) {
 
                         /*
                         |--------------------------------------------------------------------------
-                        | MALAM
+                        | SHIFT MALAM
                         |--------------------------------------------------------------------------
                         */
 
@@ -3167,93 +3170,29 @@ function generateGanttAbsensiV5(start_date, end_date) {
 
                         /*
                         |--------------------------------------------------------------------------
-                        | CLIP BAR KE TIMELINE
+                        | JANGAN CLIP BAR
+                        |--------------------------------------------------------------------------
                         |
-                        | Ini penting supaya shift yang checkout
-                        | setelah tanggal filter tidak merusak range chart.
+                        | Bar tetap menggunakan waktu asli.
+                        |
+                        | Ini penting untuk shift malam.
                         |--------------------------------------------------------------------------
                         */
-
-                        var displayStart =
-                            new Date(start);
-
-
-                        var displayEnd =
-                            new Date(end);
-
-
-                        if (
-                            displayStart <
-                            timelineStart
-                        ) {
-
-                            displayStart =
-                                new Date(
-                                    timelineStart
-                                );
-
-                        }
-
-
-                        if (
-                            displayEnd >
-                            timelineEnd
-                        ) {
-
-                            displayEnd =
-                                new Date(
-                                    timelineEnd
-                                );
-
-                        }
-
-
-                        /*
-                        |--------------------------------------------------------------------------
-                        | Jangan tampilkan bar kalau seluruhnya
-                        | berada di luar timeline.
-                        |--------------------------------------------------------------------------
-                        */
-
-                        if (
-                            displayEnd <=
-                            timelineStart
-                        ) {
-
-                            return;
-
-                        }
-
-
-                        if (
-                            displayStart >=
-                            timelineEnd
-                        ) {
-
-                            return;
-
-                        }
-
 
                         ganttData.push({
 
                             id:
-                                row.NIK +
-                                '-' +
-                                row.tanggal +
-                                '-' +
-                                row.Shift +
-                                '-' +
+                                'gantt-' +
                                 index,
 
                             name:
                                 row.Shift,
 
                             start:
-                                displayStart.getTime(),
+                                start.getTime(),
 
                             end:
-                                displayEnd.getTime(),
+                                end.getTime(),
 
                             y:
                                 peopleMap[
@@ -3297,27 +3236,21 @@ function generateGanttAbsensiV5(start_date, end_date) {
                 );
 
 
-                /*
-                |--------------------------------------------------------------------------
-                | CHART ELEMENT
-                |--------------------------------------------------------------------------
-                */
-
-                $container.html(
-
-                    '<div id="gantt_absensi_kmj_chart" ' +
-                        'class="gantt-v5-chart">' +
-                    '</div>'
-
+                console.log(
+                    'GANTT V5 SERIES:',
+                    ganttData
                 );
 
 
                 /*
                 |--------------------------------------------------------------------------
-                | CHART SIZE
+                | CHART WIDTH
+                |--------------------------------------------------------------------------
                 |
-                | Semakin banyak tanggal, semakin lebar.
-                | Container akan scroll horizontal.
+                | 1 hari = 620 px
+                | 30 hari = 18.600 px
+                |
+                | Tidak mengecilkan chart.
                 |--------------------------------------------------------------------------
                 */
 
@@ -3327,194 +3260,46 @@ function generateGanttAbsensiV5(start_date, end_date) {
                             timelineEnd.getTime() -
                             timelineStart.getTime()
                         ) /
-                        (
-                            24 *
-                            60 *
-                            60 *
-                            1000
-                        )
+                        86400000
                     );
 
 
                 var chartWidth =
                     Math.max(
-                        1100,
+                        1400,
                         totalDays * 620
                     );
 
 
                 /*
                 |--------------------------------------------------------------------------
-                | HEIGHT
-                |
-                | Container luar yang melakukan vertical scroll.
+                | CHART HEIGHT
                 |--------------------------------------------------------------------------
                 */
 
                 var chartHeight =
                     Math.max(
                         500,
-                        people.length * 48 + 170
+                        people.length * 48 + 150
                     );
 
 
                 /*
                 |--------------------------------------------------------------------------
-                | DATE BAND
-                |
-                | Satu band = satu tanggal filter.
-                |
-                | Kalau filter:
-                | 6
-                |
-                | hanya ada:
-                | Sunday, September 6
-                |
-                | Kalau filter:
-                | 6 - 7
-                |
-                | hanya ada:
-                | Sunday, September 6
-                | Monday, September 7
+                | CONTAINER CHART
                 |--------------------------------------------------------------------------
                 */
 
-                var plotBands = [];
+                $container.html(
 
+                    '<div id="gantt_absensi_kmj_chart"></div>'
 
-                var bandDate =
-                    new Date(
-                        timelineStart
-                    );
-
-
-                while (
-                    bandDate <
-                    timelineEnd
-                ) {
-
-                    var bandStart =
-                        new Date(
-                            bandDate
-                        );
-
-
-                    var bandEnd =
-                        new Date(
-                            bandDate
-                        );
-
-                    bandEnd.setDate(
-                        bandEnd.getDate() + 1
-                    );
-
-
-                    if (
-                        bandEnd >
-                        timelineEnd
-                    ) {
-
-                        bandEnd =
-                            new Date(
-                                timelineEnd
-                            );
-
-                    }
-
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | Format nama tanggal
-                    |--------------------------------------------------------------------------
-                    */
-
-                    var dayName =
-                        bandStart.toLocaleDateString(
-                            'en-US',
-                            {
-                                weekday:
-                                    'long',
-
-                                month:
-                                    'long',
-
-                                day:
-                                    'numeric'
-                            }
-                        );
-
-
-                    plotBands.push({
-
-                        from:
-                            bandStart.getTime(),
-
-                        to:
-                            bandEnd.getTime(),
-
-                        color:
-                            'rgba(255,255,255,0.005)',
-
-                        borderColor:
-                            '#333',
-
-                        borderWidth:
-                            1,
-
-                        zIndex:
-                            0,
-
-                        label: {
-
-                            text:
-                                dayName,
-
-                            align:
-                                'center',
-
-                            verticalAlign:
-                                'top',
-
-                            y:
-                                12,
-
-                            className:
-                                'gantt-v5-date-band'
-
-                        }
-
-                    });
-
-
-                    bandDate =
-                        bandEnd;
-
-                }
+                );
 
 
                 /*
                 |--------------------------------------------------------------------------
-                | X AXIS TICKS
-                |
-                | 07:00
-                | 13:00
-                | 19:00
-                | 01:00
-                |
-                | Setiap 6 jam.
-                |--------------------------------------------------------------------------
-                */
-
-                var tickInterval =
-                    6 *
-                    60 *
-                    60 *
-                    1000;
-
-
-                /*
-                |--------------------------------------------------------------------------
-                | HIGHCHARTS
+                | HIGHCHART
                 |--------------------------------------------------------------------------
                 */
 
@@ -3536,7 +3321,7 @@ function generateGanttAbsensiV5(start_date, end_date) {
                                 '#111',
 
                             spacingTop:
-                                55,
+                                70,
 
                             spacingRight:
                                 20,
@@ -3545,14 +3330,7 @@ function generateGanttAbsensiV5(start_date, end_date) {
                                 20,
 
                             spacingLeft:
-                                10,
-
-                            style: {
-
-                                fontFamily:
-                                    'Arial, sans-serif'
-
-                            }
+                                10
 
                         },
 
@@ -3601,7 +3379,7 @@ function generateGanttAbsensiV5(start_date, end_date) {
                                 10,
 
                             y:
-                                40,
+                                42,
 
                             style: {
 
@@ -3628,7 +3406,7 @@ function generateGanttAbsensiV5(start_date, end_date) {
                                 timelineEnd.getTime(),
 
                             tickInterval:
-                                tickInterval,
+                                6 * 60 * 60 * 1000,
 
                             opposite:
                                 true,
@@ -3645,20 +3423,14 @@ function generateGanttAbsensiV5(start_date, end_date) {
                                     true,
 
                                 cellWidth:
-                                    105
+                                    100
 
                             },
-
-                            plotBands:
-                                plotBands,
 
                             labels: {
 
                                 useHTML:
                                     true,
-
-                                y:
-                                    25,
 
                                 formatter:
                                     function () {
@@ -3669,32 +3441,18 @@ function generateGanttAbsensiV5(start_date, end_date) {
                                             );
 
 
-                                        var hour =
-                                            String(
-                                                d.getHours()
-                                            ).padStart(
-                                                2,
-                                                '0'
-                                            );
-
-
-                                        var minute =
-                                            String(
-                                                d.getMinutes()
-                                            ).padStart(
-                                                2,
-                                                '0'
-                                            );
-
-
                                         return (
 
                                             '<div class="gantt-v5-time">' +
 
                                                 '<b>' +
-                                                    hour +
+                                                    pad(
+                                                        d.getHours()
+                                                    ) +
                                                     ':' +
-                                                    minute +
+                                                    pad(
+                                                        d.getMinutes()
+                                                    ) +
                                                 '</b>' +
 
                                             '</div>'
@@ -3735,19 +3493,9 @@ function generateGanttAbsensiV5(start_date, end_date) {
                                 style: {
 
                                     color:
-                                        '#aaa',
-
-                                    fontSize:
-                                        '11px'
+                                        '#aaa'
 
                                 }
-
-                            },
-
-                            grid: {
-
-                                enabled:
-                                    true
 
                             },
 
@@ -3781,14 +3529,15 @@ function generateGanttAbsensiV5(start_date, end_date) {
                                             '<div class="gantt-v5-person">' +
 
                                                 '<span class="gantt-v5-avatar">' +
-                                                    initial +
+                                                    escapeHtml(
+                                                        initial
+                                                    ) +
                                                 '</span>' +
 
                                                 '<span class="gantt-v5-name">' +
-                                                    Highcharts
-                                                        .escapeHTML(
-                                                            person.Nama
-                                                        ) +
+                                                    escapeHtml(
+                                                        person.Nama
+                                                    ) +
                                                 '</span>' +
 
                                             '</div>'
@@ -3807,18 +3556,6 @@ function generateGanttAbsensiV5(start_date, end_date) {
                             useHTML:
                                 true,
 
-                            backgroundColor:
-                                '#fff',
-
-                            borderColor:
-                                '#ddd',
-
-                            borderRadius:
-                                5,
-
-                            shadow:
-                                true,
-
                             formatter:
                                 function () {
 
@@ -3831,7 +3568,7 @@ function generateGanttAbsensiV5(start_date, end_date) {
                                         '<div class="gantt-v5-tooltip">' +
 
                                             '<div class="gantt-v5-tooltip-name">' +
-                                                Highcharts.escapeHTML(
+                                                escapeHtml(
                                                     c.nama
                                                 ) +
                                             '</div>' +
@@ -3839,8 +3576,8 @@ function generateGanttAbsensiV5(start_date, end_date) {
                                             '<div class="gantt-v5-tooltip-row">' +
                                                 '<span>NIK</span>' +
                                                 '<b>' +
-                                                    Highcharts.escapeHTML(
-                                                        String(c.nik || '-')
+                                                    escapeHtml(
+                                                        c.nik
                                                     ) +
                                                 '</b>' +
                                             '</div>' +
@@ -3848,8 +3585,8 @@ function generateGanttAbsensiV5(start_date, end_date) {
                                             '<div class="gantt-v5-tooltip-row">' +
                                                 '<span>Tanggal</span>' +
                                                 '<b>' +
-                                                    Highcharts.escapeHTML(
-                                                        String(c.tanggal || '-')
+                                                    escapeHtml(
+                                                        c.tanggal
                                                     ) +
                                                 '</b>' +
                                             '</div>' +
@@ -3857,8 +3594,8 @@ function generateGanttAbsensiV5(start_date, end_date) {
                                             '<div class="gantt-v5-tooltip-row">' +
                                                 '<span>Shift</span>' +
                                                 '<b>' +
-                                                    Highcharts.escapeHTML(
-                                                        String(c.shift || '-')
+                                                    escapeHtml(
+                                                        c.shift
                                                     ) +
                                                 '</b>' +
                                             '</div>' +
@@ -3866,8 +3603,8 @@ function generateGanttAbsensiV5(start_date, end_date) {
                                             '<div class="gantt-v5-tooltip-row">' +
                                                 '<span>Check In</span>' +
                                                 '<b>' +
-                                                    Highcharts.escapeHTML(
-                                                        String(c.checkIn || '-')
+                                                    escapeHtml(
+                                                        c.checkIn
                                                     ) +
                                                 '</b>' +
                                             '</div>' +
@@ -3875,15 +3612,15 @@ function generateGanttAbsensiV5(start_date, end_date) {
                                             '<div class="gantt-v5-tooltip-row">' +
                                                 '<span>Check Out</span>' +
                                                 '<b>' +
-                                                    Highcharts.escapeHTML(
-                                                        String(c.checkOut || '-')
+                                                    escapeHtml(
+                                                        c.checkOut
                                                     ) +
                                                 '</b>' +
                                             '</div>' +
 
                                             '<div class="gantt-v5-tooltip-duration">' +
-                                                Highcharts.escapeHTML(
-                                                    String(c.durasi || '-')
+                                                escapeHtml(
+                                                    c.durasi
                                                 ) +
                                                 ' jam' +
                                             '</div>' +
@@ -3985,10 +3722,16 @@ function generateGanttAbsensiV5(start_date, end_date) {
 
 
         error:
-            function (xhr) {
+            function (
+                xhr,
+                status,
+                error
+            ) {
 
-                console.log(
-                    'Gantt V5 Error:',
+                console.error(
+                    'GANTT V5 AJAX ERROR:',
+                    status,
+                    error,
                     xhr.responseText
                 );
 
@@ -3996,7 +3739,7 @@ function generateGanttAbsensiV5(start_date, end_date) {
                 $container.html(
 
                     '<div class="alert alert-danger">' +
-                        'Gagal mengambil data Gantt V5.' +
+                        'Gagal mengambil data Gantt.' +
                     '</div>'
 
                 );

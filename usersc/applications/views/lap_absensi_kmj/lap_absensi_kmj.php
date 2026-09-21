@@ -270,152 +270,92 @@
 </style> -->
 
 <style>
-	/* ============================================================
+/* ============================================================
    GANTT ABSENSI KMJ V5
    ============================================================ */
 
 #gantt_absensi_kmj {
-
     width: 100%;
-
     height: 720px;
-
     max-height: 720px;
 
     border: 1px solid #333;
-
     border-radius: 8px;
 
-    overflow: auto;
-
     background: #111;
+
+    overflow: auto;
 
     position: relative;
 
     box-sizing: border-box;
 
     scrollbar-width: thin;
-
     scrollbar-color: #666 #1a1a1a;
 }
 
 
-/* ============================================================
-   SCROLLBAR
-   ============================================================ */
+/* SCROLLBAR */
 
 #gantt_absensi_kmj::-webkit-scrollbar {
-
     width: 10px;
-
     height: 10px;
 }
 
-
 #gantt_absensi_kmj::-webkit-scrollbar-track {
-
     background: #1a1a1a;
-
 }
-
 
 #gantt_absensi_kmj::-webkit-scrollbar-thumb {
-
     background: #666;
-
     border-radius: 6px;
-
 }
-
 
 #gantt_absensi_kmj::-webkit-scrollbar-thumb:hover {
-
     background: #888;
-
 }
 
 
-/* ============================================================
-   HIGHCHART CONTAINER
-   ============================================================ */
+/* CHART */
 
-#gantt_absensi_kmj .gantt-v5-chart {
-
+#gantt_absensi_kmj_chart {
     position: relative;
-
     background: #111;
-
 }
 
 
-/* ============================================================
-   AXIS TIME
-   ============================================================ */
+/* AXIS JAM */
 
 .gantt-v5-time {
-
+    width: 90px;
     text-align: center;
-
-    min-width: 95px;
-
     line-height: 1.2;
-
 }
-
 
 .gantt-v5-time b {
-
     display: block;
-
-    font-size: 11px;
-
-    color: #d0d0d0;
-
+    color: #aaa;
+    font-size: 10px;
     font-weight: 600;
-
 }
 
 
-.gantt-v5-time small {
-
-    display: block;
-
-    margin-top: 3px;
-
-    font-size: 9px;
-
-    color: #777;
-
-}
-
-
-/* ============================================================
-   PERSON
-   ============================================================ */
+/* NAMA */
 
 .gantt-v5-person {
-
     display: flex;
-
     align-items: center;
+
+    width: 280px;
+    min-width: 280px;
 
     gap: 8px;
 
-    width: 285px;
-
-    min-width: 285px;
-
     white-space: nowrap;
-
-    overflow: hidden;
-
 }
 
-
 .gantt-v5-avatar {
-
     width: 25px;
-
     height: 25px;
 
     min-width: 25px;
@@ -423,73 +363,48 @@
     border-radius: 50%;
 
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
 
     background: #f1f3f5;
-
     color: #343a40;
 
     font-size: 10px;
-
     font-weight: 700;
-
 }
 
-
 .gantt-v5-name {
-
-    color: #d6d6d6;
+    color: #ccc;
 
     font-size: 12px;
 
-    font-weight: 500;
-
     overflow: hidden;
-
     text-overflow: ellipsis;
-
 }
 
 
-/* ============================================================
-   TOOLTIP
-   ============================================================ */
+/* TOOLTIP */
 
 .gantt-v5-tooltip {
-
     width: 245px;
-
     padding: 10px;
 
     background: #fff;
-
     color: #222;
-
 }
 
-
 .gantt-v5-tooltip-name {
-
     margin-bottom: 8px;
-
     padding-bottom: 7px;
 
     border-bottom: 1px solid #ddd;
 
     font-size: 13px;
-
     font-weight: 700;
-
 }
 
-
 .gantt-v5-tooltip-row {
-
     display: flex;
-
     justify-content: space-between;
 
     gap: 15px;
@@ -497,30 +412,19 @@
     padding: 3px 0;
 
     font-size: 11px;
-
 }
-
 
 .gantt-v5-tooltip-row span {
-
     color: #888;
-
 }
-
 
 .gantt-v5-tooltip-row b {
-
-    text-align: right;
-
     color: #222;
-
+    text-align: right;
 }
 
-
 .gantt-v5-tooltip-duration {
-
     margin-top: 7px;
-
     padding-top: 7px;
 
     border-top: 1px solid #ddd;
@@ -528,153 +432,49 @@
     color: #ff9800;
 
     font-weight: 700;
-
-    font-size: 12px;
-
 }
 
 
-/* ============================================================
-   BAR
-   ============================================================ */
+/* BAR */
 
-.highcharts-gantt-series
-.highcharts-point {
-
+.highcharts-gantt-series .highcharts-point {
     rx: 5;
-
     ry: 5;
 
     stroke-width: 0;
+}
 
-    transition: filter .15s ease;
-
+.highcharts-gantt-series .highcharts-point:hover {
+    filter: brightness(1.08);
 }
 
 
-.highcharts-gantt-series
-.highcharts-point:hover {
-
-    filter:
-        brightness(1.08)
-        drop-shadow(
-            0 3px 4px rgba(
-                0,
-                0,
-                0,
-                .30
-            )
-        );
-
-}
-
-
-/* ============================================================
-   HIGHCHART DARK THEME
-   ============================================================ */
+/* DARK */
 
 #gantt_absensi_kmj .highcharts-background {
-
     fill: #111;
-
 }
-
-
-#gantt_absensi_kmj .highcharts-title {
-
-    fill: #e5e5e5 !important;
-
-    font-weight: 700;
-
-}
-
-
-#gantt_absensi_kmj .highcharts-subtitle {
-
-    fill: #888 !important;
-
-}
-
-
-#gantt_absensi_kmj .highcharts-axis-line {
-
-    stroke: #444;
-
-}
-
-
-#gantt_absensi_kmj .highcharts-tick {
-
-    stroke: #444;
-
-}
-
 
 #gantt_absensi_kmj .highcharts-grid-line {
-
     stroke: #292929;
+}
 
+#gantt_absensi_kmj .highcharts-axis-line {
+    stroke: #444;
+}
+
+#gantt_absensi_kmj .highcharts-tick {
+    stroke: #444;
 }
 
 
-#gantt_absensi_kmj .highcharts-xaxis-labels text {
-
-    fill: #aaa !important;
-
-}
-
-
-#gantt_absensi_kmj .highcharts-yaxis-labels text {
-
-    fill: #ccc !important;
-
-}
-
-
-/* ============================================================
-   DATE BAND
-   ============================================================ */
-
-.gantt-v5-date-band {
-
-    color: #d5d5d5;
-
-    font-size: 12px;
-
-    font-weight: 600;
-
-    white-space: nowrap;
-
-}
-
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-
-@media (max-width: 1200px) {
-
-    #gantt_absensi_kmj {
-
-        height: 650px;
-
-        max-height: 650px;
-
-    }
-
-}
-
+/* MOBILE */
 
 @media (max-width: 768px) {
 
     #gantt_absensi_kmj {
-
         height: 600px;
-
         max-height: 600px;
-
-        border-radius: 6px;
-
     }
 
 }
