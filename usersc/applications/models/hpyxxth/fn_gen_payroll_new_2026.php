@@ -119,7 +119,12 @@
                             history.id_harxxmh,
                             
                             CASE
-                                WHEN d.rn = 1 THEN 1
+                                WHEN b.id = (
+                                    SELECT MAX(b2.id)
+                                    FROM hemxxmh b2
+                                    WHERE b2.nama = b.nama
+                                )
+                                THEN 1
                                 ELSE 0
                             END AS is_terbaru,
 
@@ -161,19 +166,7 @@
                             WHERE rn = 1
                         ) history ON history.id_hemxxmh = c.id_hemxxmh
 
-                        LEFT JOIN (
-                            SELECT
-                                d.*,
-                                ROW_NUMBER() OVER (
-                                    PARTITION BY b.nama
-                                    ORDER BY d.id DESC
-                                ) AS rn
-                            FROM hemdcmh d
-                            JOIN hemxxmh b
-                                ON b.id = d.id_hemxxmh
-                        ) d
-                            ON d.id_hemxxmh = b.id
-
+                        LEFT JOIN hemdcmh d on d.id_hemxxmh = b.id
                         LEFT JOIN hodxxmh departemen on departemen.id = c.id_hodxxmh
                         LEFT JOIN hetxxmh jabatan on jabatan.id = c.id_hetxxmh
                         LEFT JOIN heyxxmh tipe on tipe.id = c.id_heyxxmh
