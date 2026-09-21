@@ -214,163 +214,165 @@
 													<th class="text-center align-middle">No NPWP</th>
 
 													<!-- DATA GAJI -->
-													<th class="text-center align-middle lama">Gaji Pokok (Lama)</th>
-													<th class="text-center align-middle baru">Gaji Pokok (Baru)</th>
+													<!-- DATA GAJI -->
+<th class="text-center align-middle lama">1. Gaji Pokok (Lama)</th>
+<th class="text-center align-middle baru">2. Gaji Pokok (Baru)</th>
 
-													<th class="text-center align-middle satu">Tj. Jabatan (Lama)</th>
-													<th class="text-center align-middle satu">Tj. Jabatan (Baru)</th>
-													<th class="text-center align-middle satu">Tj. Khusus (Lama)</th>
-													<th class="text-center align-middle satu">Tj. Khusus (Baru)</th>
+<th class="text-center align-middle satu">3. Tj. Jabatan (Lama)</th>
+<th class="text-center align-middle satu">4. Tj. Jabatan (Baru)</th>
 
-													<!-- START Terima Lain -->
-													<th class="text-center align-middle dua">Terima Lain (Lama)</th>
-													<th class="text-center align-middle dua">Terima Lain (Baru)</th>
-													<th class="text-center align-middle dua">Premi Absensi (Lama)</th>
-													<th class="text-center align-middle dua">Premi Absensi (Baru)</th>
-													
-													<th class="text-center align-middle dua">Lembur x1.5 (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x1.5 (jam) (Baru)</th>
+<th class="text-center align-middle satu">5. Tj. Khusus (Lama)</th>
+<th class="text-center align-middle satu">6. Tj. Khusus (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x1.5 (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x1.5 (rp) (Baru)</th>
+<!-- START Terima Lain -->
+<th class="text-center align-middle dua">7. Terima Lain (Lama)</th>
+<th class="text-center align-middle dua">8. Terima Lain (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x2 (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x2 (jam) (Baru)</th>
+<th class="text-center align-middle dua">9. Premi Absensi (Lama)</th>
+<th class="text-center align-middle dua">10. Premi Absensi (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x2 (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x2 (rp) (Baru)</th>
+<th class="text-center align-middle dua">11. Lembur x1.5 (jam) (Lama)</th>
+<th class="text-center align-middle dua">12. Lembur x1.5 (jam) (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x3 (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x3 (jam) (Baru)</th>
+<th class="text-center align-middle dua">13. Lembur x1.5 (rp) (Lama)</th>
+<th class="text-center align-middle dua">14. Lembur x1.5 (rp) (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x3 (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x3 (rp) (Baru)</th>
+<th class="text-center align-middle dua">15. Lembur x2 (jam) (Lama)</th>
+<th class="text-center align-middle dua">16. Lembur x2 (jam) (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur Total (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur Total (jam) (Baru)</th>
+<th class="text-center align-middle dua">17. Lembur x2 (rp) (Lama)</th>
+<th class="text-center align-middle dua">18. Lembur x2 (rp) (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur Total (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur Total (rp) (Baru)</th>
-													
-													<th class="text-center align-middle text-danger dua">Potongan Upah (Rp) (Lama)</th>
-													<th class="text-center align-middle text-danger dua">Potongan Upah (Rp) (Baru)</th>
-													
-													<th class="text-center align-middle text-danger dua">Potongan Jam (Rp) (Lama)</th>
-													<th class="text-center align-middle text-danger dua">Potongan Jam (Rp) (Baru)</th>
-													
-													<th class="text-center align-middle text-danger dua">Potongan Sebelum PPh 21 (Lama)</th>
-													<th class="text-center align-middle text-danger dua">Potongan Sebelum PPh 21 (Baru)</th>
+<th class="text-center align-middle dua">19. Lembur x3 (jam) (Lama)</th>
+<th class="text-center align-middle dua">20. Lembur x3 (jam) (Baru)</th>
 
-													<!-- END Terima Lain -->
+<th class="text-center align-middle dua">21. Lembur x3 (rp) (Lama)</th>
+<th class="text-center align-middle dua">22. Lembur x3 (rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Tj. Lain-lain (Lama)</th>
-													<th class="text-center align-middle baru">Tj. Lain-lain (Baru)</th>
+<th class="text-center align-middle dua">23. Lembur Total (jam) (Lama)</th>
+<th class="text-center align-middle dua">24. Lembur Total (jam) (Baru)</th>
 
-													<th class="text-center align-middle lama">Tj. Masa Kerja (Lama)</th>
-													<th class="text-center align-middle baru">Tj. Masa Kerja (Baru)</th>
+<th class="text-center align-middle dua">25. Lembur Total (rp) (Lama)</th>
+<th class="text-center align-middle dua">26. Lembur Total (rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Kompensasi Kontrak Berakhir (Lama)</th>
-													<th class="text-center align-middle baru">Kompensasi Kontrak Berakhir (Baru)</th>
+<th class="text-center align-middle text-danger dua">27. Potongan Upah (Rp) (Lama)</th>
+<th class="text-center align-middle text-danger dua">28. Potongan Upah (Rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Cuti Tahunan (Lama)</th>
-													<th class="text-center align-middle baru">Cuti Tahunan (Baru)</th>
+<th class="text-center align-middle text-danger dua">29. Potongan Jam (Rp) (Lama)</th>
+<th class="text-center align-middle text-danger dua">30. Potongan Jam (Rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Cuti Bersama (Lama)</th>
-													<th class="text-center align-middle baru">Cuti Bersama (Baru)</th>
+<th class="text-center align-middle text-danger dua">31. Potongan Sebelum PPh 21 (Lama)</th>
+<th class="text-center align-middle text-danger dua">32. Potongan Sebelum PPh 21 (Baru)</th>
+<!-- END Terima Lain -->
 
-													<th class="text-center align-middle lama">Hari Sisa Cuti (Lama)</th>
-													<th class="text-center align-middle baru">Hari Sisa Cuti (Baru)</th>
+<th class="text-center align-middle lama">33. Tj. Lain-lain (Lama)</th>
+<th class="text-center align-middle baru">34. Tj. Lain-lain (Baru)</th>
 
-													<th class="text-center align-middle lama">Kompensasi Sisa Cuti (Lama)</th>
-													<th class="text-center align-middle baru">Kompensasi Sisa Cuti (Baru)</th>
+<th class="text-center align-middle lama">35. Tj. Masa Kerja (Lama)</th>
+<th class="text-center align-middle baru">36. Tj. Masa Kerja (Baru)</th>
 
-													<th class="text-center align-middle lama">THR (Lama)</th>
-													<th class="text-center align-middle baru">THR (Baru)</th>
+<th class="text-center align-middle lama">37. Kompensasi Kontrak Berakhir (Lama)</th>
+<th class="text-center align-middle baru">38. Kompensasi Kontrak Berakhir (Baru)</th>
 
-													<!-- POTONGAN -->
-													<th class="text-center align-middle text-danger lama">Potongan Makan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan Makan (Baru)</th>
+<th class="text-center align-middle lama">39. Cuti Tahunan (Lama)</th>
+<th class="text-center align-middle baru">40. Cuti Tahunan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Total Pot Upah (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Total Pot Upah (Baru)</th>
+<th class="text-center align-middle lama">41. Cuti Bersama (Lama)</th>
+<th class="text-center align-middle baru">42. Cuti Bersama (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Total Pot Resign (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Total Pot Resign (Baru)</th>
+<th class="text-center align-middle lama">43. Hari Sisa Cuti (Lama)</th>
+<th class="text-center align-middle baru">44. Hari Sisa Cuti (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan Resign (Rp) (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan Resign (Rp) (Baru)</th>
+<th class="text-center align-middle lama">45. Kompensasi Sisa Cuti (Lama)</th>
+<th class="text-center align-middle baru">46. Kompensasi Sisa Cuti (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Total Pot Jam (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Total Pot Jam (Baru)</th>
+<th class="text-center align-middle lama">47. THR (Lama)</th>
+<th class="text-center align-middle baru">48. THR (Baru)</th>
 
-													<th class="text-center align-middle lama">Penghasilan Sebelum PPh 21 (Lama)</th>
-													<th class="text-center align-middle baru">Penghasilan Sebelum PPh 21 (Baru)</th>
+<!-- POTONGAN -->
+<th class="text-center align-middle text-danger lama">49. Potongan Makan (Lama)</th>
+<th class="text-center align-middle text-danger baru">50. Potongan Makan (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS Kes Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS Kes Perusahaan (Baru)</th>
+<th class="text-center align-middle text-danger lama">51. Total Pot Upah (Lama)</th>
+<th class="text-center align-middle text-danger baru">52. Total Pot Upah (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS JKK Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS JKK Perusahaan (Baru)</th>
+<th class="text-center align-middle text-danger lama">53. Total Pot Resign (Lama)</th>
+<th class="text-center align-middle text-danger baru">54. Total Pot Resign (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS JKM Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS JKM Perusahaan (Baru)</th>
+<th class="text-center align-middle text-danger lama">55. Potongan Resign (Rp) (Lama)</th>
+<th class="text-center align-middle text-danger baru">56. Potongan Resign (Rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Penghasilan Bruto (Lama)</th>
-													<th class="text-center align-middle baru">Penghasilan Bruto (Baru)</th>
+<th class="text-center align-middle text-danger lama">57. Total Pot Jam (Lama)</th>
+<th class="text-center align-middle text-danger baru">58. Total Pot Jam (Baru)</th>
 
-													<th class="text-center align-middle lama">Tarif TER (%) (Lama)</th>
-													<th class="text-center align-middle baru">Tarif TER (%) (Baru)</th>
+<th class="text-center align-middle lama">59. Penghasilan Sebelum PPh 21 (Lama)</th>
+<th class="text-center align-middle baru">60. Penghasilan Sebelum PPh 21 (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan PPh 21 (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan PPh 21 (Baru)</th>
+<th class="text-center align-middle lama">61. BPJS Kes Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">62. BPJS Kes Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">Penghasilan Setelah PPh 21 (Lama)</th>
-													<th class="text-center align-middle baru">Penghasilan Setelah PPh 21 (Baru)</th>
+<th class="text-center align-middle lama">63. BPJS JKK Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">64. BPJS JKK Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS JHT Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS JHT Perusahaan (Baru)</th>
+<th class="text-center align-middle lama">65. BPJS JKM Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">66. BPJS JKM Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS JP Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS JP Perusahaan (Baru)</th>
+<th class="text-center align-middle lama">67. Penghasilan Bruto (Lama)</th>
+<th class="text-center align-middle baru">68. Penghasilan Bruto (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">BPJS JHT Karyawan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">BPJS JHT Karyawan (Baru)</th>
+<th class="text-center align-middle lama">69. Tarif TER (%) (Lama)</th>
+<th class="text-center align-middle baru">70. Tarif TER (%) (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">BPJS JP Karyawan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">BPJS JP Karyawan (Baru)</th>
+<th class="text-center align-middle text-danger lama">71. Potongan PPh 21 (Lama)</th>
+<th class="text-center align-middle text-danger baru">72. Potongan PPh 21 (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">BPJS Kes Karyawan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">BPJS Kes Karyawan (Baru)</th>
+<th class="text-center align-middle lama">73. Penghasilan Setelah PPh 21 (Lama)</th>
+<th class="text-center align-middle baru">74. Penghasilan Setelah PPh 21 (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan BPJS Kes Perusahaan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan BPJS Kes Perusahaan (Baru)</th>
+<th class="text-center align-middle lama">75. BPJS JHT Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">76. BPJS JHT Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan BPJS JKK Perusahaan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan BPJS JKK Perusahaan (Baru)</th>
+<th class="text-center align-middle lama">77. BPJS JP Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">78. BPJS JP Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan BPJS JKM Perusahaan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan BPJS JKM Perusahaan (Baru)</th>
+<th class="text-center align-middle text-danger lama">79. BPJS JHT Karyawan (Lama)</th>
+<th class="text-center align-middle text-danger baru">80. BPJS JHT Karyawan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Piutang Karyawan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Piutang Karyawan (Baru)</th>
+<th class="text-center align-middle text-danger lama">81. BPJS JP Karyawan (Lama)</th>
+<th class="text-center align-middle text-danger baru">82. BPJS JP Karyawan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Pot Denda APD (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Pot Denda APD (Baru)</th>
+<th class="text-center align-middle text-danger lama">83. BPJS Kes Karyawan (Lama)</th>
+<th class="text-center align-middle text-danger baru">84. BPJS Kes Karyawan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Iuran SPSI (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Iuran SPSI (Baru)</th>
+<th class="text-center align-middle text-danger lama">85. Potongan BPJS Kes Perusahaan (Lama)</th>
+<th class="text-center align-middle text-danger baru">86. Potongan BPJS Kes Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">Pendapatan Setelah PPh 21 (Lama)</th>
-													<th class="text-center align-middle baru">Pendapatan Setelah PPh 21 (Baru)</th>
+<th class="text-center align-middle text-danger lama">87. Potongan BPJS JKK Perusahaan (Lama)</th>
+<th class="text-center align-middle text-danger baru">88. Potongan BPJS JKK Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan Setelah PPh 21 (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan Setelah PPh 21 (Baru)</th>
+<th class="text-center align-middle text-danger lama">89. Potongan BPJS JKM Perusahaan (Lama)</th>
+<th class="text-center align-middle text-danger baru">90. Potongan BPJS JKM Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">Gaji Bersih (Lama)</th>
-													<th class="text-center align-middle baru">Gaji Bersih (Baru)</th>
+<th class="text-center align-middle text-danger lama">91. Piutang Karyawan (Lama)</th>
+<th class="text-center align-middle text-danger baru">92. Piutang Karyawan (Baru)</th>
 
-													<th class="text-center align-middle lama">Bulat (Lama)</th>
-													<th class="text-center align-middle baru">Bulat (Baru)</th>
+<th class="text-center align-middle text-danger lama">93. Pot Denda APD (Lama)</th>
+<th class="text-center align-middle text-danger baru">94. Pot Denda APD (Baru)</th>
+
+<th class="text-center align-middle text-danger lama">95. Iuran SPSI (Lama)</th>
+<th class="text-center align-middle text-danger baru">96. Iuran SPSI (Baru)</th>
+
+<th class="text-center align-middle lama">97. Pendapatan Setelah PPh 21 (Lama)</th>
+<th class="text-center align-middle baru">98. Pendapatan Setelah PPh 21 (Baru)</th>
+
+<th class="text-center align-middle text-danger lama">99. Potongan Setelah PPh 21 (Lama)</th>
+<th class="text-center align-middle text-danger baru">100. Potongan Setelah PPh 21 (Baru)</th>
+
+<th class="text-center align-middle lama">101. Gaji Bersih (Lama)</th>
+<th class="text-center align-middle baru">102. Gaji Bersih (Baru)</th>
+
+<th class="text-center align-middle lama">103. Bulat (Lama)</th>
+<th class="text-center align-middle baru">104. Bulat (Baru)</th>
 												</tr>
 											</thead>
 											<tfoot>
@@ -539,163 +541,165 @@
 													<th class="text-center align-middle">No NPWP</th>
 
 													<!-- DATA GAJI -->
-													<th class="text-center align-middle lama">Gaji Pokok (Lama)</th>
-													<th class="text-center align-middle baru">Gaji Pokok (Baru)</th>
+													<!-- DATA GAJI -->
+<th class="text-center align-middle lama">1. Gaji Pokok (Lama)</th>
+<th class="text-center align-middle baru">2. Gaji Pokok (Baru)</th>
 
-													<th class="text-center align-middle satu">Tj. Jabatan (Lama)</th>
-													<th class="text-center align-middle satu">Tj. Jabatan (Baru)</th>
-													<th class="text-center align-middle satu">Tj. Khusus (Lama)</th>
-													<th class="text-center align-middle satu">Tj. Khusus (Baru)</th>
+<th class="text-center align-middle satu">3. Tj. Jabatan (Lama)</th>
+<th class="text-center align-middle satu">4. Tj. Jabatan (Baru)</th>
 
-													<!-- START Terima Lain -->
-													<th class="text-center align-middle dua">Terima Lain (Lama)</th>
-													<th class="text-center align-middle dua">Terima Lain (Baru)</th>
-													<th class="text-center align-middle dua">Premi Absensi (Lama)</th>
-													<th class="text-center align-middle dua">Premi Absensi (Baru)</th>
-													
-													<th class="text-center align-middle dua">Lembur x1.5 (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x1.5 (jam) (Baru)</th>
+<th class="text-center align-middle satu">5. Tj. Khusus (Lama)</th>
+<th class="text-center align-middle satu">6. Tj. Khusus (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x1.5 (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x1.5 (rp) (Baru)</th>
+<!-- START Terima Lain -->
+<th class="text-center align-middle dua">7. Terima Lain (Lama)</th>
+<th class="text-center align-middle dua">8. Terima Lain (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x2 (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x2 (jam) (Baru)</th>
+<th class="text-center align-middle dua">9. Premi Absensi (Lama)</th>
+<th class="text-center align-middle dua">10. Premi Absensi (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x2 (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x2 (rp) (Baru)</th>
+<th class="text-center align-middle dua">11. Lembur x1.5 (jam) (Lama)</th>
+<th class="text-center align-middle dua">12. Lembur x1.5 (jam) (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x3 (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x3 (jam) (Baru)</th>
+<th class="text-center align-middle dua">13. Lembur x1.5 (rp) (Lama)</th>
+<th class="text-center align-middle dua">14. Lembur x1.5 (rp) (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x3 (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x3 (rp) (Baru)</th>
+<th class="text-center align-middle dua">15. Lembur x2 (jam) (Lama)</th>
+<th class="text-center align-middle dua">16. Lembur x2 (jam) (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur Total (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur Total (jam) (Baru)</th>
+<th class="text-center align-middle dua">17. Lembur x2 (rp) (Lama)</th>
+<th class="text-center align-middle dua">18. Lembur x2 (rp) (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur Total (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur Total (rp) (Baru)</th>
-													
-													<th class="text-center align-middle text-danger dua">Potongan Upah (Rp) (Lama)</th>
-													<th class="text-center align-middle text-danger dua">Potongan Upah (Rp) (Baru)</th>
-													
-													<th class="text-center align-middle text-danger dua">Potongan Jam (Rp) (Lama)</th>
-													<th class="text-center align-middle text-danger dua">Potongan Jam (Rp) (Baru)</th>
-													
-													<th class="text-center align-middle text-danger dua">Potongan Sebelum PPh 21 (Lama)</th>
-													<th class="text-center align-middle text-danger dua">Potongan Sebelum PPh 21 (Baru)</th>
+<th class="text-center align-middle dua">19. Lembur x3 (jam) (Lama)</th>
+<th class="text-center align-middle dua">20. Lembur x3 (jam) (Baru)</th>
 
-													<!-- END Terima Lain -->
+<th class="text-center align-middle dua">21. Lembur x3 (rp) (Lama)</th>
+<th class="text-center align-middle dua">22. Lembur x3 (rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Tj. Lain-lain (Lama)</th>
-													<th class="text-center align-middle baru">Tj. Lain-lain (Baru)</th>
+<th class="text-center align-middle dua">23. Lembur Total (jam) (Lama)</th>
+<th class="text-center align-middle dua">24. Lembur Total (jam) (Baru)</th>
 
-													<th class="text-center align-middle lama">Tj. Masa Kerja (Lama)</th>
-													<th class="text-center align-middle baru">Tj. Masa Kerja (Baru)</th>
+<th class="text-center align-middle dua">25. Lembur Total (rp) (Lama)</th>
+<th class="text-center align-middle dua">26. Lembur Total (rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Kompensasi Kontrak Berakhir (Lama)</th>
-													<th class="text-center align-middle baru">Kompensasi Kontrak Berakhir (Baru)</th>
+<th class="text-center align-middle text-danger dua">27. Potongan Upah (Rp) (Lama)</th>
+<th class="text-center align-middle text-danger dua">28. Potongan Upah (Rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Cuti Tahunan (Lama)</th>
-													<th class="text-center align-middle baru">Cuti Tahunan (Baru)</th>
+<th class="text-center align-middle text-danger dua">29. Potongan Jam (Rp) (Lama)</th>
+<th class="text-center align-middle text-danger dua">30. Potongan Jam (Rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Cuti Bersama (Lama)</th>
-													<th class="text-center align-middle baru">Cuti Bersama (Baru)</th>
+<th class="text-center align-middle text-danger dua">31. Potongan Sebelum PPh 21 (Lama)</th>
+<th class="text-center align-middle text-danger dua">32. Potongan Sebelum PPh 21 (Baru)</th>
+<!-- END Terima Lain -->
 
-													<th class="text-center align-middle lama">Hari Sisa Cuti (Lama)</th>
-													<th class="text-center align-middle baru">Hari Sisa Cuti (Baru)</th>
+<th class="text-center align-middle lama">33. Tj. Lain-lain (Lama)</th>
+<th class="text-center align-middle baru">34. Tj. Lain-lain (Baru)</th>
 
-													<th class="text-center align-middle lama">Kompensasi Sisa Cuti (Lama)</th>
-													<th class="text-center align-middle baru">Kompensasi Sisa Cuti (Baru)</th>
+<th class="text-center align-middle lama">35. Tj. Masa Kerja (Lama)</th>
+<th class="text-center align-middle baru">36. Tj. Masa Kerja (Baru)</th>
 
-													<th class="text-center align-middle lama">THR (Lama)</th>
-													<th class="text-center align-middle baru">THR (Baru)</th>
+<th class="text-center align-middle lama">37. Kompensasi Kontrak Berakhir (Lama)</th>
+<th class="text-center align-middle baru">38. Kompensasi Kontrak Berakhir (Baru)</th>
 
-													<!-- POTONGAN -->
-													<th class="text-center align-middle text-danger lama">Potongan Makan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan Makan (Baru)</th>
+<th class="text-center align-middle lama">39. Cuti Tahunan (Lama)</th>
+<th class="text-center align-middle baru">40. Cuti Tahunan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Total Pot Upah (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Total Pot Upah (Baru)</th>
+<th class="text-center align-middle lama">41. Cuti Bersama (Lama)</th>
+<th class="text-center align-middle baru">42. Cuti Bersama (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Total Pot Resign (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Total Pot Resign (Baru)</th>
+<th class="text-center align-middle lama">43. Hari Sisa Cuti (Lama)</th>
+<th class="text-center align-middle baru">44. Hari Sisa Cuti (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan Resign (Rp) (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan Resign (Rp) (Baru)</th>
+<th class="text-center align-middle lama">45. Kompensasi Sisa Cuti (Lama)</th>
+<th class="text-center align-middle baru">46. Kompensasi Sisa Cuti (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Total Pot Jam (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Total Pot Jam (Baru)</th>
+<th class="text-center align-middle lama">47. THR (Lama)</th>
+<th class="text-center align-middle baru">48. THR (Baru)</th>
 
-													<th class="text-center align-middle lama">Penghasilan Sebelum PPh 21 (Lama)</th>
-													<th class="text-center align-middle baru">Penghasilan Sebelum PPh 21 (Baru)</th>
+<!-- POTONGAN -->
+<th class="text-center align-middle text-danger lama">49. Potongan Makan (Lama)</th>
+<th class="text-center align-middle text-danger baru">50. Potongan Makan (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS Kes Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS Kes Perusahaan (Baru)</th>
+<th class="text-center align-middle text-danger lama">51. Total Pot Upah (Lama)</th>
+<th class="text-center align-middle text-danger baru">52. Total Pot Upah (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS JKK Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS JKK Perusahaan (Baru)</th>
+<th class="text-center align-middle text-danger lama">53. Total Pot Resign (Lama)</th>
+<th class="text-center align-middle text-danger baru">54. Total Pot Resign (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS JKM Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS JKM Perusahaan (Baru)</th>
+<th class="text-center align-middle text-danger lama">55. Potongan Resign (Rp) (Lama)</th>
+<th class="text-center align-middle text-danger baru">56. Potongan Resign (Rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Penghasilan Bruto (Lama)</th>
-													<th class="text-center align-middle baru">Penghasilan Bruto (Baru)</th>
+<th class="text-center align-middle text-danger lama">57. Total Pot Jam (Lama)</th>
+<th class="text-center align-middle text-danger baru">58. Total Pot Jam (Baru)</th>
 
-													<th class="text-center align-middle lama">Tarif TER (%) (Lama)</th>
-													<th class="text-center align-middle baru">Tarif TER (%) (Baru)</th>
+<th class="text-center align-middle lama">59. Penghasilan Sebelum PPh 21 (Lama)</th>
+<th class="text-center align-middle baru">60. Penghasilan Sebelum PPh 21 (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan PPh 21 (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan PPh 21 (Baru)</th>
+<th class="text-center align-middle lama">61. BPJS Kes Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">62. BPJS Kes Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">Penghasilan Setelah PPh 21 (Lama)</th>
-													<th class="text-center align-middle baru">Penghasilan Setelah PPh 21 (Baru)</th>
+<th class="text-center align-middle lama">63. BPJS JKK Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">64. BPJS JKK Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS JHT Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS JHT Perusahaan (Baru)</th>
+<th class="text-center align-middle lama">65. BPJS JKM Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">66. BPJS JKM Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS JP Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS JP Perusahaan (Baru)</th>
+<th class="text-center align-middle lama">67. Penghasilan Bruto (Lama)</th>
+<th class="text-center align-middle baru">68. Penghasilan Bruto (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">BPJS JHT Karyawan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">BPJS JHT Karyawan (Baru)</th>
+<th class="text-center align-middle lama">69. Tarif TER (%) (Lama)</th>
+<th class="text-center align-middle baru">70. Tarif TER (%) (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">BPJS JP Karyawan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">BPJS JP Karyawan (Baru)</th>
+<th class="text-center align-middle text-danger lama">71. Potongan PPh 21 (Lama)</th>
+<th class="text-center align-middle text-danger baru">72. Potongan PPh 21 (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">BPJS Kes Karyawan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">BPJS Kes Karyawan (Baru)</th>
+<th class="text-center align-middle lama">73. Penghasilan Setelah PPh 21 (Lama)</th>
+<th class="text-center align-middle baru">74. Penghasilan Setelah PPh 21 (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan BPJS Kes Perusahaan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan BPJS Kes Perusahaan (Baru)</th>
+<th class="text-center align-middle lama">75. BPJS JHT Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">76. BPJS JHT Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan BPJS JKK Perusahaan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan BPJS JKK Perusahaan (Baru)</th>
+<th class="text-center align-middle lama">77. BPJS JP Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">78. BPJS JP Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan BPJS JKM Perusahaan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan BPJS JKM Perusahaan (Baru)</th>
+<th class="text-center align-middle text-danger lama">79. BPJS JHT Karyawan (Lama)</th>
+<th class="text-center align-middle text-danger baru">80. BPJS JHT Karyawan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Piutang Karyawan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Piutang Karyawan (Baru)</th>
+<th class="text-center align-middle text-danger lama">81. BPJS JP Karyawan (Lama)</th>
+<th class="text-center align-middle text-danger baru">82. BPJS JP Karyawan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Pot Denda APD (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Pot Denda APD (Baru)</th>
+<th class="text-center align-middle text-danger lama">83. BPJS Kes Karyawan (Lama)</th>
+<th class="text-center align-middle text-danger baru">84. BPJS Kes Karyawan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Iuran SPSI (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Iuran SPSI (Baru)</th>
+<th class="text-center align-middle text-danger lama">85. Potongan BPJS Kes Perusahaan (Lama)</th>
+<th class="text-center align-middle text-danger baru">86. Potongan BPJS Kes Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">Pendapatan Setelah PPh 21 (Lama)</th>
-													<th class="text-center align-middle baru">Pendapatan Setelah PPh 21 (Baru)</th>
+<th class="text-center align-middle text-danger lama">87. Potongan BPJS JKK Perusahaan (Lama)</th>
+<th class="text-center align-middle text-danger baru">88. Potongan BPJS JKK Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan Setelah PPh 21 (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan Setelah PPh 21 (Baru)</th>
+<th class="text-center align-middle text-danger lama">89. Potongan BPJS JKM Perusahaan (Lama)</th>
+<th class="text-center align-middle text-danger baru">90. Potongan BPJS JKM Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">Gaji Bersih (Lama)</th>
-													<th class="text-center align-middle baru">Gaji Bersih (Baru)</th>
+<th class="text-center align-middle text-danger lama">91. Piutang Karyawan (Lama)</th>
+<th class="text-center align-middle text-danger baru">92. Piutang Karyawan (Baru)</th>
 
-													<th class="text-center align-middle lama">Bulat (Lama)</th>
-													<th class="text-center align-middle baru">Bulat (Baru)</th>
+<th class="text-center align-middle text-danger lama">93. Pot Denda APD (Lama)</th>
+<th class="text-center align-middle text-danger baru">94. Pot Denda APD (Baru)</th>
+
+<th class="text-center align-middle text-danger lama">95. Iuran SPSI (Lama)</th>
+<th class="text-center align-middle text-danger baru">96. Iuran SPSI (Baru)</th>
+
+<th class="text-center align-middle lama">97. Pendapatan Setelah PPh 21 (Lama)</th>
+<th class="text-center align-middle baru">98. Pendapatan Setelah PPh 21 (Baru)</th>
+
+<th class="text-center align-middle text-danger lama">99. Potongan Setelah PPh 21 (Lama)</th>
+<th class="text-center align-middle text-danger baru">100. Potongan Setelah PPh 21 (Baru)</th>
+
+<th class="text-center align-middle lama">101. Gaji Bersih (Lama)</th>
+<th class="text-center align-middle baru">102. Gaji Bersih (Baru)</th>
+
+<th class="text-center align-middle lama">103. Bulat (Lama)</th>
+<th class="text-center align-middle baru">104. Bulat (Baru)</th>
 												</tr>
 											</thead>
 											<tfoot>
@@ -864,163 +868,165 @@
 													<th class="text-center align-middle">No NPWP</th>
 
 													<!-- DATA GAJI -->
-													<th class="text-center align-middle lama">Gaji Pokok (Lama)</th>
-													<th class="text-center align-middle baru">Gaji Pokok (Baru)</th>
+													<!-- DATA GAJI -->
+<th class="text-center align-middle lama">1. Gaji Pokok (Lama)</th>
+<th class="text-center align-middle baru">2. Gaji Pokok (Baru)</th>
 
-													<th class="text-center align-middle satu">Tj. Jabatan (Lama)</th>
-													<th class="text-center align-middle satu">Tj. Jabatan (Baru)</th>
-													<th class="text-center align-middle satu">Tj. Khusus (Lama)</th>
-													<th class="text-center align-middle satu">Tj. Khusus (Baru)</th>
+<th class="text-center align-middle satu">3. Tj. Jabatan (Lama)</th>
+<th class="text-center align-middle satu">4. Tj. Jabatan (Baru)</th>
 
-													<!-- START Terima Lain -->
-													<th class="text-center align-middle dua">Terima Lain (Lama)</th>
-													<th class="text-center align-middle dua">Terima Lain (Baru)</th>
-													<th class="text-center align-middle dua">Premi Absensi (Lama)</th>
-													<th class="text-center align-middle dua">Premi Absensi (Baru)</th>
-													
-													<th class="text-center align-middle dua">Lembur x1.5 (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x1.5 (jam) (Baru)</th>
+<th class="text-center align-middle satu">5. Tj. Khusus (Lama)</th>
+<th class="text-center align-middle satu">6. Tj. Khusus (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x1.5 (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x1.5 (rp) (Baru)</th>
+<!-- START Terima Lain -->
+<th class="text-center align-middle dua">7. Terima Lain (Lama)</th>
+<th class="text-center align-middle dua">8. Terima Lain (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x2 (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x2 (jam) (Baru)</th>
+<th class="text-center align-middle dua">9. Premi Absensi (Lama)</th>
+<th class="text-center align-middle dua">10. Premi Absensi (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x2 (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x2 (rp) (Baru)</th>
+<th class="text-center align-middle dua">11. Lembur x1.5 (jam) (Lama)</th>
+<th class="text-center align-middle dua">12. Lembur x1.5 (jam) (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x3 (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x3 (jam) (Baru)</th>
+<th class="text-center align-middle dua">13. Lembur x1.5 (rp) (Lama)</th>
+<th class="text-center align-middle dua">14. Lembur x1.5 (rp) (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur x3 (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur x3 (rp) (Baru)</th>
+<th class="text-center align-middle dua">15. Lembur x2 (jam) (Lama)</th>
+<th class="text-center align-middle dua">16. Lembur x2 (jam) (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur Total (jam) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur Total (jam) (Baru)</th>
+<th class="text-center align-middle dua">17. Lembur x2 (rp) (Lama)</th>
+<th class="text-center align-middle dua">18. Lembur x2 (rp) (Baru)</th>
 
-													<th class="text-center align-middle dua">Lembur Total (rp) (Lama)</th>
-													<th class="text-center align-middle dua">Lembur Total (rp) (Baru)</th>
-													
-													<th class="text-center align-middle text-danger dua">Potongan Upah (Rp) (Lama)</th>
-													<th class="text-center align-middle text-danger dua">Potongan Upah (Rp) (Baru)</th>
-													
-													<th class="text-center align-middle text-danger dua">Potongan Jam (Rp) (Lama)</th>
-													<th class="text-center align-middle text-danger dua">Potongan Jam (Rp) (Baru)</th>
-													
-													<th class="text-center align-middle text-danger dua">Potongan Sebelum PPh 21 (Lama)</th>
-													<th class="text-center align-middle text-danger dua">Potongan Sebelum PPh 21 (Baru)</th>
+<th class="text-center align-middle dua">19. Lembur x3 (jam) (Lama)</th>
+<th class="text-center align-middle dua">20. Lembur x3 (jam) (Baru)</th>
 
-													<!-- END Terima Lain -->
+<th class="text-center align-middle dua">21. Lembur x3 (rp) (Lama)</th>
+<th class="text-center align-middle dua">22. Lembur x3 (rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Tj. Lain-lain (Lama)</th>
-													<th class="text-center align-middle baru">Tj. Lain-lain (Baru)</th>
+<th class="text-center align-middle dua">23. Lembur Total (jam) (Lama)</th>
+<th class="text-center align-middle dua">24. Lembur Total (jam) (Baru)</th>
 
-													<th class="text-center align-middle lama">Tj. Masa Kerja (Lama)</th>
-													<th class="text-center align-middle baru">Tj. Masa Kerja (Baru)</th>
+<th class="text-center align-middle dua">25. Lembur Total (rp) (Lama)</th>
+<th class="text-center align-middle dua">26. Lembur Total (rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Kompensasi Kontrak Berakhir (Lama)</th>
-													<th class="text-center align-middle baru">Kompensasi Kontrak Berakhir (Baru)</th>
+<th class="text-center align-middle text-danger dua">27. Potongan Upah (Rp) (Lama)</th>
+<th class="text-center align-middle text-danger dua">28. Potongan Upah (Rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Cuti Tahunan (Lama)</th>
-													<th class="text-center align-middle baru">Cuti Tahunan (Baru)</th>
+<th class="text-center align-middle text-danger dua">29. Potongan Jam (Rp) (Lama)</th>
+<th class="text-center align-middle text-danger dua">30. Potongan Jam (Rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Cuti Bersama (Lama)</th>
-													<th class="text-center align-middle baru">Cuti Bersama (Baru)</th>
+<th class="text-center align-middle text-danger dua">31. Potongan Sebelum PPh 21 (Lama)</th>
+<th class="text-center align-middle text-danger dua">32. Potongan Sebelum PPh 21 (Baru)</th>
+<!-- END Terima Lain -->
 
-													<th class="text-center align-middle lama">Hari Sisa Cuti (Lama)</th>
-													<th class="text-center align-middle baru">Hari Sisa Cuti (Baru)</th>
+<th class="text-center align-middle lama">33. Tj. Lain-lain (Lama)</th>
+<th class="text-center align-middle baru">34. Tj. Lain-lain (Baru)</th>
 
-													<th class="text-center align-middle lama">Kompensasi Sisa Cuti (Lama)</th>
-													<th class="text-center align-middle baru">Kompensasi Sisa Cuti (Baru)</th>
+<th class="text-center align-middle lama">35. Tj. Masa Kerja (Lama)</th>
+<th class="text-center align-middle baru">36. Tj. Masa Kerja (Baru)</th>
 
-													<th class="text-center align-middle lama">THR (Lama)</th>
-													<th class="text-center align-middle baru">THR (Baru)</th>
+<th class="text-center align-middle lama">37. Kompensasi Kontrak Berakhir (Lama)</th>
+<th class="text-center align-middle baru">38. Kompensasi Kontrak Berakhir (Baru)</th>
 
-													<!-- POTONGAN -->
-													<th class="text-center align-middle text-danger lama">Potongan Makan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan Makan (Baru)</th>
+<th class="text-center align-middle lama">39. Cuti Tahunan (Lama)</th>
+<th class="text-center align-middle baru">40. Cuti Tahunan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Total Pot Upah (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Total Pot Upah (Baru)</th>
+<th class="text-center align-middle lama">41. Cuti Bersama (Lama)</th>
+<th class="text-center align-middle baru">42. Cuti Bersama (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Total Pot Resign (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Total Pot Resign (Baru)</th>
+<th class="text-center align-middle lama">43. Hari Sisa Cuti (Lama)</th>
+<th class="text-center align-middle baru">44. Hari Sisa Cuti (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan Resign (Rp) (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan Resign (Rp) (Baru)</th>
+<th class="text-center align-middle lama">45. Kompensasi Sisa Cuti (Lama)</th>
+<th class="text-center align-middle baru">46. Kompensasi Sisa Cuti (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Total Pot Jam (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Total Pot Jam (Baru)</th>
+<th class="text-center align-middle lama">47. THR (Lama)</th>
+<th class="text-center align-middle baru">48. THR (Baru)</th>
 
-													<th class="text-center align-middle lama">Penghasilan Sebelum PPh 21 (Lama)</th>
-													<th class="text-center align-middle baru">Penghasilan Sebelum PPh 21 (Baru)</th>
+<!-- POTONGAN -->
+<th class="text-center align-middle text-danger lama">49. Potongan Makan (Lama)</th>
+<th class="text-center align-middle text-danger baru">50. Potongan Makan (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS Kes Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS Kes Perusahaan (Baru)</th>
+<th class="text-center align-middle text-danger lama">51. Total Pot Upah (Lama)</th>
+<th class="text-center align-middle text-danger baru">52. Total Pot Upah (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS JKK Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS JKK Perusahaan (Baru)</th>
+<th class="text-center align-middle text-danger lama">53. Total Pot Resign (Lama)</th>
+<th class="text-center align-middle text-danger baru">54. Total Pot Resign (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS JKM Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS JKM Perusahaan (Baru)</th>
+<th class="text-center align-middle text-danger lama">55. Potongan Resign (Rp) (Lama)</th>
+<th class="text-center align-middle text-danger baru">56. Potongan Resign (Rp) (Baru)</th>
 
-													<th class="text-center align-middle lama">Penghasilan Bruto (Lama)</th>
-													<th class="text-center align-middle baru">Penghasilan Bruto (Baru)</th>
+<th class="text-center align-middle text-danger lama">57. Total Pot Jam (Lama)</th>
+<th class="text-center align-middle text-danger baru">58. Total Pot Jam (Baru)</th>
 
-													<th class="text-center align-middle lama">Tarif TER (%) (Lama)</th>
-													<th class="text-center align-middle baru">Tarif TER (%) (Baru)</th>
+<th class="text-center align-middle lama">59. Penghasilan Sebelum PPh 21 (Lama)</th>
+<th class="text-center align-middle baru">60. Penghasilan Sebelum PPh 21 (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan PPh 21 (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan PPh 21 (Baru)</th>
+<th class="text-center align-middle lama">61. BPJS Kes Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">62. BPJS Kes Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">Penghasilan Setelah PPh 21 (Lama)</th>
-													<th class="text-center align-middle baru">Penghasilan Setelah PPh 21 (Baru)</th>
+<th class="text-center align-middle lama">63. BPJS JKK Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">64. BPJS JKK Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS JHT Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS JHT Perusahaan (Baru)</th>
+<th class="text-center align-middle lama">65. BPJS JKM Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">66. BPJS JKM Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">BPJS JP Perusahaan (Lama)</th>
-													<th class="text-center align-middle baru">BPJS JP Perusahaan (Baru)</th>
+<th class="text-center align-middle lama">67. Penghasilan Bruto (Lama)</th>
+<th class="text-center align-middle baru">68. Penghasilan Bruto (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">BPJS JHT Karyawan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">BPJS JHT Karyawan (Baru)</th>
+<th class="text-center align-middle lama">69. Tarif TER (%) (Lama)</th>
+<th class="text-center align-middle baru">70. Tarif TER (%) (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">BPJS JP Karyawan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">BPJS JP Karyawan (Baru)</th>
+<th class="text-center align-middle text-danger lama">71. Potongan PPh 21 (Lama)</th>
+<th class="text-center align-middle text-danger baru">72. Potongan PPh 21 (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">BPJS Kes Karyawan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">BPJS Kes Karyawan (Baru)</th>
+<th class="text-center align-middle lama">73. Penghasilan Setelah PPh 21 (Lama)</th>
+<th class="text-center align-middle baru">74. Penghasilan Setelah PPh 21 (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan BPJS Kes Perusahaan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan BPJS Kes Perusahaan (Baru)</th>
+<th class="text-center align-middle lama">75. BPJS JHT Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">76. BPJS JHT Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan BPJS JKK Perusahaan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan BPJS JKK Perusahaan (Baru)</th>
+<th class="text-center align-middle lama">77. BPJS JP Perusahaan (Lama)</th>
+<th class="text-center align-middle baru">78. BPJS JP Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan BPJS JKM Perusahaan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan BPJS JKM Perusahaan (Baru)</th>
+<th class="text-center align-middle text-danger lama">79. BPJS JHT Karyawan (Lama)</th>
+<th class="text-center align-middle text-danger baru">80. BPJS JHT Karyawan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Piutang Karyawan (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Piutang Karyawan (Baru)</th>
+<th class="text-center align-middle text-danger lama">81. BPJS JP Karyawan (Lama)</th>
+<th class="text-center align-middle text-danger baru">82. BPJS JP Karyawan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Pot Denda APD (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Pot Denda APD (Baru)</th>
+<th class="text-center align-middle text-danger lama">83. BPJS Kes Karyawan (Lama)</th>
+<th class="text-center align-middle text-danger baru">84. BPJS Kes Karyawan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Iuran SPSI (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Iuran SPSI (Baru)</th>
+<th class="text-center align-middle text-danger lama">85. Potongan BPJS Kes Perusahaan (Lama)</th>
+<th class="text-center align-middle text-danger baru">86. Potongan BPJS Kes Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">Pendapatan Setelah PPh 21 (Lama)</th>
-													<th class="text-center align-middle baru">Pendapatan Setelah PPh 21 (Baru)</th>
+<th class="text-center align-middle text-danger lama">87. Potongan BPJS JKK Perusahaan (Lama)</th>
+<th class="text-center align-middle text-danger baru">88. Potongan BPJS JKK Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle text-danger lama">Potongan Setelah PPh 21 (Lama)</th>
-													<th class="text-center align-middle text-danger baru">Potongan Setelah PPh 21 (Baru)</th>
+<th class="text-center align-middle text-danger lama">89. Potongan BPJS JKM Perusahaan (Lama)</th>
+<th class="text-center align-middle text-danger baru">90. Potongan BPJS JKM Perusahaan (Baru)</th>
 
-													<th class="text-center align-middle lama">Gaji Bersih (Lama)</th>
-													<th class="text-center align-middle baru">Gaji Bersih (Baru)</th>
+<th class="text-center align-middle text-danger lama">91. Piutang Karyawan (Lama)</th>
+<th class="text-center align-middle text-danger baru">92. Piutang Karyawan (Baru)</th>
 
-													<th class="text-center align-middle lama">Bulat (Lama)</th>
-													<th class="text-center align-middle baru">Bulat (Baru)</th>
+<th class="text-center align-middle text-danger lama">93. Pot Denda APD (Lama)</th>
+<th class="text-center align-middle text-danger baru">94. Pot Denda APD (Baru)</th>
+
+<th class="text-center align-middle text-danger lama">95. Iuran SPSI (Lama)</th>
+<th class="text-center align-middle text-danger baru">96. Iuran SPSI (Baru)</th>
+
+<th class="text-center align-middle lama">97. Pendapatan Setelah PPh 21 (Lama)</th>
+<th class="text-center align-middle baru">98. Pendapatan Setelah PPh 21 (Baru)</th>
+
+<th class="text-center align-middle text-danger lama">99. Potongan Setelah PPh 21 (Lama)</th>
+<th class="text-center align-middle text-danger baru">100. Potongan Setelah PPh 21 (Baru)</th>
+
+<th class="text-center align-middle lama">101. Gaji Bersih (Lama)</th>
+<th class="text-center align-middle baru">102. Gaji Bersih (Baru)</th>
+
+<th class="text-center align-middle lama">103. Bulat (Lama)</th>
+<th class="text-center align-middle baru">104. Bulat (Baru)</th>
 												</tr>
 											</thead>
 											<tfoot>

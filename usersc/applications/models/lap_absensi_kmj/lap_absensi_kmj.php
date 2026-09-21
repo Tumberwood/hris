@@ -41,7 +41,10 @@
 					DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i") AS `Check In`,
 					DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i") AS `Check Out`,
 					ROUND(TIMESTAMPDIFF(MINUTE, a.clock_in, a.clock_out) / 60.0, 2) AS `Durasi (Jam)`,
-					1 AS `Count orang`
+					CASE
+						WHEN TIMESTAMPDIFF(MINUTE, a.clock_in, a.clock_out) / 60.0, 2) > 0 THEN 1
+						ELSE 0
+					END AS `Count orang`
 				FROM htsprrd a
 				JOIN hemxxmh b ON b.id = a.id_hemxxmh
 				JOIN hemjbmh c ON c.id_hemxxmh = a.id_hemxxmh
