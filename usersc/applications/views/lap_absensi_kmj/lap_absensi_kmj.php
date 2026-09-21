@@ -22,6 +22,242 @@
 	}
 ?>
 
+<style>
+
+.gantt-v2-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    border: 1px solid #000;
+
+}
+
+
+.gantt-v2-table {
+
+    border-collapse: collapse;
+
+    min-width: max-content;
+
+    width: 100%;
+
+    font-size: 13px;
+
+}
+
+
+.gantt-v2-table th,
+.gantt-v2-table td {
+
+    border: 1px solid #000;
+
+    padding: 0;
+
+    vertical-align: middle;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| HEADER TANGGAL
+|--------------------------------------------------------------------------
+*/
+
+.gantt-v2-date {
+
+    height: 32px;
+
+    min-width: 270px;
+
+    text-align: center;
+
+    background: #f8f8f8;
+
+    font-weight: bold;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| HEADER SHIFT
+|--------------------------------------------------------------------------
+*/
+
+.gantt-v2-shift {
+
+    width: 90px;
+
+    min-width: 90px;
+
+    height: 30px;
+
+    text-align: center;
+
+    background: #fff;
+
+    font-weight: bold;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| NIK
+|--------------------------------------------------------------------------
+*/
+
+.gantt-v2-nik {
+
+    width: 90px;
+
+    min-width: 90px;
+
+    text-align: center;
+
+}
+
+
+.gantt-v2-nik-cell {
+
+    padding: 5px 8px !important;
+
+    white-space: nowrap;
+
+    text-align: center;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| NAMA
+|--------------------------------------------------------------------------
+*/
+
+.gantt-v2-nama {
+
+    width: 260px;
+
+    min-width: 260px;
+
+}
+
+
+.gantt-v2-nama-cell {
+
+    width: 260px;
+
+    min-width: 260px;
+
+    padding: 5px 8px !important;
+
+    white-space: nowrap;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CELL BAR
+|--------------------------------------------------------------------------
+*/
+
+.gantt-v2-bar-cell {
+
+    width: 90px;
+
+    min-width: 90px;
+
+    height: 32px;
+
+    padding: 0 !important;
+
+    position: relative;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TRACK
+|--------------------------------------------------------------------------
+*/
+
+.gantt-v2-track {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 30px;
+
+    background: #fff;
+
+    overflow: hidden;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| BAR
+|--------------------------------------------------------------------------
+*/
+
+.gantt-v2-bar {
+
+    position: absolute;
+
+    top: 5px;
+
+    height: 20px;
+
+    background: #ffc107;
+
+    border: 1px solid #e0a800;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    color: #000;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| EMPTY
+|--------------------------------------------------------------------------
+*/
+
+.gantt-v2-empty {
+
+    width: 100%;
+
+    height: 30px;
+
+    background: #fff;
+
+}
+
+</style>
 <!-- begin content here -->
 
 <div class="row">
@@ -228,7 +464,7 @@
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 
 			generateTable(start_date, end_date);
-			generateGanttAbsensi(start_date, end_date);
+			generateGanttAbsensiV2(start_date, end_date);
 			
 			id_hemxxmh_old = id_hem_get;
 			
@@ -340,7 +576,7 @@
 					});
 
 					generateTable(start_date, end_date);
-					generateGanttAbsensi(start_date, end_date);
+					generateGanttAbsensiV2(start_date, end_date);
 
 					tbllap_absensi_kmj.rows().deselect();
 					tbllap_absensi_kmj.ajax.reload(function ( json ) {
