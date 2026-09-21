@@ -1722,7 +1722,7 @@
                                     IF(id_heyxxmd = 1, 
                                         0, 
                                         ( bruto * (IFNULL(ter.persen,0) / 100) ) 
-                                    )
+                                    ), 0
                                 )
                             )
                             -- + (jht_perusahaan + jp_perusahaan)
