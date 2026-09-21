@@ -490,7 +490,7 @@
 							SELECT
 								id_hemxxmh,
 								tanggal_efektif,
-								IFNULL(nominal, 0) AS nominal_gp
+								IFNULL(nominal, 0) AS nominal_t_jab
 							FROM (
 								SELECT
 									id,
