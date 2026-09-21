@@ -140,11 +140,15 @@ $sql = "
         ON b.id = a.id_hemxxmh
 
     JOIN hemjbmh c
-        ON c.id = a.id_hemxxmh
+        ON c.id_hemxxmh = a.id_hemxxmh
 
     WHERE a.tanggal BETWEEN :start_date AND :end_date
 
         AND c.id_heyxxmd = 4
+
+        -- Hanya ceklok yang lengkap
+        AND a.clock_in IS NOT NULL
+        AND a.clock_out IS NOT NULL
 
         AND (
             a.st_jadwal LIKE '%PAGI%'
