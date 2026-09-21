@@ -1423,7 +1423,7 @@
                         ) iuran_spsi ON iuran_spsi.id_hemxxmh = p.id_hemxxmh
                     )
                     SELECT
-                        :id_hpyxxth,
+                        :id_hpyxxth AS id_hpyxxth,
                         id_heyxxmd,
                         is_terbaru,
                         p.id_hemxxmh,
