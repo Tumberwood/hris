@@ -117,6 +117,12 @@
                         SELECT
                             b.id AS id_hemxxmh,
                             history.id_harxxmh,
+                            
+                            CASE
+                                WHEN d.rn = 1 THEN 1
+                                ELSE 0
+                            END AS is_terbaru,
+
                             c.tanggal_masuk,
                             c.grup_hk,
                             c.tanggal_keluar,
@@ -155,7 +161,19 @@
                             WHERE rn = 1
                         ) history ON history.id_hemxxmh = c.id_hemxxmh
 
-                        LEFT JOIN hemdcmh d on d.id_hemxxmh = b.id
+                        LEFT JOIN (
+                            SELECT
+                                d.*,
+                                ROW_NUMBER() OVER (
+                                    PARTITION BY b.nama
+                                    ORDER BY d.id DESC
+                                ) AS rn
+                            FROM hemdcmh d
+                            JOIN hemxxmh b
+                                ON b.id = d.id_hemxxmh
+                        ) d
+                            ON d.id_hemxxmh = b.id
+
                         LEFT JOIN hodxxmh departemen on departemen.id = c.id_hodxxmh
                         LEFT JOIN hetxxmh jabatan on jabatan.id = c.id_hetxxmh
                         LEFT JOIN heyxxmh tipe on tipe.id = c.id_heyxxmh
@@ -1199,6 +1217,7 @@
                                 GROUP BY pe.nama
                             ) AS subquery
                         ) piutang ON piutang.id_hemxxmh = p.id_hemxxmh OR piutang.nama = p.nama
+                        AND is_terbaru = 1
                     ),
                     komp_rekontrak AS (
                         SELECT
