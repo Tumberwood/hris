@@ -202,7 +202,7 @@
                         SELECT
                             p.id_hemxxmh,
                             -- COALESCE(nominal_gp, 0) AS gp,
-        CASE
+                            CASE
                             WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
                             THEN (
                                 SELECT
