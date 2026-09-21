@@ -906,12 +906,7 @@
                                 )
                                 OR
                                 (
-                                    NOT (
-                                        job.tanggal_keluar BETWEEN
-                                            DATE_FORMAT(:tanggal_akhir, "%Y-%m-01")
-                                            AND :tanggal_akhir
-                                    )
-                                    AND pr.tanggal BETWEEN
+                                    pr.tanggal BETWEEN
                                         :tanggal_awal
                                         AND :tanggal_akhir
                                 )
