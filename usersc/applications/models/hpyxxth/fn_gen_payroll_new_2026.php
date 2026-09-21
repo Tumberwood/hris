@@ -117,12 +117,15 @@
                         SELECT
                             b.id AS id_hemxxmh,
                             history.id_harxxmh,
-                            
+                            b.kode nrp,
+                            b.nama,
+
                             CASE
                                 WHEN b.id = (
                                     SELECT MAX(b2.id)
                                     FROM hemxxmh b2
                                     WHERE b2.nama = b.nama
+                                    AND is_active = 1
                                 )
                                 THEN 1
                                 ELSE 0
@@ -133,7 +136,6 @@
                             c.tanggal_keluar,
                             id_gtxpkmh,
                             kategori_kelas,
-                            b.kode nrp,
                             ktp_no ktp,
                             departemen.nama departemen,
                             jabatan.nama jabatan,
@@ -143,13 +145,17 @@
                             npwp_no npwp,
                             ptkp.kode ptkp,
                             no_rekening,
-                            b.nama,
                             c.id_hetxxmh,
                             c.id_hesxxmh,
                             c.id_heyxxmh,
                             c.id_heyxxmd
+
                         FROM hemxxmh b
-                        JOIN hemjbmh c  ON c.id_hemxxmh = b.id AND c.id_heyxxmd <> 2
+
+                        JOIN hemjbmh c
+                            ON c.id_hemxxmh = b.id
+                            AND c.id_heyxxmd <> 2
+
                         LEFT JOIN (
                             SELECT *
                             FROM (
@@ -160,19 +166,32 @@
                                         ORDER BY tanggal_awal DESC, id DESC
                                     ) AS rn
                                 FROM hemjbrd
-                                WHERE 1
-                                AND id_harxxmh <> 1
+                                WHERE id_harxxmh <> 1
                             ) t
                             WHERE rn = 1
-                        ) history ON history.id_hemxxmh = c.id_hemxxmh
+                        ) history
+                            ON history.id_hemxxmh = c.id_hemxxmh
 
-                        LEFT JOIN hemdcmh d on d.id_hemxxmh = b.id
-                        LEFT JOIN hodxxmh departemen on departemen.id = c.id_hodxxmh
-                        LEFT JOIN hetxxmh jabatan on jabatan.id = c.id_hetxxmh
-                        LEFT JOIN heyxxmh tipe on tipe.id = c.id_heyxxmh
-                        LEFT JOIN heyxxmd sub_tipe on sub_tipe.id = c.id_heyxxmd
-                        LEFT JOIN hesxxmh status on status.id = c.id_hesxxmh
-                        LEFT JOIN gtxpkmh ptkp on ptkp.id = d.id_gtxpkmh
+                        LEFT JOIN hemdcmh d
+                            ON d.id_hemxxmh = b.id
+
+                        LEFT JOIN hodxxmh departemen
+                            ON departemen.id = c.id_hodxxmh
+
+                        LEFT JOIN hetxxmh jabatan
+                            ON jabatan.id = c.id_hetxxmh
+
+                        LEFT JOIN heyxxmh tipe
+                            ON tipe.id = c.id_heyxxmh
+
+                        LEFT JOIN heyxxmd sub_tipe
+                            ON sub_tipe.id = c.id_heyxxmd
+
+                        LEFT JOIN hesxxmh status
+                            ON status.id = c.id_hesxxmh
+
+                        LEFT JOIN gtxpkmh ptkp
+                            ON ptkp.id = d.id_gtxpkmh
                     ),
 
                     presensi AS (
@@ -206,7 +225,7 @@
 
                         FROM htsprrd a
                         JOIN pegawai p ON p.id_hemxxmh = a.id_hemxxmh
-                        WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                        WHERE a.tanggal BETWEEN "2026-07-23" AND "2026-08-22"
                         GROUP BY a.id_hemxxmh
                     ),
                     gaji_pokok AS (
@@ -214,7 +233,7 @@
                             p.id_hemxxmh,
                             -- COALESCE(nominal_gp, 0) AS gp,
                             CASE
-                            WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
+                            WHEN p.tanggal_keluar BETWEEN "2026-07-23" AND "2026-08-22"
                             THEN (
                                 SELECT
                                     SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
@@ -232,12 +251,12 @@
                                             ) 
                                             AS c_id
                                 FROM htsprrd pr
-                                WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND p.tanggal_keluar
+                                WHERE pr.tanggal BETWEEN DATE_FORMAT("2026-08-22", "%Y-%m-01") AND p.tanggal_keluar
                                 AND pr.id_hemxxmh = p.id_hemxxmh
                                 AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL"
                             )
                             
-                            WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                            WHEN p.tanggal_masuk BETWEEN "2026-07-23" AND "2026-08-22"
                             THEN (
                                 SELECT
                                     SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
@@ -255,7 +274,7 @@
                                             ) 
                                             AS c_id
                                 FROM htsprrd pr
-                                WHERE pr.tanggal BETWEEN p.tanggal_masuk AND LAST_DAY(:tanggal_akhir)
+                                WHERE pr.tanggal BETWEEN p.tanggal_masuk AND LAST_DAY("2026-08-22")
                                 AND pr.id_hemxxmh = p.id_hemxxmh
                                 AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL"
                             )
@@ -272,7 +291,7 @@
                                 FROM htpr_hemxxmh
                                 WHERE id_hpcxxmh = 1
                                 AND is_active = 1
-                                AND tanggal_efektif <= :tanggal_akhir
+                                AND tanggal_efektif <= "2026-08-22"
                             ) x WHERE rn = 1
                         ) gp1 ON gp1.id_hemxxmh = p.id_hemxxmh
                     ),
@@ -296,7 +315,7 @@
                                 FROM htpr_hemxxmh
                                 WHERE
                                     htpr_hemxxmh.id_hpcxxmh = 32
-                                    AND tanggal_efektif <= :tanggal_akhir
+                                    AND tanggal_efektif <= "2026-08-22"
                                     AND is_active = 1
                             ) AS subquery
                             WHERE row_num = 1
@@ -324,7 +343,7 @@
                                 FROM htpr_hemxxmh
                                 WHERE
                                     htpr_hemxxmh.id_hpcxxmh = 102
-                                    AND tanggal_efektif <= :tanggal_akhir
+                                    AND tanggal_efektif <= "2026-08-22"
                                     AND is_active = 1
                             ) AS subquery
                             WHERE row_num = 1
@@ -352,7 +371,7 @@
                                 FROM htpr_hemxxmh
                                 WHERE
                                     htpr_hemxxmh.id_hpcxxmh = 133
-                                    AND tanggal_efektif <= :tanggal_akhir
+                                    AND tanggal_efektif <= "2026-08-22"
                                     AND is_active = 1
                             ) AS subquery
                             WHERE row_num = 1
@@ -379,7 +398,7 @@
                                     id_hesxxmh,
                                     IF(
                                         a.tanggal_keluar IS NULL,
-                                        TIMESTAMPDIFF(MONTH, a.tanggal_masuk, :tanggal_akhir) / 12,
+                                        TIMESTAMPDIFF(MONTH, a.tanggal_masuk, "2026-08-22") / 12,
                                         TIMESTAMPDIFF(MONTH, a.tanggal_masuk, a.tanggal_keluar) / 12
                                     ) AS masa_kerja_year
                                 FROM hemjbmh AS a
@@ -401,7 +420,7 @@
                                 FROM htpr_hevgrmh_mk
                                 WHERE
                                     id_hpcxxmh = 31
-                                    AND tanggal_efektif <= :tanggal_akhir
+                                    AND tanggal_efektif <= "2026-08-22"
                                     AND is_active = 1
                             ) AS masakerja ON masakerja.id_hevgrmh = job.id_hevgrmh
                                 AND masakerja.id_heyxxmd = job.id_heyxxmd
@@ -435,7 +454,7 @@
                                     id_hemxxmh,
                                     COUNT(id) AS report_pot_premi
                                 FROM htsprrd
-                                WHERE tanggal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND LAST_DAY(:tanggal_awal)
+                                WHERE tanggal BETWEEN DATE_FORMAT("2026-07-23", "%Y-%m-01") AND LAST_DAY("2026-07-23")
                                     AND is_pot_premi = 1
                                 GROUP BY id_hemxxmh
                             ) c_report_pot_premi
@@ -456,7 +475,7 @@
                                     ) AS row_num
                                 FROM htpr_hemxxmh
                                 WHERE id_hpcxxmh = 33
-                                AND tanggal_efektif <= :tanggal_awal
+                                AND tanggal_efektif <= "2026-07-23"
                                 AND is_active = 1
                             ) x
                             WHERE row_num = 1
@@ -686,7 +705,7 @@
                                 FROM htpr_hemxxmh
                                 WHERE
                                     htpr_hemxxmh.id_hpcxxmh = 2
-                                    AND tanggal_efektif <= :tanggal_akhir
+                                    AND tanggal_efektif <= "2026-08-22"
                                     AND is_active = 1
                             ) AS subquery
                             WHERE row_num = 1
@@ -709,7 +728,7 @@
                                 FROM htpr_hemxxmh
                                 WHERE
                                     htpr_hemxxmh.id_hpcxxmh = 127
-                                    AND tanggal_efektif <= :tanggal_akhir
+                                    AND tanggal_efektif <= "2026-08-22"
                                     AND is_active = 1
                             ) AS subquery
                             WHERE row_num = 1
@@ -742,7 +761,7 @@
                                 FROM bpjs_kes_exclude AS bpjs_kes
                                 LEFT JOIN hesxxtd b ON b.id_hemxxmh = bpjs_kes.id_hemxxmh
                                 LEFT JOIN hemxxmh c ON c.kode = b.nik_baru
-                                WHERE bpjs_kes.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
+                                WHERE bpjs_kes.tanggal BETWEEN "2026-07-23" AND last_day("2026-08-22")
                                 GROUP BY id_hemxxmh
                             ) AS subquery
                         ) bpjs_kes_exclude ON bpjs_kes_exclude.id_hemxxmh = p.id_hemxxmh
@@ -759,7 +778,7 @@
                                 FROM bpjs_tk_exclude AS bpjs_tk
                                 LEFT JOIN hesxxtd b ON b.id_hemxxmh = bpjs_tk.id_hemxxmh
                                 LEFT JOIN hemxxmh c ON c.kode = b.nik_baru
-                                WHERE bpjs_tk.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
+                                WHERE bpjs_tk.tanggal BETWEEN "2026-07-23" AND last_day("2026-08-22")
                                 GROUP BY id_hemxxmh
                             ) AS subquery
                         ) bpjs_tk_exclude ON bpjs_tk_exclude.id_hemxxmh = p.id_hemxxmh
@@ -787,7 +806,7 @@
                                 FROM htpr_hemxxmh
                                 WHERE
                                     htpr_hemxxmh.id_hpcxxmh = 34
-                                    AND tanggal_efektif <= :tanggal_akhir
+                                    AND tanggal_efektif <= "2026-08-22"
                                     AND is_active = 1
                             ) AS subquery
                             WHERE row_num = 1
@@ -895,7 +914,7 @@
                         LEFT JOIN fix_cost fc ON fc.id_hemxxmh = pr.id_hemxxmh
 
                         WHERE pr.is_pot_upah = 1 
-                        AND pr.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                        AND pr.tanggal BETWEEN "2026-07-23" AND "2026-08-22"
 
                         GROUP BY pr.id_hemxxmh
                     ),
@@ -926,7 +945,7 @@
                                                 FROM htpr_hemxxmh a
                                                 WHERE a.id_hpcxxmh = 1
                                                     AND a.id_hemxxmh = job.id_hemxxmh
-                                                    AND a.tanggal_efektif <= :tanggal_akhir
+                                                    AND a.tanggal_efektif <= "2026-08-22"
                                                     AND a.is_active = 1
                                                 ORDER BY a.tanggal_efektif DESC
                                                 LIMIT 1
@@ -940,7 +959,7 @@
                                                 FROM htpr_hemxxmh a
                                                 WHERE a.id_hpcxxmh = 32
                                                     AND a.id_hemxxmh = job.id_hemxxmh
-                                                    AND a.tanggal_efektif <= :tanggal_akhir
+                                                    AND a.tanggal_efektif <= "2026-08-22"
                                                     AND a.is_active = 1
                                                 ORDER BY a.tanggal_efektif DESC
                                                 LIMIT 1
@@ -954,7 +973,7 @@
                                                 FROM htpr_hemxxmh a
                                                 WHERE a.id_hpcxxmh = 133
                                                     AND a.id_hemxxmh = job.id_hemxxmh
-                                                    AND a.tanggal_efektif <= :tanggal_akhir
+                                                    AND a.tanggal_efektif <= "2026-08-22"
                                                     AND a.is_active = 1
                                                 ORDER BY a.tanggal_efektif DESC
                                                 LIMIT 1
@@ -985,8 +1004,8 @@
                         LEFT JOIN fix_cost fc ON fc.id_hemxxmh = job.id_hemxxmh
                         WHERE 1
                             AND job.tanggal_keluar 
-                                BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01")
-                                AND LAST_DAY(:tanggal_akhir)
+                                BETWEEN DATE_FORMAT("2026-08-22", "%Y-%m-01")
+                                AND LAST_DAY("2026-08-22")
                     ),
                     pot_jam AS (
                         SELECT
@@ -1093,7 +1112,7 @@
                         LEFT JOIN fix_cost fc ON fc.id_hemxxmh = pr.id_hemxxmh
 
                         WHERE pr.pot_hk > 0
-                        AND pr.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                        AND pr.tanggal BETWEEN "2026-07-23" AND "2026-08-22"
                         GROUP BY pr.id_hemxxmh
                     ),
                     pendapatan_lain_before_pph AS (
@@ -1111,7 +1130,7 @@
                                     SUM(nominal) as nominal
                                 FROM hpy_piutang_d as a
                                 WHERE
-                                    a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    a.tanggal BETWEEN "2026-07-23" AND "2026-08-22"
                                     AND id_hpcxxmh = 129
                                     AND is_approve = 1
                                 GROUP BY id_hemxxmh
@@ -1133,7 +1152,7 @@
                                     SUM(nominal) as nominal
                                 FROM hpy_piutang_d as a
                                 WHERE
-                                    a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    a.tanggal BETWEEN "2026-07-23" AND "2026-08-22"
                                     AND id_hpcxxmh = 130
                                     AND is_approve = 1
                                 GROUP BY id_hemxxmh
@@ -1156,7 +1175,7 @@
                                     SUM(nominal) as nominal
                                 FROM hpy_piutang_d as a
                                 WHERE
-                                    a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    a.tanggal BETWEEN "2026-07-23" AND "2026-08-22"
                                     AND id_hpcxxmh = 131
                                     AND is_approve = 1
                                 GROUP BY id_hemxxmh
@@ -1178,7 +1197,7 @@
                                     SUM(nominal) as nominal
                                 FROM hpy_piutang_d as a
                                 WHERE
-                                    a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    a.tanggal BETWEEN "2026-07-23" AND "2026-08-22"
                                     AND id_hpcxxmh = 132
                                     AND is_approve = 1
                                 GROUP BY id_hemxxmh
@@ -1204,35 +1223,77 @@
                                 FROM hpy_piutang_d as a
                                 JOIN hemxxmh pe on pe.id = a.id_hemxxmh
                                 WHERE
-                                    a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    a.tanggal BETWEEN "2026-07-23" AND "2026-08-22"
                                     AND id_hpcxxmh = 105
                                     AND a.is_approve = 1
                                 GROUP BY pe.nama
                             ) AS subquery
-                        ) piutang ON piutang.id_hemxxmh = p.id_hemxxmh OR piutang.nama = p.nama
+                        ) piutang ON piutang.nama = p.nama 
                         AND is_terbaru = 1
                     ),
                     komp_rekontrak AS (
                         SELECT
-                            p.id_hemxxmh,
-                            nominal_rekontrak AS komp_rekontrak
-                        FROM pegawai p
+                            a.id,
+                            b.id AS id_hemxxmh_lama,
+                            hl.id_hemxxmh,
+                            c.tanggal_keluar,
+                            (
+                                (TIMESTAMPDIFF(MONTH, c.tanggal_masuk, c.tanggal_keluar) + 1) / 12.0
+                            ) * (
+                                IFNULL(gp.nominal, 0) + IFNULL(tjab.nominal, 0)
+                            ) AS komp_rekontrak
+
+                        FROM hesxxtd a
+
+                        JOIN hemxxmh b 
+                            ON b.id = a.id_hemxxmh
+
+                        -- Mengambil MAX(id) per nama tanpa CTE WITH
+                        JOIN (
+                            SELECT nama, MAX(id) AS id_hemxxmh_baru
+                            FROM hemxxmh
+                            GROUP BY nama
+                        ) hl ON hl.nama = b.nama
+
+                        JOIN hemjbmh c 
+                            ON c.id_hemxxmh = b.id
+
+                        -- Left join untuk komponen GP (id_hpcxxmh = 1) terbaru
                         LEFT JOIN (
-                            SELECT
-                                id_hemxxmh,
-                                IFNULL(nominal, 0) AS nominal_rekontrak
-                            FROM (
-                                SELECT
-                                    a.id_hemxxmh,
-                                    SUM(nominal) as nominal
-                                FROM hpy_piutang_d as a
-                                WHERE
-                                    a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                                    AND id_hpcxxmh = 108
-                                    AND is_approve = 1
-                                GROUP BY id_hemxxmh
-                            ) AS subquery
-                        ) rekontrak ON rekontrak.id_hemxxmh = p.id_hemxxmh
+                            SELECT 
+                                komp.id_hemxxmh,
+                                komp.nominal,
+                                komp.tanggal_efektif,
+                                ROW_NUMBER() OVER (
+                                    PARTITION BY komp.id_hemxxmh 
+                                    ORDER BY komp.tanggal_efektif DESC
+                                ) AS rn
+                            FROM htpr_hemxxmh komp
+                            WHERE komp.id_hpcxxmh = 1
+                            AND komp.is_active = 1
+                        ) gp ON gp.id_hemxxmh = hl.id_hemxxmh_baru 
+                            AND gp.rn = 1 
+                            AND gp.tanggal_efektif <= c.tanggal_keluar
+
+                        -- Left join untuk komponen TJAB (id_hpcxxmh = 32) terbaru
+                        LEFT JOIN (
+                            SELECT 
+                                komp.id_hemxxmh,
+                                komp.nominal,
+                                komp.tanggal_efektif,
+                                ROW_NUMBER() OVER (
+                                    PARTITION BY komp.id_hemxxmh 
+                                    ORDER BY komp.tanggal_efektif DESC
+                                ) AS rn
+                            FROM htpr_hemxxmh komp
+                            WHERE komp.id_hpcxxmh = 32
+                            AND komp.is_active = 1
+                        ) tjab ON tjab.id_hemxxmh = hl.id_hemxxmh_baru 
+                            AND tjab.rn = 1 
+                            AND tjab.tanggal_efektif <= c.tanggal_keluar
+
+                        WHERE a.tanggal_mulai BETWEEN "2026-07-23" AND "2026-08-22"
+                        AND a.keputusan = "rekontrak"
                     ),
                     komp_sisa_cuti AS (
                         SELECT
@@ -1292,7 +1353,7 @@
                                 ) as cuti_bersama
                             FROM htlxxrh AS rh
                             LEFT JOIN htlxxmh AS mh ON mh.id = rh.id_htlxxmh
-                            WHERE YEAR(rh.tanggal) = YEAR(DATE_SUB(:tanggal_akhir, INTERVAL 1 YEAR)) AND rh.jenis = 1 AND mh.is_potongcuti = 1
+                            WHERE YEAR(rh.tanggal) = YEAR(DATE_SUB("2026-08-22", INTERVAL 1 YEAR)) AND rh.jenis = 1 AND mh.is_potongcuti = 1
                             GROUP BY rh.id_hemxxmh
                         ) AS cb ON cb.id_hemxxmh = a.id_hemxxmh
                         
@@ -1310,7 +1371,7 @@
                                     FROM htpr_hemxxmh
                                     WHERE id_hpcxxmh = 1
                                     AND is_active = 1
-                                    AND tanggal_efektif <= :tanggal_awal
+                                    AND tanggal_efektif <= "2026-07-23"
                                 ) x WHERE rn = 1
                             ) gp1 ON gp1.id_hemxxmh = p.id_hemxxmh
                         ) gp ON gp.id_hemxxmh = jb.id_hemxxmh
@@ -1335,7 +1396,7 @@
                                     FROM htpr_hemxxmh
                                     WHERE
                                         htpr_hemxxmh.id_hpcxxmh = 32
-                                        AND tanggal_efektif <= :tanggal_awal
+                                        AND tanggal_efektif <= "2026-07-23"
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -1363,7 +1424,7 @@
                                         id_hesxxmh,
                                         IF(
                                             a.tanggal_keluar IS NULL,
-                                            TIMESTAMPDIFF(MONTH, a.tanggal_masuk, :tanggal_akhir) / 12,
+                                            TIMESTAMPDIFF(MONTH, a.tanggal_masuk, "2026-08-22") / 12,
                                             TIMESTAMPDIFF(MONTH, a.tanggal_masuk, a.tanggal_keluar) / 12
                                         ) AS masa_kerja_year
                                     FROM hemjbmh AS a
@@ -1385,7 +1446,7 @@
                                     FROM htpr_hevgrmh_mk
                                     WHERE
                                         id_hpcxxmh = 31
-                                        AND tanggal_efektif <= :tanggal_awal
+                                        AND tanggal_efektif <= "2026-07-23"
                                         AND is_active = 1
                                 ) AS masakerja ON masakerja.id_hevgrmh = job.id_hevgrmh
                                     AND masakerja.id_heyxxmd = job.id_heyxxmd
@@ -1417,7 +1478,7 @@
                                     FROM htpr_hemxxmh
                                     WHERE
                                         htpr_hemxxmh.id_hpcxxmh = 102
-                                        AND tanggal_efektif <= :tanggal_awal
+                                        AND tanggal_efektif <= "2026-07-23"
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
@@ -1446,14 +1507,14 @@
                                     FROM htpr_hemxxmh
                                     WHERE
                                         htpr_hemxxmh.id_hpcxxmh = 133
-                                        AND tanggal_efektif <= :tanggal_awal
+                                        AND tanggal_efektif <= "2026-07-23"
                                         AND is_active = 1
                                 ) AS subquery
                                 WHERE row_num = 1
                             ) tbl_tj_khusus ON tbl_tj_khusus.id_hemxxmh = p.id_hemxxmh
                         ) tjk on tjk.id_hemxxmh = jb.id_hemxxmh
                         
-                        WHERE YEAR(a.tanggal) = YEAR(DATE_SUB(:tanggal_akhir, INTERVAL 1 YEAR)) AND jb.is_checkclock = 1 
+                        WHERE YEAR(a.tanggal) = YEAR(DATE_SUB("2026-08-22", INTERVAL 1 YEAR)) AND jb.is_checkclock = 1 
                         GROUP BY a.id_hemxxmh 
                     ),
                     
@@ -1472,7 +1533,7 @@
                                     SUM(nominal) as nominal
                                 FROM hpy_piutang_d as a
                                 WHERE
-                                    a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    a.tanggal BETWEEN "2026-07-23" AND "2026-08-22"
                                     AND id_hpcxxmh = 103
                                     AND is_approve = 1
                                 GROUP BY id_hemxxmh
@@ -1494,7 +1555,7 @@
                                 FROM htpr_hemxxmh
                                 WHERE id_hpcxxmh = 126
                                 AND is_active = 1
-                                AND tanggal_efektif <= :tanggal_akhir
+                                AND tanggal_efektif <= "2026-08-22"
                             ) x WHERE rn = 1
                         ) iuran_spsi ON iuran_spsi.id_hemxxmh = p.id_hemxxmh
                     ),
@@ -1502,6 +1563,7 @@
                         SELECT
                             -- :id_hpyxxth,
                             id_heyxxmd,
+                            is_terbaru,
                             p.id_hemxxmh,
                             id_gtxpkmh,
                             kategori_kelas,
@@ -1543,12 +1605,12 @@
                             total_rp_lembur,
 
                             IFNULL(komp_rekontrak,0 ) AS komp_rekontrak,
-                            IF(MONTH(:tanggal_akhir) = 1, 
+                            IF(MONTH("2026-08-22") = 1, 
                                 IFNULL(komp_sisa_cuti,0 ),
                                 0
                             ) AS komp_sisa_cuti,
 
-                            IF(MONTH(:tanggal_akhir) = 1, 
+                            IF(MONTH("2026-08-22") = 1, 
                                 IFNULL(sisa_cuti_hari,0 ),
                                 0
                             ) AS sisa_cuti_hari,
@@ -1589,7 +1651,7 @@
                                 -- + COALESCE(komp_sisa_cuti,0)
                                 + 
                                 
-                                IF(MONTH(:tanggal_akhir) = 1, 
+                                IF(MONTH("2026-08-22") = 1, 
                                     IFNULL(komp_sisa_cuti,0 ),
                                     0
                                 )
@@ -1645,17 +1707,42 @@
                         LEFT JOIN denda_apd ON denda_apd.id_hemxxmh = p.id_hemxxmh
                         LEFT JOIN iuran_spsi ON iuran_spsi.id_hemxxmh = p.id_hemxxmh
                     ),
+                    bruto_per_nama AS (
+                        SELECT
+                            nama,
+                            SUM(bruto) AS total_bruto_nama
+                        FROM payroll
+                        GROUP BY nama
+                        HAVING COUNT(*) > 1
+                    ),
+
+                    payroll_base AS (
+                        SELECT
+                            payroll.*,
+
+                            IF(
+                                payroll.is_terbaru = 1,
+                                IFNULL(bpn.total_bruto_nama, payroll.bruto),
+                                0
+                            ) AS bruto_dasar_pph
+
+                        FROM payroll
+
+                        LEFT JOIN bruto_per_nama bpn
+                            ON bpn.nama = payroll.nama
+                    ),
+
                     payroll_final AS (
                         SELECT
                             id_hemxxmh,
                             nrp,
-                            payroll.nama,
+                            payroll_base.nama,
                             departemen,
                             jabatan,
                             tipe,
                             sub_tipe,
                             status_peg,
-                            
+
                             ptkp,
                             no_rekening,
                             ktp,
@@ -1667,7 +1754,7 @@
                             tj_khusus,
                             fix_cost,
                             premi_abs,
-                            
+
                             lembur15,
                             lembur15_final,
                             rp_lembur15,
@@ -1677,7 +1764,7 @@
                             lembur3,
                             lembur3_final,
                             rp_lembur3,
-                            
+
                             total_lembur_jam,
                             total_lembur_jam_final,
                             total_rp_lembur,
@@ -1688,33 +1775,49 @@
                             cuti_bersama,
                             sisa_cuti_hari,
                             thr,
-                            
+
                             pot_makan,
                             pot_upah,
                             c_pot_upah,
-                            
+
                             pot_resign,
                             c_pot_resign,
-                            
+
                             pot_jam,
                             c_pot_jam,
+
                             pendapatan_lain_before_pph,
                             pot_lain_before_pph,
+
                             bpjs_kes_perusahaan,
                             jkk,
                             jkm,
-                            
+
                             bruto,
                             kategori_kelas,
-                            IF(id_heyxxmd = 1, 0, ter.persen ) AS persen_ter,
-                            ROUND( IF(id_heyxxmd = 1, 0, bruto * (IFNULL(ter.persen,0) / 100) ), 0 ) AS pot_pph21,
-                            bruto - 
-                            IF(id_heyxxmd = 1, 
-                                0, 
-                                ( bruto * (IFNULL(ter.persen,0) / 100) ) 
-                            )
-                            AS after_pph21,
-                            
+
+                            IF(
+                                id_heyxxmd = 1,
+                                0,
+                                ter.persen
+                            ) AS persen_ter,
+
+                            ROUND(
+                                IF(
+                                    id_heyxxmd = 1,
+                                    0,
+                                    bruto_dasar_pph * (IFNULL(ter.persen, 0) / 100)
+                                ),
+                                0
+                            ) AS pot_pph21,
+
+                            bruto -
+                            IF(
+                                id_heyxxmd = 1,
+                                0,
+                                bruto_dasar_pph * (IFNULL(ter.persen, 0) / 100)
+                            ) AS after_pph21,
+
                             jht_perusahaan,
                             jp_perusahaan,
 
@@ -1728,35 +1831,45 @@
                             pendapatan_lain_after_pph,
                             pot_lain_after_pph,
 
+                            bruto_dasar_pph,
+
                             -- GAJI BERSIH
-                            ( bruto - 
+                            (
+                                bruto
+                                -
                                 ROUND(
-                                    IF(id_heyxxmd = 1, 
-                                        0, 
-                                        ( bruto * (IFNULL(ter.persen,0) / 100) ) 
-                                    ), 0
+                                    IF(
+                                        id_heyxxmd = 1,
+                                        0,
+                                        bruto_dasar_pph * (IFNULL(ter.persen, 0) / 100)
+                                    ),
+                                    0
                                 )
-                            )
-                            -- + (jht_perusahaan + jp_perusahaan)
-                            - (
-                                pot_jht_karyawan
-                                + pot_jp_karyawan
-                                + bpjs_kes_karyawan
-                                + pot_piutang
-                                + denda_apd
-                                + iuran_spsi
-                                + COALESCE(bpjs_kes_perusahaan,0)
-                                + COALESCE(jkk,0)
-                                + COALESCE(jkm,0)
-                                
-                                + COALESCE(pot_makan,0)
-                            )
-                            + pendapatan_lain_after_pph
-                            - pot_lain_after_pph
-                             AS gaji_bersih
-                        FROM payroll
-                        LEFT JOIN hpcatmh AS ter ON ter.kategori = payroll.kategori_kelas 
-                            AND payroll.bruto > ter.nominal_awal AND payroll.bruto <= ter.nominal_akhir
+                                -
+                                (
+                                    pot_jht_karyawan
+                                    + pot_jp_karyawan
+                                    + bpjs_kes_karyawan
+                                    + pot_piutang
+                                    + denda_apd
+                                    + iuran_spsi
+                                    + COALESCE(bpjs_kes_perusahaan, 0)
+                                    + COALESCE(jkk, 0)
+                                    + COALESCE(jkm, 0)
+                                    + COALESCE(pot_makan, 0)
+                                )
+                                + pendapatan_lain_after_pph
+                                - pot_lain_after_pph
+                            ) AS gaji_bersih
+
+                        FROM payroll_base
+
+                        LEFT JOIN hpcatmh AS ter
+                            ON ter.kategori = payroll_base.kategori_kelas
+
+                            AND payroll_base.bruto_dasar_pph > ter.nominal_awal
+
+                            AND payroll_base.bruto_dasar_pph <= ter.nominal_akhir
                     )
                     SELECT
                         :id_hpyxxth AS id_hpyxxth,
