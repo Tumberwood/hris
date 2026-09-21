@@ -50,7 +50,16 @@
 				JOIN hemjbmh c ON c.id_hemxxmh = a.id_hemxxmh
 				WHERE a.tanggal BETWEEN :start_date AND :end_date
 				AND c.id_heyxxmd = 4
-				ORDER BY a.tanggal, b.kode
+				ORDER BY 
+					a.tanggal,
+					CASE
+						WHEN a.st_jadwal LIKE "%PAGI%" THEN 1
+						WHEN a.st_jadwal LIKE "%SORE%"
+							OR a.st_jadwal LIKE "%SIANG%" THEN 2
+						WHEN a.st_jadwal LIKE "%MALAM%" THEN 3
+						WHEN a.st_jadwal LIKE "%OFF%" THEN 4
+						ELSE 5
+					END
 				'
 				);
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
