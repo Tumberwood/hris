@@ -70,6 +70,7 @@
 		<div class="ibox ">
 			<div class="ibox-content">
 				<div class="table-responsive">
+					<h3>Resume</h3>
 					<div id="tabel_atas"></div>
 				</div>
 			</div>
@@ -82,6 +83,7 @@
 		<div class="ibox ">
 			<div class="ibox-content">
 				<div class="table-responsive">
+					<h3>List</h3>
                     <table id="tbllap_absensi_kmj" class="table table-striped table-bordered table-hover nowrap" width="100%">
 						<thead>
 							<tr>

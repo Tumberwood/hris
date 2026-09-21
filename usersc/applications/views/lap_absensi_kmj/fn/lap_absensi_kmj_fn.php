@@ -200,7 +200,6 @@
                         autoWidth: false,
 
                         dom:
-                            "<P>" +
                             "<lf>" +
                             "<B>" +
                             "<rt>" +
