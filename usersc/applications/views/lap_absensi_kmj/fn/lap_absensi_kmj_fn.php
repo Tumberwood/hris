@@ -2282,109 +2282,374 @@ window.generateGanttAbsensiV5 = function(start_date, end_date) {
 
 
                 /*
-                |--------------------------------------------------------------------------
-                | PEOPLE
-                |--------------------------------------------------------------------------
-                */
+|--------------------------------------------------------------------------
+| PEOPLE
+|--------------------------------------------------------------------------
+|
+| URUTAN PEGAWAI DITENTUKAN BERDASARKAN SHIFT
+| PADA TANGGAL PERTAMA FILTER.
+|
+| 1 = Pagi
+| 2 = Siang
+| 3 = Malam
+| 4 = OFF
+| 5 = Tidak ada absensi
+|
+|--------------------------------------------------------------------------
+*/
 
-                var people = [];
+var people = [];
 
-                var peopleMap = {};
-
-
-                $.each(
-
-                    rows,
-
-                    function(
-                        index,
-                        row
-                    ) {
-
-                        var nik =
-                            row.NIK;
+var peopleMap = {};
 
 
-                        if (
-                            nik &&
-                            peopleMap[nik] === undefined
-                        ) {
+/*
+|--------------------------------------------------------------------------
+| SHIFT ORDER
+|--------------------------------------------------------------------------
+*/
 
-                            peopleMap[nik] =
-                                people.length;
+function getShiftOrder(shift) {
+
+    shift = String(
+        shift || ''
+    ).toUpperCase();
 
 
-                            people.push({
+    if (shift.indexOf('PAGI') !== -1) {
 
-                                NIK:
-                                    nik,
+        return 1;
 
-                                Nama:
-                                    $.trim(
-                                        row.Nama ||
-                                        '-'
-                                    )
+    }
 
-                            });
 
-                        }
+    if (
+        shift.indexOf('SIANG') !== -1 ||
+        shift.indexOf('SORE') !== -1
+    ) {
 
-                    }
+        return 2;
+
+    }
+
+
+    if (shift.indexOf('MALAM') !== -1) {
+
+        return 3;
+
+    }
+
+
+    if (shift.indexOf('OFF') !== -1) {
+
+        return 4;
+
+    }
+
+
+    return 5;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| SHIFT PADA TANGGAL PERTAMA
+|--------------------------------------------------------------------------
+|
+| Contoh:
+|
+| filterStart = 2026-09-06
+|
+| Maka hanya absensi tanggal 2026-09-06
+| yang dipakai untuk menentukan urutan pegawai.
+|
+|--------------------------------------------------------------------------
+*/
+
+var firstDateShiftMap = {};
+
+
+$.each(
+
+    rows,
+
+    function(
+        index,
+        row
+    ) {
+
+        var nik =
+            row.NIK;
+
+
+        if (!nik) {
+
+            return;
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | TENTUKAN TANGGAL ABSENSI
+        |--------------------------------------------------------------------------
+        */
+
+        var tanggal =
+            normalizeDate(
+                row.tanggal
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | FALLBACK KE CHECK IN
+        |--------------------------------------------------------------------------
+        */
+
+        if (!tanggal) {
+
+            var checkIn =
+                parseDate(
+                    row['Check In']
+                );
+
+
+            if (!checkIn) {
+
+                return;
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | BUSINESS DATE MULAI 07:00
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                checkIn.getHours() < 7
+            ) {
+
+                checkIn.setDate(
+
+                    checkIn.getDate() - 1
 
                 );
 
+            }
+
+
+            tanggal =
+                formatDate(
+                    checkIn
+                );
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | HANYA TANGGAL PERTAMA
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            tanggal !== filterStart
+        ) {
+
+            return;
+
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SHIFT
+        |--------------------------------------------------------------------------
+        */
+
+        var shiftOrder =
+            getShiftOrder(
+                row.Shift
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | JIKA SATU ORANG PUNYA LEBIH DARI
+        | SATU DATA DI TANGGAL YANG SAMA,
+        | AMBIL SHIFT DENGAN PRIORITAS TERKECIL.
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            firstDateShiftMap[nik] === undefined ||
+            shiftOrder <
+                firstDateShiftMap[nik]
+        ) {
+
+            firstDateShiftMap[nik] =
+                shiftOrder;
+
+        }
+
+    }
+
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| BUILD PEOPLE
+|--------------------------------------------------------------------------
+*/
+
+$.each(
+
+    rows,
+
+    function(
+        index,
+        row
+    ) {
+
+        var nik =
+            row.NIK;
+
+
+        if (
+            nik &&
+            peopleMap[nik] === undefined
+        ) {
+
+            peopleMap[nik] =
+                people.length;
+
+
+            people.push({
+
+                NIK:
+                    nik,
+
+                Nama:
+                    $.trim(
+                        row.Nama ||
+                        '-'
+                    ),
 
                 /*
                 |--------------------------------------------------------------------------
-                | SORT NAMA
+                | SHIFT PADA TANGGAL PERTAMA
                 |--------------------------------------------------------------------------
                 */
 
-                people.sort(
+                ShiftOrder:
+                    firstDateShiftMap[nik] !== undefined
+                        ? firstDateShiftMap[nik]
+                        : 5
 
-                    function(
-                        a,
-                        b
-                    ) {
+            });
 
-                        return (
+        }
 
-                            a.Nama.localeCompare(
-                                b.Nama
-                            )
+    }
 
-                        );
-
-                    }
-
-                );
+);
 
 
-                /*
-                |--------------------------------------------------------------------------
-                | REBUILD MAP
-                |--------------------------------------------------------------------------
-                */
+/*
+|--------------------------------------------------------------------------
+| SORT PEOPLE
+|--------------------------------------------------------------------------
+|
+| PRIORITAS:
+|
+| 1. SHIFT TANGGAL PERTAMA
+| 2. NAMA
+|
+|--------------------------------------------------------------------------
+*/
 
-                peopleMap = {};
+people.sort(
+
+    function(
+        a,
+        b
+    ) {
 
 
-                $.each(
+        /*
+        |--------------------------------------------------------------------------
+        | URUTKAN SHIFT
+        |--------------------------------------------------------------------------
+        */
 
-                    people,
+        if (
+            a.ShiftOrder !==
+            b.ShiftOrder
+        ) {
 
-                    function(
-                        index,
-                        person
-                    ) {
+            return (
+                a.ShiftOrder -
+                b.ShiftOrder
+            );
 
-                        peopleMap[
-                            person.NIK
-                        ] = index;
+        }
 
-                    }
 
-                );
+        /*
+        |--------------------------------------------------------------------------
+        | JIKA SHIFT SAMA
+        | URUTKAN NAMA
+        |--------------------------------------------------------------------------
+        */
+
+        return (
+
+            a.Nama.localeCompare(
+                b.Nama,
+                'id',
+                {
+                    sensitivity:
+                        'base'
+                }
+            )
+
+        );
+
+    }
+
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| REBUILD MAP
+|--------------------------------------------------------------------------
+*/
+
+peopleMap = {};
+
+
+$.each(
+
+    people,
+
+    function(
+        index,
+        person
+    ) {
+
+        peopleMap[
+            person.NIK
+        ] = index;
+
+    }
+
+);
 
 
                 /*
