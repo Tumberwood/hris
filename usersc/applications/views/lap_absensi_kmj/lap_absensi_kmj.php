@@ -271,111 +271,7 @@
 
 		overflow: hidden;
 
-		background: #ffffff !important;
-
-	}
-
-
-	/*
-	|--------------------------------------------------------------------------
-	| HIGHCHARTS BACKGROUND
-	|--------------------------------------------------------------------------
-	*/
-
-	#gantt_absensi_kmj .highcharts-container {
-
-		background: #ffffff !important;
-
-	}
-
-
-	#gantt_absensi_kmj .highcharts-background {
-
-		fill: #ffffff !important;
-
-	}
-
-
-	#gantt_absensi_kmj .highcharts-plot-background {
-
-		fill: #ffffff !important;
-
-	}
-
-
-	#gantt_absensi_kmj .highcharts-plot-border {
-
-		stroke: #dee2e6 !important;
-
-	}
-
-
-	/*
-	|--------------------------------------------------------------------------
-	| HIGHCHARTS GRID
-	|--------------------------------------------------------------------------
-	*/
-
-	#gantt_absensi_kmj .highcharts-grid-line {
-
-		stroke: #e9ecef !important;
-
-	}
-
-
-	#gantt_absensi_kmj .highcharts-minor-grid-line {
-
-		stroke: #f1f3f5 !important;
-
-	}
-
-
-	#gantt_absensi_kmj .highcharts-axis-line {
-
-		stroke: #dee2e6 !important;
-
-	}
-
-
-	#gantt_absensi_kmj .highcharts-tick {
-
-		stroke: #dee2e6 !important;
-
-	}
-
-
-	/*
-	|--------------------------------------------------------------------------
-	| AXIS TEXT
-	|--------------------------------------------------------------------------
-	*/
-
-	#gantt_absensi_kmj .highcharts-axis-labels text {
-
-		fill: #343a40 !important;
-
-	}
-
-
-	#gantt_absensi_kmj .highcharts-axis-title {
-
-		fill: #343a40 !important;
-
-	}
-
-
-	#gantt_absensi_kmj .highcharts-title {
-
-		fill: #212529 !important;
-
-		font-weight: 700 !important;
-
-	}
-
-
-	#gantt_absensi_kmj .highcharts-subtitle {
-
-		fill: #6c757d !important;
+		background: #fff;
 
 	}
 
@@ -488,37 +384,11 @@
 	|--------------------------------------------------------------------------
 	*/
 
-	.highcharts-tooltip-box {
-
-		fill: #ffffff !important;
-
-		stroke: #dee2e6 !important;
-
-		stroke-width: 1px !important;
-
-		filter:
-			drop-shadow(
-				0 8px 20px
-				rgba(
-					0,
-					0,
-					0,
-					.15
-				)
-			);
-
-	}
-
-
 	.gantt-v4-tooltip {
 
 		width: 240px;
 
 		padding: 10px;
-
-		color: #212529;
-
-		background: #ffffff;
 
 	}
 
@@ -534,8 +404,6 @@
 		font-size: 13px;
 
 		font-weight: 700;
-
-		color: #212529;
 
 	}
 
@@ -561,8 +429,6 @@
 
 
 	.gantt-v4-tooltip-row b {
-
-		color: #212529;
 
 		text-align: right;
 
@@ -611,8 +477,7 @@
 		filter:
 			brightness(1.08)
 			drop-shadow(
-				0 4px 5px
-				rgba(
+				0 4px 5px rgba(
 					0,
 					0,
 					0,
@@ -625,81 +490,7 @@
 
 	/*
 	|--------------------------------------------------------------------------
-	| NAVIGATOR
-	|--------------------------------------------------------------------------
-	*/
-
-	#gantt_absensi_kmj
-	.highcharts-navigator-mask {
-
-		fill:
-			rgba(
-				108,
-				117,
-				125,
-				.10
-			) !important;
-
-	}
-
-
-	#gantt_absensi_kmj
-	.highcharts-navigator-outline {
-
-		stroke: #adb5bd !important;
-
-	}
-
-
-	#gantt_absensi_kmj
-	.highcharts-navigator-series {
-
-		fill: #adb5bd !important;
-
-		stroke: #868e96 !important;
-
-	}
-
-
-	/*
-	|--------------------------------------------------------------------------
-	| SCROLLBAR
-	|--------------------------------------------------------------------------
-	*/
-
-	#gantt_absensi_kmj
-	.highcharts-scrollbar-track {
-
-		fill: #f1f3f5 !important;
-
-		stroke: #dee2e6 !important;
-
-	}
-
-
-	#gantt_absensi_kmj
-	.highcharts-scrollbar-thumb {
-
-		fill: #adb5bd !important;
-
-		stroke: #868e96 !important;
-
-	}
-
-
-	#gantt_absensi_kmj
-	.highcharts-scrollbar-button {
-
-		fill: #f8f9fa !important;
-
-		stroke: #dee2e6 !important;
-
-	}
-
-
-	/*
-	|--------------------------------------------------------------------------
-	| RESPONSIVE
+	| MOBILE
 	|--------------------------------------------------------------------------
 	*/
 
@@ -712,7 +503,6 @@
 		}
 
 	}
-
 
 </style>
 <!-- begin content here -->
