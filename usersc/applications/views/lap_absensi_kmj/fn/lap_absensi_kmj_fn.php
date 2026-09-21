@@ -1512,4 +1512,933 @@ function generateGanttAbsensiV2(start_date, end_date) {
     }
 
 }
+
+function generateGanttAbsensiV4(start_date, end_date) {
+
+    $('#gantt_absensi_kmj').empty();
+
+    $.ajax({
+        url: "../../models/lap_absensi_kmj/lap_absensi_kmj.php",
+        type: "POST",
+        dataType: "json",
+        data: {
+            start_date: start_date,
+            end_date: end_date,
+            id_hemxxmh: 0
+        },
+
+        success: function (json) {
+
+            var rows = [];
+
+            if (
+                json &&
+                json.data &&
+                json.data.htsprrd
+            ) {
+                rows = json.data.htsprrd;
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | HANYA DATA YANG ADA ABSENSI
+            |--------------------------------------------------------------------------
+            */
+
+            rows = rows.filter(function (row) {
+
+                return (
+                    row['Check In'] &&
+                    row['Check Out'] &&
+                    row.Shift !== 'OFF'
+                );
+
+            });
+
+
+            if (rows.length === 0) {
+
+                $('#gantt_absensi_kmj').html(
+                    '<div class="alert alert-warning">' +
+                        'Tidak ada data absensi.' +
+                    '</div>'
+                );
+
+                return;
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | MONTH
+            |--------------------------------------------------------------------------
+            */
+
+            var monthMap = {
+                Jan: 0,
+                Feb: 1,
+                Mar: 2,
+                Apr: 3,
+                May: 4,
+                Jun: 5,
+                Jul: 6,
+                Aug: 7,
+                Sep: 8,
+                Oct: 9,
+                Nov: 10,
+                Dec: 11
+            };
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | PARSE DATE
+            |--------------------------------------------------------------------------
+            */
+
+            function parseDate(value) {
+
+                var p =
+                    value.trim().split(' ');
+
+                if (p.length < 4) {
+                    return null;
+                }
+
+                var t =
+                    p[3].split(':');
+
+                return new Date(
+                    parseInt(p[2], 10),
+                    monthMap[p[1]],
+                    parseInt(p[0], 10),
+                    parseInt(t[0], 10),
+                    parseInt(t[1], 10),
+                    0
+                );
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | FORMAT DATE
+            |--------------------------------------------------------------------------
+            */
+
+            function formatDate(date) {
+
+                var day =
+                    String(
+                        date.getDate()
+                    ).padStart(2, '0');
+
+                var month =
+                    date.toLocaleString(
+                        'en-US',
+                        {
+                            month: 'short'
+                        }
+                    );
+
+                var year =
+                    String(
+                        date.getFullYear()
+                    ).slice(-2);
+
+                return (
+                    day +
+                    '-' +
+                    month +
+                    '-' +
+                    year
+                );
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | FORMAT TIME
+            |--------------------------------------------------------------------------
+            */
+
+            function formatTime(date) {
+
+                return (
+                    String(
+                        date.getHours()
+                    ).padStart(2, '0') +
+                    ':' +
+                    String(
+                        date.getMinutes()
+                    ).padStart(2, '0')
+                );
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | START / END
+            |--------------------------------------------------------------------------
+            */
+
+            var minDate = null;
+            var maxDate = null;
+
+
+            $.each(rows, function (index, row) {
+
+                var start =
+                    parseDate(
+                        row['Check In']
+                    );
+
+                var end =
+                    parseDate(
+                        row['Check Out']
+                    );
+
+
+                if (!start || !end) {
+                    return;
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | MALAM
+                |--------------------------------------------------------------------------
+                */
+
+                if (
+                    row.Shift === 'Malam' &&
+                    end <= start
+                ) {
+
+                    end.setDate(
+                        end.getDate() + 1
+                    );
+
+                }
+
+
+                if (
+                    !minDate ||
+                    start < minDate
+                ) {
+
+                    minDate =
+                        new Date(start);
+
+                }
+
+
+                if (
+                    !maxDate ||
+                    end > maxDate
+                ) {
+
+                    maxDate =
+                        new Date(end);
+
+                }
+
+            });
+
+
+            if (!minDate || !maxDate) {
+
+                return;
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | TIMELINE DISET KE 07:00
+            |--------------------------------------------------------------------------
+            */
+
+            minDate.setHours(
+                7,
+                0,
+                0,
+                0
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | END TIMELINE
+            |--------------------------------------------------------------------------
+            */
+
+            maxDate.setHours(
+                7,
+                0,
+                0,
+                0
+            );
+
+            maxDate.setDate(
+                maxDate.getDate() + 1
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CATEGORY ORANG
+            |--------------------------------------------------------------------------
+            */
+
+            var people = [];
+            var peopleMap = {};
+
+
+            $.each(rows, function (index, row) {
+
+                var nik = row.NIK;
+
+                if (
+                    nik &&
+                    peopleMap[nik] === undefined
+                ) {
+
+                    peopleMap[nik] =
+                        people.length;
+
+                    people.push({
+                        NIK: nik,
+                        Nama:
+                            $.trim(
+                                row.Nama || '-'
+                            )
+                    });
+
+                }
+
+            });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | SORT NAMA
+            |--------------------------------------------------------------------------
+            */
+
+            people.sort(function (a, b) {
+
+                return a.Nama.localeCompare(
+                    b.Nama
+                );
+
+            });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | UPDATE INDEX SETELAH SORT
+            |--------------------------------------------------------------------------
+            */
+
+            peopleMap = {};
+
+            $.each(
+                people,
+                function (index, person) {
+
+                    peopleMap[
+                        person.NIK
+                    ] = index;
+
+                }
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | GANTT DATA
+            |--------------------------------------------------------------------------
+            */
+
+            var ganttData = [];
+
+
+            $.each(rows, function (index, row) {
+
+                var start =
+                    parseDate(
+                        row['Check In']
+                    );
+
+                var end =
+                    parseDate(
+                        row['Check Out']
+                    );
+
+
+                if (!start || !end) {
+                    return;
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | MALAM
+                |--------------------------------------------------------------------------
+                */
+
+                if (
+                    row.Shift === 'Malam' &&
+                    end <= start
+                ) {
+
+                    end.setDate(
+                        end.getDate() + 1
+                    );
+
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | WARNA
+                |--------------------------------------------------------------------------
+                */
+
+                var color =
+                    '#ffc107';
+
+
+                if (row.Shift === 'Siang') {
+
+                    color =
+                        '#ff9800';
+
+                }
+
+
+                if (row.Shift === 'Malam') {
+
+                    color =
+                        '#795548';
+
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | GANTT POINT
+                |--------------------------------------------------------------------------
+                */
+
+                ganttData.push({
+
+                    id:
+                        row.NIK +
+                        '-' +
+                        row.tanggal +
+                        '-' +
+                        row.Shift +
+                        '-' +
+                        index,
+
+                    name:
+                        row.Shift,
+
+                    start:
+                        start.getTime(),
+
+                    end:
+                        end.getTime(),
+
+                    y:
+                        peopleMap[row.NIK],
+
+                    color:
+                        color,
+
+                    custom: {
+
+                        nik:
+                            row.NIK,
+
+                        nama:
+                            $.trim(
+                                row.Nama
+                            ),
+
+                        tanggal:
+                            row.tanggal,
+
+                        shift:
+                            row.Shift,
+
+                        checkIn:
+                            row['Check In'],
+
+                        checkOut:
+                            row['Check Out'],
+
+                        durasi:
+                            row['Durasi (Jam)']
+
+                    }
+
+                });
+
+            });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CHART
+            |--------------------------------------------------------------------------
+            */
+
+            Highcharts.ganttChart(
+                'gantt_absensi_kmj',
+                {
+
+                    chart: {
+
+                        height:
+                            Math.max(
+                                500,
+                                people.length * 48 + 150
+                            ),
+
+                        spacingLeft: 10,
+
+                        spacingRight: 20,
+
+                        style: {
+
+                            fontFamily:
+                                'Arial, sans-serif'
+
+                        }
+
+                    },
+
+
+                    title: {
+
+                        text:
+                            'Gantt Chart Absensi KMJ',
+
+                        align:
+                            'left',
+
+                        margin:
+                            8
+
+                    },
+
+
+                    subtitle: {
+
+                        text:
+                            start_date +
+                            ' — ' +
+                            end_date,
+
+                        align:
+                            'left'
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | X AXIS
+                    |--------------------------------------------------------------------------
+                    */
+
+                    xAxis: {
+
+                        min:
+                            minDate.getTime(),
+
+                        max:
+                            maxDate.getTime(),
+
+                        type:
+                            'datetime',
+
+                        tickInterval:
+                            8 * 60 * 60 * 1000,
+
+
+                        labels: {
+
+                            useHTML:
+                                true,
+
+                            formatter:
+                                function () {
+
+                                    var d =
+                                        new Date(
+                                            this.value
+                                        );
+
+                                    var hour =
+                                        d.getHours();
+
+
+                                    var shift =
+                                        '';
+
+
+                                    if (
+                                        hour >= 7 &&
+                                        hour < 15
+                                    ) {
+
+                                        shift =
+                                            'Pagi';
+
+                                    }
+                                    else if (
+                                        hour >= 15 &&
+                                        hour < 23
+                                    ) {
+
+                                        shift =
+                                            'Siang';
+
+                                    }
+                                    else {
+
+                                        shift =
+                                            'Malam';
+
+                                    }
+
+
+                                    return (
+
+                                        '<div class="gantt-v4-axis">' +
+
+                                            '<b>' +
+                                                formatDate(d) +
+                                            '</b>' +
+
+                                            '<span>' +
+                                                shift +
+                                            '</span>' +
+
+                                            '<small>' +
+                                                formatTime(d) +
+                                            '</small>' +
+
+                                        '</div>'
+
+                                    );
+
+                                }
+
+                        },
+
+
+                        grid: {
+
+                            enabled:
+                                true,
+
+                            cellWidth:
+                                100
+
+                        },
+
+
+                        plotBands: [
+
+                            /*
+                            | Bisa diperpanjang otomatis
+                            | berdasarkan range chart.
+                            */
+
+                        ]
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Y AXIS
+                    |--------------------------------------------------------------------------
+                    */
+
+                    yAxis: {
+
+                        type:
+                            'category',
+
+                        categories:
+                            people.map(
+                                function (person) {
+                                    return person.Nama;
+                                }
+                            ),
+
+                        reversed:
+                            true,
+
+                        title: {
+
+                            text:
+                                'Nama'
+
+                        },
+
+                        labels: {
+
+                            useHTML:
+                                true,
+
+                            formatter:
+                                function () {
+
+                                    var person =
+                                        people[
+                                            this.pos
+                                        ];
+
+                                    return (
+
+                                        '<div class="gantt-v4-person">' +
+
+                                            '<span class="gantt-v4-avatar">' +
+                                                person.Nama
+                                                    .charAt(0)
+                                                    .toUpperCase() +
+                                            '</span>' +
+
+                                            '<span>' +
+                                                person.Nama +
+                                            '</span>' +
+
+                                        '</div>'
+
+                                    );
+
+                                }
+
+                        }
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | TOOLTIP
+                    |--------------------------------------------------------------------------
+                    */
+
+                    tooltip: {
+
+                        useHTML:
+                            true,
+
+                        formatter:
+                            function () {
+
+                                var c =
+                                    this.point.custom;
+
+
+                                return (
+
+                                    '<div class="gantt-v4-tooltip">' +
+
+                                        '<div class="gantt-v4-tooltip-name">' +
+                                            c.nama +
+                                        '</div>' +
+
+                                        '<div class="gantt-v4-tooltip-row">' +
+                                            '<span>NIK</span>' +
+                                            '<b>' +
+                                                c.nik +
+                                            '</b>' +
+                                        '</div>' +
+
+                                        '<div class="gantt-v4-tooltip-row">' +
+                                            '<span>Tanggal</span>' +
+                                            '<b>' +
+                                                c.tanggal +
+                                            '</b>' +
+                                        '</div>' +
+
+                                        '<div class="gantt-v4-tooltip-row">' +
+                                            '<span>Shift</span>' +
+                                            '<b>' +
+                                                c.shift +
+                                            '</b>' +
+                                        '</div>' +
+
+                                        '<div class="gantt-v4-tooltip-row">' +
+                                            '<span>Check In</span>' +
+                                            '<b>' +
+                                                c.checkIn +
+                                            '</b>' +
+                                        '</div>' +
+
+                                        '<div class="gantt-v4-tooltip-row">' +
+                                            '<span>Check Out</span>' +
+                                            '<b>' +
+                                                c.checkOut +
+                                            '</b>' +
+                                        '</div>' +
+
+                                        '<div class="gantt-v4-tooltip-duration">' +
+                                            c.durasi +
+                                            ' jam' +
+                                        '</div>' +
+
+                                    '</div>'
+
+                                );
+
+                            }
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | NAVIGATOR
+                    |--------------------------------------------------------------------------
+                    */
+
+                    navigator: {
+
+                        enabled:
+                            true,
+
+                        liveRedraw:
+                            true,
+
+                        height:
+                            35
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | SCROLLBAR
+                    |--------------------------------------------------------------------------
+                    */
+
+                    scrollbar: {
+
+                        enabled:
+                            true
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | RANGE SELECTOR
+                    |--------------------------------------------------------------------------
+                    */
+
+                    rangeSelector: {
+
+                        enabled:
+                            false
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | LEGEND
+                    |--------------------------------------------------------------------------
+                    */
+
+                    legend: {
+
+                        enabled:
+                            false
+
+                    },
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | SERIES
+                    |--------------------------------------------------------------------------
+                    */
+
+                    series: [
+
+                        {
+
+                            name:
+                                'Absensi',
+
+                            data:
+                                ganttData,
+
+                            dataLabels: {
+
+                                enabled:
+                                    true,
+
+                                format:
+                                    '{point.name}',
+
+                                style: {
+
+                                    fontSize:
+                                        '9px',
+
+                                    fontWeight:
+                                        '600',
+
+                                    textOutline:
+                                        'none'
+
+                                }
+
+                            }
+
+                        }
+
+                    ]
+
+                }
+
+            );
+
+        },
+
+
+        error: function (xhr) {
+
+            console.log(
+                'Gantt V4 Error:',
+                xhr.responseText
+            );
+
+            $('#gantt_absensi_kmj').html(
+
+                '<div class="alert alert-danger">' +
+                    'Gagal mengambil data Gantt V4.' +
+                '</div>'
+
+            );
+
+        }
+
+    });
+
+}
 </script>

@@ -22,240 +22,487 @@
 	}
 ?>
 
+<!-- <style>
+
+	.gantt-v2-wrapper {
+
+		width: 100%;
+
+		overflow-x: auto;
+
+		border: 1px solid #000;
+
+	}
+
+
+	.gantt-v2-table {
+
+		border-collapse: collapse;
+
+		min-width: max-content;
+
+		width: 100%;
+
+		font-size: 13px;
+
+	}
+
+
+	.gantt-v2-table th,
+	.gantt-v2-table td {
+
+		border: 1px solid #000;
+
+		padding: 0;
+
+		vertical-align: middle;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| HEADER TANGGAL
+	|--------------------------------------------------------------------------
+	*/
+
+	.gantt-v2-date {
+
+		height: 32px;
+
+		min-width: 270px;
+
+		text-align: center;
+
+		background: #f8f8f8;
+
+		font-weight: bold;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| HEADER SHIFT
+	|--------------------------------------------------------------------------
+	*/
+
+	.gantt-v2-shift {
+
+		width: 90px;
+
+		min-width: 90px;
+
+		height: 30px;
+
+		text-align: center;
+
+		background: #fff;
+
+		font-weight: bold;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| NIK
+	|--------------------------------------------------------------------------
+	*/
+
+	.gantt-v2-nik {
+
+		width: 90px;
+
+		min-width: 90px;
+
+		text-align: center;
+
+	}
+
+
+	.gantt-v2-nik-cell {
+
+		padding: 5px 8px !important;
+
+		white-space: nowrap;
+
+		text-align: center;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| NAMA
+	|--------------------------------------------------------------------------
+	*/
+
+	.gantt-v2-nama {
+
+		width: 260px;
+
+		min-width: 260px;
+
+	}
+
+
+	.gantt-v2-nama-cell {
+
+		width: 260px;
+
+		min-width: 260px;
+
+		padding: 5px 8px !important;
+
+		white-space: nowrap;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| CELL BAR
+	|--------------------------------------------------------------------------
+	*/
+
+	.gantt-v2-bar-cell {
+
+		width: 90px;
+
+		min-width: 90px;
+
+		height: 32px;
+
+		padding: 0 !important;
+
+		position: relative;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| TRACK
+	|--------------------------------------------------------------------------
+	*/
+
+	.gantt-v2-track {
+
+		position: relative;
+
+		width: 100%;
+
+		height: 30px;
+
+		background: #fff;
+
+		overflow: hidden;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| BAR
+	|--------------------------------------------------------------------------
+	*/
+
+	.gantt-v2-bar {
+
+		position: absolute;
+
+		top: 5px;
+
+		height: 20px;
+
+		background: #ffc107;
+
+		border: 1px solid #e0a800;
+
+		box-sizing: border-box;
+
+		display: flex;
+
+		align-items: center;
+
+		justify-content: center;
+
+		white-space: nowrap;
+
+		overflow: hidden;
+
+		font-size: 10px;
+
+		font-weight: bold;
+
+		color: #000;
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| EMPTY
+	|--------------------------------------------------------------------------
+	*/
+
+	.gantt-v2-empty {
+
+		width: 100%;
+
+		height: 30px;
+
+		background: #fff;
+
+	}
+
+</style> -->
+
 <style>
 
-.gantt-v2-wrapper {
+	#gantt_absensi_kmj {
 
-    width: 100%;
+		width: 100%;
 
-    overflow-x: auto;
+		border: 1px solid #dee2e6;
 
-    border: 1px solid #000;
+		border-radius: 8px;
 
-}
+		overflow: hidden;
 
+		background: #fff;
 
-.gantt-v2-table {
+	}
 
-    border-collapse: collapse;
 
-    min-width: max-content;
+	/*
+	|--------------------------------------------------------------------------
+	| AXIS HEADER
+	|--------------------------------------------------------------------------
+	*/
 
-    width: 100%;
+	.gantt-v4-axis {
 
-    font-size: 13px;
+		text-align: center;
 
-}
+		min-width: 85px;
 
+		line-height: 1.25;
 
-.gantt-v2-table th,
-.gantt-v2-table td {
+	}
 
-    border: 1px solid #000;
 
-    padding: 0;
+	.gantt-v4-axis b {
 
-    vertical-align: middle;
+		display: block;
 
-}
+		font-size: 11px;
 
+		color: #212529;
 
-/*
-|--------------------------------------------------------------------------
-| HEADER TANGGAL
-|--------------------------------------------------------------------------
-*/
+	}
 
-.gantt-v2-date {
 
-    height: 32px;
+	.gantt-v4-axis span {
 
-    min-width: 270px;
+		display: block;
 
-    text-align: center;
+		margin-top: 3px;
 
-    background: #f8f8f8;
+		font-size: 10px;
 
-    font-weight: bold;
+		font-weight: 700;
 
-}
+		color: #ff9800;
 
+	}
 
-/*
-|--------------------------------------------------------------------------
-| HEADER SHIFT
-|--------------------------------------------------------------------------
-*/
 
-.gantt-v2-shift {
+	.gantt-v4-axis small {
 
-    width: 90px;
+		display: block;
 
-    min-width: 90px;
+		margin-top: 2px;
 
-    height: 30px;
+		font-size: 9px;
 
-    text-align: center;
+		color: #868e96;
 
-    background: #fff;
+	}
 
-    font-weight: bold;
 
-}
+	/*
+	|--------------------------------------------------------------------------
+	| PERSON
+	|--------------------------------------------------------------------------
+	*/
 
+	.gantt-v4-person {
 
-/*
-|--------------------------------------------------------------------------
-| NIK
-|--------------------------------------------------------------------------
-*/
+		display: flex;
 
-.gantt-v2-nik {
+		align-items: center;
 
-    width: 90px;
+		gap: 7px;
 
-    min-width: 90px;
+		white-space: nowrap;
 
-    text-align: center;
+	}
 
-}
 
+	.gantt-v4-avatar {
 
-.gantt-v2-nik-cell {
+		width: 25px;
 
-    padding: 5px 8px !important;
+		height: 25px;
 
-    white-space: nowrap;
+		min-width: 25px;
 
-    text-align: center;
+		border-radius: 50%;
 
-}
+		display: inline-flex;
 
+		align-items: center;
 
-/*
-|--------------------------------------------------------------------------
-| NAMA
-|--------------------------------------------------------------------------
-*/
+		justify-content: center;
 
-.gantt-v2-nama {
+		background: #f1f3f5;
 
-    width: 260px;
+		color: #495057;
 
-    min-width: 260px;
+		font-size: 10px;
 
-}
+		font-weight: 700;
 
+	}
 
-.gantt-v2-nama-cell {
 
-    width: 260px;
+	/*
+	|--------------------------------------------------------------------------
+	| TOOLTIP
+	|--------------------------------------------------------------------------
+	*/
 
-    min-width: 260px;
+	.gantt-v4-tooltip {
 
-    padding: 5px 8px !important;
+		width: 240px;
 
-    white-space: nowrap;
+		padding: 10px;
 
-}
+	}
 
 
-/*
-|--------------------------------------------------------------------------
-| CELL BAR
-|--------------------------------------------------------------------------
-*/
+	.gantt-v4-tooltip-name {
 
-.gantt-v2-bar-cell {
+		margin-bottom: 8px;
 
-    width: 90px;
+		padding-bottom: 7px;
 
-    min-width: 90px;
+		border-bottom: 1px solid #eee;
 
-    height: 32px;
+		font-size: 13px;
 
-    padding: 0 !important;
+		font-weight: 700;
 
-    position: relative;
+	}
 
-}
 
+	.gantt-v4-tooltip-row {
 
-/*
-|--------------------------------------------------------------------------
-| TRACK
-|--------------------------------------------------------------------------
-*/
+		display: flex;
 
-.gantt-v2-track {
+		justify-content: space-between;
 
-    position: relative;
+		gap: 15px;
 
-    width: 100%;
+		padding: 3px 0;
 
-    height: 30px;
+	}
 
-    background: #fff;
 
-    overflow: hidden;
+	.gantt-v4-tooltip-row span {
 
-}
+		color: #888;
 
+	}
 
-/*
-|--------------------------------------------------------------------------
-| BAR
-|--------------------------------------------------------------------------
-*/
 
-.gantt-v2-bar {
+	.gantt-v4-tooltip-row b {
 
-    position: absolute;
+		text-align: right;
 
-    top: 5px;
+	}
 
-    height: 20px;
 
-    background: #ffc107;
+	.gantt-v4-tooltip-duration {
 
-    border: 1px solid #e0a800;
+		margin-top: 7px;
 
-    box-sizing: border-box;
+		padding-top: 7px;
 
-    display: flex;
+		border-top: 1px solid #eee;
 
-    align-items: center;
+		color: #ff9800;
 
-    justify-content: center;
+		font-weight: 700;
 
-    white-space: nowrap;
+	}
 
-    overflow: hidden;
 
-    font-size: 10px;
+	/*
+	|--------------------------------------------------------------------------
+	| BAR
+	|--------------------------------------------------------------------------
+	*/
 
-    font-weight: bold;
+	.highcharts-gantt-series
+	.highcharts-point {
 
-    color: #000;
+		rx: 5;
 
-}
+		ry: 5;
 
+		stroke-width: 0;
 
-/*
-|--------------------------------------------------------------------------
-| EMPTY
-|--------------------------------------------------------------------------
-*/
+		transition:
+			filter .15s ease;
 
-.gantt-v2-empty {
+	}
 
-    width: 100%;
 
-    height: 30px;
+	.highcharts-gantt-series
+	.highcharts-point:hover {
 
-    background: #fff;
+		filter:
+			brightness(1.08)
+			drop-shadow(
+				0 4px 5px rgba(
+					0,
+					0,
+					0,
+					.22
+				)
+			);
 
-}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| MOBILE
+	|--------------------------------------------------------------------------
+	*/
+
+	@media (max-width: 768px) {
+
+		#gantt_absensi_kmj {
+
+			min-width: 850px;
+
+		}
+
+	}
 
 </style>
 <!-- begin content here -->
@@ -464,7 +711,8 @@
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 
 			generateTable(start_date, end_date);
-			generateGanttAbsensiV2(start_date, end_date);
+			// generateGanttAbsensiV2(start_date, end_date);
+			generateGanttAbsensiV4(start_date, end_date);
 			
 			id_hemxxmh_old = id_hem_get;
 			
@@ -576,7 +824,8 @@
 					});
 
 					generateTable(start_date, end_date);
-					generateGanttAbsensiV2(start_date, end_date);
+					// generateGanttAbsensiV2(start_date, end_date);
+					generateGanttAbsensiV4(start_date, end_date);
 
 					tbllap_absensi_kmj.rows().deselect();
 					tbllap_absensi_kmj.ajax.reload(function ( json ) {
