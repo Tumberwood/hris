@@ -98,14 +98,6 @@
         $db->transaction();
         
         //DELETE DETAIL PAYROLL LAMA
-        $qd_hpyemtd_bruto = $db
-            ->raw()
-            ->bind(':id_hpyxxth', $id_hpyxxth)
-            ->exec('DELETE FROM hpyemtd_bruto
-                    WHERE id_hpyxxth = :id_hpyxxth
-            '
-        );
-
         $qd_detail_payroll = $db
             ->raw()
             ->bind(':id_hpyxxth', $id_hpyxxth)
@@ -114,8 +106,9 @@
             '
         );
 
-        //START INSERT PAYROLL BRUTO
-        $qs_hpyemtd_bruto = $db
+        //Pembulatan FLOOR
+        // INSERT PAYROLL DETAIL
+        $qs_hpyemtd = $db
             ->raw()
             ->bind(':id_hpyxxth', $id_hpyxxth)
             ->bind(':tanggal_awal', $tanggal_awal)
@@ -123,6 +116,7 @@
             ->exec('WITH pegawai AS (
                         SELECT
                             b.id AS id_hemxxmh,
+                            history.id_harxxmh,
                             
                             CASE
                                 WHEN b.id = (
@@ -156,6 +150,21 @@
                             c.id_heyxxmd
                         FROM hemxxmh b
                         JOIN hemjbmh c  ON c.id_hemxxmh = b.id AND c.id_heyxxmd <> 2
+                        LEFT JOIN (
+                            SELECT *
+                            FROM (
+                                SELECT
+                                    *,
+                                    ROW_NUMBER() OVER (
+                                        PARTITION BY id_hemxxmh
+                                        ORDER BY tanggal_awal DESC, id DESC
+                                    ) AS rn
+                                FROM hemjbrd
+                                WHERE 1
+                                AND id_harxxmh <> 1
+                            ) t
+                            WHERE rn = 1
+                        ) history ON history.id_hemxxmh = c.id_hemxxmh
 
                         LEFT JOIN hemdcmh d on d.id_hemxxmh = b.id
                         LEFT JOIN hodxxmh departemen on departemen.id = c.id_hodxxmh
@@ -912,6 +921,95 @@
 
                         GROUP BY pr.id_hemxxmh
                     ),
+                    pot_resign AS (
+                        SELECT
+                            -- peg.kode,
+                            -- peg.nama,
+                            job.id_hemxxmh,
+                            job.tanggal_keluar,
+                            (DATEDIFF(LAST_DAY(job.tanggal_keluar), job.tanggal_keluar) + 2) AS sisa_hari,
+                            (
+                                SELECT
+                                    count(jad.id) hari_kerja
+                                FROM htssctd jad
+                                WHERE jad.id_hemxxmh = job.id_hemxxmh
+                                    AND jad.tanggal BETWEEN job.tanggal_keluar AND LAST_DAY(job.tanggal_keluar)
+                                    AND jad.is_active = 1
+                                    AND jad.id_htsxxmh <> 1
+                            ) c_pot_resign,
+                            ROUND(
+                                -- Rumus: ( (gp + tjab + fix_cost) / grup_hk (21 / 25) ) * is_pot_resign
+                                (
+                                    (
+                                        (
+                                            -- GP
+                                            IFNULL((
+                                                SELECT a.nominal
+                                                FROM htpr_hemxxmh a
+                                                WHERE a.id_hpcxxmh = 1
+                                                    AND a.id_hemxxmh = job.id_hemxxmh
+                                                    AND a.tanggal_efektif <= :tanggal_akhir
+                                                    AND a.is_active = 1
+                                                ORDER BY a.tanggal_efektif DESC
+                                                LIMIT 1
+                                            ),0)
+
+                                            +
+
+                                            -- TJAB
+                                            IFNULL((
+                                                SELECT a.nominal
+                                                FROM htpr_hemxxmh a
+                                                WHERE a.id_hpcxxmh = 32
+                                                    AND a.id_hemxxmh = job.id_hemxxmh
+                                                    AND a.tanggal_efektif <= :tanggal_akhir
+                                                    AND a.is_active = 1
+                                                ORDER BY a.tanggal_efektif DESC
+                                                LIMIT 1
+                                            ),0)
+
+                                            +
+
+                                            -- TJ Khusus
+                                            IFNULL((
+                                                SELECT a.nominal
+                                                FROM htpr_hemxxmh a
+                                                WHERE a.id_hpcxxmh = 133
+                                                    AND a.id_hemxxmh = job.id_hemxxmh
+                                                    AND a.tanggal_efektif <= :tanggal_akhir
+                                                    AND a.is_active = 1
+                                                ORDER BY a.tanggal_efektif DESC
+                                                LIMIT 1
+                                            ),0)
+
+                                            +
+
+                                            IFNULL(fc.fix_cost,0)
+
+                                        )
+                                        /
+                                        IF(job.grup_hk = 1, 21, 25)
+                                    )
+                                    * 
+                                    (
+                                        SELECT
+                                            count(jad.id) hari_kerja
+                                        FROM htssctd jad
+                                        WHERE jad.id_hemxxmh = job.id_hemxxmh
+                                            AND jad.tanggal BETWEEN job.tanggal_keluar AND LAST_DAY(job.tanggal_keluar)
+                                            AND jad.is_active = 1
+                                            AND jad.id_htsxxmh <> 1
+                                    )
+                                )
+                            ) AS pot_resign
+                        FROM hemxxmh peg
+                        JOIN hemjbmh job ON job.id_hemxxmh = peg.id
+                        LEFT JOIN fix_cost fc ON fc.id_hemxxmh = job.id_hemxxmh
+                        WHERE 1
+                            AND job.tanggal_keluar 
+                                BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01")
+                                AND LAST_DAY(:tanggal_akhir)
+                    ),
                     pot_jam AS (
                         SELECT
                             pr.id_hemxxmh,
@@ -1421,220 +1519,35 @@
                                 AND tanggal_efektif <= :tanggal_akhir
                             ) x WHERE rn = 1
                         ) iuran_spsi ON iuran_spsi.id_hemxxmh = p.id_hemxxmh
-                    )
-                    SELECT
-                        :id_hpyxxth,
-                        id_heyxxmd,
-                        is_terbaru,
-                        p.id_hemxxmh,
-                        id_gtxpkmh,
-                        kategori_kelas,
-                        nrp,
-                        nama,
-                        departemen,
-                        jabatan,
-                        tipe,
-                        sub_tipe,
-                        status_peg,
-                        
-                        ptkp,
-                        no_rekening,
-                        ktp,
-                        npwp,
-
-                        IFNULL(gp.gp, 0) AS gp,
-                        t_jab,
-                        0 AS terima_lain,
-                        var_cost,
-                        tj_khusus,
-                        fix_cost,
-                        premi_abs,
-                        
-                        lembur15,
-                        lembur15_final,
-                        rp_lembur15,
-
-                        lembur2,
-                        lembur2_final,
-                        rp_lembur2,
-
-                        lembur3,
-                        lembur3_final,
-                        rp_lembur3,
-                        
-                        total_lembur_jam,
-                        total_lembur_jam_final,
-                        total_rp_lembur,
-
-                        IFNULL(komp_rekontrak,0 ) AS komp_rekontrak,
-                        IF(MONTH(:tanggal_akhir) = 1, 
-                            IFNULL(komp_sisa_cuti,0 ),
-                            0
-                        ) AS komp_sisa_cuti,
-
-                        IF(MONTH(:tanggal_akhir) = 1, 
-                            IFNULL(sisa_cuti_hari,0 ),
-                            0
-                        ) AS sisa_cuti_hari,
-
-                        cuti_tahunan,
-                        cuti_bersama,
-
-                        0 AS thr,
-
-                        -- POTONGAN
-                        pot_makan,
-                        IFNULL(pot_upah, 0) AS pot_upah,
-                        IFNULL(c_pot_upah, 0) AS c_pot_upah,
-                        
-                        IFNULL(pot_jam, 0) AS pot_jam,
-                        IFNULL(c_pot_jam, 0) AS c_pot_jam,
-                        IFNULL(pendapatan_lain_before_pph,0 ) AS pendapatan_lain_before_pph,
-                        IFNULL(pot_lain_before_pph,0 ) AS pot_lain_before_pph,
-
-                        bpjs_kes_perusahaan,
-                        jkk,
-                        jkm,
-                        
-                        -- BATAS HITUNG BRUTO
-                        (
-                            COALESCE(gp.gp,0)
-                            + COALESCE(t_jab,0)
-                            + 0
-                            + COALESCE(var_cost,0)
-                            + COALESCE(tj_khusus,0)
-                            + COALESCE(fix_cost,0)
-                            + COALESCE(premi_abs,0)
-                            + COALESCE(total_rp_lembur,0)
-                            + COALESCE(komp_rekontrak,0)
-                            -- + COALESCE(komp_sisa_cuti,0)
-                            + 
-                            
-                            IF(MONTH(:tanggal_akhir) = 1, 
-                                IFNULL(komp_sisa_cuti,0 ),
-                                0
-                            )
-                            + 0
-                            + COALESCE(pendapatan_lain_before_pph,0)
-                            + COALESCE(bpjs_kes_perusahaan,0)
-                            + COALESCE(jkk,0)
-                            + COALESCE(jkm,0)
-                        )
-                        -
-                        (
-                            
-                            COALESCE(pot_upah,0)
-                            + COALESCE(pot_jam,0)
-                            + COALESCE(pot_lain_before_pph,0)
-                        ) 
-                        AS bruto,
-
-                        jht_perusahaan,
-                        jp_perusahaan,
-
-                        pot_jht_karyawan,
-                        pot_jp_karyawan,
-                        bpjs_kes_karyawan,
-                        
-                        IFNULL(pot_piutang,0 ) AS pot_piutang,
-                        IFNULL(denda_apd,0 ) AS denda_apd,
-                        IFNULL(iuran_spsi,0 ) AS iuran_spsi,
-                        IFNULL(pendapatan_lain_after_pph,0 ) AS pendapatan_lain_after_pph,
-                        IFNULL(pot_lain_after_pph,0 ) AS pot_lain_after_pph
-
-                    FROM presensi p
-                    LEFT JOIN pegawai peg on peg.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN gaji_pokok gp ON gp.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN t_jabatan tjab ON tjab.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN var_cost ON var_cost.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN tj_khusus ON tj_khusus.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN fix_cost ON fix_cost.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN premi_abs ON premi_abs.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN pot_makan ON pot_makan.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN bpjs ON bpjs.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN pot_upah pu ON pu.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN pot_jam ON pot_jam.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN piut_kyw ON piut_kyw.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN komp_rekontrak ON komp_rekontrak.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN komp_sisa_cuti ON komp_sisa_cuti.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN pendapatan_lain_before_pph ON pendapatan_lain_before_pph.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN pot_lain_before_pph ON pot_lain_before_pph.id_hemxxmh = p.id_hemxxmh
-
-                    LEFT JOIN pendapatan_lain_after_pph ON pendapatan_lain_after_pph.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN pot_lain_after_pph ON pot_lain_after_pph.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN denda_apd ON denda_apd.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN iuran_spsi ON iuran_spsi.id_hemxxmh = p.id_hemxxmh
-                    
-        ');
-        $rs_hpyemtd_bruto = $qs_hpyemtd->fetchAll();
-
-        foreach ($rs_hpyemtd_bruto as $hpyemtd_bruto) {
-            $qi_insert = $db
-                ->query('insert', 'hpyemtd_bruto')
-                ->set($hpyemtd_bruto)
-                ->exec();
-        }
-        // END INSERT PAYROLL BRUTO
-
-
-
-        //START INSERT PAYROLL FINAL
-        $qs_hpyemtd = $db
-            ->raw()
-            ->bind(':id_hpyxxth', $id_hpyxxth)
-            ->exec('WITH bruto_per_nama AS (
-                        SELECT
-                            nama,
-                            SUM(bruto) AS total_bruto_nama
-                        FROM hpyemtd_bruto
-                        WHERE id_hpyxxth = :id_hpyxxth
-                        GROUP BY nama
-                        HAVING COUNT(*) > 1
                     ),
-
-                    payroll_base AS (
+                    payroll AS (
                         SELECT
-                            a.*,
-
-                            IF(
-                                a.is_terbaru = 1,
-                                IFNULL(bpn.total_bruto_nama, a.bruto),
-                                0
-                            ) AS bruto_dasar_pph
-
-                        FROM hpyemtd_bruto a
-
-                        LEFT JOIN bruto_per_nama bpn
-                            ON bpn.nama = a.nama
-
-                        WHERE a.id_hpyxxth = :id_hpyxxth
-                    ),
-
-                    payroll_final AS (
-                        SELECT
-                            id_hpyxxth,
-                            id_hemxxmh,
+                            -- :id_hpyxxth,
+                            id_heyxxmd,
+                            p.id_hemxxmh,
+                            id_gtxpkmh,
+                            kategori_kelas,
                             nrp,
-                            payroll_base.nama,
+                            nama,
                             departemen,
                             jabatan,
                             tipe,
                             sub_tipe,
                             status_peg,
-
+                            
                             ptkp,
                             no_rekening,
                             ktp,
                             npwp,
 
-                            gp,
+                            IFNULL(gp.gp, 0) AS gp,
                             t_jab,
-                            terima_lain,
+                            0 AS terima_lain,
                             var_cost,
                             tj_khusus,
                             fix_cost,
                             premi_abs,
-
+                            
                             lembur15,
                             lembur15_final,
                             rp_lembur15,
@@ -1646,57 +1559,76 @@
                             lembur3,
                             lembur3_final,
                             rp_lembur3,
-
+                            
                             total_lembur_jam,
                             total_lembur_jam_final,
                             total_rp_lembur,
 
-                            komp_rekontrak,
-                            komp_sisa_cuti,
+                            IFNULL(komp_rekontrak,0 ) AS komp_rekontrak,
+                            IF(MONTH(:tanggal_akhir) = 1, 
+                                IFNULL(komp_sisa_cuti,0 ),
+                                0
+                            ) AS komp_sisa_cuti,
+
+                            IF(MONTH(:tanggal_akhir) = 1, 
+                                IFNULL(sisa_cuti_hari,0 ),
+                                0
+                            ) AS sisa_cuti_hari,
 
                             cuti_tahunan,
                             cuti_bersama,
-                            sisa_cuti_hari,
-                            thr,
 
+                            0 AS thr,
+
+                            -- POTONGAN
                             pot_makan,
-                            pot_upah,
-                            c_pot_upah,
-
-                            pot_jam,
-                            c_pot_jam,
-
-                            pendapatan_lain_before_pph,
-                            pot_lain_before_pph,
+                            IFNULL(pot_upah, 0) AS pot_upah,
+                            IFNULL(c_pot_upah, 0) AS c_pot_upah,
+                            
+                            IFNULL(pot_resign, 0) AS pot_resign,
+                            IFNULL(c_pot_resign, 0) AS c_pot_resign,
+                            
+                            IFNULL(pot_jam, 0) AS pot_jam,
+                            IFNULL(c_pot_jam, 0) AS c_pot_jam,
+                            IFNULL(pendapatan_lain_before_pph,0 ) AS pendapatan_lain_before_pph,
+                            IFNULL(pot_lain_before_pph,0 ) AS pot_lain_before_pph,
 
                             bpjs_kes_perusahaan,
                             jkk,
                             jkm,
-
-                            bruto,
-                            kategori_kelas,
-
-                            IF(
-                                id_heyxxmd = 1,
-                                0,
-                                ter.persen
-                            ) AS persen_ter,
-
-                            ROUND(
-                                IF(
-                                    id_heyxxmd = 1,
-                                    0,
-                                    bruto_dasar_pph * (IFNULL(ter.persen, 0) / 100)
-                                ),
-                                0
-                            ) AS pot_pph21,
-
-                            bruto -
-                            IF(
-                                id_heyxxmd = 1,
-                                0,
-                                bruto_dasar_pph * (IFNULL(ter.persen, 0) / 100)
-                            ) AS after_pph21,
+                            
+                            -- BATAS HITUNG BRUTO
+                            (
+                                COALESCE(gp.gp,0)
+                                + COALESCE(t_jab,0)
+                                + 0
+                                + COALESCE(var_cost,0)
+                                + COALESCE(tj_khusus,0)
+                                + COALESCE(fix_cost,0)
+                                + COALESCE(premi_abs,0)
+                                + COALESCE(total_rp_lembur,0)
+                                + COALESCE(komp_rekontrak,0)
+                                -- + COALESCE(komp_sisa_cuti,0)
+                                + 
+                                
+                                IF(MONTH(:tanggal_akhir) = 1, 
+                                    IFNULL(komp_sisa_cuti,0 ),
+                                    0
+                                )
+                                + 0
+                                + COALESCE(pendapatan_lain_before_pph,0)
+                                + COALESCE(bpjs_kes_perusahaan,0)
+                                + COALESCE(jkk,0)
+                                + COALESCE(jkm,0)
+                            )
+                            -
+                            (
+                                
+                                COALESCE(pot_upah,0)
+                                + COALESCE(pot_jam,0)
+                                + COALESCE(pot_lain_before_pph,0)
+                            ) 
+                            AS bruto,
 
                             jht_perusahaan,
                             jp_perusahaan,
@@ -1704,7 +1636,113 @@
                             pot_jht_karyawan,
                             pot_jp_karyawan,
                             bpjs_kes_karyawan,
+                            
+                            IFNULL(pot_piutang,0 ) AS pot_piutang,
+                            IFNULL(denda_apd,0 ) AS denda_apd,
+                            IFNULL(iuran_spsi,0 ) AS iuran_spsi,
+                            IFNULL(pendapatan_lain_after_pph,0 ) AS pendapatan_lain_after_pph,
+                            IFNULL(pot_lain_after_pph,0 ) AS pot_lain_after_pph
 
+                        FROM presensi p
+                        LEFT JOIN pegawai peg on peg.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN gaji_pokok gp ON gp.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN t_jabatan tjab ON tjab.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN var_cost ON var_cost.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN tj_khusus ON tj_khusus.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN fix_cost ON fix_cost.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN premi_abs ON premi_abs.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN pot_makan ON pot_makan.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN bpjs ON bpjs.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN pot_upah pu ON pu.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN pot_resign resign ON resign.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN pot_jam ON pot_jam.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN piut_kyw ON piut_kyw.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN komp_rekontrak ON komp_rekontrak.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN komp_sisa_cuti ON komp_sisa_cuti.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN pendapatan_lain_before_pph ON pendapatan_lain_before_pph.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN pot_lain_before_pph ON pot_lain_before_pph.id_hemxxmh = p.id_hemxxmh
+
+                        LEFT JOIN pendapatan_lain_after_pph ON pendapatan_lain_after_pph.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN pot_lain_after_pph ON pot_lain_after_pph.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN denda_apd ON denda_apd.id_hemxxmh = p.id_hemxxmh
+                        LEFT JOIN iuran_spsi ON iuran_spsi.id_hemxxmh = p.id_hemxxmh
+                    ),
+                    payroll_final AS (
+                        SELECT
+                            id_hemxxmh,
+                            nrp,
+                            payroll.nama,
+                            departemen,
+                            jabatan,
+                            tipe,
+                            sub_tipe,
+                            status_peg,
+                            
+                            ptkp,
+                            no_rekening,
+                            ktp,
+                            npwp,
+                            gp,
+                            t_jab,
+                            terima_lain,
+                            var_cost,
+                            tj_khusus,
+                            fix_cost,
+                            premi_abs,
+                            
+                            lembur15,
+                            lembur15_final,
+                            rp_lembur15,
+                            lembur2,
+                            lembur2_final,
+                            rp_lembur2,
+                            lembur3,
+                            lembur3_final,
+                            rp_lembur3,
+                            
+                            total_lembur_jam,
+                            total_lembur_jam_final,
+                            total_rp_lembur,
+                            komp_rekontrak,
+                            komp_sisa_cuti,
+
+                            cuti_tahunan,
+                            cuti_bersama,
+                            sisa_cuti_hari,
+                            thr,
+                            
+                            pot_makan,
+                            pot_upah,
+                            c_pot_upah,
+                            
+                            pot_resign,
+                            c_pot_resign,
+                            
+                            pot_jam,
+                            c_pot_jam,
+                            pendapatan_lain_before_pph,
+                            pot_lain_before_pph,
+                            bpjs_kes_perusahaan,
+                            jkk,
+                            jkm,
+                            
+                            bruto,
+                            kategori_kelas,
+                            IF(id_heyxxmd = 1, 0, ter.persen ) AS persen_ter,
+                            ROUND( IF(id_heyxxmd = 1, 0, bruto * (IFNULL(ter.persen,0) / 100) ), 0 ) AS pot_pph21,
+                            bruto - 
+                            IF(id_heyxxmd = 1, 
+                                0, 
+                                ( bruto * (IFNULL(ter.persen,0) / 100) ) 
+                            )
+                            AS after_pph21,
+                            
+                            jht_perusahaan,
+                            jp_perusahaan,
+
+                            pot_jht_karyawan,
+                            pot_jp_karyawan,
+                            bpjs_kes_karyawan,
                             pot_piutang,
                             denda_apd,
                             iuran_spsi,
@@ -1712,53 +1750,42 @@
                             pendapatan_lain_after_pph,
                             pot_lain_after_pph,
 
-                            bruto_dasar_pph,
-
                             -- GAJI BERSIH
-                            (
-                                bruto
-
-                                - ROUND(
-                                    IF(
-                                        id_heyxxmd = 1,
-                                        0,
-                                        bruto_dasar_pph * (IFNULL(ter.persen, 0) / 100)
-                                    ),
-                                    0
+                            ( bruto - 
+                                ROUND(
+                                    IF(id_heyxxmd = 1, 
+                                        0, 
+                                        ( bruto * (IFNULL(ter.persen,0) / 100) ) 
+                                    ), 0
                                 )
-
-                                - (
-                                    pot_jht_karyawan
-                                    + pot_jp_karyawan
-                                    + bpjs_kes_karyawan
-                                    + pot_piutang
-                                    + denda_apd
-                                    + iuran_spsi
-                                    + COALESCE(bpjs_kes_perusahaan, 0)
-                                    + COALESCE(jkk, 0)
-                                    + COALESCE(jkm, 0)
-                                    + COALESCE(pot_makan, 0)
-                                )
-
-                                + pendapatan_lain_after_pph
-                                - pot_lain_after_pph
-
-                            ) AS gaji_bersih
-
-                        FROM payroll_base
-
-                        LEFT JOIN hpcatmh AS ter
-                            ON ter.kategori = payroll_base.kategori_kelas
-                            AND payroll_base.bruto_dasar_pph > ter.nominal_awal
-                            AND payroll_base.bruto_dasar_pph <= ter.nominal_akhir
+                            )
+                            -- + (jht_perusahaan + jp_perusahaan)
+                            - (
+                                pot_jht_karyawan
+                                + pot_jp_karyawan
+                                + bpjs_kes_karyawan
+                                + pot_piutang
+                                + denda_apd
+                                + iuran_spsi
+                                + COALESCE(bpjs_kes_perusahaan,0)
+                                + COALESCE(jkk,0)
+                                + COALESCE(jkm,0)
+                                
+                                + COALESCE(pot_makan,0)
+                            )
+                            + pendapatan_lain_after_pph
+                            - pot_lain_after_pph
+                             AS gaji_bersih
+                        FROM payroll
+                        LEFT JOIN hpcatmh AS ter ON ter.kategori = payroll.kategori_kelas 
+                            AND payroll.bruto > ter.nominal_awal AND payroll.bruto <= ter.nominal_akhir
                     )
-
                     SELECT
-                        id_hpyxxth,
+                        :id_hpyxxth AS id_hpyxxth,
+
                         id_hemxxmh,
                         nrp,
                         nama,
-
                         departemen,
                         jabatan,
                         tipe,
@@ -1781,11 +1808,9 @@
                         lembur15,
                         lembur15_final,
                         rp_lembur15,
-
                         lembur2,
                         lembur2_final,
                         rp_lembur2,
-
                         lembur3,
                         lembur3_final,
                         rp_lembur3,
@@ -1796,7 +1821,7 @@
 
                         komp_rekontrak,
                         komp_sisa_cuti,
-
+                        
                         cuti_tahunan,
                         cuti_bersama,
                         sisa_cuti_hari,
@@ -1805,10 +1830,12 @@
                         pot_makan,
                         pot_upah,
                         c_pot_upah,
-
+                            
+                        pot_resign,
+                        c_pot_resign,
+                        
                         pot_jam,
                         c_pot_jam,
-
                         pendapatan_lain_before_pph,
                         pot_lain_before_pph,
 
@@ -1828,7 +1855,6 @@
                         pot_jht_karyawan,
                         pot_jp_karyawan,
                         bpjs_kes_karyawan,
-
                         pot_piutang,
                         denda_apd,
                         iuran_spsi,
@@ -1837,25 +1863,19 @@
                         pot_lain_after_pph,
 
                         gaji_bersih,
-
                         FLOOR(gaji_bersih % 100) AS bulat,
-
-                        FLOOR(
-                            gaji_bersih - (gaji_bersih % 100)
-                        ) AS gaji_terima
+                        FLOOR(gaji_bersih - (gaji_bersih % 100)) AS gaji_terima
 
                     FROM payroll_final
-                    
         ');
         $rs_hpyemtd = $qs_hpyemtd->fetchAll();
 
-        foreach ($rs_hpyemtd as $hpyemtd) {
+        foreach ($rs_hpyemtd as $payroll) {
             $qi_insert = $db
                 ->query('insert', 'hpyemtd')
-                ->set($hpyemtd)
+                ->set($payroll)
                 ->exec();
         }
-        // END INSERT PAYROLL FINAL
 
         $qu_hpyxxth = $db
             ->query('update', 'hpyxxth')
