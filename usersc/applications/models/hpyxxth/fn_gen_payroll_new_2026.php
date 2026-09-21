@@ -1566,7 +1566,7 @@
                     LEFT JOIN iuran_spsi ON iuran_spsi.id_hemxxmh = p.id_hemxxmh
                     
         ');
-        $rs_hpyemtd_bruto = $qs_hpyemtd->fetchAll();
+        $rs_hpyemtd_bruto = $qs_hpyemtd_bruto->fetchAll();
 
         foreach ($rs_hpyemtd_bruto as $hpyemtd_bruto) {
             $qi_insert = $db
