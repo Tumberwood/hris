@@ -72,6 +72,8 @@
 				<div class="table-responsive">
 					<h3>Resume</h3>
 					<div id="tabel_atas"></div>
+
+					<div id="tabel_detail_gantt" class="mt-3"></div>
 				</div>
 			</div>
 		</div>
@@ -225,6 +227,7 @@
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 
 			generateTable(start_date, end_date);
+			generateDetailGantt(start_date, end_date);
 			
 			id_hemxxmh_old = id_hem_get;
 			
@@ -336,6 +339,7 @@
 					});
 
 					generateTable(start_date, end_date);
+					generateDetailGantt(start_date, end_date);
 
 					tbllap_absensi_kmj.rows().deselect();
 					tbllap_absensi_kmj.ajax.reload(function ( json ) {
