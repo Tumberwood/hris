@@ -351,6 +351,19 @@
 
 	}
 
+	#gantt_absensi_kmj .highcharts-yaxis-labels {
+
+		text-align: left !important;
+
+	}
+
+
+	#gantt_absensi_kmj .highcharts-yaxis-labels text {
+
+		text-anchor: start !important;
+
+	}
+
 
 	.gantt-v4-avatar {
 
