@@ -109,6 +109,8 @@
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_datatables_load.php'; ?>
 <script src="<?=$us_url_root?>usersc/helpers/hakaksescrud_hd_fn.js"></script>
 
+<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/lap_absensi_kmj/fn/lap_absensi_kmj_fn.php'; ?>
+
 <!-- BEGIN datatables here -->
 <script type="text/javascript">
 		// ------------- default variable, do not erase
@@ -219,7 +221,7 @@
 		$(document).ready(function() {
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
-			
+
 			generateTable(start_date, end_date);
 			
 			id_hemxxmh_old = id_hem_get;
