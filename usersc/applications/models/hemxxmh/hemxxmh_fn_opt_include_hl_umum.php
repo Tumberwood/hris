@@ -22,31 +22,6 @@
         $id_hemxxmh_old = 0;
     }
 
-    $input_is_active = $_GET['is_active'];
-
-    if (isset($_GET['is_active'])) {
-        $is_active = $_GET['is_active'];
-        if ($is_active > 0) {
-            if (strpos($is_active, ',') !== false) {
-                // Jika terdapat tanda koma, maka pecah string menjadi array
-                $id_values = explode(',', $is_active);
-                $w_is_active = '(' . implode(',', $id_values) . ')';
-                $s_is_active = 'IN';
-            } else {
-                // Jika hanya satu nilai atau bukan array, gunakan default
-                $w_is_active = '(' . $is_active . ')';
-                $s_is_active = 'IN';
-            }
-        } else {
-            $w_is_active = '(-1)';
-            $s_is_active = 'NOT IN';
-        }
-    } else {
-        // Handle the case where is_active is not defined
-        $w_is_active = '(-1)';
-        $s_is_active = 'NOT IN';
-    }
-
     // BEGIN query options self.
     // Hanya dipanggil jika field ada nilai id nya
     if($id_hemxxmh_old > 0){
@@ -75,7 +50,6 @@
         ])
 		->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
 		->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
-        ->where('hemxxmh.is_active', $w_is_active, $s_is_active, false )
         ->where('hemxxmh.id', $id_hemxxmh_old, '<>' )
         ->where('hemjbmh.is_non_karyawan', '0' )
         ->where( function ( $r ) {
@@ -85,12 +59,10 @@
                 ->or_where('hemxxmh.nama', '%' . $q . '%', 'LIKE' )
                 ->or_where('hetxxmh.nama', '%' . $q . '%', 'LIKE' );
         } )
-        ->where( function ( $r ) use ($input_is_active) {
-            if ($input_is_active == 1) {
-                $r
-                    ->where( 'hemjbmh.tanggal_keluar', NULL)
-                    ->or_where( 'hemjbmh.tanggal_keluar', date('Y-m-d') , '>=');
-            }
+        ->where( function ( $r ) {
+            $r
+                ->where( 'hemjbmh.tanggal_keluar', NULL)
+                ->or_where( 'hemjbmh.tanggal_keluar', date('Y-m-d') , '>=');
         } )
         ->order('hemxxmh.id', 'Desc')
         ->limit($resultCount)
