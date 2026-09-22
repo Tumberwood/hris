@@ -116,6 +116,7 @@
 		var edtrencana_makan, tblrencana_makan, show_inactive_status_rencana_makan = 0, id_rencana_makan;
 		// ------------- end of default variable
 		var id_hemxxmh_old = 0;
+		is_need_approval = 1;
 		
 		// BEGIN datepicker init
 		$('#periode').datepicker({
