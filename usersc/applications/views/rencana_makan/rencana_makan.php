@@ -421,7 +421,7 @@
 										'</div>'
 								});
 								$("#inputfilethimportmakan").val('');
-								generateTable(start_date);
+
 							},
 							error: function (xhr, Status, err){
 								// console.log('x');
