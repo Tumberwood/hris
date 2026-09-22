@@ -30,6 +30,7 @@
                     LEFT JOIN hodxxmh c ON c.id = b.id_hodxxmh
                     WHERE (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= CURDATE() )
                     AND is_harian_lepas = 0
+            AND is_non_karyawan = 0
                     GROUP BY b.id_hodxxmh
         ');
     $rs_hemxxmh = $qs_hemxxmh->fetchAll();

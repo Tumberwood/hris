@@ -130,6 +130,7 @@ class Employee
 					LEFT JOIN hetxxmh het ON het.id = job.id_hetxxmh
 					WHERE 1
 					AND is_harian_lepas = 0
+            AND is_non_karyawan = 0
 					ORDER BY a.is_active DESC, a.kode
 					'
 					);
@@ -205,6 +206,7 @@ class Employee
 					LEFT JOIN hetxxmh het ON het.id = job.id_hetxxmh
 					WHERE 1
 					AND is_harian_lepas = 0
+            AND is_non_karyawan = 0
 					ORDER BY a.is_active DESC, a.kode
 					'.$query.'
 					'

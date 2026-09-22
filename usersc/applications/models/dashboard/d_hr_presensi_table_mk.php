@@ -41,6 +41,7 @@
             LEFT JOIN hosxxmh ON hosxxmh.id = job.id_hosxxmh
             WHERE 1
             AND is_harian_lepas = 0
+            AND is_non_karyawan = 0
             AND (tanggal_keluar IS NULL OR tanggal_keluar >= CURDATE() )
             AND TIMESTAMPDIFF(YEAR, tanggal_masuk, CURDATE()) = :mk
             '
