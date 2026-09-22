@@ -215,9 +215,9 @@
 
             edtrencana_makan.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					nama = edtrencana_makan.field('rencana_makan.nama').val();
-					if(!nama || nama == ''){
-						edtrencana_makan.field('rencana_makan.nama').error( 'Wajib diisi!' );
+					id_hemxxmh = edtrencana_makan.field('rencana_makan.id_hemxxmh').val();
+					if(!id_hemxxmh || id_hemxxmh == ''){
+						edtrencana_makan.field('rencana_makan.id_hemxxmh').error( 'Wajib diisi!' );
 					}
 
 					tanggal = edtrencana_makan.field('rencana_makan.tanggal').val();
