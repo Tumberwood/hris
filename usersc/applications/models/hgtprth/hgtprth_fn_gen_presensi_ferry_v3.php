@@ -1528,7 +1528,10 @@
                                     -- ini nanti akan mendapatkan carbon_co seperti di ferry2 baris  679
                                     if(kode_izin_out IS NOT NULL AND is_potong_gaji_out = 1,
                                         -- jika ada izin  
-                                        if(ceklok_out IS NULL,
+                                        if(ceklok_out IS NULL
+                                            -- 22 Sep 2026, Tasklist 81. Kalau CO nya kurang dari jam izin maka pake jam izin
+                                            OR TIME(ceklok_out) < jam_akhir_izin_out,
+
                                             if(jam_akhir_izin_out < "04:00:00",
                                                 -- jika kurang dari jam 4 maka bukan today dan harus di +1 day
                                                 date_add(tanggal_jam_izin_akhir_out, INTERVAL 1 DAY),
