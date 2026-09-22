@@ -1612,8 +1612,8 @@
                                 AND id_hetxxmh <> 55
                                 THEN 0.5
                                 
-                                -- 11/09/2026, Jika TI tapi tidak full jam kerja, maka potong 0.5
-                                WHEN is_istirahat = 2 AND id_htsxxmh <> 1 AND keterangan <> "" THEN 0.5
+                                -- 11/09/2026, Jika TI tapi tidak full jam kerja, maka potong 0.5 tasklist No 66
+                                -- WHEN is_istirahat = 2 AND id_htsxxmh <> 1 AND keterangan <> "" THEN 0.5
 
                                 ELSE 0
                             END AS potongan_ti_jam,
