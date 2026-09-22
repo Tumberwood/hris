@@ -51,7 +51,7 @@
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-title">
-                <h5 class="text-navy">Upload Jadwal</h5>&nbsp
+                <h5 class="text-navy">Upload Rencana Makan</h5>&nbsp
                 <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
             </div>
 			<div class="ibox-content">
