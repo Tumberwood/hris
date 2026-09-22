@@ -1784,6 +1784,7 @@
 
                                 + pendapatan_lain_after_pph
                                 - pot_lain_after_pph
+                                - komp_rekontrak
 
                             ) AS gaji_bersih
 
