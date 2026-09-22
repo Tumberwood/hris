@@ -46,6 +46,40 @@
     </div>
 </div>
 
+
+<div class="row">
+	<div class="col">
+		<div class="ibox ">
+			<div class="ibox-title">
+                <h5 class="text-navy">Upload Jadwal</h5>&nbsp
+                <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+            </div>
+			<div class="ibox-content">
+				<h3 class="text-info">Format file harus dalam .xlsx dan disesuaikan dengan format template</h3>
+				<hr>
+				<div>
+					<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/template_rencana_makan.xlsx');">
+						<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
+					</button>
+				</div>
+				<form id="frmUploadthimportmakan" enctype="multipart/form-data">
+					<div class="form-group row">
+						<label class="col-lg-2 col-form-label">File Rencana Makan</label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input type="file" name="filename" class="form-control" id="inputfilethimportmakan">
+							</div>
+						</div>
+					</div>
+					<span class="input-group-append"> 
+						<button type="submit" class="btn btn-primary">Import</button>
+					</span>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="row">
 	<div class="col">
 		<div class="ibox ">
@@ -339,6 +373,64 @@
 					return false; 
 				}
 			});
+
+			// BEGIN upload data
+			var frmUploadthimportmakan = $("#frmUploadthimportmakan").submit(function(e) {
+				e.preventDefault();
+			}).validate({
+
+				submitHandler: function(form) { 
+					
+					var notifyprogress;
+
+					var fd_makan = new FormData();
+					var makan = $('#inputfilethimportmakan')[0].files[0];
+					// console.log(makan);
+					if (makan != undefined) {
+						fd_makan.append('filename',makan);
+
+						notifyprogress = $.notify({
+							message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
+						},{
+							allow_dismiss: false,
+							type: 'danger',
+							delay: 0,
+							element: 'body'
+						});
+						
+						$.ajax( {
+							url: "../../models/rencana_makan/rencana_makan_fn_upload.php",
+							type: 'POST',
+							dataType: 'json',
+							data: fd_makan,
+							async: false,
+							contentType: false,
+							processData: false,
+							success: function ( json ) {
+								notifyprogress.close();
+								$.notify({
+									message: json.data.message
+								},{
+									type: json.data.type_message,
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
+								});
+								$("#inputfilethimportmakan").val('');
+								generateTable(start_date);
+							},
+							error: function (xhr, Status, err){
+								// console.log('x');
+							}
+						} );
+					}
+				}
+			});
+			// END upload data
 			
 		} );// end of document.ready
 	
