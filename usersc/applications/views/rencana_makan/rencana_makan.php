@@ -421,7 +421,10 @@
 										'</div>'
 								});
 								$("#inputfilethimportmakan").val('');
-
+								tblrencana_makan.rows().deselect();
+								tblrencana_makan.ajax.reload(function ( json ) {
+									notifyprogress.close();
+								}, false);
 							},
 							error: function (xhr, Status, err){
 								// console.log('x');
