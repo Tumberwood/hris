@@ -97,6 +97,7 @@
         ->where('hemjbmh.id_hesxxmh', $w_id_hesxxmh, $s_id_hesxxmh)
         ->where('hemxxmh.id', $id_hemxxmh_old, '<>' )
         ->where('hemjbmh.is_harian_lepas', '0' )
+        ->where('hemjbmh.is_non_karyawan', '0' )
         ->where( function ( $q ) use ($tanggal_akhir) {
             $q
               ->where( 'hemjbmh.tanggal_keluar', null)

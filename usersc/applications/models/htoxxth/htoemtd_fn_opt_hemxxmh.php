@@ -64,6 +64,7 @@
         ->where('hemjbmh.id_heyxxmh', $id_heyxxmh )
         ->where('hemxxmh.id', $id_hemxxmh_old, '<>' )
         ->where('hemjbmh.is_harian_lepas', '0' )
+        ->where('hemjbmh.is_non_karyawan', '0' )
         ->where( function ( $r ) {
             $q = $_GET['search'];
             $r

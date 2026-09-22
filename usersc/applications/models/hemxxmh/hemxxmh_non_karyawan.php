@@ -43,8 +43,6 @@
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemjbmh.id_hosxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hemjbmh.id_hobxxmh' )
-				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemjbmh.id_hevxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemjbmh.id_hetxxmh' )
@@ -52,6 +50,8 @@
 			Field::inst( 'hemjbmh.id_heyxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemjbmh.id_hesxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hobxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hemjbmh.id_heyxxmd' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
@@ -123,11 +123,16 @@
 				) ),
 			Field::inst( 'hemjbmh.grup_hk' ),
 			Field::inst( 'hemjbmh.jumlah_grup' ),
-			Field::inst( 'hemjbmh.is_harian_lepas' ),
 			Field::inst( 'hovxxmh.nama' ),
 			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'hemdcmh.id_gtxpkmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
+				
+			Field::inst( 'hemjbmh.is_non_karyawan' )
+				->setValue(1),
+			Field::inst( 'hemjbmh.is_checkclock' )
+				->setValue(0),
+				
 			Field::inst( 'hemdcmh.is_npwp' ),
 			Field::inst( 'hemdcmh.npwp_alamat' ),
 			Field::inst( 'hemdcmh.npwp_no' ),
@@ -145,14 +150,14 @@
 			Field::inst( 'hemdcmh.ktp_desa' ),
 			Field::inst( 'hemdcmh.domisili_kecamatan' ),
 			Field::inst( 'hemdcmh.ktp_kecamatan' ),
-
+			
 			Field::inst( 'hosxxmh.nama' ),
-			Field::inst( 'hobxxmh.nama' ),
 			Field::inst( 'hevxxmh.nama' ),
 			Field::inst( 'hetxxmh.nama' ),
 			Field::inst( 'heyxxmh.nama' ),
 			Field::inst( 'heyxxmd.nama' ),
 			Field::inst( 'hesxxmh.nama' ),
+			Field::inst( 'hobxxmh.nama' ),
 			Field::inst( 'holxxmd_2.nama' ),
 			Field::inst( 'hevgrmh.nama' ),
 
@@ -181,7 +186,6 @@
 		->leftJoin( 'hovxxmh','hovxxmh.id','=','hemjbmh.id_hovxxmh' )
 		->leftJoin( 'hodxxmh','hodxxmh.id','=','hemjbmh.id_hodxxmh' )
 		->leftJoin( 'hosxxmh','hosxxmh.id','=','hemjbmh.id_hosxxmh' )
-		->leftJoin( 'hobxxmh','hobxxmh.id','=','hemjbmh.id_hobxxmh' )
 		->leftJoin( 'hevxxmh','hevxxmh.id','=','hemjbmh.id_hevxxmh' )
 		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
 		->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
@@ -189,19 +193,9 @@
 		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
 		->leftJoin( 'hevgrmh','hevgrmh.id','=','hemjbmh.id_hevgrmh' )
+		->leftJoin( 'hobxxmh','hobxxmh.id','=','hemjbmh.id_hobxxmh' )
 		->leftJoin( 'gtxpkmh','gtxpkmh.id','=','hemdcmh.id_gtxpkmh' )
-		->where( 'heyxxmd.id', 1)
-		->where( 'hemjbmh.is_harian_lepas', 0)
-		->where( 'hemjbmh.is_non_karyawan', 0)
-		
-		->where( function ( $q ) use ($tanggal_akhir) {
-			$q
-				->where( function ( $r ) use ($tanggal_akhir) {
-					$r
-						->where( 'hemjbmh.tanggal_keluar', NULL)
-						->or_where( 'hemjbmh.tanggal_keluar', $tanggal_akhir->format('Y-m-d') , '>=');
-				} );
-		} )
+		->where( 'hemjbmh.is_non_karyawan', 1)
 		;
 	
 	// do not erase

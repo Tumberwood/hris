@@ -193,6 +193,7 @@
 		->leftJoin( 'hevgrmh','hevgrmh.id','=','hemjbmh.id_hevgrmh' )
 		->leftJoin( 'gtxpkmh','gtxpkmh.id','=','hemdcmh.id_gtxpkmh' )
 		->where( 'hemjbmh.is_harian_lepas', 0)
+		->where( 'hemjbmh.is_non_karyawan', 0)
 		
         ->where( function ( $r ) use ($tanggal_akhir) {
             $r

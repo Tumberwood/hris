@@ -165,6 +165,7 @@
 				});
 		})
 		->where( 'hemjbmh.is_harian_lepas', 0)
+		->where( 'hemjbmh.is_non_karyawan', 0)
 
 		->where( 'hemjbmh.tanggal_masuk', $end_date, '<' );
 	
