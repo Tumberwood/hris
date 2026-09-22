@@ -47,6 +47,18 @@
 				->setValue($_SESSION['user']),
 			Field::inst( 'rencana_makan.is_approve' ),
 			Field::inst( 'rencana_makan.is_defaultprogram' ),
+			Field::inst( 'rencana_makan.tanggal' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y',
+					'to' =>   'Y-m-d'
+				) ),
 			
 			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' ),
 		)
