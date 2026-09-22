@@ -335,7 +335,7 @@
 					tblrencana_makan.ajax.reload(function ( json ) {
 						notifyprogress.close();
 					}, false);
-					cekApproveTanggal()
+
 					return false; 
 				}
 			});
