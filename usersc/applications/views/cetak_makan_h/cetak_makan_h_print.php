@@ -26,11 +26,17 @@ $qs_cetak_makan_h = $db
 $rs_cetak_makan_h = $qs_cetak_makan_h->fetchAll();
 
 
+/*
+|--------------------------------------------------------------------------
+| MPDF
+|--------------------------------------------------------------------------
+*/
+
 $mpdf = new \Mpdf\Mpdf([
-    'margin_left'   => 4,
-    'margin_right'  => 4,
-    'margin_top'    => 4,
-    'margin_bottom' => 4,
+    'margin_left'   => 3,
+    'margin_right'  => 3,
+    'margin_top'    => 3,
+    'margin_bottom' => 3,
     'margin_header' => 0,
     'margin_footer' => 0,
     'format'        => [95, 140],
@@ -41,154 +47,257 @@ $mpdf->SetTitle('Kupon Makan');
 $mpdf->SetDisplayMode('fullpage');
 
 
+/*
+|--------------------------------------------------------------------------
+| PRINT
+|--------------------------------------------------------------------------
+*/
+
 foreach ($rs_cetak_makan_h as $index => $record) {
 
     if ($index > 0) {
         $mpdf->AddPage('P');
     }
 
+    $tanggal   = htmlspecialchars($record['tanggal'] ?? '');
+    $penerima  = htmlspecialchars($record['penerima'] ?? '');
+    $perusahaan = htmlspecialchars($record['perusahaan'] ?? '');
+    $pic_tamu  = htmlspecialchars($record['pic_tamu'] ?? '');
+
+
     $html = '
+
     <style>
-        * {
-            font-family: Arial, sans-serif;
-        }
 
         body {
             margin: 0;
             padding: 0;
+            font-family: Arial, sans-serif;
             font-size: 9px;
         }
 
         .kupon {
             width: 100%;
-            height: 130mm;
+            height: 133mm;
             border: 0.3mm solid #000;
-            box-sizing: border-box;
+            border-collapse: collapse;
+            table-layout: fixed;
         }
 
+        /* =========================
+           HEADER
+        ========================= */
+
         .judul {
+            height: 6mm;
             text-align: center;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: bold;
-            padding-top: 2mm;
-            padding-bottom: 1mm;
-            border-bottom: 0.2mm solid #000;
+            vertical-align: middle;
+            padding: 0;
         }
 
         .subjudul {
+            height: 5mm;
             text-align: center;
             font-size: 9px;
-            padding-bottom: 2mm;
+            vertical-align: middle;
+            padding: 0;
+            border-bottom: 0.25mm solid #000;
         }
 
-        .info {
+
+        /* =========================
+           DATA
+        ========================= */
+
+        .data {
             width: 100%;
             border-collapse: collapse;
-            font-size: 9px;
+            table-layout: fixed;
         }
 
-        .info td {
-            padding: 1mm 1mm;
-            vertical-align: top;
+        .data td {
+            height: 6mm;
+            vertical-align: middle;
+            padding: 0 1mm;
+            font-size: 9px;
         }
 
         .label {
-            width: 25%;
+            width: 38%;
         }
 
         .separator {
-            width: 3%;
+            width: 5%;
+            text-align: center;
         }
 
         .value {
-            width: 72%;
+            width: 57%;
         }
 
-        .spacer {
-            height: 77mm;
+
+        /* =========================
+           AREA KOSONG
+        ========================= */
+
+        .empty {
+            height: 82mm;
+            vertical-align: top;
         }
+
+
+        /* =========================
+           TANDA TANGAN
+        ========================= */
 
         .ttd {
             width: 100%;
             border-collapse: collapse;
-            border-top: 0.2mm solid #000;
+            table-layout: fixed;
+            border-top: 0.25mm solid #000;
         }
 
         .ttd td {
             width: 50%;
-            text-align: left;
+            height: 7mm;
+            padding: 0 1mm;
+            vertical-align: middle;
             font-size: 9px;
             font-weight: bold;
-            padding: 1.5mm 1mm;
         }
+
     </style>
 
+
     <table class="kupon" cellpadding="0" cellspacing="0">
+
+        <!-- JUDUL -->
         <tr>
-            <td>
+            <td class="judul">
+                Kupon Makan
+            </td>
+        </tr>
 
-                <div class="judul">
-                    Kupon Makan
-                </div>
+        <!-- SUB JUDUL -->
+        <tr>
+            <td class="subjudul">
+                Berlaku untuk 1 orang
+            </td>
+        </tr>
 
-                <div class="subjudul">
-                    Berlaku untuk 1 orang
-                </div>
 
-                <table class="info">
+        <!-- DATA -->
+        <tr>
+            <td style="vertical-align: top; padding: 1mm 1mm 0 1mm;">
+
+                <table class="data" cellpadding="0" cellspacing="0">
+
                     <tr>
-                        <td class="label">Tanggal Berlaku</td>
-                        <td class="separator">:</td>
+                        <td class="label">
+                            Tanggal Berlaku
+                        </td>
+
+                        <td class="separator">
+                            :
+                        </td>
+
                         <td class="value">
-                            ' . htmlspecialchars($record['tanggal'] ?? '') . '
+                            ' . $tanggal . '
                         </td>
                     </tr>
 
                     <tr>
-                        <td class="label">Penerima Makan</td>
-                        <td class="separator">:</td>
+                        <td class="label">
+                            Penerima Makan
+                        </td>
+
+                        <td class="separator">
+                            :
+                        </td>
+
                         <td class="value">
-                            ' . htmlspecialchars($record['penerima'] ?? '') . '
+                            ' . $penerima . '
                         </td>
                     </tr>
 
                     <tr>
-                        <td class="label">Perusahaan</td>
-                        <td class="separator">:</td>
+                        <td class="label">
+                            Perusahaan
+                        </td>
+
+                        <td class="separator">
+                            :
+                        </td>
+
                         <td class="value">
-                            ' . htmlspecialchars($record['perusahaan'] ?? '') . '
+                            ' . $perusahaan . '
                         </td>
                     </tr>
 
                     <tr>
-                        <td class="label">PIC Tamu PMI</td>
-                        <td class="separator">:</td>
+                        <td class="label">
+                            PIC Tamu PMI
+                        </td>
+
+                        <td class="separator">
+                            :
+                        </td>
+
                         <td class="value">
-                            ' . htmlspecialchars($record['pic_tamu'] ?? '') . '
+                            ' . $pic_tamu . '
                         </td>
                     </tr>
-                </table>
 
-                <div class="spacer"></div>
-
-                <table class="ttd" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td>
-                            TTD Bagian HRD
-                        </td>
-                        <td>
-                            TTD Bagian Kantin
-                        </td>
-                    </tr>
                 </table>
 
             </td>
         </tr>
+
+
+        <!-- AREA KOSONG -->
+        <tr>
+            <td class="empty">
+                &nbsp;
+            </td>
+        </tr>
+
+
+        <!-- TANDA TANGAN -->
+        <tr>
+            <td style="padding: 0;">
+
+                <table class="ttd" cellpadding="0" cellspacing="0">
+
+                    <tr>
+                        <td>
+                            TTD Bagian HRD
+                        </td>
+
+                        <td>
+                            TTD Bagian Kantin
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+
     </table>
     ';
 
+
     $mpdf->WriteHTML($html);
 }
+
+
+/*
+|--------------------------------------------------------------------------
+| OUTPUT
+|--------------------------------------------------------------------------
+*/
 
 $mpdf->Output();
 
