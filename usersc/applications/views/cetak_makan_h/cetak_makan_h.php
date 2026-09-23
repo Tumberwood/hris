@@ -370,7 +370,7 @@
 			
 			edtcetak_makan_d.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					
+
 					const requiredFields = [
 						'nama',
 						'perusahaan',
@@ -390,6 +390,7 @@
 						}
 
 					});
+				}
 				
 				if ( edtcetak_makan_d.inError() ) {
 					return false;
