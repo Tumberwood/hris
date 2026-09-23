@@ -244,7 +244,17 @@
 						$arr_buttons_approve 	= ['approve'];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
-					// END breaking generate button
+					// END breaking generate button,{
+						text: '<i class="fa fa-print"></i>',
+						name: 'btnPrint',
+						className: 'btn btn-outline',
+						titleAttr: 'Print Slip Gaji',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							var url = $(this).attr('href'); 
+							window.open('cetak_makan_h_print.php?id_cetak_makan_h=' + id_cetak_makan_h, 'cetak_makan_h');
+						}
+					}
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.cetak_makan_h.is_active == 0 ) {
@@ -257,6 +267,7 @@
 				// atur hak akses
 				tbl_details = [tblcetak_makan_d];
 				CekInitHeaderHD(tblcetak_makan_h, tbl_details);
+				tblcetak_makan_h.button( 'btnPrint:name' ).disable();
 			} );
 			
 			tblcetak_makan_h.on( 'select', function( e, dt, type, indexes ) {
@@ -271,6 +282,7 @@
 				// atur hak akses
 				tbl_details = [tblcetak_makan_d];
 				CekSelectHeaderHD(tblcetak_makan_h, tbl_details);
+				tblcetak_makan_h.button( 'btnPrint:name' ).enable();
 
 			} );
 			
@@ -281,6 +293,7 @@
 				// atur hak akses
 				tbl_details = [tblcetak_makan_d];
 				CekDeselectHeaderHD(tblcetak_makan_h, tbl_details);
+				tblcetak_makan_h.button( 'btnPrint:name' ).disable();
 			} );
 			
 // --------- start _detail --------------- //
