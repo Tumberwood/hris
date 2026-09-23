@@ -19,7 +19,8 @@ $qs_cetak_makan_h = $db
             b.perusahaan,
             b.pic_tamu
         FROM cetak_makan_h a
-        JOIN cetak_makan_d b ON b.id_cetak_makan_h = a.id
+        JOIN cetak_makan_d b 
+            ON b.id_cetak_makan_h = a.id
         WHERE a.id = :id_cetak_makan_h
     ');
 
@@ -59,10 +60,10 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         $mpdf->AddPage('P');
     }
 
-    $tanggal = htmlspecialchars($record['tanggal'] ?? '');
-    $penerima = htmlspecialchars($record['penerima'] ?? '');
+    $tanggal    = htmlspecialchars($record['tanggal'] ?? '');
+    $penerima   = htmlspecialchars($record['penerima'] ?? '');
     $perusahaan = htmlspecialchars($record['perusahaan'] ?? '');
-    $pic_tamu = htmlspecialchars($record['pic_tamu'] ?? '');
+    $pic_tamu   = htmlspecialchars($record['pic_tamu'] ?? '');
 
 
     $html = '
@@ -76,9 +77,10 @@ foreach ($rs_cetak_makan_h as $index => $record) {
             font-size: 9px;
         }
 
-        /* =========================
+
+        /* ==========================================
            KUPON
-        ========================= */
+        ========================================== */
 
         .kupon {
             width: 100%;
@@ -88,9 +90,9 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         }
 
 
-        /* =========================
+        /* ==========================================
            JUDUL
-        ========================= */
+        ========================================== */
 
         .judul {
             text-align: center;
@@ -100,9 +102,9 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         }
 
 
-        /* =========================
+        /* ==========================================
            SUB JUDUL
-        ========================= */
+        ========================================== */
 
         .subjudul {
             text-align: center;
@@ -112,9 +114,9 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         }
 
 
-        /* =========================
+        /* ==========================================
            DATA
-        ========================= */
+        ========================================== */
 
         .data {
             width: 100%;
@@ -142,18 +144,18 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         }
 
 
-        /* =========================
-           JARAK SEBELUM TTD
-        ========================= */
+        /* ==========================================
+           AREA KOSONG
+        ========================================== */
 
         .spacer {
             height: 18mm;
         }
 
 
-        /* =========================
+        /* ==========================================
            TANDA TANGAN
-        ========================= */
+        ========================================== */
 
         .ttd {
             width: 100%;
@@ -163,12 +165,23 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         }
 
         .ttd td {
-            width: 50%;
             height: 18mm;
-            padding: 0 1mm 1mm 1mm;
+            padding: 0;
             vertical-align: bottom;
             font-size: 8px;
             font-weight: bold;
+        }
+
+        .ttd-kiri {
+            width: 50%;
+            text-align: left;
+            padding-left: 1mm !important;
+        }
+
+        .ttd-kanan {
+            width: 50%;
+            text-align: right;
+            padding-right: 1mm !important;
         }
 
     </style>
@@ -176,7 +189,10 @@ foreach ($rs_cetak_makan_h as $index => $record) {
 
     <table class="kupon" cellpadding="0" cellspacing="0">
 
-        <!-- JUDUL -->
+        <!-- ==========================================
+             JUDUL
+        ========================================== -->
+
         <tr>
             <td class="judul">
                 Kupon Makan
@@ -184,7 +200,10 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         </tr>
 
 
-        <!-- SUB JUDUL -->
+        <!-- ==========================================
+             SUB JUDUL
+        ========================================== -->
+
         <tr>
             <td class="subjudul">
                 Berlaku untuk 1 orang
@@ -192,7 +211,10 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         </tr>
 
 
-        <!-- DATA -->
+        <!-- ==========================================
+             DATA
+        ========================================== -->
+
         <tr>
             <td style="padding: 1mm 1mm 0 1mm;">
 
@@ -260,7 +282,10 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         </tr>
 
 
-        <!-- JARAK UNTUK TANDA TANGAN -->
+        <!-- ==========================================
+             JARAK TANDA TANGAN
+        ========================================== -->
+
         <tr>
             <td class="spacer">
                 &nbsp;
@@ -268,7 +293,10 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         </tr>
 
 
-        <!-- TANDA TANGAN -->
+        <!-- ==========================================
+             TANDA TANGAN
+        ========================================== -->
+
         <tr>
             <td style="padding: 0;">
 
@@ -276,11 +304,11 @@ foreach ($rs_cetak_makan_h as $index => $record) {
 
                     <tr>
 
-                        <td>
+                        <td class="ttd-kiri">
                             TTD Bagian HRD
                         </td>
 
-                        <td>
+                        <td class="ttd-kanan">
                             TTD Bagian Kantin
                         </td>
 
@@ -292,6 +320,7 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         </tr>
 
     </table>
+
     ';
 
 
