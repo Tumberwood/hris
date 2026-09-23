@@ -95,6 +95,7 @@
 		var edtcetak_makan_h, tblcetak_makan_h, show_inactive_status_cetak_makan_h = 0, id_cetak_makan_h;
         var edtcetak_makan_d, tblcetak_makan_d, show_inactive_status_cetak_makan_d = 0, id_cetak_makan_d;
 		// ------------- end of default variable
+		is_need_approval = 1;
 		
 		// BEGIN datepicker init
 		$('#periode').datepicker({
@@ -240,7 +241,7 @@
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
 						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_h','approve'];
-						$arr_buttons_approve 	= [];
+						$arr_buttons_approve 	= ['approve'];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
