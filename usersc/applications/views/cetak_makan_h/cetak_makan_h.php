@@ -327,11 +327,11 @@
 						name: "cetak_makan_d.nama"
 					}, 	
 					{
-						label: "Perusahaan",
+						label: "Perusahaan <sup class='text-danger'>*<sup>",
 						name: "cetak_makan_d.perusahaan"
 					}, 	
 					{
-						label: "PIC Tamu PMI",
+						label: "PIC Tamu PMI <sup class='text-danger'>*<sup>",
 						name: "cetak_makan_d.pic_tamu"
 					}, 
 					{
@@ -370,13 +370,26 @@
 			
 			edtcetak_makan_d.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
+					
+					const requiredFields = [
+						'nama',
+						'perusahaan',
+						'pic_tamu'
+					];
 
-				nama = edtcetak_makan_d.field('cetak_makan_d.nama').val();
-					if(!nama || nama == ''){
-						edtcetak_makan_d.field('cetak_makan_d.nama').error( 'Wajib diisi!' );
-					}
-				
-				}
+					requiredFields.forEach(function(fieldName) {
+
+						const value = edtcetak_makan_d
+							.field(`cetak_makan_d.${fieldName}`)
+							.val();
+
+						if (!value || value === '') {
+							edtcetak_makan_d
+								.field(`cetak_makan_d.${fieldName}`)
+								.error('Wajib diisi!');
+						}
+
+					});
 				
 				if ( edtcetak_makan_d.inError() ) {
 					return false;
