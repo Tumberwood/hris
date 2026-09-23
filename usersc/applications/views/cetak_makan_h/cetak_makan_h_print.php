@@ -131,7 +131,7 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         }
 
         .label {
-            width: 25%;
+            width: 15%;
         }
 
         .separator {
