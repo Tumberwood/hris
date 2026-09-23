@@ -4,7 +4,7 @@
 			// script diletakkan disini
 		})
 		->on('postCreate',function( $editor, $id, $values, $row ) {
-			$id_cetak_makan_h = ['cetak_makan_d']['id_cetak_makan_h'];
+			$id_cetak_makan_h = $values['cetak_makan_d']['id_cetak_makan_h'];
 
 			$qu_jumlah_orang = $editor->db()
 				->raw()
@@ -26,7 +26,7 @@
 			// script diletakkan disini
 		})
 		->on('postEdit',function( $editor, $id, $values, $row ) {
-			$id_cetak_makan_h = ['cetak_makan_d']['id_cetak_makan_h'];
+			$id_cetak_makan_h = $values['cetak_makan_d']['id_cetak_makan_h'];
 
 			$qu_jumlah_orang = $editor->db()
 				->raw()
