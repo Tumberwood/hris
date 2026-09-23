@@ -59,10 +59,10 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         $mpdf->AddPage('P');
     }
 
-    $tanggal   = htmlspecialchars($record['tanggal'] ?? '');
-    $penerima  = htmlspecialchars($record['penerima'] ?? '');
+    $tanggal    = htmlspecialchars($record['tanggal'] ?? '');
+    $penerima   = htmlspecialchars($record['penerima'] ?? '');
     $perusahaan = htmlspecialchars($record['perusahaan'] ?? '');
-    $pic_tamu  = htmlspecialchars($record['pic_tamu'] ?? '');
+    $pic_tamu   = htmlspecialchars($record['pic_tamu'] ?? '');
 
 
     $html = '
@@ -76,6 +76,10 @@ foreach ($rs_cetak_makan_h as $index => $record) {
             font-size: 9px;
         }
 
+        /* =========================
+           KUPON
+        ========================= */
+
         .kupon {
             width: 100%;
             height: 133mm;
@@ -84,8 +88,9 @@ foreach ($rs_cetak_makan_h as $index => $record) {
             table-layout: fixed;
         }
 
+
         /* =========================
-           HEADER
+           JUDUL
         ========================= */
 
         .judul {
@@ -96,6 +101,11 @@ foreach ($rs_cetak_makan_h as $index => $record) {
             vertical-align: middle;
             padding: 0;
         }
+
+
+        /* =========================
+           SUB JUDUL
+        ========================= */
 
         .subjudul {
             height: 5mm;
@@ -143,7 +153,7 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         ========================= */
 
         .empty {
-            height: 82mm;
+            height: 76mm;
             vertical-align: top;
         }
 
@@ -161,9 +171,9 @@ foreach ($rs_cetak_makan_h as $index => $record) {
 
         .ttd td {
             width: 50%;
-            height: 7mm;
+            height: 25mm;
             padding: 0 1mm;
-            vertical-align: middle;
+            vertical-align: bottom;
             font-size: 9px;
             font-weight: bold;
         }
@@ -173,14 +183,21 @@ foreach ($rs_cetak_makan_h as $index => $record) {
 
     <table class="kupon" cellpadding="0" cellspacing="0">
 
-        <!-- JUDUL -->
+        <!-- =========================
+             JUDUL
+        ========================= -->
+
         <tr>
             <td class="judul">
                 Kupon Makan
             </td>
         </tr>
 
-        <!-- SUB JUDUL -->
+
+        <!-- =========================
+             SUB JUDUL
+        ========================= -->
+
         <tr>
             <td class="subjudul">
                 Berlaku untuk 1 orang
@@ -188,7 +205,10 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         </tr>
 
 
-        <!-- DATA -->
+        <!-- =========================
+             DATA TAMU
+        ========================= -->
+
         <tr>
             <td style="vertical-align: top; padding: 1mm 1mm 0 1mm;">
 
@@ -256,7 +276,10 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         </tr>
 
 
-        <!-- AREA KOSONG -->
+        <!-- =========================
+             AREA KOSONG
+        ========================= -->
+
         <tr>
             <td class="empty">
                 &nbsp;
@@ -264,13 +287,17 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         </tr>
 
 
-        <!-- TANDA TANGAN -->
+        <!-- =========================
+             TANDA TANGAN
+        ========================= -->
+
         <tr>
             <td style="padding: 0;">
 
                 <table class="ttd" cellpadding="0" cellspacing="0">
 
                     <tr>
+
                         <td>
                             TTD Bagian HRD
                         </td>
@@ -278,6 +305,7 @@ foreach ($rs_cetak_makan_h as $index => $record) {
                         <td>
                             TTD Bagian Kantin
                         </td>
+
                     </tr>
 
                 </table>
@@ -286,6 +314,7 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         </tr>
 
     </table>
+
     ';
 
 
@@ -295,7 +324,7 @@ foreach ($rs_cetak_makan_h as $index => $record) {
 
 /*
 |--------------------------------------------------------------------------
-| OUTPUT
+| OUTPUT PDF
 |--------------------------------------------------------------------------
 */
 
