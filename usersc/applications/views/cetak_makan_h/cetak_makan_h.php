@@ -244,7 +244,8 @@
 						$arr_buttons_approve 	= ['approve'];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
-					// END breaking generate button,{
+					// END breaking generate button
+					,{
 						text: '<i class="fa fa-print"></i>',
 						name: 'btnPrint',
 						className: 'btn btn-outline',
