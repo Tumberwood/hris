@@ -33,10 +33,10 @@ $rs_cetak_makan_h = $qs_cetak_makan_h->fetchAll();
 */
 
 $mpdf = new \Mpdf\Mpdf([
-    'margin_left'   => 3,
-    'margin_right'  => 3,
-    'margin_top'    => 3,
-    'margin_bottom' => 3,
+    'margin_left'   => 5,
+    'margin_right'  => 5,
+    'margin_top'    => 5,
+    'margin_bottom' => 5,
     'margin_header' => 0,
     'margin_footer' => 0,
     'format'        => [95, 140],
@@ -59,10 +59,10 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         $mpdf->AddPage('P');
     }
 
-    $tanggal    = htmlspecialchars($record['tanggal'] ?? '');
-    $penerima   = htmlspecialchars($record['penerima'] ?? '');
+    $tanggal = htmlspecialchars($record['tanggal'] ?? '');
+    $penerima = htmlspecialchars($record['penerima'] ?? '');
     $perusahaan = htmlspecialchars($record['perusahaan'] ?? '');
-    $pic_tamu   = htmlspecialchars($record['pic_tamu'] ?? '');
+    $pic_tamu = htmlspecialchars($record['pic_tamu'] ?? '');
 
 
     $html = '
@@ -82,7 +82,6 @@ foreach ($rs_cetak_makan_h as $index => $record) {
 
         .kupon {
             width: 100%;
-            height: 133mm;
             border: 0.3mm solid #000;
             border-collapse: collapse;
             table-layout: fixed;
@@ -94,12 +93,10 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         ========================= */
 
         .judul {
-            height: 6mm;
             text-align: center;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
-            vertical-align: middle;
-            padding: 0;
+            padding: 1.5mm 0 0.5mm 0;
         }
 
 
@@ -108,11 +105,9 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         ========================= */
 
         .subjudul {
-            height: 5mm;
             text-align: center;
-            font-size: 9px;
-            vertical-align: middle;
-            padding: 0;
+            font-size: 8px;
+            padding: 0 0 1.5mm 0;
             border-bottom: 0.25mm solid #000;
         }
 
@@ -128,14 +123,13 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         }
 
         .data td {
-            height: 6mm;
+            font-size: 8px;
+            padding: 1mm 1mm;
             vertical-align: middle;
-            padding: 0 1mm;
-            font-size: 9px;
         }
 
         .label {
-            width: 38%;
+            width: 36%;
         }
 
         .separator {
@@ -144,17 +138,16 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         }
 
         .value {
-            width: 57%;
+            width: 59%;
         }
 
 
         /* =========================
-           AREA KOSONG
+           JARAK SEBELUM TTD
         ========================= */
 
-        .empty {
-            height: 76mm;
-            vertical-align: top;
+        .spacer {
+            height: 18mm;
         }
 
 
@@ -171,10 +164,10 @@ foreach ($rs_cetak_makan_h as $index => $record) {
 
         .ttd td {
             width: 50%;
-            height: 25mm;
-            padding: 0 1mm;
+            height: 18mm;
+            padding: 0 1mm 1mm 1mm;
             vertical-align: bottom;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: bold;
         }
 
@@ -183,10 +176,7 @@ foreach ($rs_cetak_makan_h as $index => $record) {
 
     <table class="kupon" cellpadding="0" cellspacing="0">
 
-        <!-- =========================
-             JUDUL
-        ========================= -->
-
+        <!-- JUDUL -->
         <tr>
             <td class="judul">
                 Kupon Makan
@@ -194,10 +184,7 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         </tr>
 
 
-        <!-- =========================
-             SUB JUDUL
-        ========================= -->
-
+        <!-- SUB JUDUL -->
         <tr>
             <td class="subjudul">
                 Berlaku untuk 1 orang
@@ -205,12 +192,9 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         </tr>
 
 
-        <!-- =========================
-             DATA TAMU
-        ========================= -->
-
+        <!-- DATA -->
         <tr>
-            <td style="vertical-align: top; padding: 1mm 1mm 0 1mm;">
+            <td style="padding: 1mm 1mm 0 1mm;">
 
                 <table class="data" cellpadding="0" cellspacing="0">
 
@@ -276,21 +260,15 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         </tr>
 
 
-        <!-- =========================
-             AREA KOSONG
-        ========================= -->
-
+        <!-- JARAK UNTUK TANDA TANGAN -->
         <tr>
-            <td class="empty">
+            <td class="spacer">
                 &nbsp;
             </td>
         </tr>
 
 
-        <!-- =========================
-             TANDA TANGAN
-        ========================= -->
-
+        <!-- TANDA TANGAN -->
         <tr>
             <td style="padding: 0;">
 
@@ -314,7 +292,6 @@ foreach ($rs_cetak_makan_h as $index => $record) {
         </tr>
 
     </table>
-
     ';
 
 
@@ -324,7 +301,7 @@ foreach ($rs_cetak_makan_h as $index => $record) {
 
 /*
 |--------------------------------------------------------------------------
-| OUTPUT PDF
+| OUTPUT
 |--------------------------------------------------------------------------
 */
 
