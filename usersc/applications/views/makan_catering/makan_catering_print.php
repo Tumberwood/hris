@@ -292,10 +292,10 @@ $total_biaya       = $total_biaya_kary + $total_biaya_staff;
 */
 
 $mpdf = new \Mpdf\Mpdf([
-    'margin_left'   => 6,
-    'margin_right'  => 6,
-    'margin_top'    => 6,
-    'margin_bottom' => 6,
+    'margin_left'   => 8,
+    'margin_right'  => 8,
+    'margin_top'    => 8,
+    'margin_bottom' => 8,
     'margin_header' => 0,
     'margin_footer' => 0,
     'format'        => 'A4',
@@ -320,8 +320,15 @@ $html = '
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
-        font-size: 8px;
+        font-size: 11px;
         color: #000;
+    }
+
+    .report-title {
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        margin: 0 0 5mm 0;
     }
 
     .header-table {
@@ -331,8 +338,9 @@ $html = '
     }
 
     .header-table td {
-        padding: 0.8mm 0;
+        padding: 1.1mm 0;
         vertical-align: top;
+        font-size: 11px;
     }
 
     .header-label {
@@ -351,8 +359,8 @@ $html = '
 
     .section-title {
         font-weight: bold;
-        font-size: 10px;
-        margin-bottom: 2mm;
+        font-size: 12px;
+        margin-bottom: 2.5mm;
     }
 
 
@@ -369,10 +377,11 @@ $html = '
     .detail th,
     .detail td {
         border: 0.25mm solid #000;
-        padding: 1mm 0.4mm;
+        padding: 1.6mm 0.8mm;
         text-align: center;
         vertical-align: middle;
-        line-height: 1.15;
+        line-height: 1.2;
+        font-size: 10px;
     }
 
     .detail th {
@@ -380,19 +389,19 @@ $html = '
     }
 
     .detail .tanggal {
-        width: 14%;
+        width: 16%;
     }
 
     .detail .shift-col {
-        width: 10%;
+        width: 9%;
     }
 
     .detail .total-col {
-        width: 10%;
+        width: 9%;
     }
 
     .detail .grand-col {
-        width: 10%;
+        width: 12%;
     }
 
     .detail .number {
@@ -406,9 +415,9 @@ $html = '
 
     .footer-title {
         font-weight: bold;
-        font-size: 10px;
+        font-size: 12px;
         margin-top: 5mm;
-        margin-bottom: 2mm;
+        margin-bottom: 2.5mm;
     }
 
     .footer-table {
@@ -417,8 +426,9 @@ $html = '
     }
 
     .footer-table td {
-        padding: 0.7mm 0;
+        padding: 1mm 0;
         vertical-align: middle;
+        font-size: 11px;
     }
 
     .footer-label {
@@ -439,6 +449,15 @@ $html = '
     }
 
 </style>
+
+
+<!-- =====================================================
+     JUDUL
+     ===================================================== -->
+
+<div class="report-title">
+    Laporan Catering periode ' . e($rs_makan_catering['tanggal_awal']) . ' s/d ' . e($rs_makan_catering['tanggal_akhir']) . '
+</div>
 
 
 <!-- =====================================================
