@@ -63,111 +63,156 @@
                         </thead>
                     </table>
                     <legend>Detail</legend>
-<table id="tblcetak_makan_d"
-       class="table table-striped table-bordered table-hover nowrap"
-       width="100%">
+					<table id="tblcetak_makan_d"
+						class="table table-striped table-bordered table-hover nowrap"
+						width="100%">
 
-    <thead>
-        <!-- HEADER GROUP -->
-        <tr>
-            <th rowspan="2" class="text-center align-middle">
-                Tanggal
-            </th>
+						<thead>
+							<!-- HEADER GROUP -->
+							<tr>
+								<th rowspan="2" class="text-center align-middle">
+									Tanggal
+								</th>
 
-            <th colspan="2" class="text-center">
-                Shift 1
-            </th>
+								<th colspan="2" class="text-center">
+									Shift 1
+								</th>
 
-            <th colspan="2" class="text-center">
-                Shift 2
-            </th>
+								<th colspan="2" class="text-center">
+									Shift 2
+								</th>
 
-            <th colspan="2" class="text-center">
-                Shift 3
-            </th>
+								<th colspan="2" class="text-center">
+									Shift 3
+								</th>
 
-            <th colspan="2" class="text-center">
-                Total
-            </th>
+								<th colspan="2" class="text-center">
+									Total
+								</th>
 
-            <th rowspan="2" class="text-center align-middle">
-                Grand Total
-            </th>
-        </tr>
+								<th rowspan="2" class="text-center align-middle">
+									Grand Total
+								</th>
+							</tr>
 
-        <!-- HEADER DETAIL -->
-        <tr>
-            <th class="text-center">
-                Karyawan
-            </th>
+							<!-- HEADER DETAIL -->
+							<tr>
+								<th class="text-center">
+									Karyawan
+								</th>
 
-            <th class="text-center">
-                Staff
-            </th>
+								<th class="text-center">
+									Staff
+								</th>
 
-            <th class="text-center">
-                Karyawan
-            </th>
+								<th class="text-center">
+									Karyawan
+								</th>
 
-            <th class="text-center">
-                Staff
-            </th>
+								<th class="text-center">
+									Staff
+								</th>
 
-            <th class="text-center">
-                Karyawan
-            </th>
+								<th class="text-center">
+									Karyawan
+								</th>
 
-            <th class="text-center">
-                Staff
-            </th>
+								<th class="text-center">
+									Staff
+								</th>
 
-            <th class="text-center">
-                Karyawan
-            </th>
+								<th class="text-center">
+									Karyawan
+								</th>
 
-            <th class="text-center">
-                Staff
-            </th>
-        </tr>
-    </thead>
+								<th class="text-center">
+									Staff
+								</th>
+							</tr>
+						</thead>
 
-    <tbody>
-    </tbody>
+						<tbody>
+						</tbody>
 
-    <tfoot>
-        <tr>
-            <td colspan="10" class="font-weight-bold pt-3">
-                Footer
-            </td>
-        </tr>
+						<tfoot>
+							<!-- FOOTER TITLE -->
+							<tr>
+								<td colspan="10" class="bg-light font-weight-bold">
+									<div class="d-flex justify-content-between align-items-center">
+										<span>
+											<i class="fa fa-calculator mr-1"></i>
+											Rekapitulasi Makan
+										</span>
+									</div>
+								</td>
+							</tr>
 
-        <tr>
-            <td colspan="10">
-                Jumlah makan Karyawan :
-                <span id="footer_jumlah_karyawan">0</span>
-                x harga =
-                <span id="footer_harga_karyawan">0</span>
-            </td>
-        </tr>
+							<!-- KARYAWAN -->
+							<tr>
+								<td colspan="5" class="text-left">
+									<span class="font-weight-bold">
+										Jumlah Makan Karyawan
+									</span>
+								</td>
 
-        <tr>
-            <td colspan="10">
-                Jumlah Makan Staff :
-                <span id="footer_jumlah_staff">0</span>
-                x harga =
-                <span id="footer_harga_staff">0</span>
-            </td>
-        </tr>
+								<td colspan="2" class="text-center">
+									<span id="footer_jumlah_karyawan" class="font-weight-bold">
+										0
+									</span>
+									x harga
+								</td>
 
-        <tr>
-            <td colspan="10" class="font-weight-bold">
-                Total :
-                <span id="footer_total">0</span>
-            </td>
-        </tr>
-    </tfoot>
+								<td colspan="3" class="text-right">
+									<span class="font-weight-bold">
+										Rp
+										<span id="footer_harga_karyawan">
+											0
+										</span>
+									</span>
+								</td>
+							</tr>
 
-</table>
+							<!-- STAFF -->
+							<tr>
+								<td colspan="5" class="text-left">
+									<span class="font-weight-bold">
+										Jumlah Makan Staff
+									</span>
+								</td>
+
+								<td colspan="2" class="text-center">
+									<span id="footer_jumlah_staff" class="font-weight-bold">
+										0
+									</span>
+									x harga
+								</td>
+
+								<td colspan="3" class="text-right">
+									<span class="font-weight-bold">
+										Rp
+										<span id="footer_harga_staff">
+											0
+										</span>
+									</span>
+								</td>
+							</tr>
+
+							<!-- GRAND TOTAL -->
+							<tr>
+								<td colspan="7" class="text-right font-weight-bold">
+									Total
+								</td>
+
+								<td colspan="3" class="text-right font-weight-bold">
+									Rp
+									<span id="footer_total">
+										0
+									</span>
+								</td>
+							</tr>
+						</tfoot>
+
+					</table>
 				</div>
 			</div>
 		</div>
@@ -659,7 +704,127 @@
 					// END breaking generate button
 				],
 				rowCallback: function( row, data, index ) {
-				}
+				},
+				footerCallback: function (row, data, start, end, display) {
+
+					var api = this.api();
+
+					// =====================================================
+					// FUNCTION PARSE ANGKA
+					// =====================================================
+					var toNumber = function (value) {
+
+						if (value === null || value === undefined || value === '') {
+							return 0;
+						}
+
+						if (typeof value === 'number') {
+							return value;
+						}
+
+						return parseFloat(
+							String(value).replace(/[^0-9.-]/g, '')
+						) || 0;
+					};
+
+
+					// =====================================================
+					// AMBIL SEMUA DATA YANG SEDANG TERFILTER
+					// BUKAN HANYA DATA DI HALAMAN AKTIF
+					// =====================================================
+					var rows = api
+						.rows({
+							search: 'applied'
+						})
+						.data();
+
+
+					// =====================================================
+					// TOTAL KARYAWAN
+					// index 7 = total_kary
+					// =====================================================
+					var jumlah_karyawan = 0;
+
+					// =====================================================
+					// TOTAL STAFF
+					// index 8 = total_staff
+					// =====================================================
+					var jumlah_staff = 0;
+
+					// =====================================================
+					// GRAND TOTAL
+					// index 9 = grand_total
+					// =====================================================
+					var grand_total = 0;
+
+
+					// =====================================================
+					// HITUNG
+					// =====================================================
+					rows.each(function (item) {
+
+						jumlah_karyawan += toNumber(item.total_kary);
+
+						jumlah_staff += toNumber(item.total_staff);
+
+						grand_total += toNumber(item.grand_total);
+
+					});
+
+
+					// =====================================================
+					// HITUNG TOTAL HARGA
+					// =====================================================
+					var total_harga_karyawan =
+						jumlah_karyawan * harga_karyawan;
+
+					var total_harga_staff =
+						jumlah_staff * harga_staff;
+
+					var total_harga =
+						total_harga_karyawan +
+						total_harga_staff;
+
+
+					// =====================================================
+					// FORMAT RUPIAH
+					// =====================================================
+					var formatRupiah = function (angka) {
+
+						return new Intl.NumberFormat('id-ID', {
+							maximumFractionDigits: 0
+						}).format(angka);
+
+					};
+
+
+					// =====================================================
+					// UPDATE FOOTER
+					// =====================================================
+					$('#footer_jumlah_karyawan').html(
+						formatRupiah(jumlah_karyawan)
+					);
+
+					$('#footer_harga_karyawan').html(
+						formatRupiah(total_harga_karyawan)
+					);
+
+
+					$('#footer_jumlah_staff').html(
+						formatRupiah(jumlah_staff)
+					);
+
+					$('#footer_harga_staff').html(
+						formatRupiah(total_harga_staff)
+					);
+
+
+					$('#footer_total').html(
+						formatRupiah(total_harga)
+					);
+
+				},
+
 			} );
 
 			tblcetak_makan_d.on( 'draw', function( e, settings ) { 
