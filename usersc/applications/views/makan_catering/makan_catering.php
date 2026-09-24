@@ -202,7 +202,7 @@
 
         <td colspan="2" class="text-center font-weight-bold">
             <span id="footer_jumlah_karyawan">0</span>
-            x harga
+            x <span id="footer_harga_catering_karyawan">0</span>
         </td>
 
         <td colspan="3" class="text-right font-weight-bold">
@@ -220,7 +220,7 @@
 
         <td colspan="2" class="text-center font-weight-bold">
             <span id="footer_jumlah_staff">0</span>
-            x harga
+            x <span id="footer_harga_catering_staff">0</span>
         </td>
 
         <td colspan="3" class="text-right font-weight-bold">
@@ -743,7 +743,7 @@ footerCallback: function (row, data, start, end, display) {
     var api = this.api();
 
     // =====================================================
-    // HARGA
+    // HARGA CATERING
     // =====================================================
     var harga_karyawan = 3250;
     var harga_staff    = 3250;
@@ -903,26 +903,56 @@ footerCallback: function (row, data, start, end, display) {
 
 
     // =====================================================
-    // FOOTER NOMINAL
+    // JUMLAH MAKAN KARYAWAN
     // =====================================================
     $('#footer_jumlah_karyawan').html(
         formatNumber(total_kary)
     );
 
+
+    // =====================================================
+    // HARGA CATERING KARYAWAN
+    // =====================================================
+    $('#footer_harga_catering_karyawan').html(
+        formatNumber(harga_karyawan)
+    );
+
+
+    // =====================================================
+    // TOTAL HARGA KARYAWAN
+    // =====================================================
     $('#footer_harga_karyawan').html(
         formatNumber(total_harga_karyawan)
     );
 
 
+    // =====================================================
+    // JUMLAH MAKAN STAFF
+    // =====================================================
     $('#footer_jumlah_staff').html(
         formatNumber(total_staff)
     );
 
+
+    // =====================================================
+    // HARGA CATERING STAFF
+    // =====================================================
+    $('#footer_harga_catering_staff').html(
+        formatNumber(harga_staff)
+    );
+
+
+    // =====================================================
+    // TOTAL HARGA STAFF
+    // =====================================================
     $('#footer_harga_staff').html(
         formatNumber(total_harga_staff)
     );
 
 
+    // =====================================================
+    // GRAND TOTAL HARGA
+    // =====================================================
     $('#footer_total').html(
         formatNumber(total_harga)
     );
