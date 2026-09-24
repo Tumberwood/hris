@@ -7,24 +7,282 @@ require '../../../../usersc/vendor/autoload.php';
 
 use Carbon\Carbon;
 
-$id_cetak_makan_h = $_GET['id_cetak_makan_h'];
+$id_makan_catering = $_GET['id_makan_catering'] ?? 0;
 
-$qs_cetak_makan_h = $db
+
+/*
+|--------------------------------------------------------------------------
+| HEADER / DATA CATERING
+|--------------------------------------------------------------------------
+*/
+
+$qs_makan_catering = $db
     ->raw()
-    ->bind(':id_cetak_makan_h', $id_cetak_makan_h)
+    ->bind(':id_makan_catering', $id_makan_catering)
     ->exec('
         SELECT
-            DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
-            b.nama AS penerima,
-            b.perusahaan,
-            b.pic_tamu
-        FROM cetak_makan_h a
-        JOIN cetak_makan_d b 
-            ON b.id_cetak_makan_h = a.id
-        WHERE a.id = :id_cetak_makan_h
+            a.tanggal_awal AS start_date,
+            a.tanggal_akhir AS end_date,
+            DATE_FORMAT(a.tanggal_awal, "%d %b %Y") AS tanggal_awal,
+            DATE_FORMAT(a.tanggal_akhir, "%d %b %Y") AS tanggal_akhir,
+            a.nama AS catering,
+            a.keterangan
+        FROM makan_catering a
+        WHERE a.id = :id_makan_catering
     ');
 
-$rs_cetak_makan_h = $qs_cetak_makan_h->fetchAll();
+$rs_makan_catering = $qs_makan_catering->fetch();
+
+if (!$rs_makan_catering) {
+    die('Data catering tidak ditemukan.');
+}
+
+$start_date = $rs_makan_catering['start_date'];
+$end_date   = $rs_makan_catering['end_date'];
+
+
+/*
+|--------------------------------------------------------------------------
+| DETAIL MAKAN
+|--------------------------------------------------------------------------
+*/
+
+$qs_data_sql = $db
+    ->raw()
+    ->bind(':start_date', $start_date)
+    ->bind(':end_date', $end_date)
+    ->exec('
+        SELECT
+            DATE_FORMAT(x.tanggal, "%d %b %Y") AS tanggal,
+
+            /* =========================
+               HARGA CATERING
+               ========================= */
+            MAX(
+                CASE
+                    WHEN x.sub = "KARYAWAN"
+                    THEN x.harga_catering
+                    ELSE 0
+                END
+            ) AS harga_catering_kary,
+
+            MAX(
+                CASE
+                    WHEN x.sub = "STAFF"
+                    THEN x.harga_catering
+                    ELSE 0
+                END
+            ) AS harga_catering_staff,
+
+
+            /* =========================
+               SHIFT 1
+               ========================= */
+            SUM(
+                x.shift = 1
+                AND x.sub = "KARYAWAN"
+                AND x.is_makan = 1
+            ) AS shift1_kary,
+
+            SUM(
+                x.shift = 1
+                AND x.sub = "STAFF"
+                AND x.is_makan = 1
+            ) AS shift1_staff,
+
+
+            /* =========================
+               SHIFT 2
+               ========================= */
+            SUM(
+                x.shift = 2
+                AND x.sub = "KARYAWAN"
+                AND x.is_makan = 1
+            ) AS shift2_kary,
+
+            SUM(
+                x.shift = 2
+                AND x.sub = "STAFF"
+                AND x.is_makan = 1
+            ) AS shift2_staff,
+
+
+            /* =========================
+               SHIFT 3
+               ========================= */
+            SUM(
+                x.shift = 3
+                AND x.sub = "KARYAWAN"
+                AND x.is_makan = 1
+            ) AS shift3_kary,
+
+            SUM(
+                x.shift = 3
+                AND x.sub = "STAFF"
+                AND x.is_makan = 1
+            ) AS shift3_staff,
+
+
+            /* =========================
+               TOTAL KARYAWAN
+               ========================= */
+            SUM(
+                x.sub = "KARYAWAN"
+                AND x.is_makan = 1
+            ) AS total_kary,
+
+
+            /* =========================
+               TOTAL STAFF
+               ========================= */
+            SUM(
+                x.sub = "STAFF"
+                AND x.is_makan = 1
+            ) AS total_staff,
+
+
+            /* =========================
+               GRAND TOTAL
+               ========================= */
+            SUM(
+                x.is_makan = 1
+            ) AS grand_total
+
+        FROM
+        (
+            SELECT
+                a.tanggal,
+                d.nama AS sub,
+                a.is_makan,
+
+
+                /* =========================
+                   HARGA CATERING
+                   ========================= */
+                COALESCE(
+                    (
+                        SELECT
+                            p.nominal
+                        FROM htpr_hemxxmh p
+                        WHERE p.id_hpcxxmh = 34
+                            AND p.id_hemxxmh = b.id
+                            AND p.tanggal_efektif <= a.tanggal
+                            AND p.is_active = 1
+                        ORDER BY
+                            p.tanggal_efektif DESC
+                        LIMIT 1
+                    ),
+                    0
+                ) AS harga_catering,
+
+
+                /* =========================
+                   SHIFT
+                   ========================= */
+                CASE
+                    WHEN a.st_jadwal LIKE "PAGI%"
+                        THEN 1
+
+                    WHEN a.st_jadwal LIKE "SIANG%"
+                    OR a.st_jadwal LIKE "SORE%"
+                        THEN 2
+
+                    WHEN a.st_jadwal LIKE "MALAM%"
+                        THEN 3
+
+                    ELSE NULL
+                END AS shift
+
+            FROM htsprrd a
+
+            INNER JOIN hemxxmh b
+                ON b.id = a.id_hemxxmh
+
+            INNER JOIN hemjbmh c
+                ON c.id_hemxxmh = a.id_hemxxmh
+
+            INNER JOIN heyxxmd d
+                ON d.id = c.id_hesxxmh
+
+            WHERE a.tanggal BETWEEN :start_date AND :end_date
+                AND d.id IN (2, 3)
+
+        ) x
+
+        GROUP BY
+            x.tanggal
+
+        ORDER BY
+            x.tanggal
+    ');
+
+$rs_data_sql = $qs_data_sql->fetchAll();
+
+
+/*
+|--------------------------------------------------------------------------
+| HELPER
+|--------------------------------------------------------------------------
+*/
+
+function e($value)
+{
+    return htmlspecialchars((string)($value ?? ''), ENT_QUOTES, 'UTF-8');
+}
+
+function n($value)
+{
+    return number_format((float)($value ?? 0), 0, ',', '.');
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TOTAL FOOTER
+|--------------------------------------------------------------------------
+*/
+
+$total_kary      = 0;
+$total_staff     = 0;
+$grand_total     = 0;
+$harga_kary      = 0;
+$harga_staff     = 0;
+$total_biaya_kary = 0;
+$total_biaya_staff = 0;
+
+foreach ($rs_data_sql as $row) {
+
+    $kary  = (int)($row['total_kary'] ?? 0);
+    $staff = (int)($row['total_staff'] ?? 0);
+
+    $total_kary  += $kary;
+    $total_staff += $staff;
+
+    $grand_total += (int)($row['grand_total'] ?? 0);
+
+    if ((float)($row['harga_catering_kary'] ?? 0) > 0) {
+        $harga_kary = (float)$row['harga_catering_kary'];
+    }
+
+    if ((float)($row['harga_catering_staff'] ?? 0) > 0) {
+        $harga_staff = (float)$row['harga_catering_staff'];
+    }
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| HITUNG TOTAL BIAYA
+|--------------------------------------------------------------------------
+|
+| Harga catering diambil dari harga terakhir yang tersedia pada periode.
+| Jika harga tidak ditemukan, nilainya 0.
+|
+*/
+
+$total_biaya_kary  = $total_kary * $harga_kary;
+$total_biaya_staff = $total_staff * $harga_staff;
+$total_biaya       = $total_biaya_kary + $total_biaya_staff;
 
 
 /*
@@ -34,17 +292,17 @@ $rs_cetak_makan_h = $qs_cetak_makan_h->fetchAll();
 */
 
 $mpdf = new \Mpdf\Mpdf([
-    'margin_left'   => 5,
-    'margin_right'  => 5,
-    'margin_top'    => 5,
-    'margin_bottom' => 5,
+    'margin_left'   => 8,
+    'margin_right'  => 8,
+    'margin_top'    => 8,
+    'margin_bottom' => 8,
     'margin_header' => 0,
     'margin_footer' => 0,
-    'format'        => [95, 140],
+    'format'        => 'A4-L',
 ]);
 
 $mpdf->SetProtection(['print']);
-$mpdf->SetTitle('Kupon Makan');
+$mpdf->SetTitle('Rekap Makan Catering');
 $mpdf->SetDisplayMode('fullpage');
 
 
@@ -54,278 +312,353 @@ $mpdf->SetDisplayMode('fullpage');
 |--------------------------------------------------------------------------
 */
 
-foreach ($rs_cetak_makan_h as $index => $record) {
+$html = '
 
-    if ($index > 0) {
-        $mpdf->AddPage('P');
+<style>
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        font-size: 9px;
+        color: #000;
     }
 
-    $tanggal    = htmlspecialchars($record['tanggal'] ?? '');
-    $penerima   = htmlspecialchars($record['penerima'] ?? '');
-    $perusahaan = htmlspecialchars($record['perusahaan'] ?? '');
-    $pic_tamu   = htmlspecialchars($record['pic_tamu'] ?? '');
+    .header-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 5mm;
+    }
+
+    .header-table td {
+        padding: 0.8mm 0;
+        vertical-align: top;
+    }
+
+    .header-label {
+        width: 18mm;
+        font-weight: normal;
+    }
+
+    .header-separator {
+        width: 4mm;
+        text-align: center;
+    }
+
+    .header-value {
+        font-weight: normal;
+    }
+
+    .section-title {
+        font-weight: bold;
+        font-size: 10px;
+        margin-bottom: 2mm;
+    }
 
 
-    $html = '
+    /* =====================================================
+       DETAIL TABLE
+       ===================================================== */
 
-    <style>
+    .detail {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            font-size: 9px;
-        }
+    .detail th,
+    .detail td {
+        border: 0.25mm solid #000;
+        padding: 1.1mm 0.8mm;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 1.15;
+    }
 
+    .detail th {
+        font-weight: bold;
+    }
 
-        /* ==========================================
-           KUPON
-        ========================================== */
+    .detail .tanggal {
+        width: 14%;
+    }
 
-        .kupon {
-            width: 100%;
-            border: 0.3mm solid #000;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
+    .detail .shift-col {
+        width: 10%;
+    }
 
+    .detail .total-col {
+        width: 10%;
+    }
 
-        /* ==========================================
-           JUDUL
-        ========================================== */
+    .detail .grand-col {
+        width: 10%;
+    }
 
-        .judul {
-            text-align: center;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 1.5mm 0 0.5mm 0;
-        }
-
-
-        /* ==========================================
-           SUB JUDUL
-        ========================================== */
-
-        .subjudul {
-            text-align: center;
-            font-size: 8px;
-            padding: 0 0 1.5mm 0;
-            border-bottom: 0.25mm solid #000;
-        }
+    .detail .number {
+        text-align: center;
+    }
 
 
-        /* ==========================================
-           DATA
-        ========================================== */
+    /* =====================================================
+       FOOTER
+       ===================================================== */
 
-        .data {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
+    .footer-title {
+        font-weight: bold;
+        font-size: 10px;
+        margin-top: 5mm;
+        margin-bottom: 2mm;
+    }
 
-        .data td {
-            font-size: 8px;
-            padding: 1mm 1mm;
-            vertical-align: middle;
-        }
+    .footer-table {
+        border-collapse: collapse;
+        width: 100%;
+    }
 
-        .label {
-            width: 15%;
-        }
+    .footer-table td {
+        padding: 0.7mm 0;
+        vertical-align: middle;
+    }
 
-        .separator {
-            width: 5%;
-            text-align: center;
-        }
+    .footer-label {
+        width: 48mm;
+    }
 
-        .value {
-            width: 59%;
-        }
+    .footer-separator {
+        width: 4mm;
+        text-align: center;
+    }
 
+    .footer-value {
+        width: auto;
+    }
 
-        /* ==========================================
-           AREA KOSONG
-        ========================================== */
+    .footer-total {
+        font-weight: bold;
+    }
 
-        .spacer {
-            height: 18mm;
-        }
-
-
-        /* ==========================================
-           TANDA TANGAN
-        ========================================== */
-
-        .ttd {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-            border-top: 0.25mm solid #000;
-        }
-
-        .ttd td {
-            height: 18mm;
-            padding: 0;
-            vertical-align: bottom;
-            font-size: 8px;
-            font-weight: bold;
-        }
-
-        .ttd-kiri {
-            width: 50%;
-            text-align: left;
-            padding-left: 1mm !important;
-        }
-
-        .ttd-kanan {
-            width: 50%;
-            text-align: right;
-            padding-right: 1mm !important;
-        }
-
-    </style>
+</style>
 
 
-    <table class="kupon" cellpadding="0" cellspacing="0">
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
 
-        <!-- ==========================================
-             JUDUL
-        ========================================== -->
+<table class="header-table" cellpadding="0" cellspacing="0">
 
-        <tr>
-            <td class="judul">
-                Kupon Makan
-            </td>
-        </tr>
+    <tr>
+        <td class="header-label">Header</td>
+        <td class="header-separator"></td>
+        <td class="header-value"></td>
+    </tr>
 
+    <tr>
+        <td class="header-label">Catering</td>
+        <td class="header-separator"></td>
+        <td class="header-value">' . e($rs_makan_catering['catering']) . '</td>
+    </tr>
 
-        <!-- ==========================================
-             SUB JUDUL
-        ========================================== -->
+    <tr>
+        <td class="header-label">Periode</td>
+        <td class="header-separator"></td>
+        <td class="header-value">
+            ' . e($rs_makan_catering['tanggal_awal']) . '
+            s/d
+            ' . e($rs_makan_catering['tanggal_akhir']) . '
+        </td>
+    </tr>
 
-        <tr>
-            <td class="subjudul">
-                Berlaku untuk 1 orang
-            </td>
-        </tr>
+    <tr>
+        <td class="header-label">Keterangan</td>
+        <td class="header-separator"></td>
+        <td class="header-value">' . e($rs_makan_catering['keterangan']) . '</td>
+    </tr>
 
-
-        <!-- ==========================================
-             DATA
-        ========================================== -->
-
-        <tr>
-            <td style="padding: 1mm 1mm 0 1mm;">
-
-                <table class="data" cellpadding="0" cellspacing="0">
-
-                    <tr>
-                        <td class="label">
-                            Tanggal Berlaku
-                        </td>
-
-                        <td class="separator">
-                            :
-                        </td>
-
-                        <td class="value">
-                            ' . $tanggal . '
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="label">
-                            Penerima Makan
-                        </td>
-
-                        <td class="separator">
-                            :
-                        </td>
-
-                        <td class="value">
-                            ' . $penerima . '
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="label">
-                            Perusahaan
-                        </td>
-
-                        <td class="separator">
-                            :
-                        </td>
-
-                        <td class="value">
-                            ' . $perusahaan . '
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="label">
-                            PIC Tamu PMI
-                        </td>
-
-                        <td class="separator">
-                            :
-                        </td>
-
-                        <td class="value">
-                            ' . $pic_tamu . '
-                        </td>
-                    </tr>
-
-                </table>
-
-            </td>
-        </tr>
+</table>
 
 
-        <!-- ==========================================
-             JARAK TANDA TANGAN
-        ========================================== -->
+<!-- =====================================================
+     DETAIL
+     ===================================================== -->
+
+<div class="section-title">Detail</div>
+
+<table class="detail" cellpadding="0" cellspacing="0">
+
+    <thead>
 
         <tr>
-            <td class="spacer">
-                &nbsp;
-            </td>
+            <th class="tanggal" rowspan="2">Tanggal</th>
+
+            <th colspan="2">Shift 1</th>
+            <th colspan="2">Shift 2</th>
+            <th colspan="2">Shift 3</th>
+
+            <th colspan="2">Total</th>
+
+            <th class="grand-col" rowspan="2">
+                Grand Total
+            </th>
         </tr>
-
-
-        <!-- ==========================================
-             TANDA TANGAN
-        ========================================== -->
 
         <tr>
-            <td style="padding: 0;">
+            <th class="shift-col">Kary</th>
+            <th class="shift-col">Staff</th>
 
-                <table class="ttd" cellpadding="0" cellspacing="0">
+            <th class="shift-col">Kary</th>
+            <th class="shift-col">Staff</th>
 
-                    <tr>
+            <th class="shift-col">Kary</th>
+            <th class="shift-col">Staff</th>
 
-                        <td class="ttd-kiri">
-                            TTD Bagian HRD
-                        </td>
-
-                        <td class="ttd-kanan">
-                            TTD Bagian Kantin
-                        </td>
-
-                    </tr>
-
-                </table>
-
-            </td>
+            <th class="total-col">Kary</th>
+            <th class="total-col">Staff</th>
         </tr>
 
-    </table>
+        <tr>
+            <th></th>
 
+            <th>jml makan</th>
+            <th>jml makan</th>
+
+            <th>jml makan</th>
+            <th>jml makan</th>
+
+            <th>jml makan</th>
+            <th>jml makan</th>
+
+            <th>jml total</th>
+            <th>jml total</th>
+
+            <th>jml grand total</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+';
+
+if (!empty($rs_data_sql)) {
+
+    foreach ($rs_data_sql as $row) {
+
+        $shift1_kary  = (int)($row['shift1_kary'] ?? 0);
+        $shift1_staff = (int)($row['shift1_staff'] ?? 0);
+
+        $shift2_kary  = (int)($row['shift2_kary'] ?? 0);
+        $shift2_staff = (int)($row['shift2_staff'] ?? 0);
+
+        $shift3_kary  = (int)($row['shift3_kary'] ?? 0);
+        $shift3_staff = (int)($row['shift3_staff'] ?? 0);
+
+        $total_kary_row  = (int)($row['total_kary'] ?? 0);
+        $total_staff_row = (int)($row['total_staff'] ?? 0);
+
+        $grand_total_row = (int)($row['grand_total'] ?? 0);
+
+        $html .= '
+        <tr>
+
+            <td>' . e($row['tanggal']) . '</td>
+
+            <td class="number">' . n($shift1_kary) . '</td>
+            <td class="number">' . n($shift1_staff) . '</td>
+
+            <td class="number">' . n($shift2_kary) . '</td>
+            <td class="number">' . n($shift2_staff) . '</td>
+
+            <td class="number">' . n($shift3_kary) . '</td>
+            <td class="number">' . n($shift3_staff) . '</td>
+
+            <td class="number">' . n($total_kary_row) . '</td>
+            <td class="number">' . n($total_staff_row) . '</td>
+
+            <td class="number">' . n($grand_total_row) . '</td>
+
+        </tr>
+        ';
+    }
+
+} else {
+
+    $html .= '
+        <tr>
+            <td colspan="10" style="height: 12mm;">
+                Tidak ada data.
+            </td>
+        </tr>
     ';
-
-
-    $mpdf->WriteHTML($html);
 }
+
+$html .= '
+
+    </tbody>
+
+</table>
+
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<div class="footer-title">Footer</div>
+
+<table class="footer-table" cellpadding="0" cellspacing="0">
+
+    <tr>
+        <td class="footer-label">
+            Jumlah makan Karyawan
+        </td>
+
+        <td class="footer-separator">:</td>
+
+        <td class="footer-value">
+            ' . n($total_kary) . '
+            x
+            ' . n($harga_kary) . '
+            =
+            ' . n($total_biaya_kary) . '
+        </td>
+    </tr>
+
+    <tr>
+        <td class="footer-label">
+            Jumlah Makan Staff
+        </td>
+
+        <td class="footer-separator">:</td>
+
+        <td class="footer-value">
+            ' . n($total_staff) . '
+            x
+            ' . n($harga_staff) . '
+            =
+            ' . n($total_biaya_staff) . '
+        </td>
+    </tr>
+
+    <tr>
+        <td class="footer-label footer-total">
+            Total
+        </td>
+
+        <td class="footer-separator footer-total">:</td>
+
+        <td class="footer-value footer-total">
+            ' . n($total_biaya_kary) . '
+            +
+            ' . n($total_biaya_staff) . '
+            =
+            ' . n($total_biaya) . '
+        </td>
+    </tr>
+
+</table>
+';
+
+
+$mpdf->WriteHTML($html);
 
 
 /*
