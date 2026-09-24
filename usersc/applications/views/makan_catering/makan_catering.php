@@ -745,8 +745,8 @@ footerCallback: function (row, data, start, end, display) {
     // =====================================================
     // HARGA
     // =====================================================
-    var harga_karyawan = 20000;
-    var harga_staff    = 25000;
+    var harga_karyawan = 3250;
+    var harga_staff    = 3250;
 
 
     // =====================================================
