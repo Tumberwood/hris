@@ -269,30 +269,30 @@
                         ) gp1 ON gp1.id_hemxxmh = p.id_hemxxmh
                     ),
                     t_jabatan AS (
-                        -- SELECT
-                        --     p.id_hemxxmh,
-                        --     COALESCE(nominal_t_jab, 0) AS t_jab
-                        -- FROM pegawai p
-                        -- LEFT JOIN (
-                        --     SELECT
-                        --         id_hemxxmh,
-                        --         tanggal_efektif,
-                        --         IFNULL(nominal, 0) AS nominal_t_jab
-                        --     FROM (
-                        --         SELECT
-                        --             id,
-                        --             id_hemxxmh,
-                        --             tanggal_efektif,
-                        --             nominal,
-                        --             ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
-                        --         FROM htpr_hemxxmh
-                        --         WHERE
-                        --             htpr_hemxxmh.id_hpcxxmh = 32
-                        --             AND tanggal_efektif <= :tanggal_akhir
-                        --             AND is_active = 1
-                        --     ) AS subquery
-                        --     WHERE row_num = 1
-                        -- ) t_jabatan ON t_jabatan.id_hemxxmh = p.id_hemxxmh
+                        SELECT
+                            p.id_hemxxmh,
+                            COALESCE(nominal_t_jab, 0) AS t_jab
+                        FROM pegawai p
+                        LEFT JOIN (
+                            SELECT
+                                id_hemxxmh,
+                                tanggal_efektif,
+                                IFNULL(nominal, 0) AS nominal_t_jab
+                            FROM (
+                                SELECT
+                                    id,
+                                    id_hemxxmh,
+                                    tanggal_efektif,
+                                    nominal,
+                                    ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                                FROM htpr_hemxxmh
+                                WHERE
+                                    htpr_hemxxmh.id_hpcxxmh = 32
+                                    AND tanggal_efektif <= :tanggal_akhir
+                                    AND is_active = 1
+                            ) AS subquery
+                            WHERE row_num = 1
+                        ) t_jabatan ON t_jabatan.id_hemxxmh = p.id_hemxxmh
                     ),
                     var_cost AS (
                         SELECT
