@@ -406,6 +406,7 @@
                             p.id_hemxxmh,
                             report_pot_premi,
                             CASE
+                                WHEN tanggal_masuk > LAST_DAY(:tanggal_awal) THEN 0
                                 WHEN p.id_hemxxmh = 67 THEN 0
                                 WHEN p.id_heyxxmh = 1 
                                     AND COALESCE(pr.report_pot_premi, 0) >= 1
