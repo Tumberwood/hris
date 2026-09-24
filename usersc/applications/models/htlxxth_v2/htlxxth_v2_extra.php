@@ -250,7 +250,13 @@
 			}
 		})
 		->on('preRemove',function( $editor, $id, $values ) {
-			// script diletakkan disini
+			$id_htlxxth = $id;
+			
+			$qd_htlxxrh = $editor->db()
+				->query('delete', 'htlxxrh')
+				->where('id_transaksi', $id_htlxxth )
+				->where('jenis', 1 )
+				->exec();
 		})
 		->on('postRemove',function( $editor, $id, $values ) {
 			// script diletakkan disini
