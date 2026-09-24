@@ -63,107 +63,111 @@
                         </thead>
                     </table>
                     <legend>Detail</legend>
-                    <table id="tblcetak_makan_d"
-						class="table table-striped table-bordered table-hover nowrap"
-						width="100%">
+<table id="tblcetak_makan_d"
+       class="table table-striped table-bordered table-hover nowrap"
+       width="100%">
 
-						<thead>
-							<!-- HEADER UTAMA -->
-							<tr>
-								<th rowspan="3" class="text-center align-middle">
-									Tanggal
-								</th>
+    <thead>
+        <!-- HEADER GROUP -->
+        <tr>
+            <th rowspan="2" class="text-center align-middle">
+                Tanggal
+            </th>
 
-								<th colspan="2" class="text-center">
-									Shift 1
-								</th>
+            <th colspan="2" class="text-center">
+                Shift 1
+            </th>
 
-								<th colspan="2" class="text-center">
-									Shift 2
-								</th>
+            <th colspan="2" class="text-center">
+                Shift 2
+            </th>
 
-								<th colspan="2" class="text-center">
-									Shift 3
-								</th>
+            <th colspan="2" class="text-center">
+                Shift 3
+            </th>
 
-								<th colspan="2" class="text-center">
-									Total
-								</th>
+            <th colspan="2" class="text-center">
+                Total
+            </th>
 
-								<th rowspan="3" class="text-center align-middle">
-									Grand Total
-								</th>
-							</tr>
+            <th rowspan="2" class="text-center align-middle">
+                Grand Total
+            </th>
+        </tr>
 
-							<!-- SUB HEADER -->
-							<tr>
-								<th class="text-center">Karyawan</th>
-								<th class="text-center">Staff</th>
+        <!-- HEADER DETAIL -->
+        <tr>
+            <th class="text-center">
+                Karyawan
+            </th>
 
-								<th class="text-center">Karyawan</th>
-								<th class="text-center">Staff</th>
+            <th class="text-center">
+                Staff
+            </th>
 
-								<th class="text-center">Karyawan</th>
-								<th class="text-center">Staff</th>
+            <th class="text-center">
+                Karyawan
+            </th>
 
-								<th class="text-center">Karyawan</th>
-								<th class="text-center">Staff</th>
-							</tr>
+            <th class="text-center">
+                Staff
+            </th>
 
-							<!-- DETAIL HEADER -->
-							<tr>
-								<th class="text-center font-weight-normal">jml makan</th>
-								<th class="text-center font-weight-normal">jml makan</th>
+            <th class="text-center">
+                Karyawan
+            </th>
 
-								<th class="text-center font-weight-normal">jml makan</th>
-								<th class="text-center font-weight-normal">jml makan</th>
+            <th class="text-center">
+                Staff
+            </th>
 
-								<th class="text-center font-weight-normal">jml makan</th>
-								<th class="text-center font-weight-normal">jml makan</th>
+            <th class="text-center">
+                Karyawan
+            </th>
 
-								<th class="text-center font-weight-normal">jml total</th>
-								<th class="text-center font-weight-normal">jml total</th>
+            <th class="text-center">
+                Staff
+            </th>
+        </tr>
+    </thead>
 
-							</tr>
-						</thead>
+    <tbody>
+    </tbody>
 
-						<tbody>
-						</tbody>
+    <tfoot>
+        <tr>
+            <td colspan="10" class="font-weight-bold pt-3">
+                Footer
+            </td>
+        </tr>
 
-						<tfoot>
-							<tr>
-								<td colspan="10" class="font-weight-bold pt-3">
-									Footer
-								</td>
-							</tr>
+        <tr>
+            <td colspan="10">
+                Jumlah makan Karyawan :
+                <span id="footer_jumlah_karyawan">0</span>
+                x harga =
+                <span id="footer_harga_karyawan">0</span>
+            </td>
+        </tr>
 
-							<tr>
-								<td colspan="10">
-									Jumlah makan Karyawan :
-									<span id="footer_jumlah_karyawan">xxx</span>
-									x harga =
-									<span id="footer_harga_karyawan">xxx</span>
-								</td>
-							</tr>
+        <tr>
+            <td colspan="10">
+                Jumlah Makan Staff :
+                <span id="footer_jumlah_staff">0</span>
+                x harga =
+                <span id="footer_harga_staff">0</span>
+            </td>
+        </tr>
 
-							<tr>
-								<td colspan="10">
-									Jumlah Makan Staff :
-									<span id="footer_jumlah_staff">nnn</span>
-									x harga =
-									<span id="footer_harga_staff">yyy</span>
-								</td>
-							</tr>
+        <tr>
+            <td colspan="10" class="font-weight-bold">
+                Total :
+                <span id="footer_total">0</span>
+            </td>
+        </tr>
+    </tfoot>
 
-							<tr>
-								<td colspan="10" class="font-weight-bold">
-									Total :
-									<span id="footer_total">xxx + yyy</span>
-								</td>
-							</tr>
-						</tfoot>
-
-					</table>
+</table>
 				</div>
 			</div>
 		</div>
