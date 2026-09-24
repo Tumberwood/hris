@@ -655,9 +655,6 @@
 					// END breaking generate button
 				],
 				rowCallback: function( row, data, index ) {
-					if ( data.cetak_makan_d.is_active == 0 ) {
-						$('td', row).addClass('text-danger');
-					}
 				}
 			} );
 
