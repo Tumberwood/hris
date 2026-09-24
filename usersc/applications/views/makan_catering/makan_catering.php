@@ -235,9 +235,9 @@
 						def: 1
 					},	
 					{
-						label: "Catering",
+						label: "Catering <sup class='text-danger'>*<sup>",
 						name: "makan_catering.nama",
-					}
+					},
 					{
 						label: "Tanggal Awal <sup class='text-danger'>*<sup>",
 						name: "makan_catering.tanggal_awal",
@@ -287,12 +287,15 @@
 			
 			edtmakan_catering.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					// BEGIN of validasi makan_catering.tanggal_awal 
+					nama = edtmakan_catering.field('makan_catering.nama').val();
+					if(!nama || nama == ''){
+						edtmakan_catering.field('makan_catering.nama').error( 'Wajib diisi!' );
+					}
 					tanggal_awal = edtmakan_catering.field('makan_catering.tanggal_awal').val();
 					if(!tanggal_awal || tanggal_awal == ''){
 						edtmakan_catering.field('makan_catering.tanggal_awal').error( 'Wajib diisi!' );
 					}
-					// BEGIN of validasi makan_catering.tanggal_akhir 
+
 					tanggal_akhir = edtmakan_catering.field('makan_catering.tanggal_akhir').val();
 					if(!tanggal_akhir || tanggal_akhir == ''){
 						edtmakan_catering.field('makan_catering.tanggal_akhir').error( 'Wajib diisi!' );
