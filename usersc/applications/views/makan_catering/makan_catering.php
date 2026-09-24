@@ -232,7 +232,7 @@
 
     <!-- GRAND TOTAL HARGA -->
     <tr>
-        <td colspan="7" class="text-right font-weight-bold">
+        <td colspan="7" class="font-weight-bold">
             Total
         </td>
 
