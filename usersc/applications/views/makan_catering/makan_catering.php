@@ -472,7 +472,7 @@
 				is_active        = data_makan_catering.is_active;
 				tanggal_awal        = data_makan_catering.tanggal_awal;
 				tanggal_akhir        = data_makan_catering.tanggal_akhir;
-				$('#periode_catering').html(`${tanggal_awal} - ${tanggal_akhir}`);
+				$('#periode_catering').html(`${tanggal_awal} s/d ${tanggal_akhir}`);
 				
 				// atur hak akses
 				tbl_details = [tblcetak_makan_d];
