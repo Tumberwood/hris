@@ -292,13 +292,13 @@ $total_biaya       = $total_biaya_kary + $total_biaya_staff;
 */
 
 $mpdf = new \Mpdf\Mpdf([
-    'margin_left'   => 8,
-    'margin_right'  => 8,
-    'margin_top'    => 8,
-    'margin_bottom' => 8,
+    'margin_left'   => 6,
+    'margin_right'  => 6,
+    'margin_top'    => 6,
+    'margin_bottom' => 6,
     'margin_header' => 0,
     'margin_footer' => 0,
-    'format'        => 'A4-L',
+    'format'        => 'A4',
 ]);
 
 $mpdf->SetProtection(['print']);
@@ -320,7 +320,7 @@ $html = '
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
-        font-size: 9px;
+        font-size: 8px;
         color: #000;
     }
 
@@ -369,7 +369,7 @@ $html = '
     .detail th,
     .detail td {
         border: 0.25mm solid #000;
-        padding: 1.1mm 0.8mm;
+        padding: 1mm 0.4mm;
         text-align: center;
         vertical-align: middle;
         line-height: 1.15;
@@ -516,23 +516,6 @@ $html = '
             <th class="total-col">Staff</th>
         </tr>
 
-        <tr>
-            <th></th>
-
-            <th>jml makan</th>
-            <th>jml makan</th>
-
-            <th>jml makan</th>
-            <th>jml makan</th>
-
-            <th>jml makan</th>
-            <th>jml makan</th>
-
-            <th>jml total</th>
-            <th>jml total</th>
-
-            <th>jml grand total</th>
-        </tr>
 
     </thead>
 
