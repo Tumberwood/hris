@@ -707,123 +707,115 @@
 				},
 				footerCallback: function (row, data, start, end, display) {
 
-					var api = this.api();
+    var api = this.api();
 
-					// =====================================================
-					// FUNCTION PARSE ANGKA
-					// =====================================================
-					var toNumber = function (value) {
-
-						if (value === null || value === undefined || value === '') {
-							return 0;
-						}
-
-						if (typeof value === 'number') {
-							return value;
-						}
-
-						return parseFloat(
-							String(value).replace(/[^0-9.-]/g, '')
-						) || 0;
-					};
+    // =====================================================
+    // HARGA MAKAN
+    // =====================================================
+    var harga_karyawan = 20000;
+    var harga_staff    = 25000;
 
 
-					// =====================================================
-					// AMBIL SEMUA DATA YANG SEDANG TERFILTER
-					// BUKAN HANYA DATA DI HALAMAN AKTIF
-					// =====================================================
-					var rows = api
-						.rows({
-							search: 'applied'
-						})
-						.data();
+    // =====================================================
+    // PARSE ANGKA
+    // =====================================================
+    var toNumber = function (value) {
+
+        if (
+            value === null ||
+            value === undefined ||
+            value === ''
+        ) {
+            return 0;
+        }
+
+        if (typeof value === 'number') {
+            return value;
+        }
+
+        return parseFloat(value) || 0;
+    };
 
 
-					// =====================================================
-					// TOTAL KARYAWAN
-					// index 7 = total_kary
-					// =====================================================
-					var jumlah_karyawan = 0;
-
-					// =====================================================
-					// TOTAL STAFF
-					// index 8 = total_staff
-					// =====================================================
-					var jumlah_staff = 0;
-
-					// =====================================================
-					// GRAND TOTAL
-					// index 9 = grand_total
-					// =====================================================
-					var grand_total = 0;
+    // =====================================================
+    // AMBIL SEMUA DATA YANG TERFILTER
+    // BUKAN HANYA DATA DI HALAMAN AKTIF
+    // =====================================================
+    var rows = api
+        .rows({
+            search: 'applied'
+        })
+        .data();
 
 
-					// =====================================================
-					// HITUNG
-					// =====================================================
-					rows.each(function (item) {
-
-						jumlah_karyawan += toNumber(item.total_kary);
-
-						jumlah_staff += toNumber(item.total_staff);
-
-						grand_total += toNumber(item.grand_total);
-
-					});
+    var jumlah_karyawan = 0;
+    var jumlah_staff    = 0;
 
 
-					// =====================================================
-					// HITUNG TOTAL HARGA
-					// =====================================================
-					var total_harga_karyawan =
-						jumlah_karyawan * harga_karyawan;
+    // =====================================================
+    // HITUNG JUMLAH MAKAN
+    // =====================================================
+    rows.each(function (item) {
 
-					var total_harga_staff =
-						jumlah_staff * harga_staff;
+        jumlah_karyawan += toNumber(item.total_kary);
 
-					var total_harga =
-						total_harga_karyawan +
-						total_harga_staff;
+        jumlah_staff += toNumber(item.total_staff);
+
+    });
 
 
-					// =====================================================
-					// FORMAT RUPIAH
-					// =====================================================
-					var formatRupiah = function (angka) {
+    // =====================================================
+    // HITUNG HARGA
+    // =====================================================
+    var total_harga_karyawan =
+        jumlah_karyawan * harga_karyawan;
 
-						return new Intl.NumberFormat('id-ID', {
-							maximumFractionDigits: 0
-						}).format(angka);
+    var total_harga_staff =
+        jumlah_staff * harga_staff;
 
-					};
-
-
-					// =====================================================
-					// UPDATE FOOTER
-					// =====================================================
-					$('#footer_jumlah_karyawan').html(
-						formatRupiah(jumlah_karyawan)
-					);
-
-					$('#footer_harga_karyawan').html(
-						formatRupiah(total_harga_karyawan)
-					);
+    var total_harga =
+        total_harga_karyawan +
+        total_harga_staff;
 
 
-					$('#footer_jumlah_staff').html(
-						formatRupiah(jumlah_staff)
-					);
+    // =====================================================
+    // FORMAT ANGKA
+    // =====================================================
+    var formatRupiah = function (angka) {
 
-					$('#footer_harga_staff').html(
-						formatRupiah(total_harga_staff)
-					);
+        return new Intl.NumberFormat('id-ID', {
+            maximumFractionDigits: 0
+        }).format(angka);
+
+    };
 
 
-					$('#footer_total').html(
-						formatRupiah(total_harga)
-					);
+    // =====================================================
+    // UPDATE FOOTER
+    // =====================================================
+    $('#footer_jumlah_karyawan').html(
+        formatRupiah(jumlah_karyawan)
+    );
 
-				},
+    $('#footer_harga_karyawan').html(
+        formatRupiah(total_harga_karyawan)
+    );
+
+
+    $('#footer_jumlah_staff').html(
+        formatRupiah(jumlah_staff)
+    );
+
+    $('#footer_harga_staff').html(
+        formatRupiah(total_harga_staff)
+    );
+
+
+    $('#footer_total').html(
+        formatRupiah(total_harga)
+    );
+
+}
 
 			} );
 
