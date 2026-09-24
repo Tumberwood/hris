@@ -548,7 +548,7 @@
 					},
 					dataSrc: 'data.lembur'
 				},
-				order: [[ 2, "desc" ]],
+				order: [[ 0, "asc" ]],
 				columns: [
 					{
 						data: "tanggal",

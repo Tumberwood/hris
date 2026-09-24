@@ -36,7 +36,7 @@
 			->bind(':start_date', $start_date)
 			->bind(':end_date', $end_date)
 			->exec('SELECT
-						x.tanggal,
+						DATE_FORMAT(x.tanggal, "%d %b %Y") AS tanggal,
 
 						/* =========================
 						SHIFT 1 - PAGI
