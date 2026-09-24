@@ -134,83 +134,115 @@
 						<tbody>
 						</tbody>
 
-						<tfoot>
-							<!-- FOOTER TITLE -->
-							<tr>
-								<td colspan="10" class="bg-light font-weight-bold">
-									<div class="d-flex justify-content-between align-items-center">
-										<span>
-											<i class="fa fa-calculator mr-1"></i>
-											Rekapitulasi Makan
-										</span>
-									</div>
-								</td>
-							</tr>
+<tfoot>
 
-							<!-- KARYAWAN -->
-							<tr>
-								<td colspan="5" class="text-left">
-									<span class="font-weight-bold">
-										Jumlah Makan Karyawan
-									</span>
-								</td>
+    <!-- TOTAL PORSI -->
+    <tr class="font-weight-bold">
+        <td class="text-right">
+            Total
+        </td>
 
-								<td colspan="2" class="text-center">
-									<span id="footer_jumlah_karyawan" class="font-weight-bold">
-										0
-									</span>
-									x harga
-								</td>
+        <!-- Shift 1 -->
+        <td class="text-center">
+            <span id="sum_shift1_kary">0</span>
+        </td>
 
-								<td colspan="3" class="text-right">
-									<span class="font-weight-bold">
-										Rp
-										<span id="footer_harga_karyawan">
-											0
-										</span>
-									</span>
-								</td>
-							</tr>
+        <td class="text-center">
+            <span id="sum_shift1_staff">0</span>
+        </td>
 
-							<!-- STAFF -->
-							<tr>
-								<td colspan="5" class="text-left">
-									<span class="font-weight-bold">
-										Jumlah Makan Staff
-									</span>
-								</td>
+        <!-- Shift 2 -->
+        <td class="text-center">
+            <span id="sum_shift2_kary">0</span>
+        </td>
 
-								<td colspan="2" class="text-center">
-									<span id="footer_jumlah_staff" class="font-weight-bold">
-										0
-									</span>
-									x harga
-								</td>
+        <td class="text-center">
+            <span id="sum_shift2_staff">0</span>
+        </td>
 
-								<td colspan="3" class="text-right">
-									<span class="font-weight-bold">
-										Rp
-										<span id="footer_harga_staff">
-											0
-										</span>
-									</span>
-								</td>
-							</tr>
+        <!-- Shift 3 -->
+        <td class="text-center">
+            <span id="sum_shift3_kary">0</span>
+        </td>
 
-							<!-- GRAND TOTAL -->
-							<tr>
-								<td colspan="7" class="text-right font-weight-bold">
-									Total
-								</td>
+        <td class="text-center">
+            <span id="sum_shift3_staff">0</span>
+        </td>
 
-								<td colspan="3" class="text-right font-weight-bold">
-									Rp
-									<span id="footer_total">
-										0
-									</span>
-								</td>
-							</tr>
-						</tfoot>
+        <!-- Total -->
+        <td class="text-center">
+            <span id="sum_total_kary">0</span>
+        </td>
+
+        <td class="text-center">
+            <span id="sum_total_staff">0</span>
+        </td>
+
+        <!-- Grand Total -->
+        <td class="text-center">
+            <span id="sum_grand_total">0</span>
+        </td>
+    </tr>
+
+
+    <!-- JUDUL REKAP -->
+    <tr>
+        <td colspan="10" class="bg-light font-weight-bold">
+            <i class="fa fa-calculator mr-1"></i>
+            Rekapitulasi Makan
+        </td>
+    </tr>
+
+
+    <!-- KARYAWAN -->
+    <tr>
+        <td colspan="5" class="font-weight-bold">
+            Jumlah Makan Karyawan
+        </td>
+
+        <td colspan="2" class="text-center font-weight-bold">
+            <span id="footer_jumlah_karyawan">0</span>
+            x harga
+        </td>
+
+        <td colspan="3" class="text-right font-weight-bold">
+            Rp
+            <span id="footer_harga_karyawan">0</span>
+        </td>
+    </tr>
+
+
+    <!-- STAFF -->
+    <tr>
+        <td colspan="5" class="font-weight-bold">
+            Jumlah Makan Staff
+        </td>
+
+        <td colspan="2" class="text-center font-weight-bold">
+            <span id="footer_jumlah_staff">0</span>
+            x harga
+        </td>
+
+        <td colspan="3" class="text-right font-weight-bold">
+            Rp
+            <span id="footer_harga_staff">0</span>
+        </td>
+    </tr>
+
+
+    <!-- GRAND TOTAL HARGA -->
+    <tr>
+        <td colspan="7" class="text-right font-weight-bold">
+            Total
+        </td>
+
+        <td colspan="3" class="text-right font-weight-bold">
+            Rp
+            <span id="footer_total">0</span>
+        </td>
+    </tr>
+
+</tfoot>
 
 					</table>
 				</div>
@@ -705,12 +737,13 @@
 				],
 				rowCallback: function( row, data, index ) {
 				},
-				footerCallback: function (row, data, start, end, display) {
+
+footerCallback: function (row, data, start, end, display) {
 
     var api = this.api();
 
     // =====================================================
-    // HARGA MAKAN
+    // HARGA
     // =====================================================
     var harga_karyawan = 20000;
     var harga_staff    = 25000;
@@ -738,8 +771,7 @@
 
 
     // =====================================================
-    // AMBIL SEMUA DATA YANG TERFILTER
-    // BUKAN HANYA DATA DI HALAMAN AKTIF
+    // SEMUA DATA YANG TERFILTER
     // =====================================================
     var rows = api
         .rows({
@@ -748,30 +780,54 @@
         .data();
 
 
-    var jumlah_karyawan = 0;
-    var jumlah_staff    = 0;
+    // =====================================================
+    // VARIABLE SUM
+    // =====================================================
+    var shift1_kary  = 0;
+    var shift1_staff = 0;
+
+    var shift2_kary  = 0;
+    var shift2_staff = 0;
+
+    var shift3_kary  = 0;
+    var shift3_staff = 0;
+
+    var total_kary   = 0;
+    var total_staff  = 0;
+
+    var grand_total  = 0;
 
 
     // =====================================================
-    // HITUNG JUMLAH MAKAN
+    // LOOP DATA
     // =====================================================
     rows.each(function (item) {
 
-        jumlah_karyawan += toNumber(item.total_kary);
+        shift1_kary += toNumber(item.shift1_kary);
+        shift1_staff += toNumber(item.shift1_staff);
 
-        jumlah_staff += toNumber(item.total_staff);
+        shift2_kary += toNumber(item.shift2_kary);
+        shift2_staff += toNumber(item.shift2_staff);
+
+        shift3_kary += toNumber(item.shift3_kary);
+        shift3_staff += toNumber(item.shift3_staff);
+
+        total_kary += toNumber(item.total_kary);
+        total_staff += toNumber(item.total_staff);
+
+        grand_total += toNumber(item.grand_total);
 
     });
 
 
     // =====================================================
-    // HITUNG HARGA
+    // TOTAL HARGA
     // =====================================================
     var total_harga_karyawan =
-        jumlah_karyawan * harga_karyawan;
+        total_kary * harga_karyawan;
 
     var total_harga_staff =
-        jumlah_staff * harga_staff;
+        total_staff * harga_staff;
 
     var total_harga =
         total_harga_karyawan +
@@ -781,7 +837,7 @@
     // =====================================================
     // FORMAT ANGKA
     // =====================================================
-    var formatRupiah = function (angka) {
+    var formatNumber = function (angka) {
 
         return new Intl.NumberFormat('id-ID', {
             maximumFractionDigits: 0
@@ -791,28 +847,84 @@
 
 
     // =====================================================
-    // UPDATE FOOTER
+    // SUM SHIFT 1
+    // =====================================================
+    $('#sum_shift1_kary').html(
+        formatNumber(shift1_kary)
+    );
+
+    $('#sum_shift1_staff').html(
+        formatNumber(shift1_staff)
+    );
+
+
+    // =====================================================
+    // SUM SHIFT 2
+    // =====================================================
+    $('#sum_shift2_kary').html(
+        formatNumber(shift2_kary)
+    );
+
+    $('#sum_shift2_staff').html(
+        formatNumber(shift2_staff)
+    );
+
+
+    // =====================================================
+    // SUM SHIFT 3
+    // =====================================================
+    $('#sum_shift3_kary').html(
+        formatNumber(shift3_kary)
+    );
+
+    $('#sum_shift3_staff').html(
+        formatNumber(shift3_staff)
+    );
+
+
+    // =====================================================
+    // SUM TOTAL
+    // =====================================================
+    $('#sum_total_kary').html(
+        formatNumber(total_kary)
+    );
+
+    $('#sum_total_staff').html(
+        formatNumber(total_staff)
+    );
+
+
+    // =====================================================
+    // SUM GRAND TOTAL
+    // =====================================================
+    $('#sum_grand_total').html(
+        formatNumber(grand_total)
+    );
+
+
+    // =====================================================
+    // FOOTER NOMINAL
     // =====================================================
     $('#footer_jumlah_karyawan').html(
-        formatRupiah(jumlah_karyawan)
+        formatNumber(total_kary)
     );
 
     $('#footer_harga_karyawan').html(
-        formatRupiah(total_harga_karyawan)
+        formatNumber(total_harga_karyawan)
     );
 
 
     $('#footer_jumlah_staff').html(
-        formatRupiah(jumlah_staff)
+        formatNumber(total_staff)
     );
 
     $('#footer_harga_staff').html(
-        formatRupiah(total_harga_staff)
+        formatNumber(total_harga_staff)
     );
 
 
     $('#footer_total').html(
-        formatRupiah(total_harga)
+        formatNumber(total_harga)
     );
 
 }
