@@ -746,12 +746,6 @@ footerCallback: function (row, data, start, end, display) {
 
     var api = this.api();
 
-    // =====================================================
-    // HARGA CATERING
-    // =====================================================
-    var harga_karyawan = 3250;
-    var harga_staff    = 3250;
-
 
     // =====================================================
     // PARSE ANGKA
@@ -782,6 +776,23 @@ footerCallback: function (row, data, start, end, display) {
             search: 'applied'
         })
         .data();
+
+
+    // =====================================================
+    // AMBIL HARGA DARI 1 DATA SAJA
+    // =====================================================
+    var harga_karyawan = 0;
+    var harga_staff = 0;
+
+    if (rows.length > 0) {
+        harga_karyawan = toNumber(
+            rows[0].harga_catering_kary
+        );
+
+        harga_staff = toNumber(
+            rows[0].harga_catering_staff
+        );
+    }
 
 
     // =====================================================

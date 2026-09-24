@@ -36,162 +36,169 @@
 			->bind(':start_date', $start_date)
 			->bind(':end_date', $end_date)
 			->exec('SELECT
-						DATE_FORMAT(x.tanggal, "%d %b %Y") AS tanggal,
+						x.tanggal,
 
 						/* =========================
-						SHIFT 1 - PAGI
+						HARGA CATERING
 						========================= */
-						SUM(
+						MAX(
 							CASE
-								WHEN x.shift = 1
-									AND x.sub = "KARYAWAN"
-									AND x.is_makan = 1
-								THEN 1
+								WHEN x.sub = "KARYAWAN"
+								THEN x.harga_catering
 								ELSE 0
 							END
+						) AS harga_catering_kary,
+
+						MAX(
+							CASE
+								WHEN x.sub = "STAFF"
+								THEN x.harga_catering
+								ELSE 0
+							END
+						) AS harga_catering_staff,
+
+
+						/* =========================
+						SHIFT 1
+						========================= */
+						SUM(
+							x.shift = 1
+							AND x.sub = "KARYAWAN"
+							AND x.is_makan = 1
 						) AS shift1_kary,
 
 						SUM(
-							CASE
-								WHEN x.shift = 1
-									AND x.sub = "STAFF"
-									AND x.is_makan = 1
-								THEN 1
-								ELSE 0
-							END
+							x.shift = 1
+							AND x.sub = "STAFF"
+							AND x.is_makan = 1
 						) AS shift1_staff,
 
+
 						/* =========================
-						SHIFT 2 - SIANG / SORE
+						SHIFT 2
 						========================= */
 						SUM(
-							CASE
-								WHEN x.shift = 2
-									AND x.sub = "KARYAWAN"
-									AND x.is_makan = 1
-								THEN 1
-								ELSE 0
-							END
+							x.shift = 2
+							AND x.sub = "KARYAWAN"
+							AND x.is_makan = 1
 						) AS shift2_kary,
 
 						SUM(
-							CASE
-								WHEN x.shift = 2
-									AND x.sub = "STAFF"
-									AND x.is_makan = 1
-								THEN 1
-								ELSE 0
-							END
+							x.shift = 2
+							AND x.sub = "STAFF"
+							AND x.is_makan = 1
 						) AS shift2_staff,
 
+
 						/* =========================
-						SHIFT 3 - MALAM
+						SHIFT 3
 						========================= */
 						SUM(
-							CASE
-								WHEN x.shift = 3
-									AND x.sub = "KARYAWAN"
-									AND x.is_makan = 1
-								THEN 1
-								ELSE 0
-							END
+							x.shift = 3
+							AND x.sub = "KARYAWAN"
+							AND x.is_makan = 1
 						) AS shift3_kary,
 
 						SUM(
-							CASE
-								WHEN x.shift = 3
-									AND x.sub = "STAFF"
-									AND x.is_makan = 1
-								THEN 1
-								ELSE 0
-							END
+							x.shift = 3
+							AND x.sub = "STAFF"
+							AND x.is_makan = 1
 						) AS shift3_staff,
+
 
 						/* =========================
 						TOTAL KARYAWAN
 						========================= */
 						SUM(
-							CASE
-								WHEN x.sub = "KARYAWAN"
-									AND x.is_makan = 1
-								THEN 1
-								ELSE 0
-							END
+							x.sub = "KARYAWAN"
+							AND x.is_makan = 1
 						) AS total_kary,
+
 
 						/* =========================
 						TOTAL STAFF
 						========================= */
 						SUM(
-							CASE
-								WHEN x.sub = "STAFF"
-									AND x.is_makan = 1
-								THEN 1
-								ELSE 0
-							END
+							x.sub = "STAFF"
+							AND x.is_makan = 1
 						) AS total_staff,
+
 
 						/* =========================
 						GRAND TOTAL
 						========================= */
 						SUM(
-							CASE
-								WHEN x.is_makan = 1
-								THEN 1
-								ELSE 0
-							END
+							x.is_makan = 1
 						) AS grand_total
+
 
 					FROM
 					(
 						SELECT
-							b.kode,
-							b.nama,
 							a.tanggal,
 							d.nama AS sub,
-							a.st_jadwal,
 							a.is_makan,
-							a.jam_makan,
-							b.is_pot_makan,
+
 
 							/* =========================
-							PENENTUAN SHIFT
+							HARGA CATERING
+							========================= */
+							COALESCE(
+								(
+									SELECT
+										p.nominal
+									FROM htpr_hemxxmh p
+									WHERE p.id_hpcxxmh = 34
+										AND p.id_hemxxmh = b.id
+										AND p.tanggal_efektif <= a.tanggal
+										AND p.is_active = 1
+									ORDER BY
+										p.tanggal_efektif DESC
+									LIMIT 1
+								),
+								0
+							) AS harga_catering,
+
+
+							/* =========================
+							SHIFT
 							========================= */
 							CASE
-								WHEN UPPER(a.st_jadwal) LIKE "PAGI%"
+								WHEN a.st_jadwal LIKE "PAGI%"
 									THEN 1
 
-								WHEN UPPER(a.st_jadwal) LIKE "SIANG%"
-								OR UPPER(a.st_jadwal) LIKE "SORE%"
+								WHEN a.st_jadwal LIKE "SIANG%"
+								OR a.st_jadwal LIKE "SORE%"
 									THEN 2
 
-								WHEN UPPER(a.st_jadwal) LIKE "MALAM%"
+								WHEN a.st_jadwal LIKE "MALAM%"
 									THEN 3
 
 								ELSE NULL
 							END AS shift
 
+
 						FROM htsprrd a
 
-						JOIN hemxxmh b
+						INNER JOIN hemxxmh b
 							ON b.id = a.id_hemxxmh
 
-						JOIN hemjbmh c
+						INNER JOIN hemjbmh c
 							ON c.id_hemxxmh = a.id_hemxxmh
 
-						LEFT JOIN heyxxmd d
+						INNER JOIN heyxxmd d
 							ON d.id = c.id_hesxxmh
 
-						WHERE 1 = 1
-
-							AND a.tanggal BETWEEN :start_date AND :end_date
+						WHERE a.tanggal BETWEEN :start_date AND :end_date
 
 							AND d.id IN (2, 3)
 
 					) x
 
+
 					GROUP BY
 						x.tanggal
+
 
 					ORDER BY
 						x.tanggal
