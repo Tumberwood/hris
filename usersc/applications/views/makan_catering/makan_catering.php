@@ -189,7 +189,7 @@
     <tr>
         <td colspan="10" class="bg-light font-weight-bold">
             <i class="fa fa-calculator mr-1"></i>
-            Rekapitulasi Makan
+            LAPORAN CATERING <span id="periode_catering"></span>
         </td>
     </tr>
 
@@ -470,6 +470,9 @@
 				is_nextprocess   = data_makan_catering.is_nextprocess;
 				is_jurnal        = data_makan_catering.is_jurnal;
 				is_active        = data_makan_catering.is_active;
+				tanggal_awal        = data_makan_catering.tanggal_awal;
+				tanggal_akhir        = data_makan_catering.tanggal_akhir;
+				$('#periode_catering').html(`${tanggal_awal} - ${tanggal_akhir}`);
 				
 				// atur hak akses
 				tbl_details = [tblcetak_makan_d];
@@ -486,6 +489,7 @@
 				tbl_details = [tblcetak_makan_d];
 				CekDeselectHeaderHD(tblmakan_catering, tbl_details);
 				tblmakan_catering.button( 'btnPrint:name' ).disable();
+				$('#periode_catering').empty();
 			} );
 			
 // --------- start _detail --------------- //
