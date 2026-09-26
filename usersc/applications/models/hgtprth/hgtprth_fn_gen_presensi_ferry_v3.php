@@ -390,7 +390,7 @@
                                 COALESCE(durasi_lembur_awal_jam, 0) + COALESCE(durasi_lembur_akhir_jam, 0) + COALESCE(durasi_lembur_libur_jam, 0) + COALESCE(durasi_lembur_istirahat1_jam, 0) + COALESCE(durasi_lembur_istirahat2_jam, 0) + COALESCE(durasi_lembur_istirahat3_jam, 0) AS durasi_lembur_total_jam,
 
                                 -- (FLOOR(IF(b.id_hesxxmh = 3, COALESCE(nominal_lembur_mati, 0), (COALESCE(nominal_gp, 0) + IF(b.id_heyxxmd = 1 AND b.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) ) / 173))) AS nominal_lembur_jam,
-                                (FLOOR(IF(b.id_hesxxmh = 3, COALESCE(nominal_lembur_mati, 0), (COALESCE(nominal_gp, 0) + COALESCE(nominal_jabatan, 0) ) / 173))) AS nominal_lembur_jam,
+                                (FLOOR(IF(b.id_hesxxmh = 3, COALESCE(nominal_lembur_mati, 0), (COALESCE(nominal_gp, 0) + COALESCE(nominal_jabatan, 0) + COALESCE(nominal_tj_khusus, 0) ) / 173))) AS nominal_lembur_jam,
                                 jadwal.jam_awal AS shift_in,
                                 jadwal.jam_akhir AS shift_out,
                                 jadwal.tanggaljam_awal_t1,
@@ -1440,6 +1440,27 @@
                                 ) AS subquery
                                 WHERE row_num = 1
                             ) tbl_jabatan ON tbl_jabatan.id_hemxxmh = a.id
+                            
+                            LEFT JOIN (
+                                SELECT
+                                    id_hemxxmh,
+                                    tanggal_efektif,
+                                    IFNULL(nominal, 0) AS nominal_tj_khusus
+                                FROM (
+                                    SELECT
+                                        id,
+                                        id_hemxxmh,
+                                        tanggal_efektif,
+                                        nominal,
+                                        ROW_NUMBER() OVER (PARTITION BY id_hemxxmh ORDER BY tanggal_efektif DESC) AS row_num
+                                    FROM htpr_hemxxmh
+                                    WHERE
+                                        htpr_hemxxmh.id_hpcxxmh = 133
+                                        AND tanggal_efektif <= :tanggal
+                                        AND is_active = 1
+                                ) AS subquery
+                                WHERE row_num = 1
+                            ) tbl_tj_khusus ON tbl_tj_khusus.id_hemxxmh = a.id
                             
                             -- gaji pokok
                             LEFT JOIN (
