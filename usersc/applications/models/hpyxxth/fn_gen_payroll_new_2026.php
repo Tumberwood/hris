@@ -1879,7 +1879,7 @@
                                     + pot_piutang
                                     + denda_apd
                                     + iuran_spsi
-                                    -- + COALESCE(bpjs_kes_perusahaan, 0)
+                                    + COALESCE(bpjs_kes_perusahaan, 0)
                                     + COALESCE(jkk, 0)
                                     + COALESCE(jkm, 0)
                                     + COALESCE(pot_makan, 0)
