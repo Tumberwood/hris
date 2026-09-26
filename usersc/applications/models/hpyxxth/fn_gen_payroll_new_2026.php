@@ -123,6 +123,8 @@
             ->exec('WITH pegawai AS (
                         SELECT
                             b.id AS id_hemxxmh,
+                            tanggal_mulai_bpjs_kes,
+                            tanggal_mulai_bpjs_tk,
                             
                             CASE
                                 WHEN b.id = (
@@ -623,7 +625,7 @@
                                 IF(
                                     p.id_hesxxmh IN (1,2,5),
                                     IF(
-                                        skip_c_bpjs_kes > 0, 
+                                        skip_c_bpjs_kes > 0 OR (tanggal_mulai_bpjs_kes IS NOT NULL AND tanggal_mulai_bpjs_kes > :tanggal_akhir), 
                                         0, 
                                         IF(
                                             id_heyxxmd = 3,
@@ -640,7 +642,7 @@
                                 IF(
                                     p.id_hesxxmh IN (1,2,5),
                                     IF(
-                                        skip_c_bpjs_kes > 0, 
+                                        skip_c_bpjs_kes > 0 OR (tanggal_mulai_bpjs_kes IS NOT NULL AND tanggal_mulai_bpjs_kes > :tanggal_akhir), 
                                         0, 
                                         IF(
                                             id_heyxxmd = 3,
