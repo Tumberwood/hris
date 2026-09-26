@@ -174,6 +174,32 @@
 					'from' => 'd M Y',
 					'to' =>   'Y-m-d'
 				) ),
+			Field::inst( 'hemxxmh.tanggal_mulai_bpjs_kes' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null || $val === '') {
+						return '';
+					} else {
+						return date( 'M Y', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'M Y',
+					'to'   => 'Y-m-01'
+				) ),
+
+			Field::inst( 'hemxxmh.tanggal_mulai_bpjs_tk' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null || $val === '') {
+						return '';
+					} else {
+						return date( 'M Y', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'M Y',
+					'to'   => 'Y-m-01'
+				) ),
+				
 			// ,
 			// Field::inst( 'v_hemxxmh_htsptth.pola_shift' ),
 			// Field::inst( 'v_hemxxmh_htsptth.grup_ke' )
