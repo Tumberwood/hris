@@ -581,7 +581,7 @@
                                                         jadwal.id_htsxxmh = 1
                                                         AND d.id IS NOT NULL
                                                         AND c.tanggal_jam BETWEEN
-                                                            DATE_SUB(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 1 HOUR)
+                                                            DATE_SUB(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 2 HOUR)
                                                             AND
                                                             DATE_ADD(
                                                                 CONCAT(
@@ -632,7 +632,7 @@
                                                         jadwal.id_htsxxmh = 1
                                                         AND d.id IS NOT NULL
                                                         AND c.tanggal_jam BETWEEN
-                                                            DATE_SUB(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 1 HOUR)
+                                                            DATE_SUB(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 2 HOUR)
                                                             AND
                                                             DATE_ADD(
                                                                 CONCAT(
@@ -1135,7 +1135,7 @@
                                     AND c.tanggal_jam >= IF(
                                         d.id_hemxxmh IS NOT NULL AND jadwal.id_htsxxmh = 1,
                                         -- CONCAT(d.tanggal, " ", d.jam_awal),
-                                        DATE_SUB(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 1 HOUR),
+                                        DATE_SUB(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 2 HOUR),
                                         jadwal.tanggaljam_awal_t1
                                     )
 
