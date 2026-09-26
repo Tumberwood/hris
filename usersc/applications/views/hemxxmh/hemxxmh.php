@@ -212,6 +212,14 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
+								<editor-field name="hemxxmh.tanggal_mulai_bpjs_kes"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.tanggal_mulai_bpjs_tk"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
 								<editor-field name="hemxxmh.id_files_foto"></editor-field>
 							</div>
 						</div>
@@ -1367,11 +1375,6 @@
 					{
 						label: "Kecamatan Domisili" ,
 						name: "hemdcmh.domisili_kecamatan",
-						type: "textarea"
-					},
-					{
-						label: "Kecamatan KTP " ,
-						name: "hemdcmh.ktp_kecamatan",
 						type: "textarea"
 					},
 					{
