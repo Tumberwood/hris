@@ -1231,7 +1231,7 @@
                             (
                                 (TIMESTAMPDIFF(MONTH, c.tanggal_masuk, c.tanggal_keluar) + 1) / 12.0
                             ) * (
-                                IFNULL(gp.nominal, 0) + IFNULL(tjab.nominal, 0)
+                                IFNULL(gp.nominal, 0) + IFNULL(tjab.nominal, 0) + IFNULL(tkhusus.nominal, 0)
                             ) AS komp_rekontrak
 
                         FROM hesxxtd a
@@ -1282,6 +1282,23 @@
                         ) tjab ON tjab.id_hemxxmh = hl.id_hemxxmh_baru 
                             AND tjab.rn = 1 
                             AND tjab.tanggal_efektif <= c.tanggal_keluar
+
+                        -- Left join untuk komponen TJ Khusus (id_hpcxxmh = 133) terbaru
+                        LEFT JOIN (
+                            SELECT 
+                                komp.id_hemxxmh,
+                                komp.nominal,
+                                komp.tanggal_efektif,
+                                ROW_NUMBER() OVER (
+                                    PARTITION BY komp.id_hemxxmh 
+                                    ORDER BY komp.tanggal_efektif DESC
+                                ) AS rn
+                            FROM htpr_hemxxmh komp
+                            WHERE komp.id_hpcxxmh = 133
+                            AND komp.is_active = 1
+                        ) tkhusus ON tkhusus.id_hemxxmh = hl.id_hemxxmh_baru 
+                            AND tkhusus.rn = 1 
+                            AND tkhusus.tanggal_efektif <= c.tanggal_keluar
 
                         WHERE a.tanggal_mulai BETWEEN :tanggal_awal AND :tanggal_akhir
                         AND a.keputusan = "rekontrak"
