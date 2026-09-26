@@ -1378,7 +1378,7 @@
 						type: "textarea"
 					},
 					{
-						label: "Tanggal Mulai BPJS Kes <sup class='text-danger'>*</sup>",
+						label: "Tanggal Mulai BPJS Kes",
 						name: "hemxxmh.tanggal_mulai_bpjs_kes",
 						type: "datetime",
 						def: function () {
@@ -1391,7 +1391,7 @@
 						format: 'MMM YYYY'
 					},
 					{
-						label: "Tanggal Mulai BPJS TK <sup class='text-danger'>*</sup>",
+						label: "Tanggal Mulai BPJS TK",
 						name: "hemxxmh.tanggal_mulai_bpjs_tk",
 						type: "datetime",
 						def: function () {
@@ -1481,15 +1481,6 @@
 			
 			edthemxxmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					tanggal_mulai_bpjs_kes = edthemxxmh.field('hemxxmh.tanggal_mulai_bpjs_kes').val();
-					if(!tanggal_mulai_bpjs_kes || tanggal_mulai_bpjs_kes == ''){
-						edthemxxmh.field('hemxxmh.tanggal_mulai_bpjs_kes').error( 'Wajib diisi!' );
-					}
-
-					tanggal_mulai_bpjs_tk = edthemxxmh.field('hemxxmh.tanggal_mulai_bpjs_tk').val();
-					if(!tanggal_mulai_bpjs_tk || tanggal_mulai_bpjs_tk == ''){
-						edthemxxmh.field('hemxxmh.tanggal_mulai_bpjs_tk').error( 'Wajib diisi!' );
-					}
 					
 					id_gctxxmh_lahir = edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').val();
 					if(!id_gctxxmh_lahir || id_gctxxmh_lahir == ''){
