@@ -581,7 +581,8 @@
                                                         jadwal.id_htsxxmh = 1
                                                         AND d.id IS NOT NULL
                                                         AND c.tanggal_jam BETWEEN
-                                                            DATE_SUB(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 30 MINUTE)
+                                                            -- DATE_SUB(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 30 MINUTE)
+                                                            DATE_SUB(CONCAT(d.tanggal, " ", d.jam_awal), INTERVAL 1 HOUR)
                                                             AND
                                                             DATE_ADD(
                                                                 CONCAT(
