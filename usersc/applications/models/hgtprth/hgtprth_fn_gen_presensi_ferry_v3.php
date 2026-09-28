@@ -1798,7 +1798,7 @@
                                 )
                                 AS pot_jam_late,
 
-                                -- kalau ada lembur, maka cek late lembur, pastikan bukan long shift lembur
+                               -- kalau ada lembur, maka cek late lembur, pastikan bukan long shift lembur
                                 -- 9 JUL 26, FIX BUG LEMBUR AWAL
                                 IF(durasi_lembur_awal_jam = 0 AND IFNULL(tanggaljam_awal_toleransi_lembur, "") != "" AND jam_awal_lembur != jam_akhir_schedule,
                                     IF(CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60) > 7,
@@ -1808,7 +1808,15 @@
                                             CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60)
                                         )
                                     ),
-                                    0
+                                    -- 0
+
+                                    -- 28 Sep 2026, Jika ada lembur awal, dan telat > 5 menit toleransi maka pot 1 jam.
+                                    -- Case Imanuel Yulianto - 13 Aug 2026
+                                    IF(durasi_lembur_awal_jam > 0 AND durasi_lembur_akhir_jam = 0 AND durasi_lembur_libur_jam = 0,
+                                        CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60),
+                                        0
+                                    )
+                                    
                                 ) AS pot_jam_late_lembur,
 
                                 -- hitung pot_early
