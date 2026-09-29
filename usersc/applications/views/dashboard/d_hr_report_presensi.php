@@ -687,7 +687,7 @@
 									} else if (colObj5.name == 'jam_wajib') {
 										str5 += '<th class="text-center">Jam Wajib</th>';
 									} else if (colObj5.name == 'potong') {
-										str5 += '<th class="text-center">Potong Jam</th>';
+										str5 += '<th class="text-center">Total Potong Jam</th>';
 									} else if (colObj5.name == 'ti') {
 										str5 += '<th class="text-center">Potong TI</th>';
 									} else if (colObj5.name == 'makan') {
