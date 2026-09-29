@@ -172,8 +172,8 @@
 						ck.kode
 					FROM htsprtd ck
 					WHERE ck.nama IN ("makan")
-						AND ck.tanggal BETWEEN :start_date
-							AND DATE_ADD(:end_date, INTERVAL 1 DAY)
+						AND ck.tanggal >= :start_date
+						AND ck.tanggal < DATE_ADD(:end_date, INTERVAL 1 DAY)
 				) ceklok
 					ON ceklok.kode = hem.kode_finger
 					AND ceklok.tanggal_jam NOT BETWEEN
