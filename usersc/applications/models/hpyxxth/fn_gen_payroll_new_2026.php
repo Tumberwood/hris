@@ -1239,8 +1239,8 @@
                                         + IFNULL(tjab.nominal, 0)
                                         + IFNULL(tkhusus.nominal, 0)
                                     )
-                                ) / 1000
-                            ) * 1000 AS komp_rekontrak
+                                ) / 100
+                            ) * 100 AS komp_rekontrak
 
                         FROM hesxxtd a
 
