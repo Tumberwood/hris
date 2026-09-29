@@ -837,9 +837,9 @@
 
     font-weight: 700 !important;
 
-    fill: #1f2937 !important;
+    fill: #ffffff !important;
 
-    color: #1f2937 !important;
+    color: #ffffff !important;
 
     text-outline: none !important;
 
@@ -1095,6 +1095,7 @@
 }
 
 </style>
+
 <!-- begin content here -->
 
 <div class="row">
