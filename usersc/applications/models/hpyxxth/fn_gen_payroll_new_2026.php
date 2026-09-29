@@ -200,7 +200,7 @@
                         FROM htsprrd a
                         JOIN pegawai p ON p.id_hemxxmh = a.id_hemxxmh
                         WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                        AND (id_hesxxmh <> 3 AND id_heyxxmd <> 1)
+                        AND (p.id_hesxxmh <> 3 AND p.id_heyxxmd <> 1)
                         GROUP BY a.id_hemxxmh
                     ),
                     gaji_pokok AS (
@@ -1816,7 +1816,7 @@
                         FROM htsprrd a
                         JOIN pegawai p ON p.id_hemxxmh = a.id_hemxxmh
                         WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                        AND (id_hesxxmh = 3 AND id_heyxxmd = 1)
+                        AND (p.id_hesxxmh = 3 AND ip.d_heyxxmd = 1)
                         GROUP BY a.id_hemxxmh
                     ),
                     gaji_pokok AS (
