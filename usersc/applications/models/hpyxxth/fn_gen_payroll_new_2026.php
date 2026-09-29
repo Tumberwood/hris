@@ -1230,11 +1230,17 @@
                             b.id AS id_hemxxmh_lama,
                             hl.id_hemxxmh_baru as id_hemxxmh,
                             c.tanggal_keluar,
-                            (
-                                (TIMESTAMPDIFF(MONTH, c.tanggal_masuk, c.tanggal_keluar) + 1) / 12.0
-                            ) * (
-                                IFNULL(gp.nominal, 0) + IFNULL(tjab.nominal, 0) + IFNULL(tkhusus.nominal, 0)
-                            ) AS komp_rekontrak
+                            FLOOR(
+                                (
+                                    (
+                                        (TIMESTAMPDIFF(MONTH, c.tanggal_masuk, c.tanggal_keluar) + 1) / 12.0
+                                    ) * (
+                                        IFNULL(gp.nominal, 0)
+                                        + IFNULL(tjab.nominal, 0)
+                                        + IFNULL(tkhusus.nominal, 0)
+                                    )
+                                ) / 1000
+                            ) * 1000 AS komp_rekontrak
 
                         FROM hesxxtd a
 
