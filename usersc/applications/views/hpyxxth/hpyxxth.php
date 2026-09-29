@@ -2370,12 +2370,12 @@
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_lain",
+						data: "hpyemtd.pot_lain_after_pph",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pendapatan_lain",
+						data: "hpyemtd.pendapatan_lain_after_pph",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
 					},
