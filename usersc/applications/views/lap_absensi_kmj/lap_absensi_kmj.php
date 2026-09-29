@@ -1107,12 +1107,24 @@
 				<div class="table-responsive">
 					<h3>Resume</h3>
 					<div id="tabel_atas"></div>
-
-					<div id="gantt_absensi_kmj" style="margin-top:20px;"></div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="ibox collapsed" id="iboxfilter">
+            <div class="ibox-title">
+                <h5 class="text-navy">Gantt Chart</h5>&nbsp
+                <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+            </div>
+            <div class="ibox-content">
+				<div id="gantt_absensi_kmj" style="margin-top:20px;"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row">
