@@ -82,6 +82,9 @@
 				Field::inst( 'hpyemtd.pot_lain' ),
 				Field::inst( 'hpyemtd.pot_lain_after_pph' ),
 				Field::inst( 'hpyemtd.pendapatan_lain_after_pph' ),
+				Field::inst( 'hpyemtd.total_lembur_jam' ),
+				Field::inst( 'hpyemtd.total_jam_lembur_final' ),
+				Field::inst( 'hpyemtd.total_rp_lembur' ),
 
 				Field::inst( 'hetxxmh.nama' ),
 				Field::inst( 'hodxxmh.nama' ),
