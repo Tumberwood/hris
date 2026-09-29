@@ -3270,8 +3270,6 @@
                         (
                             COALESCE(gp.gp,0)
                             + COALESCE(total_rp_lembur,0)
-                            + COALESCE(jkk,0)
-                            + COALESCE(jkm,0)
                         )
                         -
                         (
@@ -3468,9 +3466,24 @@
                             -- GAJI BERSIH
                             (
                                 bruto
+
+                                - ROUND(
+                                    IF(
+                                        id_heyxxmd = 1,
+                                        0,
+                                        bruto_dasar_pph * (IFNULL(ter.persen, 0) / 100)
+                                    ),
+                                    0
+                                )
+
                                 - (
                                     pot_jht_karyawan
+                                    + pot_jp_karyawan
+                                    + bpjs_kes_karyawan
                                     + pot_piutang
+                                    + denda_apd
+                                    + iuran_spsi
+                                    + COALESCE(bpjs_kes_perusahaan, 0)
                                     + COALESCE(jkk, 0)
                                     + COALESCE(jkm, 0)
                                     + COALESCE(pot_makan, 0)
@@ -3478,6 +3491,7 @@
 
                                 + pendapatan_lain_after_pph
                                 - pot_lain_after_pph
+                                - komp_rekontrak
 
                             ) AS gaji_bersih
 
@@ -3730,35 +3744,17 @@
 
                             bruto_dasar_pph,
 
+
                             -- GAJI BERSIH
                             (
                                 bruto
-
-                                - ROUND(
-                                    IF(
-                                        id_heyxxmd = 1,
-                                        0,
-                                        bruto_dasar_pph * (IFNULL(ter.persen, 0) / 100)
-                                    ),
-                                    0
-                                )
-
                                 - (
-                                    pot_jht_karyawan
-                                    + pot_jp_karyawan
-                                    + bpjs_kes_karyawan
                                     + pot_piutang
-                                    + denda_apd
-                                    + iuran_spsi
-                                    + COALESCE(bpjs_kes_perusahaan, 0)
-                                    + COALESCE(jkk, 0)
-                                    + COALESCE(jkm, 0)
                                     + COALESCE(pot_makan, 0)
                                 )
 
                                 + pendapatan_lain_after_pph
                                 - pot_lain_after_pph
-                                - komp_rekontrak
 
                             ) AS gaji_bersih
 
