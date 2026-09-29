@@ -444,9 +444,11 @@
 #gantt_absensi_kmj
 .highcharts-title {
 
-    fill: #1f2937 !important;
+    fill: #111827 !important;
 
-    color: #1f2937 !important;
+    color: #111827 !important;
+
+    opacity: 1 !important;
 
     font-size: 16px !important;
 
@@ -462,9 +464,11 @@
 #gantt_absensi_kmj
 .highcharts-subtitle {
 
-    fill: #6b7280 !important;
+    fill: #4b5563 !important;
 
-    color: #6b7280 !important;
+    color: #4b5563 !important;
+
+    opacity: 1 !important;
 
     font-size: 11px !important;
 
@@ -580,7 +584,11 @@
 
     text-align: center;
 
-    color: #374151;
+    color: #111827 !important;
+
+    opacity: 1 !important;
+
+    background: #f8fafc;
 
     font-size: 12px;
 
@@ -616,7 +624,9 @@
 
     display: block;
 
-    color: #6b7280;
+    color: #374151 !important;
+
+    opacity: 1 !important;
 
     font-size: 10px;
 
@@ -709,13 +719,40 @@
 
     white-space: nowrap;
 
-    color: #374151;
+    color: #111827 !important;
+
+    opacity: 1 !important;
 
     font-size: 11px;
 
     font-weight: 600;
 
     text-align: left;
+
+}
+
+
+/* ============================================================
+   LIGHT MODE TEXT OVERRIDES
+   ============================================================ */
+
+#gantt_absensi_kmj .highcharts-xaxis-labels text,
+#gantt_absensi_kmj .highcharts-yaxis-labels text,
+#gantt_absensi_kmj .highcharts-axis-labels text {
+
+    fill: #111827 !important;
+
+    color: #111827 !important;
+
+    opacity: 1 !important;
+
+}
+
+#gantt_absensi_kmj .highcharts-axis-labels,
+#gantt_absensi_kmj .highcharts-xaxis-labels,
+#gantt_absensi_kmj .highcharts-yaxis-labels {
+
+    opacity: 1 !important;
 
 }
 
