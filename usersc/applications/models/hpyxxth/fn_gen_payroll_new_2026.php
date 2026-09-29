@@ -2949,7 +2949,7 @@
                         JOIN hemjbmh jb ON jb.id_hemxxmh = a.id_hemxxmh
 
                         WHERE a.id_hpyxxth = :id_hpyxxth
-                        AND jb.id_hesxxmh = 3 AND jb.id_heyxxmd = 1
+                        AND (jb.id_hesxxmh = 3 AND jb.id_heyxxmd = 1)
                     ),
 
                     payroll_final AS (
