@@ -269,11 +269,12 @@
 
 </style> -->
 
+
 <style>
 
 /* ============================================================
    GANTT ABSENSI KMJ V5
-   DARK COMFORT THEME
+   LIGHT COMFORT THEME
    ============================================================ */
 
 
@@ -297,17 +298,17 @@
 
     overflow-y: auto;
 
-    border: 1px solid #343941;
+    border: 1px solid #d9dee5;
 
     border-radius: 8px;
 
-    background: #181b20;
+    background: #ffffff;
 
     scrollbar-width: auto;
 
     scrollbar-color:
-        #555b64
-        #20242a;
+        #b8bec7
+        #f1f3f5;
 
 }
 
@@ -339,7 +340,7 @@
 
     display: block;
 
-    background: #181b20;
+    background: #ffffff;
 
 }
 
@@ -386,32 +387,32 @@
 
 #gantt_absensi_kmj::-webkit-scrollbar-track {
 
-    background: #20242a;
+    background: #f1f3f5;
 
 }
 
 
 #gantt_absensi_kmj::-webkit-scrollbar-thumb {
 
-    background: #555b64;
+    background: #b8bec7;
 
     border-radius: 6px;
 
-    border: 2px solid #20242a;
+    border: 2px solid #f1f3f5;
 
 }
 
 
 #gantt_absensi_kmj::-webkit-scrollbar-thumb:hover {
 
-    background: #6c737e;
+    background: #9aa1ab;
 
 }
 
 
 #gantt_absensi_kmj::-webkit-scrollbar-corner {
 
-    background: #20242a;
+    background: #f1f3f5;
 
 }
 
@@ -423,7 +424,7 @@
 #gantt_absensi_kmj
 .highcharts-background {
 
-    fill: #181b20;
+    fill: #ffffff;
 
 }
 
@@ -431,7 +432,7 @@
 #gantt_absensi_kmj
 .highcharts-plot-background {
 
-    fill: #1c2025;
+    fill: #fafbfc;
 
 }
 
@@ -443,9 +444,9 @@
 #gantt_absensi_kmj
 .highcharts-title {
 
-    fill: #f1f3f5 !important;
+    fill: #1f2937 !important;
 
-    color: #f1f3f5 !important;
+    color: #1f2937 !important;
 
     font-size: 16px !important;
 
@@ -461,9 +462,9 @@
 #gantt_absensi_kmj
 .highcharts-subtitle {
 
-    fill: #858c96 !important;
+    fill: #6b7280 !important;
 
-    color: #858c96 !important;
+    color: #6b7280 !important;
 
     font-size: 11px !important;
 
@@ -477,7 +478,7 @@
 #gantt_absensi_kmj
 .highcharts-xaxis-line {
 
-    stroke: #444a52;
+    stroke: #cfd5dc;
 
     stroke-width: 1;
 
@@ -487,7 +488,7 @@
 #gantt_absensi_kmj
 .highcharts-tick {
 
-    stroke: #444a52;
+    stroke: #cfd5dc;
 
     stroke-width: 1;
 
@@ -501,7 +502,7 @@
 #gantt_absensi_kmj
 .highcharts-grid-line {
 
-    stroke: #30353d;
+    stroke: #e2e6eb;
 
     stroke-width: 1;
 
@@ -516,7 +517,7 @@
 .highcharts-grid-axis
 .highcharts-grid-line {
 
-    stroke: #383e46;
+    stroke: #e1e5ea;
 
     stroke-width: 1;
 
@@ -530,7 +531,7 @@
 #gantt_absensi_kmj
 .highcharts-axis-line {
 
-    stroke: #444a52;
+    stroke: #cfd5dc;
 
     stroke-width: 1;
 
@@ -556,9 +557,9 @@
 #gantt_absensi_kmj
 .highcharts-yaxis-title {
 
-    fill: #8f97a2 !important;
+    fill: #6b7280 !important;
 
-    color: #8f97a2 !important;
+    color: #6b7280 !important;
 
     font-size: 11px !important;
 
@@ -579,7 +580,7 @@
 
     text-align: center;
 
-    color: #e5e7eb;
+    color: #374151;
 
     font-size: 12px;
 
@@ -615,7 +616,7 @@
 
     display: block;
 
-    color: #aeb5bf;
+    color: #6b7280;
 
     font-size: 10px;
 
@@ -679,11 +680,11 @@
 
     border-radius: 50%;
 
-    background: #303640;
+    background: #eef1f4;
 
-    border: 1px solid #4b535e;
+    border: 1px solid #c7cdd5;
 
-    color: #f1f3f5;
+    color: #1f2937;
 
     font-size: 10px;
 
@@ -708,7 +709,7 @@
 
     white-space: nowrap;
 
-    color: #e5e7eb;
+    color: #374151;
 
     font-size: 11px;
 
@@ -727,7 +728,7 @@
 .highcharts-grid-axis
 .highcharts-grid-line {
 
-    stroke: #363b43;
+    stroke: #e3e7eb;
 
 }
 
@@ -799,9 +800,9 @@
 
     font-weight: 700 !important;
 
-    fill: #111827 !important;
+    fill: #1f2937 !important;
 
-    color: #111827 !important;
+    color: #1f2937 !important;
 
     text-outline: none !important;
 
@@ -856,7 +857,7 @@
 
     border-bottom:
         1px solid
-        #e5e7eb;
+        #374151;
 
     color: #1f2937;
 
@@ -930,7 +931,7 @@
 
     border-top:
         1px solid
-        #e5e7eb;
+        #374151;
 
     color: #e58a00;
 
@@ -966,7 +967,7 @@
 #gantt_absensi_kmj
 .highcharts-crosshair {
 
-    stroke: #727985;
+    stroke: #9ca3af;
 
     stroke-width: 1;
 
