@@ -2356,7 +2356,7 @@
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.total_jam_lembur_final",
+						data: "hpyemtd.total_lembur_jam_final",
 						class: "text-right "
 					},
 					{ 
