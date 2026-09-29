@@ -171,7 +171,7 @@
 						ck.id_hemxxmh,
 						ck.kode
 					FROM htsprtd ck
-					WHERE ck.nama IN ("makan", "makan manual")
+					WHERE ck.nama IN ("makan")
 						AND ck.tanggal BETWEEN :start_date
 							AND DATE_ADD(:end_date, INTERVAL 1 DAY)
 				) ceklok
