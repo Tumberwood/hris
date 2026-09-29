@@ -80,6 +80,8 @@
 				Field::inst( 'hpyemtd.overtime_susulan' ),
 				Field::inst( 'hpyemtd.sisa_cuti' ),
 				Field::inst( 'hpyemtd.pot_lain' ),
+				Field::inst( 'hpyemtd.pot_lain_after_pph' ),
+				Field::inst( 'hpyemtd.pendapatan_lain_after_pph' ),
 
 				Field::inst( 'hetxxmh.nama' ),
 				Field::inst( 'hodxxmh.nama' ),
