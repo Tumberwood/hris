@@ -1812,7 +1812,8 @@
 
                                     -- 28 Sep 2026, Jika ada lembur awal, dan telat > 5 menit toleransi maka pot 1 jam.
                                     -- Case Imanuel Yulianto - 13 Aug 2026
-                                    IF(durasi_lembur_awal_jam > 0 AND durasi_lembur_akhir_jam = 0 AND durasi_lembur_libur_jam = 0,
+                                    IF(durasi_lembur_awal_jam > 0 AND durasi_lembur_akhir_jam = 0 AND durasi_lembur_libur_jam = 0
+                                        AND CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60) < 3,
                                         CEIL(TIMESTAMPDIFF(MINUTE, tanggaljam_awal_toleransi_lembur, IFNULL(ceklok_in,carbon_ci)) / 60),
                                         0
                                     )
