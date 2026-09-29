@@ -5779,7 +5779,7 @@ window.generateGanttAbsensiV5 = function(start_date, end_date) {
                             style: {
 
                                 color:
-                                    '#111827',
+                                    '#fff',
 
                                 fontSize:
                                     '16px',
@@ -6444,7 +6444,7 @@ window.generateGanttAbsensiV5 = function(start_date, end_date) {
                                             '700',
 
                                         color:
-                                            '#111827',
+                                            '#fff',
 
                                         textOutline:
                                             'none'
