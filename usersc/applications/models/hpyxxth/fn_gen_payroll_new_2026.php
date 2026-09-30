@@ -201,7 +201,7 @@
                         FROM htsprrd a
                         JOIN pegawai p ON p.id_hemxxmh = a.id_hemxxmh
                         WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                        AND NOT (id_hesxxmh = 3 AND id_heyxxmd = 1)
+                        AND NOT (id_hesxxmh IN (3,8,9) AND id_heyxxmd = 1)
                         GROUP BY a.id_hemxxmh
                     ),
                     gaji_pokok AS (
@@ -2668,7 +2668,7 @@
                         JOIN hemjbmh jb ON jb.id_hemxxmh = a.id_hemxxmh
 
                         WHERE a.id_hpyxxth = :id_hpyxxth
-                        AND NOT (jb.id_hesxxmh = 3 AND jb.id_heyxxmd = 1)
+                        AND NOT (jb.id_hesxxmh IN (3,8,9) AND jb.id_heyxxmd = 1)
                     ),
 
                     payroll_final AS (
