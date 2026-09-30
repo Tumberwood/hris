@@ -1035,6 +1035,7 @@
 		// ------------- default variable, do not erase
 		var edthpyxxth, tblhpyxxth, show_inactive_status_hpyxxth = 0, id_hpyxxth;
         var edthpyemtd_kbm_reg, tblhpyemtd_kbm_reg, show_inactive_status_hpyemtd = 0, id_hpyemtd;
+		var tbltabhpyemtd_kbm_pelatihan_nganjuk;
 		// ------------- end of default variable
 		var id_heyxxmh_old = 0, id_periode_payroll_old = 0;
 		
