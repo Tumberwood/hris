@@ -728,10 +728,10 @@
 									</div> <!-- end of table -->
 								</div>
 							</div>
-							<div role="tabpanel" id="tabtabhpyemtd_kbm_pelatihan_nganjuk" class="tab-pane">
+							<div role="tabpanel" id="tabhpyemtd_kbm_pelatihan_nganjuk" class="tab-pane">
 								<div class="panel-body">
 									<div class="table-responsive">
-										<table id="tbltabhpyemtd_kbm_pelatihan_nganjuk" class="table table-striped table-bordered table-hover nowrap" width="100%">
+										<table id="tblhpyemtd_kbm_pelatihan_nganjuk" class="table table-striped table-bordered table-hover nowrap" width="100%">
 											<thead>
 												<tr>
 													<th>ID</th>
@@ -1035,7 +1035,7 @@
 		// ------------- default variable, do not erase
 		var edthpyxxth, tblhpyxxth, show_inactive_status_hpyxxth = 0, id_hpyxxth;
         var edthpyemtd_kbm_reg, tblhpyemtd_kbm_reg, show_inactive_status_hpyemtd = 0, id_hpyemtd;
-		var tbltabhpyemtd_kbm_pelatihan_nganjuk;
+		var tblhpyemtd_kbm_pelatihan_nganjuk;
 		// ------------- end of default variable
 		var id_heyxxmh_old = 0, id_periode_payroll_old = 0;
 		
@@ -1368,7 +1368,7 @@
 			
 			tblhpyxxth.on( 'init', function () {
 				// atur hak akses
-				tbl_details = [tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr, tbltabhpyemtd_kbm_pelatihan_nganjuk];
+				tbl_details = [tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr, tblhpyemtd_kbm_pelatihan_nganjuk];
 				CekInitHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
 				tblhpyxxth.button( 'btnGeneratePresensiNew:name' ).disable();
@@ -1398,7 +1398,7 @@
 				id_periode_payroll_old = data_hpyxxth.id_periode_payroll;
 				
 				// atur hak akses
-				tbl_details = [tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr, tbltabhpyemtd_kbm_pelatihan_nganjuk];
+				tbl_details = [tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr, tblhpyemtd_kbm_pelatihan_nganjuk];
 				CekSelectHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).enable();
 				tblhpyxxth.button( 'btnGeneratePresensiNew:name' ).enable();
@@ -1433,7 +1433,7 @@
 				id_heyxxmh_select = 0;
 
 				// atur hak akses
-				tbl_details = [tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr, tbltabhpyemtd_kbm_pelatihan_nganjuk];
+				tbl_details = [tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr, tblhpyemtd_kbm_pelatihan_nganjuk];
 				CekDeselectHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
 				tblhpyxxth.button( 'btnGeneratePresensiNew:name' ).disable();
