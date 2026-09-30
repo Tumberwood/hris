@@ -3416,7 +3416,7 @@
 						$table       = 'tblhpyemtd_kbm_pelatihan_nganjuk';
 						$edt         = 'edthpyemtd_kbm_pelatihan_nganjuk';
 						$show_status = '_hpyemtd';
-						$table_name  = $nama_tabels_d[5];
+						$table_name  = $nama_tabels_d[7];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
 						$arr_buttons_action 	= [];
