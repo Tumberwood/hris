@@ -16,6 +16,7 @@
     $nama_tabels_d[4] = 'hpyemtd_freelance';
     $nama_tabels_d[5] = 'hpyemtd_kbm_tr';
     $nama_tabels_d[6] = 'hpyemtd_kontrak';
+    $nama_tabels_d[7] = 'hpyemtd_kbm_pelatihan_nganjuk';
 ?>
 
 <style>
@@ -132,6 +133,7 @@
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kontrak"> Kontrak</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_reg"> KBM Reguler</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_tr"> KBM Pelatihan</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_pelatihan_nganjuk"> KBM Pelatihan Nganjuk</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kmj" style="display: none"> KMJ</a></li>
 							<li id="tab_freelance"><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_freelance" style="display: none"> Freelance</a></li>
 						</ul>
@@ -726,6 +728,71 @@
 									</div> <!-- end of table -->
 								</div>
 							</div>
+							<div role="tabpanel" id="tabtabhpyemtd_kbm_pelatihan_nganjuk" class="tab-pane">
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table id="tbltabhpyemtd_kbm_pelatihan_nganjuk" class="table table-striped table-bordered table-hover nowrap" width="100%">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>id_hpyxxth</th>
+													<th>NIK</th>
+													<th>Nama</th>
+													<th>Department</th>
+													<th>Jabatan</th>
+													<th>Tipe</th>
+													<th>Sub Tipe</th>
+													<th>Status</th>
+													<th>Level</th>
+													<th>Gaji Pokok</th>
+													<th>Lembur Jam Pertama</th>
+													<th>Rp Jam Pertama x 1,5</th>
+													<th>Lembur Jam Kedua</th>
+													<th>Rp Jam Kedua x 2</th>
+													<th>Lembur Jam Ketiga</th>
+													<th>Rp Jam Ketiga x 3</th>
+													<th>Total Lembur (Jam)</th>
+													<th>Total Lembur (Jam Final)</th>
+													<th>Total Lembur (Rp Final)</th>
+													<th class="text-danger">Pot Makan</th>
+													<th class="text-danger">Pot Lain</th>
+													<th>Pendapatan Lain</th>
+													<th class="text-danger">Pot Upah Harian</th>
+													<th class="text-danger">Pot Upah Jam</th>
+													<th>Gaji Bersih</th>
+													<th>Bulat</th>
+													<th>Diterima Karyawan</th>
+												</tr>
+											</thead>
+
+											<tfoot>
+												<tr>
+													<th colspan="9" class="text-end">Total</th>
+													<th></th>
+													<th id="kbm_pelatihan_nganjuk10"></th>
+													<th id="kbm_pelatihan_nganjuk11"></th>
+													<th id="kbm_pelatihan_nganjuk12"></th>
+													<th id="kbm_pelatihan_nganjuk13"></th>
+													<th id="kbm_pelatihan_nganjuk14"></th>
+													<th id="kbm_pelatihan_nganjuk15"></th>
+													<th id="kbm_pelatihan_nganjuk16"></th>
+													<th id="kbm_pelatihan_nganjuk17"></th>
+													<th id="kbm_pelatihan_nganjuk18"></th>
+													<th id="kbm_pelatihan_nganjuk19"></th>
+													<th id="kbm_pelatihan_nganjuk20"></th>
+													<th id="kbm_pelatihan_nganjuk21"></th>
+													<th id="kbm_pelatihan_nganjuk22"></th>
+													<th id="kbm_pelatihan_nganjuk23"></th>
+													<th id="kbm_pelatihan_nganjuk24"></th>
+													<th id="kbm_pelatihan_nganjuk25"></th>
+													<th id="kbm_pelatihan_nganjuk26"></th>
+													<th id="kbm_pelatihan_nganjuk27"></th>
+												</tr>
+											</tfoot>
+										</table>
+									</div> <!-- end of table -->
+								</div>
+							</div>
 							<div role="tabpanel" id="tabhpyemtd_kmj" class="tab-pane">
 								<div class="panel-body">
 									<div class="table-responsive">
@@ -1300,7 +1367,7 @@
 			
 			tblhpyxxth.on( 'init', function () {
 				// atur hak akses
-				tbl_details = [tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
+				tbl_details = [tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr, tbltabhpyemtd_kbm_pelatihan_nganjuk];
 				CekInitHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
 				tblhpyxxth.button( 'btnGeneratePresensiNew:name' ).disable();
@@ -1330,7 +1397,7 @@
 				id_periode_payroll_old = data_hpyxxth.id_periode_payroll;
 				
 				// atur hak akses
-				tbl_details = [tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
+				tbl_details = [tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr, tbltabhpyemtd_kbm_pelatihan_nganjuk];
 				CekSelectHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).enable();
 				tblhpyxxth.button( 'btnGeneratePresensiNew:name' ).enable();
@@ -1365,7 +1432,7 @@
 				id_heyxxmh_select = 0;
 
 				// atur hak akses
-				tbl_details = [tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr];
+				tbl_details = [tblhpyemtd_kbm_reg, tblhpyemtd_karyawan, tblhpyemtd_kontrak, tblhpyemtd_kmj, tblhpyemtd_freelance, tblhpyemtd_kbm_tr, tbltabhpyemtd_kbm_pelatihan_nganjuk];
 				CekDeselectHeaderHD(tblhpyxxth, tbl_details);
 				tblhpyxxth.button( 'btnGeneratePresensi:name' ).disable();
 				tblhpyxxth.button( 'btnGeneratePresensiNew:name' ).disable();
@@ -3215,6 +3282,199 @@
 				
 				// atur hak akses
 				CekDeselectDetailHD(tblhpyxxth, tblhpyemtd_freelance );
+			} );
+
+// --------- end _detail --------------- //		
+
+
+// --------- start _detail --------------- //
+			//start datatables
+			tblhpyemtd_kbm_pelatihan_nganjuk = $('#tblhpyemtd_kbm_pelatihan_nganjuk').DataTable( {
+				ajax: {
+					url: "../../models/hpyxxth/hpyemtd_kbm_pelatihan_nganjuk.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
+						d.id_hpyxxth = id_hpyxxth;
+					}
+				},
+				order: [[ 2, "asc" ]],
+				responsive: false,
+				// scrollX: true,
+				fixedColumns:   {
+					left: 2
+				},
+				columns: [
+					{ data: "hpyemtd.id",visible:false },
+					{ data: "hpyemtd.id_hpyxxth",visible:false },
+					{ data: "kode" },
+					{ data: "nama" },
+					{ data: "hodxxmh.nama" },
+					{ data: "hetxxmh.nama" },
+					{ data: "heyxxmh.nama" },
+					{ data: "heyxxmd.nama" },
+					{ data: "hesxxmh.nama" },
+					{ data: "hevxxmh.nama",visible:false },
+					{ 
+						data: "hpyemtd.gp",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.lembur15",
+						class: "text-right",
+						visible: false,
+					},
+					{ 
+						data: "hpyemtd.rp_lembur15",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right",
+						visible: false,
+					},
+					{ 
+						data: "hpyemtd.lembur2",
+						class: "text-right",
+						visible: false,
+					},
+					{ 
+						data: "hpyemtd.rp_lembur2",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right",
+						visible: false,
+					},
+					{ 
+						data: "hpyemtd.lembur3",
+						class: "text-right",
+						visible: false,
+					},
+					{ 
+						data: "hpyemtd.rp_lembur3",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right",
+						visible: false,
+					},
+					{ 
+						data: "hpyemtd.total_lembur_jam",
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.total_lembur_jam_final",
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.total_rp_lembur",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_makan",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_lain_after_pph",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pendapatan_lain_after_pph",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_upah",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right ",
+						visible: false,
+					},
+					{ 
+						data: "hpyemtd.pot_jam",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right ",
+						visible: false,
+					},
+					{ 
+						data: "hpyemtd.gaji_bersih",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.bulat",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.gaji_terima",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right "
+					}
+				],
+				buttons: [
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_hpyemtd';
+						$table       = 'tblhpyemtd_kbm_pelatihan_nganjuk';
+						$edt         = 'edthpyemtd_kbm_pelatihan_nganjuk';
+						$show_status = '_hpyemtd';
+						$table_name  = $nama_tabels_d[5];
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
+						$arr_buttons_action 	= [];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+					,{
+						text: '<i class="fa fa-print"></i>',
+						name: 'btnPrint',
+						className: 'btn btn-outline',
+						titleAttr: 'Print Slip Gaji',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							var url = $(this).attr('href'); 
+							window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=1&id_hesxxmh=3', 'hpyxxth');
+						}
+					}
+				],
+				footerCallback: function ( row, data, start, end, display ) {
+					var api = this.api();
+					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
+
+					for (var i = 10; i <= 27; i++) {
+						var columnIndex = i;
+						var sum_all = api.column(columnIndex).data().sum();
+						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
+						var sum = api.column(columnIndex, { page: 'current' }).data().sum();
+						$('#kbm_pelatihan_nganjuk' + columnIndex).html(numFormat(sum_all));
+
+						// console.log('Number of Pages: ' + api.page.info().pages);
+					}
+				}
+			} );
+
+			tblhpyemtd_kbm_pelatihan_nganjuk.on( 'draw', function( e, settings ) { 
+				// atur hak akses
+				cek_c_detail= 1;
+				CekDrawDetailHD(tblhpyxxth, tblhpyemtd_kbm_pelatihan_nganjuk, 'hpyemtd' );
+				CekDrawDetailHDFinal(tblhpyxxth);
+			} );
+
+			tblhpyemtd_kbm_pelatihan_nganjuk.on( 'select', function( e, dt, type, indexes ) {
+				data_hpyemtd = tblhpyemtd_kbm_pelatihan_nganjuk.row( { selected: true } ).data().hpyemtd;
+				id_hpyemtd   = data_hpyemtd.id;
+				id_transaksi_d    = id_hpyemtd; // dipakai untuk general
+				is_active_d       = data_hpyemtd.is_active;
+				
+				// atur hak akses
+				CekSelectDetailHD(tblhpyxxth, tblhpyemtd_kbm_pelatihan_nganjuk );
+			} );
+
+			tblhpyemtd_kbm_pelatihan_nganjuk.on( 'deselect', function() {
+				id_hpyemtd = '';
+				is_active_d = 0;
+				
+				// atur hak akses
+				CekDeselectDetailHD(tblhpyxxth, tblhpyemtd_kbm_pelatihan_nganjuk );
 			} );
 
 // --------- end _detail --------------- //		

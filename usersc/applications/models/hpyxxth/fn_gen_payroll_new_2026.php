@@ -1783,7 +1783,7 @@
                         LEFT JOIN heyxxmd sub_tipe on sub_tipe.id = c.id_heyxxmd
                         LEFT JOIN hesxxmh status on status.id = c.id_hesxxmh
                         LEFT JOIN gtxpkmh ptkp on ptkp.id = d.id_gtxpkmh
-                        WHERE (id_hesxxmh = 3 AND id_heyxxmd = 1)
+                        WHERE (id_hesxxmh IN (3,8,9) AND id_heyxxmd = 1)
                     ),
 
                     presensi AS (
@@ -2949,7 +2949,7 @@
                         JOIN hemjbmh jb ON jb.id_hemxxmh = a.id_hemxxmh
 
                         WHERE a.id_hpyxxth = :id_hpyxxth
-                        AND (jb.id_hesxxmh = 3 AND jb.id_heyxxmd = 1)
+                        AND (jb.id_hesxxmh IN (3,8,9) AND jb.id_heyxxmd = 1)
                     ),
 
                     payroll_final AS (
