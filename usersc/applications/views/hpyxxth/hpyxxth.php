@@ -2546,7 +2546,7 @@
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jht_karyawan",
+						data: "hpyemtd.jht_perusahaan",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
 					},
@@ -3509,7 +3509,7 @@
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jht_karyawan",
+						data: "hpyemtd.jht_perusahaan",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
 					},

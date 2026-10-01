@@ -1982,15 +1982,17 @@
 
                             -- hitung jht_perusahaan
                             ROUND(
-                                IF(
-                                    p.id_hesxxmh IN (3,8,9),
-                                    IF(
-                                        skip_c_bpjs_tk > 0, 
-                                        0, 
-                                        IFNULL((persen_jht_perusahaan / 100) * gaji_bpjs_tk, 0)
-                                    ),
-                                    0
-                                ),
+                                CASE 
+                                    -- Pengecekan 1: Skip BPJS (Prioritas Utama)
+                                    WHEN skip_c_bpjs_tk > 0 THEN 0
+
+                                    -- Pengecekan 2: Status & Masa Kerja
+                                    -- (id_hesxxmh = 3 langsung dapat, sedangkan id_hesxxmh 8 & 9 harus >= 365 hari)
+                                    WHEN (p.id_hesxxmh IN (3) OR (p.id_hesxxmh IN (8, 9) AND DATEDIFF(p.tanggal_keluar, p.tanggal_masuk) >= 365)) 
+                                    THEN IFNULL((persen_jht_perusahaan / 100) * gaji_bpjs_tk, 0)
+
+                                    ELSE 0
+                                END, 
                             0) AS jht_perusahaan,
 
                             -- hitung jp_perusahaan
