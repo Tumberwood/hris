@@ -2040,7 +2040,7 @@
                             ROUND(
                                 CASE 
                                     -- Pengecekan 1: Status & Masa Kerja (Harus >= 365 hari)
-                                    WHEN NOT (p.id_hesxxmh IN (3, 8, 9) AND DATEDIFF(p.tanggal_keluar, p.tanggal_awal) >= 365) 
+                                    WHEN NOT (p.id_hesxxmh IN (3, 8, 9) AND DATEDIFF(p.tanggal_keluar, p.tanggal_masuk) >= 365) 
                                     THEN IFNULL((persen_jht_karyawan / 100) * gaji_bpjs_tk, 0)
                                     
                                     -- Pengecekan 2: Skip BPJS
