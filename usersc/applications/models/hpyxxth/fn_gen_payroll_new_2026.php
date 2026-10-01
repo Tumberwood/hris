@@ -1891,6 +1891,66 @@
                             ) x WHERE rn = 1
                         ) gp1 ON gp1.id_hemxxmh = p.id_hemxxmh
                     ),
+                    tj_makan_nganjuk AS (
+                        SELECT
+                            p.id_hemxxmh,
+                            CASE
+                            WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
+                            THEN (
+                                SELECT
+                                    SUM(1 * 25000
+                                FROM htsprrd pr
+                                WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND p.tanggal_keluar
+                                AND pr.id_hemxxmh = p.id_hemxxmh
+                                AND pr.st_jadwal <> "OFF" 
+                            )
+                            
+                            WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                            THEN (
+                                SELECT
+                                    SUM(1 * 25000 ) AS c_id
+                                FROM htsprrd pr
+                                WHERE pr.tanggal BETWEEN p.tanggal_masuk AND LAST_DAY(:tanggal_akhir)
+                                AND pr.id_hemxxmh = p.id_hemxxmh
+                                AND pr.st_jadwal <> "OFF" 
+                                -- AND pr.status_presensi_in <> "AL" 
+                                -- AND pr.is_pot_upah = 0 
+                            )
+
+                            ELSE  625000 
+                        END AS tj_makan_nganjuk
+                        FROM pegawai p
+                    ),
+                    tj_rumah_nganjuk AS (
+                        SELECT
+                            p.id_hemxxmh,
+                            CASE
+                            WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
+                            THEN (
+                                SELECT
+                                    SUM(1 * 8000
+                                FROM htsprrd pr
+                                WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND p.tanggal_keluar
+                                AND pr.id_hemxxmh = p.id_hemxxmh
+                                AND pr.st_jadwal <> "OFF" 
+                            )
+                            
+                            WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                            THEN (
+                                SELECT
+                                    SUM(1 * 8000 ) AS c_id
+                                FROM htsprrd pr
+                                WHERE pr.tanggal BETWEEN p.tanggal_masuk AND LAST_DAY(:tanggal_akhir)
+                                AND pr.id_hemxxmh = p.id_hemxxmh
+                                AND pr.st_jadwal <> "OFF" 
+                                -- AND pr.status_presensi_in <> "AL" 
+                                -- AND pr.is_pot_upah = 0 
+                            )
+
+                            ELSE  200000  
+                        END AS tj_rumah_nganjuk
+                        FROM pegawai p
+                    ),
                     bpjs AS (
                         SELECT
                             p.id_hemxxmh,
@@ -2534,6 +2594,8 @@
                         bpjs_kes_perusahaan,
                         jkk,
                         jkm,
+                        if(id_hesxxmh IN (8,9), tj_makan_nganjuk, 0) AS tj_makan_nganjuk,
+                        if(id_hesxxmh IN (8,9), tj_rumah_nganjuk, 0) AS tj_rumah_nganjuk,
                         
                         -- BATAS HITUNG BRUTO
                         (
@@ -2541,6 +2603,8 @@
                             + COALESCE(total_rp_lembur,0)
                             + COALESCE(jkk,0)
                             + COALESCE(jkm,0)
+                            + if(id_hesxxmh IN (8,9), tj_makan_nganjuk, 0)
+                            + if(id_hesxxmh IN (8,9), tj_rumah_nganjuk, 0)
                         )
                         -
                         (
@@ -2967,6 +3031,9 @@
 
                             bruto,
                             kategori_kelas,
+                            
+                            tj_makan_nganjuk,
+                            tj_rumah_nganjuk,
 
                             IF(
                                 id_heyxxmd = 1,
@@ -3114,6 +3181,9 @@
 
                         pendapatan_lain_after_pph,
                         pot_lain_after_pph,
+                        
+                        tj_makan_nganjuk,
+                        tj_rumah_nganjuk,
 
                         gaji_bersih,
 
