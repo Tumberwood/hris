@@ -158,7 +158,7 @@
 													<th class="text-center align-middle">Skala Upah</th>
 													<th class="text-center align-middle">Sub Tipe</th>
 													<th class="text-center align-middle">Status</th>
-													<th class="text-center align-middle">Tipe</th>
+													<th class="text-center align-middle">Grup HK</th>
 													<th class="text-center align-middle">Gender</th>
 
 													<th class="text-center align-middle">PTKP</th>
@@ -333,7 +333,7 @@
 													<th class="text-center align-middle">Skala Upah</th>
 													<th class="text-center align-middle">Sub Tipe</th>
 													<th class="text-center align-middle">Status</th>
-													<th class="text-center align-middle">Tipe</th>
+													<th class="text-center align-middle">Grup HK</th>
 													<th class="text-center align-middle">Gender</th>
 
 													<th class="text-center align-middle">PTKP</th>
@@ -508,7 +508,7 @@
 													<th class="text-center align-middle">Skala Upah</th>
 													<th class="text-center align-middle">Sub Tipe</th>
 													<th class="text-center align-middle">Status</th>
-													<th class="text-center align-middle">Tipe</th>
+													<th class="text-center align-middle">Grup HK</th>
 													<th class="text-center align-middle">Gender</th>
 
 													<th class="text-center align-middle">PTKP</th>
@@ -1563,7 +1563,20 @@
 					{ data: "hevxxmh.nama" },	//Skala
 					{ data: "heyxxmd.nama" },	//Sub Tipe
 					{ data: "hesxxmh.nama" },	//Status
-					{ data: "heyxxmh.nama" },	//Tipe
+					{ 
+						data: "hemjbmh.grup_hk",
+						render: function (data){
+							if (data == 0){
+								return '';
+							}else if(data == 1){
+								return '5HK';
+							}else if(data == 2){
+								return '6HK';
+							}else{
+								return '<span class="text-danger"> Data Invalid</span>';
+							}
+						}
+					},
 					{ data: "hemxxmh.gender" },	//Gender
 
 					{ data: "hpyemtd.ptkp" },
@@ -1849,7 +1862,20 @@
 					{ data: "hevxxmh.nama" },	//Skala
 					{ data: "heyxxmd.nama" },	//Sub Tipe
 					{ data: "hesxxmh.nama" },	//Status
-					{ data: "heyxxmh.nama" },	//Tipe
+					{ 
+						data: "hemjbmh.grup_hk",
+						render: function (data){
+							if (data == 0){
+								return '';
+							}else if(data == 1){
+								return '5HK';
+							}else if(data == 2){
+								return '6HK';
+							}else{
+								return '<span class="text-danger"> Data Invalid</span>';
+							}
+						}
+					},
 					{ data: "hemxxmh.gender" },	//Gender
 
 					{ data: "hpyemtd.ptkp" },
@@ -2116,7 +2142,20 @@
 					{ data: "hevxxmh.nama" },	//Skala
 					{ data: "heyxxmd.nama" },	//Sub Tipe
 					{ data: "hesxxmh.nama" },	//Status
-					{ data: "heyxxmh.nama" },	//Tipe
+					{ 
+						data: "hemjbmh.grup_hk",
+						render: function (data){
+							if (data == 0){
+								return '';
+							}else if(data == 1){
+								return '5HK';
+							}else if(data == 2){
+								return '6HK';
+							}else{
+								return '<span class="text-danger"> Data Invalid</span>';
+							}
+						}
+					},
 					{ data: "hemxxmh.gender" },	//Gender
 
 					{ data: "hpyemtd.ptkp" },
