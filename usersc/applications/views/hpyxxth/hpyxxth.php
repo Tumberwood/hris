@@ -2526,13 +2526,11 @@
 						data: "hpyemtd.pot_upah",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right ",
-						visible: false,
 					},
 					{ 
 						data: "hpyemtd.pot_jam",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right ",
-						visible: false,
 					},
 					{ 
 						data: "hpyemtd.gaji_bersih",
@@ -3515,13 +3513,11 @@
 						data: "hpyemtd.pot_upah",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right ",
-						visible: false,
 					},
 					{ 
 						data: "hpyemtd.pot_jam",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right ",
-						visible: false,
 					},
 					{ 
 						data: "hpyemtd.gaji_bersih",
