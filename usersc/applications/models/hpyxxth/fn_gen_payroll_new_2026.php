@@ -1895,7 +1895,7 @@
                             -- hitung jkk
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (3,8,9),
+                                    p.id_hesxxmh IN (8, 9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
@@ -1912,7 +1912,7 @@
                             -- hitung jkm
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (3,8,9),
+                                    p.id_hesxxmh IN (8, 9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
@@ -1929,7 +1929,7 @@
                             -- trm_jkkjkm == jkk + jkm
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (3,8,9),
+                                    p.id_hesxxmh IN (8, 9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
@@ -1950,7 +1950,7 @@
                             -- pot_jkkjkm == jkk + jkm
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (3,8,9),
+                                    p.id_hesxxmh IN (8, 9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
@@ -1971,7 +1971,7 @@
                             -- hitung bpjs_kes_karyawan
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (3,8,9),
+                                    p.id_hesxxmh IN (8, 9),
                                     IF(
                                         skip_c_bpjs_kes > 0 OR (tanggal_mulai_bpjs_kes IS NOT NULL AND tanggal_mulai_bpjs_kes > :tanggal_akhir), 
                                         0, 
@@ -1988,7 +1988,7 @@
                             -- hitung bpjs_kes_perusahaan
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (3,8,9),
+                                    p.id_hesxxmh IN (8, 9),
                                     IF(
                                         skip_c_bpjs_kes > 0 OR (tanggal_mulai_bpjs_kes IS NOT NULL AND tanggal_mulai_bpjs_kes > :tanggal_akhir), 
                                         0, 
@@ -2005,7 +2005,7 @@
                             -- hitung jht_perusahaan
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (3,8,9),
+                                    p.id_hesxxmh IN (8, 9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
@@ -2022,7 +2022,7 @@
                             -- hitung jp_perusahaan
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (3,8,9),
+                                    p.id_hesxxmh IN (8, 9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
@@ -2039,7 +2039,7 @@
                             -- hitung pot_jht_karyawan
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (3,8,9),
+                                    p.id_hesxxmh IN (8, 9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
@@ -2056,7 +2056,7 @@
                             -- hitung pot_jp_karyawan
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (3,8,9),
+                                    p.id_hesxxmh IN (8, 9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
