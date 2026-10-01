@@ -697,6 +697,7 @@
 													<th>Gaji Bersih</th>
 													<th>Bulat</th>
 													<th>Diterima Karyawan</th>
+													<th>Gaji BPJS TK</th>
 												</tr>
 											</thead>
 
@@ -722,6 +723,7 @@
 													<th id="kbm_tr25"></th>
 													<th id="kbm_tr26"></th>
 													<th id="kbm_tr27"></th>
+													<th id="kbm_tr28"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -2525,7 +2527,12 @@
 						data: "hpyemtd.gaji_terima",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
-					}
+					},
+					{ 
+						data: "hpyemtd.jkkjkm",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right "
+					},
 				],
 				buttons: [
 					// BEGIN breaking generate button
@@ -2558,7 +2565,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 27; i++) {
+					for (var i = 10; i <= 28; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }

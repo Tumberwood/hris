@@ -98,6 +98,7 @@
 				
 				Field::inst( 'hobxxmh.nama' ),
 				Field::inst( 'hevgrmh.nama' ),
+				Field::inst( 'hemjbmh.grup_hk' ),
 			)
 			->leftJoin( 'hemxxmh','hemxxmh.id','=','hpyemtd.id_hemxxmh' )
 			->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
