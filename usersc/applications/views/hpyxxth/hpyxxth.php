@@ -697,10 +697,11 @@
 													<th>Gaji Bersih</th>
 													<th>Bulat</th>
 													<th>Diterima Karyawan</th>
-													<!-- <th>Gaji BPJS TK</th> -->
+													<th>Gaji BPJS TK</th>
 													<th>JKK</th>
 													<th>JKM</th>
 													<th>JHT</th>
+													<th>BPJS TK</th>
 												</tr>
 											</thead>
 
@@ -767,9 +768,12 @@
 													<th>Gaji Bersih</th>
 													<th>Bulat</th>
 													<th>Diterima Karyawan</th>
+													<th>Gaji BPJS TK</th>
+													<th>Gaji BPJS Kes</th>
 													<th>JKK</th>
 													<th>JKM</th>
 													<th>JHT</th>
+													<th>BPJS TK</th>
 													<th>BPJS Kes</th>
 												</tr>
 											</thead>
@@ -2536,6 +2540,11 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.gaji_bpjs_tk",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right"
+					},
+					{ 
 						data: "hpyemtd.jkk",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
@@ -2549,6 +2558,27 @@
 						data: "hpyemtd.jht_perusahaan",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
+					},
+					{
+						data: null,
+						class: "text-right",
+						render: function (data, type, row) {
+							// Ambil nilai dan konversi ke float/number untuk menghindari masalah string, 
+							// berikan nilai default 0 jika null/undefined
+							var jkk = parseFloat(row.hpyemtd?.jkk) || 0;
+							var jkm = parseFloat(row.hpyemtd?.jkm) || 0;
+							var jht_perusahaan = parseFloat(row.hpyemtd?.jht_perusahaan) || 0;
+
+							var total = jkk + jkm + jht_perusahaan;
+
+							// Jika dipanggil untuk display/filter, format angka menggunakan helper DataTables
+							if (type === 'display' || type === 'filter') {
+								return $.fn.dataTable.render.number(',', '.', 0, '', '').display(total);
+							}
+
+							// Return nilai asli numerik untuk sorting/pengurutan data
+							return total;
+						}
 					},
 				],
 				buttons: [
@@ -3499,6 +3529,16 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.gaji_bpjs_tk",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right"
+					},
+					{ 
+						data: "hpyemtd.gaji_bpjs_kes",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right"
+					},
+					{ 
 						data: "hpyemtd.jkk",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
@@ -3512,6 +3552,27 @@
 						data: "hpyemtd.jht_perusahaan",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
+					},
+					{
+						data: null,
+						class: "text-right",
+						render: function (data, type, row) {
+							// Ambil nilai dan konversi ke float/number untuk menghindari masalah string, 
+							// berikan nilai default 0 jika null/undefined
+							var jkk = parseFloat(row.hpyemtd?.jkk) || 0;
+							var jkm = parseFloat(row.hpyemtd?.jkm) || 0;
+							var jht_perusahaan = parseFloat(row.hpyemtd?.jht_perusahaan) || 0;
+
+							var total = jkk + jkm + jht_perusahaan;
+
+							// Jika dipanggil untuk display/filter, format angka menggunakan helper DataTables
+							if (type === 'display' || type === 'filter') {
+								return $.fn.dataTable.render.number(',', '.', 0, '', '').display(total);
+							}
+
+							// Return nilai asli numerik untuk sorting/pengurutan data
+							return total;
+						}
 					},
 					{ 
 						data: "hpyemtd.bpjs_kes_perusahaan",

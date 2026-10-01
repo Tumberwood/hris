@@ -86,6 +86,8 @@
 				Field::inst( 'hpyemtd.total_lembur_jam_final' ),
 				Field::inst( 'hpyemtd.total_rp_lembur' ),
 				Field::inst( 'hpyemtd.jht_perusahaan' ),
+				Field::inst( 'hpyemtd.gaji_bpjs_tk' ),
+				Field::inst( 'hpyemtd.gaji_bpjs_kes' ),
 
 				Field::inst( 'hetxxmh.nama' ),
 				Field::inst( 'hodxxmh.nama' ),
