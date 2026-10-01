@@ -678,7 +678,7 @@
 													<th>Tipe</th>
 													<th>Sub Tipe</th>
 													<th>Status</th>
-													<th>Level</th>
+													<th>Grup HK</th>
 													<th>Gaji Pokok</th>
 													<th>Lembur Jam Pertama</th>
 													<th>Rp Jam Pertama x 1,5</th>
@@ -743,7 +743,7 @@
 													<th>Tipe</th>
 													<th>Sub Tipe</th>
 													<th>Status</th>
-													<th>Level</th>
+													<th>Grup HK</th>
 													<th>Gaji Pokok</th>
 													<th>Lembur Jam Pertama</th>
 													<th>Rp Jam Pertama x 1,5</th>
@@ -2419,7 +2419,20 @@
 					{ data: "heyxxmh.nama" },
 					{ data: "heyxxmd.nama" },
 					{ data: "hesxxmh.nama" },
-					{ data: "hevxxmh.nama",visible:false },
+					{ 
+						data: "hemjbmh.grup_hk",
+						render: function (data){
+							if (data == 0){
+								return '';
+							}else if(data == 1){
+								return '5HK';
+							}else if(data == 2){
+								return '6HK';
+							}else{
+								return '<span class="text-danger"> Data Invalid</span>';
+							}
+						}
+					},
 					{ 
 						data: "hpyemtd.gp",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
@@ -3354,7 +3367,20 @@
 					{ data: "heyxxmh.nama" },
 					{ data: "heyxxmd.nama" },
 					{ data: "hesxxmh.nama" },
-					{ data: "hevxxmh.nama",visible:false },
+					{ 
+						data: "hemjbmh.grup_hk",
+						render: function (data){
+							if (data == 0){
+								return '';
+							}else if(data == 1){
+								return '5HK';
+							}else if(data == 2){
+								return '6HK';
+							}else{
+								return '<span class="text-danger"> Data Invalid</span>';
+							}
+						}
+					},
 					{ 
 						data: "hpyemtd.gp",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
