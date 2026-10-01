@@ -1892,8 +1892,8 @@
                     bpjs AS (
                         SELECT
                             p.id_hemxxmh,
-                            p.gaji_bpjs_tk,
-                            p.gaji_bpjs_kes,
+                            gaji_bpjs_tk,
+                            gaji_bpjs_kes,
                             -- hitung jkk
                             ROUND(
                                 IF(
