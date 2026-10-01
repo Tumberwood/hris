@@ -389,8 +389,8 @@
                                 COALESCE(durasi_lembur_awal_jam, 0) + COALESCE(durasi_lembur_akhir_jam, 0) + COALESCE(durasi_lembur_libur_jam, 0) AS durasi_lembur_non_ti,
                                 COALESCE(durasi_lembur_awal_jam, 0) + COALESCE(durasi_lembur_akhir_jam, 0) + COALESCE(durasi_lembur_libur_jam, 0) + COALESCE(durasi_lembur_istirahat1_jam, 0) + COALESCE(durasi_lembur_istirahat2_jam, 0) + COALESCE(durasi_lembur_istirahat3_jam, 0) AS durasi_lembur_total_jam,
 
-                                -- (FLOOR(IF(b.id_hesxxmh = 3, COALESCE(nominal_lembur_mati, 0), (COALESCE(nominal_gp, 0) + IF(b.id_heyxxmd = 1 AND b.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) ) / 173))) AS nominal_lembur_jam,
-                                (FLOOR(IF(b.id_hesxxmh = 3, COALESCE(nominal_lembur_mati, 0), (COALESCE(nominal_gp, 0) + COALESCE(nominal_jabatan, 0) + COALESCE(nominal_tj_khusus, 0) ) / 173))) AS nominal_lembur_jam,
+                                -- (FLOOR(IF(b.id_hesxxmh IN (3,8,9), COALESCE(nominal_lembur_mati, 0), (COALESCE(nominal_gp, 0) + IF(b.id_heyxxmd = 1 AND b.id_hesxxmh = 4, COALESCE(nominal_jabatan, 0), COALESCE(nominal_t_jab, 0)) ) / 173))) AS nominal_lembur_jam,
+                                (FLOOR(IF(b.id_hesxxmh IN (3,8,9), COALESCE(nominal_lembur_mati, 0), (COALESCE(nominal_gp, 0) + COALESCE(nominal_jabatan, 0) + COALESCE(nominal_tj_khusus, 0) ) / 173))) AS nominal_lembur_jam,
                                 jadwal.jam_awal AS shift_in,
                                 jadwal.jam_akhir AS shift_out,
                                 jadwal.tanggaljam_awal_t1,
@@ -1996,7 +1996,7 @@
                         hitung_lembur AS (
                             SELECT
                                 *,
-                                IF(id_hesxxmh = 3, 
+                                IF(id_hesxxmh IN (3,8,9), 
                                     durasi_lembur_final,
                                     IF(durasi_lembur_libur_jam > 0,
                                         IF(durasi_lembur_libur_jam > 0,
@@ -2013,7 +2013,7 @@
                                     )
                                 ) AS lembur15,
 
-                                IF(id_hesxxmh = 3, 
+                                IF(id_hesxxmh IN (3,8,9), 
                                     0,
                                     IF(durasi_lembur_libur_jam > 0, -- cek apakah ini lembur libur
                                         IF(durasi_lembur_final > 7,  -- cek durasi_lembur_final apakah > 7
@@ -2033,7 +2033,7 @@
                                     )
                                 ) AS lembur2,
 
-                                IF(id_hesxxmh = 3, 
+                                IF(id_hesxxmh IN (3,8,9), 
                                     0,
                                     IF(durasi_lembur_libur_jam > 0, -- cek apakah lembur libur
                                         IF(durasi_lembur_final > 7, -- jika lembur libur > 7 maka masuk lembur3
@@ -2060,9 +2060,21 @@
                                 lembur3 * 3 AS lembur3_final,
                                 0 AS lembur4_final,
 
-                                nominal_lembur_jam * (lembur15 * 1.5) AS rp_lembur15,
-                                nominal_lembur_jam * (lembur2 * 2) AS rp_lembur2,
-                                nominal_lembur_jam * (lembur3 * 3) AS rp_lembur3,
+                                CASE 
+                                    WHEN id_hesxxmh IN (3, 8, 9) THEN nominal_lembur_jam * lembur15
+                                    ELSE nominal_lembur_jam * (lembur15 * 1.5)
+                                END AS rp_lembur15,
+
+                                CASE 
+                                    WHEN id_hesxxmh IN (3, 8, 9) THEN nominal_lembur_jam * lembur2
+                                    ELSE nominal_lembur_jam * (lembur2 * 2)
+                                END AS rp_lembur2,
+
+                                CASE 
+                                    WHEN id_hesxxmh IN (3, 8, 9) THEN nominal_lembur_jam * lembur3
+                                    ELSE nominal_lembur_jam * (lembur3 * 3)
+                                END AS rp_lembur3,
+
                                 0 AS rp_lembur4
 
                             FROM hitung_lembur
