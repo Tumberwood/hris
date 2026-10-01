@@ -2048,7 +2048,7 @@
                                                                         
                                     ELSE 0
                                 END, 
-                            0) AS pot_jht_karyawan
+                            0) AS pot_jht_karyawan,
 
                             -- hitung pot_jp_karyawan
                             ROUND(
