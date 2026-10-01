@@ -1892,6 +1892,8 @@
                     bpjs AS (
                         SELECT
                             p.id_hemxxmh,
+                            p.gaji_bpjs_tk,
+                            p.gaji_bpjs_kes,
                             -- hitung jkk
                             ROUND(
                                 IF(
@@ -2917,6 +2919,8 @@
                         SELECT
                             id_hpyxxth,
                             id_hemxxmh,
+                            gaji_bpjs_tk,
+                            gaji_bpjs_kes,
                             nrp,
                             payroll_base.nama,
                             departemen,
@@ -3044,6 +3048,8 @@
                     SELECT
                         id_hpyxxth,
                         id_hemxxmh,
+                        gaji_bpjs_tk,
+                        gaji_bpjs_kes,
                         nrp,
                         nama,
 
