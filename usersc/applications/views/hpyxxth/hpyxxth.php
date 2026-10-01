@@ -2529,7 +2529,7 @@
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.jkkjkm",
+						data: "hpyemtd.pot_jkkjkm",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
 					},
