@@ -1846,7 +1846,8 @@
                                 FROM htsprrd pr
                                 WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND p.tanggal_keluar
                                 AND pr.id_hemxxmh = p.id_hemxxmh
-                                AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" AND pr.is_pot_upah = 0 
+                                AND pr.st_jadwal <> "OFF" 
+                                -- AND pr.status_presensi_in <> "AL" AND pr.is_pot_upah = 0 
                             )
                             
                             WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
@@ -1869,7 +1870,8 @@
                                 FROM htsprrd pr
                                 WHERE pr.tanggal BETWEEN p.tanggal_masuk AND LAST_DAY(:tanggal_akhir)
                                 AND pr.id_hemxxmh = p.id_hemxxmh
-                                AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" 
+                                AND pr.st_jadwal <> "OFF" 
+                                -- AND pr.status_presensi_in <> "AL" 
                                 -- AND pr.is_pot_upah = 0 
                             )
 
