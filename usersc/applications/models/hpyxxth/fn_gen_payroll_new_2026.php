@@ -2311,19 +2311,7 @@
 
                                     -- Pot jam Mati
                                     (
-                                        (
-                                            IFNULL((
-                                                SELECT a.nominal
-                                                FROM htpr_hemxxmh a
-                                                WHERE a.id_hpcxxmh = 35
-                                                    AND a.id_hemxxmh = pr.id_hemxxmh
-                                                    AND a.tanggal_efektif <= pr.tanggal
-                                                    AND a.is_active = 1
-                                                ORDER BY a.tanggal_efektif DESC
-                                                LIMIT 1
-                                            ),0) 
-                                            / 173
-                                        )
+                                        IF(job.grup_hk = 1, 95950 * 21, 80598 * 25) / 173
                                         * pr.pot_hk
                                     ),
 
