@@ -697,7 +697,10 @@
 													<th>Gaji Bersih</th>
 													<th>Bulat</th>
 													<th>Diterima Karyawan</th>
-													<th>Gaji BPJS TK</th>
+													<!-- <th>Gaji BPJS TK</th> -->
+													<th>JKK</th>
+													<th>JKM</th>
+													<th>JHT</th>
 												</tr>
 											</thead>
 
@@ -2529,7 +2532,17 @@
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_jkkjkm",
+						data: "hpyemtd.jkk",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.jkm",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.pot_jht_karyawan",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
 					},
