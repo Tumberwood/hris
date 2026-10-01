@@ -728,6 +728,10 @@
 													<th id="kbm_tr26"></th>
 													<th id="kbm_tr27"></th>
 													<th id="kbm_tr28"></th>
+													<th id="kbm_tr29"></th>
+													<th id="kbm_tr30"></th>
+													<th id="kbm_tr31"></th>
+													<th id="kbm_tr32"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -799,8 +803,14 @@
 													<th id="kbm_pelatihan_nganjuk24"></th>
 													<th id="kbm_pelatihan_nganjuk25"></th>
 													<th id="kbm_pelatihan_nganjuk26"></th>
-													<th id="kbm_pelatihan_nganjuk27"></th>
-												</tr>
+													<th id="kbm_pelatihan_nganjuk27" class="text-right"></th>
+													<th id="kbm_pelatihan_nganjuk28" class="text-right"></th>
+													<th id="kbm_pelatihan_nganjuk29" class="text-right"></th>
+													<th id="kbm_pelatihan_nganjuk30" class="text-right"></th>
+													<th id="kbm_pelatihan_nganjuk31" class="text-right"></th>
+													<th id="kbm_pelatihan_nganjuk32" class="text-right"></th>
+													<th id="kbm_pelatihan_nganjuk33" class="text-right"></th>
+													<th id="kbm_pelatihan_nganjuk34" class="text-right"></th>												</tr>
 											</tfoot>
 										</table>
 									</div> <!-- end of table -->
@@ -2612,7 +2622,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 28; i++) {
+					for (var i = 10; i <= 32; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -3611,7 +3621,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 27; i++) {
+					for (var i = 10; i <= 34; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
