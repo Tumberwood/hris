@@ -1895,7 +1895,7 @@
                             -- hitung jkk
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (8, 9),
+                                    p.id_hesxxmh IN (3,8,9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
@@ -1912,7 +1912,7 @@
                             -- hitung jkm
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (8, 9),
+                                    p.id_hesxxmh IN (3,8,9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
@@ -1929,7 +1929,7 @@
                             -- trm_jkkjkm == jkk + jkm
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (8, 9),
+                                    p.id_hesxxmh IN (3,8,9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
@@ -1950,7 +1950,7 @@
                             -- pot_jkkjkm == jkk + jkm
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (8, 9),
+                                    p.id_hesxxmh IN (3,8,9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
@@ -1971,7 +1971,7 @@
                             -- hitung bpjs_kes_karyawan
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (8, 9),
+                                    p.id_hesxxmh IN (8,9),
                                     IF(
                                         skip_c_bpjs_kes > 0 OR (tanggal_mulai_bpjs_kes IS NOT NULL AND tanggal_mulai_bpjs_kes > :tanggal_akhir), 
                                         0, 
@@ -1988,7 +1988,7 @@
                             -- hitung bpjs_kes_perusahaan
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (8, 9),
+                                    p.id_hesxxmh IN (8,9),
                                     IF(
                                         skip_c_bpjs_kes > 0 OR (tanggal_mulai_bpjs_kes IS NOT NULL AND tanggal_mulai_bpjs_kes > :tanggal_akhir), 
                                         0, 
@@ -2005,7 +2005,7 @@
                             -- hitung jht_perusahaan
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (8, 9),
+                                    p.id_hesxxmh IN (3,8,9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
@@ -2022,7 +2022,7 @@
                             -- hitung jp_perusahaan
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (8, 9),
+                                    p.id_hesxxmh IN (3,8,9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
@@ -2038,25 +2038,22 @@
 
                             -- hitung pot_jht_karyawan
                             ROUND(
-                                IF(
-                                    p.id_hesxxmh IN (8, 9),
-                                    IF(
-                                        skip_c_bpjs_tk > 0, 
-                                        0, 
-                                        IF(
-                                            id_heyxxmd = 3,
-                                            IFNULL((persen_jht_karyawan / 100) * gaji_bpjs_tk, 0),
-                                            0
-                                        )
-                                    ),
-                                    0
-                                ),
-                            0) AS pot_jht_karyawan,
+                                CASE 
+                                    -- Pengecekan 1: Status & Masa Kerja (Harus >= 365 hari)
+                                    WHEN NOT (p.id_hesxxmh IN (3, 8, 9) AND DATEDIFF(p.tanggal_keluar, p.tanggal_awal) >= 365) 
+                                    THEN IFNULL((persen_jht_karyawan / 100) * gaji_bpjs_tk, 0)
+                                    
+                                    -- Pengecekan 2: Skip BPJS
+                                    WHEN skip_c_bpjs_tk > 0 THEN 0
+                                                                        
+                                    ELSE 0
+                                END, 
+                            0) AS pot_jht_karyawan
 
                             -- hitung pot_jp_karyawan
                             ROUND(
                                 IF(
-                                    p.id_hesxxmh IN (8, 9),
+                                    p.id_hesxxmh IN (3,8,9),
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
@@ -2085,7 +2082,7 @@
                             is_active
                             FROM (
                                 SELECT
-                                    persen_jkk,
+                                    0.24 AS persen_jkk,
                                     persen_jkm,
                                     persen_jht_perusahaan,
                                     persen_jp_perusahaan,

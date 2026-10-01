@@ -767,6 +767,10 @@
 													<th>Gaji Bersih</th>
 													<th>Bulat</th>
 													<th>Diterima Karyawan</th>
+													<th>JKK</th>
+													<th>JKM</th>
+													<th>JHT</th>
+													<th>BPJS Kes</th>
 												</tr>
 											</thead>
 
