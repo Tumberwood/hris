@@ -811,8 +811,9 @@
 													<th id="kbm_pelatihan_nganjuk31"></th>
 													<th id="kbm_pelatihan_nganjuk32"></th>
 													<th id="kbm_pelatihan_nganjuk33"></th>
-													<th id="kbm_pelatihan_nganjuk34"></th>												</tr>
-													<th id="kbm_pelatihan_nganjuk35"></th>												</tr>
+													<th id="kbm_pelatihan_nganjuk34"></th>												
+													<th id="kbm_pelatihan_nganjuk35"></th>												
+												</tr>
 											</tfoot>
 										</table>
 									</div> <!-- end of table -->
