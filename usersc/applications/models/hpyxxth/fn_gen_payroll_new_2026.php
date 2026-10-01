@@ -2197,7 +2197,7 @@
 
                                     -- Pot Upah Mati
                                     (
-                                        IF(job.grup_hk = 1, 80598, 95950)
+                                        IF(job.grup_hk = 1, 95950, 80598)
                                         * pr.is_pot_upah
                                     ),
 
