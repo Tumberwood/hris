@@ -2629,6 +2629,8 @@
                     FROM presensi p
                     LEFT JOIN pegawai peg on peg.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN gaji_pokok gp ON gp.id_hemxxmh = p.id_hemxxmh
+                    LEFT JOIN tj_makan_nganjuk tmn ON tmn.id_hemxxmh = p.id_hemxxmh
+                    LEFT JOIN tj_rumah_nganjuk trn ON trn.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN pot_makan ON pot_makan.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN bpjs ON bpjs.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN pot_upah pu ON pu.id_hemxxmh = p.id_hemxxmh
