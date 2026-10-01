@@ -2505,6 +2505,8 @@
                     SELECT
                         :id_hpyxxth AS id_hpyxxth,
                         id_heyxxmd,
+                        gaji_bpjs_tk,
+                        gaji_bpjs_kes,
                         is_terbaru,
                         p.id_hemxxmh,
                         id_gtxpkmh,
