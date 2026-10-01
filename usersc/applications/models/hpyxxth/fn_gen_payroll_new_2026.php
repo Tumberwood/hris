@@ -2192,69 +2192,79 @@
                             pr.id_hemxxmh,
                             
                             ROUND(SUM(
-                                -- Rumus: ( (gp + tjab + (tj lain)) / grup_hk (21 / 25) ) * is_pot_upah
-                                (
+                                IF(
+                                    job.id_hesxxmh = 3 AND job.id_heyxxmd = 1,
+
+                                    -- Pot Upah Mati
+                                    (
+                                        IF(job.grup_hk = 1, 80598, 95950)
+                                        * pr.is_pot_upah
+                                    ),
+
+                                    -- Rumus: ( (gp + tjab + (tj lain)) / grup_hk (21 / 25) ) * is_pot_upah
                                     (
                                         (
-                                            -- GP
-                                            IFNULL((
-                                                SELECT a.nominal
-                                                FROM htpr_hemxxmh a
-                                                WHERE a.id_hpcxxmh = 1
-                                                    AND a.id_hemxxmh = pr.id_hemxxmh
-                                                    AND a.tanggal_efektif <= pr.tanggal
-                                                    AND a.is_active = 1
-                                                ORDER BY a.tanggal_efektif DESC
-                                                LIMIT 1
-                                            ),0)
+                                            (
+                                                -- GP
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 1
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
 
-                                            +
+                                                +
 
-                                            -- TJAB
-                                            IFNULL((
-                                                SELECT a.nominal
-                                                FROM htpr_hemxxmh a
-                                                WHERE a.id_hpcxxmh = 32
-                                                    AND a.id_hemxxmh = pr.id_hemxxmh
-                                                    AND a.tanggal_efektif <= pr.tanggal
-                                                    AND a.is_active = 1
-                                                ORDER BY a.tanggal_efektif DESC
-                                                LIMIT 1
-                                            ),0)
+                                                -- TJAB
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 32
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
 
-                                            +
+                                                +
 
-                                            -- TJ Khusus
-                                            IFNULL((
-                                                SELECT a.nominal
-                                                FROM htpr_hemxxmh a
-                                                WHERE a.id_hpcxxmh = 133
-                                                    AND a.id_hemxxmh = pr.id_hemxxmh
-                                                    AND a.tanggal_efektif <= pr.tanggal
-                                                    AND a.is_active = 1
-                                                ORDER BY a.tanggal_efektif DESC
-                                                LIMIT 1
-                                            ),0)
+                                                -- TJ Khusus
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 133
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
 
-                                            +
+                                                +
 
-                                            -- TJ lain
-                                            IFNULL((
-                                                SELECT a.nominal
-                                                FROM htpr_hemxxmh a
-                                                WHERE a.id_hpcxxmh = 102
-                                                    AND a.id_hemxxmh = pr.id_hemxxmh
-                                                    AND a.tanggal_efektif <= pr.tanggal
-                                                    AND a.is_active = 1
-                                                ORDER BY a.tanggal_efektif DESC
-                                                LIMIT 1
-                                            ),0)
+                                                -- TJ lain
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 102
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
 
+                                            )
+                                            /
+                                            IF(job.grup_hk = 1, 21, 25)
                                         )
-                                        /
-                                        IF(job.grup_hk = 1, 21, 25)
+                                        * pr.is_pot_upah
                                     )
-                                    * pr.is_pot_upah
                                 )
                             )) AS pot_upah,
 
