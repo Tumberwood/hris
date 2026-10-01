@@ -89,6 +89,8 @@
 				Field::inst( 'hpyemtd.bpjs_kes_perusahaan' ),
 				Field::inst( 'hpyemtd.gaji_bpjs_tk' ),
 				Field::inst( 'hpyemtd.gaji_bpjs_kes' ),
+				Field::inst( 'hpyemtd.tj_makan_nganjuk' ),
+				Field::inst( 'hpyemtd.tj_rumah_nganjuk' ),
 
 				Field::inst( 'hetxxmh.nama' ),
 				Field::inst( 'hodxxmh.nama' ),

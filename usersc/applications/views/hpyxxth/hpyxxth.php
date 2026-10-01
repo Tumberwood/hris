@@ -764,7 +764,8 @@
 													<th>Total Lembur (Jam)</th>
 													<th>Total Lembur (Jam Final)</th>
 													<th>Total Lembur (Rp Final)</th>
-													<th class="text-danger">Pot Makan</th>
+													<th>Tunjangan Makan</th>
+													<th>Tunjangan Rumah</th>
 													<th class="text-danger">Pot Lain</th>
 													<th>Pendapatan Lain</th>
 													<th class="text-danger">Pot Upah Harian</th>
@@ -811,6 +812,7 @@
 													<th id="kbm_pelatihan_nganjuk32"></th>
 													<th id="kbm_pelatihan_nganjuk33"></th>
 													<th id="kbm_pelatihan_nganjuk34"></th>												</tr>
+													<th id="kbm_pelatihan_nganjuk35"></th>												</tr>
 											</tfoot>
 										</table>
 									</div> <!-- end of table -->
@@ -3495,7 +3497,12 @@
 						class: "text-right "
 					},
 					{ 
-						data: "hpyemtd.pot_makan",
+						data: "hpyemtd.tj_makan_nganjuk",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right "
+					},
+					{ 
+						data: "hpyemtd.tj_rumah_nganjuk",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right "
 					},
@@ -3617,7 +3624,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 34; i++) {
+					for (var i = 10; i <= 35; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
