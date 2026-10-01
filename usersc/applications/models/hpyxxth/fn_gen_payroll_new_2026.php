@@ -1899,11 +1899,7 @@
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
-                                        IF(
-                                            id_heyxxmd = 3,
-                                            IFNULL((persen_jkk / 100) * gaji_bpjs_tk, 0),
-                                            0
-                                        )
+                                        IFNULL((persen_jkk / 100) * gaji_bpjs_tk, 0)
                                     ),
                                     0
                                 ),
@@ -1916,11 +1912,7 @@
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
-                                        IF(
-                                            id_heyxxmd = 3,
-                                            IFNULL((persen_jkm / 100) * gaji_bpjs_tk, 0),
-                                            0
-                                        )
+                                        IFNULL((persen_jkm / 100) * gaji_bpjs_tk, 0)
                                     ),
                                     0
                                 ),
@@ -1933,13 +1925,9 @@
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
-                                        IF(
-                                            id_heyxxmd = 3,
-                                            IFNULL(
-                                                ((persen_jkk / 100) * gaji_bpjs_tk) +
-                                                ((persen_jkm / 100) * gaji_bpjs_tk),
-                                                0
-                                            ),
+                                        IFNULL(
+                                            ((persen_jkk / 100) * gaji_bpjs_tk) +
+                                            ((persen_jkm / 100) * gaji_bpjs_tk),
                                             0
                                         )
                                     ),
@@ -1954,13 +1942,9 @@
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
-                                        IF(
-                                            id_heyxxmd = 3,
-                                            IFNULL(
-                                                ((persen_jkk / 100) * gaji_bpjs_tk) +
-                                                ((persen_jkm / 100) * gaji_bpjs_tk),
-                                                0
-                                            ),
+                                        IFNULL(
+                                            ((persen_jkk / 100) * gaji_bpjs_tk) +
+                                            ((persen_jkm / 100) * gaji_bpjs_tk),
                                             0
                                         )
                                     ),
@@ -1975,11 +1959,7 @@
                                     IF(
                                         skip_c_bpjs_kes > 0 OR (tanggal_mulai_bpjs_kes IS NOT NULL AND tanggal_mulai_bpjs_kes > :tanggal_akhir), 
                                         0, 
-                                        IF(
-                                            id_heyxxmd = 3,
-                                            IFNULL((persen_karyawan / 100) * IFNULL(gaji_bpjs_kes, gaji_bpjs_tk), 0),
-                                            0
-                                        )
+                                        IFNULL((persen_karyawan / 100) * IFNULL(gaji_bpjs_kes, gaji_bpjs_tk), 0)
                                     ),
                                     0
                                 ),
@@ -1992,11 +1972,7 @@
                                     IF(
                                         skip_c_bpjs_kes > 0 OR (tanggal_mulai_bpjs_kes IS NOT NULL AND tanggal_mulai_bpjs_kes > :tanggal_akhir), 
                                         0, 
-                                        IF(
-                                            id_heyxxmd = 3,
-                                            IFNULL((persen_perusahaan / 100) * IFNULL(gaji_bpjs_kes, gaji_bpjs_tk), 0),
-                                            0
-                                        )
+                                        IFNULL((persen_perusahaan / 100) * IFNULL(gaji_bpjs_kes, gaji_bpjs_tk), 0)
                                     ),
                                     0
                                 ),
@@ -2009,11 +1985,7 @@
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
-                                        IF(
-                                            id_heyxxmd = 3,
-                                            IFNULL((persen_jht_perusahaan / 100) * gaji_bpjs_tk, 0),
-                                            0
-                                        )
+                                        IFNULL((persen_jht_perusahaan / 100) * gaji_bpjs_tk, 0)
                                     ),
                                     0
                                 ),
@@ -2026,11 +1998,7 @@
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
-                                        IF(
-                                            id_heyxxmd = 3,
-                                            IFNULL((persen_jp_perusahaan / 100) * gaji_bpjs_tk, 0),
-                                            0
-                                        )
+                                        IFNULL((persen_jp_perusahaan / 100) * gaji_bpjs_tk, 0)
                                     ),
                                     0
                                 ),
@@ -2057,11 +2025,7 @@
                                     IF(
                                         skip_c_bpjs_tk > 0, 
                                         0, 
-                                        IF(
-                                            id_heyxxmd = 3,
-                                            IFNULL((persen_jp_karyawan / 100) * gaji_bpjs_tk, 0),
-                                            0
-                                        )
+                                        IFNULL((persen_jp_karyawan / 100) * gaji_bpjs_tk, 0)
                                     ),
                                     0
                                 ),
