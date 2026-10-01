@@ -1898,7 +1898,7 @@
                             WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
                             THEN (
                                 SELECT
-                                    SUM(1 * 25000
+                                    SUM(1 * 25000) AS c_id
                                 FROM htsprrd pr
                                 WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND p.tanggal_keluar
                                 AND pr.id_hemxxmh = p.id_hemxxmh
@@ -1913,7 +1913,7 @@
                                 WHERE pr.tanggal BETWEEN p.tanggal_masuk AND LAST_DAY(:tanggal_akhir)
                                 AND pr.id_hemxxmh = p.id_hemxxmh
                                 AND pr.st_jadwal <> "OFF" 
-                                -- AND pr.status_presensi_in <> "AL" 
+                                AND pr.status_presensi_in <> "AL" 
                                 -- AND pr.is_pot_upah = 0 
                             )
 
@@ -1928,7 +1928,7 @@
                             WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
                             THEN (
                                 SELECT
-                                    SUM(1 * 8000
+                                    SUM(1 * 8000) AS c_id
                                 FROM htsprrd pr
                                 WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND p.tanggal_keluar
                                 AND pr.id_hemxxmh = p.id_hemxxmh
@@ -1943,7 +1943,7 @@
                                 WHERE pr.tanggal BETWEEN p.tanggal_masuk AND LAST_DAY(:tanggal_akhir)
                                 AND pr.id_hemxxmh = p.id_hemxxmh
                                 AND pr.st_jadwal <> "OFF" 
-                                -- AND pr.status_presensi_in <> "AL" 
+                                AND pr.status_presensi_in <> "AL" 
                                 -- AND pr.is_pot_upah = 0 
                             )
 
