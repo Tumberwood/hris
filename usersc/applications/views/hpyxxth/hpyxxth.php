@@ -679,29 +679,29 @@
 													<th>Sub Tipe</th>
 													<th>Status</th>
 													<th>Grup HK</th>
-													<th>Gaji Pokok</th>
-													<th>Lembur Jam Pertama</th>
-													<th>Rp Jam Pertama x 1,5</th>
-													<th>Lembur Jam Kedua</th>
-													<th>Rp Jam Kedua x 2</th>
-													<th>Lembur Jam Ketiga</th>
-													<th>Rp Jam Ketiga x 3</th>
-													<th>Total Lembur (Jam)</th>
-													<th>Total Lembur (Jam Final)</th>
-													<th>Total Lembur (Rp Final)</th>
-													<th class="text-danger">Pot Makan</th>
-													<th class="text-danger">Pot Lain</th>
-													<th>Pendapatan Lain</th>
-													<th class="text-danger">Pot Upah Harian</th>
-													<th class="text-danger">Pot Upah Jam</th>
-													<th>Gaji Bersih</th>
-													<th>Bulat</th>
-													<th>Diterima Karyawan</th>
-													<th>Gaji BPJS TK</th>
-													<th>JKK</th>
-													<th>JKM</th>
-													<th>JHT</th>
-													<th>BPJS TK</th>
+													<th>1. Gaji Pokok</th>
+													<th>2. Lembur Jam Pertama</th>
+													<th>3. Rp Jam Pertama x 1,5</th>
+													<th>4. Lembur Jam Kedua</th>
+													<th>5. Rp Jam Kedua x 2</th>
+													<th>6. Lembur Jam Ketiga</th>
+													<th>7. Rp Jam Ketiga x 3</th>
+													<th>8. Total Lembur (Jam)</th>
+													<th>9. Total Lembur (Jam Final)</th>
+													<th>10. Total Lembur (Rp Final)</th>
+													<th class="text-danger">11. Pot Makan</th>
+													<th class="text-danger">12. Pot Lain</th>
+													<th>13. Pendapatan Lain</th>
+													<th class="text-danger">14. Pot Upah Harian</th>
+													<th class="text-danger">15. Pot Upah Jam</th>
+													<th>16. Gaji Bersih</th>
+													<th>17. Bulat</th>
+													<th>18. Diterima Karyawan</th>
+													<th>19. Gaji BPJS TK</th>
+													<th>20. JKK</th>
+													<th>21. JKM</th>
+													<th>22. JHT</th>
+													<th>23. BPJS TK</th>
 												</tr>
 											</thead>
 
@@ -754,32 +754,32 @@
 													<th>Sub Tipe</th>
 													<th>Status</th>
 													<th>Grup HK</th>
-													<th>Gaji Pokok</th>
-													<th>Lembur Jam Pertama</th>
-													<th>Rp Jam Pertama x 1,5</th>
-													<th>Lembur Jam Kedua</th>
-													<th>Rp Jam Kedua x 2</th>
-													<th>Lembur Jam Ketiga</th>
-													<th>Rp Jam Ketiga x 3</th>
-													<th>Total Lembur (Jam)</th>
-													<th>Total Lembur (Jam Final)</th>
-													<th>Total Lembur (Rp Final)</th>
-													<th>Tunjangan Makan</th>
-													<th>Tunjangan Rumah</th>
-													<th class="text-danger">Pot Lain</th>
-													<th>Pendapatan Lain</th>
-													<th class="text-danger">Pot Upah Harian</th>
-													<th class="text-danger">Pot Upah Jam</th>
-													<th>Gaji Bersih</th>
-													<th>Bulat</th>
-													<th>Diterima Karyawan</th>
-													<th>Gaji BPJS TK</th>
-													<th>Gaji BPJS Kes</th>
-													<th>JKK</th>
-													<th>JKM</th>
-													<th>JHT</th>
-													<th>BPJS TK</th>
-													<th>BPJS Kes</th>
+													<th>1. Gaji Pokok</th>
+													<th>2. Lembur Jam Pertama</th>
+													<th>3. Rp Jam Pertama x 1,5</th>
+													<th>4. Lembur Jam Kedua</th>
+													<th>5. Rp Jam Kedua x 2</th>
+													<th>6. Lembur Jam Ketiga</th>
+													<th>7. Rp Jam Ketiga x 3</th>
+													<th>8. Total Lembur (Jam)</th>
+													<th>9. Total Lembur (Jam Final)</th>
+													<th>10. Total Lembur (Rp Final)</th>
+													<th>11. Tunjangan Makan</th>
+													<th>12. Tunjangan Rumah</th>
+													<th class="text-danger">13. Pot Lain</th>
+													<th>14. Pendapatan Lain</th>
+													<th class="text-danger">15. Pot Upah Harian</th>
+													<th class="text-danger">16. Pot Upah Jam</th>
+													<th>17. Gaji Bersih</th>
+													<th>18. Bulat</th>
+													<th>19. Diterima Karyawan</th>
+													<th>20. Gaji BPJS TK</th>
+													<th>21. Gaji BPJS Kes</th>
+													<th>22. JKK</th>
+													<th>23. JKM</th>
+													<th>24. JHT</th>
+													<th>25. BPJS TK</th>
+													<th>26. BPJS Kes</th>
 												</tr>
 											</thead>
 
