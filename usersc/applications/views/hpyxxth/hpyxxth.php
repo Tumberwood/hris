@@ -2477,24 +2477,24 @@
 					},
 					{ 
 						data: "hpyemtd.lembur2",
-						class: "text-right", visible: false
+						class: "text-right",
 						
 					},
 					{ 
 						data: "hpyemtd.rp_lembur2",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right", visible: false
+						class: "text-right",
 						
 					},
 					{ 
 						data: "hpyemtd.lembur3",
-						class: "text-right", visible: false
+						class: "text-right",
 						
 					},
 					{ 
 						data: "hpyemtd.rp_lembur3",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right", visible: false
+						class: "text-right",
 						
 					},
 					{ 
@@ -3464,24 +3464,24 @@
 					},
 					{ 
 						data: "hpyemtd.lembur2",
-						class: "text-right", visible: false
+						class: "text-right",
 						
 					},
 					{ 
 						data: "hpyemtd.rp_lembur2",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right", visible: false
+						class: "text-right",
 						
 					},
 					{ 
 						data: "hpyemtd.lembur3",
-						class: "text-right", visible: false
+						class: "text-right",
 						
 					},
 					{ 
 						data: "hpyemtd.rp_lembur3",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right", visible: false
+						class: "text-right",
 						
 					},
 					{ 
