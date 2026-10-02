@@ -316,6 +316,7 @@
 						$qi_hpyemtd_cocokan = $db
 							->query('insert', 'hpyemtd_cocokan')
 							->set('id_hpyxxth', $id_hpyxxth)
+							->set('keterangan', $sheetName)
 							// ->set('id_hpyxxth_cocok', $id_hpyxxth_cocok)
 
 							->set('id_hemxxmh', $id_hemxxmh)
