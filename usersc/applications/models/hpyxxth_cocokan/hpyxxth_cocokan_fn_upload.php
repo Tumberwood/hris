@@ -53,7 +53,7 @@
 		;
 
 		foreach ($sheetNames as $sheetIndex => $sheetName) {
-			if (in_array($sheetName, ['TETAP', 'KONTRAK', 'KBM REG'])) {
+			if (in_array($sheetName, ['TETAP', 'KONTRAK', 'KBM REG', 'KBM PELATIHAN', 'KBM PELATIHAN NGANJUK'])) {
 				$sheetData = $spreadsheet->getSheet($sheetIndex)->toArray();
 				
 				if ($sheetData[0][1] == "no_induk") {
