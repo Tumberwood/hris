@@ -256,48 +256,50 @@
 						}
 						elseif ($sheetName == 'KBM PELATIHAN') {
 
-							$nrp                    = strtoupper($sheetData[$i][0]);
-							$nama                   = strtoupper($sheetData[$i][1]);
+							$no_urut                = strtoupper($sheetData[$i][0]);
+							$nrp                    = strtoupper($sheetData[$i][1]);
+							$nama                   = strtoupper($sheetData[$i][2]);
 
-							$gp                     = strtoupper($sheetData[$i][2]);
+							$gp                     = strtoupper($sheetData[$i][3]);
 
-							$lembur15               = strtoupper($sheetData[$i][3]);
-							$rp_lembur15            = strtoupper($sheetData[$i][4]);
+							$lembur15               = strtoupper($sheetData[$i][4]);
+							$rp_lembur15            = strtoupper($sheetData[$i][5]);
 
-							$pot_upah               = strtoupper($sheetData[$i][5]);
-							$pot_jam                = strtoupper($sheetData[$i][6]);
-							$pot_makan              = strtoupper($sheetData[$i][7]);
+							$pot_upah               = strtoupper($sheetData[$i][6]);
+							$pot_jam                = strtoupper($sheetData[$i][7]);
+							$pot_makan              = strtoupper($sheetData[$i][8]);
 
-							$terima_lain            = strtoupper($sheetData[$i][8]);
-							$pot_lain_after_pph     = strtoupper($sheetData[$i][9]);
-
-							$gaji_bersih            = strtoupper($sheetData[$i][10]);
-							$bulat                  = strtoupper($sheetData[$i][11]);
-							$gaji_terima            = strtoupper($sheetData[$i][12]);
-
-						}
-						elseif ($sheetName == 'KBM PELATIHAN NGANJUK') {
-
-							$nrp                    = strtoupper($sheetData[$i][0]);
-							$nama                   = strtoupper($sheetData[$i][1]);
-
-							$gp                     = strtoupper($sheetData[$i][2]);
-
-							$tj_makan_nganjuk       = strtoupper($sheetData[$i][3]);
-							$tj_rumah_nganjuk       = strtoupper($sheetData[$i][4]);
-
-							$lembur15               = strtoupper($sheetData[$i][5]);
-							$rp_lembur15            = strtoupper($sheetData[$i][6]);
-
-							$pot_upah               = strtoupper($sheetData[$i][7]);
-							$pot_jam                = strtoupper($sheetData[$i][8]);
-
-							$pendapatan_lain_after_pph = strtoupper($sheetData[$i][9]);
-							$pot_lain_after_pph        = strtoupper($sheetData[$i][10]);
+							$terima_lain            = strtoupper($sheetData[$i][9]);
+							$pot_lain_after_pph     = strtoupper($sheetData[$i][10]);
 
 							$gaji_bersih            = strtoupper($sheetData[$i][11]);
 							$bulat                  = strtoupper($sheetData[$i][12]);
 							$gaji_terima            = strtoupper($sheetData[$i][13]);
+
+						}
+						elseif ($sheetName == 'KBM PELATIHAN NGANJUK') {
+
+							$no_urut                = strtoupper($sheetData[$i][0]);
+							$nrp                    = strtoupper($sheetData[$i][1]);
+							$nama                   = strtoupper($sheetData[$i][2]);
+
+							$gp                     = strtoupper($sheetData[$i][3]);
+
+							$tj_makan_nganjuk       = strtoupper($sheetData[$i][4]);
+							$tj_rumah_nganjuk       = strtoupper($sheetData[$i][5]);
+
+							$lembur15               = strtoupper($sheetData[$i][6]);
+							$rp_lembur15            = strtoupper($sheetData[$i][7]);
+
+							$pot_upah               = strtoupper($sheetData[$i][8]);
+							$pot_jam                = strtoupper($sheetData[$i][9]);
+
+							$pendapatan_lain_after_pph = strtoupper($sheetData[$i][10]);
+							$pot_lain_after_pph        = strtoupper($sheetData[$i][11]);
+
+							$gaji_bersih            = strtoupper($sheetData[$i][12]);
+							$bulat                  = strtoupper($sheetData[$i][13]);
+							$gaji_terima            = strtoupper($sheetData[$i][14]);
 
 						}
 
