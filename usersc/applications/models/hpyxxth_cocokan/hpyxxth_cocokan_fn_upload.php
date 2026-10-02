@@ -61,6 +61,8 @@
 						
 						$komp_sisa_cuti 		= 0;
 						$komp_rekontrak 		= 0;
+						$tj_makan_nganjuk		= 0;
+						$tj_rumah_nganjuk		= 0;
 
 						if ($sheetName == 'TETAP') {
 
@@ -252,6 +254,53 @@
 							$komp_sisa_cuti         = '';
 
 						}
+						elseif ($sheetName == 'KBM PELATIHAN') {
+
+							$nrp                    = strtoupper($sheetData[$i][0]);
+							$nama                   = strtoupper($sheetData[$i][1]);
+
+							$gp                     = strtoupper($sheetData[$i][2]);
+
+							$lembur15               = strtoupper($sheetData[$i][3]);
+							$rp_lembur15            = strtoupper($sheetData[$i][4]);
+
+							$pot_upah               = strtoupper($sheetData[$i][5]);
+							$pot_jam                = strtoupper($sheetData[$i][6]);
+							$pot_makan              = strtoupper($sheetData[$i][7]);
+
+							$terima_lain            = strtoupper($sheetData[$i][8]);
+							$pot_lain_after_pph     = strtoupper($sheetData[$i][9]);
+
+							$gaji_bersih            = strtoupper($sheetData[$i][10]);
+							$bulat                  = strtoupper($sheetData[$i][11]);
+							$gaji_terima            = strtoupper($sheetData[$i][12]);
+
+						}
+						elseif ($sheetName == 'KBM PELATIHAN NGANJUK') {
+
+							$nrp                    = strtoupper($sheetData[$i][0]);
+							$nama                   = strtoupper($sheetData[$i][1]);
+
+							$gp                     = strtoupper($sheetData[$i][2]);
+
+							$tj_makan_nganjuk       = strtoupper($sheetData[$i][3]);
+							$tj_rumah_nganjuk       = strtoupper($sheetData[$i][4]);
+
+							$lembur15               = strtoupper($sheetData[$i][5]);
+							$rp_lembur15            = strtoupper($sheetData[$i][6]);
+
+							$pot_upah               = strtoupper($sheetData[$i][7]);
+							$pot_jam                = strtoupper($sheetData[$i][8]);
+
+							$pendapatan_lain_after_pph = strtoupper($sheetData[$i][9]);
+							$pot_lain_after_pph        = strtoupper($sheetData[$i][10]);
+
+							$gaji_bersih            = strtoupper($sheetData[$i][11]);
+							$bulat                  = strtoupper($sheetData[$i][12]);
+							$gaji_terima            = strtoupper($sheetData[$i][13]);
+
+						}
+
 						$qs_hemxxmh = $db
 							->query('select', 'hemxxmh' )
 							->get(['id'] )
@@ -313,6 +362,9 @@
 
 							->set('bpjs_kes_karyawan', $bpjs_kes_karyawan)
 							->set('pot_jp_karyawan', $pot_jp_karyawan)
+							
+							->set('tj_makan_nganjuk', $tj_makan_nganjuk)
+							->set('tj_rumah_nganjuk', $tj_rumah_nganjuk)
 
 							->set('gaji_bersih', $gaji_bersih)
 							->set('bulat', $bulat)
