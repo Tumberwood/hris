@@ -113,7 +113,7 @@
 			// 		'
 			// 		);
 
-			$tanggal_akhir = $values['hemjbmh']['tanggal_keluar'];
+			$tanggal_akhir = $values['hemjbmh']['tanggal_akhir_kontrak'];
 			$tanggal_akhir_kontrak = date("Y-m-d", strtotime($tanggal_akhir));
 			// print_r($tanggal_akhir_kontrak);
 			$qs_hemjbmh = $editor->db()
