@@ -129,8 +129,9 @@
 							->bind(':id_hemxxmh', $id_hemxxmh)
 							->bind(':id_hobxxmh', $id_hobxxmh)
 							->bind(':tanggal_masuk', $tanggal_masuk)
-							->exec('INSERT INTO hemjbmh (id_hemxxmh, id_hobxxmh, tanggal_masuk) 
-								    VALUES (:id_hemxxmh, :id_hobxxmh, :tanggal_masuk)');
+							->bind(':is_harian_lepas', $is_harian_lepas)
+							->exec('INSERT INTO hemjbmh (id_hemxxmh, id_hobxxmh, tanggal_masuk, is_harian_lepas) 
+								    VALUES (:id_hemxxmh, :id_hobxxmh, :tanggal_masuk, :is_harian_lepas)');
 
 						// 4. Insert ke hemfmmd (Tanggal Lahir)
 						$db->raw()
