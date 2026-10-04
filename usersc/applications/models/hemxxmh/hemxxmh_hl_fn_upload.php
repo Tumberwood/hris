@@ -173,17 +173,20 @@
 							->bind(':id_hemxxmh', $id_hemxxmh)
 							->bind(':ktp_no', $ktp_no)
 							->bind(':no_bpjs_tk', $no_bpjs_tk)
+							->bind(':tanggal_lahir', $tanggal_lahir)
 							->bind(':alamat', $alamat)
 							->exec('
 								INSERT INTO hemdcmh (
 									id_hemxxmh,
 									ktp_no,
 									no_bpjs_tk,
+									tanggal_lahir,
 									alamat
 								) VALUES (
 									:id_hemxxmh,
 									:ktp_no,
 									:no_bpjs_tk,
+									:tanggal_lahir,
 									:alamat
 								)
 							');
@@ -206,22 +209,6 @@
 									:id_hobxxmh,
 									:tanggal_masuk,
 									1
-								)
-							');
-
-						// =====================================================
-						// 4. INSERT hemfmmd
-						// =====================================================
-						$db->raw()
-							->bind(':id_hemxxmh', $id_hemxxmh)
-							->bind(':tanggal_lahir', $tanggal_lahir)
-							->exec('
-								INSERT INTO hemfmmd (
-									id_hemxxmh,
-									tanggal_lahir
-								) VALUES (
-									:id_hemxxmh,
-									:tanggal_lahir
 								)
 							');
 
