@@ -41,6 +41,40 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+	<div class="col">
+		<div class="ibox ">
+			<div class="ibox-title">
+                <h5 class="text-navy">Upload Karyawan HL</h5>&nbsp
+                <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+            </div>
+			<div class="ibox-content">
+				<h3 class="text-info">Format file harus dalam .xlsx dan disesuaikan dengan format template</h3>
+				<hr>
+				<div>
+					<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/template_hemxxmh_hl.xlsx');">
+						<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
+					</button>
+				</div>
+				<form id="frmUploadthimport_hl" enctype="multipart/form-data">
+					<div class="form-group row">
+						<label class="col-lg-2 col-form-label">File Karyawan HL</label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input type="file" name="filename" class="form-control" id="inputfilethimport_hl">
+							</div>
+						</div>
+					</div>
+					<span class="input-group-append"> 
+						<button type="submit" class="btn btn-primary">Import</button>
+					</span>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="row">
 	<div class="col">
 		<div class="ibox ">
@@ -60,9 +94,9 @@
 							<div class="col-lg-6">
 								<editor-field name="hemxxmh.kode_finger"></editor-field>
 							</div>
-							<!-- <div class="col-lg-6">
+							<div class="col-lg-6">
 								<editor-field name="hemdcmh.ktp_no"></editor-field>
-							</div> -->
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
@@ -666,10 +700,10 @@
 						label: "Kode Finger<sup class='text-danger'>*<sup>",
 						name: "hemxxmh.kode_finger"
 					}, 	
-					// {
-					// 	label: "No KTP <sup class='text-danger'>*<sup>",
-					// 	name: "hemdcmh.ktp_no"
-					// }, 	
+					{
+						label: "No KTP <sup class='text-danger'>*<sup>",
+						name: "hemdcmh.ktp_no"
+					}, 	
 					{
 						label: "No BPJS TK <sup class='text-danger'>*<sup>",
 						name: "hemdcmh.no_bpjs_tk"
@@ -1523,19 +1557,19 @@
 					// END of validasi hemxxmh.is_tukar 
 
 					// BEGIN of validasi hemdcmh.ktp_no 
-					// ktp_no = edthemxxmh.field('hemdcmh.ktp_no').val();
-					// if(!ktp_no || ktp_no == ''){
-					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Wajib diisi!' );
-					// }
-					// // validasi min atau max angka
-					// if(ktp_no <= 0 ){
-					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus > 0' );
-					// }
+					ktp_no = edthemxxmh.field('hemdcmh.ktp_no').val();
+					if(!ktp_no || ktp_no == ''){
+						edthemxxmh.field('hemdcmh.ktp_no').error( 'Wajib diisi!' );
+					}
+					// validasi min atau max angka
+					if(ktp_no <= 0 ){
+						edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus > 0' );
+					}
 					
-					// // validasi angka
-					// if(isNaN(ktp_no) ){
-					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus berupa Angka!' );
-					// }
+					// validasi angka
+					if(isNaN(ktp_no) ){
+						edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus berupa Angka!' );
+					}
 					// END of validasi hemxxmh.kode_finger 
 
 					// BEGIN of validasi hemdcmh.no_bpjs_kes 
@@ -4815,7 +4849,68 @@
 				CekDeselectDetailHD(tblhemxxmh, tblhemecmd );
 			} );
 
-// --------- end _detail --------------- //		
+// --------- end _detail --------------- //	
+
+			// BEGIN upload data
+			var frmUploadthimport_hl = $("#frmUploadthimport_hl").submit(function(e) {
+				e.preventDefault();
+			}).validate({
+
+				submitHandler: function(form) { 
+					
+					var notifyprogress;
+
+					var fd_hl = new FormData();
+					var hl = $('#inputfilethimport_hl')[0].files[0];
+					// console.log(hl);
+					if (hl != undefined) {
+						fd_hl.append('filename',hl);
+
+						notifyprogress = $.notify({
+							message: 'Processing ...</br> Jangan tutup window sampai ada notifikasi hasil upload!'
+						},{
+							allow_dismiss: false,
+							type: 'danger',
+							delay: 0,
+							element: 'body'
+						});
+						
+						$.ajax( {
+							url: "../../models/hemxxmh/hemxxmh_hl_fn_upload.php",
+							type: 'POST',
+							dataType: 'json',
+							data: fd_hl,
+							async: false,
+							contentType: false,
+							processData: false,
+							success: function ( json ) {
+								notifyprogress.close();
+								$.notify({
+									message: json.data.message
+								},{
+									type: json.data.type_message,
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
+								});
+								$("#inputfilethimport_hl").val('');
+								tblhemxxmh_hl.rows().deselect();
+								tblhemxxmh_hl.ajax.reload(function ( json ) {
+									notifyprogress.close();
+								}, false);
+							},
+							error: function (xhr, Status, err){
+								// console.log('x');
+							}
+						} );
+					}
+				}
+			});
+			// END upload data	
 			
 		} );// end of document.ready
 	
