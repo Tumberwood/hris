@@ -129,6 +129,7 @@
 							'nama'
 						])
 						->where('kode_finger', $kode_finger)
+						->where('nama', $nama)
 						->exec();
 
 					$rs_hem = $qs_hem->fetch();
