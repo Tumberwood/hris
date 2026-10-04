@@ -94,7 +94,6 @@
 					$alamat        = $sheetData[$i]['9']; // ALAMAT
 
 					// Default
-					$is_harian_lepas = 0;
 
 					// =========================================================
 					// AMBIL ID BAGIAN DARI MASTER hobxxmh
@@ -190,7 +189,6 @@
 							->bind(':id_hemxxmh', $id_hemxxmh)
 							->bind(':id_hobxxmh', $id_hobxxmh)
 							->bind(':tanggal_masuk', $tanggal_masuk)
-							->bind(':is_harian_lepas', $is_harian_lepas)
 							->exec('
 								INSERT INTO hemjbmh (
 									id_hemxxmh,
@@ -201,7 +199,7 @@
 									:id_hemxxmh,
 									:id_hobxxmh,
 									:tanggal_masuk,
-									:is_harian_lepas
+									1
 								)
 							');
 
