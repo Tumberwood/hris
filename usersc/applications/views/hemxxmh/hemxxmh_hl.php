@@ -679,7 +679,7 @@
 						name: "hemdcmh.no_bpjs_kes"
 					}, 
 					{
-						label: "Grup Jabatan <sup class='text-danger'>*<sup>",
+						label: "Grup Jabatan",
 						name: "hemjbmh.id_hevgrmh",
 						type: "select2",
 						opts: {
@@ -715,7 +715,7 @@
 						}
 					},	
 					{
-						label: "Divisi <sup class='text-danger'>*<sup>",
+						label: "Divisi",
 						name: "hemjbmh.id_hovxxmh",
 						type: "select2",
 						opts: {
@@ -752,7 +752,7 @@
 						}
 					},
 					{
-						label: "Department <sup class='text-danger'>*<sup>",
+						label: "Department",
 						name: "hemjbmh.id_hodxxmh",
 						type: "select2",
 						opts: {
@@ -827,7 +827,7 @@
 					},
 					
 					{
-						label: "Bagian <sup class='text-danger'>*<sup>",  
+						label: "Bagian",  
 						name: "hemjbmh.id_hobxxmh",
 						type: "select2",
 						opts: {
@@ -1049,7 +1049,7 @@
 						}
 					},
 					{
-						label: "Area Kerja <sup class='text-danger'>*<sup>",
+						label: "Area Kerja",
 						name: "hemjbmh.id_holxxmd_2",
 						type: "select2",
 						fieldInfo: "Master Area Kerja",
@@ -1449,10 +1449,10 @@
 			edthemxxmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					// BEGIN of validasi hemjbmh.id_hevgrmh 
-					id_hevgrmh = edthemxxmh.field('hemjbmh.id_hevgrmh').val();
-					if(!id_hevgrmh || id_hevgrmh == ''){
-						edthemxxmh.field('hemjbmh.id_hevgrmh').error( 'Wajib diisi!' );
-					}
+					// id_hevgrmh = edthemxxmh.field('hemjbmh.id_hevgrmh').val();
+					// if(!id_hevgrmh || id_hevgrmh == ''){
+					// 	edthemxxmh.field('hemjbmh.id_hevgrmh').error( 'Wajib diisi!' );
+					// }
 					// END of validasi hemjbmh.id_hevgrmh 
 
 					id_gctxxmh_lahir = edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').val();
@@ -1578,17 +1578,17 @@
 					// END of validasi hemxxmh.kode_finger 
 
 					// BEGIN of validasi hemjbmh.id_hovxxmh 
-					id_hovxxmh = edthemxxmh.field('hemjbmh.id_hovxxmh').val();
-					if(!id_hovxxmh || id_hovxxmh == ''){
-						edthemxxmh.field('hemjbmh.id_hovxxmh').error( 'Wajib diisi!' );
-					}
+					// id_hovxxmh = edthemxxmh.field('hemjbmh.id_hovxxmh').val();
+					// if(!id_hovxxmh || id_hovxxmh == ''){
+					// 	edthemxxmh.field('hemjbmh.id_hovxxmh').error( 'Wajib diisi!' );
+					// }
 					// END of validasi hemjbmh.id_hovxxmh 
 
 					// BEGIN of validasi hemjbmh.id_hodxxmh 
-					id_hodxxmh = edthemxxmh.field('hemjbmh.id_hodxxmh').val();
-					if(!id_hodxxmh || id_hodxxmh == ''){
-						edthemxxmh.field('hemjbmh.id_hodxxmh').error( 'Wajib diisi!' );
-					}
+					// id_hodxxmh = edthemxxmh.field('hemjbmh.id_hodxxmh').val();
+					// if(!id_hodxxmh || id_hodxxmh == ''){
+					// 	edthemxxmh.field('hemjbmh.id_hodxxmh').error( 'Wajib diisi!' );
+					// }
 					// END of validasi hemjbmh.id_hodxxmh 
 
 					// BEGIN of validasi hemjbmh.id_hosxxmh 
@@ -1658,10 +1658,10 @@
 					// END of validasi hemjbmh.id_hesxxmh 
 
 					// BEGIN of validasi hemjbmh.id_holxxmd_2 
-					id_holxxmd_2 = edthemxxmh.field('hemjbmh.id_holxxmd_2').val();
-					if(!id_holxxmd_2 || id_holxxmd_2 == ''){
-						edthemxxmh.field('hemjbmh.id_holxxmd_2').error( 'Wajib diisi!' );
-					}
+					// id_holxxmd_2 = edthemxxmh.field('hemjbmh.id_holxxmd_2').val();
+					// if(!id_holxxmd_2 || id_holxxmd_2 == ''){
+					// 	edthemxxmh.field('hemjbmh.id_holxxmd_2').error( 'Wajib diisi!' );
+					// }
 					// END of validasi hemjbmh.id_holxxmd_2 
 
 					// BEGIN of validasi hemdcmh.id_gtxpkmh 
