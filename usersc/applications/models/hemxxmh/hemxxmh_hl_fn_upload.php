@@ -79,7 +79,13 @@
 					$kode_finger   = $sheetData[$i]['1']; // KODE FINGER
 					$nama          = $sheetData[$i]['2']; // NAMA
 					$bagian        = $sheetData[$i]['4']; // BAGIAN
-					$gender        = $sheetData[$i]['5']; // JENIS KELAMIN
+					$gender = $sheetData[$i]['5']; // JENIS KELAMIN
+
+					if ($gender == 'L') {
+						$gender = 'Laki-laki';
+					} else {
+						$gender = 'Perempuan';
+					}
 
 					// Parsing Tanggal
 					$tanggal_lahir = !empty($sheetData[$i]['6'])
