@@ -44,7 +44,9 @@
 		$spreadsheet = $reader->load($_FILES['filename']['tmp_name']);
 		$sheetData = $spreadsheet->getActiveSheet()->toArray();
 		
-		// --- PENGECEKAN TEMPLATE EXCEL ---
+		// =========================================================
+		// PENGECEKAN TEMPLATE EXCEL
+		// =========================================================
 		$header_first_col = isset($sheetData[0]['0']) ? trim($sheetData[0]['0']) : '';
 
 		if (strtoupper($header_first_col) !== 'NIK KTP') {
@@ -56,14 +58,15 @@
 			require_once( "../../../../usersc/helpers/fn_ajax_results.php" );
 			exit();
 		}
-		// ----------------------------------
+		// =========================================================
 
 		try{
 			$db->transaction();
 			
-			$datakembar = 0;
-			$dataupload = 0;
-			$emptyPeg   = array();
+			$datakembar       = 0;
+			$dataupload       = 0;
+			$emptyPeg         = array();
+			$datakembar_detail = array();
 
 			for($i = 1; $i < count($sheetData); $i++){
 
@@ -93,213 +96,174 @@
 					// Default
 					$is_harian_lepas = 0;
 
-					// Variable untuk tracking proses insert
-					$currentProcess = 'Persiapan data';
+					// =========================================================
+					// AMBIL ID BAGIAN DARI MASTER hobxxmh
+					// =========================================================
+					$qs_hobxxmh = $db
+						->query('select', 'hobxxmh')
+						->get(['id as id_hobxxmh'])
+						->where('nama', $bagian)
+						->exec();
 
-					try {
+					$rs_hobxxmh = $qs_hobxxmh->fetch();
 
-						// =========================================================
-						// 1. AMBIL ID BAGIAN
-						// =========================================================
-						$currentProcess = 'Mencari Master Bagian (hobxxmh)';
+					$id_hobxxmh = isset($rs_hobxxmh['id_hobxxmh'])
+						? $rs_hobxxmh['id_hobxxmh']
+						: 0;
 
-						$qs_hobxxmh = $db
-							->query('select', 'hobxxmh')
-							->get(['id as id_hobxxmh'])
-							->where('nama', $bagian)
-							->exec();
+					if ($id_hobxxmh == 0) {
 
-						$rs_hobxxmh = $qs_hobxxmh->fetch();
-
-						$id_hobxxmh = isset($rs_hobxxmh['id_hobxxmh'])
-							? $rs_hobxxmh['id_hobxxmh']
-							: 0;
-
-						if ($id_hobxxmh == 0) {
-							$emptyPeg[] = array(
-								'rowIndex' => $i + 1,
-								'field'    => 'Bagian tidak ditemukan: ' . $bagian
-							);
-						}
-
-						// =========================================================
-						// 2. CEK DUPLIKASI KODE FINGER
-						// =========================================================
-						$currentProcess = 'Cek duplikasi kode_finger';
-
-						$qs_hem = $db
-							->query('select', 'hemxxmh')
-							->get(['id'])
-							->where('kode_finger', $kode_finger)
-							->exec();
-
-						$rs_hem = $qs_hem->fetch();
-
-						if(!$rs_hem){
-
-							// =====================================================
-							// 3. INSERT hemxxmh
-							// =====================================================
-							$currentProcess = 'Insert hemxxmh';
-
-							$insert_query = $db->raw()
-								->bind(':kode_finger', $kode_finger)
-								->bind(':kode', $kode_finger)
-								->bind(':nama', $nama)
-								->bind(':gender', $gender)
-								->exec('
-									INSERT INTO hemxxmh (
-										kode_finger,
-										kode,
-										nama,
-										gender
-									) VALUES (
-										:kode_finger,
-										:kode,
-										:nama,
-										:gender
-									)
-								');
-
-							// Ambil ID hasil insert
-							$id_hemxxmh = $insert_query->insertId();
-
-							// =====================================================
-							// VALIDASI INSERT hemxxmh
-							// =====================================================
-							if (!$id_hemxxmh) {
-								throw new Exception(
-									'Insert hemxxmh berhasil dijalankan tetapi insertId tidak ditemukan.'
-								);
-							}
-
-							// =====================================================
-							// 4. INSERT hemdcmh
-							// =====================================================
-							$currentProcess = 'Insert hemdcmh';
-
-							$db->raw()
-								->bind(':id_hemxxmh', $id_hemxxmh)
-								->bind(':ktp_no', $ktp_no)
-								->bind(':no_bpjs_tk', $no_bpjs_tk)
-								->bind(':alamat', $alamat)
-								->exec('
-									INSERT INTO hemdcmh (
-										id_hemxxmh,
-										ktp_no,
-										no_bpjs_tk,
-										alamat
-									) VALUES (
-										:id_hemxxmh,
-										:ktp_no,
-										:no_bpjs_tk,
-										:alamat
-									)
-								');
-
-							// =====================================================
-							// 5. INSERT hemjbmh
-							// =====================================================
-							$currentProcess = 'Insert hemjbmh';
-
-							$db->raw()
-								->bind(':id_hemxxmh', $id_hemxxmh)
-								->bind(':id_hobxxmh', $id_hobxxmh)
-								->bind(':tanggal_masuk', $tanggal_masuk)
-								->bind(':is_harian_lepas', $is_harian_lepas)
-								->exec('
-									INSERT INTO hemjbmh (
-										id_hemxxmh,
-										id_hobxxmh,
-										tanggal_masuk,
-										is_harian_lepas
-									) VALUES (
-										:id_hemxxmh,
-										:id_hobxxmh,
-										:tanggal_masuk,
-										:is_harian_lepas
-									)
-								');
-
-							// =====================================================
-							// 6. INSERT hemfmmd
-							// =====================================================
-							$currentProcess = 'Insert hemfmmd';
-
-							$db->raw()
-								->bind(':id_hemxxmh', $id_hemxxmh)
-								->bind(':tanggal_lahir', $tanggal_lahir)
-								->exec('
-									INSERT INTO hemfmmd (
-										id_hemxxmh,
-										tanggal_lahir
-									) VALUES (
-										:id_hemxxmh,
-										:tanggal_lahir
-									)
-								');
-
-							// =====================================================
-							// 7. INSERT hemjbrd
-							// =====================================================
-							$currentProcess = 'Insert hemjbrd';
-
-							$db->raw()
-								->bind(':id_hemxxmh', $id_hemxxmh)
-								->bind(':id_harxxmh', 1)
-								->bind(':is_email_status', 1)
-								->bind(':tanggal_awal', $tanggal_masuk)
-								->exec('
-									INSERT INTO hemjbrd (
-										id_hemxxmh,
-										id_harxxmh,
-										is_email_status,
-										tanggal_awal
-									) VALUES (
-										:id_hemxxmh,
-										:id_harxxmh,
-										:is_email_status,
-										:tanggal_awal
-									)
-								');
-
-							$dataupload++;
-
-						} else {
-
-							$datakembar++;
-						}
-
-					} catch (Throwable $e) {
-
-						// =========================================================
-						// DETAIL ERROR INSERT
-						// =========================================================
-
-						$db->rollback();
-
-						$errorDetail =
-							"Upload gagal pada baris Excel " . ($i + 1) . ".<br>" .
-							"<b>Proses:</b> " . htmlspecialchars($currentProcess) . "<br>" .
-							"<b>NIK KTP:</b> " . htmlspecialchars($ktp_no) . "<br>" .
-							"<b>Kode Finger:</b> " . htmlspecialchars($kode_finger) . "<br>" .
-							"<b>Nama:</b> " . htmlspecialchars($nama) . "<br>" .
-							"<b>Bagian:</b> " . htmlspecialchars($bagian) . "<br>" .
-							"<b>Error:</b> " . htmlspecialchars($e->getMessage());
-
-						$data = array(
-							"message" => $errorDetail,
-							"type_message" => "danger"
+						$emptyPeg[] = array(
+							'rowIndex' => $i + 1,
+							'field'    => 'Bagian tidak ditemukan: ' . $bagian
 						);
+					}
 
-						require_once( "../../../../usersc/helpers/fn_ajax_results.php" );
-						exit();
+					// =========================================================
+					// CEK DUPLIKASI BERDASARKAN kode_finger
+					// =========================================================
+					$qs_hem = $db
+						->query('select', 'hemxxmh')
+						->get([
+							'id',
+							'nama'
+						])
+						->where('kode_finger', $kode_finger)
+						->exec();
+
+					$rs_hem = $qs_hem->fetch();
+
+					if(!$rs_hem){
+
+						// =====================================================
+						// 1. INSERT hemxxmh
+						// =====================================================
+						$insert_query = $db->raw()
+							->bind(':kode_finger', $kode_finger)
+							->bind(':kode', $kode_finger)
+							->bind(':nama', $nama)
+							->bind(':gender', $gender)
+							->exec('
+								INSERT INTO hemxxmh (
+									kode_finger,
+									kode,
+									nama,
+									gender
+								) VALUES (
+									:kode_finger,
+									:kode,
+									:nama,
+									:gender
+								)
+							');
+
+						// Ambil ID hasil insert
+						$id_hemxxmh = $insert_query->insertId();
+
+						// =====================================================
+						// 2. INSERT hemdcmh
+						// =====================================================
+						$db->raw()
+							->bind(':id_hemxxmh', $id_hemxxmh)
+							->bind(':ktp_no', $ktp_no)
+							->bind(':no_bpjs_tk', $no_bpjs_tk)
+							->bind(':alamat', $alamat)
+							->exec('
+								INSERT INTO hemdcmh (
+									id_hemxxmh,
+									ktp_no,
+									no_bpjs_tk,
+									alamat
+								) VALUES (
+									:id_hemxxmh,
+									:ktp_no,
+									:no_bpjs_tk,
+									:alamat
+								)
+							');
+
+						// =====================================================
+						// 3. INSERT hemjbmh
+						// =====================================================
+						$db->raw()
+							->bind(':id_hemxxmh', $id_hemxxmh)
+							->bind(':id_hobxxmh', $id_hobxxmh)
+							->bind(':tanggal_masuk', $tanggal_masuk)
+							->bind(':is_harian_lepas', $is_harian_lepas)
+							->exec('
+								INSERT INTO hemjbmh (
+									id_hemxxmh,
+									id_hobxxmh,
+									tanggal_masuk,
+									is_harian_lepas
+								) VALUES (
+									:id_hemxxmh,
+									:id_hobxxmh,
+									:tanggal_masuk,
+									:is_harian_lepas
+								)
+							');
+
+						// =====================================================
+						// 4. INSERT hemfmmd
+						// =====================================================
+						$db->raw()
+							->bind(':id_hemxxmh', $id_hemxxmh)
+							->bind(':tanggal_lahir', $tanggal_lahir)
+							->exec('
+								INSERT INTO hemfmmd (
+									id_hemxxmh,
+									tanggal_lahir
+								) VALUES (
+									:id_hemxxmh,
+									:tanggal_lahir
+								)
+							');
+
+						// =====================================================
+						// 5. INSERT hemjbrd
+						// =====================================================
+						$db->raw()
+							->bind(':id_hemxxmh', $id_hemxxmh)
+							->bind(':id_harxxmh', 1)
+							->bind(':is_email_status', 1)
+							->bind(':tanggal_awal', $tanggal_masuk)
+							->exec('
+								INSERT INTO hemjbrd (
+									id_hemxxmh,
+									id_harxxmh,
+									is_email_status,
+									tanggal_awal
+								) VALUES (
+									:id_hemxxmh,
+									:id_harxxmh,
+									:is_email_status,
+									:tanggal_awal
+								)
+							');
+
+						$dataupload++;
+
+					} else {
+
+						// =====================================================
+						// DATA KEMBAR
+						// =====================================================
+						$datakembar++;
+
+						$datakembar_detail[] = array(
+							'rowIndex'       => $i + 1,
+							'kode_finger'    => $kode_finger,
+							'nama_excel'     => $nama,
+							'id_hemxxmh'     => $rs_hem['id'],
+							'nama_database'  => $rs_hem['nama']
+						);
 					}
 				}
 			}
 			
 			// =========================================================
-			// VALIDASI MASTER BAGIAN
+			// CEK MASTER BAGIAN
 			// =========================================================
 			if (count($emptyPeg) >= 1) {
 
@@ -325,7 +289,8 @@
 					"message" =>
 						"Master Bagian tidak ditemukan: " .
 						$errorMessage,
-					"type_message" => "danger"
+					"type_message" => "danger",
+					"data_kembar" => $datakembar_detail
 				);
 
 			} else {
@@ -338,17 +303,18 @@
 						$datakembar .
 						" data kembar TIDAK diimport.",
 					"type_message" => "success",
-					"debug" => $emptyPeg
+
+					// Data Bagian yang tidak ditemukan
+					"debug" => $emptyPeg,
+
+					// Data yang dianggap kembar
+					"data_kembar" => $datakembar_detail
 				);
 			}
 
 			$db->commit();
 
 		} catch (Throwable $e) {
-
-			// =========================================================
-			// ERROR TRANSACTION
-			// =========================================================
 
 			try {
 				$db->rollback();
@@ -361,7 +327,10 @@
 					"Upload gagal.<br>" .
 					"<b>Error:</b> " .
 					htmlspecialchars($e->getMessage()),
-				"type_message" => "danger"
+				"type_message" => "danger",
+				"data_kembar" => isset($datakembar_detail)
+					? $datakembar_detail
+					: array()
 			);
 		}
 
@@ -373,6 +342,8 @@
 		);
 	}
 
-	// Tampilkan results
+	// =========================================================
+	// TAMPILKAN RESULTS
+	// =========================================================
     require_once( "../../../../usersc/helpers/fn_ajax_results.php" );
 ?>
