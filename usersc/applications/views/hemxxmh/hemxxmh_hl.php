@@ -899,44 +899,44 @@
 							},
 						}
 					},
-					{
-						label: "Jabatan",
-						name: "hemjbmh.id_hetxxmh",
-						fieldInfo: "Jabatan sesuai Grup Jabatan",
-						type: "select2",
-						opts: {
-							placeholder : "Select",
-							allowClear: true,
-							multiple: false,
-							ajax: {
-								url: "../../models/hetxxmh/hetxxmh_fn_opt.php",
-								dataType: 'json',
-								data: function (params) {
-									var query = {
-										id_hetxxmh_old: id_hetxxmh_old,
-										id_hevgrmh: edthemxxmh.field('hemjbmh.id_hevgrmh').val() || -1,
-										search: params.term || '',
-										page: params.page || 1
-									}
-										return query;
-								},
-								processResults: function (data, params) {
-									return {
-										results: data.results,
-										pagination: {
-											more: true
-										}
-									};
-								},
-								cache: true,
-								minimumInputLength: 1,
-								maximum: 10,
-								delay: 500,
-								maximumSelectionLength: 5,
-								minimumResultsForSearch: -1,
-							},
-						}
-					},
+					// {
+					// 	label: "Jabatan",
+					// 	name: "hemjbmh.id_hetxxmh",
+					// 	fieldInfo: "Jabatan sesuai Grup Jabatan",
+					// 	type: "select2",
+					// 	opts: {
+					// 		placeholder : "Select",
+					// 		allowClear: true,
+					// 		multiple: false,
+					// 		ajax: {
+					// 			url: "../../models/hetxxmh/hetxxmh_fn_opt.php",
+					// 			dataType: 'json',
+					// 			data: function (params) {
+					// 				var query = {
+					// 					id_hetxxmh_old: id_hetxxmh_old,
+					// 					id_hevgrmh: edthemxxmh.field('hemjbmh.id_hevgrmh').val() || -1,
+					// 					search: params.term || '',
+					// 					page: params.page || 1
+					// 				}
+					// 					return query;
+					// 			},
+					// 			processResults: function (data, params) {
+					// 				return {
+					// 					results: data.results,
+					// 					pagination: {
+					// 						more: true
+					// 					}
+					// 				};
+					// 			},
+					// 			cache: true,
+					// 			minimumInputLength: 1,
+					// 			maximum: 10,
+					// 			delay: 500,
+					// 			maximumSelectionLength: 5,
+					// 			minimumResultsForSearch: -1,
+					// 		},
+					// 	}
+					// },
 					{
 						label: "Sub Tipe <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_heyxxmd",
@@ -1606,10 +1606,10 @@
 					// END of validasi hemjbmh.id_hevxxmh 
 
 					// BEGIN of validasi hemjbmh.id_hobxxmh 
-					id_hobxxmh = edthemxxmh.field('hemjbmh.id_hobxxmh').val();
-					if(!id_hobxxmh || id_hobxxmh == ''){
-						edthemxxmh.field('hemjbmh.id_hobxxmh').error( 'Wajib diisi!' );
-					}
+					// id_hobxxmh = edthemxxmh.field('hemjbmh.id_hobxxmh').val();
+					// if(!id_hobxxmh || id_hobxxmh == ''){
+					// 	edthemxxmh.field('hemjbmh.id_hobxxmh').error( 'Wajib diisi!' );
+					// }
 					// END of validasi hemjbmh.id_hobxxmh 
 
 					is_npwp = edthemxxmh.field('hemdcmh.is_npwp').val();
