@@ -4898,8 +4898,8 @@
 										'</div>'
 								});
 								$("#inputfilethimport_hl").val('');
-								tblhemxxmh_hl.rows().deselect();
-								tblhemxxmh_hl.ajax.reload(function ( json ) {
+								tblhemxxmh.rows().deselect();
+								tblhemxxmh.ajax.reload(function ( json ) {
 									notifyprogress.close();
 								}, false);
 							},
