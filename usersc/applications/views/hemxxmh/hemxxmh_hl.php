@@ -660,7 +660,8 @@
 						def: 1
 					},		
 					{
-						label: "Nama <sup class='text-danger'>*<sup>",
+						label: "Nama ",
+						// label: "Nama <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.nama"
 					}, 	
 					{
@@ -693,23 +694,28 @@
 						name: "hemxxmh.jumlah_anak"
 					}, 	
 					{
-						label: "Kode <sup class='text-danger'>*<sup>",
+						label: "Kode ",
+						// label: "Kode <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.kode"
 					}, 	
 					{
-						label: "Kode Finger<sup class='text-danger'>*<sup>",
+						label: "Kode Finger",
+						// label: "Kode Finger<sup class='text-danger'>*<sup>",
 						name: "hemxxmh.kode_finger"
 					}, 	
 					{
-						label: "No KTP <sup class='text-danger'>*<sup>",
+						label: "No KTP ",
+						// label: "No KTP <sup class='text-danger'>*<sup>",
 						name: "hemdcmh.ktp_no"
 					}, 	
 					{
-						label: "No BPJS TK <sup class='text-danger'>*<sup>",
+						label: "No BPJS TK ",
+						// label: "No BPJS TK <sup class='text-danger'>*<sup>",
 						name: "hemdcmh.no_bpjs_tk"
 					}, 	
 					{
-						label: "No BPJS Kesehatan <sup class='text-danger'>*<sup>",
+						label: "No BPJS Kesehatan ",
+						// label: "No BPJS Kesehatan <sup class='text-danger'>*<sup>",
 						name: "hemdcmh.no_bpjs_kes"
 					}, 
 					{
@@ -823,7 +829,8 @@
 						}
 					},
 					{
-						label: "Unit Kerja <sup class='text-danger'>*<sup>",
+						label: "Unit Kerja ",
+						// label: "Unit Kerja <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_hosxxmh",
 						type: "select2",
 						opts: {
@@ -972,7 +979,8 @@
 					// 	}
 					// },
 					{
-						label: "Sub Tipe <sup class='text-danger'>*<sup>",
+						label: "Sub Tipe ",
+						// label: "Sub Tipe <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_heyxxmd",
 						type: "select2",
 						opts: {
@@ -1009,7 +1017,8 @@
 						}
 					},
 					{
-						label: "Tipe <sup class='text-danger'>*<sup>",
+						label: "Tipe ",
+						// label: "Tipe <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_heyxxmh",
 						type: "select2",
 						opts: {
@@ -1046,7 +1055,8 @@
 						}
 					},
 					{
-						label: "Status <sup class='text-danger'>*<sup>",
+						label: "Status ",
+						// label: "Status <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.id_hesxxmh",
 						type: "select2",
 						opts: {
@@ -1146,7 +1156,8 @@
 						format: 'DD MMM YYYY'
 					},
 					{
-						label: "Grup Hari Kerja <sup class='text-danger'>*<sup>",
+						label: "Grup Hari Kerja ",
+						// label: "Grup Hari Kerja <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.grup_hk",
 						type: "select",
 						placeholder : "Select",
@@ -1156,7 +1167,8 @@
 						]
 					},
 					{
-						label: "4 Grup <sup class='text-danger'>*<sup>",
+						label: "4 Grup ",
+						// label: "4 Grup <sup class='text-danger'>*<sup>",
 						name: "hemjbmh.jumlah_grup",
 						type: "select",
 						placeholder : "Select",
@@ -1166,7 +1178,8 @@
 						]
 					},
 					{
-						label: "Potong Makan <sup class='text-danger'>*<sup>",
+						label: "Potong Makan ",
+						// label: "Potong Makan <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.is_pot_makan",
 						fieldInfo: "Catering = Tidak dipotong makan.",
 						type: "select2",
@@ -1177,7 +1190,8 @@
 						]
 					},
 					{
-						label: "Tukar Jadwal <sup class='text-danger'>*<sup>",
+						label: "Tukar Jadwal ",
+						// label: "Tukar Jadwal <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.is_tukar",
 						type: "select2",
 						options: [
@@ -1200,7 +1214,8 @@
 						]
 					},
 					{
-						label: "PTKP <sup class='text-danger'>*<sup>",
+						label: "PTKP ",
+						// label: "PTKP <sup class='text-danger'>*<sup>",
 						name: "hemdcmh.id_gtxpkmh",
 						type: "select2",
 						opts: {
@@ -1236,7 +1251,8 @@
 						}
 					},
 					{
-						label: "NPWP <sup class='text-danger'>*<sup>",
+						label: "NPWP ",
+						// label: "NPWP <sup class='text-danger'>*<sup>",
 						name: "hemdcmh.is_npwp",
 						type: "select2",
 						options: [
@@ -1245,16 +1261,19 @@
 						]
 					},
 					{
-						label: "No NPWP <sup class='text-danger'>*<sup>" ,
+						label: "No NPWP " ,
+						// label: "No NPWP <sup class='text-danger'>*<sup>" ,
 						name: "hemdcmh.npwp_no"
 					},
 					{
-						label: "Alamat NPWP <sup class='text-danger'>*<sup>" ,
+						label: "Alamat NPWP " ,
+						// label: "Alamat NPWP <sup class='text-danger'>*<sup>" ,
 						name: "hemdcmh.npwp_alamat",
 						type: "textarea"
 					},
 					{
-						label: "Gender <sup class='text-danger'>*<sup>",
+						label: "Gender ",
+						// label: "Gender <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.gender",
 						type: "select2",
 						options: [
@@ -1263,7 +1282,8 @@
 						]
 					},
 					{
-						label: "Kota Lahir <sup class='text-danger'>*<sup>",
+						label: "Kota Lahir ",
+						// label: "Kota Lahir <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.id_gctxxmh_lahir",
 						type: "select2",
 						opts: {
@@ -1371,7 +1391,8 @@
 						}
 					},
 					{
-						label: "Tanggal Lahir  <sup class='text-danger'>*<sup>",
+						label: "Tanggal Lahir  ",
+						// label: "Tanggal Lahir  <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.tanggal_lahir",
 						type: "datetime",
 						opts:{
@@ -1489,237 +1510,237 @@
 					// }
 					// END of validasi hemjbmh.id_hevgrmh 
 
-					id_gctxxmh_lahir = edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').val();
-					if(!id_gctxxmh_lahir || id_gctxxmh_lahir == ''){
-						edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').error( 'Wajib diisi!' );
-					}
-					
-					gender = edthemxxmh.field('hemxxmh.gender').val();
-					if(!gender || gender == ''){
-						edthemxxmh.field('hemxxmh.gender').error( 'Wajib diisi!' );
-					}
-
-					tanggal_lahir = edthemxxmh.field('hemxxmh.tanggal_lahir').val();
-					if(!tanggal_lahir || tanggal_lahir == ''){
-						edthemxxmh.field('hemxxmh.tanggal_lahir').error( 'Wajib diisi!' );
-					}
-					
-					// BEGIN of validasi hemxxmh.kode 
-					kode = edthemxxmh.field('hemxxmh.kode').val();
-					if(!kode || kode == ''){
-						edthemxxmh.field('hemxxmh.kode').error( 'Wajib diisi!' );
-					}
-					
-					// BEGIN of cek unik hemxxmh.kode 
-					if(action == 'create'){
-						id_hemxxmh = 0;
-					}
-					
-					$.ajax( {
-						url: '../../../helpers/validate_fn_unique.php',
-						dataType: 'json',
-						type: 'POST',
-						async: false,
-						data: {
-							table_name: 'hemxxmh',
-							nama_field: 'kode',
-							nama_field_value: '"'+kode+'"',
-							id_transaksi: id_hemxxmh
-						},
-						success: function ( json ) {
-							if(json.data.count == 1){
-								edthemxxmh.field('hemxxmh.kode').error( 'Data tidak boleh kembar!' );
-							}
-						}
-					} );
-					// END of cek unik hemxxmh.kode 
-					// END of validasi hemxxmh.kode 
-
-					// BEGIN of validasi hemxxmh.nama 
-					nama = edthemxxmh.field('hemxxmh.nama').val();
-					if(!nama || nama == ''){
-						edthemxxmh.field('hemxxmh.nama').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemxxmh.nama 
-					
-					// BEGIN of validasi hemxxmh.is_pot_makan 
-					is_pot_makan = edthemxxmh.field('hemxxmh.is_pot_makan').val();
-					if(!is_pot_makan || is_pot_makan == ''){
-						edthemxxmh.field('hemxxmh.is_pot_makan').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemxxmh.is_pot_makan 
-					
-					// BEGIN of validasi hemxxmh.is_tukar 
-					is_tukar = edthemxxmh.field('hemxxmh.is_tukar').val();
-					if(!is_tukar || is_tukar == ''){
-						edthemxxmh.field('hemxxmh.is_tukar').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemxxmh.is_tukar 
-
-					// BEGIN of validasi hemdcmh.ktp_no 
-					ktp_no = edthemxxmh.field('hemdcmh.ktp_no').val();
-					if(!ktp_no || ktp_no == ''){
-						edthemxxmh.field('hemdcmh.ktp_no').error( 'Wajib diisi!' );
-					}
-					// validasi min atau max angka
-					if(ktp_no <= 0 ){
-						edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus > 0' );
-					}
-					
-					// validasi angka
-					if(isNaN(ktp_no) ){
-						edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus berupa Angka!' );
-					}
-					// END of validasi hemxxmh.kode_finger 
-
-					// BEGIN of validasi hemdcmh.no_bpjs_kes 
-					no_bpjs_kes = edthemxxmh.field('hemdcmh.no_bpjs_kes').val();
-					if(!no_bpjs_kes || no_bpjs_kes == ''){
-						edthemxxmh.field('hemdcmh.no_bpjs_kes').error( 'Wajib diisi!' );
-					}
-					// validasi min atau max angka
-					if(no_bpjs_kes <= 0 ){
-						edthemxxmh.field('hemdcmh.no_bpjs_kes').error( 'Inputan harus > 0' );
-					}
-					
-					// validasi angka
-					if(isNaN(no_bpjs_kes) ){
-						edthemxxmh.field('hemdcmh.no_bpjs_kes').error( 'Inputan harus berupa Angka!' );
-					}
-					// END of validasi hemxxmh.no_bpjs_kes 
-
-					// BEGIN of validasi hemdcmh.no_bpjs_tk 
-					no_bpjs_tk = edthemxxmh.field('hemdcmh.no_bpjs_tk').val();
-					if(!no_bpjs_tk || no_bpjs_tk == ''){
-						edthemxxmh.field('hemdcmh.no_bpjs_tk').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemxxmh.no_bpjs_tk 
-
-					// BEGIN of validasi hemxxmh.kode_finger 
-					kode_finger = edthemxxmh.field('hemxxmh.kode_finger').val();
-					if(!kode_finger || kode_finger == ''){
-						edthemxxmh.field('hemxxmh.kode_finger').error( 'Wajib diisi!' );
-					}
-					// validasi min atau max angka
-					if(kode_finger <= 0 ){
-						edthemxxmh.field('hemxxmh.kode_finger').error( 'Inputan harus > 0' );
-					}
-					
-					// validasi angka
-					if(isNaN(kode_finger) ){
-						edthemxxmh.field('hemxxmh.kode_finger').error( 'Inputan harus berupa Angka!' );
-					}
-					// END of validasi hemxxmh.kode_finger 
-
-					// BEGIN of validasi hemjbmh.id_hovxxmh 
-					// id_hovxxmh = edthemxxmh.field('hemjbmh.id_hovxxmh').val();
-					// if(!id_hovxxmh || id_hovxxmh == ''){
-					// 	edthemxxmh.field('hemjbmh.id_hovxxmh').error( 'Wajib diisi!' );
+					// id_gctxxmh_lahir = edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').val();
+					// if(!id_gctxxmh_lahir || id_gctxxmh_lahir == ''){
+					// 	edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').error( 'Wajib diisi!' );
 					// }
-					// END of validasi hemjbmh.id_hovxxmh 
-
-					// BEGIN of validasi hemjbmh.id_hodxxmh 
-					// id_hodxxmh = edthemxxmh.field('hemjbmh.id_hodxxmh').val();
-					// if(!id_hodxxmh || id_hodxxmh == ''){
-					// 	edthemxxmh.field('hemjbmh.id_hodxxmh').error( 'Wajib diisi!' );
+					
+					// gender = edthemxxmh.field('hemxxmh.gender').val();
+					// if(!gender || gender == ''){
+					// 	edthemxxmh.field('hemxxmh.gender').error( 'Wajib diisi!' );
 					// }
-					// END of validasi hemjbmh.id_hodxxmh 
 
-					// BEGIN of validasi hemjbmh.id_hosxxmh 
-					id_hosxxmh = edthemxxmh.field('hemjbmh.id_hosxxmh').val();
-					if(!id_hosxxmh || id_hosxxmh == ''){
-						edthemxxmh.field('hemjbmh.id_hosxxmh').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.id_hosxxmh 
-
-					// BEGIN of validasi hemjbmh.id_hevxxmh 
-					// id_hevxxmh = edthemxxmh.field('hemjbmh.id_hevxxmh').val();
-					// if(!id_hevxxmh || id_hevxxmh == ''){
-					// 	edthemxxmh.field('hemjbmh.id_hevxxmh').error( 'Wajib diisi!' );
+					// tanggal_lahir = edthemxxmh.field('hemxxmh.tanggal_lahir').val();
+					// if(!tanggal_lahir || tanggal_lahir == ''){
+					// 	edthemxxmh.field('hemxxmh.tanggal_lahir').error( 'Wajib diisi!' );
 					// }
-					// END of validasi hemjbmh.id_hevxxmh 
-
-					// BEGIN of validasi hemjbmh.id_hobxxmh 
-					// id_hobxxmh = edthemxxmh.field('hemjbmh.id_hobxxmh').val();
-					// if(!id_hobxxmh || id_hobxxmh == ''){
-					// 	edthemxxmh.field('hemjbmh.id_hobxxmh').error( 'Wajib diisi!' );
+					
+					// // BEGIN of validasi hemxxmh.kode 
+					// kode = edthemxxmh.field('hemxxmh.kode').val();
+					// if(!kode || kode == ''){
+					// 	edthemxxmh.field('hemxxmh.kode').error( 'Wajib diisi!' );
 					// }
-					// END of validasi hemjbmh.id_hobxxmh 
+					
+					// // BEGIN of cek unik hemxxmh.kode 
+					// if(action == 'create'){
+					// 	id_hemxxmh = 0;
+					// }
+					
+					// $.ajax( {
+					// 	url: '../../../helpers/validate_fn_unique.php',
+					// 	dataType: 'json',
+					// 	type: 'POST',
+					// 	async: false,
+					// 	data: {
+					// 		table_name: 'hemxxmh',
+					// 		nama_field: 'kode',
+					// 		nama_field_value: '"'+kode+'"',
+					// 		id_transaksi: id_hemxxmh
+					// 	},
+					// 	success: function ( json ) {
+					// 		if(json.data.count == 1){
+					// 			edthemxxmh.field('hemxxmh.kode').error( 'Data tidak boleh kembar!' );
+					// 		}
+					// 	}
+					// } );
+					// // END of cek unik hemxxmh.kode 
+					// // END of validasi hemxxmh.kode 
 
-					is_npwp = edthemxxmh.field('hemdcmh.is_npwp').val();
-					if(!is_npwp || is_npwp == ''){
-						edthemxxmh.field('hemdcmh.is_npwp').error( 'Wajib diisi!' );
-					}
-					if (is_npwp == 1) {
-						// BEGIN of validasi hemdcmh.npwp_no 
-						npwp_no = edthemxxmh.field('hemdcmh.npwp_no').val();
-						if(!npwp_no || npwp_no == ''){
-							edthemxxmh.field('hemdcmh.npwp_no').error( 'Wajib diisi!' );
-						}
+					// // BEGIN of validasi hemxxmh.nama 
+					// nama = edthemxxmh.field('hemxxmh.nama').val();
+					// if(!nama || nama == ''){
+					// 	edthemxxmh.field('hemxxmh.nama').error( 'Wajib diisi!' );
+					// }
+					// // END of validasi hemxxmh.nama 
+					
+					// // BEGIN of validasi hemxxmh.is_pot_makan 
+					// is_pot_makan = edthemxxmh.field('hemxxmh.is_pot_makan').val();
+					// if(!is_pot_makan || is_pot_makan == ''){
+					// 	edthemxxmh.field('hemxxmh.is_pot_makan').error( 'Wajib diisi!' );
+					// }
+					// // END of validasi hemxxmh.is_pot_makan 
+					
+					// // BEGIN of validasi hemxxmh.is_tukar 
+					// is_tukar = edthemxxmh.field('hemxxmh.is_tukar').val();
+					// if(!is_tukar || is_tukar == ''){
+					// 	edthemxxmh.field('hemxxmh.is_tukar').error( 'Wajib diisi!' );
+					// }
+					// // END of validasi hemxxmh.is_tukar 
+
+					// // BEGIN of validasi hemdcmh.ktp_no 
+					// ktp_no = edthemxxmh.field('hemdcmh.ktp_no').val();
+					// if(!ktp_no || ktp_no == ''){
+					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Wajib diisi!' );
+					// }
+					// // validasi min atau max angka
+					// if(ktp_no <= 0 ){
+					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus > 0' );
+					// }
+					
+					// // validasi angka
+					// if(isNaN(ktp_no) ){
+					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus berupa Angka!' );
+					// }
+					// // END of validasi hemxxmh.kode_finger 
+
+					// // BEGIN of validasi hemdcmh.no_bpjs_kes 
+					// no_bpjs_kes = edthemxxmh.field('hemdcmh.no_bpjs_kes').val();
+					// if(!no_bpjs_kes || no_bpjs_kes == ''){
+					// 	edthemxxmh.field('hemdcmh.no_bpjs_kes').error( 'Wajib diisi!' );
+					// }
+					// // validasi min atau max angka
+					// if(no_bpjs_kes <= 0 ){
+					// 	edthemxxmh.field('hemdcmh.no_bpjs_kes').error( 'Inputan harus > 0' );
+					// }
+					
+					// // validasi angka
+					// if(isNaN(no_bpjs_kes) ){
+					// 	edthemxxmh.field('hemdcmh.no_bpjs_kes').error( 'Inputan harus berupa Angka!' );
+					// }
+					// // END of validasi hemxxmh.no_bpjs_kes 
+
+					// // BEGIN of validasi hemdcmh.no_bpjs_tk 
+					// no_bpjs_tk = edthemxxmh.field('hemdcmh.no_bpjs_tk').val();
+					// if(!no_bpjs_tk || no_bpjs_tk == ''){
+					// 	edthemxxmh.field('hemdcmh.no_bpjs_tk').error( 'Wajib diisi!' );
+					// }
+					// // END of validasi hemxxmh.no_bpjs_tk 
+
+					// // BEGIN of validasi hemxxmh.kode_finger 
+					// kode_finger = edthemxxmh.field('hemxxmh.kode_finger').val();
+					// if(!kode_finger || kode_finger == ''){
+					// 	edthemxxmh.field('hemxxmh.kode_finger').error( 'Wajib diisi!' );
+					// }
+					// // validasi min atau max angka
+					// if(kode_finger <= 0 ){
+					// 	edthemxxmh.field('hemxxmh.kode_finger').error( 'Inputan harus > 0' );
+					// }
+					
+					// // validasi angka
+					// if(isNaN(kode_finger) ){
+					// 	edthemxxmh.field('hemxxmh.kode_finger').error( 'Inputan harus berupa Angka!' );
+					// }
+					// // END of validasi hemxxmh.kode_finger 
+
+					// // BEGIN of validasi hemjbmh.id_hovxxmh 
+					// // id_hovxxmh = edthemxxmh.field('hemjbmh.id_hovxxmh').val();
+					// // if(!id_hovxxmh || id_hovxxmh == ''){
+					// // 	edthemxxmh.field('hemjbmh.id_hovxxmh').error( 'Wajib diisi!' );
+					// // }
+					// // END of validasi hemjbmh.id_hovxxmh 
+
+					// // BEGIN of validasi hemjbmh.id_hodxxmh 
+					// // id_hodxxmh = edthemxxmh.field('hemjbmh.id_hodxxmh').val();
+					// // if(!id_hodxxmh || id_hodxxmh == ''){
+					// // 	edthemxxmh.field('hemjbmh.id_hodxxmh').error( 'Wajib diisi!' );
+					// // }
+					// // END of validasi hemjbmh.id_hodxxmh 
+
+					// // BEGIN of validasi hemjbmh.id_hosxxmh 
+					// id_hosxxmh = edthemxxmh.field('hemjbmh.id_hosxxmh').val();
+					// if(!id_hosxxmh || id_hosxxmh == ''){
+					// 	edthemxxmh.field('hemjbmh.id_hosxxmh').error( 'Wajib diisi!' );
+					// }
+					// // END of validasi hemjbmh.id_hosxxmh 
+
+					// // BEGIN of validasi hemjbmh.id_hevxxmh 
+					// // id_hevxxmh = edthemxxmh.field('hemjbmh.id_hevxxmh').val();
+					// // if(!id_hevxxmh || id_hevxxmh == ''){
+					// // 	edthemxxmh.field('hemjbmh.id_hevxxmh').error( 'Wajib diisi!' );
+					// // }
+					// // END of validasi hemjbmh.id_hevxxmh 
+
+					// // BEGIN of validasi hemjbmh.id_hobxxmh 
+					// // id_hobxxmh = edthemxxmh.field('hemjbmh.id_hobxxmh').val();
+					// // if(!id_hobxxmh || id_hobxxmh == ''){
+					// // 	edthemxxmh.field('hemjbmh.id_hobxxmh').error( 'Wajib diisi!' );
+					// // }
+					// // END of validasi hemjbmh.id_hobxxmh 
+
+					// is_npwp = edthemxxmh.field('hemdcmh.is_npwp').val();
+					// if(!is_npwp || is_npwp == ''){
+					// 	edthemxxmh.field('hemdcmh.is_npwp').error( 'Wajib diisi!' );
+					// }
+					// if (is_npwp == 1) {
+					// 	// BEGIN of validasi hemdcmh.npwp_no 
+					// 	npwp_no = edthemxxmh.field('hemdcmh.npwp_no').val();
+					// 	if(!npwp_no || npwp_no == ''){
+					// 		edthemxxmh.field('hemdcmh.npwp_no').error( 'Wajib diisi!' );
+					// 	}
 								
-						if(isNaN(npwp_no) ){
-							edthemxxmh.field('hemdcmh.npwp_no').error( 'Inputan harus berupa Angka!' );
-						}
-						// END of validasi hemdcmh.npwp_no 
+					// 	if(isNaN(npwp_no) ){
+					// 		edthemxxmh.field('hemdcmh.npwp_no').error( 'Inputan harus berupa Angka!' );
+					// 	}
+					// 	// END of validasi hemdcmh.npwp_no 
 
-						// BEGIN of validasi hemdcmh.npwp_alamat 
-						npwp_alamat = edthemxxmh.field('hemdcmh.npwp_alamat').val();
-						if(!npwp_alamat || npwp_alamat == ''){
-							edthemxxmh.field('hemdcmh.npwp_alamat').error( 'Wajib diisi!' );
-						}
-						// END of validasi hemdcmh.npwp_alamat 
-					}
-
-					// BEGIN of validasi hemjbmh.id_heyxxmd 
-					id_heyxxmd = edthemxxmh.field('hemjbmh.id_heyxxmd').val();
-					if(!id_heyxxmd || id_heyxxmd == ''){
-						edthemxxmh.field('hemjbmh.id_heyxxmd').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.id_heyxxmd 
-
-					// BEGIN of validasi hemjbmh.jumlah_grup 
-					jumlah_grup = edthemxxmh.field('hemjbmh.jumlah_grup').val();
-					if(!jumlah_grup || jumlah_grup == ''){
-						edthemxxmh.field('hemjbmh.jumlah_grup').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.jumlah_grup 
-
-					// BEGIN of validasi hemjbmh.id_hesxxmh 
-					id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
-					if(!id_hesxxmh || id_hesxxmh == ''){
-						edthemxxmh.field('hemjbmh.id_hesxxmh').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.id_hesxxmh 
-
-					// BEGIN of validasi hemjbmh.id_holxxmd_2 
-					// id_holxxmd_2 = edthemxxmh.field('hemjbmh.id_holxxmd_2').val();
-					// if(!id_holxxmd_2 || id_holxxmd_2 == ''){
-					// 	edthemxxmh.field('hemjbmh.id_holxxmd_2').error( 'Wajib diisi!' );
+					// 	// BEGIN of validasi hemdcmh.npwp_alamat 
+					// 	npwp_alamat = edthemxxmh.field('hemdcmh.npwp_alamat').val();
+					// 	if(!npwp_alamat || npwp_alamat == ''){
+					// 		edthemxxmh.field('hemdcmh.npwp_alamat').error( 'Wajib diisi!' );
+					// 	}
+					// 	// END of validasi hemdcmh.npwp_alamat 
 					// }
-					// END of validasi hemjbmh.id_holxxmd_2 
 
-					// BEGIN of validasi hemdcmh.id_gtxpkmh 
-					id_gtxpkmh = edthemxxmh.field('hemdcmh.id_gtxpkmh').val();
-					if(!id_gtxpkmh || id_gtxpkmh == ''){
-						edthemxxmh.field('hemdcmh.id_gtxpkmh').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemdcmh.id_gtxpkmh 
+					// // BEGIN of validasi hemjbmh.id_heyxxmd 
+					// id_heyxxmd = edthemxxmh.field('hemjbmh.id_heyxxmd').val();
+					// if(!id_heyxxmd || id_heyxxmd == ''){
+					// 	edthemxxmh.field('hemjbmh.id_heyxxmd').error( 'Wajib diisi!' );
+					// }
+					// // END of validasi hemjbmh.id_heyxxmd 
 
-					// BEGIN of validasi hemjbmh.tanggal_masuk 
-					tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
-					if(!tanggal_masuk || tanggal_masuk == ''){
-						edthemxxmh.field('hemjbmh.tanggal_masuk').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.tanggal_masuk 
+					// // BEGIN of validasi hemjbmh.jumlah_grup 
+					// jumlah_grup = edthemxxmh.field('hemjbmh.jumlah_grup').val();
+					// if(!jumlah_grup || jumlah_grup == ''){
+					// 	edthemxxmh.field('hemjbmh.jumlah_grup').error( 'Wajib diisi!' );
+					// }
+					// // END of validasi hemjbmh.jumlah_grup 
 
-					if (action == 'create') {
-						// BEGIN of validasi hemjbmh.grup_hk 
-						grup_hk = edthemxxmh.field('hemjbmh.grup_hk').val();
-						if(!grup_hk || grup_hk == ''){
-							edthemxxmh.field('hemjbmh.grup_hk').error( 'Wajib diisi!' );
-						}
-						// END of validasi hemjbmh.grup_hk 
-					}
+					// // BEGIN of validasi hemjbmh.id_hesxxmh 
+					// id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
+					// if(!id_hesxxmh || id_hesxxmh == ''){
+					// 	edthemxxmh.field('hemjbmh.id_hesxxmh').error( 'Wajib diisi!' );
+					// }
+					// // END of validasi hemjbmh.id_hesxxmh 
+
+					// // BEGIN of validasi hemjbmh.id_holxxmd_2 
+					// // id_holxxmd_2 = edthemxxmh.field('hemjbmh.id_holxxmd_2').val();
+					// // if(!id_holxxmd_2 || id_holxxmd_2 == ''){
+					// // 	edthemxxmh.field('hemjbmh.id_holxxmd_2').error( 'Wajib diisi!' );
+					// // }
+					// // END of validasi hemjbmh.id_holxxmd_2 
+
+					// // BEGIN of validasi hemdcmh.id_gtxpkmh 
+					// id_gtxpkmh = edthemxxmh.field('hemdcmh.id_gtxpkmh').val();
+					// if(!id_gtxpkmh || id_gtxpkmh == ''){
+					// 	edthemxxmh.field('hemdcmh.id_gtxpkmh').error( 'Wajib diisi!' );
+					// }
+					// // END of validasi hemdcmh.id_gtxpkmh 
+
+					// // BEGIN of validasi hemjbmh.tanggal_masuk 
+					// tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
+					// if(!tanggal_masuk || tanggal_masuk == ''){
+					// 	edthemxxmh.field('hemjbmh.tanggal_masuk').error( 'Wajib diisi!' );
+					// }
+					// // END of validasi hemjbmh.tanggal_masuk 
+
+					// if (action == 'create') {
+					// 	// BEGIN of validasi hemjbmh.grup_hk 
+					// 	grup_hk = edthemxxmh.field('hemjbmh.grup_hk').val();
+					// 	if(!grup_hk || grup_hk == ''){
+					// 		edthemxxmh.field('hemjbmh.grup_hk').error( 'Wajib diisi!' );
+					// 	}
+					// 	// END of validasi hemjbmh.grup_hk 
+					// }
 				}
 				
 				if ( edthemxxmh.inError() ) {
