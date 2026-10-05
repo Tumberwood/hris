@@ -1456,11 +1456,11 @@
 					edthemxxmh.field('status_aktif').show();
 					edthemxxmh.field('status_aktif').val(is_active);
 					edthemxxmh.field('hemjbmh.grup_hk').hide();
-					edthemxxmh.field('hemjbmh.jumlah_grup').disable();
+					// edthemxxmh.field('hemjbmh.jumlah_grup').disable();
 					edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').hide();
 				} else {
 					edthemxxmh.field('hemjbmh.grup_hk').show();
-					edthemxxmh.field('hemjbmh.jumlah_grup').enable();
+					// edthemxxmh.field('hemjbmh.jumlah_grup').enable();
 					edthemxxmh.field('hemjbmh.tanggal_akhir_kontrak').show();
 				}
 			});

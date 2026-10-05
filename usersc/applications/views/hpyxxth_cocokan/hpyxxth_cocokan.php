@@ -45,113 +45,6 @@
 </style>
 <!-- begin content here -->
 
-<div class="modal" id="modalUpload" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content animated bounceInRight">
-			<form class="form-horizontal" id="frmUploadMaster" enctype="multipart/form-data">
-				<div class="modal-header">
-					<h4 class="modal-title">Upload Excel</h4>
-				</div>
-				<div class="modal-body">
-					<div class="form-group row">
-						<label class="col-lg-2 col-form-label">File Excel</label>
-						<div class="col-sm-4">
-							<div class="input-group">
-								<input type="file" name="filename" class="form-control" id="frmUploadItem">
-							</div>
-						</div>
-						<div class="col-sm-4">
-							<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/template_payroll.xlsx');">
-								<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
-							</button>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-					<button class="btn btn-primary" type="submit" id="submitUpload">Submit</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-
-<!-- Breakdown -->
-<div class="modal fade" id="modalBreakdown" tabindex="-1" role="dialog" aria-labelledby="myModal1Label" aria-hidden="true">
-  <div class="modal-dialog modal-xxl" role="document">
-    <div class="modal-content">
-      
-      <div class="modal-header">
-        <h3 class="modal-title" id="myModal1Label"></h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <div class="modal-body">
-		<div class="table-responsive">
-			<div class="row">
-				<div class="col-12">
-					<h3 id="text_upah">Potongan Upah</h3>
-					<table id="potongan_upah" class="table table-striped table-bordered table-hover nowrap" width="100%">
-						<thead>
-							<tr>
-								<th>Tanggal</th>
-								<th>Status Jadwal</th>
-								<th>Status In</th>
-								<th>Status Out</th>
-								<th>Pot Upah</th>
-							</tr>
-						</thead>
-					</table>
-				</div>
-
-				<div class="col-12">
-					<h3 id="text_premi">Potongan Premi</h3>
-					<table id="potongan_premi" class="table table-striped table-bordered table-hover nowrap" width="100%">
-						<thead>
-							<tr>
-								<th>Tanggal</th>
-								<th>Status Jadwal</th>
-								<th>Status In</th>
-								<th>Status Out</th>
-								<th>Pot Premi</th>
-							</tr>
-						</thead>
-					</table>
-				</div>
-
-				<div class="col-12">
-					<h3 id="text_lembur">Data Lembur</h3>
-					<table id="data_lembur" class="table table-striped table-bordered table-hover nowrap" width="100%">
-						<thead>
-							<tr>
-								<th>Tanggal</th>
-								<th>SPKL</th>
-								<th>Jenis Lembur</th>
-								<th>Status Istirahat</th>
-								<th>Durasi SPKL</th>
-								<th>Pot TI</th>
-								<th>Pot Overtime</th>
-								<th>Pot HK</th>
-								<th>Pot Jam</th>
-								<th>Lembur Final</th>
-							</tr>
-						</thead>
-					</table>
-				</div>
-			</div>
-		</div>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
 <div class="row">
 	<div class="col">
 		<div class="ibox ">
@@ -171,14 +64,7 @@
                     </table>
 					<div class="tabs-container">
 						<ul class="nav nav-tabs" role="tablist">
-							<li><a class="nav-link active" data-toggle="tab" href="#tabhpyemtd_karyawan"> Tetap</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kontrak"> Kontrak</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_reg"> KBM Reguler</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kbm_tr"> KBM Pelatihan</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_kmj" style="display: none"> KMJ</a></li>
-							<li id="tab_freelance"><a class="nav-link" data-toggle="tab" href="#tabhpyemtd_freelance" style="display: none"> Freelance</a></li>
-							
-							<li><a class="nav-link" data-toggle="tab" href="#tabpentunjuk"> Petunjuk</a></li>
+							<li><a class="nav-link active" data-toggle="tab" href="#tabhpyemtd_karyawan"> Detail</a></li>
 						</ul>
 						<div class="tab-content">
 							<div role="tabpanel" id="tabhpyemtd_karyawan" class="tab-pane active">
