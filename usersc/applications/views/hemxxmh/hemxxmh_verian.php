@@ -596,7 +596,7 @@
 			//start datatables editor
 			edthemxxmh = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/hemxxmh/hemxxmh.php",
+					url: "../../models/hemxxmh/hemxxmh_all.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_hemxxmh = show_inactive_status_hemxxmh;
@@ -1740,7 +1740,7 @@
 					}
 				],
 				ajax: {
-					url: "../../models/hemxxmh/hemxxmh.php",
+					url: "../../models/hemxxmh/hemxxmh_all.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_hemxxmh = show_inactive_status_hemxxmh;
@@ -1811,9 +1811,9 @@
 						data: "hemxxmh.is_active",
 						render: function (data){
 							if (data == 0){
-								return '<i class="fa fa-remove text-danger"></i>';
+								return 'Tidak';
 							}else if(data == 1){
-								return '<i class="fa fa-check text-navy"></i>';
+								return 'Ya';
 							}else if(data == -9){
 								return '<span class="text-danger">Data Error</span>';
 							}

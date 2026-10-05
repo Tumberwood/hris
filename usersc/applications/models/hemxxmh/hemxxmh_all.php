@@ -1,0 +1,239 @@
+<?php
+	include( "../../../../users/init.php" );
+	include( "../../../../usersc/lib/DataTables.php" );
+	
+	use Carbon\Carbon;
+	use
+		DataTables\Editor,
+		DataTables\Editor\Field,
+		DataTables\Editor\Format,
+		DataTables\Editor\Mjoin,
+		DataTables\Editor\Options,
+		DataTables\Editor\Upload,
+		DataTables\Editor\Validate,
+		DataTables\Editor\ValidateOptions,
+		DataTables\Editor\Query,
+		DataTables\Editor\Result;
+	
+	// ----------- do not erase
+	$show_inactive_status = $_POST['show_inactive_status_hemxxmh'];
+	
+    $tanggal_akhir = new Carbon();
+	// -----------
+
+	$editor = Editor::inst( $db, 'hemxxmh' )
+		->debug(true)
+		->fields(
+			Field::inst( 'hemxxmh.id' ),
+			Field::inst( 'hemxxmh.id_files_foto' )
+				->setFormatter( Format::ifEmpty( 0 ) )
+				->upload( Upload::inst(  $abs_us_root.$us_url_root.'usersc/files/foto_karyawan/__ID__.__EXTN__' )
+					->db( 'files', 'id', array(
+						'filename'    => Upload::DB_FILE_NAME,
+						'filesize'    => Upload::DB_FILE_SIZE,
+						'web_path'    => Upload::DB_WEB_PATH,
+						'system_path' => Upload::DB_SYSTEM_PATH,
+						'extn' 		  => Upload::DB_EXTN
+					) )
+					->validator( Validate::fileSize( 500000, 'Ukuran lampiran maksimal 500Kb' ) )
+					->validator( Validate::fileExtensions( array( 'png', 'jpg', 'jpeg'), "Hanya boleh format png, jpg atau jpeg" ) )
+				),
+			Field::inst( 'hemjbmh.id_hovxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hodxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hosxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hobxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hevxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hetxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_heyxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hesxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_heyxxmd' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_holxxmd_2' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemjbmh.id_hevgrmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemxxmh.id_gctxxmh_lahir' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemxxmh.kode' )
+				->setFormatter( function ( $val ) {
+					return strtoupper(trim($val));
+			} ),
+			Field::inst( 'hemxxmh.nama' )
+				->setFormatter( function ( $val ) {
+					return ucwords($val);
+				} ),
+			Field::inst( 'hemxxmh.keterangan' ),
+			Field::inst( 'hemxxmh.kode_finger' ),
+			Field::inst( 'hemxxmh.is_active' ),
+			Field::inst( 'hemxxmh.is_tukar' ),
+			Field::inst( 'hemxxmh.created_by' )
+				->set( Field::SET_CREATE )
+				->setValue($_SESSION['user']),
+			Field::inst( 'hemxxmh.created_on' )
+				->set( Field::SET_CREATE ),
+			Field::inst( 'hemxxmh.last_edited_by' )
+				->set( Field::SET_EDIT )
+				->setValue($_SESSION['user']),
+			Field::inst( 'hemxxmh.is_approve' ),
+			Field::inst( 'hemxxmh.is_pot_makan' ),
+			Field::inst( 'hemxxmh.is_defaultprogram' ),
+			
+			Field::inst( 'hemjbmh.tanggal_masuk' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y',
+					'to' =>   'Y-m-d'
+				) ),
+			Field::inst( 'hemjbmh.tanggal_keluar' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y',
+					'to' =>   'Y-m-d'
+				) ),
+			Field::inst( 'hemjbmh.tanggal_akhir_kontrak' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y',
+					'to' =>   'Y-m-d'
+				) ),
+			Field::inst( 'hemjbmh.grup_hk' ),
+			Field::inst( 'hemjbmh.jumlah_grup' ),
+			Field::inst( 'hemjbmh.is_harian_lepas' ),
+			Field::inst( 'hovxxmh.nama' ),
+			Field::inst( 'hodxxmh.nama' ),
+			Field::inst( 'hemdcmh.id_gtxpkmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+
+			Field::inst( 'hemdcmh.id_gctxxmh_domisili' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'hemdcmh.id_gctxxmh_ktp' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
+
+			Field::inst( 'hemdcmh.is_npwp' ),
+			Field::inst( 'hemdcmh.npwp_alamat' ),
+			Field::inst( 'hemdcmh.npwp_no' ),
+			Field::inst( 'hemdcmh.ktp_no' ),
+			Field::inst( 'hemdcmh.ktp_alamat' ),
+			Field::inst( 'hemdcmh.alamat' ),
+			Field::inst( 'hemdcmh.domisili_desa' ),
+			Field::inst( 'hemdcmh.ktp_desa' ),
+			Field::inst( 'hemdcmh.domisili_kecamatan' ),
+			Field::inst( 'hemdcmh.ktp_kecamatan' ),
+
+			Field::inst( 'hemdcmh.no_bpjs_tk' ),
+			Field::inst( 'hemdcmh.no_bpjs_kes' ),
+			Field::inst( 'hosxxmh.nama' ),
+			Field::inst( 'hobxxmh.nama' ),
+			Field::inst( 'hevxxmh.nama' ),
+			Field::inst( 'hetxxmh.nama' ),
+			Field::inst( 'heyxxmh.nama' ),
+			Field::inst( 'heyxxmd.nama' ),
+			Field::inst( 'hesxxmh.nama' ),
+			Field::inst( 'holxxmd_2.nama' ),
+			Field::inst( 'hevgrmh.nama' ),
+
+			Field::inst( 'hemxxmh.gender' ),
+			Field::inst( 'hemxxmh.perkawinan' ),
+			Field::inst( 'hemxxmh.jumlah_anak' ),
+			Field::inst( 'gtxpkmh.kode' ),
+			Field::inst( 'hemxxmh.tanggal_lahir' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null){
+						echo '';
+					}else{
+						return date( 'd M Y', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'd M Y',
+					'to' =>   'Y-m-d'
+				) ),
+			Field::inst( 'hemxxmh.tanggal_mulai_bpjs_kes' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null || $val === '') {
+						return '';
+					} else {
+						return date( 'M Y', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'M Y',
+					'to'   => 'Y-m-01'
+				) ),
+
+			Field::inst( 'hemxxmh.tanggal_mulai_bpjs_tk' )
+				->getFormatter( function ( $val, $data, $opts ) {
+					if ($val === '0000-00-00' || $val === null || $val === '') {
+						return '';
+					} else {
+						return date( 'M Y', strtotime( $val ) );
+					}
+				} )
+				->setFormatter( 'Format::datetime', array(
+					'from' => 'M Y',
+					'to'   => 'Y-m-01'
+				) ),
+				
+			// ,
+			// Field::inst( 'v_hemxxmh_htsptth.pola_shift' ),
+			// Field::inst( 'v_hemxxmh_htsptth.grup_ke' )
+		)
+		->leftJoin( 'hemdcmh','hemdcmh.id_hemxxmh','=','hemxxmh.id' )
+		->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
+		->leftJoin( 'hovxxmh','hovxxmh.id','=','hemjbmh.id_hovxxmh' )
+		->leftJoin( 'hodxxmh','hodxxmh.id','=','hemjbmh.id_hodxxmh' )
+		->leftJoin( 'hosxxmh','hosxxmh.id','=','hemjbmh.id_hosxxmh' )
+		->leftJoin( 'hobxxmh','hobxxmh.id','=','hemjbmh.id_hobxxmh' )
+		->leftJoin( 'hevxxmh','hevxxmh.id','=','hemjbmh.id_hevxxmh' )
+		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
+		->leftJoin( 'heyxxmh','heyxxmh.id','=','hemjbmh.id_heyxxmh' )
+		->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
+		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
+		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
+		->leftJoin( 'hevgrmh','hevgrmh.id','=','hemjbmh.id_hevgrmh' )
+		->leftJoin( 'gtxpkmh','gtxpkmh.id','=','hemdcmh.id_gtxpkmh' )
+		->where( 'hemjbmh.is_harian_lepas', 0)
+		->where( 'hemjbmh.is_non_karyawan', 0)
+		// ->leftJoin( 'v_hemxxmh_htsptth','v_hemxxmh_htsptth.id_hemxxmh','=','hemxxmh.id' )
+		;
+	
+	// do not erase
+	// function show / hide inactive document
+	if ($show_inactive_status == 0){
+		$editor
+			->where( 'hemxxmh.is_active', 1);
+	}
+	
+	include( "hemxxmh_extra.php" );
+	include( "../../../helpers/edt_log.php" );
+	
+	$editor
+		->process( $_POST )
+		->json();
+?>
