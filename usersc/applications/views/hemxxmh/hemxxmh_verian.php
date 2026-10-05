@@ -255,6 +255,7 @@
 
                                 <th>Tanggal Join</th>
                                 <th>Tanggal Akhir Kontrak</th>
+                                <th>Tanggal Keluar</th>
                                 <th>Grup HK</th>
                                 <th>Gender</th>
                                 <th>PTKP</th>
@@ -1779,6 +1780,7 @@
 
 					{ data: "hemjbmh.tanggal_masuk" },
 					{ data: "hemjbmh.tanggal_akhir_kontrak" },
+					{ data: "hemjbmh.tanggal_keluar" },
 					{ 
 						data: "hemjbmh.grup_hk",
 						render: function (data){
