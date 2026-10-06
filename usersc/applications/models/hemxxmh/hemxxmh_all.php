@@ -225,10 +225,10 @@
 	
 	// do not erase
 	// function show / hide inactive document
-	if ($show_inactive_status == 0){
-		$editor
-			->where( 'hemxxmh.is_active', 1);
-	}
+	// if ($show_inactive_status == 0){
+	// 	$editor
+	// 		->where( 'hemxxmh.is_active', 1);
+	// }
 	
 	include( "hemxxmh_extra.php" );
 	include( "../../../helpers/edt_log.php" );
