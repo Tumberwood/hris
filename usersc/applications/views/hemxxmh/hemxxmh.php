@@ -233,6 +233,9 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
+								<editor-field name="hemjbmh.is_checkclock"></editor-field>
+							</div>
+							<div class="col-lg-6">
 								<editor-field name="hemxxmh.keterangan"></editor-field>
 							</div>
 						</div>
@@ -1155,6 +1158,16 @@
 						options: [
 							{ "label": "Ya", "value": 1 },
 							{ "label": "Tidak", "value": -9 }
+						]
+					},
+					{
+						label: "Masuk Report Presensi",
+						name: "hemjbmh.is_checkclock",
+						type: "select2",
+						def: 1,
+						options: [
+							{ "label": "Ya", "value": 1 },
+							{ "label": "Tidak", "value": 0 }
 						]
 					},
 					{
