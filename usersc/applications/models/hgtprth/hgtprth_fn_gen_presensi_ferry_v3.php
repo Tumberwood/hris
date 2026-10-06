@@ -205,6 +205,8 @@
         } )
         ->where('hemjbmh.tanggal_masuk', $tanggal, '<=' )
         ->where('hemxxmh.is_active', 1 )
+        ->where('hemjbmh.is_harian_lepas', 0 )
+        ->where('hemjbmh.is_non_karyawan', 0 )
         ->where('hemjbmh.is_checkclock', 1 ) // skip yang tidak perlu checkclock
         ->where('hemjbmh.id_heyxxmh', $id_heyxxmh ) // skip yang tidak perlu checkclock
         ->exec();
