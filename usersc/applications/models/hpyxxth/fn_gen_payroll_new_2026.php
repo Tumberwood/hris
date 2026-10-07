@@ -123,6 +123,7 @@
             ->exec('WITH pegawai AS (
                         SELECT
                             b.id AS id_hemxxmh,
+                            b.medical_leave,
                             tanggal_mulai_bpjs_kes,
                             tanggal_mulai_bpjs_tk,
                             
@@ -209,56 +210,58 @@
                         SELECT
                             p.id_hemxxmh,
                             -- COALESCE(nominal_gp, 0) AS gp,
-                            CASE
-                            WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
-                            THEN (
-                                SELECT
-                                    SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
-                                    -- GP
-                                        IFNULL((
-                                            SELECT a.nominal
-                                            FROM htpr_hemxxmh a
-                                            WHERE a.id_hpcxxmh = 1
-                                                AND a.id_hemxxmh = pr.id_hemxxmh
-                                                AND a.tanggal_efektif <= pr.tanggal
-                                                AND a.is_active = 1
-                                            ORDER BY a.tanggal_efektif DESC
-                                            LIMIT 1
-                                        ),0)
-                                            ) 
-                                            AS c_id
-                                FROM htsprrd pr
-                                WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND p.tanggal_keluar
-                                AND pr.id_hemxxmh = p.id_hemxxmh
-                                AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" AND pr.is_pot_upah = 0 
-                            )
-                            
-                            WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
-                            THEN (
-                                SELECT
-                                    SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
-                                    -- GP
-                                        IFNULL((
-                                            SELECT a.nominal
-                                            FROM htpr_hemxxmh a
-                                            WHERE a.id_hpcxxmh = 1
-                                                AND a.id_hemxxmh = pr.id_hemxxmh
-                                                AND a.tanggal_efektif <= pr.tanggal
-                                                AND a.is_active = 1
-                                            ORDER BY a.tanggal_efektif DESC
-                                            LIMIT 1
-                                        ),0)
-                                            ) 
-                                            AS c_id
-                                FROM htsprrd pr
-                                WHERE pr.tanggal BETWEEN p.tanggal_masuk AND LAST_DAY(:tanggal_akhir)
-                                AND pr.id_hemxxmh = p.id_hemxxmh
-                                AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" 
-                                -- AND pr.is_pot_upah = 0 
-                            )
+                            (
+                                CASE
+                                    WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    THEN (
+                                        SELECT
+                                            SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
+                                            -- GP
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 1
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
+                                                    ) 
+                                                    AS c_id
+                                        FROM htsprrd pr
+                                        WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND p.tanggal_keluar
+                                        AND pr.id_hemxxmh = p.id_hemxxmh
+                                        AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" AND pr.is_pot_upah = 0 
+                                    )
+                                    
+                                    WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    THEN (
+                                        SELECT
+                                            SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
+                                            -- GP
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 1
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
+                                                    ) 
+                                                    AS c_id
+                                        FROM htsprrd pr
+                                        WHERE pr.tanggal BETWEEN p.tanggal_masuk AND LAST_DAY(:tanggal_akhir)
+                                        AND pr.id_hemxxmh = p.id_hemxxmh
+                                        AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" 
+                                        -- AND pr.is_pot_upah = 0 
+                                    )
 
-                            ELSE COALESCE(nominal_gp, 0)
-                        END AS gp
+                                    ELSE COALESCE(nominal_gp, 0)
+                                END 
+                            ) * p.medical_leave AS gp
                         FROM pegawai p
 
                         LEFT JOIN (
@@ -278,56 +281,58 @@
                         SELECT
                             p.id_hemxxmh,
                             -- COALESCE(nominal_t_jab, 0) AS t_jab,
-                            CASE
-                                WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
-                                THEN (
-                                    SELECT
-                                        SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
-                                        -- GP
-                                            IFNULL((
-                                                SELECT a.nominal
-                                                FROM htpr_hemxxmh a
-                                                WHERE a.id_hpcxxmh = 32
-                                                    AND a.id_hemxxmh = pr.id_hemxxmh
-                                                    AND a.tanggal_efektif <= pr.tanggal
-                                                    AND a.is_active = 1
-                                                ORDER BY a.tanggal_efektif DESC
-                                                LIMIT 1
-                                            ),0)
-                                                ) 
-                                                AS c_id
-                                    FROM htsprrd pr
-                                    WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND p.tanggal_keluar
-                                    AND pr.id_hemxxmh = p.id_hemxxmh
-                                    AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" AND pr.is_pot_upah = 0 
-                                )
-                                
-                                WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
-                                THEN (
-                                    SELECT
-                                        SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
-                                        -- GP
-                                            IFNULL((
-                                                SELECT a.nominal
-                                                FROM htpr_hemxxmh a
-                                                WHERE a.id_hpcxxmh = 32
-                                                    AND a.id_hemxxmh = pr.id_hemxxmh
-                                                    AND a.tanggal_efektif <= pr.tanggal
-                                                    AND a.is_active = 1
-                                                ORDER BY a.tanggal_efektif DESC
-                                                LIMIT 1
-                                            ),0)
-                                                ) 
-                                                AS c_id
-                                    FROM htsprrd pr
-                                    WHERE pr.tanggal BETWEEN p.tanggal_masuk AND LAST_DAY(:tanggal_akhir)
-                                    AND pr.id_hemxxmh = p.id_hemxxmh
-                                    AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" 
-                                    -- AND pr.is_pot_upah = 0 
-                                )
+                            (
+                                CASE
+                                    WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    THEN (
+                                        SELECT
+                                            SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
+                                            -- GP
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 32
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
+                                                    ) 
+                                                    AS c_id
+                                        FROM htsprrd pr
+                                        WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND p.tanggal_keluar
+                                        AND pr.id_hemxxmh = p.id_hemxxmh
+                                        AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" AND pr.is_pot_upah = 0 
+                                    )
+                                    
+                                    WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    THEN (
+                                        SELECT
+                                            SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
+                                            -- GP
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 32
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
+                                                    ) 
+                                                    AS c_id
+                                        FROM htsprrd pr
+                                        WHERE pr.tanggal BETWEEN p.tanggal_masuk AND LAST_DAY(:tanggal_akhir)
+                                        AND pr.id_hemxxmh = p.id_hemxxmh
+                                        AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" 
+                                        -- AND pr.is_pot_upah = 0 
+                                    )
 
-                                ELSE COALESCE(nominal_t_jab, 0)
-                            END AS t_jab
+                                    ELSE COALESCE(nominal_t_jab, 0)
+                                END 
+                            ) * p.medical_leave AS t_jab
                         FROM pegawai p
 
                         LEFT JOIN (
@@ -375,56 +380,58 @@
                         SELECT
                             p.id_hemxxmh,
                             -- COALESCE(nominal_tj_khusus, 0) AS tj_khusus,
-                            CASE
-                                WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
-                                THEN (
-                                    SELECT
-                                        SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
-                                        -- GP
-                                            IFNULL((
-                                                SELECT a.nominal
-                                                FROM htpr_hemxxmh a
-                                                WHERE a.id_hpcxxmh = 133
-                                                    AND a.id_hemxxmh = pr.id_hemxxmh
-                                                    AND a.tanggal_efektif <= pr.tanggal
-                                                    AND a.is_active = 1
-                                                ORDER BY a.tanggal_efektif DESC
-                                                LIMIT 1
-                                            ),0)
-                                                ) 
-                                                AS c_id
-                                    FROM htsprrd pr
-                                    WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND p.tanggal_keluar
-                                    AND pr.id_hemxxmh = p.id_hemxxmh
-                                    AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" AND pr.is_pot_upah = 0 
-                                )
-                                
-                                WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
-                                THEN (
-                                    SELECT
-                                        SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
-                                        -- GP
-                                            IFNULL((
-                                                SELECT a.nominal
-                                                FROM htpr_hemxxmh a
-                                                WHERE a.id_hpcxxmh = 133
-                                                    AND a.id_hemxxmh = pr.id_hemxxmh
-                                                    AND a.tanggal_efektif <= pr.tanggal
-                                                    AND a.is_active = 1
-                                                ORDER BY a.tanggal_efektif DESC
-                                                LIMIT 1
-                                            ),0)
-                                                ) 
-                                                AS c_id
-                                    FROM htsprrd pr
-                                    WHERE pr.tanggal BETWEEN p.tanggal_masuk AND LAST_DAY(:tanggal_akhir)
-                                    AND pr.id_hemxxmh = p.id_hemxxmh
-                                    AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" 
-                                    -- AND pr.is_pot_upah = 0 
-                                )
+                            (
+                                CASE
+                                    WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    THEN (
+                                        SELECT
+                                            SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
+                                            -- GP
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 133
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
+                                                    ) 
+                                                    AS c_id
+                                        FROM htsprrd pr
+                                        WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_akhir, "%Y-%m-01") AND p.tanggal_keluar
+                                        AND pr.id_hemxxmh = p.id_hemxxmh
+                                        AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" AND pr.is_pot_upah = 0 
+                                    )
+                                    
+                                    WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    THEN (
+                                        SELECT
+                                            SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
+                                            -- GP
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 133
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
+                                                    ) 
+                                                    AS c_id
+                                        FROM htsprrd pr
+                                        WHERE pr.tanggal BETWEEN p.tanggal_masuk AND LAST_DAY(:tanggal_akhir)
+                                        AND pr.id_hemxxmh = p.id_hemxxmh
+                                        AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" 
+                                        -- AND pr.is_pot_upah = 0 
+                                    )
 
-                                ELSE COALESCE(nominal_tj_khusus, 0)
-                            END AS tj_khusus
+                                    ELSE COALESCE(nominal_tj_khusus, 0)
+                                END 
+                            ) * p.medical_leave AS tj_khusus
                         FROM pegawai p
 
                         LEFT JOIN (
@@ -442,7 +449,10 @@
                     fix_cost AS (
                         SELECT
                             p.id_hemxxmh,
-                            IF(id_heyxxmh = 1, IFNULL(nominal_mk,0) , 0) as fix_cost
+                            ( 
+                                IF(id_heyxxmh = 1, IFNULL(nominal_mk,0) , 0) 
+                            ) * p.medical_leave
+                            as fix_cost
                         FROM pegawai p
 
                         -- Masa Kerja
