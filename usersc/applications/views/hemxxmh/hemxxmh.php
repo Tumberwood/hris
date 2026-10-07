@@ -1180,7 +1180,7 @@
 					},
 					{
 						label: "Medical Leave",
-						name: "hemjbmh.medical_leave",
+						name: "hemxxmh.medical_leave",
 						type: "select2",
 						def: 1,
 						options: [
