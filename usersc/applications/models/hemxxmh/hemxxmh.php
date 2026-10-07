@@ -72,6 +72,7 @@
 				} ),
 			Field::inst( 'hemxxmh.keterangan' ),
 			Field::inst( 'hemxxmh.kode_finger' ),
+			Field::inst( 'hemxxmh.pendidikan' ),
 			Field::inst( 'hemxxmh.is_active' ),
 			Field::inst( 'hemxxmh.is_tukar' ),
 			Field::inst( 'hemxxmh.created_by' )
