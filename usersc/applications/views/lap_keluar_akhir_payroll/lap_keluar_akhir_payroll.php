@@ -226,7 +226,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [0,2,3]
+						targets: [3,4]
 					},
 					{
 						searchPanes:{
