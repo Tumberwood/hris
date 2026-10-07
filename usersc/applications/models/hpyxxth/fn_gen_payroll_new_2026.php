@@ -3211,6 +3211,28 @@
                 ->exec();
         }
         // END INSERT PAYROLL FINAL PELATIHAN
+
+        //Gaji Akhir Periode Lembur Karyawan Keluar
+        $qi_karyawan_keluar = $db
+            ->raw()
+            ->bind(':id_hpyxxth', $id_hpyxxth)
+            ->bind(':tanggal_awal', $tanggal_awal)
+            ->bind(':tanggal_akhir', $tanggal_akhir)
+            ->exec('INSERT INTO hpyemtd (
+                        id_hpyxxth,
+                    )
+                    SELECT
+                        :id_hpyxxth,
+                        a.id_hemxxmh,
+                        a.nominal AS gaji_terima
+                    FROM hpy_piutang_d a
+                    WHERE 1
+                    AND a.is_active = 1
+                    -- AND a.is_approve = 1
+                    AND a.id_hpcxxmh = 134
+                    AND a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                    GROUP BY a.id_hemxxmh
+        ');
         
         $qu_hpyxxth = $db
             ->query('update', 'hpyxxth')
