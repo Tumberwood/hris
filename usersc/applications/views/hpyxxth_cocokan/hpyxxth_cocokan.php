@@ -1247,32 +1247,84 @@
 													<th>Sub Tipe</th>
 													<th>Status</th>
 													<th>Grup HK</th>
-													<th>1. Gaji Pokok</th>
-													<th>2. Lembur Jam Pertama</th>
-													<th>3. Rp Jam Pertama x 1,5</th>
-													<th>4. Lembur Jam Kedua</th>
-													<th>5. Rp Jam Kedua x 2</th>
-													<th>6. Lembur Jam Ketiga</th>
-													<th>7. Rp Jam Ketiga x 3</th>
-													<th>8. Total Lembur (Jam)</th>
-													<th>9. Total Lembur (Jam Final)</th>
-													<th>10. Total Lembur (Rp Final)</th>
-													<th>11. Tunjangan Makan</th>
-													<th>12. Tunjangan Rumah</th>
-													<th class="text-danger">13. Pot Lain</th>
-													<th>14. Pendapatan Lain</th>
-													<th class="text-danger">15. Pot Upah Harian</th>
-													<th class="text-danger">16. Pot Upah Jam</th>
-													<th>17. Gaji Bersih</th>
-													<th>18. Bulat</th>
-													<th>19. Diterima Karyawan</th>
-													<th>20. Gaji BPJS TK</th>
-													<th>21. Gaji BPJS Kes</th>
-													<th>22. JKK</th>
-													<th>23. JKM</th>
-													<th>24. JHT</th>
-													<th>25. BPJS TK</th>
-													<th>26. BPJS Kes</th>
+
+													<th class="text-center align-middle lama">1. Gaji Pokok (Lama)</th>
+													<th class="text-center align-middle baru">1. Gaji Pokok (Baru)</th>
+
+													<th class="text-center align-middle lama">2. Lembur Jam Pertama (Lama)</th>
+													<th class="text-center align-middle baru">2. Lembur Jam Pertama (Baru)</th>
+
+													<th class="text-center align-middle lama">3. Rp Jam Pertama x 1,5 (Lama)</th>
+													<th class="text-center align-middle baru">3. Rp Jam Pertama x 1,5 (Baru)</th>
+
+													<th class="text-center align-middle lama">4. Lembur Jam Kedua (Lama)</th>
+													<th class="text-center align-middle baru">4. Lembur Jam Kedua (Baru)</th>
+
+													<th class="text-center align-middle lama">5. Rp Jam Kedua x 2 (Lama)</th>
+													<th class="text-center align-middle baru">5. Rp Jam Kedua x 2 (Baru)</th>
+
+													<th class="text-center align-middle lama">6. Lembur Jam Ketiga (Lama)</th>
+													<th class="text-center align-middle baru">6. Lembur Jam Ketiga (Baru)</th>
+
+													<th class="text-center align-middle lama">7. Rp Jam Ketiga x 3 (Lama)</th>
+													<th class="text-center align-middle baru">7. Rp Jam Ketiga x 3 (Baru)</th>
+
+													<th class="text-center align-middle lama">8. Total Lembur (Jam) (Lama)</th>
+													<th class="text-center align-middle baru">8. Total Lembur (Jam) (Baru)</th>
+
+													<th class="text-center align-middle lama">9. Total Lembur (Jam Final) (Lama)</th>
+													<th class="text-center align-middle baru">9. Total Lembur (Jam Final) (Baru)</th>
+
+													<th class="text-center align-middle lama">10. Total Lembur (Rp Final) (Lama)</th>
+													<th class="text-center align-middle baru">10. Total Lembur (Rp Final) (Baru)</th>
+
+													<th class="text-center align-middle lama">11. Tunjangan Makan (Lama)</th>
+													<th class="text-center align-middle baru">11. Tunjangan Makan (Baru)</th>
+
+													<th class="text-center align-middle lama">12. Tunjangan Rumah (Lama)</th>
+													<th class="text-center align-middle baru">12. Tunjangan Rumah (Baru)</th>
+
+													<th class="text-center align-middle lama text-danger">13. Pot Lain (Lama)</th>
+													<th class="text-center align-middle baru text-danger">13. Pot Lain (Baru)</th>
+
+													<th class="text-center align-middle lama">14. Pendapatan Lain (Lama)</th>
+													<th class="text-center align-middle baru">14. Pendapatan Lain (Baru)</th>
+
+													<th class="text-center align-middle lama text-danger">15. Pot Upah Harian (Lama)</th>
+													<th class="text-center align-middle baru text-danger">15. Pot Upah Harian (Baru)</th>
+
+													<th class="text-center align-middle lama text-danger">16. Pot Upah Jam (Lama)</th>
+													<th class="text-center align-middle baru text-danger">16. Pot Upah Jam (Baru)</th>
+
+													<th class="text-center align-middle lama">17. Gaji Bersih (Lama)</th>
+													<th class="text-center align-middle baru">17. Gaji Bersih (Baru)</th>
+
+													<th class="text-center align-middle lama">18. Bulat (Lama)</th>
+													<th class="text-center align-middle baru">18. Bulat (Baru)</th>
+
+													<th class="text-center align-middle lama">19. Diterima Karyawan (Lama)</th>
+													<th class="text-center align-middle baru">19. Diterima Karyawan (Baru)</th>
+
+													<th class="text-center align-middle lama">20. Gaji BPJS TK (Lama)</th>
+													<th class="text-center align-middle baru">20. Gaji BPJS TK (Baru)</th>
+
+													<th class="text-center align-middle lama">21. Gaji BPJS Kes (Lama)</th>
+													<th class="text-center align-middle baru">21. Gaji BPJS Kes (Baru)</th>
+
+													<th class="text-center align-middle lama">22. JKK (Lama)</th>
+													<th class="text-center align-middle baru">22. JKK (Baru)</th>
+
+													<th class="text-center align-middle lama">23. JKM (Lama)</th>
+													<th class="text-center align-middle baru">23. JKM (Baru)</th>
+
+													<th class="text-center align-middle lama">24. JHT (Lama)</th>
+													<th class="text-center align-middle baru">24. JHT (Baru)</th>
+
+													<th class="text-center align-middle lama">25. BPJS TK (Lama)</th>
+													<th class="text-center align-middle baru">25. BPJS TK (Baru)</th>
+
+													<th class="text-center align-middle lama">26. BPJS Kes (Lama)</th>
+													<th class="text-center align-middle baru">26. BPJS Kes (Baru)</th>
 												</tr>
 											</thead>
 
@@ -1280,32 +1332,84 @@
 												<tr>
 													<th colspan="9" class="text-end">Total</th>
 													<th></th>
+
 													<th id="kbm_pelatihan_nganjuk10"></th>
 													<th id="kbm_pelatihan_nganjuk11"></th>
+
 													<th id="kbm_pelatihan_nganjuk12"></th>
 													<th id="kbm_pelatihan_nganjuk13"></th>
+
 													<th id="kbm_pelatihan_nganjuk14"></th>
 													<th id="kbm_pelatihan_nganjuk15"></th>
+
 													<th id="kbm_pelatihan_nganjuk16"></th>
 													<th id="kbm_pelatihan_nganjuk17"></th>
+
 													<th id="kbm_pelatihan_nganjuk18"></th>
 													<th id="kbm_pelatihan_nganjuk19"></th>
+
 													<th id="kbm_pelatihan_nganjuk20"></th>
 													<th id="kbm_pelatihan_nganjuk21"></th>
+
 													<th id="kbm_pelatihan_nganjuk22"></th>
 													<th id="kbm_pelatihan_nganjuk23"></th>
+
 													<th id="kbm_pelatihan_nganjuk24"></th>
 													<th id="kbm_pelatihan_nganjuk25"></th>
+
 													<th id="kbm_pelatihan_nganjuk26"></th>
 													<th id="kbm_pelatihan_nganjuk27"></th>
+
 													<th id="kbm_pelatihan_nganjuk28"></th>
 													<th id="kbm_pelatihan_nganjuk29"></th>
+
 													<th id="kbm_pelatihan_nganjuk30"></th>
 													<th id="kbm_pelatihan_nganjuk31"></th>
+
 													<th id="kbm_pelatihan_nganjuk32"></th>
 													<th id="kbm_pelatihan_nganjuk33"></th>
-													<th id="kbm_pelatihan_nganjuk34"></th>												
-													<th id="kbm_pelatihan_nganjuk35"></th>												
+
+													<th id="kbm_pelatihan_nganjuk34"></th>
+													<th id="kbm_pelatihan_nganjuk35"></th>
+
+													<th id="kbm_pelatihan_nganjuk36"></th>
+													<th id="kbm_pelatihan_nganjuk37"></th>
+
+													<th id="kbm_pelatihan_nganjuk38"></th>
+													<th id="kbm_pelatihan_nganjuk39"></th>
+
+													<th id="kbm_pelatihan_nganjuk40"></th>
+													<th id="kbm_pelatihan_nganjuk41"></th>
+
+													<th id="kbm_pelatihan_nganjuk42"></th>
+													<th id="kbm_pelatihan_nganjuk43"></th>
+
+													<th id="kbm_pelatihan_nganjuk44"></th>
+													<th id="kbm_pelatihan_nganjuk45"></th>
+
+													<th id="kbm_pelatihan_nganjuk46"></th>
+													<th id="kbm_pelatihan_nganjuk47"></th>
+
+													<th id="kbm_pelatihan_nganjuk48"></th>
+													<th id="kbm_pelatihan_nganjuk49"></th>
+
+													<th id="kbm_pelatihan_nganjuk50"></th>
+													<th id="kbm_pelatihan_nganjuk51"></th>
+
+													<th id="kbm_pelatihan_nganjuk52"></th>
+													<th id="kbm_pelatihan_nganjuk53"></th>
+
+													<th id="kbm_pelatihan_nganjuk54"></th>
+													<th id="kbm_pelatihan_nganjuk55"></th>
+
+													<th id="kbm_pelatihan_nganjuk56"></th>
+													<th id="kbm_pelatihan_nganjuk57"></th>
+
+													<th id="kbm_pelatihan_nganjuk58"></th>
+													<th id="kbm_pelatihan_nganjuk59"></th>
+
+													<th id="kbm_pelatihan_nganjuk60"></th>
+													<th id="kbm_pelatihan_nganjuk61"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -5620,8 +5724,8 @@
 					left: 2
 				},
 				columns: [
-					{ data: "hpyemtd.id",visible:false },
-					{ data: "hpyemtd.id_hpyxxth",visible:false },
+					{ data: "hpyemtd.id", visible: false },
+					{ data: "hpyemtd.id_hpyxxth", visible: false },
 					{ data: "kode" },
 					{ data: "nama" },
 					{ data: "hodxxmh.nama" },
@@ -5629,167 +5733,157 @@
 					{ data: "heyxxmh.nama" },
 					{ data: "heyxxmd.nama" },
 					{ data: "hesxxmh.nama" },
-					{ 
+
+					{
 						data: "hemjbmh.grup_hk",
-						render: function (data){
-							if (data == 0){
+						render: function (data) {
+							if (data == 0) {
 								return '';
-							}else if(data == 1){
+							} else if (data == 1) {
 								return '5HK';
-							}else if(data == 2){
+							} else if (data == 2) {
 								return '6HK';
-							}else{
-								return '<span class="text-danger"> Data Invalid</span>';
+							} else {
+								return '<span class="text-danger">Data Invalid</span>';
 							}
 						}
 					},
-					{ 
-						data: "hpyemtd.gp",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.lembur15",
+
+					// 1. Gaji Pokok
+					{ data: "hpyemtd_cocokan.gp", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.gp", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 2. Lembur Jam Pertama
+					{ data: "hpyemtd_cocokan.lembur15", class: "text-right" },
+					{ data: "hpyemtd.lembur15", class: "text-right" },
+
+					// 3. Rp Jam Pertama x 1,5
+					{ data: "hpyemtd_cocokan.rp_lembur15", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.rp_lembur15", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 4. Lembur Jam Kedua
+					{ data: "hpyemtd_cocokan.lembur2", class: "text-right" },
+					{ data: "hpyemtd.lembur2", class: "text-right" },
+
+					// 5. Rp Jam Kedua x 2
+					{ data: "hpyemtd_cocokan.rp_lembur2", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.rp_lembur2", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 6. Lembur Jam Ketiga
+					{ data: "hpyemtd_cocokan.lembur3", class: "text-right" },
+					{ data: "hpyemtd.lembur3", class: "text-right" },
+
+					// 7. Rp Jam Ketiga x 3
+					{ data: "hpyemtd_cocokan.rp_lembur3", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.rp_lembur3", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 8. Total Lembur (Jam)
+					{ data: "hpyemtd_cocokan.total_lembur_jam", class: "text-right" },
+					{ data: "hpyemtd.total_lembur_jam", class: "text-right" },
+
+					// 9. Total Lembur (Jam Final)
+					{ data: "hpyemtd_cocokan.total_lembur_jam_final", class: "text-right" },
+					{ data: "hpyemtd.total_lembur_jam_final", class: "text-right" },
+
+					// 10. Total Lembur (Rp Final)
+					{ data: "hpyemtd_cocokan.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.total_rp_lembur", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 11. Tunjangan Makan
+					{ data: "hpyemtd_cocokan.tj_makan_nganjuk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.tj_makan_nganjuk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 12. Tunjangan Rumah
+					{ data: "hpyemtd_cocokan.tj_rumah_nganjuk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.tj_rumah_nganjuk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 13. Pot Lain
+					{ data: "hpyemtd_cocokan.pot_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.pot_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 14. Pendapatan Lain
+					{ data: "hpyemtd_cocokan.pendapatan_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.pendapatan_lain_after_pph", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 15. Pot Upah Harian
+					{ data: "hpyemtd_cocokan.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 16. Pot Upah Jam
+					{ data: "hpyemtd_cocokan.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.pot_jam", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 17. Gaji Bersih
+					{ data: "hpyemtd_cocokan.gaji_bersih", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.gaji_bersih", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 18. Bulat
+					{ data: "hpyemtd_cocokan.bulat", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.bulat", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 19. Diterima Karyawan
+					{ data: "hpyemtd_cocokan.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.gaji_terima", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 20. Gaji BPJS TK
+					{ data: "hpyemtd_cocokan.gaji_bpjs_tk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.gaji_bpjs_tk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 21. Gaji BPJS Kes
+					{ data: "hpyemtd_cocokan.gaji_bpjs_kes", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.gaji_bpjs_kes", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 22. JKK
+					{ data: "hpyemtd_cocokan.jkk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkk", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 23. JKM
+					{ data: "hpyemtd_cocokan.jkm", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jkm", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 24. JHT
+					{ data: "hpyemtd_cocokan.jht_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.jht_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+
+					// 25. BPJS TK
+					{
+						data: null,
 						class: "text-right",
-						
-					},
-					{ 
-						data: "hpyemtd.rp_lembur15",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right",
-						
-					},
-					{ 
-						data: "hpyemtd.lembur2",
-						class: "text-right",
-						
-					},
-					{ 
-						data: "hpyemtd.rp_lembur2",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right",
-						
-					},
-					{ 
-						data: "hpyemtd.lembur3",
-						class: "text-right",
-						
-					},
-					{ 
-						data: "hpyemtd.rp_lembur3",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right",
-						
-					},
-					{ 
-						data: "hpyemtd.total_lembur_jam",
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.total_lembur_jam_final",
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.total_rp_lembur",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.tj_makan_nganjuk",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.tj_rumah_nganjuk",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.pot_lain_after_pph",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.pendapatan_lain_after_pph",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.pot_upah",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right ",
-					},
-					{ 
-						data: "hpyemtd.pot_jam",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right ",
-					},
-					{ 
-						data: "hpyemtd.gaji_bersih",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.bulat",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.gaji_terima",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.gaji_bpjs_tk",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.gaji_bpjs_kes",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right"
-					},
-					{ 
-						data: "hpyemtd.jkk",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.jkm",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right "
-					},
-					{ 
-						data: "hpyemtd.jht_perusahaan",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right "
+						render: function (data, type, row) {
+							var jkk = parseFloat(row.hpyemtd_cocokan?.jkk) || 0;
+							var jkm = parseFloat(row.hpyemtd_cocokan?.jkm) || 0;
+							var jht_perusahaan = parseFloat(row.hpyemtd_cocokan?.jht_perusahaan) || 0;
+
+							var total = jkk + jkm + jht_perusahaan;
+
+							if (type === 'display' || type === 'filter') {
+								return $.fn.dataTable.render.number(',', '.', 0).display(total);
+							}
+
+							return total;
+						}
 					},
 					{
 						data: null,
 						class: "text-right",
 						render: function (data, type, row) {
-							// Ambil nilai dan konversi ke float/number untuk menghindari masalah string, 
-							// berikan nilai default 0 jika null/undefined
 							var jkk = parseFloat(row.hpyemtd?.jkk) || 0;
 							var jkm = parseFloat(row.hpyemtd?.jkm) || 0;
 							var jht_perusahaan = parseFloat(row.hpyemtd?.jht_perusahaan) || 0;
 
 							var total = jkk + jkm + jht_perusahaan;
 
-							// Jika dipanggil untuk display/filter, format angka menggunakan helper DataTables
 							if (type === 'display' || type === 'filter') {
-								return $.fn.dataTable.render.number(',', '.', 0, '', '').display(total);
+								return $.fn.dataTable.render.number(',', '.', 0).display(total);
 							}
 
-							// Return nilai asli numerik untuk sorting/pengurutan data
 							return total;
 						}
 					},
-					{ 
-						data: "hpyemtd.bpjs_kes_perusahaan",
-						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right "
-					},
+
+					// 26. BPJS Kes
+					{ data: "hpyemtd_cocokan.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.bpjs_kes_perusahaan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" }
 				],
 				buttons: [
 					// BEGIN breaking generate button
@@ -5822,7 +5916,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 35; i++) {
+					for (var i = 10; i <= 61; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
