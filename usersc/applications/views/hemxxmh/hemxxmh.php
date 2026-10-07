@@ -244,6 +244,14 @@
 								<editor-field name="hemxxmh.pendidikan"></editor-field>
 							</div>
 							<div class="col-lg-6">
+								<editor-field name="hemxxmh.jurusan"></editor-field>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.agama"></editor-field>
+							</div>
+							<div class="col-lg-6">
 								<editor-field name="hemxxmh.keterangan"></editor-field>
 							</div>
 						</div>
@@ -1447,13 +1455,28 @@
 						type: "select",
 						placeholder : "Select",
 						options: [
-							{ "label": "SD", "value": "SD" },
-							{ "label": "SMP", "value": "SMP" },
-							{ "label": "SMA", "value": "SMA" },
+							{ "label": "SMU / SEDERAJAT", "value": "SMU / SEDERAJAT" },
 							{ "label": "D3", "value": "D3" },
+							{ "label": "D4", "value": "D4" },
 							{ "label": "S1", "value": "S1" },
-							{ "label": "S2", "value": "S2" },
-							{ "label": "S3", "value": "S3" }
+							{ "label": "S2", "value": "S2" }
+						]
+					},
+					{
+						label: "Jurusan",
+						name: "hemxxmh.jurusan",
+					},
+					{
+						label: "Agama",
+						name: "hemxxmh.agama",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "BUDHA", "value": "BUDHA" },
+							{ "label": "HINDU", "value": "HINDU" },
+							{ "label": "ISLAM", "value": "ISLAM" },
+							{ "label": "KATHOLIK", "value": "KATHOLIK" },
+							{ "label": "KRISTEN", "value": "KRISTEN" }
 						]
 					},
 					{

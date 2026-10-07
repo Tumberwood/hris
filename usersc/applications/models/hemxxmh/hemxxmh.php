@@ -73,6 +73,8 @@
 			Field::inst( 'hemxxmh.keterangan' ),
 			Field::inst( 'hemxxmh.kode_finger' ),
 			Field::inst( 'hemxxmh.pendidikan' ),
+			Field::inst( 'hemxxmh.agama' ),
+			Field::inst( 'hemxxmh.jurusan' ),
 			Field::inst( 'hemxxmh.is_active' ),
 			Field::inst( 'hemxxmh.is_tukar' ),
 			Field::inst( 'hemxxmh.medical_leave' ),
