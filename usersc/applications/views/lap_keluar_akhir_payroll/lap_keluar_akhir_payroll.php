@@ -37,9 +37,9 @@
                         <label class="col-lg-2 col-form-label">Periode</label>
                         <div class="col-lg-5">
                             <div class="input-group input-daterange" id="periode">
-                                <input type="text" id="start_date" class="form-control">
+                                <input type="text" id="start_date" class="form-control" disabled>
                                 <span class="input-group-addon">to</span>
-                                <input type="text" id="end_date" class="form-control">
+                                <input type="text" id="end_date" class="form-control" disabled>
                                 <div class="input-group-addon">
                                     <span class="fa fa-calendar"></span>
                                 </div>
