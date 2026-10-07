@@ -1811,9 +1811,9 @@
                             + SUM(COALESCE(a.lembur2_final,0))
                             + SUM(COALESCE(a.lembur3_final,0)) AS total_lembur_jam_final,
 
-                            ROUND(COALESCE(a.lembur15,0), 0)
-                            + ROUND(COALESCE(a.lembur2,0), 0) 
-                            + ROUND(COALESCE(a.lembur3,0), 0) 
+                            ROUND(COALESCE(a.rp_lembur15,0), 0)
+                            + ROUND(COALESCE(a.rp_lembur2,0), 0) 
+                            + ROUND(COALESCE(a.rp_lembur3,0), 0) 
                             AS total_rp_lembur,
                             SUM(is_makan) sum_pot_makan
 
