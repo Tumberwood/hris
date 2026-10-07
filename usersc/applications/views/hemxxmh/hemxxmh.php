@@ -220,11 +220,6 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
-								<editor-field name="hemxxmh.id_files_foto"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
 								<editor-field name="hemjbmh.is_harian_lepas"></editor-field>
 							</div>
 							<div class="col-lg-6">
@@ -250,6 +245,12 @@
 						<div class="row">
 							<div class="col-lg-6">
 								<editor-field name="hemxxmh.agama"></editor-field>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.id_files_foto"></editor-field>
 							</div>
 							<div class="col-lg-6">
 								<editor-field name="hemxxmh.keterangan"></editor-field>
