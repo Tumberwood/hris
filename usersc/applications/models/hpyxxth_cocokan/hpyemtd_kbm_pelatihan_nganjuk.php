@@ -293,6 +293,7 @@
 
 				Field::inst( 'hobxxmh.nama' ),
 				Field::inst( 'hevgrmh.nama' ),
+				Field::inst( 'hemjbmh.grup_hk' ),
 			)
 
 			->leftJoin(
