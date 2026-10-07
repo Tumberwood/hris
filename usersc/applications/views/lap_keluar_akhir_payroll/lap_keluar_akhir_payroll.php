@@ -213,7 +213,7 @@
 			//start datatables
 			tbllap_keluar_akhir_payroll = $('#tbllap_keluar_akhir_payroll').DataTable( {
 				searchPanes:{
-					layout: 'columns-3',
+					layout: 'columns-2',
 				},
 				dom: 
 					"<P>"+
