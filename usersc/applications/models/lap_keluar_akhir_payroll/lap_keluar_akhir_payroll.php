@@ -18,6 +18,7 @@
 		->raw()
 		->bind(':periode_payroll', $periode_payroll)
 		->exec('SELECT
+					a.id,
 					a.kode AS nik,
 					a.nama,
 					DATE_FORMAT(b.tanggal_masuk, "%d %b %Y") AS tanggal_masuk,
