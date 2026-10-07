@@ -175,15 +175,15 @@
 
                             SUM(a.lembur15) lembur15,
                             SUM(a.lembur15_final) lembur15_final,
-                            SUM(a.rp_lembur15) rp_lembur15,
+                            ROUND(SUM(a.rp_lembur15), 0) rp_lembur15,
 
                             SUM(a.lembur2) lembur2,
                             SUM(a.lembur2_final) lembur2_final,
-                            SUM(a.rp_lembur2) rp_lembur2,
+                            ROUND(SUM(a.rp_lembur2), 0) rp_lembur2,
 
                             SUM(a.lembur3) lembur3,
                             SUM(a.lembur3_final) lembur3_final,
-                            SUM(a.rp_lembur3) rp_lembur3,
+                            ROUND(SUM(a.rp_lembur3), 0) rp_lembur3,
 
                             SUM(COALESCE(a.lembur15,0))
                             + SUM(COALESCE(a.lembur2,0))
@@ -193,9 +193,10 @@
                             + SUM(COALESCE(a.lembur2_final,0))
                             + SUM(COALESCE(a.lembur3_final,0)) AS total_lembur_jam_final,
 
-                            SUM(COALESCE(a.rp_lembur15,0))
-                            + SUM(COALESCE(a.rp_lembur2,0))
-                            + SUM(COALESCE(a.rp_lembur3,0)) AS total_rp_lembur,
+                            ROUND(SUM(a.rp_lembur15), 0)
+                            + ROUND(SUM(a.rp_lembur2), 0) 
+                            + ROUND(SUM(a.rp_lembur3), 0) 
+                            AS total_rp_lembur,
                             SUM(is_makan) sum_pot_makan
 
                         FROM htsprrd a
