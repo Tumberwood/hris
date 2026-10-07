@@ -900,7 +900,7 @@
 
                                     -- Rumus: ( (gp + tjab + fix_cost(masa kerja) + (tj lain)) / grup_hk (21 / 25) ) * is_pot_upah
                                     (
-                                        ROUND(
+                                        (
                                             (
                                                 -- GP
                                                 IFNULL((
@@ -1031,7 +1031,7 @@
 
                                     -- Rumus: ( (gp + tjab + fix_cost(masa kerja) + (tj lain) ) / 173 ) * pot_hk
                                     (
-                                        ROUND(
+                                        (
                                             (
                                                 -- GP
                                                 IFNULL((
