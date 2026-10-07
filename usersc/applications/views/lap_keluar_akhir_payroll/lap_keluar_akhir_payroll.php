@@ -276,53 +276,6 @@
 				initComplete: function() {
 					this.api().searchPanes.rebuildPane();
 				},
-				footerCallback: function (row, data, start, end, display) {
-					const api = this.api();
-
-					const parseNumber = function (value) {
-						if (value === null || value === undefined || value === '') {
-							return 0;
-						}
-
-						if (typeof value === 'string') {
-							value = value.replace(/,/g, '');
-						}
-
-						return parseFloat(value) || 0;
-					};
-
-					// =========================
-					// Total kolom 10
-					// =========================
-					const total = api
-						.column(10, { search: 'applied' })
-						.data()
-						.reduce(function (a, b) {
-							return parseNumber(a) + parseNumber(b);
-						}, 0);
-
-					$(api.column(10).footer()).html(
-						total.toLocaleString('id-ID', {
-							minimumFractionDigits: 0,
-							maximumFractionDigits: 0
-						})
-					);
-
-					// =========================
-					// Count NIK unik kolom 1
-					// =========================
-					const uniqueNik = new Set();
-
-					api.column(1, { search: 'applied' }).data().each(function (nik) {
-						if (nik !== null && nik !== undefined && nik !== '') {
-							uniqueNik.add(String(nik).trim());
-						}
-					});
-
-					$(api.column(2).footer()).html(
-						uniqueNik.size.toLocaleString('id-ID')
-					);
-				}
 			} );
 
 			tbllap_keluar_akhir_payroll.searchPanes.container().appendTo( '#searchPanes1' );
