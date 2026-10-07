@@ -5606,7 +5606,7 @@
 			//start datatables
 			tblhpyemtd_kbm_pelatihan_nganjuk = $('#tblhpyemtd_kbm_pelatihan_nganjuk').DataTable( {
 				ajax: {
-					url: "../../models/hpyxxth/hpyemtd_kbm_pelatihan_nganjuk.php",
+					url: "../../models/hpyxxth_cocokan/hpyemtd_kbm_pelatihan_nganjuk.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_hpyemtd = show_inactive_status_hpyemtd;
