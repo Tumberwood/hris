@@ -162,6 +162,8 @@
 				// =========================================================
 
 				Field::inst( 'hpyemtd.id' ),
+				Field::inst( 'hpyemtd.id_hpyxxth' ),
+				Field::inst( 'hpyemtd.id_hemxxmh' ),
 				Field::inst( 'hpyemtd.gp' ),
 				Field::inst( 'hpyemtd.t_jab' ),
 				Field::inst( 'hpyemtd.premi_abs' ),
