@@ -3226,7 +3226,7 @@
                     SELECT
                         :id_hpyxxth,
                         a.id_hemxxmh,
-                        a.nominal AS gaji_terima
+                        -a.nominal AS gaji_terima
                     FROM hpy_piutang_d a
                     WHERE 1
                     AND a.is_active = 1

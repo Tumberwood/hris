@@ -236,10 +236,13 @@
 								<editor-field name="hemjbmh.is_checkclock"></editor-field>
 							</div>
 							<div class="col-lg-6">
-								<editor-field name="hemxxmh.pendidikan"></editor-field>
+								<editor-field name="hemxxmh.medical_leave"></editor-field>
 							</div>
 						</div>
 						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.pendidikan"></editor-field>
+							</div>
 							<div class="col-lg-6">
 								<editor-field name="hemxxmh.keterangan"></editor-field>
 							</div>
@@ -1166,13 +1169,25 @@
 						]
 					},
 					{
-						label: "Masuk Report Presensi",
+						label: "Perlu Finger?",
 						name: "hemjbmh.is_checkclock",
 						type: "select2",
 						def: 1,
 						options: [
 							{ "label": "Ya", "value": 1 },
 							{ "label": "Tidak", "value": 0 }
+						]
+					},
+					{
+						label: "Medical Leave",
+						name: "hemjbmh.medical_leave",
+						type: "select2",
+						def: 1,
+						options: [
+							{ "label": "Tidak", "value": 1 },
+							{ "label": "75%", "value": 0.75 }
+							{ "label": "50%", "value": 0.5 }
+							{ "label": "25%", "value": 0.25 }
 						]
 					},
 					{
