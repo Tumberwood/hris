@@ -3220,6 +3220,8 @@
             ->bind(':tanggal_akhir', $tanggal_akhir)
             ->exec('INSERT INTO hpyemtd (
                         id_hpyxxth,
+                        id_hemxxmh,
+                        gaji_terima
                     )
                     SELECT
                         :id_hpyxxth,
