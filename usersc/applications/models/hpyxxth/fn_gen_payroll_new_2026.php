@@ -3228,7 +3228,7 @@
                     FROM hpy_piutang_d a
                     WHERE 1
                     AND a.is_active = 1
-                    -- AND a.is_approve = 1
+                    AND a.is_approve = 1
                     AND a.id_hpcxxmh = 134
                     AND a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
                     GROUP BY a.id_hemxxmh
