@@ -1185,9 +1185,9 @@
 						def: 1,
 						options: [
 							{ "label": "Tidak", "value": 1 },
-							{ "label": "75%", "value": 0.75 }
-							{ "label": "50%", "value": 0.5 }
-							{ "label": "25%", "value": 0.25 }
+							{ "label": "75%", "value": 0.75 },
+							{ "label": "50%", "value": 0.5 },
+							{ "label": "25%", "value": 0.25 },
 						]
 					},
 					{
