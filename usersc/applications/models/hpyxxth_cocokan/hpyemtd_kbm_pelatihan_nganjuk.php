@@ -107,6 +107,7 @@
 				// TAMBAHAN GAJI
 				Field::inst( 'hpyemtd_cocokan.terima_lain' ),
 				Field::inst( 'hpyemtd_cocokan.tj_makan_nganjuk' ),
+				Field::inst( 'hpyemtd_cocokan.tj_rumah_nganjuk' ),
 
 				Field::inst( 'hpyemtd_cocokan.lembur15_final' ),
 				Field::inst( 'hpyemtd_cocokan.lembur2_final' ),
@@ -220,6 +221,7 @@
 
 				Field::inst( 'hpyemtd.terima_lain' ),
 				Field::inst( 'hpyemtd.tj_makan_nganjuk' ),
+				Field::inst( 'hpyemtd.tj_rumah_nganjuk' ),
 
 				Field::inst( 'hpyemtd.lembur15_final' ),
 				Field::inst( 'hpyemtd.lembur2_final' ),
