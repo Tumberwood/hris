@@ -1347,117 +1347,114 @@
     </thead>
 
     <tfoot>
-        <tr>
-            <!-- ID -->
-            <th colspan="4" class="text-end">
-                Total
-            </th>
+		<tr>
+			<!-- 0-3: ID, id_hpyxxth, NIK, Nama -->
+			<th colspan="4" class="text-end">
+				Total
+			</th>
 
-            <!-- Diterima Karyawan -->
-            <th id="kbm_tr8"></th>
-            <th id="kbm_tr9"></th>
+			<!-- 4-5: Diterima Karyawan -->
+			<th id="kbm_tr8"></th>
+			<th id="kbm_tr9"></th>
 
-            <!-- Informasi Karyawan -->
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+			<!-- 6-11: Informasi Karyawan -->
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
 
-            <!-- 1. Gaji Pokok -->
-            <th id="kbm_tr10"></th>
-            <th id="kbm_tr11"></th>
+			<!-- 12-13: 1. Gaji Pokok -->
+			<th id="kbm_tr10"></th>
+			<th id="kbm_tr11"></th>
 
-            <!-- 2. Lembur Jam Pertama -->
-            <th id="kbm_tr12"></th>
-            <th id="kbm_tr13"></th>
+			<!-- 14-15: 2. Lembur Jam Pertama -->
+			<th id="kbm_tr12"></th>
+			<th id="kbm_tr13"></th>
 
-            <!-- 3. Rp Jam Pertama x 1,5 -->
-            <th id="kbm_tr14"></th>
-            <th id="kbm_tr15"></th>
+			<!-- 16-17: 3. Rp Jam Pertama x 1,5 -->
+			<th id="kbm_tr14"></th>
+			<th id="kbm_tr15"></th>
 
-            <!-- 4. Lembur Jam Kedua -->
-            <th id="kbm_tr16"></th>
-            <th id="kbm_tr17"></th>
+			<!-- 18-19: 4. Lembur Jam Kedua -->
+			<th id="kbm_tr16"></th>
+			<th id="kbm_tr17"></th>
 
-            <!-- 5. Rp Jam Kedua x 2 -->
-            <th id="kbm_tr18"></th>
-            <th id="kbm_tr19"></th>
+			<!-- 20-21: 5. Rp Jam Kedua x 2 -->
+			<th id="kbm_tr18"></th>
+			<th id="kbm_tr19"></th>
 
-            <!-- 6. Lembur Jam Ketiga -->
-            <th id="kbm_tr20"></th>
-            <th id="kbm_tr21"></th>
+			<!-- 22-23: 6. Lembur Jam Ketiga -->
+			<th id="kbm_tr20"></th>
+			<th id="kbm_tr21"></th>
 
-            <!-- 7. Rp Jam Ketiga x 3 -->
-            <th id="kbm_tr22"></th>
-            <th id="kbm_tr23"></th>
+			<!-- 24-25: 7. Rp Jam Ketiga x 3 -->
+			<th id="kbm_tr22"></th>
+			<th id="kbm_tr23"></th>
 
-            <!-- 8. Total Lembur (Jam) -->
-            <th id="kbm_tr24"></th>
-            <th id="kbm_tr25"></th>
+			<!-- 26-27: 8. Total Lembur (Jam) -->
+			<th id="kbm_tr24"></th>
+			<th id="kbm_tr25"></th>
 
-            <!-- 9. Total Lembur (Jam Final) -->
-            <th id="kbm_tr26"></th>
-            <th id="kbm_tr27"></th>
+			<!-- 28-29: 9. Total Lembur (Jam Final) -->
+			<th id="kbm_tr26"></th>
+			<th id="kbm_tr27"></th>
 
-            <!-- 10. Total Lembur (Rp Final) -->
-            <th id="kbm_tr28"></th>
-            <th id="kbm_tr29"></th>
+			<!-- 30-31: 10. Total Lembur (Rp Final) -->
+			<th id="kbm_tr28"></th>
+			<th id="kbm_tr29"></th>
 
-            <!-- 11. Pot Makan -->
-            <th id="kbm_tr30"></th>
-            <th id="kbm_tr31"></th>
+			<!-- 32-33: 11. Pot Makan -->
+			<th id="kbm_tr30"></th>
+			<th id="kbm_tr31"></th>
 
-            <!-- 12. Pot Lain -->
-            <th id="kbm_tr32"></th>
-            <th id="kbm_tr33"></th>
+			<!-- 34-35: 12. Pot Lain -->
+			<th id="kbm_tr32"></th>
+			<th id="kbm_tr33"></th>
 
-            <!-- 13. Pendapatan Lain -->
-            <th id="kbm_tr34"></th>
-            <th id="kbm_tr35"></th>
+			<!-- 36-37: 13. Pendapatan Lain -->
+			<th id="kbm_tr34"></th>
+			<th id="kbm_tr35"></th>
 
-            <!-- 14. Pot Upah Harian -->
-            <th id="kbm_tr36"></th>
-            <th id="kbm_tr37"></th>
+			<!-- 38-39: 14. Pot Upah Harian -->
+			<th id="kbm_tr36"></th>
+			<th id="kbm_tr37"></th>
 
-            <!-- 15. Pot Upah Jam -->
-            <th id="kbm_tr38"></th>
-            <th id="kbm_tr39"></th>
+			<!-- 40-41: 15. Pot Upah Jam -->
+			<th id="kbm_tr38"></th>
+			<th id="kbm_tr39"></th>
 
-            <!-- 16. Gaji Bersih -->
-            <th id="kbm_tr40"></th>
-            <th id="kbm_tr41"></th>
+			<!-- 42-43: 16. Gaji Bersih -->
+			<th id="kbm_tr40"></th>
+			<th id="kbm_tr41"></th>
 
-            <!-- 17. Bulat -->
-            <th id="kbm_tr42"></th>
-            <th id="kbm_tr43"></th>
+			<!-- 44-45: 17. Bulat -->
+			<th id="kbm_tr42"></th>
+			<th id="kbm_tr43"></th>
 
-            <!-- 19. Gaji BPJS TK -->
-            <th id="kbm_tr44"></th>
-            <th id="kbm_tr45"></th>
+			<!-- 46-47: 19. Gaji BPJS TK -->
+			<th id="kbm_tr44"></th>
+			<th id="kbm_tr45"></th>
 
-            <!-- 20. JKK -->
-            <th id="kbm_tr46"></th>
-            <th id="kbm_tr47"></th>
+			<!-- 48-49: 20. JKK -->
+			<th id="kbm_tr46"></th>
+			<th id="kbm_tr47"></th>
 
-            <!-- 21. JKM -->
-            <th id="kbm_tr48"></th>
-            <th id="kbm_tr49"></th>
+			<!-- 50-51: 21. JKM -->
+			<th id="kbm_tr48"></th>
+			<th id="kbm_tr49"></th>
 
-            <!-- 22. JHT -->
-            <th id="kbm_tr50"></th>
-            <th id="kbm_tr51"></th>
+			<!-- 52-53: 22. JHT -->
+			<th id="kbm_tr50"></th>
+			<th id="kbm_tr51"></th>
 
-            <!-- 23. BPJS TK -->
-            <th id="kbm_tr52"></th>
-            <th id="kbm_tr53"></th>
+			<!-- 54-55: 23. BPJS TK -->
+			<th id="kbm_tr52"></th>
+			<th id="kbm_tr53"></th>
+		</tr>
+	</tfoot>
 
-            <!-- Kolom sisa / kompatibilitas ID lama -->
-            <th id="kbm_tr54"></th>
-            <th id="kbm_tr55"></th>
-        </tr>
-    </tfoot>
 </table>
 
 									</div> <!-- end of table -->
@@ -5429,52 +5426,105 @@
 					?>
 					// END breaking generate button
 				],
-				footerCallback: function (row, data, start, end, display) {
-    var api = this.api();
+				    var api = this.api();
 
     var numFormat = $.fn.dataTable.render
         .number(',', '.', 0, '', '')
         .display;
 
     // =========================================================
-    // 1. RENDER SUBTOTAL FOOTER
+    // MAPPING DATA TABLES COLUMN -> FOOTER ID
     // =========================================================
-    //
-    // Mapping:
-    //
-    // DataTables Column 4  -> Footer kbm_tr8
-    // DataTables Column 5  -> Footer kbm_tr9
-    //
-    // DataTables Column 12 -> Footer kbm_tr10
-    // DataTables Column 13 -> Footer kbm_tr11
-    //
-    // dst...
-    //
-    // Rumus:
-    // footer ID = column index + 4
-    //
-    // Contoh:
-    // column 4  => kbm_tr8
-    // column 12 => kbm_tr16
-    // =========================================================
+    var footerColumns = {
+        4: 'kbm_tr8',
+        5: 'kbm_tr9',
 
-    for (var columnIndex = 4; columnIndex <= 55; columnIndex++) {
+        12: 'kbm_tr10',
+        13: 'kbm_tr11',
+
+        14: 'kbm_tr12',
+        15: 'kbm_tr13',
+
+        16: 'kbm_tr14',
+        17: 'kbm_tr15',
+
+        18: 'kbm_tr16',
+        19: 'kbm_tr17',
+
+        20: 'kbm_tr18',
+        21: 'kbm_tr19',
+
+        22: 'kbm_tr20',
+        23: 'kbm_tr21',
+
+        24: 'kbm_tr22',
+        25: 'kbm_tr23',
+
+        26: 'kbm_tr24',
+        27: 'kbm_tr25',
+
+        28: 'kbm_tr26',
+        29: 'kbm_tr27',
+
+        30: 'kbm_tr28',
+        31: 'kbm_tr29',
+
+        32: 'kbm_tr30',
+        33: 'kbm_tr31',
+
+        34: 'kbm_tr32',
+        35: 'kbm_tr33',
+
+        36: 'kbm_tr34',
+        37: 'kbm_tr35',
+
+        38: 'kbm_tr36',
+        39: 'kbm_tr37',
+
+        40: 'kbm_tr38',
+        41: 'kbm_tr39',
+
+        42: 'kbm_tr40',
+        43: 'kbm_tr41',
+
+        44: 'kbm_tr42',
+        45: 'kbm_tr43',
+
+        46: 'kbm_tr44',
+        47: 'kbm_tr45',
+
+        48: 'kbm_tr46',
+        49: 'kbm_tr47',
+
+        50: 'kbm_tr48',
+        51: 'kbm_tr49',
+
+        52: 'kbm_tr50',
+        53: 'kbm_tr51',
+
+        54: 'kbm_tr52',
+        55: 'kbm_tr53'
+    };
+
+
+    // =========================================================
+    // 1. RENDER SUBTOTAL
+    // =========================================================
+    $.each(footerColumns, function (columnIndex, footerId) {
 
         var sumAll = api
-            .column(columnIndex)
+            .column(parseInt(columnIndex))
             .data()
             .sum();
 
-        var footerIndex = columnIndex + 4;
-
-        $('#kbm_tr' + footerIndex).html(
+        $('#' + footerId).html(
             numFormat(sumAll)
         );
-    }
+    });
 
 
     // =========================================================
-    // 2. HELPER MEMBANDINGKAN SUBTOTAL FOOTER
+    // 2. HELPER COMPARE SUBTOTAL LAMA VS BARU
     // =========================================================
     function compareFooterSum(colIndex1, colIndex2) {
 
@@ -5488,13 +5538,12 @@
             .data()
             .sum();
 
-        var footerIndex1 = colIndex1 + 4;
-        var footerIndex2 = colIndex2 + 4;
+        var footerId1 = footerColumns[colIndex1];
+        var footerId2 = footerColumns[colIndex2];
 
-        var $elem1 = $('#kbm_tr' + footerIndex1);
-        var $elem2 = $('#kbm_tr' + footerIndex2);
+        var $elem1 = $('#' + footerId1);
+        var $elem2 = $('#' + footerId2);
 
-        // Toleransi floating point
         if (Math.abs(sum1 - sum2) > 0.01) {
 
             $elem1.css({
@@ -5523,374 +5572,334 @@
 
 
     // =========================================================
-    // 3. BANDINGKAN SUBTOTAL LAMA VS BARU
+    // 3. COMPARE SEMUA PASANGAN LAMA VS BARU
     // =========================================================
+    var pairs = [
+        [4, 5],       // Gaji Diterima
+        [12, 13],     // Gaji Pokok
+        [14, 15],     // Lembur Jam Pertama
+        [16, 17],     // Rp Jam Pertama
+        [18, 19],     // Lembur Jam Kedua
+        [20, 21],     // Rp Jam Kedua
+        [22, 23],     // Lembur Jam Ketiga
+        [24, 25],     // Rp Jam Ketiga
+        [26, 27],     // Total Lembur Jam
+        [28, 29],     // Total Lembur Jam Final
+        [30, 31],     // Total Rp Lembur
+        [32, 33],     // Pot Makan
+        [34, 35],     // Pot Lain
+        [36, 37],     // Pendapatan Lain
+        [38, 39],     // Pot Upah
+        [40, 41],     // Pot Jam
+        [42, 43],     // Gaji Bersih
+        [44, 45],     // Bulat
+        [46, 47],     // Gaji BPJS TK
+        [48, 49],     // JKK
+        [50, 51],     // JKM
+        [52, 53],     // JHT
+        [54, 55]      // BPJS TK Total
+    ];
 
-    // Gaji Diterima
-    compareFooterSum(4, 5);
-
-    // Gaji Pokok
-    compareFooterSum(12, 13);
-
-    // Lembur Jam Pertama
-    compareFooterSum(14, 15);
-
-    // Rp Jam Pertama
-    compareFooterSum(16, 17);
-
-    // Lembur Jam Kedua
-    compareFooterSum(18, 19);
-
-    // Rp Jam Kedua
-    compareFooterSum(20, 21);
-
-    // Lembur Jam Ketiga
-    compareFooterSum(22, 23);
-
-    // Rp Jam Ketiga
-    compareFooterSum(24, 25);
-
-    // Total Lembur Jam
-    compareFooterSum(26, 27);
-
-    // Total Lembur Jam Final
-    compareFooterSum(28, 29);
-
-    // Total Rp Lembur
-    compareFooterSum(30, 31);
-
-    // Pot Makan
-    compareFooterSum(32, 33);
-
-    // Pot Lain
-    compareFooterSum(34, 35);
-
-    // Pendapatan Lain
-    compareFooterSum(36, 37);
-
-    // Pot Upah
-    compareFooterSum(38, 39);
-
-    // Pot Jam
-    compareFooterSum(40, 41);
-
-    // Gaji Bersih
-    compareFooterSum(42, 43);
-
-    // Bulat
-    compareFooterSum(44, 45);
-
-    // Gaji BPJS TK
-    compareFooterSum(46, 47);
-
-    // JKK
-    compareFooterSum(48, 49);
-
-    // JKM
-    compareFooterSum(50, 51);
-
-    // JHT
-    compareFooterSum(52, 53);
-
-    // BPJS TK TOTAL
-    compareFooterSum(54, 55);
+    $.each(pairs, function (index, pair) {
+        compareFooterSum(pair[0], pair[1]);
+    });
 },
 
 
-rowCallback: function (row, data, index) {
+				rowCallback: function (row, data, index) {
 
-    // =========================================================
-    // GAJI DITERIMA
-    // =========================================================
-    compareField(
-        row,
-        data,
-        4,
-        'gaji_terima'
-    );
-
-
-    // =========================================================
-    // GAJI POKOK
-    // =========================================================
-    compareField(
-        row,
-        data,
-        12,
-        'gp'
-    );
+					// =========================================================
+					// GAJI DITERIMA
+					// =========================================================
+					compareField(
+						row,
+						data,
+						4,
+						'gaji_terima'
+					);
 
 
-    // =========================================================
-    // LEMBUR JAM PERTAMA
-    // =========================================================
-    compareField(
-        row,
-        data,
-        14,
-        'lembur15'
-    );
+					// =========================================================
+					// GAJI POKOK
+					// =========================================================
+					compareField(
+						row,
+						data,
+						12,
+						'gp'
+					);
 
 
-    // =========================================================
-    // RP JAM PERTAMA
-    // =========================================================
-    compareField(
-        row,
-        data,
-        16,
-        'rp_lembur15'
-    );
+					// =========================================================
+					// LEMBUR JAM PERTAMA
+					// =========================================================
+					compareField(
+						row,
+						data,
+						14,
+						'lembur15'
+					);
 
 
-    // =========================================================
-    // LEMBUR JAM KEDUA
-    // =========================================================
-    compareField(
-        row,
-        data,
-        18,
-        'lembur2'
-    );
+					// =========================================================
+					// RP JAM PERTAMA
+					// =========================================================
+					compareField(
+						row,
+						data,
+						16,
+						'rp_lembur15'
+					);
 
 
-    // =========================================================
-    // RP JAM KEDUA
-    // =========================================================
-    compareField(
-        row,
-        data,
-        20,
-        'rp_lembur2'
-    );
+					// =========================================================
+					// LEMBUR JAM KEDUA
+					// =========================================================
+					compareField(
+						row,
+						data,
+						18,
+						'lembur2'
+					);
 
 
-    // =========================================================
-    // LEMBUR JAM KETIGA
-    // =========================================================
-    compareField(
-        row,
-        data,
-        22,
-        'lembur3'
-    );
+					// =========================================================
+					// RP JAM KEDUA
+					// =========================================================
+					compareField(
+						row,
+						data,
+						20,
+						'rp_lembur2'
+					);
 
 
-    // =========================================================
-    // RP JAM KETIGA
-    // =========================================================
-    compareField(
-        row,
-        data,
-        24,
-        'rp_lembur3'
-    );
+					// =========================================================
+					// LEMBUR JAM KETIGA
+					// =========================================================
+					compareField(
+						row,
+						data,
+						22,
+						'lembur3'
+					);
 
 
-    // =========================================================
-    // TOTAL LEMBUR JAM
-    // =========================================================
-    compareField(
-        row,
-        data,
-        26,
-        'total_lembur_jam'
-    );
+					// =========================================================
+					// RP JAM KETIGA
+					// =========================================================
+					compareField(
+						row,
+						data,
+						24,
+						'rp_lembur3'
+					);
 
 
-    // =========================================================
-    // TOTAL LEMBUR JAM FINAL
-    // =========================================================
-    compareField(
-        row,
-        data,
-        28,
-        'total_lembur_jam_final'
-    );
+					// =========================================================
+					// TOTAL LEMBUR JAM
+					// =========================================================
+					compareField(
+						row,
+						data,
+						26,
+						'total_lembur_jam'
+					);
 
 
-    // =========================================================
-    // TOTAL RP LEMBUR
-    // =========================================================
-    compareField(
-        row,
-        data,
-        30,
-        'total_rp_lembur'
-    );
+					// =========================================================
+					// TOTAL LEMBUR JAM FINAL
+					// =========================================================
+					compareField(
+						row,
+						data,
+						28,
+						'total_lembur_jam_final'
+					);
 
 
-    // =========================================================
-    // POT MAKAN
-    // =========================================================
-    compareField(
-        row,
-        data,
-        32,
-        'pot_makan'
-    );
+					// =========================================================
+					// TOTAL RP LEMBUR
+					// =========================================================
+					compareField(
+						row,
+						data,
+						30,
+						'total_rp_lembur'
+					);
 
 
-    // =========================================================
-    // POT LAIN
-    // =========================================================
-    compareField(
-        row,
-        data,
-        34,
-        'pot_lain_after_pph'
-    );
+					// =========================================================
+					// POT MAKAN
+					// =========================================================
+					compareField(
+						row,
+						data,
+						32,
+						'pot_makan'
+					);
 
 
-    // =========================================================
-    // PENDAPATAN LAIN
-    // =========================================================
-    compareField(
-        row,
-        data,
-        36,
-        'pendapatan_lain_after_pph'
-    );
+					// =========================================================
+					// POT LAIN
+					// =========================================================
+					compareField(
+						row,
+						data,
+						34,
+						'pot_lain_after_pph'
+					);
 
 
-    // =========================================================
-    // POT UPAH
-    // =========================================================
-    compareField(
-        row,
-        data,
-        38,
-        'pot_upah'
-    );
+					// =========================================================
+					// PENDAPATAN LAIN
+					// =========================================================
+					compareField(
+						row,
+						data,
+						36,
+						'pendapatan_lain_after_pph'
+					);
 
 
-    // =========================================================
-    // POT JAM
-    // =========================================================
-    compareField(
-        row,
-        data,
-        40,
-        'pot_jam'
-    );
+					// =========================================================
+					// POT UPAH
+					// =========================================================
+					compareField(
+						row,
+						data,
+						38,
+						'pot_upah'
+					);
 
 
-    // =========================================================
-    // GAJI BERSIH
-    // =========================================================
-    compareField(
-        row,
-        data,
-        42,
-        'gaji_bersih'
-    );
+					// =========================================================
+					// POT JAM
+					// =========================================================
+					compareField(
+						row,
+						data,
+						40,
+						'pot_jam'
+					);
 
 
-    // =========================================================
-    // BULAT
-    // =========================================================
-    compareField(
-        row,
-        data,
-        44,
-        'bulat'
-    );
+					// =========================================================
+					// GAJI BERSIH
+					// =========================================================
+					compareField(
+						row,
+						data,
+						42,
+						'gaji_bersih'
+					);
 
 
-    // =========================================================
-    // GAJI BPJS TK
-    // =========================================================
-    compareField(
-        row,
-        data,
-        46,
-        'gaji_bpjs_tk'
-    );
+					// =========================================================
+					// BULAT
+					// =========================================================
+					compareField(
+						row,
+						data,
+						44,
+						'bulat'
+					);
 
 
-    // =========================================================
-    // JKK
-    // =========================================================
-    compareField(
-        row,
-        data,
-        48,
-        'jkk'
-    );
+					// =========================================================
+					// GAJI BPJS TK
+					// =========================================================
+					compareField(
+						row,
+						data,
+						46,
+						'gaji_bpjs_tk'
+					);
 
 
-    // =========================================================
-    // JKM
-    // =========================================================
-    compareField(
-        row,
-        data,
-        50,
-        'jkm'
-    );
+					// =========================================================
+					// JKK
+					// =========================================================
+					compareField(
+						row,
+						data,
+						48,
+						'jkk'
+					);
 
 
-    // =========================================================
-    // JHT
-    // =========================================================
-    compareField(
-        row,
-        data,
-        52,
-        'jht_perusahaan'
-    );
+					// =========================================================
+					// JKM
+					// =========================================================
+					compareField(
+						row,
+						data,
+						50,
+						'jkm'
+					);
 
 
-    // =========================================================
-    // BPJS TK TOTAL
-    // =========================================================
-    //
-    // Kolom 54 dan 55 tidak mempunyai field langsung.
-    // Nilainya merupakan:
-    //
-    // JKK + JKM + JHT Perusahaan
-    //
-    // sehingga tidak menggunakan compareField().
-    // =========================================================
+					// =========================================================
+					// JHT
+					// =========================================================
+					compareField(
+						row,
+						data,
+						52,
+						'jht_perusahaan'
+					);
 
-    var bpjsLama =
-        (parseFloat(data.hpyemtd_cocokan?.jkk) || 0) +
-        (parseFloat(data.hpyemtd_cocokan?.jkm) || 0) +
-        (parseFloat(data.hpyemtd_cocokan?.jht_perusahaan) || 0);
 
-    var bpjsBaru =
-        (parseFloat(data.hpyemtd?.jkk) || 0) +
-        (parseFloat(data.hpyemtd?.jkm) || 0) +
-        (parseFloat(data.hpyemtd?.jht_perusahaan) || 0);
+					// =========================================================
+					// BPJS TK TOTAL
+					// =========================================================
+					//
+					// Kolom 54 dan 55 tidak mempunyai field langsung.
+					// Nilainya merupakan:
+					//
+					// JKK + JKM + JHT Perusahaan
+					//
+					// sehingga tidak menggunakan compareField().
+					// =========================================================
 
-    var $bpjsLama = $('td:eq(54)', row);
-    var $bpjsBaru = $('td:eq(55)', row);
+					var bpjsLama =
+						(parseFloat(data.hpyemtd_cocokan?.jkk) || 0) +
+						(parseFloat(data.hpyemtd_cocokan?.jkm) || 0) +
+						(parseFloat(data.hpyemtd_cocokan?.jht_perusahaan) || 0);
 
-    if (Math.abs(bpjsLama - bpjsBaru) > 0.01) {
+					var bpjsBaru =
+						(parseFloat(data.hpyemtd?.jkk) || 0) +
+						(parseFloat(data.hpyemtd?.jkm) || 0) +
+						(parseFloat(data.hpyemtd?.jht_perusahaan) || 0);
 
-        $bpjsLama.css({
-            'color': 'red',
-            'font-weight': 'bold'
-        });
+					var $bpjsLama = $('td:eq(54)', row);
+					var $bpjsBaru = $('td:eq(55)', row);
 
-        $bpjsBaru.css({
-            'color': 'red',
-            'font-weight': 'bold'
-        });
+					if (Math.abs(bpjsLama - bpjsBaru) > 0.01) {
 
-    } else {
+						$bpjsLama.css({
+							'color': 'red',
+							'font-weight': 'bold'
+						});
 
-        $bpjsLama.css({
-            'color': '',
-            'font-weight': ''
-        });
+						$bpjsBaru.css({
+							'color': 'red',
+							'font-weight': 'bold'
+						});
 
-        $bpjsBaru.css({
-            'color': '',
-            'font-weight': ''
-        });
-    }
-},
+					} else {
+
+						$bpjsLama.css({
+							'color': '',
+							'font-weight': ''
+						});
+
+						$bpjsBaru.css({
+							'color': '',
+							'font-weight': ''
+						});
+					}
+				},
 
 			} );
 
