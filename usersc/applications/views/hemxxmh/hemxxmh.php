@@ -5124,7 +5124,7 @@
 						$table       = 'tblhemxxmh_medical_leave';
 						$edt         = 'edthemxxmh_medical_leave';
 						$show_status = '_hemxxmh_medical_leave';
-						$table_name  = $nama_tabels_d[12];
+						$table_name  = $nama_tabels_d[13];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
 						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_d'];
