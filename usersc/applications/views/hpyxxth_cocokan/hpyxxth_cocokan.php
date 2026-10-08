@@ -5423,8 +5423,452 @@
 						$arr_buttons_action 	= [];
 						$arr_buttons_approve 	= [];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
-					?>
+					?>,
 					// END breaking generate button
+{
+    text: '<span class="fa fa-file-excel-o">&nbsp;&nbsp;Excel Berwarna</span>',
+    className: 'btn btn-success',
+    name: 'btnExcelBerwarna',
+
+    action: async function () {
+
+        notifyLoadingJerapah();
+
+        await new Promise(resolve => requestAnimationFrame(resolve));
+        await new Promise(resolve => setTimeout(resolve, 50));
+
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Payroll');
+
+        const dt = $('#tblhpyemtd_karyawan').DataTable();
+
+        // =========================
+        // MAPPING compareField()
+        // =========================
+        const compareMap = {
+
+            4: 'gaji_terima',
+
+            12: 'gp',
+
+            14: 'lembur15',
+            16: 'rp_lembur15',
+
+            18: 'lembur2',
+            20: 'rp_lembur2',
+
+            22: 'lembur3',
+            24: 'rp_lembur3',
+
+            26: 'total_lembur_jam',
+            28: 'total_lembur_jam_final',
+            30: 'total_rp_lembur',
+
+            32: 'pot_makan',
+            34: 'pot_lain_after_pph',
+            36: 'pendapatan_lain_after_pph',
+
+            38: 'pot_upah',
+            40: 'pot_jam',
+
+            42: 'gaji_bersih',
+            44: 'bulat',
+
+            46: 'gaji_bpjs_tk',
+
+            48: 'jkk',
+            50: 'jkm',
+
+            52: 'jht_perusahaan'
+
+        };
+
+        // =========================
+        // HEADER
+        // =========================
+        const headers = [];
+
+        $('#tblhpyemtd_karyawan thead th').each(function () {
+
+            headers.push(
+                $(this).text().trim()
+            );
+
+        });
+
+        worksheet.addRow(headers);
+
+        const headerRow = worksheet.getRow(1);
+
+        $('#tblhpyemtd_karyawan thead th').each(function (idx) {
+
+            const cell = headerRow.getCell(idx + 1);
+
+            cell.font = {
+                bold: true,
+                color: {
+                    argb: 'FF000000'
+                }
+            };
+
+            cell.alignment = {
+                horizontal: 'center',
+                vertical: 'middle',
+                wrapText: true
+            };
+
+            cell.border = {
+                top: {
+                    style: 'thin'
+                },
+                left: {
+                    style: 'thin'
+                },
+                bottom: {
+                    style: 'thin'
+                },
+                right: {
+                    style: 'thin'
+                }
+            };
+
+            // =========================
+            // HEADER COLOR
+            // =========================
+            if ($(this).hasClass('lama')) {
+
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: {
+                        argb: 'FFFFEBAA'
+                    }
+                };
+
+            } else if ($(this).hasClass('baru')) {
+
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: {
+                        argb: 'FFC3E6CB'
+                    }
+                };
+
+            } else if ($(this).hasClass('satu')) {
+
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: {
+                        argb: 'FFC3D7E6'
+                    }
+                };
+
+            } else if ($(this).hasClass('dua')) {
+
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: {
+                        argb: 'FFCCE6C3'
+                    }
+                };
+
+            } else {
+
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: {
+                        argb: 'FFE9ECEF'
+                    }
+                };
+
+            }
+
+            // =========================
+            // HEADER TEXT DANGER
+            // =========================
+            if ($(this).hasClass('text-danger')) {
+
+                cell.font = {
+                    bold: true,
+                    color: {
+                        argb: 'FFFF0000'
+                    }
+                };
+
+            }
+
+        });
+
+        // =========================
+        // DATA SEMUA PAGE
+        // =========================
+        const allRows =
+            dt.rows({
+                search: 'applied'
+            })
+            .indexes()
+            .toArray();
+
+        allRows.forEach(function (data) {
+
+            const rowData = [];
+
+            // =========================
+            // AMBIL DATA KOLOM VISIBLE
+            // =========================
+            dt.columns(':visible').every(function () {
+
+                let value =
+                    dt.cell(
+                        data,
+                        this.index()
+                    ).render('display');
+
+                if (
+                    value === null ||
+                    value === undefined
+                ) {
+
+                    value = '';
+
+                }
+
+                value = $('<div>')
+                    .html(value)
+                    .text()
+                    .trim();
+
+                rowData.push(value);
+
+            });
+
+            if (rowData.length === 0) {
+                return;
+            }
+
+            // =========================
+            // ADD ROW
+            // =========================
+            const excelRow =
+                worksheet.addRow(rowData);
+
+            // =========================
+            // BORDER
+            // =========================
+            excelRow.eachCell(function (cell) {
+
+                cell.border = {
+                    top: {
+                        style: 'thin'
+                    },
+                    left: {
+                        style: 'thin'
+                    },
+                    bottom: {
+                        style: 'thin'
+                    },
+                    right: {
+                        style: 'thin'
+                    }
+                };
+
+            });
+
+            // =========================
+            // DATA ORIGINAL
+            // =========================
+            const rowObj =
+                dt.row(data).data();
+
+            // =========================
+            // compareField() -> bg-danger
+            // =========================
+            Object.entries(compareMap).forEach(
+                function ([colIndex, field]) {
+
+                    const nilaiCocokan =
+                        Number(
+                            rowObj?.hpyemtd_cocokan?.[field] ?? 0
+                        );
+
+                    const nilaiAsli =
+                        Number(
+                            rowObj?.hpyemtd?.[field] ?? 0
+                        );
+
+                    // =========================
+                    // JIKA BERBEDA
+                    // =========================
+                    if (nilaiCocokan !== nilaiAsli) {
+
+                        const cell =
+                            excelRow.getCell(
+                                Number(colIndex) + 1
+                            );
+
+                        // =========================
+                        // BACKGROUND MERAH
+                        // =========================
+                        cell.fill = {
+                            type: 'pattern',
+                            pattern: 'solid',
+                            fgColor: {
+                                argb: 'FFDC3545'
+                            }
+                        };
+
+                        // =========================
+                        // FONT PUTIH
+                        // =========================
+                        cell.font = {
+                            color: {
+                                argb: 'FFFFFFFF'
+                            },
+                            bold: true
+                        };
+
+                        // =========================
+                        // CATAT SELISIH
+                        // =========================
+                        const selisih =
+                            nilaiCocokan - nilaiAsli;
+
+                        cell.note =
+                            `Selisih : ${formatNumber(selisih)}`;
+
+                    }
+
+                }
+            );
+
+        });
+
+        // =========================
+        // STYLE KOLOM
+        // =========================
+        $('#tblhpyemtd_karyawan thead th').each(function (idx) {
+
+            const th = $(this);
+
+            const col =
+                worksheet.getColumn(idx + 1);
+
+            // =========================
+            // WIDTH
+            // =========================
+            col.width = Math.max(
+                15,
+                Math.min(
+                    40,
+                    th.text().length + 5
+                )
+            );
+
+            // =========================
+            // TEXT RIGHT
+            // =========================
+            if (th.hasClass('text-right')) {
+
+                col.alignment = {
+                    horizontal: 'right'
+                };
+
+            }
+
+            // =========================
+            // TEXT CENTER
+            // =========================
+            if (th.hasClass('text-center')) {
+
+                col.alignment = {
+                    horizontal: 'center'
+                };
+
+            }
+
+            // =========================
+            // TEXT DANGER
+            // =========================
+            if (th.hasClass('text-danger')) {
+
+                col.eachCell(function (
+                    cell,
+                    rowNumber
+                ) {
+
+                    if (
+                        rowNumber > 1 &&
+                        !(
+                            cell.fill &&
+                            cell.fill.fgColor &&
+                            cell.fill.fgColor.argb ===
+                                'FFDC3545'
+                        )
+                    ) {
+
+                        cell.font = {
+                            color: {
+                                argb: 'FFFF0000'
+                            }
+                        };
+
+                    }
+
+                });
+
+            }
+
+        });
+
+        // =========================
+        // FREEZE HEADER
+        // =========================
+        worksheet.views = [
+            {
+                state: 'frozen',
+                ySplit: 1
+            }
+        ];
+
+        // =========================
+        // AUTO FILTER
+        // =========================
+        worksheet.autoFilter = {
+            from: 'A1',
+            to:
+                worksheet
+                    .getRow(1)
+                    .getCell(headers.length)
+                    ._address
+        };
+
+        // =========================
+        // EXPORT
+        // =========================
+        const buffer =
+            await workbook.xlsx.writeBuffer();
+
+        saveAs(
+            new Blob(
+                [
+                    buffer
+                ],
+                {
+                    type:
+                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                }
+            ),
+            'Payroll.xlsx'
+        );
+
+        Swal.close();
+
+    }
+}
 				],
 				footerCallback: function (row, data, start, end, display) {
     var api = this.api();
