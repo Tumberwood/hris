@@ -5609,298 +5609,294 @@
 
 rowCallback: function (row, data, index) {
 
-    // =========================================================
-    // GAJI DITERIMA
-    // DataTables 4 -> DOM 2
-    // =========================================================
-    compareField(
-        row,
-        data,
-        2,
-        'gaji_terima'
-    );
+// =========================================================
+// GAJI DITERIMA
+// TH / DataTables: 4 = Lama, 5 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    4,
+    'gaji_terima'
+);
 
-    // =========================================================
-    // GAJI POKOK
-    // DataTables 12 -> DOM 10
-    // =========================================================
-    compareField(
-        row,
-        data,
-        10,
-        'gp'
-    );
+// =========================================================
+// GAJI POKOK
+// TH / DataTables: 12 = Lama, 13 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    12,
+    'gp'
+);
 
-    // =========================================================
-    // LEMBUR JAM PERTAMA
-    // DataTables 14 -> DOM 12
-    // =========================================================
-    compareField(
-        row,
-        data,
-        12,
-        'lembur15'
-    );
+// =========================================================
+// LEMBUR JAM PERTAMA
+// TH / DataTables: 14 = Lama, 15 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    14,
+    'lembur15'
+);
 
-    // =========================================================
-    // RP JAM PERTAMA
-    // DataTables 16 -> DOM 14
-    // =========================================================
-    compareField(
-        row,
-        data,
-        14,
-        'rp_lembur15'
-    );
+// =========================================================
+// RP JAM PERTAMA
+// TH / DataTables: 16 = Lama, 17 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    16,
+    'rp_lembur15'
+);
 
-    // =========================================================
-    // LEMBUR JAM KEDUA
-    // DataTables 18 -> DOM 16
-    // =========================================================
-    compareField(
-        row,
-        data,
-        16,
-        'lembur2'
-    );
+// =========================================================
+// LEMBUR JAM KEDUA
+// TH / DataTables: 18 = Lama, 19 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    18,
+    'lembur2'
+);
 
-    // =========================================================
-    // RP JAM KEDUA
-    // DataTables 20 -> DOM 18
-    // =========================================================
-    compareField(
-        row,
-        data,
-        18,
-        'rp_lembur2'
-    );
+// =========================================================
+// RP JAM KEDUA
+// TH / DataTables: 20 = Lama, 21 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    20,
+    'rp_lembur2'
+);
 
-    // =========================================================
-    // LEMBUR JAM KETIGA
-    // DataTables 22 -> DOM 20
-    // =========================================================
-    compareField(
-        row,
-        data,
-        20,
-        'lembur3'
-    );
+// =========================================================
+// LEMBUR JAM KETIGA
+// TH / DataTables: 22 = Lama, 23 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    22,
+    'lembur3'
+);
 
-    // =========================================================
-    // RP JAM KETIGA
-    // DataTables 24 -> DOM 22
-    // =========================================================
-    compareField(
-        row,
-        data,
-        22,
-        'rp_lembur3'
-    );
+// =========================================================
+// RP JAM KETIGA
+// TH / DataTables: 24 = Lama, 25 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    24,
+    'rp_lembur3'
+);
 
-    // =========================================================
-    // TOTAL LEMBUR JAM
-    // DataTables 26 -> DOM 24
-    // =========================================================
-    compareField(
-        row,
-        data,
-        24,
-        'total_lembur_jam'
-    );
+// =========================================================
+// TOTAL LEMBUR JAM
+// TH / DataTables: 26 = Lama, 27 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    26,
+    'total_lembur_jam'
+);
 
-    // =========================================================
-    // TOTAL LEMBUR JAM FINAL
-    // DataTables 28 -> DOM 26
-    // =========================================================
-    compareField(
-        row,
-        data,
-        26,
-        'total_lembur_jam_final'
-    );
+// =========================================================
+// TOTAL LEMBUR JAM FINAL
+// TH / DataTables: 28 = Lama, 29 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    28,
+    'total_lembur_jam_final'
+);
 
-    // =========================================================
-    // TOTAL RP LEMBUR
-    // DataTables 30 -> DOM 28
-    // =========================================================
-    compareField(
-        row,
-        data,
-        28,
-        'total_rp_lembur'
-    );
+// =========================================================
+// TOTAL RP LEMBUR
+// TH / DataTables: 30 = Lama, 31 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    30,
+    'total_rp_lembur'
+);
 
-    // =========================================================
-    // POT MAKAN
-    // DataTables 32 -> DOM 30
-    // =========================================================
-    compareField(
-        row,
-        data,
-        30,
-        'pot_makan'
-    );
+// =========================================================
+// POT MAKAN
+// TH / DataTables: 32 = Lama, 33 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    32,
+    'pot_makan'
+);
 
-    // =========================================================
-    // POT LAIN
-    // DataTables 34 -> DOM 32
-    // =========================================================
-    compareField(
-        row,
-        data,
-        32,
-        'pot_lain_after_pph'
-    );
+// =========================================================
+// POT LAIN
+// TH / DataTables: 34 = Lama, 35 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    34,
+    'pot_lain_after_pph'
+);
 
-    // =========================================================
-    // PENDAPATAN LAIN
-    // DataTables 36 -> DOM 34
-    // =========================================================
-    compareField(
-        row,
-        data,
-        34,
-        'pendapatan_lain_after_pph'
-    );
+// =========================================================
+// PENDAPATAN LAIN
+// TH / DataTables: 36 = Lama, 37 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    36,
+    'pendapatan_lain_after_pph'
+);
 
-    // =========================================================
-    // POT UPAH
-    // DataTables 38 -> DOM 36
-    // =========================================================
-    compareField(
-        row,
-        data,
-        36,
-        'pot_upah'
-    );
+// =========================================================
+// POT UPAH HARIAN
+// TH / DataTables: 38 = Lama, 39 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    38,
+    'pot_upah'
+);
 
-    // =========================================================
-    // POT JAM
-    // DataTables 40 -> DOM 38
-    // =========================================================
-    compareField(
-        row,
-        data,
-        38,
-        'pot_jam'
-    );
+// =========================================================
+// POT UPAH JAM
+// TH / DataTables: 40 = Lama, 41 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    40,
+    'pot_jam'
+);
 
-    // =========================================================
-    // GAJI BERSIH
-    // DataTables 42 -> DOM 40
-    // =========================================================
-    compareField(
-        row,
-        data,
-        40,
-        'gaji_bersih'
-    );
+// =========================================================
+// GAJI BERSIH
+// TH / DataTables: 42 = Lama, 43 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    42,
+    'gaji_bersih'
+);
 
-    // =========================================================
-    // BULAT
-    // DataTables 44 -> DOM 42
-    // =========================================================
-    compareField(
-        row,
-        data,
-        42,
-        'bulat'
-    );
+// =========================================================
+// BULAT
+// TH / DataTables: 44 = Lama, 45 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    44,
+    'bulat'
+);
 
-    // =========================================================
-    // GAJI BPJS TK
-    // DataTables 46 -> DOM 44
-    // =========================================================
-    compareField(
-        row,
-        data,
-        44,
-        'gaji_bpjs_tk'
-    );
+// =========================================================
+// GAJI BPJS TK
+// TH / DataTables: 46 = Lama, 47 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    46,
+    'gaji_bpjs_tk'
+);
 
-    // =========================================================
-    // JKK
-    // DataTables 48 -> DOM 46
-    // =========================================================
-    compareField(
-        row,
-        data,
-        46,
-        'jkk'
-    );
+// =========================================================
+// JKK
+// TH / DataTables: 48 = Lama, 49 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    48,
+    'jkk'
+);
 
-    // =========================================================
-    // JKM
-    // DataTables 50 -> DOM 48
-    // =========================================================
-    compareField(
-        row,
-        data,
-        48,
-        'jkm'
-    );
+// =========================================================
+// JKM
+// TH / DataTables: 50 = Lama, 51 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    50,
+    'jkm'
+);
 
-    // =========================================================
-    // JHT
-    // DataTables 52 -> DOM 50
-    // =========================================================
-    compareField(
-        row,
-        data,
-        50,
-        'jht_perusahaan'
-    );
+// =========================================================
+// JHT
+// TH / DataTables: 52 = Lama, 53 = Baru
+// =========================================================
+compareField(
+    row,
+    data,
+    52,
+    'jht_perusahaan'
+);
 
-    // =========================================================
-    // BPJS TK TOTAL
-    //
-    // DataTables:
-    // 54 = BPJS TK Total Lama
-    // 55 = BPJS TK Total Baru
-    //
-    // Karena kolom 0 dan 1 hidden:
-    // DOM:
-    // 52 = BPJS TK Total Lama
-    // 53 = BPJS TK Total Baru
-    // =========================================================
+// =========================================================
+// BPJS TK TOTAL
+// TH / DataTables: 54 = Lama, 55 = Baru
+//
+// Nilai:
+// JKK + JKM + JHT Perusahaan
+// =========================================================
 
-    var bpjsLama =
-        (parseFloat(data.hpyemtd_cocokan?.jkk) || 0) +
-        (parseFloat(data.hpyemtd_cocokan?.jkm) || 0) +
-        (parseFloat(data.hpyemtd_cocokan?.jht_perusahaan) || 0);
+var bpjsLama =
+    (parseFloat(data.hpyemtd_cocokan?.jkk) || 0) +
+    (parseFloat(data.hpyemtd_cocokan?.jkm) || 0) +
+    (parseFloat(data.hpyemtd_cocokan?.jht_perusahaan) || 0);
 
-    var bpjsBaru =
-        (parseFloat(data.hpyemtd?.jkk) || 0) +
-        (parseFloat(data.hpyemtd?.jkm) || 0) +
-        (parseFloat(data.hpyemtd?.jht_perusahaan) || 0);
+var bpjsBaru =
+    (parseFloat(data.hpyemtd?.jkk) || 0) +
+    (parseFloat(data.hpyemtd?.jkm) || 0) +
+    (parseFloat(data.hpyemtd?.jht_perusahaan) || 0);
 
-    var $bpjsLama = $('td:eq(52)', row);
-    var $bpjsBaru = $('td:eq(53)', row);
+var $bpjsLama = $('td:eq(54)', row);
+var $bpjsBaru = $('td:eq(55)', row);
 
-    if (Math.abs(bpjsLama - bpjsBaru) > 0.01) {
+if (Math.abs(bpjsLama - bpjsBaru) > 0.01) {
 
-        $bpjsLama.css({
-            'color': 'red',
-            'font-weight': 'bold'
-        });
+    $bpjsLama.css({
+        'color': 'red',
+        'font-weight': 'bold'
+    });
 
-        $bpjsBaru.css({
-            'color': 'red',
-            'font-weight': 'bold'
-        });
+    $bpjsBaru.css({
+        'color': 'red',
+        'font-weight': 'bold'
+    });
 
-    } else {
+} else {
 
-        $bpjsLama.css({
-            'color': '',
-            'font-weight': ''
-        });
+    $bpjsLama.css({
+        'color': '',
+        'font-weight': ''
+    });
 
-        $bpjsBaru.css({
-            'color': '',
-            'font-weight': ''
-        });
-    }
+    $bpjsBaru.css({
+        'color': '',
+        'font-weight': ''
+    });
+}
+
 },
 
 			} );
