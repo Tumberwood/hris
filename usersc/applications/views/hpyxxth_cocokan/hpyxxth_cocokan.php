@@ -5426,7 +5426,8 @@
 					?>
 					// END breaking generate button
 				],
-				    var api = this.api();
+				footerCallback: function (row, data, start, end, display) {
+    var api = this.api();
 
     var numFormat = $.fn.dataTable.render
         .number(',', '.', 0, '', '')
