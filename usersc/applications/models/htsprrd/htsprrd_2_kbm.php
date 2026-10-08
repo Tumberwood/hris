@@ -146,6 +146,8 @@
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','htsprrd.id_holxxmd_2' )
 		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
 		->where( 'hemjbmh.id_heyxxmd', 1 )
+		->where( 'hemjbmh.is_harian_lepas', 0)
+		->where( 'hemjbmh.is_non_karyawan', 0)
 		;
 	
 	// do not erase
