@@ -123,7 +123,17 @@
             ->exec('WITH pegawai AS (
                         SELECT
                             b.id AS id_hemxxmh,
-                            b.medical_leave,
+                            COALESCE(
+                                (
+                                    SELECT ml.medical_leave
+                                    FROM hemxxmh_medical_leave ml
+                                    WHERE ml.id_hemxxmh = b.id
+                                    AND ml.tanggal_efektif BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    ORDER BY ml.tanggal_efektif DESC
+                                    LIMIT 1
+                                ), 0
+                            ) AS medical_leave,
+
                             tanggal_mulai_bpjs_kes,
                             tanggal_mulai_bpjs_tk,
                             
