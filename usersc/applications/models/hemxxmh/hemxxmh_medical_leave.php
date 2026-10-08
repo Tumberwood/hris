@@ -32,8 +32,17 @@
 				Field::inst( 'hemxxmh_medical_leave.is_active' ),
 				Field::inst( 'hemxxmh_medical_leave.medical_leave' ),
 				Field::inst( 'hemxxmh_medical_leave.tanggal_efektif' )
-					->setFormatter( Format::ifEmpty( 0 ) )
-				,
+					->getFormatter( function ( $val, $data, $opts ) {
+						if ($val === '0000-00-00' || $val === null){
+							echo '';
+						}else{
+							return date( 'd M Y', strtotime( $val ) );
+						}
+					} )
+					->setFormatter( 'Format::datetime', array(
+						'from' => 'd M Y',
+						'to' =>   'Y-m-d'
+					) ),
 				Field::inst( 'hemxxmh_medical_leave.created_by' )
 					->set( Field::SET_CREATE )
 					->setValue($_SESSION['user']),
