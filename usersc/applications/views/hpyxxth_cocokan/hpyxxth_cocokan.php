@@ -5959,7 +5959,8 @@
     }
 }
 				],
-				footerCallback: function (row, data, start, end, display) {
+				
+footerCallback: function (row, data, start, end, display) {
     var api = this.api();
 
     var numFormat = $.fn.dataTable.render
