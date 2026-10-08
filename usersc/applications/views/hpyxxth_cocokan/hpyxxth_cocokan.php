@@ -5424,7 +5424,6 @@
 						$arr_buttons_approve 	= [];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>,
-					// END breaking generate button
 {
     text: '<span class="fa fa-file-excel-o">&nbsp;&nbsp;Excel Berwarna</span>',
     className: 'btn btn-success',
@@ -5443,44 +5442,39 @@
         const dt = $('#tblhpyemtd_kbm_tr').DataTable();
 
         // =========================
-        // MAPPING compareField()
+        // MAPPING SESUAI rowCallback
         // =========================
         const compareMap = {
+            2: 'gaji_terima',
 
-            4: 'gaji_terima',
+            10: 'gp',
 
-            12: 'gp',
+            12: 'lembur15',
+            14: 'rp_lembur15',
+            16: 'lembur2',
+            18: 'rp_lembur2',
+            20: 'lembur3',
+            22: 'rp_lembur3',
 
-            14: 'lembur15',
-            16: 'rp_lembur15',
+            24: 'total_lembur_jam',
+            26: 'total_lembur_jam_final',
+            28: 'total_rp_lembur',
 
-            18: 'lembur2',
-            20: 'rp_lembur2',
+            30: 'pot_makan',
+            32: 'pot_lain_after_pph',
+            34: 'pendapatan_lain_after_pph',
 
-            22: 'lembur3',
-            24: 'rp_lembur3',
+            36: 'pot_upah',
+            38: 'pot_jam',
 
-            26: 'total_lembur_jam',
-            28: 'total_lembur_jam_final',
-            30: 'total_rp_lembur',
+            40: 'gaji_bersih',
+            42: 'bulat',
 
-            32: 'pot_makan',
-            34: 'pot_lain_after_pph',
-            36: 'pendapatan_lain_after_pph',
+            44: 'gaji_bpjs_tk',
 
-            38: 'pot_upah',
-            40: 'pot_jam',
-
-            42: 'gaji_bersih',
-            44: 'bulat',
-
-            46: 'gaji_bpjs_tk',
-
-            48: 'jkk',
-            50: 'jkm',
-
-            52: 'jht_perusahaan'
-
+            46: 'jkk',
+            48: 'jkm',
+            50: 'jht_perusahaan'
         };
 
         // =========================
@@ -5651,7 +5645,7 @@
             }
 
             // =========================
-            // ADD ROW
+            // ADD EXCEL ROW
             // =========================
             const excelRow =
                 worksheet.addRow(rowData);
@@ -5685,7 +5679,7 @@
                 dt.row(data).data();
 
             // =========================
-            // compareField() -> bg-danger
+            // COMPARE FIELD
             // =========================
             Object.entries(compareMap).forEach(
                 function ([colIndex, field]) {
@@ -5703,7 +5697,11 @@
                     // =========================
                     // JIKA BERBEDA
                     // =========================
-                    if (nilaiCocokan !== nilaiAsli) {
+                    if (
+                        Math.abs(
+                            nilaiCocokan - nilaiAsli
+                        ) > 0.01
+                    ) {
 
                         const cell =
                             excelRow.getCell(
@@ -5732,7 +5730,7 @@
                         };
 
                         // =========================
-                        // CATAT SELISIH
+                        // NOTE SELISIH
                         // =========================
                         const selisih =
                             nilaiCocokan - nilaiAsli;
@@ -5744,6 +5742,97 @@
 
                 }
             );
+
+            // =========================
+            // BPJS TK TOTAL
+            // index 52 = Lama
+            // index 53 = Baru
+            // =========================
+            const bpjsLama =
+                (parseFloat(
+                    rowObj?.hpyemtd_cocokan?.jkk
+                ) || 0) +
+
+                (parseFloat(
+                    rowObj?.hpyemtd_cocokan?.jkm
+                ) || 0) +
+
+                (parseFloat(
+                    rowObj?.hpyemtd_cocokan?.jht_perusahaan
+                ) || 0);
+
+            const bpjsBaru =
+                (parseFloat(
+                    rowObj?.hpyemtd?.jkk
+                ) || 0) +
+
+                (parseFloat(
+                    rowObj?.hpyemtd?.jkm
+                ) || 0) +
+
+                (parseFloat(
+                    rowObj?.hpyemtd?.jht_perusahaan
+                ) || 0);
+
+            if (
+                Math.abs(
+                    bpjsLama - bpjsBaru
+                ) > 0.01
+            ) {
+
+                const cellBpjsLama =
+                    excelRow.getCell(53);
+
+                const cellBpjsBaru =
+                    excelRow.getCell(54);
+
+                // =========================
+                // BPJS LAMA
+                // =========================
+                cellBpjsLama.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: {
+                        argb: 'FFDC3545'
+                    }
+                };
+
+                cellBpjsLama.font = {
+                    color: {
+                        argb: 'FFFFFFFF'
+                    },
+                    bold: true
+                };
+
+                cellBpjsLama.note =
+                    `Selisih : ${formatNumber(
+                        bpjsLama - bpjsBaru
+                    )}`;
+
+                // =========================
+                // BPJS BARU
+                // =========================
+                cellBpjsBaru.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: {
+                        argb: 'FFDC3545'
+                    }
+                };
+
+                cellBpjsBaru.font = {
+                    color: {
+                        argb: 'FFFFFFFF'
+                    },
+                    bold: true
+                };
+
+                cellBpjsBaru.note =
+                    `Selisih : ${formatNumber(
+                        bpjsLama - bpjsBaru
+                    )}`;
+
+            }
 
         });
 
