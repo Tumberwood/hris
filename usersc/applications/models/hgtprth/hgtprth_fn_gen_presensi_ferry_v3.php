@@ -424,7 +424,8 @@
                                     j.is_checkclock,
                                     j.tanggal_masuk,
                                     j.tanggal_keluar,
-                                    IFNULL(history.id_hesxxmh, j.id_hesxxmh) id_hesxxmh,
+                                    -- IFNULL(history.id_hesxxmh, j.id_hesxxmh) id_hesxxmh,
+                                    COALESCE(NULLIF(history.id_hesxxmh, 0), j.id_hesxxmh) AS id_hesxxmh,
                                     IFNULL(history.jumlah_grup, j.jumlah_grup) jumlah_grup,
                                     IFNULL(is_resign, 0) is_resign,
                                     IF(
