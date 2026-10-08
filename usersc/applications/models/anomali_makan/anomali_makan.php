@@ -209,6 +209,7 @@
 					AND a.tanggal BETWEEN :start_date AND :end_date
 
 					AND a.is_makan = 0
+					AND a.st_jadwal <> "OFF"
 
 					AND a.durasi_lembur_final > 0
 
