@@ -135,6 +135,7 @@
 				<div id="tabel_atas"></div>
 				<div style="margin-top: -40px" id="tabel_bawah"></div>
 				<div style="margin-top: -40px" id="tabel_potongan"></div>
+				<div style="margin-top: -40px" id="tabel_jam_istirahat_makan"></div>
 				<div class="row">
 					<div class="col-md-4">
                         <h3 id="h3_riwayat"></h3>
@@ -745,6 +746,7 @@
 								}
 							});
 							
+							//Tabel Potongan
 							var str6 = '<table id="tblhtsprrd6" class="table table-striped table-bordered">';
 							
 							if ($.fn.dataTable.isDataTable('#tblhtsprrd6')) {
@@ -787,6 +789,53 @@
 								scrollCollapse: true,
 								data: json.data,
 								columns: json.columns6,
+								columnDefs: [
+									{ targets: '_all', className: 'text-right' } // Apply text-right class to all columns
+								],
+								buttons: [
+								],
+								rowCallback: function (row, data, index) {
+
+								}
+							});
+							
+							//Tabel Jam Break dan Makan
+							var str7 = '<table id="tblhtsprrd7" class="table table-striped table-bordered">';
+							
+							if ($.fn.dataTable.isDataTable('#tblhtsprrd7')) {
+								$('#tblhtsprrd7').DataTable().clear();
+								$('#tblhtsprrd7').DataTable().destroy();
+								$('#tblhtsprrd7 tbody').empty();
+								$('#tblhtsprrd7 thead').empty();
+							}
+							str7 += '<thead>';
+								str7 += '<tr>';
+								$.each(json.columns7, function (k, colObj7) {
+									// BEGIN render column name
+									if (colObj7.name == 'break_in') {
+										str7 += '<th class="text-danger text-center">Break In</th>';
+									} else if (colObj7.name == 'break_out') {
+										str7 += '<th class="text-danger text-center">Break Out</th>';
+									} else if (colObj7.name == 'jam_makan') {
+										str7 += '<th class="text-danger text-center">Jam Makan</th>';
+									} 
+								});
+								str7 += '</tr>';
+								// END header baris 7
+							str7 = str7 + '</thead>';
+
+							$('#tabel_jam_istirahat_makan').html(str7);
+							// $('#h3_bawah').text("Checkclock bawah");
+
+							$('#tblhtsprrd7').DataTable({
+								paging: false,          // Disable pagination
+								searching: false,       // Disable search
+								info: false,            // Disable "Showing X of Y entries" information
+								lengthChange: false,    // Disable "Show X entries" dropdown
+								responsive: false,
+								scrollCollapse: true,
+								data: json.data,
+								columns: json.columns7,
 								columnDefs: [
 									{ targets: '_all', className: 'text-right' } // Apply text-right class to all columns
 								],

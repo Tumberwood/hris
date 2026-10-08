@@ -141,6 +141,10 @@
 					a.cek,
 					DATE_FORMAT(a.clock_in, "%d %b %Y %H:%i:%s") as clock_in,
 					DATE_FORMAT(a.clock_out, "%d %b %Y %H:%i:%s") as clock_out,
+					
+					DATE_FORMAT(a.break_in, "%d %b %Y %H:%i:%s") as break_in,
+					DATE_FORMAT(a.break_out, "%d %b %Y %H:%i:%s") as break_out,
+					DATE_FORMAT(a.jam_makan, "%d %b %Y %H:%i:%s") as jam_makan,
 					a.st_clock_in,
 					a.st_clock_out,
 					IFNULL(a.htlxxrh_kode, "-") as kondite,
@@ -519,6 +523,12 @@
 			['data' => 'pot_abnormal_istirahat', 'name' => 'pot_abnormal_istirahat'],
 			['data' => 'pot_jam_istirahat', 'name' => 'pot_jam_istirahat'],
 			['data' => 'pot_jam_makan_manual', 'name' => 'pot_jam_makan_manual'],
+		];
+		
+		$results['columns7'] = [
+			['data' => 'break_in', 'name' => 'break_in'],
+			['data' => 'break_out', 'name' => 'break_out'],
+			['data' => 'jam_makan', 'name' => 'jam_makan'],
 		];
 		
 	} else {
