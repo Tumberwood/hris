@@ -7,7 +7,7 @@
 		->on('postCreate',function( $editor, $id, $values, $row ) {
 			$id_hemxxmh = $values['hemxxmh_medical_leave']['id_hemxxmh'];
 
-			$qs_medic = $db
+			$qs_medic = $editor->db()
 				->raw()
 				->bind(':id_hemxxmh', $id_hemxxmh)
 				->exec('UPDATE hemxxmh a
@@ -28,7 +28,7 @@
 		->on('postEdit',function( $editor, $id, $values, $row ) {
 			$id_hemxxmh = $values['hemxxmh_medical_leave']['id_hemxxmh'];
 
-			$qs_medic = $db
+			$qs_medic = $editor->db()
 				->raw()
 				->bind(':id_hemxxmh', $id_hemxxmh)
 				->exec('UPDATE hemxxmh a
