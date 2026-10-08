@@ -25,6 +25,7 @@
     $nama_tabels_d[10] = 'hemogmd';
     $nama_tabels_d[11] = 'hemdhmd';
     $nama_tabels_d[12] = 'hemecmd';
+    $nama_tabels_d[13] = 'hemxxmh_medical_leave';
 ?>
 
 <!-- begin content here -->
@@ -311,6 +312,7 @@
 							<li><a class="nav-link" data-toggle="tab" href="#tabhtlxxth"> Absensi</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhtpxxth"> Izin</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhemjbrd"> Job History</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhemxxmh_medical_leave"> Medical Leave</a></li>
 						</ul>
 						<div class="tab-content">
 							<div role="tabpanel" id="tabhemfmmd" class="tab-pane active">
@@ -417,7 +419,25 @@
 
 								</div>
 							</div>
+							
+							<div role="tabpanel" id="tabhemxxmh_medical_leave" class="tab-pane">
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table id="tblhemxxmh_medical_leave" class="table table-striped table-bordered table-hover nowrap" width="100%">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>id_hemxxmh</th>
+													<th>Tanggal Efektif</th>
+													<th>Persen Medical Leave</th>
+													<th>Keterangan</th>
+												</tr>
+											</thead>
+										</table>
+									</div> <!-- end of table -->
 
+								</div>
+							</div>
 							
 							<div role="tabpanel" id="tabhemedmd" class="tab-pane">
 								<div class="panel-body">
@@ -608,6 +628,7 @@
 		var edthemogmd, tblhemogmd, show_inactive_status_hemogmd = 0, id_hemogmd;
         var edthemdhmd, tblhemdhmd, show_inactive_status_hemdhmd = 0, id_hemdhmd;
         var edthemecmd, tblhemecmd, show_inactive_status_hemecmd = 0, id_hemecmd;
+        var edthemxxmh_medical_leave, tblhemxxmh_medical_leave, show_inactive_status_hemxxmh_medical_leave = 0, id_hemxxmh_medical_leave;
 		// ------------- end of default variable
 
 		var id_hovxxmh_old = 0, id_hodxxmh_old = 0, id_hosxxmh_old = 0, id_hetxxmh_old = 0, id_hevxxmh_old = 0, id_heyxxmh_old = 0, id_hesxxmh_old = 0;
@@ -1987,6 +2008,7 @@
 					tblhemogmd,
 					tblhemdhmd,
 					tblhemecmd,
+					tblhemxxmh_medical_leave,
 				];
 				CekInitHeaderHD(tblhemxxmh, tbl_details);
 			} );
@@ -2031,6 +2053,7 @@
 					tblhemogmd,
 					tblhemdhmd,
 					tblhemecmd,
+					tblhemxxmh_medical_leave,
 				];
 				CekSelectHeaderHD(tblhemxxmh, tbl_details);
 
@@ -2078,6 +2101,7 @@
 					tblhemogmd,
 					tblhemdhmd,
 					tblhemecmd,
+					tblhemxxmh_medical_leave,
 				];
 				CekDeselectHeaderHD(tblhemxxmh, tbl_details);
 				
@@ -4945,6 +4969,200 @@
 				
 				// atur hak akses
 				CekDeselectDetailHD(tblhemxxmh, tblhemecmd );
+			} );
+
+// --------- end _detail --------------- //		
+			
+			
+// --------- start _detail hemxxmh_medical_leave Kontak Darurat --------------- //
+
+			//start datatables editor
+			edthemxxmh_medical_leave = new $.fn.dataTable.Editor( {
+				ajax: {
+					url: "../../models/hemxxmh/hemxxmh_medical_leave.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hemxxmh_medical_leave = show_inactive_status_hemxxmh_medical_leave;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				table: "#tblhemxxmh_medical_leave",
+				formOptions: {
+					main: {
+						focus: 3
+					}
+				},
+				fields: [ 
+					{
+						label: "start_on",
+						name: "start_on",
+						type: "hidden"
+					},	{
+						label: "finish_on",
+						name: "finish_on",
+						type: "hidden"
+					},	{
+						label: "nama_tabel",
+						name: "nama_tabel",
+						def: "hemxxmh_medical_leave",
+						type: "hidden"
+					},	{
+						label: "id_hemxxmh",
+						name: "hemxxmh_medical_leave.id_hemxxmh",
+						type: "hidden"
+					},	{
+						label: "Active Status",
+						name: "hemxxmh_medical_leave.is_active",
+                        type: "hidden",
+						def: 1
+					},
+					{
+						label: "Tanggal Efektif <sup class='text-danger'>*<sup>",
+						name: "hemxxmh_medical_leave.tanggal_efektif",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY'
+					},
+					{
+						label: "Persen Medical Leave <sup class='text-danger'>*<sup>",
+						name: "hemxxmh_medical_leave.medical_leave",
+						type: "select2",
+						def: 1,
+						options: [
+							{ "label": "Tidak", "value": '1.00' },
+							{ "label": "75%", "value": '0.75' },
+							{ "label": "50%", "value": '0.50' },
+							{ "label": "25%", "value": '0.25' },
+						]
+					},	
+					{
+						label: "Ketrerangan",
+						name: "hemxxmh_medical_leave.keterangan",
+						type: "textarea"
+					},	
+				]
+			} );
+			
+			edthemxxmh_medical_leave.on( 'preOpen', function( e, mode, action ) {
+				edthemxxmh_medical_leave.field('hemxxmh_medical_leave.id_hemxxmh').val(id_hemxxmh);
+				
+				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthemxxmh_medical_leave.field('start_on').val(start_on);
+
+				if(action == 'create'){
+					tblhemxxmh_medical_leave.rows().deselect();
+				}
+			});
+
+            edthemxxmh_medical_leave.on("open", function (e, mode, action) {
+				$(".modal-dialog").addClass("modal-lg");
+			});
+			
+			edthemxxmh_medical_leave.on( 'preSubmit', function (e, data, action) {
+				if(action != 'remove'){
+
+					// BEGIN of validasi hemxxmh_medical_leave.tanggal_efektif 
+					tanggal_efektif = edthemxxmh_medical_leave.field('hemxxmh_medical_leave.tanggal_efektif').val();
+					if(!tanggal_efektif || tanggal_efektif == ''){
+						edthemxxmh_medical_leave.field('hemxxmh_medical_leave.tanggal_efektif').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemxxmh_medical_leave.tanggal_efektif 
+
+					// BEGIN of validasi hemxxmh_medical_leave.medical_leave 
+					medical_leave = edthemxxmh_medical_leave.field('hemxxmh_medical_leave.medical_leave').val();
+					if(!medical_leave || medical_leave == ''){
+						edthemxxmh_medical_leave.field('hemxxmh_medical_leave.medical_leave').error( 'Wajib diisi!' );
+					}
+					// END of validasi hemxxmh_medical_leave.medical_leave 
+
+				}
+				
+				if ( edthemxxmh_medical_leave.inError() ) {
+					return false;
+				}
+			});
+
+			edthemxxmh_medical_leave.on('initSubmit', function(e, action) {
+				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
+				edthemxxmh_medical_leave.field('finish_on').val(finish_on);
+			});
+			
+			edthemxxmh_medical_leave.on( 'postSubmit', function (e, json, data, action, xhr) {
+				// event setelah Create atau Edit, dibedakan dari parameter action
+				// action : "create" | "edit"
+				// do something
+			} );
+			
+			//start datatables
+			tblhemxxmh_medical_leave = $('#tblhemxxmh_medical_leave').DataTable( {
+				ajax: {
+					url: "../../models/hemxxmh/hemxxmh_medical_leave.php",
+					type: 'POST',
+					data: function (d){
+						d.show_inactive_status_hemxxmh_medical_leave = show_inactive_status_hemxxmh_medical_leave;
+						d.id_hemxxmh = id_hemxxmh;
+					}
+				},
+				order: [[ 2, "desc" ]],
+				columns: [
+					{ data: "hemxxmh_medical_leave.id",visible:false },
+					{ data: "hemxxmh_medical_leave.id_hemxxmh",visible:false },
+					{ data: "hemxxmh_medical_leave.tanggal_efektif" },
+					{ data: "hemxxmh_medical_leave.medical_leave" },
+					{ data: "hemxxmh_medical_leave.keterangan" },
+				],
+				buttons: [
+					// BEGIN breaking generate button
+					<?php
+						$id_table    = 'id_hemxxmh_medical_leave';
+						$table       = 'tblhemxxmh_medical_leave';
+						$edt         = 'edthemxxmh_medical_leave';
+						$show_status = '_hemxxmh_medical_leave';
+						$table_name  = $nama_tabels_d[12];
+
+						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
+						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_d'];
+						$arr_buttons_approve 	= [];
+						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
+					?>
+					// END breaking generate button
+				],
+				rowCallback: function( row, data, index ) {
+					if ( data.hemxxmh_medical_leave.is_active == 0 ) {
+						$('td', row).addClass('text-danger');
+					}
+				}
+			} );
+
+			tblhemxxmh_medical_leave.on( 'draw', function( e, settings ) { 
+				// atur hak akses
+				cek_c_detail= 1;
+				CekDrawDetailHD(tblhemxxmh, tblhemxxmh_medical_leave, 'hemxxmh_medical_leave' );
+				CekDrawDetailHDFinal(tblhemxxmh);
+			} );
+
+			tblhemxxmh_medical_leave.on( 'select', function( e, dt, type, indexes ) {
+				data_hemxxmh_medical_leave = tblhemxxmh_medical_leave.row( { selected: true } ).data().hemxxmh_medical_leave;
+				id_hemxxmh_medical_leave   = data_hemxxmh_medical_leave.id;
+				id_transaksi_d    = id_hemxxmh_medical_leave; // dipakai untuk general
+				is_active_d       = data_hemxxmh_medical_leave.is_active;
+				
+				// atur hak akses
+				CekSelectDetailHD(tblhemxxmh, tblhemxxmh_medical_leave );
+			} );
+
+			tblhemxxmh_medical_leave.on( 'deselect', function() {
+				id_hemxxmh_medical_leave = '';
+				is_active_d = 0;
+				
+				// atur hak akses
+				CekDeselectDetailHD(tblhemxxmh, tblhemxxmh_medical_leave );
 			} );
 
 // --------- end _detail --------------- //		
