@@ -5114,30 +5114,7 @@
 					{ data: "hemxxmh_medical_leave.id",visible:false },
 					{ data: "hemxxmh_medical_leave.id_hemxxmh",visible:false },
 					{ data: "hemxxmh_medical_leave.tanggal_efektif" },
-					{ 
-						data: "medical_leave", // gunakan alias "medical_leave" dari CTE SQL sebelumnya
-						render: function(data, type, row) {
-							if (data === null || data === undefined || data === '') {
-								return '-';
-							}
-
-							// Konversi ke number/float agar pencocokan presisi
-							const val = parseFloat(data).toFixed(2);
-
-							switch (val) {
-								case '1.00':
-									return 'Tidak';
-								case '0.75':
-									return '75%';
-								case '0.50':
-									return '50%';
-								case '0.25':
-									return '25%';
-								default:
-									return data; // menampilkan nilai asli jika tidak ada yang cocok
-							}
-						}
-					},
+					{ data: "hemxxmh_medical_leave.medical_leave" },
 					{ data: "hemxxmh_medical_leave.keterangan" },
 				],
 				buttons: [
