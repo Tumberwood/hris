@@ -151,26 +151,19 @@
 					DATE_FORMAT(ceklok.tanggal_jam, "%d %b %Y %H:%i:%s") AS makan,
 					"CEKLOK MAKAN DILUAR RANGE JADWAL" AS keterangan
 				FROM htsprrd a
-
 				JOIN hemxxmh hem
 					ON hem.id = a.id_hemxxmh
-
 				JOIN hemjbmh jb
 					ON jb.id_hemxxmh = a.id_hemxxmh
-
 				LEFT JOIN hodxxmh d
 					ON d.id = jb.id_hodxxmh
-
 				LEFT JOIN hetxxmh e
 					ON e.id = jb.id_hetxxmh
-
 				LEFT JOIN holxxmd_2 f
 					ON f.id = a.id_holxxmd_2
-
 				JOIN htssctd b
 					ON b.tanggal = a.tanggal
 					AND b.id_hemxxmh = a.id_hemxxmh
-
 				LEFT JOIN (
 					SELECT
 						ck.tanggal,
@@ -178,41 +171,25 @@
 						ck.id_hemxxmh,
 						ck.kode
 					FROM htsprtd ck
-					WHERE ck.nama = "makan"
+					WHERE ck.nama IN ("makan")
+						AND ck.tanggal >= :start_date
+						AND ck.tanggal < DATE_ADD(:end_date, INTERVAL 1 DAY)
 				) ceklok
 					ON ceklok.kode = hem.kode_finger
-
-					/* =====================================================
-					BATASI CEKLOK SESUAI TANGGAL HTSPRDD
-					===================================================== */
-
-					AND ceklok.tanggal_jam >= a.tanggal
-
-					AND ceklok.tanggal_jam <
-						CASE
-							WHEN UPPER(a.st_jadwal) LIKE "MALAM%"
-								THEN DATE_ADD(a.tanggal, INTERVAL 2 DAY)
-							ELSE
-								DATE_ADD(a.tanggal, INTERVAL 1 DAY)
-						END
-
-					/* =====================================================
-					CEKLOK HARUS DI LUAR RANGE JADWAL
-					===================================================== */
-
 					AND ceklok.tanggal_jam NOT BETWEEN
-						b.tanggaljam_awal
-						AND b.tanggaljam_akhir
+						b.tanggaljam_awal AND b.tanggaljam_akhir
+
+					/* Abaikan ceklok shift malam sebelumnya */
+					AND NOT (
+						UPPER(a.st_jadwal) LIKE "MALAM%"
+						AND TIME(ceklok.tanggal_jam) < "07:00:00"
+					)
 
 				WHERE 1
-
 					AND a.tanggal BETWEEN :start_date AND :end_date
-
 					AND a.is_makan = 0
-
 					AND a.durasi_lembur_final > 0
-
-					AND ceklok.tanggal_jam IS NOT NULL;
+					AND ceklok.tanggal_jam IS NOT NULL
 				' 
 				);
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
