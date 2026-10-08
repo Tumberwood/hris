@@ -131,7 +131,7 @@
                                     AND ml.tanggal_efektif BETWEEN :tanggal_awal AND :tanggal_akhir
                                     ORDER BY ml.tanggal_efektif DESC
                                     LIMIT 1
-                                ), 0
+                                ), 1
                             ) AS medical_leave,
 
                             tanggal_mulai_bpjs_kes,
