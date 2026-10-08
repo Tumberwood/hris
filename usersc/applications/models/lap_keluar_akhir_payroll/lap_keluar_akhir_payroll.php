@@ -29,10 +29,10 @@
 				WHERE b.tanggal_keluar IN (
 					SELECT
 					-- p.tanggal_awal - INTERVAL 1 DAY
-					p.tanggal_akhir
+					p.tanggal_awal
 					FROM periode_payroll p
 					WHERE p.is_active = 1
-					AND p.id = :periode_payroll - 1
+					AND p.id = :periode_payroll
 				)
 				AND b.id_heyxxmd = 1
 				ORDER BY b.tanggal_keluar DESC
