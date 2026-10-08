@@ -813,11 +813,11 @@
 								$.each(json.columns7, function (k, colObj7) {
 									// BEGIN render column name
 									if (colObj7.name == 'break_in') {
-										str7 += '<th class="text-danger text-center">Break In</th>';
+										str7 += '<th class="text-center">Break In</th>';
 									} else if (colObj7.name == 'break_out') {
-										str7 += '<th class="text-danger text-center">Break Out</th>';
+										str7 += '<th class="text-center">Break Out</th>';
 									} else if (colObj7.name == 'jam_makan') {
-										str7 += '<th class="text-danger text-center">Jam Makan</th>';
+										str7 += '<th class="text-center">Jam Makan</th>';
 									} 
 								});
 								str7 += '</tr>';
@@ -837,7 +837,7 @@
 								data: json.data,
 								columns: json.columns7,
 								columnDefs: [
-									{ targets: '_all', className: 'text-right' } // Apply text-right class to all columns
+									{ targets: '_all', className: 'text-center' } // Apply text-right class to all columns
 								],
 								buttons: [
 								],
