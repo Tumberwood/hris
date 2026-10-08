@@ -5440,7 +5440,7 @@
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Payroll');
 
-        const dt = $('#tblhpyemtd_karyawan').DataTable();
+        const dt = $('#tblhpyemtd_kbm_tr').DataTable();
 
         // =========================
         // MAPPING compareField()
@@ -5488,7 +5488,7 @@
         // =========================
         const headers = [];
 
-        $('#tblhpyemtd_karyawan thead th').each(function () {
+        $('#tblhpyemtd_kbm_tr thead th').each(function () {
 
             headers.push(
                 $(this).text().trim()
@@ -5500,7 +5500,7 @@
 
         const headerRow = worksheet.getRow(1);
 
-        $('#tblhpyemtd_karyawan thead th').each(function (idx) {
+        $('#tblhpyemtd_kbm_tr thead th').each(function (idx) {
 
             const cell = headerRow.getCell(idx + 1);
 
@@ -5750,7 +5750,7 @@
         // =========================
         // STYLE KOLOM
         // =========================
-        $('#tblhpyemtd_karyawan thead th').each(function (idx) {
+        $('#tblhpyemtd_kbm_tr thead th').each(function (idx) {
 
             const th = $(this);
 
