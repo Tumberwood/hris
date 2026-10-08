@@ -5607,296 +5607,77 @@
 },
 
 
-rowCallback: function (row, data, index) {
+rowCallback: function(row, data, index) {
 
-// =========================================================
-// GAJI DITERIMA
-// TH / DataTables: 4 = Lama, 5 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    4,
-    'gaji_terima'
-);
+    compareField(row, data, 4, 'gaji_terima');
 
-// =========================================================
-// GAJI POKOK
-// TH / DataTables: 12 = Lama, 13 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    12,
-    'gp'
-);
+    compareField(row, data, 12, 'gp');
 
-// =========================================================
-// LEMBUR JAM PERTAMA
-// TH / DataTables: 14 = Lama, 15 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    14,
-    'lembur15'
-);
+    compareField(row, data, 14, 'lembur15');
+    compareField(row, data, 16, 'rp_lembur15');
+    compareField(row, data, 18, 'lembur2');
+    compareField(row, data, 20, 'rp_lembur2');
+    compareField(row, data, 22, 'lembur3');
+    compareField(row, data, 24, 'rp_lembur3');
 
-// =========================================================
-// RP JAM PERTAMA
-// TH / DataTables: 16 = Lama, 17 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    16,
-    'rp_lembur15'
-);
+    compareField(row, data, 26, 'total_lembur_jam');
+    compareField(row, data, 28, 'total_lembur_jam_final');
+    compareField(row, data, 30, 'total_rp_lembur');
 
-// =========================================================
-// LEMBUR JAM KEDUA
-// TH / DataTables: 18 = Lama, 19 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    18,
-    'lembur2'
-);
+    compareField(row, data, 32, 'pot_makan');
+    compareField(row, data, 34, 'pot_lain_after_pph');
+    compareField(row, data, 36, 'pendapatan_lain_after_pph');
 
-// =========================================================
-// RP JAM KEDUA
-// TH / DataTables: 20 = Lama, 21 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    20,
-    'rp_lembur2'
-);
+    compareField(row, data, 38, 'pot_upah');
+    compareField(row, data, 40, 'pot_jam');
 
-// =========================================================
-// LEMBUR JAM KETIGA
-// TH / DataTables: 22 = Lama, 23 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    22,
-    'lembur3'
-);
+    compareField(row, data, 42, 'gaji_bersih');
+    compareField(row, data, 44, 'bulat');
 
-// =========================================================
-// RP JAM KETIGA
-// TH / DataTables: 24 = Lama, 25 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    24,
-    'rp_lembur3'
-);
+    compareField(row, data, 46, 'gaji_bpjs_tk');
 
-// =========================================================
-// TOTAL LEMBUR JAM
-// TH / DataTables: 26 = Lama, 27 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    26,
-    'total_lembur_jam'
-);
+    compareField(row, data, 48, 'jkk');
+    compareField(row, data, 50, 'jkm');
+    compareField(row, data, 52, 'jht_perusahaan');
 
-// =========================================================
-// TOTAL LEMBUR JAM FINAL
-// TH / DataTables: 28 = Lama, 29 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    28,
-    'total_lembur_jam_final'
-);
+    // BPJS TK TOTAL
+    var bpjsLama =
+        (parseFloat(data.hpyemtd_cocokan?.jkk) || 0) +
+        (parseFloat(data.hpyemtd_cocokan?.jkm) || 0) +
+        (parseFloat(data.hpyemtd_cocokan?.jht_perusahaan) || 0);
 
-// =========================================================
-// TOTAL RP LEMBUR
-// TH / DataTables: 30 = Lama, 31 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    30,
-    'total_rp_lembur'
-);
+    var bpjsBaru =
+        (parseFloat(data.hpyemtd?.jkk) || 0) +
+        (parseFloat(data.hpyemtd?.jkm) || 0) +
+        (parseFloat(data.hpyemtd?.jht_perusahaan) || 0);
 
-// =========================================================
-// POT MAKAN
-// TH / DataTables: 32 = Lama, 33 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    32,
-    'pot_makan'
-);
+    var $bpjsLama = $('td:eq(54)', row);
+    var $bpjsBaru = $('td:eq(55)', row);
 
-// =========================================================
-// POT LAIN
-// TH / DataTables: 34 = Lama, 35 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    34,
-    'pot_lain_after_pph'
-);
+    if (Math.abs(bpjsLama - bpjsBaru) > 0.01) {
 
-// =========================================================
-// PENDAPATAN LAIN
-// TH / DataTables: 36 = Lama, 37 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    36,
-    'pendapatan_lain_after_pph'
-);
+        $bpjsLama.css({
+            'color': 'red',
+            'font-weight': 'bold'
+        });
 
-// =========================================================
-// POT UPAH HARIAN
-// TH / DataTables: 38 = Lama, 39 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    38,
-    'pot_upah'
-);
+        $bpjsBaru.css({
+            'color': 'red',
+            'font-weight': 'bold'
+        });
 
-// =========================================================
-// POT UPAH JAM
-// TH / DataTables: 40 = Lama, 41 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    40,
-    'pot_jam'
-);
+    } else {
 
-// =========================================================
-// GAJI BERSIH
-// TH / DataTables: 42 = Lama, 43 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    42,
-    'gaji_bersih'
-);
+        $bpjsLama.css({
+            'color': '',
+            'font-weight': ''
+        });
 
-// =========================================================
-// BULAT
-// TH / DataTables: 44 = Lama, 45 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    44,
-    'bulat'
-);
-
-// =========================================================
-// GAJI BPJS TK
-// TH / DataTables: 46 = Lama, 47 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    46,
-    'gaji_bpjs_tk'
-);
-
-// =========================================================
-// JKK
-// TH / DataTables: 48 = Lama, 49 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    48,
-    'jkk'
-);
-
-// =========================================================
-// JKM
-// TH / DataTables: 50 = Lama, 51 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    50,
-    'jkm'
-);
-
-// =========================================================
-// JHT
-// TH / DataTables: 52 = Lama, 53 = Baru
-// =========================================================
-compareField(
-    row,
-    data,
-    52,
-    'jht_perusahaan'
-);
-
-// =========================================================
-// BPJS TK TOTAL
-// TH / DataTables: 54 = Lama, 55 = Baru
-//
-// Nilai:
-// JKK + JKM + JHT Perusahaan
-// =========================================================
-
-var bpjsLama =
-    (parseFloat(data.hpyemtd_cocokan?.jkk) || 0) +
-    (parseFloat(data.hpyemtd_cocokan?.jkm) || 0) +
-    (parseFloat(data.hpyemtd_cocokan?.jht_perusahaan) || 0);
-
-var bpjsBaru =
-    (parseFloat(data.hpyemtd?.jkk) || 0) +
-    (parseFloat(data.hpyemtd?.jkm) || 0) +
-    (parseFloat(data.hpyemtd?.jht_perusahaan) || 0);
-
-var $bpjsLama = $('td:eq(54)', row);
-var $bpjsBaru = $('td:eq(55)', row);
-
-if (Math.abs(bpjsLama - bpjsBaru) > 0.01) {
-
-    $bpjsLama.css({
-        'color': 'red',
-        'font-weight': 'bold'
-    });
-
-    $bpjsBaru.css({
-        'color': 'red',
-        'font-weight': 'bold'
-    });
-
-} else {
-
-    $bpjsLama.css({
-        'color': '',
-        'font-weight': ''
-    });
-
-    $bpjsBaru.css({
-        'color': '',
-        'font-weight': ''
-    });
-}
-
+        $bpjsBaru.css({
+            'color': '',
+            'font-weight': ''
+        });
+    }
 },
 
 			} );
