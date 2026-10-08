@@ -5606,39 +5606,38 @@
     });
 },
 
-
 rowCallback: function(row, data, index) {
 
-    compareField(row, data, 4, 'gaji_terima');
+    compareField(row, data, 2, 'gaji_terima');
 
-    compareField(row, data, 12, 'gp');
+    compareField(row, data, 10, 'gp');
 
-    compareField(row, data, 14, 'lembur15');
-    compareField(row, data, 16, 'rp_lembur15');
-    compareField(row, data, 18, 'lembur2');
-    compareField(row, data, 20, 'rp_lembur2');
-    compareField(row, data, 22, 'lembur3');
-    compareField(row, data, 24, 'rp_lembur3');
+    compareField(row, data, 12, 'lembur15');
+    compareField(row, data, 14, 'rp_lembur15');
+    compareField(row, data, 16, 'lembur2');
+    compareField(row, data, 18, 'rp_lembur2');
+    compareField(row, data, 20, 'lembur3');
+    compareField(row, data, 22, 'rp_lembur3');
 
-    compareField(row, data, 26, 'total_lembur_jam');
-    compareField(row, data, 28, 'total_lembur_jam_final');
-    compareField(row, data, 30, 'total_rp_lembur');
+    compareField(row, data, 24, 'total_lembur_jam');
+    compareField(row, data, 26, 'total_lembur_jam_final');
+    compareField(row, data, 28, 'total_rp_lembur');
 
-    compareField(row, data, 32, 'pot_makan');
-    compareField(row, data, 34, 'pot_lain_after_pph');
-    compareField(row, data, 36, 'pendapatan_lain_after_pph');
+    compareField(row, data, 30, 'pot_makan');
+    compareField(row, data, 32, 'pot_lain_after_pph');
+    compareField(row, data, 34, 'pendapatan_lain_after_pph');
 
-    compareField(row, data, 38, 'pot_upah');
-    compareField(row, data, 40, 'pot_jam');
+    compareField(row, data, 36, 'pot_upah');
+    compareField(row, data, 38, 'pot_jam');
 
-    compareField(row, data, 42, 'gaji_bersih');
-    compareField(row, data, 44, 'bulat');
+    compareField(row, data, 40, 'gaji_bersih');
+    compareField(row, data, 42, 'bulat');
 
-    compareField(row, data, 46, 'gaji_bpjs_tk');
+    compareField(row, data, 44, 'gaji_bpjs_tk');
 
-    compareField(row, data, 48, 'jkk');
-    compareField(row, data, 50, 'jkm');
-    compareField(row, data, 52, 'jht_perusahaan');
+    compareField(row, data, 46, 'jkk');
+    compareField(row, data, 48, 'jkm');
+    compareField(row, data, 50, 'jht_perusahaan');
 
     // BPJS TK TOTAL
     var bpjsLama =
@@ -5651,8 +5650,8 @@ rowCallback: function(row, data, index) {
         (parseFloat(data.hpyemtd?.jkm) || 0) +
         (parseFloat(data.hpyemtd?.jht_perusahaan) || 0);
 
-    var $bpjsLama = $('td:eq(54)', row);
-    var $bpjsBaru = $('td:eq(55)', row);
+    var $bpjsLama = $('td:eq(52)', row);
+    var $bpjsBaru = $('td:eq(53)', row);
 
     if (Math.abs(bpjsLama - bpjsBaru) > 0.01) {
 
@@ -5679,6 +5678,7 @@ rowCallback: function(row, data, index) {
         });
     }
 },
+
 drawCallback: function () {
 	$('[data-toggle="tooltip"]').tooltip({
 		container: 'body'
