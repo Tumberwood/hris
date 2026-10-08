@@ -136,84 +136,55 @@
 
 				UNION ALL
 
-				SELECT
-					a.id,
-					a.id_hemxxmh,
+				SELECT DISTINCT
+					hem.id, 
+					jb.id_hemxxmh,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
 					jb.id_heyxxmh,
-					hem.kode AS nik,
-					hem.nama,
-					d.nama AS dep,
-					e.nama AS jab,
-					f.nama AS area,
-					a.st_jadwal,
-					a.cek,
-					DATE_FORMAT(ceklok.tanggal_jam, "%d %b %Y %H:%i:%s") AS makan,
-					"CEKLOK MAKAN DILUAR RANGE JADWAL" AS keterangan
-				FROM htsprrd a
+									hem.kode AS nik,
+									hem.nama,
+									d.nama AS dep,
+									e.nama AS jab,
+									f.nama AS area,
+					(
+						SELECT
+							pr.st_jadwal
+						FROM htsprrd pr
+						WHERE pr.id_hemxxmh = hem.id
+							AND pr.tanggal = a.tanggal
+						LIMIT 1
+					) AS st_jadwal,
+					0 AS cek,
+					
+					DATE_FORMAT(a.tanggal_jam, "%d %b %Y %H:%i:%s") AS makan,
+				"CEKLOK MAKAN DILUAR RANGE JADWAL" AS keterangan
 
-				JOIN hemxxmh hem
-					ON hem.id = a.id_hemxxmh
+				FROM htsprtd a
+				JOIN hemxxmh hem ON hem.kode_finger = a.kode
+				JOIN hemjbmh jb ON jb.id_hemxxmh = hem.id
+				LEFT JOIN hodxxmh d ON d.id = jb.id_hodxxmh
+				LEFT JOIN hetxxmh e ON e.id = jb.id_hetxxmh
+				LEFT JOIN holxxmd_2 f ON f.id = jb.id_holxxmd_2
+				WHERE a.tanggal BETWEEN :start_date AND :end_date
 
-				JOIN hemjbmh jb
-					ON jb.id_hemxxmh = a.id_hemxxmh
+					AND a.nama = "makan"
 
-				LEFT JOIN hodxxmh d
-					ON d.id = jb.id_hodxxmh
+					AND a.tanggal_jam NOT IN (
+						SELECT
+							pr.jam_makan
+						FROM htsprrd pr
+						JOIN hemxxmh h
+							ON h.id = pr.id_hemxxmh
+						WHERE pr.tanggal BETWEEN
+							DATE_SUB(:start_date, INTERVAL 1 DAY)
+							AND DATE_ADD(:end_date, INTERVAL 1 DAY)
+							AND pr.jam_makan IS NOT NULL
+					)
 
-				LEFT JOIN hetxxmh e
-					ON e.id = jb.id_hetxxmh
-
-				LEFT JOIN holxxmd_2 f
-					ON f.id = a.id_holxxmd_2
-
-				JOIN htssctd b
-					ON b.tanggal = a.tanggal
-					AND b.id_hemxxmh = a.id_hemxxmh
-
-				LEFT JOIN (
-					SELECT
-						ck.tanggal,
-						ck.tanggal_jam,
-						ck.id_hemxxmh,
-						ck.kode
-					FROM htsprtd ck
-					WHERE ck.nama = "makan"
-				) ceklok
-					ON ceklok.kode = hem.kode_finger
-
-					/* =====================================================
-					BATASI CEKLOK SESUAI TANGGAL HTSPRDD
-					===================================================== */
-
-					AND ceklok.tanggal_jam >= a.tanggal
-
-					AND ceklok.tanggal_jam <
-						CASE
-							WHEN UPPER(a.st_jadwal) LIKE "MALAM%"
-								THEN DATE_ADD(a.tanggal, INTERVAL 2 DAY)
-							ELSE
-								DATE_ADD(a.tanggal, INTERVAL 1 DAY)
-						END
-
-					/* =====================================================
-					CEKLOK HARUS DI LUAR RANGE JADWAL
-					===================================================== */
-
-					AND ceklok.tanggal_jam NOT BETWEEN
-						b.tanggaljam_awal
-						AND b.tanggaljam_akhir
-
-				WHERE 1
-
-					AND a.tanggal BETWEEN :start_date AND :end_date
-
-					AND a.is_makan = 0
-					AND a.st_jadwal <> "OFF"
-
-					AND a.durasi_lembur_final > 0
-
-					AND ceklok.tanggal_jam IS NOT NULL;
+					AND (
+						jb.tanggal_keluar IS NULL
+						OR a.tanggal <= jb.tanggal_keluar
+					);
 				' 
 				);
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
