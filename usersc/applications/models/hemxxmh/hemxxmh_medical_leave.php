@@ -61,6 +61,7 @@
 				->where( 'hemxxmh_medical_leave.is_active', 1);
 		}
 		
+		include( "hemxxmh_medical_leave_extra.php" );
 		include( "../../../helpers/edt_log.php" );
 		
 		$editor
