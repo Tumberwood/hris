@@ -5679,6 +5679,11 @@ rowCallback: function(row, data, index) {
         });
     }
 },
+drawCallback: function () {
+	$('[data-toggle="tooltip"]').tooltip({
+		container: 'body'
+	});
+}
 
 			} );
 
