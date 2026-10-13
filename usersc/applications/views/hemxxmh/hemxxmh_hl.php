@@ -127,7 +127,7 @@
 								<editor-field name="hemjbmh.id_hevgrmh"></editor-field>
 							</div>
 							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_hevxxmh"></editor-field>
+								<!-- <editor-field name="hemjbmh.id_hevxxmh"></editor-field> -->
 							</div>
 						</div>
 						<div class="row">
@@ -150,25 +150,25 @@
 							<div class="col-lg-6">
 								<editor-field name="hemjbmh.id_holxxmd_2"></editor-field>
 							</div>
-							<div class="col-lg-6">
+							<!-- <div class="col-lg-6">
 								<editor-field name="hemdcmh.id_gtxpkmh"></editor-field>
-							</div>
+							</div> -->
 						</div>
-						<div class="row">
+						<!-- <div class="row">
 							<div class="col-lg-6">
 								<editor-field name="hemxxmh.perkawinan"></editor-field>
 							</div>
 							<div class="col-lg-6">
 								<editor-field name="hemxxmh.jumlah_anak"></editor-field>
 							</div>
-						</div>
+						</div> -->
 						<div class="row">
 							<div class="col-lg-6">
 								<editor-field name="hemjbmh.tanggal_masuk"></editor-field>
 							</div>
-							<div class="col-lg-6">
+							<!-- <div class="col-lg-6">
 								<editor-field name="hemjbmh.tanggal_akhir_kontrak"></editor-field>
-							</div>
+							</div> -->
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
@@ -288,12 +288,9 @@
 								<th>Area Kerja</th>
 
                                 <th>Tanggal Join</th>
-                                <th>Tanggal Akhir Kontrak</th>
                                 <th>Grup HK</th>
                                 <th>Gender</th>
-                                <th>PTKP</th>
-                                <th>Status Pernikahan</th>
-                                <th>Jumlah Anak</th>
+                                <th>Tanggal Lahir</th>
                                 <th>Harian Lepas</th>
                                 <th>Aktif</th>
                             </tr>
@@ -1827,7 +1824,6 @@
 					{ data: "holxxmd_2.nama" },	//Area Kerja
 
 					{ data: "hemjbmh.tanggal_masuk" },
-					{ data: "hemjbmh.tanggal_akhir_kontrak" },
 					{ 
 						data: "hemjbmh.grup_hk",
 						render: function (data){
@@ -1843,9 +1839,7 @@
 						}
 					},
 					{ data: "hemxxmh.gender" },
-					{ data: "gtxpkmh.kode" },
-					{ data: "hemxxmh.perkawinan" },
-					{ data: "hemxxmh.jumlah_anak" },
+					{ data: "hemxxmh.tanggal_lahir" },
 					{ 
 						data: "hemjbmh.is_harian_lepas",
 						render: function (data){
