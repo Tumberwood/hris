@@ -281,7 +281,6 @@
 								<th>Jabatan</th>
 								<th>Grup Jabatan</th>
 								<th>Bagian</th>
-								<th>Skala Upah</th>
 								<th>Sub Tipe</th>
 								<th>Status</th>
 								<th>Tipe</th>
@@ -1817,7 +1816,7 @@
 					{ data: "hetxxmh.nama" },	//jab
 					{ data: "hevgrmh.nama" },	//grup
 					{ data: "hobxxmh.nama" },	//Bagian
-					{ data: "hevxxmh.nama" },	//Skala
+
 					{ data: "heyxxmd.nama" },	//Sub Tipe
 					{ data: "hesxxmh.nama" },	//Status
 					{ data: "heyxxmh.nama" },	//Tipe
