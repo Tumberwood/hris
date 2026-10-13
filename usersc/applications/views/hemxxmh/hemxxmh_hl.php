@@ -147,9 +147,9 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-6">
+							<!-- <div class="col-lg-6">
 								<editor-field name="hemjbmh.id_holxxmd_2"></editor-field>
-							</div>
+							</div> -->
 							<!-- <div class="col-lg-6">
 								<editor-field name="hemdcmh.id_gtxpkmh"></editor-field>
 							</div> -->
@@ -284,7 +284,6 @@
 								<th>Sub Tipe</th>
 								<th>Status</th>
 								<th>Tipe</th>
-								<th>Area Kerja</th>
 
                                 <th>Tanggal Join</th>
                                 <th>Grup HK</th>
@@ -1820,7 +1819,6 @@
 					{ data: "heyxxmd.nama" },	//Sub Tipe
 					{ data: "hesxxmh.nama" },	//Status
 					{ data: "heyxxmh.nama" },	//Tipe
-					{ data: "holxxmd_2.nama" },	//Area Kerja
 
 					{ data: "hemjbmh.tanggal_masuk" },
 					{ 
