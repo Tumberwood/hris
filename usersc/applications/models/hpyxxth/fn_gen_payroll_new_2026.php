@@ -2623,20 +2623,18 @@
                         
                         -- BATAS HITUNG BRUTO
                         (
-                            COALESCE(gp.gp,0)
-                            + COALESCE(total_rp_lembur,0)
-                            + COALESCE(jkk,0)
-                            + COALESCE(jkm,0)
-                            + if(id_hesxxmh IN (8,9), tj_makan_nganjuk, 0)
-                            + if(id_hesxxmh IN (8,9), tj_rumah_nganjuk, 0)
+                            COALESCE(gp.gp, 0)
+                            + COALESCE(total_rp_lembur, 0)
+                            + COALESCE(jkk, 0)
+                            + COALESCE(jkm, 0)
+                            + IF(id_hesxxmh IN (8,9), COALESCE(tj_makan_nganjuk, 0), 0)
+                            + IF(id_hesxxmh IN (8,9), COALESCE(tj_rumah_nganjuk, 0), 0)
                         )
                         -
                         (
-                            
-                            COALESCE(pot_upah,0)
-                            + COALESCE(pot_jam,0)
-                        ) 
-                        AS bruto,
+                            COALESCE(pot_upah, 0)
+                            + COALESCE(pot_jam, 0)
+                        ) AS bruto,
 
                         jht_perusahaan,
                         jp_perusahaan,
