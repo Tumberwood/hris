@@ -2969,7 +2969,7 @@
 
                         gaji_bersih,
 
-                        FLOOR(gaji_bersih % 100) AS bulat,
+                        (gaji_bersih % 100) AS bulat,
 
                         FLOOR(
                             gaji_bersih - (gaji_bersih % 100)
@@ -3244,7 +3244,7 @@
 
                         gaji_bersih,
 
-                        FLOOR(gaji_bersih % 100) AS bulat,
+                        (gaji_bersih % 100) AS bulat,
 
                         FLOOR(
                             gaji_bersih - (gaji_bersih % 100)
