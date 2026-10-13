@@ -1390,7 +1390,7 @@
                             --         ELSE 0
                             --     END
                             -- ) AS komp_sisa_cuti
-                            FLOOR(
+                            ROUND(
                                 (
                                     (gp + t_jab + fix_cost + var_cost + tj_khusus) 
                                     / IF(grup_hk = 1, 21, 25)
