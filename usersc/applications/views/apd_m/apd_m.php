@@ -80,14 +80,6 @@
 						def: 1
 					},	
 					{
-						label: "% Perusahaan <sup class='text-danger'>*<sup>",
-						name: "apd_m.persen_perusahaan"
-					
-					}, 	{
-						label: "% Karyawan <sup class='text-danger'>*<sup>",
-						name: "apd_m.persen_karyawan"
-					}, 	
-					{
 						label: "Nominal <sup class='text-danger'>*<sup>",
 						name: "apd_m.nominal"
 					}, 
@@ -135,37 +127,6 @@
 							edtapd_m.field('apd_m.tanggal_efektif').error( 'Wajib diisi!' );
 						}
 					}
-					// END of validasi apd_m.persen_perusahaan
-					
-					// BEGIN of validasi apd_m.persen_perusahaan
-					if ( ! edtapd_m.field('apd_m.persen_perusahaan').isMultiValue() ) {
-						persen_perusahaan = edtapd_m.field('apd_m.persen_perusahaan').val();
-						if(!persen_perusahaan || persen_perusahaan == ''){
-							edtapd_m.field('apd_m.persen_perusahaan').error( 'Wajib diisi!' );
-						}
-						if(persen_perusahaan <= 0 ){
-							edtapd_m.field('apd_m.persen_perusahaan').error( 'Inputan harus > 0' );
-						}
-						if(isNaN(persen_perusahaan) ){
-							edtapd_m.field('apd_m.persen_perusahaan').error( 'Inputan harus berupa Angka!' );
-						}
-					}
-					// END of validasi apd_m.persen_perusahaan
-
-					// BEGIN of validasi apd_m.persen_karyawan
-					if ( ! edtapd_m.field('apd_m.persen_karyawan').isMultiValue() ) {
-						persen_karyawan = edtapd_m.field('apd_m.persen_karyawan').val();
-						if(!persen_karyawan || persen_karyawan == ''){
-							edtapd_m.field('apd_m.persen_karyawan').error( 'Wajib diisi!' );
-						}
-						if(persen_karyawan <= 0 ){
-							edtapd_m.field('apd_m.persen_karyawan').error( 'Inputan harus > 0' );
-						}
-						if(isNaN(persen_karyawan) ){
-							edtapd_m.field('apd_m.persen_karyawan').error( 'Inputan harus berupa Angka!' );
-						}
-					}
-					// END of validasi apd_m.persen_karyawan
 
 					// BEGIN of validasi apd_m.nominal
 					if ( ! edtapd_m.field('apd_m.nominal').isMultiValue() ) {
