@@ -1277,7 +1277,8 @@
                                     AND a.is_approve = 1
                                 GROUP BY pe.nama
                             ) AS subquery
-                        ) piutang ON piutang.id_hemxxmh = p.id_hemxxmh OR piutang.nama = p.nama
+                        -- ) piutang ON piutang.id_hemxxmh = p.id_hemxxmh OR piutang.nama = p.nama
+                        ) piutang ON piutang.nama = p.nama
                         AND is_terbaru = 1
                     ),
                     komp_rekontrak AS (
