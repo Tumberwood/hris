@@ -1595,21 +1595,24 @@
                             p.id_hemxxmh,
                             nominal_denda_apd AS denda_apd
                         FROM pegawai p
-                        LEFT JOIN (
+                        JOIN (
                             SELECT
-                                id_hemxxmh,
-                                IFNULL(nominal, 0) AS nominal_denda_apd
-                            FROM (
-                                SELECT
-                                    a.id_hemxxmh,
-                                    SUM(nominal) as nominal
-                                FROM hpy_piutang_d as a
-                                WHERE
-                                    a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                                    AND id_hpcxxmh = 103
-                                    AND is_approve = 1
-                                GROUP BY id_hemxxmh
-                            ) AS subquery
+                                a.id_hemxxmh,
+                                COUNT(a.id) c_id,
+                                SUM(1 *
+                                    (
+                                        SELECT
+                                            m.nominal
+                                        FROM apd_m m
+                                        WHERE m.is_active = 1 AND m.tanggal_efektif <= a.tanggal
+                                    )
+                                ) AS nominal_denda_apd,
+                                a.tanggal
+                            FROM potongan_apd a
+                            WHERE a.is_active = 1
+                            AND a.is_approve = 1
+                            AND a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                            GROUP BY a.id_hemxxmh
                         ) denda_apd ON denda_apd.id_hemxxmh = p.id_hemxxmh
                     ),
                     
