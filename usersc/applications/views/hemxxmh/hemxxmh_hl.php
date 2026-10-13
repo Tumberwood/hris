@@ -127,21 +127,18 @@
 								<editor-field name="hemjbmh.id_hevgrmh"></editor-field>
 							</div>
 							<div class="col-lg-6">
-								<!-- <editor-field name="hemjbmh.id_hevxxmh"></editor-field> -->
+								<editor-field name="hemjbmh.id_hetxxmh"></editor-field>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_hetxxmh"></editor-field>
-							</div>
 							<div class="col-lg-6">
 								<editor-field name="hemjbmh.id_heyxxmd"></editor-field>
 							</div>
-						</div>
-						<div class="row">
 							<div class="col-lg-6">
 								<editor-field name="hemjbmh.id_heyxxmh"></editor-field>
 							</div>
+						</div>
+						<div class="row">
 							<div class="col-lg-6">
 								<editor-field name="hemjbmh.id_hesxxmh"></editor-field>
 							</div>
