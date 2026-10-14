@@ -38,7 +38,14 @@
 					e.nama AS jab,
 					f.nama AS area,
 					pr.st_jadwal,
-					pr.clock_out
+					pr.clock_out,
+					
+					tipe.nama as tipe,
+					
+					CASE
+						WHEN IFNULL(cek.id, 0) > 0 THEN 1
+						ELSE 0
+					END AS is_sesuai
 										
 				FROM htsprrd pr
 				JOIN hemxxmh b ON b.id = pr.id_hemxxmh
