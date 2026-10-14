@@ -141,6 +141,7 @@
 					jb.id_hemxxmh,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
 					jb.id_heyxxmh,
+					
 					hem.kode AS nik,
 					hem.nama,
 					d.nama AS dep,
@@ -150,7 +151,7 @@
 					0 AS cek,
 					
 					DATE_FORMAT(a.tanggal_jam, "%d %b %Y %H:%i:%s") AS makan,
-				"CEKLOK MAKAN DILUAR RANGE JADWAL" AS keterangan
+					"CEKLOK MAKAN DILUAR RANGE JADWAL" AS keterangan
 
 				FROM htsprtd a
 				JOIN hemxxmh hem ON hem.kode_finger = a.kode
@@ -177,11 +178,7 @@
 							AND DATE_ADD(:end_date, INTERVAL 1 DAY)
 						AND pr.jam_makan IS NOT NULL
 						AND pr.tanggaljam_awal_t1 IS NOT NULL
-						-- AND a.tanggal_jam >= pr.tanggaljam_awal_t1
-
-						AND (a.tanggal_jam >= pr.tanggaljam_awal_t1
-						)
-
+						AND a.tanggal_jam >= pr.tanggaljam_awal_t1
 						AND a.tanggal_jam BETWEEN
 							pr.jam_makan
 							AND DATE_ADD(pr.jam_makan, INTERVAL 2 MINUTE)
