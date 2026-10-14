@@ -144,7 +144,7 @@
 						? $rs_gtxpkmh['id_gtxpkmh']
 						: 0;
 
-					//Job
+					// Job
 					$qu_hemjbmh = $db
 						->raw()
 						->bind(':id_hovxxmh', $id_hovxxmh)
@@ -163,18 +163,78 @@
 						->exec("
 							UPDATE hemjbmh a
 							SET
-								a.id_hovxxmh     = COALESCE(NULLIF(:id_hovxxmh, 0), 0),
-								a.id_hodxxmh     = COALESCE(NULLIF(:id_hodxxmh, 0), 0),
-								a.id_hobxxmh     = COALESCE(NULLIF(:id_hobxxmh, 0), 0),
-								a.id_hosxxmh     = COALESCE(NULLIF(:id_hosxxmh, 0), 0),
-								a.id_hevgrmh     = COALESCE(NULLIF(:id_hevgrmh, 0), 0),
-								a.id_hetxxmh     = COALESCE(NULLIF(:id_hetxxmh, 0), 0),
-								a.id_holxxmd_2   = COALESCE(NULLIF(:id_holxxmd_2, 0), 0),
-								a.id_heyxxmh     = COALESCE(NULLIF(:id_heyxxmh, 0), 0),
-								a.id_heyxxmd     = COALESCE(NULLIF(:id_heyxxmd, 0), 0),
-								a.id_hesxxmh     = COALESCE(NULLIF(:id_hesxxmh, 0), 0),
-								a.id_hevxxmh     = COALESCE(NULLIF(:id_hevxxmh, 0), 25),
-								a.grup_hk        = COALESCE(NULLIF(:grup_hk, 0), a.grup_hk)
+								a.id_hovxxmh = CASE
+									WHEN :id_hovxxmh IS NOT NULL AND :id_hovxxmh <> 0
+										THEN :id_hovxxmh
+									ELSE a.id_hovxxmh
+								END,
+
+								a.id_hodxxmh = CASE
+									WHEN :id_hodxxmh IS NOT NULL AND :id_hodxxmh <> 0
+										THEN :id_hodxxmh
+									ELSE a.id_hodxxmh
+								END,
+
+								a.id_hobxxmh = CASE
+									WHEN :id_hobxxmh IS NOT NULL AND :id_hobxxmh <> 0
+										THEN :id_hobxxmh
+									ELSE a.id_hobxxmh
+								END,
+
+								a.id_hosxxmh = CASE
+									WHEN :id_hosxxmh IS NOT NULL AND :id_hosxxmh <> 0
+										THEN :id_hosxxmh
+									ELSE a.id_hosxxmh
+								END,
+
+								a.id_hevgrmh = CASE
+									WHEN :id_hevgrmh IS NOT NULL AND :id_hevgrmh <> 0
+										THEN :id_hevgrmh
+									ELSE a.id_hevgrmh
+								END,
+
+								a.id_hetxxmh = CASE
+									WHEN :id_hetxxmh IS NOT NULL AND :id_hetxxmh <> 0
+										THEN :id_hetxxmh
+									ELSE a.id_hetxxmh
+								END,
+
+								a.id_holxxmd_2 = CASE
+									WHEN :id_holxxmd_2 IS NOT NULL AND :id_holxxmd_2 <> 0
+										THEN :id_holxxmd_2
+									ELSE a.id_holxxmd_2
+								END,
+
+								a.id_heyxxmh = CASE
+									WHEN :id_heyxxmh IS NOT NULL AND :id_heyxxmh <> 0
+										THEN :id_heyxxmh
+									ELSE a.id_heyxxmh
+								END,
+
+								a.id_heyxxmd = CASE
+									WHEN :id_heyxxmd IS NOT NULL AND :id_heyxxmd <> 0
+										THEN :id_heyxxmd
+									ELSE a.id_heyxxmd
+								END,
+
+								a.id_hesxxmh = CASE
+									WHEN :id_hesxxmh IS NOT NULL AND :id_hesxxmh <> 0
+										THEN :id_hesxxmh
+									ELSE a.id_hesxxmh
+								END,
+
+								a.id_hevxxmh = CASE
+									WHEN :id_hevxxmh IS NOT NULL AND :id_hevxxmh <> 0
+										THEN :id_hevxxmh
+									ELSE a.id_hevxxmh
+								END,
+
+								a.grup_hk = CASE
+									WHEN :grup_hk IS NOT NULL AND :grup_hk <> 0
+										THEN :grup_hk
+									ELSE a.grup_hk
+								END
+
 							WHERE a.id_hemxxmh = :id_hemxxmh
 						");
 
@@ -185,9 +245,17 @@
 							->bind(':ktp_no', $ktp_no)
 							->exec("
 								UPDATE hemdcmh
-								SET 
-									id_gtxpkmh = COALESCE(NULLIF(:id_gtxpkmh, 0), id_gtxpkmh),
-									ktp_no = COALESCE(NULLIF(:ktp_no, ''), ktp_no)
+								SET
+									id_gtxpkmh = COALESCE(
+										NULLIF(:id_gtxpkmh, 0),
+										id_gtxpkmh
+									),
+
+									ktp_no = COALESCE(
+										NULLIF(:ktp_no, ''),
+										ktp_no
+									)
+
 								WHERE id_hemxxmh = :id_hemxxmh
 							");
 
@@ -200,11 +268,27 @@
 							->bind(':id_hemxxmh', $id_hemxxmh)
 							->exec("
 								UPDATE hemxxmh
-								SET 
-									perkawinan = COALESCE(NULLIF(:perkawinan, ''), perkawinan),
-									agama = COALESCE(NULLIF(:agama, ''), agama),
-									pendidikan = COALESCE(NULLIF(:pendidikan, ''), pendidikan),
-									jumlah_anak = :jumlah_anak
+								SET
+									perkawinan = COALESCE(
+										NULLIF(:perkawinan, ''),
+										perkawinan
+									),
+
+									agama = COALESCE(
+										NULLIF(:agama, ''),
+										agama
+									),
+
+									pendidikan = COALESCE(
+										NULLIF(:pendidikan, ''),
+										pendidikan
+									),
+
+									jumlah_anak = COALESCE(
+										:jumlah_anak,
+										jumlah_anak
+									)
+
 								WHERE id = :id_hemxxmh
 							");
 
