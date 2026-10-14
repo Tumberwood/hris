@@ -2277,23 +2277,6 @@
                                 GROUP BY id_hemxxmh
                             ) AS subquery
                         ) bpjs_tk_exclude ON bpjs_tk_exclude.id_hemxxmh = p.id_hemxxmh
-                        
-                        -- Cari bpjs_tk_exclude
-                        LEFT JOIN (
-                            SELECT
-                                id_hemxxmh,
-                                IFNULL(c_bpjs_tk, 0) AS skip_c_bpjs_tk
-                            FROM (
-                                SELECT
-                                    COUNT(bpjs_tk.id) AS c_bpjs_tk,
-                                    c.id id_hemxxmh
-                                FROM bpjs_tk_exclude AS bpjs_tk
-                                LEFT JOIN hesxxtd b ON b.id_hemxxmh = bpjs_tk.id_hemxxmh
-                                LEFT JOIN hemxxmh c ON c.kode = b.nik_baru
-                                WHERE bpjs_tk.tanggal BETWEEN :tanggal_awal AND last_day(:tanggal_akhir)
-                                GROUP BY id_hemxxmh
-                            ) AS subquery
-                        ) bpjs_tk_exclude ON bpjs_tk_exclude.id_hemxxmh = p.id_hemxxmh
                     ),
                     pot_makan AS (
                         SELECT
