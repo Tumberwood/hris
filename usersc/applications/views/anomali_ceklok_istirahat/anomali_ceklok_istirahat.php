@@ -81,6 +81,10 @@
 								<th>Area Kerja</th>
 								<th>Tanggal</th>
 								<th>Jadwal</th>
+								<th>Awal Istirahat Jadwal</th>
+								<th>Akhir Istirahat Jadwal</th>
+								<th>Awal Istirahat Checkclock</th>
+								<th>Akhir Istirahat Checkclock</th>
 								<th>Sesuai</th>
 							</tr>
 						</thead>
@@ -273,6 +277,10 @@
 					{ data: "area" },
 					{ data: "tanggal" },
 					{ data: "st_jadwal" },
+					{ data: "tanggaljam_awal_istirahat" },
+					{ data: "tanggaljam_akhir_istirahat" },
+					{ data: "break_in" },
+					{ data: "break_out" },
 					{ 
 						data: "is_sesuai",
 						render: function (data, type, row) {
