@@ -26,6 +26,8 @@
 		->bind(':start_date', $start_date)
 		->bind(':end_date', $end_date)
 		->exec('SELECT
+					pr.id,
+					DATE_FORMAT(pr.tanggal, "%d %b %Y") tanggal,
 					b.kode nik,
 					b.nama,
 					pr.st_jadwal,
