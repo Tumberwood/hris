@@ -614,7 +614,7 @@
                                         )
                                     ),
                                     0
-                                ),
+                                ) * IFNULL(upd_jkk, 1) ,
                             0) AS jkk,
 
                             -- hitung jkm
@@ -631,7 +631,7 @@
                                         )
                                     ),
                                     0
-                                ),
+                                ) * IFNULL(upd_jkm, 1) ,
                             0) AS jkm,
 
                             -- trm_jkkjkm == jkk + jkm
@@ -690,7 +690,7 @@
                                         )
                                     ),
                                     0
-                                ),
+                                ) * IFNULL(upd_bpjs_kes_karyawan, 1) ,
                             0) AS bpjs_kes_karyawan,
 
                             -- hitung bpjs_kes_perusahaan
@@ -707,7 +707,7 @@
                                         )
                                     ),
                                     0
-                                ),
+                                ) * IFNULL(upd_bpjs_kes_perusahaan, 1) ,
                             0) AS bpjs_kes_perusahaan,
 
                             -- hitung jht_perusahaan
@@ -724,7 +724,7 @@
                                         )
                                     ),
                                     0
-                                ),
+                                ) * IFNULL(upd_jht_perusahaan, 1) ,
                             0) AS jht_perusahaan,
 
                             -- hitung jp_perusahaan
@@ -741,7 +741,7 @@
                                         )
                                     ),
                                     0
-                                ),
+                                ) * IFNULL(upd_jp_perusahaan, 1) ,
                             0) AS jp_perusahaan,
 
                             -- hitung pot_jht_karyawan
@@ -758,7 +758,7 @@
                                         )
                                     ),
                                     0
-                                ),
+                                ) * IFNULL(upd_pot_jht_karyawan, 1) ,
                             0) AS pot_jht_karyawan,
 
                             -- hitung pot_jp_karyawan
@@ -775,7 +775,7 @@
                                         )
                                     ),
                                     0
-                                ),
+                                ) * IFNULL(pot_jp_karyawan, 1) ,
                             0) AS pot_jp_karyawan
 
                         FROM pegawai p
@@ -898,6 +898,24 @@
                                 GROUP BY id_hemxxmh
                             ) AS subquery
                         ) bpjs_tk_exclude ON bpjs_tk_exclude.id_hemxxmh = p.id_hemxxmh
+                        
+                        -- Menu Update BPJS
+                        LEFT JOIN (
+                            SELECT
+                                b.id_hemxxmh,
+                                jht_perusahaan AS upd_jht_perusahaan,
+                                jkk AS upd_jkk,
+                                jkm AS upd_jkm,
+                                jp_perusahaan AS upd_jp_perusahaan,
+                                pot_jht_karyawan AS upd_pot_jht_karyawan,
+                                pot_jp_karyawan AS upd_pot_jp_karyawan,
+                                bpjs_kes_perusahaan AS upd_bpjs_kes_perusahaan,
+                                bpjs_kes_karyawan AS upd_bpjs_kes_karyawan
+                            FROM bpjs_h a
+                            JOIN bpjs_d b ON b.id_bpjs_h = a.id
+                            WHERE a.tanggal_awal = :start_date
+                            AND a.tanggal_akhir = :end_date
+                        ) update_bpjs ON update_bpjs.id_hemxxmh = p.id_hemxxmh
                     ),
                     pot_makan AS (
                         SELECT
@@ -2277,6 +2295,24 @@
                                 GROUP BY id_hemxxmh
                             ) AS subquery
                         ) bpjs_tk_exclude ON bpjs_tk_exclude.id_hemxxmh = p.id_hemxxmh
+                        
+                        -- Menu Update BPJS
+                        LEFT JOIN (
+                            SELECT
+                                b.id_hemxxmh,
+                                jht_perusahaan AS upd_jht_perusahaan,
+                                jkk AS upd_jkk,
+                                jkm AS upd_jkm,
+                                jp_perusahaan AS upd_jp_perusahaan,
+                                pot_jht_karyawan AS upd_pot_jht_karyawan,
+                                pot_jp_karyawan AS upd_pot_jp_karyawan,
+                                bpjs_kes_perusahaan AS upd_bpjs_kes_perusahaan,
+                                bpjs_kes_karyawan AS upd_bpjs_kes_karyawan
+                            FROM bpjs_h a
+                            JOIN bpjs_d b ON b.id_bpjs_h = a.id
+                            WHERE a.tanggal_awal = :start_date
+                            AND a.tanggal_akhir = :end_date
+                        ) update_bpjs ON update_bpjs.id_hemxxmh = p.id_hemxxmh
                     ),
                     pot_makan AS (
                         SELECT
