@@ -72,7 +72,7 @@
 					$id = $sheetData[$i][0];
 					$nik = $sheetData[$i][1];
 					$kode_finger = $sheetData[$i][2];
-					$no_ktp = $sheetData[$i][3];
+					$ktp_no = $sheetData[$i][3];
 					$nama = $sheetData[$i][4];
 					$divisi = $sheetData[$i][5]; //hovxxmh
 					$department = $sheetData[$i][6]; //hodxxmh
@@ -182,12 +182,12 @@
 							->raw()
 							->bind(':id_gtxpkmh', $id_gtxpkmh)
 							->bind(':id_hemxxmh', $id_hemxxmh)
-							->bind(':no_ktp', $no_ktp)
+							->bind(':ktp_no', $ktp_no)
 							->exec("
 								UPDATE hemdcmh
 								SET 
 									id_gtxpkmh = COALESCE(NULLIF(:id_gtxpkmh, 0), id_gtxpkmh),
-									no_ktp = COALESCE(NULLIF(:no_ktp, ''), no_ktp)
+									ktp_no = COALESCE(NULLIF(:ktp_no, ''), ktp_no)
 								WHERE id_hemxxmh = :id_hemxxmh
 							");
 
