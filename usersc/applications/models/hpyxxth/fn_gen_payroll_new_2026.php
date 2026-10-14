@@ -913,8 +913,8 @@
                                 bpjs_kes_karyawan AS upd_bpjs_kes_karyawan
                             FROM bpjs_h a
                             JOIN bpjs_d b ON b.id_bpjs_h = a.id
-                            WHERE a.tanggal_awal = :start_date
-                            AND a.tanggal_akhir = :end_date
+                            WHERE a.tanggal_awal = :tanggal_awal
+                            AND a.tanggal_akhir = :tanggal_akhir
                         ) update_bpjs ON update_bpjs.id_hemxxmh = p.id_hemxxmh
                     ),
                     pot_makan AS (
@@ -2310,8 +2310,8 @@
                                 bpjs_kes_karyawan AS upd_bpjs_kes_karyawan
                             FROM bpjs_h a
                             JOIN bpjs_d b ON b.id_bpjs_h = a.id
-                            WHERE a.tanggal_awal = :start_date
-                            AND a.tanggal_akhir = :end_date
+                            WHERE a.tanggal_awal = :tanggal_awal
+                            AND a.tanggal_akhir = :tanggal_akhir
                         ) update_bpjs ON update_bpjs.id_hemxxmh = p.id_hemxxmh
                     ),
                     pot_makan AS (
