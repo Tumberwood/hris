@@ -559,14 +559,54 @@
 					{ data: "bpjs_d.id",visible:false },
 					{ data: "bpjs_d.id_bpjs_h",visible:false },
 					{ data: "hemxxmh.nama" },
-					{ data: "bpjs_d.jht_perusahaan" },
-					{ data: "bpjs_d.jkk" },
-					{ data: "bpjs_d.jkm" },
-					{ data: "bpjs_d.jp_perusahaan" },
-					{ data: "bpjs_d.pot_jht_karyawan" },
-					{ data: "bpjs_d.pot_jp_karyawan" },
-					{ data: "bpjs_d.bpjs_kes_perusahaan" },
-					{ data: "bpjs_d.bpjs_kes_karyawan" },
+					{
+						data: "bpjs_d.jht_perusahaan",
+						render: function (data) {
+							return data == 0 ? "Nol" : "Tidak Berubah";
+						}
+					},
+					{
+						data: "bpjs_d.jkk",
+						render: function (data) {
+							return data == 0 ? "Nol" : "Tidak Berubah";
+						}
+					},
+					{
+						data: "bpjs_d.jkm",
+						render: function (data) {
+							return data == 0 ? "Nol" : "Tidak Berubah";
+						}
+					},
+					{
+						data: "bpjs_d.jp_perusahaan",
+						render: function (data) {
+							return data == 0 ? "Nol" : "Tidak Berubah";
+						}
+					},
+					{
+						data: "bpjs_d.pot_jht_karyawan",
+						render: function (data) {
+							return data == 0 ? "Nol" : "Tidak Berubah";
+						}
+					},
+					{
+						data: "bpjs_d.pot_jp_karyawan",
+						render: function (data) {
+							return data == 0 ? "Nol" : "Tidak Berubah";
+						}
+					},
+					{
+						data: "bpjs_d.bpjs_kes_perusahaan",
+						render: function (data) {
+							return data == 0 ? "Nol" : "Tidak Berubah";
+						}
+					},
+					{
+						data: "bpjs_d.bpjs_kes_karyawan",
+						render: function (data) {
+							return data == 0 ? "Nol" : "Tidak Berubah";
+						}
+					},
 				],
 				buttons: [
 					// BEGIN breaking generate button
