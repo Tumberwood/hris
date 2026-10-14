@@ -31,10 +31,11 @@
 					b.kode nik,
 					b.nama,
 					pr.st_jadwal,
-					pr.break_in,
-					pr.break_out,
-					c.tanggaljam_awal_istirahat,
-					c.tanggaljam_akhir_istirahat,
+					
+					DATE_FORMAT(pr.break_in, "%d %b %Y %H:%i") AS break_in,
+					DATE_FORMAT(pr.break_out, "%d %b %Y %H:%i") AS break_out,
+					DATE_FORMAT(c.tanggaljam_awal_istirahat, "%d %b %Y %H:%i") AS tanggaljam_awal_istirahat,
+					DATE_FORMAT(c.tanggaljam_akhir_istirahat, "%d %b %Y %H:%i") AS tanggaljam_akhir_istirahat,
 					
 					dep.nama AS dep,
 					e.nama AS jab,
