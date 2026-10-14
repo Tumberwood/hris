@@ -4,11 +4,10 @@
 			// script diletakkan disini
 		})
 		->on('postCreate',function( $editor, $id, $values, $row ) {
-			$id_periode_payroll = $values['bpjs_h']['id_periode_payroll'];
+
 			$qu_bpjs_h = $editor->db()
 				->raw()
 				->bind(':id', $id)
-				->bind(':id_periode_payroll', $id_periode_payroll)
 				->exec('UPDATE bpjs_h a
 						LEFT JOIN periode_payroll b on b.id = a.id_periode_payroll
 						SET
@@ -21,11 +20,10 @@
 			// script diletakkan disini
 		})
 		->on('postEdit',function( $editor, $id, $values, $row ) {
-			$id_periode_payroll = $values['bpjs_h']['id_periode_payroll'];
+
 			$qu_bpjs_h = $editor->db()
 				->raw()
 				->bind(':id', $id)
-				->bind(':id_periode_payroll', $id_periode_payroll)
 				->exec('UPDATE bpjs_h a
 						LEFT JOIN periode_payroll b on b.id = a.id_periode_payroll
 						SET
