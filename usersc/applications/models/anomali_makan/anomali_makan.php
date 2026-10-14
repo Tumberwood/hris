@@ -178,6 +178,7 @@
 						AND pr.jam_makan IS NOT NULL
 						AND pr.tanggaljam_awal_t1 IS NOT NULL
 						AND a.tanggal_jam >= pr.tanggaljam_awal_t1
+						AND TIME(a.tanggal_jam) >= "04:00:00"
 						AND a.tanggal_jam BETWEEN
 							pr.jam_makan
 							AND DATE_ADD(pr.jam_makan, INTERVAL 2 MINUTE)
