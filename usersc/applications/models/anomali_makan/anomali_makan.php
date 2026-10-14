@@ -146,14 +146,7 @@
 									d.nama AS dep,
 									e.nama AS jab,
 									f.nama AS area,
-					(
-						SELECT
-							pr.st_jadwal
-						FROM htsprrd pr
-						WHERE pr.id_hemxxmh = hem.id
-							AND pr.tanggal = a.tanggal
-						LIMIT 1
-					) AS st_jadwal,
+					pr.st_jadwal AS st_jadwal,
 					0 AS cek,
 					
 					DATE_FORMAT(a.tanggal_jam, "%d %b %Y %H:%i:%s") AS makan,
@@ -162,29 +155,38 @@
 				FROM htsprtd a
 				JOIN hemxxmh hem ON hem.kode_finger = a.kode
 				JOIN hemjbmh jb ON jb.id_hemxxmh = hem.id
-				LEFT JOIN hodxxmh d ON d.id = jb.id_hodxxmh
+
+				LEFT JOIN htsprrd pr on pr.id_hemxxmh = hem.id
+				AND a.tanggal = pr.tanggal
+
+				LEFT JOIN hodxxmh d ON d.id = jb.id_hodxxmh 
 				LEFT JOIN hetxxmh e ON e.id = jb.id_hetxxmh
 				LEFT JOIN holxxmd_2 f ON f.id = jb.id_holxxmd_2
 				WHERE a.tanggal BETWEEN :start_date AND :end_date
 
 					AND a.nama = "makan"
+					AND jb.id_hodxxmh NOT IN (28)
+					AND tanggal_jam >= pr.tanggaljam_awal_t1
 
-					AND a.tanggal_jam NOT IN (
-						SELECT
-							pr.jam_makan
+					AND NOT EXISTS (
+						SELECT 1
 						FROM htsprrd pr
-						JOIN hemxxmh h
-							ON h.id = pr.id_hemxxmh
-						WHERE pr.tanggal BETWEEN
+						WHERE pr.id_hemxxmh = hem.id
+						AND pr.tanggal BETWEEN
 							DATE_SUB(:start_date, INTERVAL 1 DAY)
 							AND DATE_ADD(:end_date, INTERVAL 1 DAY)
-							AND pr.jam_makan IS NOT NULL
+						AND pr.jam_makan IS NOT NULL
+						AND pr.tanggaljam_awal_t1 IS NOT NULL
+						AND a.tanggal_jam >= pr.tanggaljam_awal_t1
+						AND a.tanggal_jam BETWEEN
+							pr.jam_makan
+							AND DATE_ADD(pr.jam_makan, INTERVAL 2 MINUTE)
 					)
 
 					AND (
 						jb.tanggal_keluar IS NULL
 						OR a.tanggal <= jb.tanggal_keluar
-					);
+					)
 				' 
 				);
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
