@@ -101,6 +101,8 @@
 					$ptkp = $sheetData[$i][21];
 					$perkawinan = $sheetData[$i][22];
 					$jumlah_anak = $sheetData[$i][23];
+					$agama = $sheetData[$i][24];
+					$pendidikan = $sheetData[$i][25];
 					
 					// cari nik
 					$qs_hemxxmh = $db->query('select','hemxxmh')
@@ -180,9 +182,12 @@
 							->raw()
 							->bind(':id_gtxpkmh', $id_gtxpkmh)
 							->bind(':id_hemxxmh', $id_hemxxmh)
+							->bind(':no_ktp', $no_ktp)
 							->exec("
 								UPDATE hemdcmh
-								SET id_gtxpkmh = COALESCE(NULLIF(:id_gtxpkmh, 0), id_gtxpkmh)
+								SET 
+									id_gtxpkmh = COALESCE(NULLIF(:id_gtxpkmh, 0), id_gtxpkmh),
+									no_ktp = COALESCE(NULLIF(:no_ktp, ''), no_ktp)
 								WHERE id_hemxxmh = :id_hemxxmh
 							");
 
@@ -190,11 +195,15 @@
 							->raw()
 							->bind(':jumlah_anak', $jumlah_anak)
 							->bind(':perkawinan', $perkawinan)
+							->bind(':agama', $agama)
+							->bind(':pendidikan', $pendidikan)
 							->bind(':id_hemxxmh', $id_hemxxmh)
 							->exec("
 								UPDATE hemxxmh
 								SET 
-									perkawinan = :perkawinan,
+									perkawinan = COALESCE(NULLIF(:perkawinan, ''), perkawinan),
+									agama = COALESCE(NULLIF(:agama, ''), agama),
+									pendidikan = COALESCE(NULLIF(:pendidikan, ''), pendidikan),
 									jumlah_anak = :jumlah_anak
 								WHERE id = :id_hemxxmh
 							");
