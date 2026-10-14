@@ -55,6 +55,7 @@
 				JOIN hemxxmh b ON b.id = pr.id_hemxxmh
 				JOIN htssctd c ON c.tanggal = pr.tanggal
 					AND c.id_hemxxmh = pr.id_hemxxmh
+					AND c.is_active = 1
 					
 				JOIN hemjbmh jb ON jb.id_hemxxmh = pr.id_hemxxmh
 
