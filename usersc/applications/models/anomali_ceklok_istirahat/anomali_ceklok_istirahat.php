@@ -27,6 +27,7 @@
 		->bind(':end_date', $end_date)
 		->exec('SELECT
 					pr.id,
+					pr.id_hemxxmh,
 					DATE_FORMAT(pr.tanggal, "%d %b %Y") tanggal,
 					b.kode nik,
 					b.nama,
