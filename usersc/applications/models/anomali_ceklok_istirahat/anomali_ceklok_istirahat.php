@@ -68,7 +68,7 @@
 				AND pr.break_in IS NOT NULL
 				AND pr.break_out IS NOT NULL
 
-				AND ( pr.break_in NOT BETWEEN c.tanggaljam_awal_istirahat AND c.tanggaljam_akhir_istirahat)
+				AND ( pr.st_jadwal <> "OFF" AND pr.break_in NOT BETWEEN c.tanggaljam_awal_istirahat AND c.tanggaljam_akhir_istirahat)
 				' 
 				);
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
