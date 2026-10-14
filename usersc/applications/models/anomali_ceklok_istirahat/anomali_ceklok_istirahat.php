@@ -61,6 +61,9 @@
 				LEFT JOIN holxxmd_2 f ON f.id = pr.id_holxxmd_2
 				LEFT JOIN heyxxmh tipe ON tipe.id = jb.id_heyxxmh
 
+				LEFT JOIN cek_anomali_istirahat cek ON cek.id_hemxxmh = pr.id_hemxxmh
+				AND cek.tanggal = pr.tanggal
+				
 				WHERE pr.tanggal BETWEEN :start_date AND :end_date
 				AND pr.break_in IS NOT NULL
 				AND pr.break_out IS NOT NULL
