@@ -414,7 +414,7 @@
 					},
 					{
 						label: "JHT Perusahaan",
-						name: "bpjs_h.jht_perusahaan",
+						name: "bpjs_d.jht_perusahaan",
 						type: "select",
 						placeholder: "Select",
 						def: 0,
@@ -425,7 +425,7 @@
 					},
 					{
 						label: "JKK Perusahaan",
-						name: "bpjs_h.jkk",
+						name: "bpjs_d.jkk",
 						type: "select",
 						placeholder: "Select",
 						def: 0,
@@ -436,7 +436,7 @@
 					},
 					{
 						label: "JKM Perusahaan",
-						name: "bpjs_h.jkm",
+						name: "bpjs_d.jkm",
 						type: "select",
 						placeholder: "Select",
 						def: 0,
@@ -447,7 +447,7 @@
 					},
 					{
 						label: "JP Perusahaan",
-						name: "bpjs_h.jp_perusahaan",
+						name: "bpjs_d.jp_perusahaan",
 						type: "select",
 						placeholder: "Select",
 						def: 0,
@@ -458,7 +458,7 @@
 					},
 					{
 						label: "JHT Karyawan",
-						name: "bpjs_h.pot_jht_karyawan",
+						name: "bpjs_d.pot_jht_karyawan",
 						type: "select",
 						placeholder: "Select",
 						def: 0,
@@ -469,7 +469,7 @@
 					},
 					{
 						label: "JP Karyawan",
-						name: "bpjs_h.pot_jp_karyawan",
+						name: "bpjs_d.pot_jp_karyawan",
 						type: "select",
 						placeholder: "Select",
 						def: 0,
@@ -480,7 +480,7 @@
 					},
 					{
 						label: "Kes Perusahaan",
-						name: "bpjs_h.bpjs_kes_perusahaan",
+						name: "bpjs_d.bpjs_kes_perusahaan",
 						type: "select",
 						placeholder: "Select",
 						def: 0,
@@ -491,7 +491,7 @@
 					},
 					{
 						label: "Kes Karyawan",
-						name: "bpjs_h.bpjs_kes_karyawan",
+						name: "bpjs_d.bpjs_kes_karyawan",
 						type: "select",
 						placeholder: "Select",
 						def: 0,
@@ -559,14 +559,14 @@
 					{ data: "bpjs_d.id",visible:false },
 					{ data: "bpjs_d.id_bpjs_h",visible:false },
 					{ data: "hemxxmh.nama" },
-					{ data: "bpjs_h.jht_perusahaan" },
-					{ data: "bpjs_h.jkk" },
-					{ data: "bpjs_h.jkm" },
-					{ data: "bpjs_h.jp_perusahaan" },
-					{ data: "bpjs_h.pot_jht_karyawan" },
-					{ data: "bpjs_h.pot_jp_karyawan" },
-					{ data: "bpjs_h.bpjs_kes_perusahaan" },
-					{ data: "bpjs_h.bpjs_kes_karyawan" },
+					{ data: "bpjs_d.jht_perusahaan" },
+					{ data: "bpjs_d.jkk" },
+					{ data: "bpjs_d.jkm" },
+					{ data: "bpjs_d.jp_perusahaan" },
+					{ data: "bpjs_d.pot_jht_karyawan" },
+					{ data: "bpjs_d.pot_jp_karyawan" },
+					{ data: "bpjs_d.bpjs_kes_perusahaan" },
+					{ data: "bpjs_d.bpjs_kes_karyawan" },
 				],
 				buttons: [
 					// BEGIN breaking generate button
