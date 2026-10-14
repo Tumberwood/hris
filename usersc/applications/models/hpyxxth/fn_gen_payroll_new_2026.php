@@ -775,7 +775,7 @@
                                         )
                                     ),
                                     0
-                                ) * IFNULL(pot_jp_karyawan, 1) ,
+                                ) * IFNULL(upd_pot_jp_karyawan, 1) ,
                             0) AS pot_jp_karyawan
 
                         FROM pegawai p
