@@ -186,7 +186,7 @@
 													<th class="text-center align-middle">17. Cuti Tahunan</th>
 													<th class="text-center align-middle">18. Cuti Bersama (Cuti Masal)</th>
 													<th class="text-center align-middle">19. Hari Sisa Cuti</th>
-													<th class="text-center align-middle">20. Kompensasi Sisa Cuti</th>
+													<th class="text-center align-middle">20. Kompensasi Sisa Cuti Tahunan</th>
 													<th class="text-center align-middle">21. THR</th>
 
 													<!-- POTONGAN -->
@@ -361,7 +361,7 @@
 													<th class="text-center align-middle">17. Cuti Tahunan</th>
 													<th class="text-center align-middle">18. Cuti Bersama (Cuti Masal)</th>
 													<th class="text-center align-middle">19. Hari Sisa Cuti</th>
-													<th class="text-center align-middle">20. Kompensasi Sisa Cuti</th>
+													<th class="text-center align-middle">20. Kompensasi Sisa Cuti Tahunan</th>
 													<th class="text-center align-middle">21. THR</th>
 
 													<!-- POTONGAN -->
@@ -536,7 +536,7 @@
 													<th class="text-center align-middle">17. Cuti Tahunan</th>
 													<th class="text-center align-middle">18. Cuti Bersama (Cuti Masal)</th>
 													<th class="text-center align-middle">19. Hari Sisa Cuti</th>
-													<th class="text-center align-middle">20. Kompensasi Sisa Cuti</th>
+													<th class="text-center align-middle">20. Kompensasi Sisa Cuti Tahunan</th>
 													<th class="text-center align-middle">21. THR</th>
 
 													<!-- POTONGAN -->

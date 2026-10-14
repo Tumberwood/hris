@@ -285,8 +285,8 @@
 													<th class="text-center align-middle lama">43. Hari Sisa Cuti (Lama)</th>
 													<th class="text-center align-middle baru">44. Hari Sisa Cuti (Baru)</th>
 
-													<th class="text-center align-middle lama">45. Kompensasi Sisa Cuti (Lama)</th>
-													<th class="text-center align-middle baru">46. Kompensasi Sisa Cuti (Baru)</th>
+													<th class="text-center align-middle lama">45. Kompensasi Sisa Cuti Tahunan (Lama)</th>
+													<th class="text-center align-middle baru">46. Kompensasi Sisa Cuti Tahunan (Baru)</th>
 
 													<th class="text-center align-middle lama">47. THR (Lama)</th>
 													<th class="text-center align-middle baru">48. THR (Baru)</th>
@@ -612,8 +612,8 @@
 													<th class="text-center align-middle lama">43. Hari Sisa Cuti (Lama)</th>
 													<th class="text-center align-middle baru">44. Hari Sisa Cuti (Baru)</th>
 
-													<th class="text-center align-middle lama">45. Kompensasi Sisa Cuti (Lama)</th>
-													<th class="text-center align-middle baru">46. Kompensasi Sisa Cuti (Baru)</th>
+													<th class="text-center align-middle lama">45. Kompensasi Sisa Cuti Tahunan (Lama)</th>
+													<th class="text-center align-middle baru">46. Kompensasi Sisa Cuti Tahunan (Baru)</th>
 
 													<th class="text-center align-middle lama">47. THR (Lama)</th>
 													<th class="text-center align-middle baru">48. THR (Baru)</th>
@@ -939,8 +939,8 @@
 													<th class="text-center align-middle lama">43. Hari Sisa Cuti (Lama)</th>
 													<th class="text-center align-middle baru">44. Hari Sisa Cuti (Baru)</th>
 
-													<th class="text-center align-middle lama">45. Kompensasi Sisa Cuti (Lama)</th>
-													<th class="text-center align-middle baru">46. Kompensasi Sisa Cuti (Baru)</th>
+													<th class="text-center align-middle lama">45. Kompensasi Sisa Cuti Tahunan (Lama)</th>
+													<th class="text-center align-middle baru">46. Kompensasi Sisa Cuti Tahunan (Baru)</th>
 
 													<th class="text-center align-middle lama">47. THR (Lama)</th>
 													<th class="text-center align-middle baru">48. THR (Baru)</th>
@@ -2441,7 +2441,7 @@
 					{ data: "hpyemtd_cocokan.sisa_cuti_hari", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.sisa_cuti_hari", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					// 64-65 Kompensasi Sisa Cuti
+					// 64-65 Kompensasi Sisa Cuti Tahunan
 					{ data: "hpyemtd_cocokan.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
@@ -3360,7 +3360,7 @@
 					{ data: "hpyemtd_cocokan.sisa_cuti_hari", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.sisa_cuti_hari", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					// 64-65 Kompensasi Sisa Cuti
+					// 64-65 Kompensasi Sisa Cuti Tahunan
 					{ data: "hpyemtd_cocokan.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
@@ -4262,7 +4262,7 @@
 					{ data: "hpyemtd_cocokan.sisa_cuti_hari", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.sisa_cuti_hari", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
-					// 64-65 Kompensasi Sisa Cuti
+					// 64-65 Kompensasi Sisa Cuti Tahunan
 					{ data: "hpyemtd_cocokan.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
