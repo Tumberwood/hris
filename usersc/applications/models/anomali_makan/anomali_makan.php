@@ -141,11 +141,11 @@
 					jb.id_hemxxmh,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
 					jb.id_heyxxmh,
-									hem.kode AS nik,
-									hem.nama,
-									d.nama AS dep,
-									e.nama AS jab,
-									f.nama AS area,
+					hem.kode AS nik,
+					hem.nama,
+					d.nama AS dep,
+					e.nama AS jab,
+					f.nama AS area,
 					pr.st_jadwal AS st_jadwal,
 					0 AS cek,
 					
@@ -177,8 +177,11 @@
 							AND DATE_ADD(:end_date, INTERVAL 1 DAY)
 						AND pr.jam_makan IS NOT NULL
 						AND pr.tanggaljam_awal_t1 IS NOT NULL
+						-- AND a.tanggal_jam >= pr.tanggaljam_awal_t1
+
 						AND a.tanggal_jam >= pr.tanggaljam_awal_t1
-						AND TIME(a.tanggal_jam) >= "04:00:00"
+						-- AND TIME(a.tanggal_jam) >= "04:00:00"
+
 						AND a.tanggal_jam BETWEEN
 							pr.jam_makan
 							AND DATE_ADD(pr.jam_makan, INTERVAL 2 MINUTE)
