@@ -179,8 +179,8 @@
 						AND pr.tanggaljam_awal_t1 IS NOT NULL
 						-- AND a.tanggal_jam >= pr.tanggaljam_awal_t1
 
-						AND a.tanggal_jam >= pr.tanggaljam_awal_t1
-						AND a.tanggal_jam >= CONCAT(DATE(a.tanggal_jam), " 04:00:00")
+						AND (a.tanggal_jam >= pr.tanggaljam_awal_t1
+						AND a.tanggal_jam >= CONCAT(DATE(a.tanggal_jam), " 04:00:00") )
 
 						AND a.tanggal_jam BETWEEN
 							pr.jam_makan
