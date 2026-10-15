@@ -58,7 +58,7 @@
                 LEFT JOIN hesxxmh AS c ON c.id = b.id_hesxxmh
                 WHERE 1 
                 -- AND a.nama = :nama
-                AND a.id_hemxxmh = :id_hemxxmh
+                AND a.id = :id_hemxxmh
                 ORDER BY a.id DESC
                 LIMIT 1;
     
