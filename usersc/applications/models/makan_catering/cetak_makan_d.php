@@ -175,7 +175,7 @@
 							ON c.id_hemxxmh = a.id_hemxxmh
 
 						INNER JOIN heyxxmd d
-							ON d.id = c.id_hesxxmh
+							ON d.id = c.id_heyxxmh
 
 						WHERE a.tanggal BETWEEN :start_date AND :end_date
 
