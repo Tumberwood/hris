@@ -206,7 +206,7 @@
 						d.kode = get_kode;
 					}
 				},
-				order: [[ 1, "asc" ]],
+				order: [[ 1, "desc" ]],
 				columns: [
 					{ data: "hesxxtd_resign.id",visible:false },
 					{ data: "hesxxtd_resign.kode" },
