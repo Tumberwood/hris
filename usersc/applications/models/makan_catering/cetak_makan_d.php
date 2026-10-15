@@ -41,21 +41,9 @@
 						/* =========================
 						HARGA CATERING
 						========================= */
-						MAX(
-							CASE
-								WHEN x.sub = "KARYAWAN"
-								THEN x.harga_catering
-								ELSE 0
-							END
-						) AS harga_catering_kary,
+						5500 AS harga_catering_kary,
 
-						MAX(
-							CASE
-								WHEN x.sub = "STAFF"
-								THEN x.harga_catering
-								ELSE 0
-							END
-						) AS harga_catering_staff,
+						5500 AS harga_catering_staff,
 
 
 						/* =========================
