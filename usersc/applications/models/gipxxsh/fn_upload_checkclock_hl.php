@@ -37,78 +37,65 @@
 
     function processSheetData_hl($sheetData, $db, &$dataupload, &$datakembar, $nama)
     {
-        $arr_kode = [];
-        $tanggal_min = null;
-        $tanggal_max = null;
+        $tanggal = '';
+        $arr_kode = "";
+        for($i = 1;$i < count($sheetData);$i++){
 
-        for ($i = 1; $i < count($sheetData); $i++) {
-            if (trim((string) ($sheetData[$i][0] ?? '')) === '') {
-                continue;
-            }
+            //8 Aug 2026, diubah karena gagal insert ceklok istirahat info by Bu Cia, karena format tanggalnya
+            if ($sheetData[$i]['0'] != '') {
+                $kode = 'HL' . str_pad((string) (int) $sheetData[$i][0], 4, '0', STR_PAD_LEFT);
 
-            $kode = 'HL' . str_pad(
-                trim((string) $sheetData[$i][0]),
-                4,
-                '0',
-                STR_PAD_LEFT
-            );
+                // Ambil data dari kolom Excel
+                $raw_datetime = $sheetData[$i][3] ?? '';
 
-            $raw_datetime = trim((string) ($sheetData[$i][3] ?? ''));
+                $tanggal = null;
+                $jam     = null;
 
-            if ($raw_datetime === '') {
-                continue;
-            }
+                if ($raw_datetime !== '' && $raw_datetime !== null) {
+                    if (is_numeric($raw_datetime)) {
+                        $dateObj = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(
+                            (float) $raw_datetime
+                        );
+                    } else {
+                        $raw_datetime = trim((string) $raw_datetime);
+                        $dateObj = false;
 
-            $dateObj = false;
+                        foreach ([
+                            'd/m/Y H:i:s',
+                            'd/m/Y H:i',
+                            'd-m-Y H:i:s',
+                            'd-m-Y H:i',
+                            'Y-m-d H:i:s',
+                            'Y-m-d H:i'
+                        ] as $fmt) {
+                            $d = DateTime::createFromFormat('!' . $fmt, $raw_datetime);
+                            $errors = DateTime::getLastErrors();
 
-            if (is_numeric($raw_datetime)) {
-                try {
-                    $dateObj = \PhpOffice\PhpSpreadsheet\Shared\Date
-                        ::excelToDateTimeObject((float) $raw_datetime);
-                } catch (\Throwable $e) {
-                    $dateObj = false;
-                }
-            } else {
-                $formats = [
-                    'd/m/Y H:i:s',
-                    'd/m/Y H:i',
-                    'd-m-Y H:i:s',
-                    'd-m-Y H:i',
-                    'Y-m-d H:i:s',
-                    'Y-m-d H:i',
-                ];
+                            if (
+                                $d &&
+                                ($errors === false ||
+                                    ($errors['warning_count'] === 0 &&
+                                    $errors['error_count'] === 0)) &&
+                                $d->format($fmt) === $raw_datetime
+                            ) {
+                                $dateObj = $d;
+                                break;
+                            }
+                        }
+                    }
 
-                foreach ($formats as $fmt) {
-                    $d = DateTime::createFromFormat('!' . $fmt, $raw_datetime);
-
-                    if ($d && $d->format($fmt) === $raw_datetime) {
-                        $dateObj = $d;
-                        break;
+                    if ($dateObj !== false) {
+                        $tanggal = $dateObj->format('Y-m-d');
+                        $jam     = $dateObj->format('H:i:s');
                     }
                 }
+                
+                if ($i == 1) {
+                    $arr_kode = 'SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" AS excel_value ';
+                } else {
+                    $arr_kode .= 'UNION ALL SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" ';
+                }
             }
-
-            if (!$dateObj) {
-                continue;
-            }
-
-            $tanggal = $dateObj->format('Y-m-d');
-            $jam = $dateObj->format('H:i');
-
-            $tanggal_min = $tanggal_min === null
-                ? $tanggal
-                : min($tanggal_min, $tanggal);
-
-            $tanggal_max = $tanggal_max === null
-                ? $tanggal
-                : max($tanggal_max, $tanggal);
-
-            $arr_kode[] = [
-                'kode' => $kode,
-                'nama' => $nama,
-                'tanggal' => $tanggal,
-                'jam' => $jam,
-            ];
         }
         
         if ($arr_kode != "") {
