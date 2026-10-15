@@ -187,6 +187,7 @@
 													<th class="text-center align-middle">18. Cuti Bersama (Cuti Masal)</th>
 													<th class="text-center align-middle">19. Hari Sisa Cuti</th>
 													<th class="text-center align-middle">20. Kompensasi Sisa Cuti Tahunan</th>
+													<th class="text-center align-middle">20a. Kompensasi Sisa Cuti Tahunan Resign</th>
 													<th class="text-center align-middle">21. THR</th>
 
 													<!-- POTONGAN -->
@@ -307,6 +308,7 @@
 													<th id="karyawan_68"></th>
 													<th id="karyawan_69"></th>
 													<th id="karyawan_70"></th>
+													<th id="karyawan_71"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -362,7 +364,6 @@
 													<th class="text-center align-middle">18. Cuti Bersama (Cuti Masal)</th>
 													<th class="text-center align-middle">19. Hari Sisa Cuti</th>
 													<th class="text-center align-middle">20. Kompensasi Sisa Cuti Tahunan</th>
-													<th class="text-center align-middle">20a. Kompensasi Sisa Cuti Tahunan</th>
 													<th class="text-center align-middle">21. THR</th>
 
 													<!-- POTONGAN -->
@@ -483,7 +484,6 @@
 													<th id="kontrak_68"></th>
 													<th id="kontrak_69"></th>
 													<th id="kontrak_70"></th>
-													<th id="kontrak_71"></th>
 												</tr>
 											</tfoot>
 										</table>
