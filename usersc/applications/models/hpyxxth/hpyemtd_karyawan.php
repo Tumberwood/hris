@@ -108,6 +108,7 @@
 				Field::inst( 'hpyemtd.komp_rekontrak' ),
 
 				Field::inst( 'hpyemtd.komp_sisa_cuti' ),
+				Field::inst( 'hpyemtd.komp_sisa_cuti_resign' ),
 				Field::inst( 'hpyemtd.cuti_tahunan' ),
 				Field::inst( 'hpyemtd.cuti_bersama' ),
 				Field::inst( 'hpyemtd.sisa_cuti_hari' ),
