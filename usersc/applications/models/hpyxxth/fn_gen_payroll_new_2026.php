@@ -2987,6 +2987,7 @@
 
                         komp_rekontrak,
                         komp_sisa_cuti,
+                        komp_sisa_cuti_resign,
 
                         cuti_tahunan,
                         cuti_bersama,
