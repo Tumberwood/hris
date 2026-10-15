@@ -1301,8 +1301,11 @@
                     komp_rekontrak AS (
                         SELECT
                             a.id,
-                            b.id AS id_hemxxmh_lama,
-                            hl.id_hemxxmh_baru as id_hemxxmh,
+                            
+                            b.id AS id_hemxxmh,
+
+                            -- b.id AS id_hemxxmh_lama,
+                            -- hl.id_hemxxmh_baru as id_hemxxmh,
                             c.tanggal_keluar,
                             FLOOR(
                                 (
