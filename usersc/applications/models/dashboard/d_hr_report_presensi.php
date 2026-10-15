@@ -170,6 +170,7 @@
 				LEFT JOIN grup AS d ON d.id_hemxxmh = a.id_hemxxmh
 				LEFT JOIN htsxxmh AS f on f.id = b.id_htsxxmh
 				WHERE a.tanggal = :start_date AND a.id_hemxxmh = :id_hemxxmh AND b.is_active = 1 
+				GROUP BY a.id
 				'
 				);
 	$rs_report_presensi = $qs_report_presensi->fetchAll();
