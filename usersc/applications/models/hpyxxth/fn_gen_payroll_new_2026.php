@@ -1435,7 +1435,7 @@
                                     * 
                                     ( ( MONTH(tanggal_keluar) - 1 ) - COALESCE(cb.c_cb, 0) ) 
                                     * -1
-                             ELSE 2
+                             ELSE 0
                            END AS komp_sisa_cuti_resign
 
                         FROM htlxxrh AS a
