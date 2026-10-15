@@ -46,7 +46,7 @@
             if ($sheetData[$i]['0'] != '') {
                 $kode = 'HL' . str_pad($sheetData[$i]['0'], 4, '0', STR_PAD_LEFT);
     
-                $dt = explode(" ", $sheetData[$i]['2']);
+                $dt = explode(" ", $sheetData[$i]['3']);
                 $str_tanggal = $dt[0];
                 $tahun = substr($str_tanggal, 6, 4);
                 $bulan = substr($str_tanggal, 3, 2);
