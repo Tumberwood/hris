@@ -37,90 +37,78 @@
 
     function processSheetData_hl($sheetData, $db, &$dataupload, &$datakembar, $nama)
     {
-        $tanggal = '';
-        $arr_kode = "";
-        for($i = 1;$i < count($sheetData);$i++){
-            // Str pad 4 digit dengan 0 sebagai default,
+        $arr_kode = [];
+        $tanggal_min = null;
+        $tanggal_max = null;
 
-            //jadi jika 0 tidak terbaca di excel, maka bisa di akali dengan str pad
-            // if ($sheetData[$i]['0'] != '') {
-            //     $kode = str_pad($sheetData[$i]['0'], 4, '0', STR_PAD_LEFT);
-    
-            //     $dt = explode(" ", $sheetData[$i]['2']);
-            //     $str_tanggal = $dt[0];
-            //     $tahun = substr($str_tanggal, 6, 4);
-            //     $bulan = substr($str_tanggal, 3, 2);
-            //     $tgl = substr($str_tanggal, 0, 2);
-            //     $tanggal = $tahun . '-' . $bulan . '-' . $tgl;
-            //     $jam = $dt[1];
-    
-            //     if ($i == 1) {
-            //         $arr_kode = 'SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" AS excel_value ';
-            //     } else {
-            //         $arr_kode .= 'UNION ALL SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" ';
-            //     }
-            // }
+        for ($i = 1; $i < count($sheetData); $i++) {
+            if (trim((string) ($sheetData[$i][0] ?? '')) === '') {
+                continue;
+            }
 
-            //8 Aug 2026, diubah karena gagal insert ceklok istirahat info by Bu Cia, karena format tanggalnya
-            if ($sheetData[$i]['0'] != '') {
-                $kode = 'HL' . str_pad($sheetData[$i]['0'], 4, '0', STR_PAD_LEFT);
+            $kode = 'HL' . str_pad(
+                trim((string) $sheetData[$i][0]),
+                4,
+                '0',
+                STR_PAD_LEFT
+            );
 
-                // Ambil data dari kolom Excel
-                $raw_datetime = trim($sheetData[$i]['3'] ?? '');
+            $raw_datetime = trim((string) ($sheetData[$i][3] ?? ''));
 
-                $tanggal = null;
-                $jam     = null;
+            if ($raw_datetime === '') {
+                continue;
+            }
 
-                if (!empty($raw_datetime)) {
-                    // 1. Jika berupa Serial Number dari Excel (misal: 46239.3347)
-                    if (is_numeric($raw_datetime)) {
-                        $dateObj = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($raw_datetime);
-                        $tanggal = $dateObj->format('Y-m-d');
-                        $jam     = $dateObj->format('H:i'); // Hanya jam:menit
-                    } 
-                    // 2. Jika berupa String Tanggal
-                    else {
-                        $formats = [
-                            'd/m/Y H:i:s', // Tetap bisa baca input jika Excel mengirim detik...
-                            'd/m/Y H:i',   
-                            'd-m-Y H:i:s', 
-                            'd-m-Y H:i',   
-                            'Y-m-d H:i:s', 
-                            'Y-m-d H:i'
-                        ];
+            $dateObj = false;
 
-                        $dateObj = false;
+            if (is_numeric($raw_datetime)) {
+                try {
+                    $dateObj = \PhpOffice\PhpSpreadsheet\Shared\Date
+                        ::excelToDateTimeObject((float) $raw_datetime);
+                } catch (\Throwable $e) {
+                    $dateObj = false;
+                }
+            } else {
+                $formats = [
+                    'd/m/Y H:i:s',
+                    'd/m/Y H:i',
+                    'd-m-Y H:i:s',
+                    'd-m-Y H:i',
+                    'Y-m-d H:i:s',
+                    'Y-m-d H:i',
+                ];
 
-                        foreach ($formats as $fmt) {
-                            $d = DateTime::createFromFormat($fmt, $raw_datetime);
-                            if ($d && $d->format($fmt) === $raw_datetime) {
-                                $dateObj = $d;
-                                break;
-                            }
-                        }
+                foreach ($formats as $fmt) {
+                    $d = DateTime::createFromFormat('!' . $fmt, $raw_datetime);
 
-                        if ($dateObj) {
-                            $tanggal = $dateObj->format('Y-m-d');
-                            $jam     = $dateObj->format('H:i'); // Output tanpa detik
-                        } else {
-                            // Fallback: paksa ubah '/' ke '-' agar strtotime baca d-m-Y
-                            $normalized = str_replace('/', '-', $raw_datetime);
-                            $timestamp  = strtotime($normalized);
-
-                            if ($timestamp !== false) {
-                                $tanggal = date('Y-m-d', $timestamp);
-                                $jam     = date('H:i', $timestamp); // Output tanpa detik
-                            }
-                        }
+                    if ($d && $d->format($fmt) === $raw_datetime) {
+                        $dateObj = $d;
+                        break;
                     }
                 }
-                
-                if ($i == 1) {
-                    $arr_kode = 'SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" AS excel_value ';
-                } else {
-                    $arr_kode .= 'UNION ALL SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" ';
-                }
             }
+
+            if (!$dateObj) {
+                continue;
+            }
+
+            $tanggal = $dateObj->format('Y-m-d');
+            $jam = $dateObj->format('H:i');
+
+            $tanggal_min = $tanggal_min === null
+                ? $tanggal
+                : min($tanggal_min, $tanggal);
+
+            $tanggal_max = $tanggal_max === null
+                ? $tanggal
+                : max($tanggal_max, $tanggal);
+
+            $arr_kode[] = [
+                'kode' => $kode,
+                'nama' => $nama,
+                'tanggal' => $tanggal,
+                'jam' => $jam,
+            ];
         }
         
         if ($arr_kode != "") {
