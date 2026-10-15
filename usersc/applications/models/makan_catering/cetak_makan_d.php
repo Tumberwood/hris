@@ -51,7 +51,7 @@
 						========================= */
 						SUM(
 							x.shift = 1
-							AND x.sub = "KARYAWAN"
+							AND x.sub <> "STAFF"
 							AND x.jam_makan IS NOT NULL
 						) AS shift1_kary,
 
@@ -67,7 +67,7 @@
 						========================= */
 						SUM(
 							x.shift = 2
-							AND x.sub = "KARYAWAN"
+							AND x.sub <> "STAFF"
 							AND x.jam_makan IS NOT NULL
 						) AS shift2_kary,
 
@@ -83,7 +83,7 @@
 						========================= */
 						SUM(
 							x.shift = 3
-							AND x.sub = "KARYAWAN"
+							AND x.sub <> "STAFF"
 							AND x.jam_makan IS NOT NULL
 						) AS shift3_kary,
 
@@ -98,7 +98,7 @@
 						TOTAL KARYAWAN
 						========================= */
 						SUM(
-							x.sub = "KARYAWAN"
+							x.sub <> "STAFF"
 							AND x.jam_makan IS NOT NULL
 						) AS total_kary,
 
@@ -179,7 +179,7 @@
 
 						WHERE a.tanggal BETWEEN :start_date AND :end_date
 
-							AND d.id IN (2, 3)
+							-- AND d.id IN (2, 3)
 
 					) x
 
