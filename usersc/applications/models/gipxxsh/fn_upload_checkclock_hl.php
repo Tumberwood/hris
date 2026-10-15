@@ -38,64 +38,107 @@
     function processSheetData_hl($sheetData, $db, &$dataupload, &$datakembar, $nama)
     {
         $tanggal = '';
-        $arr_kode = "";
-        for($i = 1;$i < count($sheetData);$i++){
+        $arr_kode = '';
+        $jumlah_data = 0;
 
-            //8 Aug 2026, diubah karena gagal insert ceklok istirahat info by Bu Cia, karena format tanggalnya
-            if ($sheetData[$i]['0'] != '') {
-                $kode = 'HL' . str_pad((string) (int) $sheetData[$i][0], 4, '0', STR_PAD_LEFT);
+        for ($i = 1; $i < count($sheetData); $i++) {
 
-                // Ambil data dari kolom Excel
-                $raw_datetime = $sheetData[$i][3] ?? '';
+            // Ambil kode pegawai dari Excel.
+            $raw_kode = trim((string) ($sheetData[$i][0] ?? ''));
 
-                $tanggal = null;
-                $jam     = null;
+            if ($raw_kode === '') {
+                continue;
+            }
 
-                if ($raw_datetime !== '' && $raw_datetime !== null) {
-                    if (is_numeric($raw_datetime)) {
-                        $dateObj = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(
-                            (float) $raw_datetime
-                        );
-                    } else {
-                        $raw_datetime = trim((string) $raw_datetime);
-                        $dateObj = false;
+            $kode = 'HL' . str_pad(
+                (string) (int) $raw_kode,
+                4,
+                '0',
+                STR_PAD_LEFT
+            );
 
-                        foreach ([
-                            'd/m/Y H:i:s',
-                            'd/m/Y H:i',
-                            'd-m-Y H:i:s',
-                            'd-m-Y H:i',
-                            'Y-m-d H:i:s',
-                            'Y-m-d H:i'
-                        ] as $fmt) {
-                            $d = DateTime::createFromFormat('!' . $fmt, $raw_datetime);
-                            $errors = DateTime::getLastErrors();
+            // Ambil tanggal dan jam dari kolom Time.
+            $raw_datetime = $sheetData[$i][3] ?? '';
 
-                            if (
-                                $d &&
-                                ($errors === false ||
-                                    ($errors['warning_count'] === 0 &&
-                                    $errors['error_count'] === 0)) &&
-                                $d->format($fmt) === $raw_datetime
-                            ) {
-                                $dateObj = $d;
-                                break;
-                            }
-                        }
-                    }
+            if ($raw_datetime === '' || $raw_datetime === null) {
+                continue;
+            }
 
-                    if ($dateObj !== false) {
-                        $tanggal = $dateObj->format('Y-m-d');
-                        $jam     = $dateObj->format('H:i:s');
-                    }
+            $dateObj = false;
+
+            // 1. Tanggal berupa serial number Excel.
+            if (is_numeric($raw_datetime)) {
+                try {
+                    $dateObj = \PhpOffice\PhpSpreadsheet\Shared\Date
+                        ::excelToDateTimeObject((float) $raw_datetime);
+                } catch (\Throwable $e) {
+                    $dateObj = false;
                 }
-                
-                if ($i == 1) {
-                    $arr_kode = 'SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" AS excel_value ';
-                } else {
-                    $arr_kode .= 'UNION ALL SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" ';
+            } elseif ($raw_datetime instanceof \DateTimeInterface) {
+                // 2. Tanggal berupa objek DateTime.
+                $dateObj = \DateTime::createFromInterface($raw_datetime);
+            } else {
+                // 3. Tanggal berupa string.
+                $raw_datetime = trim((string) $raw_datetime);
+
+                $formats = [
+                    'd/m/Y H:i:s',
+                    'd/m/Y H:i',
+                    'd-m-Y H:i:s',
+                    'd-m-Y H:i',
+                    'Y-m-d H:i:s',
+                    'Y-m-d H:i',
+                ];
+
+                foreach ($formats as $fmt) {
+                    $d = \DateTime::createFromFormat('!' . $fmt, $raw_datetime);
+                    $errors = \DateTime::getLastErrors();
+
+                    if (
+                        $d !== false &&
+                        ($errors === false ||
+                            (
+                                $errors['warning_count'] === 0 &&
+                                $errors['error_count'] === 0
+                            )) &&
+                        $d->format($fmt) === $raw_datetime
+                    ) {
+                        $dateObj = $d;
+                        break;
+                    }
                 }
             }
+
+            // Lewati data jika tanggal tidak valid.
+            if ($dateObj === false) {
+                continue;
+            }
+
+            $tanggal = $dateObj->format('Y-m-d');
+            $jam     = $dateObj->format('H:i:s');
+
+            // Amankan string untuk query SQL.
+            $kode_sql    = str_replace("'", "''", $kode);
+            $nama_sql    = str_replace("'", "''", $nama);
+            $tanggal_sql = $tanggal;
+            $jam_sql     = $jam;
+
+            // Susun data dengan kolom terpisah.
+            $select = "
+                SELECT
+                    '{$kode_sql}' AS kode,
+                    '{$nama_sql}' AS nama,
+                    '{$tanggal_sql}' AS tanggal,
+                    '{$jam_sql}' AS jam
+            ";
+
+            if ($jumlah_data === 0) {
+                $arr_kode = $select;
+            } else {
+                $arr_kode .= ' UNION ALL ' . $select;
+            }
+
+            $jumlah_data++;
         }
         
         if ($arr_kode != "") {
