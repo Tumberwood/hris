@@ -125,7 +125,7 @@
 						SELECT
 							a.tanggal,
 							d.nama AS sub,
-							a.is_makan,
+							a.jam_makan,
 
 
 							/* =========================
