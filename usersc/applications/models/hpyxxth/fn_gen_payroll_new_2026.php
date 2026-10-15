@@ -1428,12 +1428,24 @@
                             
                             CASE 
                              WHEN jb.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
+                                AND masa_kerja_year > 12
+                                AND jb.id_hesxxmh = 1
                              	THEN 
                                     ROUND(
                                         (gp + t_jab + fix_cost + var_cost + tj_khusus)  / IF(grup_hk = 1, 21, 25)
 	                                , 0) 
                                     * 
                                     ( ( MONTH(tanggal_keluar) - 1 ) - COALESCE(cb.c_cb, 0) ) 
+                                    
+                             WHEN jb.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
+                                AND masa_kerja_year < 12
+                                AND jb.id_hesxxmh = 1
+                             	THEN 
+                                    ROUND(
+                                        (gp + t_jab + fix_cost + var_cost + tj_khusus)  / IF(grup_hk = 1, 21, 25)
+	                                , 0) 
+                                    * 
+                                    ( COALESCE(cb.c_cb, 0) ) 
                                     * -1
                              ELSE 0
                            END AS komp_sisa_cuti_resign
@@ -1757,6 +1769,7 @@
                             + COALESCE(premi_abs,0)
                             + COALESCE(total_rp_lembur,0)
                             + COALESCE(komp_rekontrak,0)
+                            + COALESCE(komp_sisa_cuti_resign,0)
                             -- + COALESCE(komp_sisa_cuti,0)
                             + 
                             
