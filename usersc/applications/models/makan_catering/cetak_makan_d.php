@@ -180,6 +180,7 @@
 							ON d.id = c.id_heyxxmd
 
 						WHERE a.tanggal BETWEEN :start_date AND :end_date
+						GROUP BY a.id_hemxxmh, a.tanggal
 
 							-- AND d.id IN (2, 3)
 
