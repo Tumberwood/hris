@@ -1636,7 +1636,7 @@
 					{ data: "hpyemtd.cuti_bersama", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.sisa_cuti_hari", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
-					{ data: "hpyemtd.komp_sisa_cuti_resign", class: "text-right" },
+					{ data: "hpyemtd.komp_sisa_cuti_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.thr", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					// POTONGAN
