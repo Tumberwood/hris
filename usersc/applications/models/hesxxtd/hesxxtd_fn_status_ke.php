@@ -52,6 +52,7 @@
                     a.id,
                     c.nama,
                     b.tanggal_awal as tanggal_masuk,
+                    b.tanggal_akhir_kontrak as tanggal_akhir_kontrak,
                     b.tanggal_akhir as tanggal_keluar
                 FROM hemxxmh AS a
                 LEFT JOIN hemjbrd AS b ON b.id_hemxxmh = a.id
