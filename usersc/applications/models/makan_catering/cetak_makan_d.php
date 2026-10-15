@@ -52,13 +52,13 @@
 						SUM(
 							x.shift = 1
 							AND x.sub = "KARYAWAN"
-							AND x.is_makan = 1
+							AND x.jam_makan IS NOT NULL
 						) AS shift1_kary,
 
 						SUM(
 							x.shift = 1
 							AND x.sub = "STAFF"
-							AND x.is_makan = 1
+							AND x.jam_makan IS NOT NULL
 						) AS shift1_staff,
 
 
@@ -68,13 +68,13 @@
 						SUM(
 							x.shift = 2
 							AND x.sub = "KARYAWAN"
-							AND x.is_makan = 1
+							AND x.jam_makan IS NOT NULL
 						) AS shift2_kary,
 
 						SUM(
 							x.shift = 2
 							AND x.sub = "STAFF"
-							AND x.is_makan = 1
+							AND x.jam_makan IS NOT NULL
 						) AS shift2_staff,
 
 
@@ -84,13 +84,13 @@
 						SUM(
 							x.shift = 3
 							AND x.sub = "KARYAWAN"
-							AND x.is_makan = 1
+							AND x.jam_makan IS NOT NULL
 						) AS shift3_kary,
 
 						SUM(
 							x.shift = 3
 							AND x.sub = "STAFF"
-							AND x.is_makan = 1
+							AND x.jam_makan IS NOT NULL
 						) AS shift3_staff,
 
 
@@ -99,7 +99,7 @@
 						========================= */
 						SUM(
 							x.sub = "KARYAWAN"
-							AND x.is_makan = 1
+							AND x.jam_makan IS NOT NULL
 						) AS total_kary,
 
 
@@ -108,7 +108,7 @@
 						========================= */
 						SUM(
 							x.sub = "STAFF"
-							AND x.is_makan = 1
+							AND x.jam_makan IS NOT NULL
 						) AS total_staff,
 
 
@@ -116,7 +116,7 @@
 						GRAND TOTAL
 						========================= */
 						SUM(
-							x.is_makan = 1
+							x.jam_makan IS NOT NULL
 						) AS grand_total
 
 
