@@ -46,7 +46,7 @@
 
 	$qs_hemxxmh  = $db
 		->raw()
-		->bind(':nama', $nama )
+		->bind(':id_hemxxmh', $id_hemxxmh )
 		->exec(' SELECT
                     a.nama,
                     a.id,
@@ -56,7 +56,9 @@
                 FROM hemxxmh AS a
                 LEFT JOIN hemjbrd AS b ON b.id_hemxxmh = a.id
                 LEFT JOIN hesxxmh AS c ON c.id = b.id_hesxxmh
-                WHERE a.nama = :nama
+                WHERE 1 
+                -- AND a.nama = :nama
+                AND a.id_hemxxmh = :id_hemxxmh
                 ORDER BY a.id DESC
                 LIMIT 1;
     
