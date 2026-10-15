@@ -153,7 +153,7 @@
 							========================= */
 							CASE
 								WHEN a.st_jadwal LIKE "PAGI%" 
-									OR a.jam_awal_lembur_libur = "07:00:00"
+									OR a.jam_awal_lembur_libur BETWEEN "06:00:00" AND "08:00:00" 
 									THEN 1
 
 								WHEN a.st_jadwal LIKE "SIANG%"
