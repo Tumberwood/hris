@@ -52,10 +52,8 @@
                     a.id,
                     c.nama,
                     b.tanggal_awal as tanggal_masuk,
-                    jb.tanggal_akhir_kontrak as tanggal_akhir_kontrak,
                     b.tanggal_akhir as tanggal_keluar
                 FROM hemxxmh AS a
-                JOIN hemjbmh jb ON jb.id_hemxxmh = a.id
                 LEFT JOIN hemjbrd AS b ON b.id_hemxxmh = a.id
                 LEFT JOIN hesxxmh AS c ON c.id = b.id_hesxxmh
                 WHERE 1 

@@ -22,7 +22,6 @@
 					edthesxxtd.field('hesxxtd.status_ke').val(status_ke);
 					edthesxxtd.field('tanggal_keluar').val(moment(tanggal_keluar).format('DD MMM YYYY'));
 					edthesxxtd.field('tanggal_masuk').val(moment(tanggal_masuk).format('DD MMM YYYY'));
-					edthesxxtd.field('tanggal_akhir_kontrak').val(moment(tanggal_akhir_kontrak).format('DD MMM YYYY'));
                     
                 if (keputusan == 'Kontrak') {
 					if (tanggal_keluar != null) {

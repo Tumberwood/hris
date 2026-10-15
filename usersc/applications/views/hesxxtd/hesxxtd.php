@@ -213,11 +213,6 @@
 					},
 					{
 						label: "Tanggal Akhir Kontrak NIK Lama",
-						name: "tanggal_akhir_kontrak",
-						type: "readonly"
-					},
-					{
-						label: "Tanggal Keluar NIK Lama",
 						name: "tanggal_keluar",
 						type: "readonly"
 					},
