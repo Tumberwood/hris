@@ -1301,7 +1301,7 @@
                     komp_rekontrak AS (
                         SELECT
                             a.id,
-                            
+
                             b.id AS id_hemxxmh,
 
                             -- b.id AS id_hemxxmh_lama,
@@ -1411,6 +1411,7 @@
                             --         ELSE 0
                             --     END
                             -- ) AS komp_sisa_cuti
+
                             ROUND(
                                 (
                                     (gp + t_jab + fix_cost + var_cost + tj_khusus) 
@@ -1422,7 +1423,21 @@
                                         ELSE 0
                                     END
                                 ) / 100
-                            ) * 100 AS komp_sisa_cuti
+                            ) * 100 AS komp_sisa_cuti,
+
+                            
+                            CASE 
+                             WHEN jb.tanggal_keluar BETWEEN :tanggal_awal AND :tanggal_akhir
+                             	THEN 
+                                    ROUND(
+                                        (gp + t_jab + fix_cost + var_cost + tj_khusus)  / IF(grup_hk = 1, 21, 25)
+	                                , 0) 
+                                    * 
+                                    ( ( MONTH(tanggal_keluar) - 1 ) - COALESCE(cb.c_cb, 0) ) 
+                                    * -1
+                             ELSE 2
+                           END AS komp_sisa_cuti_resign
+
                         FROM htlxxrh AS a
                         LEFT JOIN hemxxmh AS peg ON peg.id = a.id_hemxxmh
                         LEFT JOIN hemjbmh AS jb ON jb.id_hemxxmh = peg.id
@@ -1704,6 +1719,8 @@
                             IFNULL(komp_sisa_cuti,0 ),
                             0
                         ) AS komp_sisa_cuti,
+                        
+                        IFNULL(komp_sisa_cuti_resign, 0) AS komp_sisa_cuti_resign,
 
                         IF(MONTH(:tanggal_akhir) = 1, 
                             IFNULL(sisa_cuti_hari,0 ),
@@ -2825,6 +2842,7 @@
 
                             komp_rekontrak,
                             komp_sisa_cuti,
+                            komp_sisa_cuti_resign,
 
                             cuti_tahunan,
                             cuti_bersama,
