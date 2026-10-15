@@ -17,7 +17,6 @@
                 status_ke = json.data.status_ke;
                 tanggal_keluar = json.data.rs_hemxxmh.tanggal_keluar;
                 tanggal_masuk = json.data.rs_hemxxmh.tanggal_masuk;
-                tanggal_akhir_kontrak = json.data.rs_hemxxmh.tanggal_akhir_kontrak;
                 
 					edthesxxtd.field('hesxxtd.status_ke').val(status_ke);
 					edthesxxtd.field('tanggal_keluar').val(moment(tanggal_keluar).format('DD MMM YYYY'));
