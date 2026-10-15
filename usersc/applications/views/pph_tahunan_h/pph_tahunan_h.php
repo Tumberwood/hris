@@ -408,93 +408,33 @@
 						}
 					},
 					{
-						label: "JHT Perusahaan",
-						name: "pph_tahunan_d.jht_perusahaan",
+						label: "Bulan <sup class='text-danger'>*<sup>",  
+						name: "pph_tahunan_d.bulan",
 						type: "select",
 						placeholder: "Select",
-						def: 0,
 						options: [
-							{ label: "Tidak Berubah", value: 1 },
-							{ label: "Nol", value: 0 }
+							{ label: "Jan", value: "Jan" },
+							{ label: "Feb", value: "Feb" },
+							{ label: "Mar", value: "Mar" },
+							{ label: "Apr", value: "Apr" },
+							{ label: "Mei", value: "Mei" },
+							{ label: "Jun", value: "Jun" },
+							{ label: "Jul", value: "Jul" },
+							{ label: "Agu", value: "Agu" },
+							{ label: "Sep", value: "Sep" },
+							{ label: "Okt", value: "Okt" },
+							{ label: "Nov", value: "Nov" },
+							{ label: "Des", value: "Des" },
 						]
 					},
 					{
-						label: "JKK Perusahaan",
-						name: "pph_tahunan_d.jkk",
-						type: "select",
-						placeholder: "Select",
-						def: 0,
-						options: [
-							{ label: "Tidak Berubah", value: 1 },
-							{ label: "Nol", value: 0 }
-						]
-					},
+						label: "Bruto <sup class='text-danger'>*<sup>", 
+						name: "pph_tahunan_d.bruto",
+					},	
 					{
-						label: "JKM Perusahaan",
-						name: "pph_tahunan_d.jkm",
-						type: "select",
-						placeholder: "Select",
-						def: 0,
-						options: [
-							{ label: "Tidak Berubah", value: 1 },
-							{ label: "Nol", value: 0 }
-						]
-					},
-					{
-						label: "JP Perusahaan",
-						name: "pph_tahunan_d.jp_perusahaan",
-						type: "select",
-						placeholder: "Select",
-						def: 0,
-						options: [
-							{ label: "Tidak Berubah", value: 1 },
-							{ label: "Nol", value: 0 }
-						]
-					},
-					{
-						label: "JHT Karyawan",
-						name: "pph_tahunan_d.pot_jht_karyawan",
-						type: "select",
-						placeholder: "Select",
-						def: 0,
-						options: [
-							{ label: "Tidak Berubah", value: 1 },
-							{ label: "Nol", value: 0 }
-						]
-					},
-					{
-						label: "JP Karyawan",
-						name: "pph_tahunan_d.pot_jp_karyawan",
-						type: "select",
-						placeholder: "Select",
-						def: 0,
-						options: [
-							{ label: "Tidak Berubah", value: 1 },
-							{ label: "Nol", value: 0 }
-						]
-					},
-					{
-						label: "Kes Perusahaan",
-						name: "pph_tahunan_d.pph_tahunan_kes_perusahaan",
-						type: "select",
-						placeholder: "Select",
-						def: 0,
-						options: [
-							{ label: "Tidak Berubah", value: 1 },
-							{ label: "Nol", value: 0 }
-						]
-					},
-					{
-						label: "Kes Karyawan",
-						name: "pph_tahunan_d.pph_tahunan_kes_karyawan",
-						type: "select",
-						placeholder: "Select",
-						def: 0,
-						options: [
-							{ label: "Tidak Berubah", value: 1 },
-							{ label: "Nol", value: 0 }
-						]
-					},
+						label: "PPh 21 Bulan Ini <sup class='text-danger'>*<sup>", 
+						name: "pph_tahunan_d.pph",
+					},	
 					{
 						label: "Keterangan",
 						name: "pph_tahunan_d.keterangan",
@@ -520,6 +460,40 @@
 			
 			edtpph_tahunan_d.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
+					
+					bulan = edthemxxmh.field('pph_tahunan_d.bulan').val();
+					if(!bulan || bulan == ''){
+						edthemxxmh.field('pph_tahunan_d.bulan').error( 'Wajib diisi!' );
+					}
+					
+					bruto = edthemxxmh.field('pph_tahunan_d.bruto').val();
+					if(!bruto || bruto == ''){
+						edthemxxmh.field('pph_tahunan_d.bruto').error( 'Wajib diisi!' );
+					}
+					// validasi min atau max angka
+					if(bruto <= 0 ){
+						edthemxxmh.field('pph_tahunan_d.bruto').error( 'Inputan harus > 0' );
+					}
+					
+					// validasi angka
+					if(isNaN(bruto) ){
+						edthemxxmh.field('pph_tahunan_d.bruto').error( 'Inputan harus berupa Angka!' );
+					}
+					
+					pph = edthemxxmh.field('pph_tahunan_d.pph').val();
+					if(!pph || pph == ''){
+						edthemxxmh.field('pph_tahunan_d.pph').error( 'Wajib diisi!' );
+					}
+					// validasi min atau max angka
+					if(pph <= 0 ){
+						edthemxxmh.field('pph_tahunan_d.pph').error( 'Inputan harus > 0' );
+					}
+					
+					// validasi angka
+					if(isNaN(pph) ){
+						edthemxxmh.field('pph_tahunan_d.pph').error( 'Inputan harus berupa Angka!' );
+					}
+
 				}
 				
 				if ( edtpph_tahunan_d.inError() ) {
