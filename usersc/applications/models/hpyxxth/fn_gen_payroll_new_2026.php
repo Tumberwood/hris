@@ -1526,6 +1526,7 @@
                         LEFT JOIN (
                             SELECT
                                 p.id_hemxxmh,
+                                masa_kerja_year,
                                 IF(id_heyxxmh = 1, IFNULL(nominal_mk,0) , 0) as fix_cost
                             FROM pegawai p
 
