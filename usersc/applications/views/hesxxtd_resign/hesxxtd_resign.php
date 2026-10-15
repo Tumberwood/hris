@@ -24,6 +24,7 @@
                                 <th>ID</th>
                                 <th>Kode</th>
                                 <th>Nama</th>
+                                <th>Status Karyawan</th>
                                 <th>Tanggal Akhir</th>
                             </tr>
                         </thead>
@@ -210,6 +211,7 @@
 					{ data: "hesxxtd_resign.id",visible:false },
 					{ data: "hesxxtd_resign.kode" },
 					{ data: "hemxxmh_data" },
+					{ data: "hesxxmh.nama" },
 					{ data: "hesxxtd_resign.tanggal_selesai" }
 				],
 				buttons: [

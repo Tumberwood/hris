@@ -58,9 +58,12 @@
 					'to' =>   'Y-m-d'
 				) ),
 			Field::inst( 'hesxxtd_resign.is_defaultprogram' ),
+			Field::inst( 'hesxxmh.nama' ),
 			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' )
 		)
 		->leftJoin( 'hemxxmh','hemxxmh.id','=','hesxxtd_resign.id_hemxxmh' )
+		->leftJoin( 'hemjbmh','hemjbmh.id','=','hemjbmh.id_hemxxmh' )
+		->leftJoin( 'hesxxmh','hesxxmh.id','=','hemjbmh.id_hesxxmh' )
 		->leftJoin( 'harxxmh','harxxmh.id','=','hesxxtd_resign.id_harxxmh' )
 		;
 	
