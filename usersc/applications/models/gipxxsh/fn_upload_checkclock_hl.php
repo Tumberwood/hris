@@ -60,53 +60,49 @@
             // Ambil tanggal dan jam dari kolom Time.
             $raw_datetime = $sheetData[$i][3] ?? '';
 
-            if ($raw_datetime === '' || $raw_datetime === null) {
-                continue;
-            }
-
+            $tanggal = null;
+            $jam = null;
             $dateObj = false;
 
-            // 1. Serial number Excel.
-            if (is_numeric($raw_datetime)) {
-                try {
-                    $dateObj = \PhpOffice\PhpSpreadsheet\Shared\Date
-                        ::excelToDateTimeObject((float) $raw_datetime);
-                } catch (\Throwable $e) {
-                    $dateObj = false;
-                }
-            } elseif ($raw_datetime instanceof \DateTimeInterface) {
-                // 2. Objek tanggal.
+            if ($raw_datetime instanceof \DateTimeInterface) {
                 $dateObj = \DateTime::createFromInterface($raw_datetime);
+            } elseif (is_numeric($raw_datetime) && (float) $raw_datetime > 1) {
+                // Serial Excel yang mencakup tanggal dan jam.
+                $dateObj = \PhpOffice\PhpSpreadsheet\Shared\Date
+                    ::excelToDateTimeObject((float) $raw_datetime);
             } else {
-                // 3. String tanggal.
                 $raw_datetime = trim((string) $raw_datetime);
 
-                $formats = [
+                foreach ([
                     'd/m/Y H:i:s',
                     'd/m/Y H:i',
                     'd-m-Y H:i:s',
                     'd-m-Y H:i',
                     'Y-m-d H:i:s',
                     'Y-m-d H:i',
-                ];
-
-                foreach ($formats as $fmt) {
-                    $d = DateTime::createFromFormat('!' . $fmt, $raw_datetime);
-                    $errors = DateTime::getLastErrors();
+                ] as $fmt) {
+                    $d = \DateTime::createFromFormat('!' . $fmt, $raw_datetime);
+                    $errors = \DateTime::getLastErrors();
 
                     if (
                         $d !== false &&
                         ($errors === false ||
-                            (
-                                $errors['warning_count'] === 0 &&
-                                $errors['error_count'] === 0
-                            )) &&
+                            ($errors['warning_count'] === 0 &&
+                            $errors['error_count'] === 0)) &&
                         $d->format($fmt) === $raw_datetime
                     ) {
                         $dateObj = $d;
                         break;
                     }
                 }
+            }
+
+            if ($dateObj !== false) {
+                $tanggal = $dateObj->format('Y-m-d');
+                $jam = $dateObj->format('H:i:s');
+            } else {
+                // Jangan insert tanggal yang gagal dibaca.
+                continue;
             }
 
             // Lewati data jika tanggal tidak valid.
