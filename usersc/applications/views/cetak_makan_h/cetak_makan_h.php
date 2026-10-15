@@ -423,7 +423,6 @@
 				// event setelah Create atau Edit, dibedakan dari parameter action
 				// action : "create" | "edit"
 				// do something
-				tblcetak_makan_h.rows().deselect();
 				tblcetak_makan_h.ajax.reload(null, false);
 			} );
 			
