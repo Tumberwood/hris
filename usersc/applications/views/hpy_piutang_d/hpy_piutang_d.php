@@ -447,7 +447,7 @@
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];
-						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_h', 'remove', 'view'];
+						$arr_buttons_action 	= ['create', 'edit', 'remove', 'view'];
 						$arr_buttons_approve 	= ['approve', 'cancel_approve'];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
