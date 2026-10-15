@@ -1618,11 +1618,6 @@
                             a.id_hemxxmh,
                             -- peg.kode,
                             -- peg.nama,
-                            COALESCE(cb.c_cb, 0) AS c_cb,
-                            IFNULL(cuti_tahunan, 0) cuti_tahunan,
-                            IFNULL(cuti_bersama, 0) cuti_bersama,
-                            ifnull(a.saldo,0) AS saldo,
-                            ifnull(a.saldo, 0) - COALESCE(cb.c_cb, 0) AS sisa_cuti_hari,
                             
                             CASE
                                 WHEN ifnull(a.saldo, 0) > 0 THEN ifnull(a.saldo, 0) - (COALESCE(cb.c_cb, 0))
