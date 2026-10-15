@@ -35,182 +35,75 @@
      * $nama        = nama Mesin pakai string = "PMI"
      */
 
+    function processSheetData_hl($sheetData, $db, &$dataupload, &$datakembar, $nama)
+    {
+        $tanggal = '';
+        $arr_kode = "";
+        for($i = 1;$i < count($sheetData);$i++){
+            // Str pad 4 digit dengan 0 sebagai default,
+
+            //jadi jika 0 tidak terbaca di excel, maka bisa di akali dengan str pad
+            if ($sheetData[$i]['0'] != '') {
+                $kode = 'HL' . str_pad($sheetData[$i]['0'], 4, '0', STR_PAD_LEFT);
     
-function processSheetData_hl($sheetData, $db, &$dataupload, &$datakembar, $nama)
-{
-    $tanggal = '';
-    $arr_kode = '';
-    $jumlah_data = 0;
-
-    for ($i = 1; $i < count($sheetData); $i++) {
-
-        if (isset($sheetData[$i][0]) && $sheetData[$i][0] !== '') {
-
-            // Kode pegawai: HL + 4 digit.
-            $kode = 'HL' . str_pad(
-                trim((string) $sheetData[$i][0]),
-                4,
-                '0',
-                STR_PAD_LEFT
-            );
-
-            // Ambil waktu dari kolom Time (indeks 3).
-            $raw_datetime = trim((string) ($sheetData[$i][3] ?? ''));
-
-            if ($raw_datetime === '') {
-                continue;
-            }
-
-            // Pisahkan tanggal dan jam berdasarkan spasi.
-            $dt = explode(' ', $raw_datetime, 2);
-
-            if (count($dt) < 2) {
-                // Jika berupa serial number Excel.
-                if (is_numeric($raw_datetime)) {
-                    try {
-                        $dateObj = \PhpOffice\PhpSpreadsheet\Shared\Date
-                            ::excelToDateTimeObject((float) $raw_datetime);
-
-                        $tanggal = $dateObj->format('Y-m-d');
-                        $jam = $dateObj->format('H:i:s');
-                    } catch (\Throwable $e) {
-                        continue;
-                    }
+                $dt = explode(" ", $sheetData[$i]['2']);
+                $str_tanggal = $dt[0];
+                $tahun = substr($str_tanggal, 6, 4);
+                $bulan = substr($str_tanggal, 3, 2);
+                $tgl = substr($str_tanggal, 0, 2);
+                $tanggal = $tahun . '-' . $bulan . '-' . $tgl;
+                $jam = $dt[1];
+    
+                if ($i == 1) {
+                    $arr_kode = 'SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" AS excel_value ';
                 } else {
-                    continue;
-                }
-            } else {
-                $str_tanggal = trim($dt[0]);
-                $jam = trim($dt[1]);
-
-                // Format tanggal dd/mm/yyyy.
-                if (preg_match(
-                    '/^(\d{2})\/(\d{2})\/(\d{4})$/',
-                    $str_tanggal,
-                    $matches
-                )) {
-                    $tgl = $matches[1];
-                    $bulan = $matches[2];
-                    $tahun = $matches[3];
-
-                    $tanggal = $tahun . '-' . $bulan . '-' . $tgl;
-                }
-                // Format tanggal dd-mm-yyyy.
-                elseif (preg_match(
-                    '/^(\d{2})-(\d{2})-(\d{4})$/',
-                    $str_tanggal,
-                    $matches
-                )) {
-                    $tgl = $matches[1];
-                    $bulan = $matches[2];
-                    $tahun = $matches[3];
-
-                    $tanggal = $tahun . '-' . $bulan . '-' . $tgl;
-                }
-                // Format tanggal yyyy-mm-dd.
-                elseif (preg_match(
-                    '/^(\d{4})-(\d{2})-(\d{2})$/',
-                    $str_tanggal
-                )) {
-                    $tanggal = $str_tanggal;
-                } else {
-                    continue;
-                }
-
-                // Validasi tanggal.
-                if (
-                    !checkdate(
-                        (int) substr($tanggal, 5, 2),
-                        (int) substr($tanggal, 8, 2),
-                        (int) substr($tanggal, 0, 4)
-                    )
-                ) {
-                    continue;
-                }
-
-                // Pastikan jam memiliki format HH:mm:ss.
-                if (preg_match('/^\d{2}:\d{2}$/', $jam)) {
-                    $jam .= ':00';
-                }
-
-                if (!preg_match('/^\d{2}:\d{2}:\d{2}$/', $jam)) {
-                    continue;
+                    $arr_kode .= 'UNION ALL SELECT "' . $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam . '" ';
                 }
             }
 
-            // Susun data dengan format yang digunakan query lama.
-            $excel_value = $kode . ' ' . $nama . ' ' . $tanggal . ' ' . $jam;
-
-            // Escape tanda kutip untuk SQL.
-            $excel_value = str_replace('"', '""', $excel_value);
-
-            if ($jumlah_data === 0) {
-                $arr_kode = 'SELECT "' . $excel_value . '" AS excel_value ';
-            } else {
-                $arr_kode .= ' UNION ALL SELECT "' . $excel_value . '" ';
-            }
-
-            $jumlah_data++;
         }
-    }
-
-    if ($arr_kode !== '') {
-
-        $qi_ceklok = $db
+        
+        if ($arr_kode != "") {
+            //1 Jun 2026, Revisi query untuk menghindari duplikasi data, dengan cara membandingkan data excel dengan data di database
+            //Menambah Range Between dan jam format 18:00
+            $qi_ceklok = $db
             ->raw()
             ->bind(':tanggal', $tanggal)
             ->bind(':nama', $nama)
-            ->exec('
-                INSERT INTO htsprtd (kode, nama, tipe, tanggal, jam)
-                WITH ada AS (
-                    SELECT
-                        CONCAT(
-                            kode, " ", nama, " ", tanggal, " ",
-                            TIME_FORMAT(jam, "%H:%i")
-                        ) AS conc_ada
-                    FROM htsprtd
-                    WHERE tanggal BETWEEN
-                        DATE_SUB(:tanggal, INTERVAL 1 DAY)
-                        AND DATE_ADD(:tanggal, INTERVAL 1 DAY)
-                        AND nama = :nama
-                        AND tipe = "upload"
-                ),
-                excel_data AS (
-                    ' . $arr_kode . '
-                )
-                SELECT
-                    SUBSTRING_INDEX(excel_value, " ", 1) AS kode,
-                    SUBSTRING_INDEX(
-                        excel_value,
-                        " ",
-                        2
-                    ) AS nama,
-                    "upload",
-                    SUBSTRING_INDEX(
-                        SUBSTRING_INDEX(excel_value, " ", 3),
-                        " ",
-                        -1
-                    ) AS tanggal,
-                    SUBSTRING_INDEX(
-                        SUBSTRING_INDEX(excel_value, " ", 4),
-                        " ",
-                        -1
-                    ) AS jam
-                FROM excel_data
-                WHERE excel_value NOT IN (
-                    SELECT conc_ada FROM ada
-                )
-            ');
+            ->exec('    INSERT INTO htsprtd (kode, nama, tipe, tanggal, jam)
+                        WITH ada AS (
+                            SELECT
+                                CONCAT(kode," ", nama, " ", tanggal, " " , TIME_FORMAT(jam, "%H:%i")) AS conc_ada
+                            FROM htsprtd
+                            WHERE tanggal BETWEEN DATE_SUB(:tanggal, INTERVAL 1 DAY) AND DATE_ADD(:tanggal, INTERVAL 1 DAY)
+                            AND nama = :nama 
+                            AND tipe = "upload"
+                        ),
+                        excel_data AS (
+                            '.$arr_kode.'
+                        )
+                        SELECT
+                            SUBSTRING(excel_value, 1, 6) AS kode,
+                            SUBSTRING_INDEX(SUBSTRING_INDEX(excel_value, " ", 2), " ", -1) AS nama,
+                            "upload",
+                            SUBSTRING_INDEX(SUBSTRING_INDEX(excel_value, " ", 3), " ", -1) AS tanggal,
+                            SUBSTRING_INDEX(SUBSTRING_INDEX(excel_value, " ", 4), " ", -1) AS jam
+                        FROM excel_data
+                        WHERE excel_value NOT IN (SELECT conc_ada FROM ada);
 
-        $qs_tidak_kembar = $db
+                    '
+                    );
+
+            $qs_tidak_kembar = $db
             ->raw()
-            ->exec('SELECT FOUND_ROWS() AS found_rows');
-
-        $rs_tidak_kembar = $qs_tidak_kembar->fetch();
-
-        $dataupload = (int) ($rs_tidak_kembar['found_rows'] ?? 0);
-        $datakembar = $jumlah_data - $dataupload;
+            ->exec(' SELECT 
+                        FOUND_ROWS() AS found_rows
+                    ;
+                    '
+                    );
+            $rs_tidak_kembar = $qs_tidak_kembar->fetch();
+            $dataupload = $rs_tidak_kembar['found_rows'];
+            $datakembar = count($sheetData) - ($dataupload + 1);
+        }
     }
-}
-
 ?>
