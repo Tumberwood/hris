@@ -4,7 +4,7 @@
 	require_once( "../../../../usersc/helpers/datatables_fn_debug.php" );
 	require_once( "../../../../usersc/vendor/autoload.php" );
 	// Untuk Function upload 12 feb 2024
-	require_once( "fn_upload_checkclock.php" );
+	require_once( "fn_upload_checkclock_hl.php" );
 	
 	use PhpOffice\PhpSpreadsheet\Spreadsheet;
 	use PhpOffice\PhpSpreadsheet\Reader\Csv;
@@ -53,7 +53,7 @@
 			$datakembar = 0;
 			$dataupload = 0;
 			$arr_kode = "";
-			processSheetData($sheetData, $db, $dataupload, $datakembar, "HL UMUM");
+			processSheetData_hl($sheetData, $db, $dataupload, $datakembar, "HL UMUM");
 
 			$db->commit();
 			$data = array(
