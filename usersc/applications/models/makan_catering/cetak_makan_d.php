@@ -152,11 +152,13 @@
 							SHIFT
 							========================= */
 							CASE
-								WHEN a.st_jadwal LIKE "PAGI%"
+								WHEN a.st_jadwal LIKE "PAGI%" 
+									OR a.jam_awal_lembur_libur = "07:00:00"
 									THEN 1
 
 								WHEN a.st_jadwal LIKE "SIANG%"
 								OR a.st_jadwal LIKE "SORE%"
+								OR a.jam_awal_lembur_libur = "15:00:00"
 									THEN 2
 
 								WHEN a.st_jadwal LIKE "MALAM%"
