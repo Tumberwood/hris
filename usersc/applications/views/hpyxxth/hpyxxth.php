@@ -362,6 +362,7 @@
 													<th class="text-center align-middle">18. Cuti Bersama (Cuti Masal)</th>
 													<th class="text-center align-middle">19. Hari Sisa Cuti</th>
 													<th class="text-center align-middle">20. Kompensasi Sisa Cuti Tahunan</th>
+													<th class="text-center align-middle">20a. Kompensasi Sisa Cuti Tahunan</th>
 													<th class="text-center align-middle">21. THR</th>
 
 													<!-- POTONGAN -->
@@ -482,6 +483,7 @@
 													<th id="kontrak_68"></th>
 													<th id="kontrak_69"></th>
 													<th id="kontrak_70"></th>
+													<th id="kontrak_71"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -1634,6 +1636,7 @@
 					{ data: "hpyemtd.cuti_bersama", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.sisa_cuti_hari", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.komp_sisa_cuti", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
+					{ data: "hpyemtd.komp_sisa_cuti_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 					{ data: "hpyemtd.thr", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
 					// POTONGAN
@@ -1724,7 +1727,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 70; i++) {
+					for (var i = 10; i <= 71; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }

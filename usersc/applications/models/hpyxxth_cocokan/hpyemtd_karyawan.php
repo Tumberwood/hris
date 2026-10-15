@@ -110,6 +110,7 @@
 				Field::inst( 'hpyemtd_cocokan.komp_rekontrak' ),
 
 				Field::inst( 'hpyemtd_cocokan.komp_sisa_cuti' ),
+				Field::inst( 'hpyemtd_cocokan.komp_sisa_cuti_resign' ),
 				Field::inst( 'hpyemtd_cocokan.cuti_tahunan' ),
 				Field::inst( 'hpyemtd_cocokan.cuti_bersama' ),
 				Field::inst( 'hpyemtd_cocokan.sisa_cuti_hari' ),
