@@ -5,17 +5,19 @@ include("../../../../usersc/lib/DataTables.php");
 include("../../../../usersc/helpers/datatables_fn_debug.php");
 require '../../../../usersc/vendor/autoload.php';
 
+use Mpdf\Mpdf;
+
+/*
+|--------------------------------------------------------------------------
+| AMBIL DATA
+|--------------------------------------------------------------------------
+*/
+
 $id_cetak_makan_h = $_GET['id_cetak_makan_h'] ?? null;
 
 if (!$id_cetak_makan_h) {
     die('ID cetak makan tidak ditemukan.');
 }
-
-/*
-|--------------------------------------------------------------------------
-| QUERY DATA
-|--------------------------------------------------------------------------
-*/
 
 $qs_cetak_makan_h = $db
     ->raw()
@@ -36,20 +38,21 @@ $rs_cetak_makan_h = $qs_cetak_makan_h->fetchAll();
 
 /*
 |--------------------------------------------------------------------------
-| MPDF
+| KONFIGURASI MPDF - A6 PORTRAIT
 |--------------------------------------------------------------------------
 */
 
-$mpdf = new \Mpdf\Mpdf([
-    'mode'          => 'utf-8',
-    'format'        => 'A4',
-    'orientation'   => 'P',
-    'margin_left'   => 5,
-    'margin_right'  => 5,
-    'margin_top'    => 5,
-    'margin_bottom' => 5,
-    'margin_header' => 0,
-    'margin_footer' => 0,
+$mpdf = new Mpdf([
+    'mode'              => 'utf-8',
+    'format'            => 'A6',
+    'orientation'       => 'P',
+    'margin_left'       => 5,
+    'margin_right'      => 5,
+    'margin_top'        => 5,
+    'margin_bottom'     => 5,
+    'margin_header'     => 0,
+    'margin_footer'     => 0,
+    'default_font'      => 'sans-serif',
 ]);
 
 $mpdf->SetProtection(['print']);
@@ -63,99 +66,90 @@ $mpdf->SetDisplayMode('fullpage');
 */
 
 $css = '
-<style>
     body {
         margin: 0;
         padding: 0;
-        font-family: Arial, sans-serif;
-        font-size: 8px;
+        font-family: sans-serif;
+        font-size: 9pt;
+        color: #000;
     }
 
-    /* GRID UTAMA: 2 KOLOM */
-    .container {
-        width: 100%;
+    table {
         border-collapse: collapse;
-        table-layout: fixed;
     }
 
-    /* HANYA SEL PEMBUNGKUS KU PON */
-    .slot {
-        width: 50%;
-        height: 69mm;
-        padding: 1mm;
-        vertical-align: top;
-    }
-
-    /* KUPON */
     .kupon {
         width: 100%;
-        height: 66mm;
-        border: 0.3mm solid #000;
+        border: 0.35mm solid #000;
         border-collapse: collapse;
         table-layout: fixed;
     }
 
-    /* JUDUL */
     .judul {
         text-align: center;
-        font-size: 12px;
+        font-size: 14pt;
         font-weight: bold;
-        padding: 1.5mm 0 0.5mm 0;
+        padding: 3mm 2mm 1mm 2mm;
     }
 
-    /* SUBJUDUL */
     .subjudul {
         text-align: center;
-        font-size: 8px;
-        padding: 0 0 1.5mm 0;
+        font-size: 8pt;
+        padding: 0 2mm 2.5mm 2mm;
         border-bottom: 0.25mm solid #000;
     }
 
-    /* DATA */
+    .area-data {
+        padding: 2mm 2mm 1mm 2mm;
+    }
+
     .data {
         width: 100%;
-        border-collapse: collapse;
         table-layout: fixed;
     }
 
     .data td {
-        font-size: 8px;
-        padding: 1mm 0.5mm;
-        vertical-align: middle;
+        font-size: 8pt;
+        line-height: 1.3;
+        padding: 1.5mm 0;
+        vertical-align: top;
+        overflow-wrap: break-word;
     }
 
     .label {
-        width: 31%;
+        width: 36%;
     }
 
     .separator {
-        width: 4%;
+        width: 5%;
         text-align: center;
     }
 
     .value {
-        width: 65%;
-        word-wrap: break-word;
+        width: 59%;
+        font-weight: normal;
+        overflow-wrap: break-word;
     }
 
-    /* AREA KOSONG */
+    .area-ttd {
+        padding: 0 2mm;
+    }
+
     .spacer {
-        height: 12mm;
+        height: 25mm;
     }
 
-    /* TANDA TANGAN */
     .ttd {
         width: 100%;
-        border-collapse: collapse;
         table-layout: fixed;
         border-top: 0.25mm solid #000;
     }
 
     .ttd td {
-        height: 13mm;
-        padding: 0;
+        height: 17mm;
+        padding: 2mm 0 0 0;
         vertical-align: bottom;
-        font-size: 8px;
+        font-size: 7.5pt;
         font-weight: bold;
     }
 
@@ -170,184 +164,140 @@ $css = '
         text-align: right;
         padding-right: 1mm !important;
     }
-</style>
 ';
-
-$mpdf->WriteHTML($css, \Mpdf\HTMLParserMode::HEADER_CSS);
 
 /*
 |--------------------------------------------------------------------------
-| FUNGSI HTML KUPON
+| CETAK KUPON
 |--------------------------------------------------------------------------
 */
 
-function buatKuponMakan($record)
-{
+foreach ($rs_cetak_makan_h as $index => $record) {
+
+    if ($index > 0) {
+        $mpdf->AddPage('P');
+    }
+
     $tanggal = htmlspecialchars(
-        $record['tanggal'] ?? '',
+        (string) ($record['tanggal'] ?? ''),
         ENT_QUOTES,
         'UTF-8'
     );
 
     $penerima = htmlspecialchars(
-        $record['penerima'] ?? '',
+        (string) ($record['penerima'] ?? ''),
         ENT_QUOTES,
         'UTF-8'
     );
 
     $perusahaan = htmlspecialchars(
-        $record['perusahaan'] ?? '',
+        (string) ($record['perusahaan'] ?? ''),
         ENT_QUOTES,
         'UTF-8'
     );
 
     $pic_tamu = htmlspecialchars(
-        $record['pic_tamu'] ?? '',
+        (string) ($record['pic_tamu'] ?? ''),
         ENT_QUOTES,
         'UTF-8'
     );
 
-    return '
-        <table class="kupon" cellpadding="0" cellspacing="0">
+    $html = '
+    <style>
+        ' . $css . '
+    </style>
 
-            <tr>
-                <td class="judul">
-                    Kupon Makan
-                </td>
-            </tr>
+    <table class="kupon" cellpadding="0" cellspacing="0">
 
-            <tr>
-                <td class="subjudul">
-                    Berlaku untuk 1 orang
-                </td>
-            </tr>
+        <tr>
+            <td class="judul">
+                KUPON MAKAN
+            </td>
+        </tr>
 
-            <tr>
-                <td style="padding: 1mm 1mm 0 1mm;">
+        <tr>
+            <td class="subjudul">
+                Berlaku untuk 1 orang
+            </td>
+        </tr>
 
-                    <table class="data" cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="area-data">
 
-                        <tr>
-                            <td class="label">
-                                Tanggal Berlaku
-                            </td>
-                            <td class="separator">:</td>
-                            <td class="value">' . $tanggal . '</td>
-                        </tr>
+                <table class="data" cellpadding="0" cellspacing="0">
 
-                        <tr>
-                            <td class="label">
-                                Penerima Makan
-                            </td>
-                            <td class="separator">:</td>
-                            <td class="value">' . $penerima . '</td>
-                        </tr>
+                    <tr>
+                        <td class="label">
+                            Tanggal Berlaku
+                        </td>
+                        <td class="separator">:</td>
+                        <td class="value">
+                            ' . $tanggal . '
+                        </td>
+                    </tr>
 
-                        <tr>
-                            <td class="label">
-                                Perusahaan
-                            </td>
-                            <td class="separator">:</td>
-                            <td class="value">' . $perusahaan . '</td>
-                        </tr>
+                    <tr>
+                        <td class="label">
+                            Penerima Makan
+                        </td>
+                        <td class="separator">:</td>
+                        <td class="value">
+                            ' . $penerima . '
+                        </td>
+                    </tr>
 
-                        <tr>
-                            <td class="label">
-                                PIC Tamu PMI
-                            </td>
-                            <td class="separator">:</td>
-                            <td class="value">' . $pic_tamu . '</td>
-                        </tr>
+                    <tr>
+                        <td class="label">
+                            Perusahaan
+                        </td>
+                        <td class="separator">:</td>
+                        <td class="value">
+                            ' . $perusahaan . '
+                        </td>
+                    </tr>
 
-                    </table>
+                    <tr>
+                        <td class="label">
+                            PIC Tamu PMI
+                        </td>
+                        <td class="separator">:</td>
+                        <td class="value">
+                            ' . $pic_tamu . '
+                        </td>
+                    </tr>
 
-                </td>
-            </tr>
+                </table>
 
-            <tr>
-                <td class="spacer">&nbsp;</td>
-            </tr>
+            </td>
+        </tr>
 
-            <tr>
-                <td style="padding: 0;">
+        <tr>
+            <td class="spacer">
+                &nbsp;
+            </td>
+        </tr>
 
-                    <table class="ttd" cellpadding="0" cellspacing="0">
-                        <tr>
-                            <td class="ttd-kiri">
-                                TTD Bagian HRD
-                            </td>
+        <tr>
+            <td class="area-ttd">
 
-                            <td class="ttd-kanan">
-                                TTD Bagian Kantin
-                            </td>
-                        </tr>
-                    </table>
+                <table class="ttd" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="ttd-kiri">
+                            TTD Bagian HRD
+                        </td>
+                        <td class="ttd-kanan">
+                            TTD Bagian Kantin
+                        </td>
+                    </tr>
+                </table>
 
-                </td>
-            </tr>
+            </td>
+        </tr>
 
-        </table>
+    </table>
     ';
-}
 
-/*
-|--------------------------------------------------------------------------
-| CETAK MAKSIMAL 8 ORANG PER HALAMAN
-|--------------------------------------------------------------------------
-*/
-
-$total_data = count($rs_cetak_makan_h);
-
-if ($total_data === 0) {
-
-    $mpdf->WriteHTML(
-        '<p style="text-align:center;">Data kupon makan tidak ditemukan.</p>',
-        \Mpdf\HTMLParserMode::HTML_BODY
-    );
-
-} else {
-
-    // Maksimal 8 orang per halaman.
-    $kelompok_data = array_chunk($rs_cetak_makan_h, 8);
-
-    foreach ($kelompok_data as $halaman => $records) {
-
-        if ($halaman > 0) {
-            $mpdf->AddPage('P');
-        }
-
-        $html = '
-            <table class="container" cellpadding="0" cellspacing="0">
-        ';
-
-        $jumlah_data = count($records);
-
-        foreach ($records as $index => $record) {
-
-            // Buka baris setiap 2 orang.
-            if ($index % 2 === 0) {
-                $html .= '<tr>';
-            }
-
-            $html .= '
-                <td class="slot">
-                    ' . buatKuponMakan($record) . '
-                </td>
-            ';
-
-            // Tutup baris setiap 2 orang atau ketika data habis.
-            if (($index % 2 === 1) || ($index === $jumlah_data - 1)) {
-                $html .= '</tr>';
-            }
-        }
-
-        $html .= '</table>';
-
-        $mpdf->WriteHTML(
-            $html,
-            \Mpdf\HTMLParserMode::HTML_BODY
-        );
-    }
+    $mpdf->WriteHTML($html);
 }
 
 /*
@@ -356,6 +306,10 @@ if ($total_data === 0) {
 |--------------------------------------------------------------------------
 */
 
-$mpdf->Output('Kupon_Makan.pdf', 'I');
+if (empty($rs_cetak_makan_h)) {
+    die('Data kupon makan tidak ditemukan.');
+}
+
+$mpdf->Output('Kupon_Makan_A6.pdf', 'I');
 
 ?>
