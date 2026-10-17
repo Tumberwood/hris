@@ -245,16 +245,27 @@
 					?>
 					// END breaking generate button
 					{
-						text: '<i class="fa fa-print"></i>',
+						text: '<i class="fa fa-print"></i> A6',
 						name: 'btnPrint',
 						className: 'btn btn-outline',
-						titleAttr: 'Print Slip Gaji',
+						titleAttr: 'Print Slip Gaji A6',
 						action: function ( e, dt, node, config ) {
 							e.preventDefault(); 
 							var url = $(this).attr('href'); 
 							window.open('cetak_makan_h_print.php?id_cetak_makan_h=' + id_cetak_makan_h, 'cetak_makan_h');
 						}
-					}
+					},
+					{
+						text: '<i class="fa fa-print"></i> A4 / 8',
+						name: 'btnPrint2',
+						className: 'btn btn-outline',
+						titleAttr: 'Print Slip Gaji A4 / 8',
+						action: function ( e, dt, node, config ) {
+							e.preventDefault(); 
+							var url = $(this).attr('href'); 
+							window.open('cetak_makan_h_print_fix.php?id_cetak_makan_h=' + id_cetak_makan_h, 'cetak_makan_h');
+						}
+					},
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.cetak_makan_h.is_active == 0 ) {
@@ -268,6 +279,7 @@
 				tbl_details = [tblcetak_makan_d];
 				CekInitHeaderHD(tblcetak_makan_h, tbl_details);
 				tblcetak_makan_h.button( 'btnPrint:name' ).disable();
+				tblcetak_makan_h.button( 'btnPrint2:name' ).disable();
 			} );
 			
 			tblcetak_makan_h.on( 'select', function( e, dt, type, indexes ) {
@@ -283,6 +295,7 @@
 				tbl_details = [tblcetak_makan_d];
 				CekSelectHeaderHD(tblcetak_makan_h, tbl_details);
 				tblcetak_makan_h.button( 'btnPrint:name' ).enable();
+				tblcetak_makan_h.button( 'btnPrint2:name' ).enable();
 
 			} );
 			
@@ -294,6 +307,7 @@
 				tbl_details = [tblcetak_makan_d];
 				CekDeselectHeaderHD(tblcetak_makan_h, tbl_details);
 				tblcetak_makan_h.button( 'btnPrint:name' ).disable();
+				tblcetak_makan_h.button( 'btnPrint2:name' ).disable();
 			} );
 			
 // --------- start _detail --------------- //
