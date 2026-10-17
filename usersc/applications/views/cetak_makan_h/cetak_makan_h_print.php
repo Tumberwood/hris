@@ -38,16 +38,20 @@ $rs_cetak_makan_h = $qs_cetak_makan_h->fetchAll();
 |--------------------------------------------------------------------------
 | MPDF
 |--------------------------------------------------------------------------
+| Kertas A4 portrait
+| Ukuran kupon A6
+| 2 kolom x 2 baris
+|--------------------------------------------------------------------------
 */
 
 $mpdf = new \Mpdf\Mpdf([
     'mode'          => 'utf-8',
     'format'        => 'A4',
     'orientation'   => 'P',
-    'margin_left'   => 5,
-    'margin_right'  => 5,
-    'margin_top'    => 5,
-    'margin_bottom' => 5,
+    'margin_left'   => 0,
+    'margin_right'  => 0,
+    'margin_top'    => 0,
+    'margin_bottom' => 0,
     'margin_header' => 0,
     'margin_footer' => 0,
 ]);
@@ -64,32 +68,35 @@ $mpdf->SetDisplayMode('fullpage');
 
 $css = '
 <style>
+    @page {
+        margin: 0;
+    }
+
     body {
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
-        font-size: 8px;
+        font-size: 9px;
     }
 
-    /* GRID UTAMA: 2 KOLOM */
+    /* GRID A4: 2 KOLOM */
     .container {
-        width: 100%;
+        width: 210mm;
         border-collapse: collapse;
         table-layout: fixed;
     }
 
-    /* HANYA SEL PEMBUNGKUS KU PON */
     .slot {
-        width: 50%;
-        height: 69mm;
-        padding: 1mm;
+        width: 105mm;
+        height: 148.5mm;
+        padding: 0;
         vertical-align: top;
     }
 
-    /* KUPON */
+    /* KUPON SETARA A6 */
     .kupon {
-        width: 100%;
-        height: 66mm;
+        width: 105mm;
+        height: 148.5mm;
         border: 0.3mm solid #000;
         border-collapse: collapse;
         table-layout: fixed;
@@ -98,16 +105,16 @@ $css = '
     /* JUDUL */
     .judul {
         text-align: center;
-        font-size: 12px;
+        font-size: 16px;
         font-weight: bold;
-        padding: 1.5mm 0 0.5mm 0;
+        padding: 5mm 2mm 2mm 2mm;
     }
 
     /* SUBJUDUL */
     .subjudul {
         text-align: center;
-        font-size: 8px;
-        padding: 0 0 1.5mm 0;
+        font-size: 10px;
+        padding: 0 2mm 3mm 2mm;
         border-bottom: 0.25mm solid #000;
     }
 
@@ -119,13 +126,13 @@ $css = '
     }
 
     .data td {
-        font-size: 8px;
-        padding: 1mm 0.5mm;
-        vertical-align: middle;
+        font-size: 10px;
+        padding: 2.5mm 1mm;
+        vertical-align: top;
     }
 
     .label {
-        width: 31%;
+        width: 32%;
     }
 
     .separator {
@@ -134,13 +141,13 @@ $css = '
     }
 
     .value {
-        width: 65%;
+        width: 64%;
         word-wrap: break-word;
     }
 
     /* AREA KOSONG */
     .spacer {
-        height: 12mm;
+        height: 65mm;
     }
 
     /* TANDA TANGAN */
@@ -152,23 +159,21 @@ $css = '
     }
 
     .ttd td {
-        height: 13mm;
-        padding: 0;
+        height: 25mm;
+        padding: 1.5mm;
         vertical-align: bottom;
-        font-size: 8px;
+        font-size: 9px;
         font-weight: bold;
     }
 
     .ttd-kiri {
         width: 50%;
         text-align: left;
-        padding-left: 1mm !important;
     }
 
     .ttd-kanan {
         width: 50%;
         text-align: right;
-        padding-right: 1mm !important;
     }
 </style>
 ';
@@ -223,7 +228,7 @@ function buatKuponMakan($record)
             </tr>
 
             <tr>
-                <td style="padding: 1mm 1mm 0 1mm;">
+                <td style="padding: 4mm 3mm 0 3mm;">
 
                     <table class="data" cellpadding="0" cellspacing="0">
 
@@ -265,7 +270,9 @@ function buatKuponMakan($record)
             </tr>
 
             <tr>
-                <td class="spacer">&nbsp;</td>
+                <td class="spacer">
+                    &nbsp;
+                </td>
             </tr>
 
             <tr>
@@ -292,7 +299,7 @@ function buatKuponMakan($record)
 
 /*
 |--------------------------------------------------------------------------
-| CETAK MAKSIMAL 8 ORANG PER HALAMAN
+| CETAK MAKSIMAL 4 KUPON PER HALAMAN
 |--------------------------------------------------------------------------
 */
 
@@ -307,8 +314,8 @@ if ($total_data === 0) {
 
 } else {
 
-    // Maksimal 8 orang per halaman.
-    $kelompok_data = array_chunk($rs_cetak_makan_h, 8);
+    // Maksimal 4 kupon untuk setiap halaman A4.
+    $kelompok_data = array_chunk($rs_cetak_makan_h, 4);
 
     foreach ($kelompok_data as $halaman => $records) {
 
@@ -320,25 +327,33 @@ if ($total_data === 0) {
             <table class="container" cellpadding="0" cellspacing="0">
         ';
 
-        $jumlah_data = count($records);
+        // Selalu gunakan grid 2 kolom x 2 baris.
+        for ($baris = 0; $baris < 2; $baris++) {
 
-        foreach ($records as $index => $record) {
+            $html .= '<tr>';
 
-            // Buka baris setiap 2 orang.
-            if ($index % 2 === 0) {
-                $html .= '<tr>';
+            for ($kolom = 0; $kolom < 2; $kolom++) {
+
+                $index = ($baris * 2) + $kolom;
+
+                if (isset($records[$index])) {
+
+                    $html .= '
+                        <td class="slot">
+                            ' . buatKuponMakan($records[$index]) . '
+                        </td>
+                    ';
+
+                } else {
+
+                    // Sel kosong tetap menjaga ukuran kupon lainnya.
+                    $html .= '
+                        <td class="slot">&nbsp;</td>
+                    ';
+                }
             }
 
-            $html .= '
-                <td class="slot">
-                    ' . buatKuponMakan($record) . '
-                </td>
-            ';
-
-            // Tutup baris setiap 2 orang atau ketika data habis.
-            if (($index % 2 === 1) || ($index === $jumlah_data - 1)) {
-                $html .= '</tr>';
-            }
+            $html .= '</tr>';
         }
 
         $html .= '</table>';
