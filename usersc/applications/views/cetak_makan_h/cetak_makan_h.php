@@ -244,19 +244,20 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
+					// {
+					// 	text: '<i class="fa fa-print"></i> A6',
+					// 	name: 'btnPrint',
+					// 	className: 'btn btn-outline',
+					// 	titleAttr: 'Print Slip Gaji A6',
+					// 	action: function ( e, dt, node, config ) {
+					// 		e.preventDefault(); 
+					// 		var url = $(this).attr('href'); 
+					// 		window.open('cetak_makan_h_print.php?id_cetak_makan_h=' + id_cetak_makan_h, 'cetak_makan_h');
+					// 	}
+					// },
 					{
-						text: '<i class="fa fa-print"></i> A6',
-						name: 'btnPrint',
-						className: 'btn btn-outline',
-						titleAttr: 'Print Slip Gaji A6',
-						action: function ( e, dt, node, config ) {
-							e.preventDefault(); 
-							var url = $(this).attr('href'); 
-							window.open('cetak_makan_h_print.php?id_cetak_makan_h=' + id_cetak_makan_h, 'cetak_makan_h');
-						}
-					},
-					{
-						text: '<i class="fa fa-print"></i> A4 / 8',
+						// text: '<i class="fa fa-print"></i> A4 / 8',
+						text: '<i class="fa fa-print"></i>',
 						name: 'btnPrint2',
 						className: 'btn btn-outline',
 						titleAttr: 'Print Slip Gaji A4 / 8',
