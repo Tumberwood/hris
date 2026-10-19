@@ -85,7 +85,7 @@ $css = '
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
-        font-size: 8px;
+        font-size: 10px;
     }
 
     .container {
@@ -118,7 +118,7 @@ $css = '
 
     .subjudul {
         text-align: center;
-        font-size: 8px;
+        font-size: 10px;
         padding: 0 0 1.5mm 0;
         border-bottom: 0.25mm solid #000;
     }
@@ -130,7 +130,7 @@ $css = '
     }
 
     .data td {
-        font-size: 8px;
+        font-size: 10px;
         padding: 1mm 0.5mm;
         vertical-align: middle;
     }
@@ -164,7 +164,7 @@ $css = '
         height: 13mm;
         padding: 0;
         vertical-align: bottom;
-        font-size: 8px;
+        font-size: 10px;
         font-weight: bold;
     }
 
