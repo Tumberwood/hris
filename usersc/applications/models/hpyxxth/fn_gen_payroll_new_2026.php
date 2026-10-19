@@ -1863,40 +1863,40 @@
                         ) denda_apd ON denda_apd.id_hemxxmh = p.id_hemxxmh
                     ),
                     
-                    pph_resign AS (
+                    pph21_resign AS (
                         SELECT
                             p.id_hemxxmh,
-                            nominal_denda_apd AS pph_resign
+                            nominal_denda_apd AS pph21_resign
                         FROM pegawai p
                         JOIN (
                             SELECT
                                 b.id_hemxxmh,
-                                b.pph AS pph_resign
-                            FROM pph_tahunan_h a
-                            JOIN pph_tahunan_d b ON b.id_pph_tahunan_h = a.id
+                                b.pph AS pph21_resign
+                            FROM pph21_tahunan_h a
+                            JOIN pph21_tahunan_d b ON b.id_pph21_tahunan_h = a.id
                             WHERE a.tanggal_awal = :tanggal_awal
                             AND a.tanggal_akhir = :tanggal_akhir
                             AND a.is_resign = 1
                             GROUP BY a.id_hemxxmh
-                        ) pph_resign ON pph_resign.id_hemxxmh = p.id_hemxxmh
+                        ) pph21_resign ON pph21_resign.id_hemxxmh = p.id_hemxxmh
                     ),
                     
-                    pph_tahunan AS (
+                    pph21_tahunan AS (
                         SELECT
                             p.id_hemxxmh,
-                            nominal_denda_apd AS pph_tahunan
+                            nominal_denda_apd AS pph21_tahunan
                         FROM pegawai p
                         JOIN (
                             SELECT
                                 b.id_hemxxmh,
-                                b.pph AS pph_tahunan
-                            FROM pph_tahunan_h a
-                            JOIN pph_tahunan_d b ON b.id_pph_tahunan_h = a.id
+                                b.pph AS pph21_tahunan
+                            FROM pph21_tahunan_h a
+                            JOIN pph21_tahunan_d b ON b.id_pph21_tahunan_h = a.id
                             WHERE a.tanggal_awal = :tanggal_awal
                             AND a.tanggal_akhir = :tanggal_akhir
                             AND a.is_resign = 0
                             GROUP BY a.id_hemxxmh
-                        ) pph_tahunan ON pph_tahunan.id_hemxxmh = p.id_hemxxmh
+                        ) pph21_tahunan ON pph21_tahunan.id_hemxxmh = p.id_hemxxmh
                     ),
                     
                     iuran_spsi AS (
@@ -2036,8 +2036,8 @@
                         
                         IFNULL(pot_piutang,0 ) AS pot_piutang,
                         IFNULL(denda_apd,0 ) AS denda_apd,
-                        IFNULL(pph_resign,0 ) AS pph_resign,
-                        IFNULL(pph_tahunan,0 ) AS pph_tahunan,
+                        IFNULL(pph21_resign,0 ) AS pph21_resign,
+                        IFNULL(pph21_tahunan,0 ) AS pph21_tahunan,
                         IFNULL(iuran_spsi,0 ) AS iuran_spsi,
                         IFNULL(pendapatan_lain_after_pph,0 ) AS pendapatan_lain_after_pph,
                         IFNULL(pot_lain_after_pph,0 ) AS pot_lain_after_pph
@@ -2064,8 +2064,8 @@
                     LEFT JOIN pendapatan_lain_after_pph ON pendapatan_lain_after_pph.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN pot_lain_after_pph ON pot_lain_after_pph.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN denda_apd ON denda_apd.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN pph_resign ON pph_resign.id_hemxxmh = p.id_hemxxmh
-                    LEFT JOIN pph_tahunan ON pph_tahunan.id_hemxxmh = p.id_hemxxmh
+                    LEFT JOIN pph21_resign ON pph21_resign.id_hemxxmh = p.id_hemxxmh
+                    LEFT JOIN pph21_tahunan ON pph21_tahunan.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN iuran_spsi ON iuran_spsi.id_hemxxmh = p.id_hemxxmh
                     
         ');
@@ -3151,8 +3151,8 @@
                             pot_piutang,
                             denda_apd,
 
-                            pph_resign,
-                            pph_tahunan,
+                            pph21_resign,
+                            pph21_tahunan,
 
                             iuran_spsi,
 
@@ -3193,8 +3193,8 @@
 
                                 + 
                                 (
-                                    pph_resign
-                                    + pph_tahunan
+                                    pph21_resign
+                                    + pph21_tahunan
                                 )
 
                             ) AS gaji_bersih
@@ -3287,8 +3287,8 @@
                         pot_piutang,
                         denda_apd,
                     
-                        pph_resign,
-                        pph_tahunan,
+                        pph21_resign,
+                        pph21_tahunan,
 
                         iuran_spsi,
 
