@@ -77,6 +77,7 @@
 				) ),
 		)
 		->leftJoin( 'periode_payroll','periode_payroll.id','=','pph_tahunan_h.id_periode_payroll' )
+		->where( 'is_resign', 1 )
 		;	
 	// do not erase
 	// function show / hide inactive document
