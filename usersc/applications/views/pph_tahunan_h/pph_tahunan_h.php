@@ -461,6 +461,19 @@
 			edtpph_tahunan_d.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					
+					// BEGIN of validasi pph_tahunan_d.pph 
+					pph = edtpph_tahunan_d.field('pph_tahunan_d.pph').val();
+					
+					// validasi min atau max angka
+					if(pph <= 0 ){
+						edtpph_tahunan_d.field('pph_tahunan_d.pph').error( 'Inputan harus > 0' );
+					}
+					
+					// validasi angka
+					if(isNaN(pph) ){
+						edtpph_tahunan_d.field('pph_tahunan_d.pph').error( 'Inputan harus berupa Angka!' );
+					}
+					// END of validasi pph_tahunan_d.pph 
 				}
 				
 				if ( edtpph_tahunan_d.inError() ) {
