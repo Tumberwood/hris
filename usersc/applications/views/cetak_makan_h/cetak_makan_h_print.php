@@ -32,6 +32,8 @@ $qs_cetak_makan_h = $db
         JOIN cetak_makan_d b
             ON b.id_cetak_makan_h = a.id
         WHERE a.id = :id_cetak_makan_h
+        AND a.is_active = 1
+        AND b.is_active = 1
     ');
 
 $rs_cetak_makan_h = $qs_cetak_makan_h->fetchAll();
