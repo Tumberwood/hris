@@ -503,10 +503,7 @@
 					// 	}
 					// },
 					{
-						data: "pph_tahunan_d.pph",
-						render: function (data) {
-							return data == 0 ? "Nol" : "Tidak Berubah";
-						}
+						data: "pph_tahunan_d.pph"
 					},
 				],
 				buttons: [
