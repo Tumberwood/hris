@@ -461,39 +461,6 @@
 			edtpph_tahunan_d.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					
-					// bulan = edthemxxmh.field('pph_tahunan_d.bulan').val();
-					// if(!bulan || bulan == ''){
-					// 	edthemxxmh.field('pph_tahunan_d.bulan').error( 'Wajib diisi!' );
-					// }
-					
-					// bruto = edthemxxmh.field('pph_tahunan_d.bruto').val();
-					// if(!bruto || bruto == ''){
-					// 	edthemxxmh.field('pph_tahunan_d.bruto').error( 'Wajib diisi!' );
-					// }
-					// // validasi min atau max angka
-					// if(bruto <= 0 ){
-					// 	edthemxxmh.field('pph_tahunan_d.bruto').error( 'Inputan harus > 0' );
-					// }
-					
-					// // validasi angka
-					// if(isNaN(bruto) ){
-					// 	edthemxxmh.field('pph_tahunan_d.bruto').error( 'Inputan harus berupa Angka!' );
-					// }
-					
-					pph = edthemxxmh.field('pph_tahunan_d.pph').val();
-					if(!pph || pph == ''){
-						edthemxxmh.field('pph_tahunan_d.pph').error( 'Wajib diisi!' );
-					}
-					// validasi min atau max angka
-					if(pph <= 0 ){
-						edthemxxmh.field('pph_tahunan_d.pph').error( 'Inputan harus > 0' );
-					}
-					
-					// validasi angka
-					if(isNaN(pph) ){
-						edthemxxmh.field('pph_tahunan_d.pph').error( 'Inputan harus berupa Angka!' );
-					}
-
 				}
 				
 				if ( edtpph_tahunan_d.inError() ) {
