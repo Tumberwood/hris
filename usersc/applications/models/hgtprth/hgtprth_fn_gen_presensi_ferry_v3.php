@@ -1518,7 +1518,8 @@
                                     OR (
                                         CASE 
                                             WHEN is_resign > 0 THEN b.tanggal_keluar > :tanggal
-                                            ELSE b.tanggal_keluar >= :tanggal
+                                            -- ELSE b.tanggal_keluar >= :tanggal
+                                            ELSE b.tanggal_keluar > :tanggal
                                         END
                                     )
                                 )
