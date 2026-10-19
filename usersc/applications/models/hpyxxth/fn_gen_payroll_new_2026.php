@@ -1863,6 +1863,42 @@
                         ) denda_apd ON denda_apd.id_hemxxmh = p.id_hemxxmh
                     ),
                     
+                    pph_resign AS (
+                        SELECT
+                            p.id_hemxxmh,
+                            nominal_denda_apd AS pph_resign
+                        FROM pegawai p
+                        JOIN (
+                            SELECT
+                                b.id_hemxxmh,
+                                b.pph AS pph_resign
+                            FROM pph_tahunan_h a
+                            JOIN pph_tahunan_d b ON b.id_pph_tahunan_h = a.id
+                            WHERE a.tanggal_awal = :tanggal_awal
+                            AND a.tanggal_akhir = :tanggal_akhir
+                            AND a.is_resign = 1
+                            GROUP BY a.id_hemxxmh
+                        ) pph_resign ON pph_resign.id_hemxxmh = p.id_hemxxmh
+                    ),
+                    
+                    pph_tahunan AS (
+                        SELECT
+                            p.id_hemxxmh,
+                            nominal_denda_apd AS pph_tahunan
+                        FROM pegawai p
+                        JOIN (
+                            SELECT
+                                b.id_hemxxmh,
+                                b.pph AS pph_tahunan
+                            FROM pph_tahunan_h a
+                            JOIN pph_tahunan_d b ON b.id_pph_tahunan_h = a.id
+                            WHERE a.tanggal_awal = :tanggal_awal
+                            AND a.tanggal_akhir = :tanggal_akhir
+                            AND a.is_resign = 0
+                            GROUP BY a.id_hemxxmh
+                        ) pph_tahunan ON pph_tahunan.id_hemxxmh = p.id_hemxxmh
+                    ),
+                    
                     iuran_spsi AS (
                         SELECT
                             p.id_hemxxmh,
@@ -2000,6 +2036,8 @@
                         
                         IFNULL(pot_piutang,0 ) AS pot_piutang,
                         IFNULL(denda_apd,0 ) AS denda_apd,
+                        IFNULL(pph_resign,0 ) AS pph_resign,
+                        IFNULL(pph_tahunan,0 ) AS pph_tahunan,
                         IFNULL(iuran_spsi,0 ) AS iuran_spsi,
                         IFNULL(pendapatan_lain_after_pph,0 ) AS pendapatan_lain_after_pph,
                         IFNULL(pot_lain_after_pph,0 ) AS pot_lain_after_pph
@@ -2026,6 +2064,8 @@
                     LEFT JOIN pendapatan_lain_after_pph ON pendapatan_lain_after_pph.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN pot_lain_after_pph ON pot_lain_after_pph.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN denda_apd ON denda_apd.id_hemxxmh = p.id_hemxxmh
+                    LEFT JOIN pph_resign ON pph_resign.id_hemxxmh = p.id_hemxxmh
+                    LEFT JOIN pph_tahunan ON pph_tahunan.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN iuran_spsi ON iuran_spsi.id_hemxxmh = p.id_hemxxmh
                     
         ');
@@ -3146,6 +3186,12 @@
                                 + pendapatan_lain_after_pph
                                 - pot_lain_after_pph
                                 - komp_rekontrak
+
+                                + 
+                                (
+                                    pph_resign
+                                    + pph_tahunan
+                                )
 
                             ) AS gaji_bersih
 
