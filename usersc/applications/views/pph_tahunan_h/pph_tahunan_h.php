@@ -78,8 +78,8 @@
                                 <th>ID</th>
                                 <th>id_pph_tahunan_h</th>
 								<th>Karyawan</th>
-								<th>Bulan</th>
-								<th>Bruto</th>
+								<!-- <th>Bulan</th>
+								<th>Bruto</th> -->
 								<th>PPh 21 Bulan Ini</th>
                             </tr>
                         </thead>
@@ -407,30 +407,30 @@
 							}
 						}
 					},
-					{
-						label: "Bulan <sup class='text-danger'>*<sup>",  
-						name: "pph_tahunan_d.bulan",
-						type: "select",
-						placeholder: "Select",
-						options: [
-							{ label: "Jan", value: "Jan" },
-							{ label: "Feb", value: "Feb" },
-							{ label: "Mar", value: "Mar" },
-							{ label: "Apr", value: "Apr" },
-							{ label: "Mei", value: "Mei" },
-							{ label: "Jun", value: "Jun" },
-							{ label: "Jul", value: "Jul" },
-							{ label: "Agu", value: "Agu" },
-							{ label: "Sep", value: "Sep" },
-							{ label: "Okt", value: "Okt" },
-							{ label: "Nov", value: "Nov" },
-							{ label: "Des", value: "Des" },
-						]
-					},
-					{
-						label: "Bruto <sup class='text-danger'>*<sup>", 
-						name: "pph_tahunan_d.bruto",
-					},	
+					// {
+					// 	label: "Bulan <sup class='text-danger'>*<sup>",  
+					// 	name: "pph_tahunan_d.bulan",
+					// 	type: "select",
+					// 	placeholder: "Select",
+					// 	options: [
+					// 		{ label: "Jan", value: "Jan" },
+					// 		{ label: "Feb", value: "Feb" },
+					// 		{ label: "Mar", value: "Mar" },
+					// 		{ label: "Apr", value: "Apr" },
+					// 		{ label: "Mei", value: "Mei" },
+					// 		{ label: "Jun", value: "Jun" },
+					// 		{ label: "Jul", value: "Jul" },
+					// 		{ label: "Agu", value: "Agu" },
+					// 		{ label: "Sep", value: "Sep" },
+					// 		{ label: "Okt", value: "Okt" },
+					// 		{ label: "Nov", value: "Nov" },
+					// 		{ label: "Des", value: "Des" },
+					// 	]
+					// },
+					// {
+					// 	label: "Bruto <sup class='text-danger'>*<sup>", 
+					// 	name: "pph_tahunan_d.bruto",
+					// },	
 					{
 						label: "PPh 21 Bulan Ini <sup class='text-danger'>*<sup>", 
 						name: "pph_tahunan_d.pph",
@@ -461,24 +461,24 @@
 			edtpph_tahunan_d.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
 					
-					bulan = edthemxxmh.field('pph_tahunan_d.bulan').val();
-					if(!bulan || bulan == ''){
-						edthemxxmh.field('pph_tahunan_d.bulan').error( 'Wajib diisi!' );
-					}
+					// bulan = edthemxxmh.field('pph_tahunan_d.bulan').val();
+					// if(!bulan || bulan == ''){
+					// 	edthemxxmh.field('pph_tahunan_d.bulan').error( 'Wajib diisi!' );
+					// }
 					
-					bruto = edthemxxmh.field('pph_tahunan_d.bruto').val();
-					if(!bruto || bruto == ''){
-						edthemxxmh.field('pph_tahunan_d.bruto').error( 'Wajib diisi!' );
-					}
-					// validasi min atau max angka
-					if(bruto <= 0 ){
-						edthemxxmh.field('pph_tahunan_d.bruto').error( 'Inputan harus > 0' );
-					}
+					// bruto = edthemxxmh.field('pph_tahunan_d.bruto').val();
+					// if(!bruto || bruto == ''){
+					// 	edthemxxmh.field('pph_tahunan_d.bruto').error( 'Wajib diisi!' );
+					// }
+					// // validasi min atau max angka
+					// if(bruto <= 0 ){
+					// 	edthemxxmh.field('pph_tahunan_d.bruto').error( 'Inputan harus > 0' );
+					// }
 					
-					// validasi angka
-					if(isNaN(bruto) ){
-						edthemxxmh.field('pph_tahunan_d.bruto').error( 'Inputan harus berupa Angka!' );
-					}
+					// // validasi angka
+					// if(isNaN(bruto) ){
+					// 	edthemxxmh.field('pph_tahunan_d.bruto').error( 'Inputan harus berupa Angka!' );
+					// }
 					
 					pph = edthemxxmh.field('pph_tahunan_d.pph').val();
 					if(!pph || pph == ''){
@@ -528,13 +528,13 @@
 					{ data: "pph_tahunan_d.id",visible:false },
 					{ data: "pph_tahunan_d.id_pph_tahunan_h",visible:false },
 					{ data: "hemxxmh.nama" },
-					{ data: "pph_tahunan_d.bulan" },
-					{
-						data: "pph_tahunan_d.bruto",
-						render: function (data) {
-							return data == 0 ? "Nol" : "Tidak Berubah";
-						}
-					},
+					// { data: "pph_tahunan_d.bulan" },
+					// {
+					// 	data: "pph_tahunan_d.bruto",
+					// 	render: function (data) {
+					// 		return data == 0 ? "Nol" : "Tidak Berubah";
+					// 	}
+					// },
 					{
 						data: "pph_tahunan_d.pph",
 						render: function (data) {
