@@ -511,7 +511,9 @@
 					// 	}
 					// },
 					{
-						data: "pph_tahunan_d.pph"
+						data: "pph_tahunan_d.pph",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right" 
 					},
 				],
 				buttons: [
