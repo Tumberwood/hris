@@ -45,10 +45,6 @@
 			');
 		})
 		->on('preRemove',function( $editor, $id, $values ) {
-			// script diletakkan disini
-		})
-		->on('postRemove',function( $editor, $id, $values ) {
-			// script diletakkan disini
 			$id_cetak_makan_h = $values['cetak_makan_d']['id_cetak_makan_h'];
 
 			$qu_jumlah_orang = $editor->db()
@@ -66,5 +62,7 @@
 							jumlah_orang = c_id
 						WHERE a.id = :id_cetak_makan_h
 			');
+		})
+		->on('postRemove',function( $editor, $id, $values ) {
 		});
 ?>
