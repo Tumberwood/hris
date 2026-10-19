@@ -1877,7 +1877,7 @@
                             WHERE a.tanggal_awal = :tanggal_awal
                             AND a.tanggal_akhir = :tanggal_akhir
                             AND a.is_resign = 1
-                            GROUP BY a.id_hemxxmh
+                            GROUP BY b.id_hemxxmh
                         ) pph21_resign ON pph21_resign.id_hemxxmh = p.id_hemxxmh
                     ),
                     
@@ -1895,7 +1895,7 @@
                             WHERE a.tanggal_awal = :tanggal_awal
                             AND a.tanggal_akhir = :tanggal_akhir
                             AND a.is_resign = 0
-                            GROUP BY a.id_hemxxmh
+                            GROUP BY b.id_hemxxmh
                         ) pph21_tahunan ON pph21_tahunan.id_hemxxmh = p.id_hemxxmh
                     ),
                     
