@@ -1,3 +1,4 @@
+
 <?php
 
 include_once("../../../../users/init.php");
@@ -36,7 +37,6 @@ $qs_cetak_makan_h = $db
                 ", ",
                 DATE_FORMAT(a.tanggal, "%d %M %Y")
             ) AS tanggal_lengkap,
-             
             b.nama AS penerima,
             b.perusahaan,
             b.pic_tamu
@@ -44,8 +44,9 @@ $qs_cetak_makan_h = $db
         JOIN cetak_makan_d b
             ON b.id_cetak_makan_h = a.id
         WHERE a.id = :id_cetak_makan_h
-        AND a.is_active = 1
-        AND b.is_active = 1
+          AND a.is_active = 1
+          AND b.is_active = 1
+        ORDER BY b.id ASC
     ');
 
 $rs_cetak_makan_h = $qs_cetak_makan_h->fetchAll();
@@ -87,14 +88,12 @@ $css = '
         font-size: 8px;
     }
 
-    /* GRID UTAMA: 2 KOLOM */
     .container {
         width: 100%;
         border-collapse: collapse;
         table-layout: fixed;
     }
 
-    /* HANYA SEL PEMBUNGKUS KU PON */
     .slot {
         width: 50%;
         height: 69mm;
@@ -102,7 +101,6 @@ $css = '
         vertical-align: top;
     }
 
-    /* KUPON */
     .kupon {
         width: 100%;
         height: 66mm;
@@ -111,7 +109,6 @@ $css = '
         table-layout: fixed;
     }
 
-    /* JUDUL */
     .judul {
         text-align: center;
         font-size: 12px;
@@ -119,7 +116,6 @@ $css = '
         padding: 1.5mm 0 0.5mm 0;
     }
 
-    /* SUBJUDUL */
     .subjudul {
         text-align: center;
         font-size: 8px;
@@ -127,7 +123,6 @@ $css = '
         border-bottom: 0.25mm solid #000;
     }
 
-    /* DATA */
     .data {
         width: 100%;
         border-collapse: collapse;
@@ -154,12 +149,10 @@ $css = '
         word-wrap: break-word;
     }
 
-    /* AREA KOSONG */
     .spacer {
         height: 12mm;
     }
 
-    /* TANDA TANGAN */
     .ttd {
         width: 100%;
         border-collapse: collapse;
@@ -185,6 +178,12 @@ $css = '
         width: 50%;
         text-align: right;
         padding-right: 1mm !important;
+    }
+
+    .slot-kosong {
+        width: 50%;
+        height: 69mm;
+        padding: 1mm;
     }
 </style>
 ';
@@ -308,7 +307,11 @@ function buatKuponMakan($record)
 
 /*
 |--------------------------------------------------------------------------
-| CETAK MAKSIMAL 8 ORANG PER HALAMAN
+| CETAK MAKSIMAL 8 KUPON PER HALAMAN
+|--------------------------------------------------------------------------
+| 2 kolom x 4 baris.
+| Kupon ke-9 dan seterusnya dimulai di halaman baru.
+| Jika jumlah kupon ganjil, sel terakhir di kanan tetap kosong.
 |--------------------------------------------------------------------------
 */
 
@@ -323,7 +326,6 @@ if ($total_data === 0) {
 
 } else {
 
-    // Maksimal 8 orang per halaman.
     $kelompok_data = array_chunk($rs_cetak_makan_h, 8);
 
     foreach ($kelompok_data as $halaman => $records) {
@@ -333,31 +335,73 @@ if ($total_data === 0) {
         }
 
         $html = '
-            <table class="container" cellpadding="0" cellspacing="0">
+            <table
+                class="container"
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                style="
+                    width: 100%;
+                    table-layout: fixed;
+                    border-collapse: collapse;
+                "
+            >
+                <tbody>
         ';
 
         $jumlah_data = count($records);
 
         foreach ($records as $index => $record) {
 
-            // Buka baris setiap 2 orang.
+            // Buka baris untuk kolom kiri.
             if ($index % 2 === 0) {
                 $html .= '<tr>';
             }
 
             $html .= '
-                <td class="slot">
+                <td
+                    class="slot"
+                    width="50%"
+                    style="
+                        width: 50%;
+                        height: 69mm;
+                        padding: 1mm;
+                        vertical-align: top;
+                    "
+                >
                     ' . buatKuponMakan($record) . '
                 </td>
             ';
 
-            // Tutup baris setiap 2 orang atau ketika data habis.
-            if (($index % 2 === 1) || ($index === $jumlah_data - 1)) {
+            // Tutup baris setiap dua kupon.
+            if ($index % 2 === 1) {
                 $html .= '</tr>';
             }
         }
 
-        $html .= '</table>';
+        // Jika jumlah kupon ganjil, tambahkan kolom kanan kosong.
+        // Kupon terakhir tetap di kiri dan tidak melebar.
+        if ($jumlah_data % 2 !== 0) {
+            $html .= '
+                <td
+                    class="slot-kosong"
+                    width="50%"
+                    style="
+                        width: 50%;
+                        height: 69mm;
+                        padding: 1mm;
+                    "
+                >
+                    &nbsp;
+                </td>
+                </tr>
+            ';
+        }
+
+        $html .= '
+                </tbody>
+            </table>
+        ';
 
         $mpdf->WriteHTML(
             $html,
