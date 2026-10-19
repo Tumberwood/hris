@@ -23,6 +23,20 @@ $qs_cetak_makan_h = $db
     ->exec('
         SELECT
             DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
+            CONCAT(
+                CASE DAYOFWEEK(a.tanggal)
+                    WHEN 1 THEN "Minggu"
+                    WHEN 2 THEN "Senin"
+                    WHEN 3 THEN "Selasa"
+                    WHEN 4 THEN "Rabu"
+                    WHEN 5 THEN "Kamis"
+                    WHEN 6 THEN "Jumat"
+                    WHEN 7 THEN "Sabtu"
+                END,
+                ", ",
+                DATE_FORMAT(a.tanggal, "%d %M %Y")
+            ) AS tanggal_lengkap,
+             
             b.nama AS penerima,
             b.perusahaan,
             b.pic_tamu
@@ -186,7 +200,7 @@ $mpdf->WriteHTML($css, \Mpdf\HTMLParserMode::HEADER_CSS);
 function buatKuponMakan($record)
 {
     $tanggal = htmlspecialchars(
-        $record['tanggal'] ?? '',
+        $record['tanggal_lengkap'] ?? '',
         ENT_QUOTES,
         'UTF-8'
     );
