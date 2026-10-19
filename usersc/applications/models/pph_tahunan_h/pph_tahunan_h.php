@@ -42,6 +42,9 @@
 				->setValue($_SESSION['user']),
 			Field::inst( 'pph_tahunan_h.created_on' )
 				->set( Field::SET_CREATE ),
+			Field::inst( 'pph_tahunan_h.is_resign' )
+				->set( Field::SET_CREATE )
+				->setValue(1),
 			Field::inst( 'pph_tahunan_h.last_edited_by' )
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
