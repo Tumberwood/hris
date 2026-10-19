@@ -1872,8 +1872,8 @@
                             SELECT
                                 b.id_hemxxmh,
                                 b.pph AS pph21_resign
-                            FROM pph21_tahunan_h a
-                            JOIN pph21_tahunan_d b ON b.id_pph21_tahunan_h = a.id
+                            FROM pph_tahunan_h a
+                            JOIN pph_tahunan_d b ON b.id_pph_tahunan_h = a.id
                             WHERE a.tanggal_awal = :tanggal_awal
                             AND a.tanggal_akhir = :tanggal_akhir
                             AND a.is_resign = 1
@@ -1890,8 +1890,8 @@
                             SELECT
                                 b.id_hemxxmh,
                                 b.pph AS pph21_tahunan
-                            FROM pph21_tahunan_h a
-                            JOIN pph21_tahunan_d b ON b.id_pph21_tahunan_h = a.id
+                            FROM pph_tahunan_h a
+                            JOIN pph_tahunan_d b ON b.id_pph_tahunan_h = a.id
                             WHERE a.tanggal_awal = :tanggal_awal
                             AND a.tanggal_akhir = :tanggal_akhir
                             AND a.is_resign = 0
