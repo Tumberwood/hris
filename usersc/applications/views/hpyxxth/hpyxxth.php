@@ -209,6 +209,8 @@
 													<th class="text-center align-middle">35. Tarif TER (%)</th>
 
 													<th class="text-center align-middle text-danger">36. Potongan PPh 21 (TER/Tahunan)</th>
+													<th class="text-center align-middle text-danger">36a. Potongan PPh 21 Resign</th>
+													<th class="text-center align-middle text-danger">36b. Potongan PPh 21 Tahunan</th>
 
 													<th class="text-center align-middle">37. Penghasilan Setelah PPh 21</th>
 													<th class="text-center align-middle">38. BPJS JHT Perusahaan</th>
@@ -309,6 +311,8 @@
 													<th id="karyawan_69"></th>
 													<th id="karyawan_70"></th>
 													<th id="karyawan_71"></th>
+													<th id="karyawan_72"></th>
+													<th id="karyawan_73"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -1661,6 +1665,8 @@
 					{ data: "hpyemtd.persen_ter", render: $.fn.dataTable.render.number(',', '.', 2), class: "text-right" },
 
 					{ data: "hpyemtd.pot_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pph_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.pph_tahunan", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 
 					{ data: "hpyemtd.after_pph21", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right" },
 
@@ -1727,7 +1733,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 71; i++) {
+					for (var i = 10; i <= 73; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }

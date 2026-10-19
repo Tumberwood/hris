@@ -68,6 +68,8 @@
 				Field::inst( 'hpyemtd.pot_pinjaman' ), 
 				Field::inst( 'hpyemtd.pot_klaim' ), 
 				Field::inst( 'hpyemtd.pot_denda_apd' ), 
+				Field::inst( 'hpyemtd.pph_resign' ), 
+				Field::inst( 'hpyemtd.pph_tahunan' ), 
 				Field::inst( 'hpyemtd.pot_pph21' ), 
 				Field::inst( 'hpyemtd.gaji_bersih' ), 
 				Field::inst( 'hpyemtd.bulat' ), 

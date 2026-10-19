@@ -3150,6 +3150,10 @@
 
                             pot_piutang,
                             denda_apd,
+
+                            pph_resign,
+                            pph_tahunan,
+
                             iuran_spsi,
 
                             pendapatan_lain_after_pph,
@@ -3282,6 +3286,10 @@
 
                         pot_piutang,
                         denda_apd,
+                    
+                        pph_resign,
+                        pph_tahunan,
+
                         iuran_spsi,
 
                         pendapatan_lain_after_pph,
