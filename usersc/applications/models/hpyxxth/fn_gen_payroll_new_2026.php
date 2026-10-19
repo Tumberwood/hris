@@ -1866,7 +1866,7 @@
                     pph21_resign AS (
                         SELECT
                             p.id_hemxxmh,
-                            nominal_denda_apd AS pph21_resign
+                            pph21_resign
                         FROM pegawai p
                         JOIN (
                             SELECT
@@ -1884,7 +1884,7 @@
                     pph21_tahunan AS (
                         SELECT
                             p.id_hemxxmh,
-                            nominal_denda_apd AS pph21_tahunan
+                            pph21_tahunan
                         FROM pegawai p
                         JOIN (
                             SELECT
