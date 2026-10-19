@@ -85,7 +85,7 @@ $css = '
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
-        font-size: 10px;
+        font-size: 12px;
     }
 
     .container {
@@ -111,14 +111,14 @@ $css = '
 
     .judul {
         text-align: center;
-        font-size: 12px;
+        font-size: 14px;
         font-weight: bold;
         padding: 1.5mm 0 0.5mm 0;
     }
 
     .subjudul {
         text-align: center;
-        font-size: 10px;
+        font-size: 12px;
         padding: 0 0 1.5mm 0;
         border-bottom: 0.25mm solid #000;
     }
@@ -130,7 +130,7 @@ $css = '
     }
 
     .data td {
-        font-size: 10px;
+        font-size: 12px;
         padding: 1mm 0.5mm;
         vertical-align: middle;
     }
@@ -164,7 +164,7 @@ $css = '
         height: 13mm;
         padding: 0;
         vertical-align: bottom;
-        font-size: 10px;
+        font-size: 12px;
         font-weight: bold;
     }
 
