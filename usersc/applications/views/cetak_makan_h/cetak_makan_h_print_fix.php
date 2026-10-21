@@ -74,6 +74,37 @@ $mpdf->SetDisplayMode('fullpage');
 
 /*
 |--------------------------------------------------------------------------
+| WATERMARK DIAGONAL BERULANG
+|--------------------------------------------------------------------------
+*/
+
+$watermarkSvgPath = sys_get_temp_dir()
+    . DIRECTORY_SEPARATOR
+    . 'watermark_kupon_makan_' . uniqid('', true) . '.svg';
+
+$watermarkSvg = <<<'SVG'
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="240" height="140" viewBox="0 0 240 140">
+    <rect width="240" height="140" fill="none"/>
+    <g fill="#e9a0a0"
+       fill-opacity="0.42"
+       font-family="Arial, sans-serif"
+       font-size="22"
+       font-weight="normal">
+        <text x="8" y="42"
+              transform="rotate(-35 8 42)">Watermark</text>
+        <text x="128" y="112"
+              transform="rotate(-35 128 112)">Watermark</text>
+    </g>
+</svg>
+SVG;
+
+if (file_put_contents($watermarkSvgPath, $watermarkSvg) === false) {
+    die('Gagal membuat aset watermark.');
+}
+
+/*
+|--------------------------------------------------------------------------
 | CSS
 |--------------------------------------------------------------------------
 */
@@ -93,12 +124,7 @@ $css = '
         table-layout: fixed;
     }
 
-    /*
-     * Garis potong:
-     * - border kanan sel kiri membentuk garis vertikal di tengah halaman.
-     * - border bawah tiap baris membentuk garis horizontal antarbaris.
-     * Kupon tetap diberi jarak dari garis potong.
-     */
+    /* Garis potong vertikal dan horizontal */
     .slot {
         width: 50%;
         height: 69mm;
@@ -115,12 +141,16 @@ $css = '
         border-bottom: 0.25mm dashed #999999;
     }
 
+    /* Watermark menjadi background, bukan baris tambahan */
     .kupon {
         width: 100%;
         height: 66mm;
         border: 0.3mm solid #000000;
         border-collapse: collapse;
         table-layout: fixed;
+        background-image: url("' . $watermarkSvgPath . '");
+        background-repeat: repeat;
+        background-position: center center;
     }
 
     .judul {
@@ -165,20 +195,6 @@ $css = '
 
     .spacer {
         height: 8mm;
-    }
-
-    /*
-     * Watermark dibuat sebagai baris tersendiri agar kompatibel dengan mPDF
-     * dan tidak menimpa data penerima maupun area tanda tangan.
-     */
-    .watermark {
-        height: 4mm;
-        text-align: center;
-        vertical-align: middle;
-        color: #E8E8E8;
-        font-size: 30px;
-        font-weight: bold;
-        letter-spacing: 2px;
     }
 
     .ttd {
@@ -274,16 +290,19 @@ function buatKuponMakan($record)
                             <td class="separator">:</td>
                             <td class="value">' . $tanggal . '</td>
                         </tr>
+
                         <tr>
                             <td class="label">Penerima Makan</td>
                             <td class="separator">:</td>
                             <td class="value">' . $penerima . '</td>
                         </tr>
+
                         <tr>
                             <td class="label">Perusahaan</td>
                             <td class="separator">:</td>
                             <td class="value">' . $perusahaan . '</td>
                         </tr>
+
                         <tr>
                             <td class="label">PIC Tamu PMI</td>
                             <td class="separator">:</td>
@@ -291,10 +310,6 @@ function buatKuponMakan($record)
                         </tr>
                     </table>
                 </td>
-            </tr>
-
-            <tr>
-                <td class="watermark">HRIS PMI</td>
             </tr>
 
             <tr>
@@ -321,7 +336,6 @@ function buatKuponMakan($record)
 |--------------------------------------------------------------------------
 | 2 kolom x 4 baris.
 | Kupon ke-9 dan seterusnya dimulai di halaman baru.
-| Garis putus-putus menjadi panduan potong vertikal dan horizontal.
 |--------------------------------------------------------------------------
 */
 
@@ -341,31 +355,34 @@ if ($total_data === 0) {
         }
 
         $html = '
-            <table class="container" width="100%" cellpadding="0" cellspacing="0"
-                style="width:100%; table-layout:fixed; border-collapse:collapse;">
+            <table class="container"
+                   width="100%"
+                   cellpadding="0"
+                   cellspacing="0"
+                   style="width:100%; table-layout:fixed; border-collapse:collapse;">
                 <tbody>
         ';
 
         $jumlah_data = count($records);
 
         foreach ($records as $index => $record) {
-            // Awal baris: setiap dua kupon.
             if ($index % 2 === 0) {
                 $html .= '<tr>';
             }
 
             $kelas_slot = 'slot';
+
             if ($index % 2 === 0) {
                 $kelas_slot .= ' slot-kiri';
             }
 
-            // Garis horizontal di bawah setiap baris, kecuali baris terakhir.
             if (floor($index / 2) < 3) {
                 $kelas_slot .= ' slot-baris';
             }
 
             $html .= '
-                <td class="' . $kelas_slot . '" width="50%"
+                <td class="' . $kelas_slot . '"
+                    width="50%"
                     style="width:50%; height:69mm; padding:1mm; vertical-align:top;">
                     ' . buatKuponMakan($record) . '
                 </td>
@@ -376,15 +393,17 @@ if ($total_data === 0) {
             }
         }
 
-        // Jika jumlah kupon ganjil, isi sel kanan terakhir dengan sel kosong.
+        /* Isi sel kanan jika jumlah kupon ganjil */
         if ($jumlah_data % 2 !== 0) {
             $kelas_kosong = 'slot-kosong';
+
             if (floor(($jumlah_data - 1) / 2) < 3) {
                 $kelas_kosong .= ' slot-baris';
             }
 
             $html .= '
-                <td class="' . $kelas_kosong . '" width="50%"
+                <td class="' . $kelas_kosong . '"
+                    width="50%"
                     style="width:50%; height:69mm; padding:1mm;">
                     &nbsp;
                 </td>
@@ -411,5 +430,9 @@ if ($total_data === 0) {
 */
 
 $mpdf->Output('Kupon_Makan.pdf', 'I');
+
+if (is_file($watermarkSvgPath)) {
+    @unlink($watermarkSvgPath);
+}
 
 ?>
