@@ -220,7 +220,7 @@
 					}
 				],
 				ajax: {
-					url: "../../models/htlxxrh/htlxxrh.php",
+					url: "../../models/htlxxrh/htlxxrh_s.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_htlxxrh = show_inactive_status_htlxxrh;
