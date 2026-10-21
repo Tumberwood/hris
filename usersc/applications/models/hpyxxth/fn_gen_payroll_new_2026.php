@@ -245,7 +245,7 @@
                                         AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" AND pr.is_pot_upah = 0 
                                     )
                                     
-                                    WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    WHEN p.tanggal_masuk BETWEEN DATEADD(DAY, 1, :tanggal_awal) AND :tanggal_akhir
                                     THEN (
                                         SELECT
                                             SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
@@ -316,7 +316,7 @@
                                         AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" AND pr.is_pot_upah = 0 
                                     )
                                     
-                                    WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    WHEN p.tanggal_masuk BETWEEN DATEADD(DAY, 1, :tanggal_awal) AND :tanggal_akhir
                                     THEN (
                                         SELECT
                                             SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
@@ -415,7 +415,7 @@
                                         AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" AND pr.is_pot_upah = 0 
                                     )
                                     
-                                    WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    WHEN p.tanggal_masuk BETWEEN DATEADD(DAY, 1, :tanggal_awal) AND :tanggal_akhir
                                     THEN (
                                         SELECT
                                             SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
@@ -479,7 +479,7 @@
                                         AND pr.st_jadwal <> "OFF" AND pr.status_presensi_in <> "AL" AND pr.is_pot_upah = 0 
                                     )
                                     
-                                    WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    WHEN p.tanggal_masuk BETWEEN DATEADD(DAY, 1, :tanggal_awal) AND :tanggal_akhir
                                     THEN (
                                         SELECT
                                             SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
@@ -2198,7 +2198,7 @@
                                         -- AND pr.status_presensi_in <> "AL" AND pr.is_pot_upah = 0 
                                     )
                                     
-                                    WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    WHEN p.tanggal_masuk BETWEEN DATEADD(DAY, 1, :tanggal_awal) AND :tanggal_akhir
                                     THEN (
                                         SELECT
                                             SUM(1 / if(pr.grup_hk = 1, 21, 25) * 
@@ -2254,7 +2254,7 @@
                                 AND pr.st_jadwal <> "OFF" 
                             )
                             
-                            WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                            WHEN p.tanggal_masuk BETWEEN DATEADD(DAY, 1, :tanggal_awal) AND :tanggal_akhir
                             THEN (
                                 SELECT
                                     SUM(1 * 25000 ) AS c_id
@@ -2284,7 +2284,7 @@
                                 AND pr.st_jadwal <> "OFF" 
                             )
                             
-                            WHEN p.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                            WHEN p.tanggal_masuk BETWEEN DATEADD(DAY, 1, :tanggal_awal) AND :tanggal_akhir
                             THEN (
                                 SELECT
                                     SUM(1 * 8000 ) AS c_id
