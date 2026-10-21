@@ -92,9 +92,9 @@ $watermarkSvg = <<<'SVG'
        font-size="22"
        font-weight="normal">
         <text x="8" y="42"
-              transform="rotate(-35 8 42)">Watermark</text>
+              transform="rotate(-35 8 42)">PT PUTRA MANDIRI INTIPACK</text>
         <text x="128" y="112"
-              transform="rotate(-35 128 112)">Watermark</text>
+              transform="rotate(-35 128 112)">PT PUTRA MANDIRI INTIPACK</text>
     </g>
 </svg>
 SVG;
