@@ -121,9 +121,6 @@ $css = '
         border: 0.3mm solid #000000;
         border-collapse: collapse;
         table-layout: fixed;
-        background-image: url("__WATERMARK_PATH__");
-        background-repeat: no-repeat;
-        background-position: center center;
     }
 
     .judul {
@@ -170,6 +167,19 @@ $css = '
         height: 8mm;
     }
 
+    /* Watermark logo PNG transparan */
+    .watermark {
+        height: 12mm;
+        padding: 0;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .watermark img {
+        width: 18mm;
+        height: 18mm;
+    }
+
     .ttd {
         width: 100%;
         border-collapse: collapse;
@@ -206,9 +216,6 @@ $css = '
     }
 </style>
 ';
-
-$watermark_path = str_replace('\\', '/', __DIR__ . '/pmi_watermark_transparan.png');
-$css = str_replace('__WATERMARK_PATH__', $watermark_path, $css);
 
 $mpdf->WriteHTML($css, \Mpdf\HTMLParserMode::HEADER_CSS);
 
@@ -282,6 +289,12 @@ function buatKuponMakan($record)
                             <td class="value">' . $pic_tamu . '</td>
                         </tr>
                     </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="watermark">
+                    <img src="../../../../usersc/files/uploads/hs.png">
                 </td>
             </tr>
 

@@ -221,7 +221,6 @@
 													<th class="text-center align-middle text-danger">42. BPJS Kes Karyawan (pot_bpjs)</th>
 
 													<!-- Potongan JKK JKM BPJS KES -->
-													<th class="text-center align-middle text-danger">43. BPJS Kes Perusahaan</th>
 													<th class="text-center align-middle text-danger">44. Potongan BPJS JKK Perusahaan</th>
 													<th class="text-center align-middle text-danger">45. Potongan BPJS JKM Perusahaan</th>
 
@@ -312,7 +311,6 @@
 													<th id="karyawan_70"></th>
 													<th id="karyawan_71"></th>
 													<th id="karyawan_72"></th>
-													<th id="karyawan_73"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -399,7 +397,6 @@
 													<th class="text-center align-middle text-danger">42. BPJS Kes Karyawan (pot_bpjs)</th>
 
 													<!-- Potongan JKK JKM BPJS KES -->
-													<th class="text-center align-middle text-danger">43. BPJS Kes Perusahaan</th>
 													<th class="text-center align-middle text-danger">44. Potongan BPJS JKK Perusahaan</th>
 													<th class="text-center align-middle text-danger">45. Potongan BPJS JKM Perusahaan</th>
 
@@ -490,7 +487,6 @@
 													<th id="kontrak_70"></th>
 												</tr>
 											</tfoot>
-										</table>
 									</div> <!-- end of table -->
 								</div>
 							</div>
@@ -574,7 +570,6 @@
 													<th class="text-center align-middle text-danger">42. BPJS Kes Karyawan (pot_bpjs)</th>
 
 													<!-- Potongan JKK JKM BPJS KES -->
-													<th class="text-center align-middle text-danger">43. BPJS Kes Perusahaan</th>
 													<th class="text-center align-middle text-danger">44. Potongan BPJS JKK Perusahaan</th>
 													<th class="text-center align-middle text-danger">45. Potongan BPJS JKM Perusahaan</th>
 
@@ -665,7 +660,6 @@
 													<th id="kbm_reg_70"></th>
 												</tr>
 											</tfoot>
-										</table>
 									</div> <!-- end of table -->
 								</div>
 							</div>
@@ -1741,7 +1735,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 73; i++) {
+					for (var i = 10; i <= 72; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -2030,7 +2024,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 70; i++) {
+					for (var i = 10; i <= 72; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -2310,7 +2304,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 70; i++) {
+					for (var i = 10; i <= 72; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
