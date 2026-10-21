@@ -1,3 +1,4 @@
+
 <?php
 
 include_once("../../../../users/init.php");
@@ -52,7 +53,7 @@ $rs_cetak_makan_h = $qs_cetak_makan_h->fetchAll();
 
 /*
 |--------------------------------------------------------------------------
-| MPDF
+| KONFIGURASI MPDF
 |--------------------------------------------------------------------------
 */
 
@@ -74,7 +75,11 @@ $mpdf->SetDisplayMode('fullpage');
 
 /*
 |--------------------------------------------------------------------------
-| WATERMARK DIAGONAL BERULANG
+| WATERMARK SVG
+|--------------------------------------------------------------------------
+| Satu tulisan untuk setiap pola.
+| Ukuran pola diperbesar agar tulisan tidak bertumpuk.
+| Teks lengkap: PT PUTRA MANDIRI INTIPACK.
 |--------------------------------------------------------------------------
 */
 
@@ -84,18 +89,28 @@ $watermarkSvgPath = sys_get_temp_dir()
 
 $watermarkSvg = <<<'SVG'
 <svg xmlns="http://www.w3.org/2000/svg"
-     width="240" height="140" viewBox="0 0 240 140">
-    <rect width="240" height="140" fill="none"/>
-    <g fill="#e9a0a0"
-       fill-opacity="0.42"
-       font-family="Arial, sans-serif"
-       font-size="22"
-       font-weight="normal">
-        <text x="8" y="42"
-              transform="rotate(-35 8 42)">PT PUTRA MANDIRI INTIPACK</text>
-        <text x="128" y="112"
-              transform="rotate(-35 128 112)">PT PUTRA MANDIRI INTIPACK</text>
-    </g>
+     width="380" height="260"
+     viewBox="0 0 380 260">
+
+    <rect
+        x="0"
+        y="0"
+        width="380"
+        height="260"
+        fill="none"/>
+
+    <text
+        x="40"
+        y="145"
+        transform="rotate(-35 190 130)"
+        fill="#e9a0a0"
+        fill-opacity="0.38"
+        font-family="Arial, sans-serif"
+        font-size="20"
+        font-weight="normal"
+        textLength="300"
+        lengthAdjust="spacingAndGlyphs">PT PUTRA MANDIRI INTIPACK</text>
+
 </svg>
 SVG;
 
@@ -124,7 +139,7 @@ $css = '
         table-layout: fixed;
     }
 
-    /* Garis potong vertikal dan horizontal */
+    /* Area setiap kupon dan garis potong */
     .slot {
         width: 50%;
         height: 69mm;
@@ -141,13 +156,14 @@ $css = '
         border-bottom: 0.25mm dashed #999999;
     }
 
-    /* Watermark menjadi background, bukan baris tambahan */
+    /* Watermark transparan dan berjarak */
     .kupon {
         width: 100%;
         height: 66mm;
         border: 0.3mm solid #000000;
         border-collapse: collapse;
         table-layout: fixed;
+
         background-image: url("' . $watermarkSvgPath . '");
         background-repeat: repeat;
         background-position: center center;
@@ -393,7 +409,7 @@ if ($total_data === 0) {
             }
         }
 
-        /* Isi sel kanan jika jumlah kupon ganjil */
+        /* Sel kanan kosong jika jumlah kupon ganjil */
         if ($jumlah_data % 2 !== 0) {
             $kelas_kosong = 'slot-kosong';
 
