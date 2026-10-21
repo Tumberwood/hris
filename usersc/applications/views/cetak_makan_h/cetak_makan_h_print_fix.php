@@ -121,6 +121,9 @@ $css = '
         border: 0.3mm solid #000000;
         border-collapse: collapse;
         table-layout: fixed;
+        background-image: url("__WATERMARK_PATH__");
+        background-repeat: no-repeat;
+        background-position: center center;
     }
 
     .judul {
@@ -167,20 +170,6 @@ $css = '
         height: 8mm;
     }
 
-    /*
-     * Watermark dibuat sebagai baris tersendiri agar kompatibel dengan mPDF
-     * dan tidak menimpa data penerima maupun area tanda tangan.
-     */
-    .watermark {
-        height: 4mm;
-        text-align: center;
-        vertical-align: middle;
-        color: #E8E8E8;
-        font-size: 30px;
-        font-weight: bold;
-        letter-spacing: 2px;
-    }
-
     .ttd {
         width: 100%;
         border-collapse: collapse;
@@ -217,6 +206,9 @@ $css = '
     }
 </style>
 ';
+
+$watermark_path = str_replace('\\', '/', __DIR__ . '/pmi_watermark_transparan.png');
+$css = str_replace('__WATERMARK_PATH__', $watermark_path, $css);
 
 $mpdf->WriteHTML($css, \Mpdf\HTMLParserMode::HEADER_CSS);
 
@@ -291,10 +283,6 @@ function buatKuponMakan($record)
                         </tr>
                     </table>
                 </td>
-            </tr>
-
-            <tr>
-                <td class="watermark">HRIS PMI</td>
             </tr>
 
             <tr>
