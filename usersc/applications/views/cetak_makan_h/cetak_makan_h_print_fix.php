@@ -90,42 +90,39 @@ $watermarkSvgPath = sys_get_temp_dir()
 
 $watermarkSvg = <<<'SVG'
 <svg xmlns="http://www.w3.org/2000/svg"
-     width="460" height="340"
-     viewBox="0 0 460 340">
+     width="440" height="300"
+     viewBox="0 0 440 300">
 
-    <rect
-        x="0"
-        y="0"
-        width="460"
-        height="340"
-        fill="none"/>
+    <rect width="440" height="300" fill="none"/>
 
     <g
-        fill="#e9a0a0"
-        fill-opacity="0.38"
+        fill="#D96B75"
+        fill-opacity="0.22"
         font-family="Arial, sans-serif"
-        font-size="20"
-        font-weight="normal">
+        font-size="18"
+        font-weight="normal"
+        text-anchor="middle">
 
-        <text x="20" y="65"
-              textLength="300"
-              lengthAdjust="spacingAndGlyphs"
-              transform="rotate(-35 170 55)">PT PUTRA MANDIRI INTIPACK</text>
+        <text x="220" y="65"
+              transform="rotate(-35 220 65)"
+              textLength="290"
+              lengthAdjust="spacingAndGlyphs">
+            PT PUTRA MANDIRI INTIPACK
+        </text>
 
-        <text x="20" y="175"
-              textLength="300"
-              lengthAdjust="spacingAndGlyphs"
-              transform="rotate(-35 170 165)">PT PUTRA MANDIRI INTIPACK</text>
+        <text x="220" y="165"
+              transform="rotate(-35 220 165)"
+              textLength="290"
+              lengthAdjust="spacingAndGlyphs">
+            PT PUTRA MANDIRI INTIPACK
+        </text>
 
-        <text x="20" y="285"
-              textLength="300"
-              lengthAdjust="spacingAndGlyphs"
-              transform="rotate(-35 170 275)">PT PUTRA MANDIRI INTIPACK</text>
-
-        <text x="20" y="395"
-              textLength="300"
-              lengthAdjust="spacingAndGlyphs"
-              transform="rotate(-35 170 385)">PT PUTRA MANDIRI INTIPACK</text>
+        <text x="220" y="265"
+              transform="rotate(-35 220 265)"
+              textLength="290"
+              lengthAdjust="spacingAndGlyphs">
+            PT PUTRA MANDIRI INTIPACK
+        </text>
 
     </g>
 </svg>
