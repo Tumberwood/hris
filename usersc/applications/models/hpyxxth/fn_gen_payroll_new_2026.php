@@ -3302,6 +3302,7 @@
                         ) AS gaji_terima
 
                     FROM payroll_final
+                    HAVING gaji_bersih <> 0
                     
         ');
         $rs_hpyemtd = $qs_hpyemtd->fetchAll();
@@ -3577,6 +3578,7 @@
                         ) AS gaji_terima
 
                     FROM payroll_final
+                    HAVING gaji_bersih <> 0
                     
         ');
         $rs_hpyemtd_pelatihan = $qs_hpyemtd_pelatihan->fetchAll();
