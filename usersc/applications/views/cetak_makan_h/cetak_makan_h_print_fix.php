@@ -166,20 +166,18 @@ $css = '
     .spacer {
         height: 8mm;
     }
+.watermark {
+    height: 4mm;
+    text-align: center;
+    vertical-align: middle;
+    color: #E8E8E8;
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 2px;
 
-    /*
-     * Watermark dibuat sebagai baris tersendiri agar kompatibel dengan mPDF
-     * dan tidak menimpa data penerima maupun area tanda tangan.
-     */
-    .watermark {
-        height: 4mm;
-        text-align: center;
-        vertical-align: middle;
-        color: #E8E8E8;
-        font-size: 30px;
-        font-weight: bold;
-        letter-spacing: 2px;
-    }
+    /* Watermark miring */
+    transform: rotate(-30deg);
+}
 
     .ttd {
         width: 100%;
