@@ -176,7 +176,7 @@ $css = '
         text-align: center;
         vertical-align: middle;
         color: #E8E8E8;
-        font-size: 16px;
+        font-size: 30px;
         font-weight: bold;
         letter-spacing: 2px;
     }
@@ -294,7 +294,7 @@ function buatKuponMakan($record)
             </tr>
 
             <tr>
-                <td class="watermark">PMI</td>
+                <td class="watermark">HRIS PMI</td>
             </tr>
 
             <tr>
