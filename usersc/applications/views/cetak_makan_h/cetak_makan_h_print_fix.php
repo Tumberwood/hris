@@ -87,32 +87,50 @@ $watermarkSvgPath = sys_get_temp_dir()
     . DIRECTORY_SEPARATOR
     . 'watermark_kupon_makan_' . uniqid('', true) . '.svg';
 
+
 $watermarkSvg = <<<'SVG'
 <svg xmlns="http://www.w3.org/2000/svg"
-     width="380" height="260"
-     viewBox="0 0 380 260">
+     width="460" height="340"
+     viewBox="0 0 460 340">
 
     <rect
         x="0"
         y="0"
-        width="380"
-        height="260"
+        width="460"
+        height="340"
         fill="none"/>
 
-    <text
-        x="40"
-        y="145"
-        transform="rotate(-35 190 130)"
+    <g
         fill="#e9a0a0"
         fill-opacity="0.38"
         font-family="Arial, sans-serif"
         font-size="20"
-        font-weight="normal"
-        textLength="300"
-        lengthAdjust="spacingAndGlyphs">PT PUTRA MANDIRI INTIPACK</text>
+        font-weight="normal">
 
+        <text x="20" y="65"
+              textLength="300"
+              lengthAdjust="spacingAndGlyphs"
+              transform="rotate(-35 170 55)">PT PUTRA MANDIRI INTIPACK</text>
+
+        <text x="20" y="175"
+              textLength="300"
+              lengthAdjust="spacingAndGlyphs"
+              transform="rotate(-35 170 165)">PT PUTRA MANDIRI INTIPACK</text>
+
+        <text x="20" y="285"
+              textLength="300"
+              lengthAdjust="spacingAndGlyphs"
+              transform="rotate(-35 170 275)">PT PUTRA MANDIRI INTIPACK</text>
+
+        <text x="20" y="395"
+              textLength="300"
+              lengthAdjust="spacingAndGlyphs"
+              transform="rotate(-35 170 385)">PT PUTRA MANDIRI INTIPACK</text>
+
+    </g>
 </svg>
 SVG;
+
 
 if (file_put_contents($watermarkSvgPath, $watermarkSvg) === false) {
     die('Gagal membuat aset watermark.');
