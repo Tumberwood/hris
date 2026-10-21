@@ -84,29 +84,17 @@ $watermarkSvgPath = sys_get_temp_dir()
 
 $watermarkSvg = <<<'SVG'
 <svg xmlns="http://www.w3.org/2000/svg"
-     width="1100" height="560" viewBox="0 0 1100 560">
-    <rect x="0" y="0" width="1100" height="560" fill="#ffffff" fill-opacity="0"/>
+     width="240" height="140" viewBox="0 0 240 140">
+    <rect width="240" height="140" fill="none"/>
     <g fill="#e9a0a0"
-       fill-opacity="0.38"
+       fill-opacity="0.42"
        font-family="Arial, sans-serif"
        font-size="22"
        font-weight="normal">
-        <text x="25" y="175"
-              transform="rotate(-35 275 175)"
-              textLength="500"
-              lengthAdjust="spacingAndGlyphs">PT PUTRA MANDIRI INTIPACK</text>
-        <text x="575" y="175"
-              transform="rotate(-35 825 175)"
-              textLength="500"
-              lengthAdjust="spacingAndGlyphs">PT PUTRA MANDIRI INTIPACK</text>
-        <text x="25" y="385"
-              transform="rotate(-35 275 385)"
-              textLength="500"
-              lengthAdjust="spacingAndGlyphs">PT PUTRA MANDIRI INTIPACK</text>
-        <text x="575" y="385"
-              transform="rotate(-35 825 385)"
-              textLength="500"
-              lengthAdjust="spacingAndGlyphs">PT PUTRA MANDIRI INTIPACK</text>
+        <text x="8" y="42"
+              transform="rotate(-35 8 42)">PT PUTRA MANDIRI INTIPACK</text>
+        <text x="128" y="112"
+              transform="rotate(-35 128 112)">PT PUTRA MANDIRI INTIPACK</text>
     </g>
 </svg>
 SVG;
@@ -161,9 +149,8 @@ $css = '
         border-collapse: collapse;
         table-layout: fixed;
         background-image: url("' . $watermarkSvgPath . '");
-        background-repeat: no-repeat;
+        background-repeat: repeat;
         background-position: center center;
-        background-size: 100% 100%;
     }
 
     .judul {
