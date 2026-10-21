@@ -1472,7 +1472,7 @@
 						type: "textarea"
 					},
 					{
-						label: "Pendidikan Terakhir",
+						label: "Pendidikan Terakhir <sup class='text-danger'>*<sup>", 
 						name: "hemxxmh.pendidikan",
 						type: "select",
 						placeholder : "Select",
@@ -1489,7 +1489,7 @@
 						name: "hemxxmh.jurusan",
 					},
 					{
-						label: "Agama",
+						label: "Agama <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.agama",
 						type: "select",
 						placeholder : "Select",
@@ -1574,6 +1574,16 @@
 			
 			edthemxxmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
+					
+					pendidikan = edthemxxmh.field('hemxxmh.pendidikan').val();
+					if(!pendidikan || pendidikan == ''){
+						edthemxxmh.field('hemxxmh.pendidikan').error( 'Wajib diisi!' );
+					}
+					
+					agama = edthemxxmh.field('hemxxmh.agama').val();
+					if(!agama || agama == ''){
+						edthemxxmh.field('hemxxmh.agama').error( 'Wajib diisi!' );
+					}
 					
 					id_gctxxmh_lahir = edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').val();
 					if(!id_gctxxmh_lahir || id_gctxxmh_lahir == ''){
