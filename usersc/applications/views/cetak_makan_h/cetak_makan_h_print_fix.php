@@ -1,4 +1,3 @@
-
 <?php
 
 include_once("../../../../users/init.php");
@@ -94,17 +93,32 @@ $css = '
         table-layout: fixed;
     }
 
+    /*
+     * Garis potong:
+     * - border kanan sel kiri membentuk garis vertikal di tengah halaman.
+     * - border bawah tiap baris membentuk garis horizontal antarbaris.
+     * Kupon tetap diberi jarak dari garis potong.
+     */
     .slot {
         width: 50%;
         height: 69mm;
         padding: 1mm;
         vertical-align: top;
+        border: none;
+    }
+
+    .slot-kiri {
+        border-right: 0.25mm dashed #999999;
+    }
+
+    .slot-baris {
+        border-bottom: 0.25mm dashed #999999;
     }
 
     .kupon {
         width: 100%;
         height: 66mm;
-        border: 0.3mm solid #000;
+        border: 0.3mm solid #000000;
         border-collapse: collapse;
         table-layout: fixed;
     }
@@ -120,7 +134,7 @@ $css = '
         text-align: center;
         font-size: 12px;
         padding: 0 0 1.5mm 0;
-        border-bottom: 0.25mm solid #000;
+        border-bottom: 0.25mm solid #000000;
     }
 
     .data {
@@ -150,14 +164,28 @@ $css = '
     }
 
     .spacer {
-        height: 12mm;
+        height: 8mm;
+    }
+
+    /*
+     * Watermark dibuat sebagai baris tersendiri agar kompatibel dengan mPDF
+     * dan tidak menimpa data penerima maupun area tanda tangan.
+     */
+    .watermark {
+        height: 4mm;
+        text-align: center;
+        vertical-align: middle;
+        color: #E8E8E8;
+        font-size: 16px;
+        font-weight: bold;
+        letter-spacing: 2px;
     }
 
     .ttd {
         width: 100%;
         border-collapse: collapse;
         table-layout: fixed;
-        border-top: 0.25mm solid #000;
+        border-top: 0.25mm solid #000000;
     }
 
     .ttd td {
@@ -184,6 +212,8 @@ $css = '
         width: 50%;
         height: 69mm;
         padding: 1mm;
+        vertical-align: top;
+        border: none;
     }
 </style>
 ';
@@ -224,7 +254,6 @@ function buatKuponMakan($record)
 
     return '
         <table class="kupon" cellpadding="0" cellspacing="0">
-
             <tr>
                 <td class="judul">
                     Kupon Makan
@@ -239,44 +268,33 @@ function buatKuponMakan($record)
 
             <tr>
                 <td style="padding: 1mm 1mm 0 1mm;">
-
                     <table class="data" cellpadding="0" cellspacing="0">
-
                         <tr>
-                            <td class="label">
-                                Tanggal Berlaku
-                            </td>
+                            <td class="label">Tanggal Berlaku</td>
                             <td class="separator">:</td>
                             <td class="value">' . $tanggal . '</td>
                         </tr>
-
                         <tr>
-                            <td class="label">
-                                Penerima Makan
-                            </td>
+                            <td class="label">Penerima Makan</td>
                             <td class="separator">:</td>
                             <td class="value">' . $penerima . '</td>
                         </tr>
-
                         <tr>
-                            <td class="label">
-                                Perusahaan
-                            </td>
+                            <td class="label">Perusahaan</td>
                             <td class="separator">:</td>
                             <td class="value">' . $perusahaan . '</td>
                         </tr>
-
                         <tr>
-                            <td class="label">
-                                PIC Tamu PMI
-                            </td>
+                            <td class="label">PIC Tamu PMI</td>
                             <td class="separator">:</td>
                             <td class="value">' . $pic_tamu . '</td>
                         </tr>
-
                     </table>
-
                 </td>
+            </tr>
+
+            <tr>
+                <td class="watermark">PMI</td>
             </tr>
 
             <tr>
@@ -285,22 +303,14 @@ function buatKuponMakan($record)
 
             <tr>
                 <td style="padding: 0;">
-
                     <table class="ttd" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td class="ttd-kiri">
-                                TTD Bagian HRD
-                            </td>
-
-                            <td class="ttd-kanan">
-                                TTD Bagian Kantin
-                            </td>
+                            <td class="ttd-kiri">TTD Bagian HRD</td>
+                            <td class="ttd-kanan">TTD Bagian Kantin</td>
                         </tr>
                     </table>
-
                 </td>
             </tr>
-
         </table>
     ';
 }
@@ -311,87 +321,71 @@ function buatKuponMakan($record)
 |--------------------------------------------------------------------------
 | 2 kolom x 4 baris.
 | Kupon ke-9 dan seterusnya dimulai di halaman baru.
-| Jika jumlah kupon ganjil, sel terakhir di kanan tetap kosong.
+| Garis putus-putus menjadi panduan potong vertikal dan horizontal.
 |--------------------------------------------------------------------------
 */
 
 $total_data = count($rs_cetak_makan_h);
 
 if ($total_data === 0) {
-
     $mpdf->WriteHTML(
         '<p style="text-align:center;">Data kupon makan tidak ditemukan.</p>',
         \Mpdf\HTMLParserMode::HTML_BODY
     );
-
 } else {
-
     $kelompok_data = array_chunk($rs_cetak_makan_h, 8);
 
     foreach ($kelompok_data as $halaman => $records) {
-
         if ($halaman > 0) {
             $mpdf->AddPage('P');
         }
 
         $html = '
-            <table
-                class="container"
-                width="100%"
-                cellpadding="0"
-                cellspacing="0"
-                style="
-                    width: 100%;
-                    table-layout: fixed;
-                    border-collapse: collapse;
-                "
-            >
+            <table class="container" width="100%" cellpadding="0" cellspacing="0"
+                style="width:100%; table-layout:fixed; border-collapse:collapse;">
                 <tbody>
         ';
 
         $jumlah_data = count($records);
 
         foreach ($records as $index => $record) {
-
-            // Buka baris untuk kolom kiri.
+            // Awal baris: setiap dua kupon.
             if ($index % 2 === 0) {
                 $html .= '<tr>';
             }
 
+            $kelas_slot = 'slot';
+            if ($index % 2 === 0) {
+                $kelas_slot .= ' slot-kiri';
+            }
+
+            // Garis horizontal di bawah setiap baris, kecuali baris terakhir.
+            if (floor($index / 2) < 3) {
+                $kelas_slot .= ' slot-baris';
+            }
+
             $html .= '
-                <td
-                    class="slot"
-                    width="50%"
-                    style="
-                        width: 50%;
-                        height: 69mm;
-                        padding: 1mm;
-                        vertical-align: top;
-                    "
-                >
+                <td class="' . $kelas_slot . '" width="50%"
+                    style="width:50%; height:69mm; padding:1mm; vertical-align:top;">
                     ' . buatKuponMakan($record) . '
                 </td>
             ';
 
-            // Tutup baris setiap dua kupon.
             if ($index % 2 === 1) {
                 $html .= '</tr>';
             }
         }
 
-        // Jika jumlah kupon ganjil, tambahkan kolom kanan kosong.
-        // Kupon terakhir tetap di kiri dan tidak melebar.
+        // Jika jumlah kupon ganjil, isi sel kanan terakhir dengan sel kosong.
         if ($jumlah_data % 2 !== 0) {
+            $kelas_kosong = 'slot-kosong';
+            if (floor(($jumlah_data - 1) / 2) < 3) {
+                $kelas_kosong .= ' slot-baris';
+            }
+
             $html .= '
-                <td
-                    class="slot-kosong"
-                    width="50%"
-                    style="
-                        width: 50%;
-                        height: 69mm;
-                        padding: 1mm;
-                    "
-                >
+                <td class="' . $kelas_kosong . '" width="50%"
+                    style="width:50%; height:69mm; padding:1mm;">
                     &nbsp;
                 </td>
                 </tr>

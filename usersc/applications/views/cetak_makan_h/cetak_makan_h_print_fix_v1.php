@@ -1,0 +1,421 @@
+
+<?php
+
+include_once("../../../../users/init.php");
+include("../../../../usersc/lib/DataTables.php");
+include("../../../../usersc/helpers/datatables_fn_debug.php");
+require '../../../../usersc/vendor/autoload.php';
+
+$id_cetak_makan_h = $_GET['id_cetak_makan_h'] ?? null;
+
+if (!$id_cetak_makan_h) {
+    die('ID cetak makan tidak ditemukan.');
+}
+
+/*
+|--------------------------------------------------------------------------
+| QUERY DATA
+|--------------------------------------------------------------------------
+*/
+
+$qs_cetak_makan_h = $db
+    ->raw()
+    ->bind(':id_cetak_makan_h', $id_cetak_makan_h)
+    ->exec('
+        SELECT
+            DATE_FORMAT(a.tanggal, "%d %b %Y") AS tanggal,
+            CONCAT(
+                CASE DAYOFWEEK(a.tanggal)
+                    WHEN 1 THEN "Minggu"
+                    WHEN 2 THEN "Senin"
+                    WHEN 3 THEN "Selasa"
+                    WHEN 4 THEN "Rabu"
+                    WHEN 5 THEN "Kamis"
+                    WHEN 6 THEN "Jumat"
+                    WHEN 7 THEN "Sabtu"
+                END,
+                ", ",
+                DATE_FORMAT(a.tanggal, "%d %M %Y")
+            ) AS tanggal_lengkap,
+            b.nama AS penerima,
+            b.perusahaan,
+            b.pic_tamu
+        FROM cetak_makan_h a
+        JOIN cetak_makan_d b
+            ON b.id_cetak_makan_h = a.id
+        WHERE a.id = :id_cetak_makan_h
+          AND a.is_active = 1
+          AND b.is_active = 1
+        ORDER BY b.id ASC
+    ');
+
+$rs_cetak_makan_h = $qs_cetak_makan_h->fetchAll();
+
+/*
+|--------------------------------------------------------------------------
+| MPDF
+|--------------------------------------------------------------------------
+*/
+
+$mpdf = new \Mpdf\Mpdf([
+    'mode'          => 'utf-8',
+    'format'        => 'A4',
+    'orientation'   => 'P',
+    'margin_left'   => 5,
+    'margin_right'  => 5,
+    'margin_top'    => 5,
+    'margin_bottom' => 5,
+    'margin_header' => 0,
+    'margin_footer' => 0,
+]);
+
+$mpdf->SetProtection(['print']);
+$mpdf->SetTitle('Kupon Makan');
+$mpdf->SetDisplayMode('fullpage');
+
+/*
+|--------------------------------------------------------------------------
+| CSS
+|--------------------------------------------------------------------------
+*/
+
+$css = '
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+    }
+
+    .container {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    .slot {
+        width: 50%;
+        height: 69mm;
+        padding: 1mm;
+        vertical-align: top;
+    }
+
+    .kupon {
+        width: 100%;
+        height: 66mm;
+        border: 0.3mm solid #000;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    .judul {
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 1.5mm 0 0.5mm 0;
+    }
+
+    .subjudul {
+        text-align: center;
+        font-size: 12px;
+        padding: 0 0 1.5mm 0;
+        border-bottom: 0.25mm solid #000;
+    }
+
+    .data {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    .data td {
+        font-size: 12px;
+        padding: 1mm 0.5mm;
+        vertical-align: middle;
+    }
+
+    .label {
+        width: 31%;
+    }
+
+    .separator {
+        width: 4%;
+        text-align: center;
+    }
+
+    .value {
+        width: 65%;
+        word-wrap: break-word;
+    }
+
+    .spacer {
+        height: 12mm;
+    }
+
+    .ttd {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        border-top: 0.25mm solid #000;
+    }
+
+    .ttd td {
+        height: 13mm;
+        padding: 0;
+        vertical-align: bottom;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .ttd-kiri {
+        width: 50%;
+        text-align: left;
+        padding-left: 1mm !important;
+    }
+
+    .ttd-kanan {
+        width: 50%;
+        text-align: right;
+        padding-right: 1mm !important;
+    }
+
+    .slot-kosong {
+        width: 50%;
+        height: 69mm;
+        padding: 1mm;
+    }
+</style>
+';
+
+$mpdf->WriteHTML($css, \Mpdf\HTMLParserMode::HEADER_CSS);
+
+/*
+|--------------------------------------------------------------------------
+| FUNGSI HTML KUPON
+|--------------------------------------------------------------------------
+*/
+
+function buatKuponMakan($record)
+{
+    $tanggal = htmlspecialchars(
+        $record['tanggal_lengkap'] ?? '',
+        ENT_QUOTES,
+        'UTF-8'
+    );
+
+    $penerima = htmlspecialchars(
+        $record['penerima'] ?? '',
+        ENT_QUOTES,
+        'UTF-8'
+    );
+
+    $perusahaan = htmlspecialchars(
+        $record['perusahaan'] ?? '',
+        ENT_QUOTES,
+        'UTF-8'
+    );
+
+    $pic_tamu = htmlspecialchars(
+        $record['pic_tamu'] ?? '',
+        ENT_QUOTES,
+        'UTF-8'
+    );
+
+    return '
+        <table class="kupon" cellpadding="0" cellspacing="0">
+
+            <tr>
+                <td class="judul">
+                    Kupon Makan
+                </td>
+            </tr>
+
+            <tr>
+                <td class="subjudul">
+                    Berlaku untuk 1 orang
+                </td>
+            </tr>
+
+            <tr>
+                <td style="padding: 1mm 1mm 0 1mm;">
+
+                    <table class="data" cellpadding="0" cellspacing="0">
+
+                        <tr>
+                            <td class="label">
+                                Tanggal Berlaku
+                            </td>
+                            <td class="separator">:</td>
+                            <td class="value">' . $tanggal . '</td>
+                        </tr>
+
+                        <tr>
+                            <td class="label">
+                                Penerima Makan
+                            </td>
+                            <td class="separator">:</td>
+                            <td class="value">' . $penerima . '</td>
+                        </tr>
+
+                        <tr>
+                            <td class="label">
+                                Perusahaan
+                            </td>
+                            <td class="separator">:</td>
+                            <td class="value">' . $perusahaan . '</td>
+                        </tr>
+
+                        <tr>
+                            <td class="label">
+                                PIC Tamu PMI
+                            </td>
+                            <td class="separator">:</td>
+                            <td class="value">' . $pic_tamu . '</td>
+                        </tr>
+
+                    </table>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td class="spacer">&nbsp;</td>
+            </tr>
+
+            <tr>
+                <td style="padding: 0;">
+
+                    <table class="ttd" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td class="ttd-kiri">
+                                TTD Bagian HRD
+                            </td>
+
+                            <td class="ttd-kanan">
+                                TTD Bagian Kantin
+                            </td>
+                        </tr>
+                    </table>
+
+                </td>
+            </tr>
+
+        </table>
+    ';
+}
+
+/*
+|--------------------------------------------------------------------------
+| CETAK MAKSIMAL 8 KUPON PER HALAMAN
+|--------------------------------------------------------------------------
+| 2 kolom x 4 baris.
+| Kupon ke-9 dan seterusnya dimulai di halaman baru.
+| Jika jumlah kupon ganjil, sel terakhir di kanan tetap kosong.
+|--------------------------------------------------------------------------
+*/
+
+$total_data = count($rs_cetak_makan_h);
+
+if ($total_data === 0) {
+
+    $mpdf->WriteHTML(
+        '<p style="text-align:center;">Data kupon makan tidak ditemukan.</p>',
+        \Mpdf\HTMLParserMode::HTML_BODY
+    );
+
+} else {
+
+    $kelompok_data = array_chunk($rs_cetak_makan_h, 8);
+
+    foreach ($kelompok_data as $halaman => $records) {
+
+        if ($halaman > 0) {
+            $mpdf->AddPage('P');
+        }
+
+        $html = '
+            <table
+                class="container"
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                style="
+                    width: 100%;
+                    table-layout: fixed;
+                    border-collapse: collapse;
+                "
+            >
+                <tbody>
+        ';
+
+        $jumlah_data = count($records);
+
+        foreach ($records as $index => $record) {
+
+            // Buka baris untuk kolom kiri.
+            if ($index % 2 === 0) {
+                $html .= '<tr>';
+            }
+
+            $html .= '
+                <td
+                    class="slot"
+                    width="50%"
+                    style="
+                        width: 50%;
+                        height: 69mm;
+                        padding: 1mm;
+                        vertical-align: top;
+                    "
+                >
+                    ' . buatKuponMakan($record) . '
+                </td>
+            ';
+
+            // Tutup baris setiap dua kupon.
+            if ($index % 2 === 1) {
+                $html .= '</tr>';
+            }
+        }
+
+        // Jika jumlah kupon ganjil, tambahkan kolom kanan kosong.
+        // Kupon terakhir tetap di kiri dan tidak melebar.
+        if ($jumlah_data % 2 !== 0) {
+            $html .= '
+                <td
+                    class="slot-kosong"
+                    width="50%"
+                    style="
+                        width: 50%;
+                        height: 69mm;
+                        padding: 1mm;
+                    "
+                >
+                    &nbsp;
+                </td>
+                </tr>
+            ';
+        }
+
+        $html .= '
+                </tbody>
+            </table>
+        ';
+
+        $mpdf->WriteHTML(
+            $html,
+            \Mpdf\HTMLParserMode::HTML_BODY
+        );
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| OUTPUT PDF
+|--------------------------------------------------------------------------
+*/
+
+$mpdf->Output('Kupon_Makan.pdf', 'I');
+
+?>
