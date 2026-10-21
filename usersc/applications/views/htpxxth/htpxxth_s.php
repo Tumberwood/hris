@@ -90,11 +90,11 @@
 		is_need_approval = 1;
 		// is_need_generate_kode = 1;
 
-		id_htpxxmh_old = 0;
+		var id_htpxxmh_old = 0;
 		var jenis_jam;
 		
 		id_heyxxmh = "<?php echo $_SESSION['str_arr_ha_heyxxmh']; ?>";
-		const id_hemxxmh_old = <?php echo (int) ($_SESSION['id_hemxxmh'] ?? 0); ?>;
+		var id_hemxxmh_old = <?php echo (int) ($_SESSION['id_hemxxmh'] ?? 0); ?>;
 		console.log(id_heyxxmh);
 
 		// BEGIN datepicker init
