@@ -89,6 +89,9 @@
 				Field::inst( 'hpyemtd.gaji_bpjs_tk' ),
 				Field::inst( 'hpyemtd.gaji_bpjs_kes' ),
 
+				Field::inst( 'hpyemtd.c_pot_upah' ),  
+				Field::inst( 'hpyemtd.c_pot_jam' ), 
+				
 				Field::inst( 'hetxxmh.nama' ),
 				Field::inst( 'hodxxmh.nama' ),
 				Field::inst( 'hevxxmh.nama' ),

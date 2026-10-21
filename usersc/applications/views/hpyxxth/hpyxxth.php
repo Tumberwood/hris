@@ -698,8 +698,10 @@
 													<th class="text-danger">11. Pot Makan</th>
 													<th class="text-danger">12. Pot Lain</th>
 													<th>13. Pendapatan Lain</th>
-													<th class="text-danger">14. Pot Upah Harian</th>
-													<th class="text-danger">15. Pot Upah Jam</th>
+													<th class="text-danger">14. Total Pot Upah (Hari)</th>
+													<th class="text-danger">14a. Pot Upah Harian</th>
+													<th class="text-danger">15. Total Pot Jam</th>
+													<th class="text-danger">15a. Pot Upah Jam</th>
 													<th>16. Gaji Bersih</th>
 													<th>17. Bulat</th>
 													<th>18. Diterima Karyawan</th>
@@ -738,6 +740,8 @@
 													<th id="kbm_tr30"></th>
 													<th id="kbm_tr31"></th>
 													<th id="kbm_tr32"></th>
+													<th id="kbm_tr33"></th>
+													<th id="kbm_tr34"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -774,8 +778,10 @@
 													<th>12. Tunjangan Rumah</th>
 													<th class="text-danger">13. Pot Lain</th>
 													<th>14. Pendapatan Lain</th>
-													<th class="text-danger">15. Pot Upah Harian</th>
-													<th class="text-danger">16. Pot Upah Jam</th>
+													<th class="text-danger">15. Total Pot Upah (Hari)</th>
+													<th class="text-danger">15a. Pot Upah Harian</th>
+													<th class="text-danger">16. Total Pot Jam</th>
+													<th class="text-danger">16a. Pot Upah Jam</th>
 													<th>17. Gaji Bersih</th>
 													<th>18. Bulat</th>
 													<th>19. Diterima Karyawan</th>
@@ -819,6 +825,8 @@
 													<th id="kbm_pelatihan_nganjuk33"></th>
 													<th id="kbm_pelatihan_nganjuk34"></th>												
 													<th id="kbm_pelatihan_nganjuk35"></th>												
+													<th id="kbm_pelatihan_nganjuk36"></th>												
+													<th id="kbm_pelatihan_nganjuk37"></th>												
 												</tr>
 											</tfoot>
 										</table>
@@ -2535,7 +2543,17 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.c_pot_upah",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right ",
+					},
+					{ 
 						data: "hpyemtd.pot_upah",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right ",
+					},
+					{ 
+						data: "hpyemtd.c_pot_jam",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right ",
 					},
@@ -2632,7 +2650,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 32; i++) {
+					for (var i = 10; i <= 34; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -3527,7 +3545,17 @@
 						class: "text-right "
 					},
 					{ 
+						data: "hpyemtd.c_pot_upah",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right ",
+					},
+					{ 
 						data: "hpyemtd.pot_upah",
+						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
+						class: "text-right ",
+					},
+					{ 
+						data: "hpyemtd.c_pot_jam",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
 						class: "text-right ",
 					},
@@ -3634,7 +3662,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 35; i++) {
+					for (var i = 10; i <= 37; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
