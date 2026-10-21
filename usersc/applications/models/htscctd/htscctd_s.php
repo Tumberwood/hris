@@ -76,7 +76,7 @@
 		->leftJoin( 'hemjbmh as hemjbmh_pengganti','hemjbmh_pengganti.id_hemxxmh','=','hemxxmh_pengganti.id' )
 		->where( 'htscctd.tanggal', $_POST['start_date'], '>=')
 		->where( 'htscctd.tanggal', $_POST['end_date'], '<=')
-		->where( 'hemxxmh.id_users', $_SESSION['user'])
+		->where( 'hemxxmh_pengaju.id_users', $_SESSION['user'])
 		;
 	
 	// do not erase
