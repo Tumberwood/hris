@@ -175,7 +175,8 @@
 						},
 						format: 'DD MMM YYYY'
 					},	{
-						label: "Employee <sup class='text-danger'>*<sup>",
+						label: "Employee",
+						// label: "Employee <sup class='text-danger'>*<sup>",
 						name: "htpxxth.id_hemxxmh",
 						type: "select2",
 						opts: {
@@ -285,6 +286,7 @@
 
 				edthtpxxth.field('htpxxth.jam_awal').hide();
 				edthtpxxth.field('htpxxth.jam_akhir').hide();
+				edthtpxxth.field('htpxxth.id_hemxxmh').disable();
 			});
 
 			edthtpxxth.on("open", function (e, mode, action) {
