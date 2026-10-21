@@ -84,18 +84,17 @@ $watermarkSvgPath = sys_get_temp_dir()
 
 $watermarkSvg = <<<'SVG'
 <svg xmlns="http://www.w3.org/2000/svg"
-     width="240" height="140" viewBox="0 0 240 140">
-    <rect width="240" height="140" fill="none"/>
-    <g fill="#e9a0a0"
-       fill-opacity="0.42"
-       font-family="Arial, sans-serif"
-       font-size="22"
-       font-weight="normal">
-        <text x="8" y="42"
-              transform="rotate(-35 8 42)">PT PUTRA MANDIRI INTIPACK</text>
-        <text x="128" y="112"
-              transform="rotate(-35 128 112)">PT PUTRA MANDIRI INTIPACK</text>
-    </g>
+     width="520" height="300" viewBox="0 0 520 300">
+    <rect width="520" height="300" fill="#ffffff" fill-opacity="0"/>
+    <text x="60" y="150"
+          transform="rotate(-35 260 150)"
+          fill="#e9a0a0"
+          fill-opacity="0.42"
+          font-family="Arial, sans-serif"
+          font-size="22"
+          font-weight="normal"
+          textLength="400"
+          lengthAdjust="spacingAndGlyphs">PT PUTRA MANDIRI INTIPACK</text>
 </svg>
 SVG;
 
