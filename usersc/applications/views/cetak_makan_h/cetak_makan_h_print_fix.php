@@ -166,18 +166,23 @@ $css = '
     .spacer {
         height: 8mm;
     }
-.watermark {
-    height: 4mm;
-    text-align: center;
-    vertical-align: middle;
-    color: #E8E8E8;
-    font-size: 30px;
-    font-weight: bold;
-    letter-spacing: 2px;
 
-    /* Watermark miring */
-    transform: rotate(-30deg);
-}
+    /*
+     * Watermark memakai SVG dengan teks yang diputar langsung.
+     * Rotasi dilakukan di SVG, bukan CSS transform, agar lebih konsisten di mPDF.
+     */
+    .watermark {
+        height: 12mm;
+        padding: 0;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .watermark svg {
+        display: block;
+        width: 100%;
+        height: 12mm;
+    }
 
     .ttd {
         width: 100%;
@@ -292,7 +297,20 @@ function buatKuponMakan($record)
             </tr>
 
             <tr>
-                <td class="watermark">HRIS PMI</td>
+                <td class="watermark">
+                    <svg width="100%" height="12mm" viewBox="0 0 100 12"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <text
+                            x="50"
+                            y="9"
+                            text-anchor="middle"
+                            font-family="Arial"
+                            font-size="10"
+                            font-weight="bold"
+                            fill="#E8E8E8"
+                            transform="rotate(-25 50 6)">HRIS PMI</text>
+                    </svg>
+                </td>
             </tr>
 
             <tr>
