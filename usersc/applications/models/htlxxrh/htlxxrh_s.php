@@ -10,9 +10,7 @@
 	$where = " AND htlxxrh.tanggal BETWEEN '" . $start_date . "' AND '" . $end_date . "'";
 	
 	$id_hemxxmh = $_SESSION['id_hemxxmh'];
-	if ($id_hemxxmh > 0) {
-		$where = $where . " AND htlxxrh.id_hemxxmh = " . $id_hemxxmh;
-	}
+	$where = $where . " AND htlxxrh.id_hemxxmh = " . $id_hemxxmh;
 	
 	// Your SQL query
 	$sql = "SELECT
