@@ -167,18 +167,17 @@ $css = '
         height: 8mm;
     }
 
-    /*
-     * Watermark dibuat sebagai baris tersendiri agar kompatibel dengan mPDF
-     * dan tidak menimpa data penerima maupun area tanda tangan.
-     */
+    /* Watermark logo PNG transparan */
     .watermark {
-        height: 4mm;
+        height: 12mm;
+        padding: 0;
         text-align: center;
         vertical-align: middle;
-        color: #E8E8E8;
-        font-size: 30px;
-        font-weight: bold;
-        letter-spacing: 2px;
+    }
+
+    .watermark img {
+        width: 18mm;
+        height: 18mm;
     }
 
     .ttd {
@@ -294,7 +293,9 @@ function buatKuponMakan($record)
             </tr>
 
             <tr>
-                <td class="watermark">HRIS PMI</td>
+                <td class="watermark">
+                    <img src="../../../../usersc/files/uploads/hs.png">
+                </td>
             </tr>
 
             <tr>
