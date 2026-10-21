@@ -168,20 +168,17 @@ $css = '
     }
 
     /*
-     * Watermark memakai SVG dengan teks yang diputar langsung.
-     * Rotasi dilakukan di SVG, bukan CSS transform, agar lebih konsisten di mPDF.
+     * Watermark dibuat sebagai baris tersendiri agar kompatibel dengan mPDF
+     * dan tidak menimpa data penerima maupun area tanda tangan.
      */
     .watermark {
-        height: 12mm;
-        padding: 0;
+        height: 4mm;
         text-align: center;
         vertical-align: middle;
-    }
-
-    .watermark svg {
-        display: block;
-        width: 100%;
-        height: 12mm;
+        color: #E8E8E8;
+        font-size: 30px;
+        font-weight: bold;
+        letter-spacing: 2px;
     }
 
     .ttd {
@@ -297,20 +294,7 @@ function buatKuponMakan($record)
             </tr>
 
             <tr>
-                <td class="watermark">
-                    <svg width="100%" height="12mm" viewBox="0 0 100 12"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <text
-                            x="50"
-                            y="9"
-                            text-anchor="middle"
-                            font-family="Arial"
-                            font-size="10"
-                            font-weight="bold"
-                            fill="#E8E8E8"
-                            transform="rotate(-25 50 6)">HRIS PMI</text>
-                    </svg>
-                </td>
+                <td class="watermark">HRIS PMI</td>
             </tr>
 
             <tr>
