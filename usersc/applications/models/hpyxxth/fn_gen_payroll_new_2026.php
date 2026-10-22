@@ -508,14 +508,44 @@
                             FROM (
                                 SELECT
                                     a.id_hemxxmh,
-                                    id_hevgrmh,
-                                    id_heyxxmd,
-                                    id_hesxxmh,
-                                    IF(
-                                        a.tanggal_keluar IS NULL,
-                                        TIMESTAMPDIFF(MONTH, a.tanggal_masuk, :tanggal_akhir) / 12,
-                                        TIMESTAMPDIFF(MONTH, a.tanggal_masuk, a.tanggal_keluar) / 12
-                                    ) AS masa_kerja_year
+
+                                    CASE
+                                        WHEN COALESCE((
+                                            SELECT b.id_hevgrmh_awal
+                                            FROM hemjbrd AS b
+                                            WHERE b.id_hemxxmh = a.id_hemxxmh
+                                            AND b.tanggal_awal <= :tanggal_akhir
+                                            ORDER BY b.tanggal_awal DESC
+                                            LIMIT 1
+                                        ), 0) <> 0
+                                        AND COALESCE((
+                                            SELECT b.id_hevgrmh_awal
+                                            FROM hemjbrd AS b
+                                            WHERE b.id_hemxxmh = a.id_hemxxmh
+                                            AND b.tanggal_awal <= :tanggal_akhir
+                                            ORDER BY b.tanggal_awal DESC
+                                            LIMIT 1
+                                        ), 0) <> a.id_hevgrmh
+                                        THEN (
+                                            SELECT b.id_hevgrmh_awal
+                                            FROM hemjbrd AS b
+                                            WHERE b.id_hemxxmh = a.id_hemxxmh
+                                            AND b.tanggal_awal <= :tanggal_akhir
+                                            ORDER BY b.tanggal_awal DESC
+                                            LIMIT 1
+                                        )
+                                        ELSE a.id_hevgrmh
+                                    END AS id_hevgrmh,
+
+                                    a.id_heyxxmd,
+                                    a.id_hesxxmh,
+
+                                    TIMESTAMPDIFF(
+                                        MONTH,
+                                        a.tanggal_masuk,
+                                        COALESCE(a.tanggal_keluar, :tanggal_akhir)
+                                    ) / 12 AS masa_kerja_year
+
                                 FROM hemjbmh AS a
                                 GROUP BY a.id_hemxxmh
                             ) AS job
