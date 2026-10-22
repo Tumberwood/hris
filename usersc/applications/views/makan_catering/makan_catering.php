@@ -74,19 +74,19 @@
 									Tanggal
 								</th>
 
-								<th colspan="2" class="text-center">
+								<th colspan="3" class="text-center">
 									Shift 1
 								</th>
 
-								<th colspan="2" class="text-center">
+								<th colspan="3" class="text-center">
 									Shift 2
 								</th>
 
-								<th colspan="2" class="text-center">
+								<th colspan="3" class="text-center">
 									Shift 3
 								</th>
 
-								<th colspan="2" class="text-center">
+								<th colspan="3" class="text-center">
 									Total
 								</th>
 
