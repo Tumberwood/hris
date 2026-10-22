@@ -51,169 +51,197 @@ $qs_data_sql = $db
     ->raw()
     ->bind(':start_date', $start_date)
     ->bind(':end_date', $end_date)
-    ->exec('
-        SELECT
-            DATE_FORMAT(x.tanggal, "%d %b %Y") AS tanggal,
+    ->exec('SELECT
+                DATE_FORMAT(x.tanggal, "%d %b %Y") AS tanggal,
 
-            /* =========================
-               HARGA CATERING
-               ========================= */
-            MAX(
-                CASE
-                    WHEN x.sub = "KARYAWAN"
-                    THEN x.harga_catering
-                    ELSE 0
-                END
-            ) AS harga_catering_kary,
+                /* =========================
+                HARGA CATERING
+                ========================= */
+                5500 AS harga_catering_kary,
 
-            MAX(
-                CASE
-                    WHEN x.sub = "STAFF"
-                    THEN x.harga_catering
-                    ELSE 0
-                END
-            ) AS harga_catering_staff,
-
-
-            /* =========================
-               SHIFT 1
-               ========================= */
-            SUM(
-                x.shift = 1
-                AND x.sub = "KARYAWAN"
-                AND x.is_makan = 1
-            ) AS shift1_kary,
-
-            SUM(
-                x.shift = 1
-                AND x.sub = "STAFF"
-                AND x.is_makan = 1
-            ) AS shift1_staff,
-
-
-            /* =========================
-               SHIFT 2
-               ========================= */
-            SUM(
-                x.shift = 2
-                AND x.sub = "KARYAWAN"
-                AND x.is_makan = 1
-            ) AS shift2_kary,
-
-            SUM(
-                x.shift = 2
-                AND x.sub = "STAFF"
-                AND x.is_makan = 1
-            ) AS shift2_staff,
-
-
-            /* =========================
-               SHIFT 3
-               ========================= */
-            SUM(
-                x.shift = 3
-                AND x.sub = "KARYAWAN"
-                AND x.is_makan = 1
-            ) AS shift3_kary,
-
-            SUM(
-                x.shift = 3
-                AND x.sub = "STAFF"
-                AND x.is_makan = 1
-            ) AS shift3_staff,
-
-
-            /* =========================
-               TOTAL KARYAWAN
-               ========================= */
-            SUM(
-                x.sub = "KARYAWAN"
-                AND x.is_makan = 1
-            ) AS total_kary,
-
-
-            /* =========================
-               TOTAL STAFF
-               ========================= */
-            SUM(
-                x.sub = "STAFF"
-                AND x.is_makan = 1
-            ) AS total_staff,
-
-
-            /* =========================
-               GRAND TOTAL
-               ========================= */
-            SUM(
-                x.is_makan = 1
-            ) AS grand_total
-
-        FROM
-        (
-            SELECT
-                a.tanggal,
-                d.nama AS sub,
-                a.is_makan,
+                5500 AS harga_catering_staff,
+                5500 AS harga_catering_hl,
 
 
                 /* =========================
-                   HARGA CATERING
-                   ========================= */
-                COALESCE(
-                    (
-                        SELECT
-                            p.nominal
-                        FROM htpr_hemxxmh p
-                        WHERE p.id_hpcxxmh = 34
-                            AND p.id_hemxxmh = b.id
-                            AND p.tanggal_efektif <= a.tanggal
-                            AND p.is_active = 1
-                        ORDER BY
-                            p.tanggal_efektif DESC
-                        LIMIT 1
-                    ),
-                    0
-                ) AS harga_catering,
+                SHIFT 1
+                ========================= */
+                SUM(
+                    x.shift = 1
+                    AND x.sub <> "STAFF"
+                    AND x.jam_makan IS NOT NULL
+                ) AS shift1_kary,
+
+                SUM(
+                    x.shift = 1
+                    AND x.sub = "STAFF"
+                    AND x.jam_makan IS NOT NULL
+                ) AS shift1_staff,
+
+                IFNULL(hl.shift1_hl, 0) AS shift1_hl,
 
 
                 /* =========================
-                   SHIFT
-                   ========================= */
-                CASE
-                    WHEN a.st_jadwal LIKE "PAGI%"
-                        THEN 1
+                SHIFT 2
+                ========================= */
+                SUM(
+                    x.shift = 2
+                    AND x.sub <> "STAFF"
+                    AND x.jam_makan IS NOT NULL
+                ) AS shift2_kary,
 
-                    WHEN a.st_jadwal LIKE "SIANG%"
-                    OR a.st_jadwal LIKE "SORE%"
-                        THEN 2
+                SUM(
+                    x.shift = 2
+                    AND x.sub = "STAFF"
+                    AND x.jam_makan IS NOT NULL
+                ) AS shift2_staff,
 
-                    WHEN a.st_jadwal LIKE "MALAM%"
-                        THEN 3
+                IFNULL(hl.shift2_hl, 0) AS shift2_hl,
 
-                    ELSE NULL
-                END AS shift
 
-            FROM htsprrd a
+                /* =========================
+                SHIFT 3
+                ========================= */
+                SUM(
+                    x.shift = 3
+                    AND x.sub <> "STAFF"
+                    AND x.jam_makan IS NOT NULL
+                ) AS shift3_kary,
 
-            INNER JOIN hemxxmh b
-                ON b.id = a.id_hemxxmh
+                SUM(
+                    x.shift = 3
+                    AND x.sub = "STAFF"
+                    AND x.jam_makan IS NOT NULL
+                ) AS shift3_staff,
 
-            INNER JOIN hemjbmh c
-                ON c.id_hemxxmh = a.id_hemxxmh
+                IFNULL(hl.shift3_hl, 0) AS shift3_hl,
 
-            INNER JOIN heyxxmd d
-                ON d.id = c.id_hesxxmh
 
-            WHERE a.tanggal BETWEEN :start_date AND :end_date
-                AND d.id IN (2, 3)
+                /* =========================
+                TOTAL KARYAWAN
+                ========================= */
+                SUM(
+                    x.sub <> "STAFF"
+                    AND x.jam_makan IS NOT NULL
+                ) AS total_kary,
 
-        ) x
 
-        GROUP BY
-            x.tanggal
+                /* =========================
+                TOTAL STAFF
+                ========================= */
+                SUM(
+                    x.sub = "STAFF"
+                    AND x.jam_makan IS NOT NULL
+                ) AS total_staff,
 
-        ORDER BY
-            x.tanggal
+                
+                (
+                    IFNULL(hl.shift1_hl, 0)
+                    + IFNULL(hl.shift2_hl, 0)
+                    + IFNULL(hl.shift3_hl, 0)
+                ) AS total_hl,
+
+
+                /* =========================
+                GRAND TOTAL
+                ========================= */
+                SUM(
+                    x.jam_makan IS NOT NULL
+                ) 
+                +
+                
+                (
+                    IFNULL(hl.shift1_hl, 0)
+                    + IFNULL(hl.shift2_hl, 0)
+                    + IFNULL(hl.shift3_hl, 0)
+                )
+
+                AS grand_total
+
+
+            FROM
+            (
+                SELECT
+                    a.tanggal,
+                    d.nama AS sub,
+                    a.jam_makan,
+
+
+                    /* =========================
+                    HARGA CATERING
+                    ========================= */
+                    COALESCE(
+                        (
+                            SELECT
+                                p.nominal
+                            FROM htpr_hemxxmh p
+                            WHERE p.id_hpcxxmh = 34
+                                AND p.id_hemxxmh = b.id
+                                AND p.tanggal_efektif <= a.tanggal
+                                AND p.is_active = 1
+                            ORDER BY
+                                p.tanggal_efektif DESC
+                            LIMIT 1
+                        ),
+                        0
+                    ) AS harga_catering,
+
+
+                    /* =========================
+                    SHIFT
+                    ========================= */
+                    CASE
+                        WHEN a.st_jadwal LIKE "PAGI%" 
+                            OR a.jam_awal_lembur_libur BETWEEN "06:00:00" AND "08:00:00" 
+                            THEN 1
+
+                        WHEN a.st_jadwal LIKE "SIANG%"
+                        OR a.st_jadwal LIKE "SORE%"
+                        OR a.jam_awal_lembur_libur = "15:00:00"
+                            THEN 2
+
+                        WHEN a.st_jadwal LIKE "MALAM%"
+                            THEN 3
+
+                        ELSE NULL
+                    END AS shift
+
+
+                FROM htsprrd a
+
+                INNER JOIN hemxxmh b
+                    ON b.id = a.id_hemxxmh
+
+                INNER JOIN hemjbmh c
+                    ON c.id_hemxxmh = a.id_hemxxmh
+
+                INNER JOIN heyxxmd d
+                    ON d.id = c.id_heyxxmd
+
+                WHERE a.tanggal BETWEEN :start_date AND :end_date
+                GROUP BY a.id_hemxxmh, a.tanggal
+
+                    -- AND d.id IN (2, 3)
+
+            ) x
+
+            LEFT JOIN (
+                SELECT
+                    tanggal,
+                    SUM(CASE WHEN shift = 1 THEN IFNULL(jumlah, 0) ELSE 0 END) AS shift1_hl,
+                    SUM(CASE WHEN shift = 2 THEN IFNULL(jumlah, 0) ELSE 0 END) AS shift2_hl,
+                    SUM(CASE WHEN shift = 3 THEN IFNULL(jumlah, 0) ELSE 0 END) AS shift3_hl
+                FROM makan_catering_hl_umum
+                WHERE tanggal BETWEEN :start_date AND :end_date
+                GROUP BY tanggal
+            ) hl ON hl.tanggal = x.tanggal
+
+            GROUP BY
+                x.tanggal
+
+
+            ORDER BY
+                x.tanggal
     ');
 
 $rs_data_sql = $qs_data_sql->fetchAll();
@@ -242,21 +270,26 @@ function n($value)
 |--------------------------------------------------------------------------
 */
 
-$total_kary      = 0;
-$total_staff     = 0;
-$grand_total     = 0;
-$harga_kary      = 0;
-$harga_staff     = 0;
+$total_kary       = 0;
+$total_staff      = 0;
+$total_hl         = 0;
+$grand_total      = 0;
+$harga_kary       = 0;
+$harga_staff      = 0;
+$harga_hl         = 0;
 $total_biaya_kary = 0;
 $total_biaya_staff = 0;
+$total_biaya_hl   = 0;
 
 foreach ($rs_data_sql as $row) {
 
     $kary  = (int)($row['total_kary'] ?? 0);
     $staff = (int)($row['total_staff'] ?? 0);
+    $hl    = (int)($row['total_hl'] ?? 0);
 
     $total_kary  += $kary;
     $total_staff += $staff;
+    $total_hl    += $hl;
 
     $grand_total += (int)($row['grand_total'] ?? 0);
 
@@ -266,6 +299,10 @@ foreach ($rs_data_sql as $row) {
 
     if ((float)($row['harga_catering_staff'] ?? 0) > 0) {
         $harga_staff = (float)$row['harga_catering_staff'];
+    }
+
+    if ((float)($row['harga_catering_hl'] ?? 0) > 0) {
+        $harga_hl = (float)$row['harga_catering_hl'];
     }
 }
 
@@ -282,7 +319,8 @@ foreach ($rs_data_sql as $row) {
 
 $total_biaya_kary  = $total_kary * $harga_kary;
 $total_biaya_staff = $total_staff * $harga_staff;
-$total_biaya       = $total_biaya_kary + $total_biaya_staff;
+$total_biaya_hl    = $total_hl * $harga_hl;
+$total_biaya       = $total_biaya_kary + $total_biaya_staff + $total_biaya_hl;
 
 
 /*
@@ -510,11 +548,11 @@ $html = '
         <tr>
             <th class="tanggal" rowspan="2">Tanggal</th>
 
-            <th colspan="2">Shift 1</th>
-            <th colspan="2">Shift 2</th>
-            <th colspan="2">Shift 3</th>
+            <th colspan="3">Shift 1</th>
+            <th colspan="3">Shift 2</th>
+            <th colspan="3">Shift 3</th>
 
-            <th colspan="2">Total</th>
+            <th colspan="3">Total</th>
 
             <th class="grand-col" rowspan="2">
                 Grand Total
@@ -524,15 +562,19 @@ $html = '
         <tr>
             <th class="shift-col">Kary</th>
             <th class="shift-col">Staff</th>
+            <th class="shift-col">HL</th>
 
             <th class="shift-col">Kary</th>
             <th class="shift-col">Staff</th>
+            <th class="shift-col">HL</th>
 
             <th class="shift-col">Kary</th>
             <th class="shift-col">Staff</th>
+            <th class="shift-col">HL</th>
 
             <th class="total-col">Kary</th>
             <th class="total-col">Staff</th>
+            <th class="total-col">HL</th>
         </tr>
 
 
@@ -547,15 +589,19 @@ if (!empty($rs_data_sql)) {
 
         $shift1_kary  = (int)($row['shift1_kary'] ?? 0);
         $shift1_staff = (int)($row['shift1_staff'] ?? 0);
+        $shift1_hl    = (int)($row['shift1_hl'] ?? 0);
 
         $shift2_kary  = (int)($row['shift2_kary'] ?? 0);
         $shift2_staff = (int)($row['shift2_staff'] ?? 0);
+        $shift2_hl    = (int)($row['shift2_hl'] ?? 0);
 
         $shift3_kary  = (int)($row['shift3_kary'] ?? 0);
         $shift3_staff = (int)($row['shift3_staff'] ?? 0);
+        $shift3_hl    = (int)($row['shift3_hl'] ?? 0);
 
         $total_kary_row  = (int)($row['total_kary'] ?? 0);
         $total_staff_row = (int)($row['total_staff'] ?? 0);
+        $total_hl_row    = (int)($row['total_hl'] ?? 0);
 
         $grand_total_row = (int)($row['grand_total'] ?? 0);
 
@@ -566,15 +612,19 @@ if (!empty($rs_data_sql)) {
 
             <td class="number">' . n($shift1_kary) . '</td>
             <td class="number">' . n($shift1_staff) . '</td>
+            <td class="number">' . n($shift1_hl) . '</td>
 
             <td class="number">' . n($shift2_kary) . '</td>
             <td class="number">' . n($shift2_staff) . '</td>
+            <td class="number">' . n($shift2_hl) . '</td>
 
             <td class="number">' . n($shift3_kary) . '</td>
             <td class="number">' . n($shift3_staff) . '</td>
+            <td class="number">' . n($shift3_hl) . '</td>
 
             <td class="number">' . n($total_kary_row) . '</td>
             <td class="number">' . n($total_staff_row) . '</td>
+            <td class="number">' . n($total_hl_row) . '</td>
 
             <td class="number">' . n($grand_total_row) . '</td>
 
@@ -586,7 +636,7 @@ if (!empty($rs_data_sql)) {
 
     $html .= '
         <tr>
-            <td colspan="10" style="height: 12mm;">
+            <td colspan="14" style="height: 12mm;">
                 Tidak ada data.
             </td>
         </tr>
@@ -641,6 +691,22 @@ $html .= '
     </tr>
 
     <tr>
+        <td class="footer-label">
+            Jumlah Makan HL
+        </td>
+
+        <td class="footer-separator">:</td>
+
+        <td class="footer-value">
+            ' . n($total_hl) . '
+            x
+            ' . n($harga_hl) . '
+            =
+            ' . n($total_biaya_hl) . '
+        </td>
+    </tr>
+
+    <tr>
         <td class="footer-label footer-total">
             Total
         </td>
@@ -651,6 +717,8 @@ $html .= '
             ' . n($total_biaya_kary) . '
             +
             ' . n($total_biaya_staff) . '
+            +
+            ' . n($total_biaya_hl) . '
             =
             ' . n($total_biaya) . '
         </td>
