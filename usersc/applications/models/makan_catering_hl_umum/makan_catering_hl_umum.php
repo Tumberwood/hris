@@ -65,7 +65,6 @@
 			->where( 'makan_catering_hl_umum.is_active', 1);
 	}
 	
-	include( "makan_catering_hl_umum_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
 	$editor
