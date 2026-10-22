@@ -1978,7 +1978,7 @@
 						$table_name  = $nama_tabel;
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
-						$arr_buttons_action 	= ['create', 'edit', 'view','nonaktif_h','approve'];
+						$arr_buttons_action 	= ['view'];
 						$arr_buttons_approve 	= [];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
