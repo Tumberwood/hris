@@ -339,6 +339,7 @@ $mpdf = new \Mpdf\Mpdf([
     'format'        => 'A4',
 ]);
 
+$mpdf->AddPage('L');
 $mpdf->SetProtection(['print']);
 $mpdf->SetTitle('Rekap Makan Catering');
 $mpdf->SetDisplayMode('fullpage');
