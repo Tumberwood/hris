@@ -1905,7 +1905,7 @@
 				},
 				order: [[ 1, "desc" ]],
 				responsive: false,
-				scrollx: true,
+				scrollX: true,
 				fixedColumns:   {
 					left: 2
 				},
