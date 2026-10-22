@@ -265,7 +265,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>NIKK</th>
+                                <th>NIKKK</th>
                                 <th>Kode Finger</th>
                                 <th>No KTP</th>
                                 <th>Nama</th>
