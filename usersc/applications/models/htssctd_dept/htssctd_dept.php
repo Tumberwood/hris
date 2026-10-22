@@ -31,6 +31,7 @@ $qs_payroll = $db
             LEFT JOIN (
                 SELECT 
                     sh.id,
+                    sh.kode,
                     sh.kode AS shift
                 FROM htsxxmh AS sh
             ) AS b ON b.id = a.id_htsxxmh
