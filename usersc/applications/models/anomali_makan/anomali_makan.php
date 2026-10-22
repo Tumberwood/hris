@@ -181,7 +181,7 @@
 						AND a.tanggal_jam >= pr.tanggaljam_awal_t1
 						AND a.tanggal_jam BETWEEN
 							pr.jam_makan
-							AND DATE_ADD(pr.jam_makan, INTERVAL 2 MINUTE)
+							AND DATE_ADD(pr.jam_makan, INTERVAL 60 MINUTE)
 					)
 
 					AND (
