@@ -795,7 +795,7 @@ footerCallback: function (row, data, start, end, display) {
     // =====================================================
     var harga_karyawan = 0;
     var harga_staff = 0;
-    var harga_hl = 0;
+    var harga_hl = 5500;
 
     if (rows.length > 0) {
         harga_karyawan = toNumber(rows[0].harga_catering_kary);
