@@ -1901,13 +1901,13 @@
 				columns: [
 					{ data: "hemxxmh.id",visible:false },
 					{ data: "hemxxmh.kode" },
-					{ data: "hemxxmh.kode_finger" },
+					{ data: "hemxxmh.kode_finger",visible:false  },
 					{ 
 						data: "hemdcmh.ktp_no",
 						render: function(data, type, row) {
 							if (data == null) return '';
 							return data.toString();
-						}
+						},visible:false 
 
 					},
 					{ data: "hemxxmh.nama" }, //4
@@ -1918,14 +1918,14 @@
 					{ data: "hetxxmh.nama" },	//jab
 					{ data: "hevgrmh.nama" },	//grup
 					{ data: "hobxxmh.nama" },	//Bagian
-					{ data: "hevxxmh.nama" },	//Skala
-					{ data: "heyxxmd.nama" },	//Sub Tipe
-					{ data: "hesxxmh.nama" },	//Status
-					{ data: "heyxxmh.nama" },	//Tipe
+					{ data: "hevxxmh.nama",visible:false  },	//Skala
+					{ data: "heyxxmd.nama",visible:false  },	//Sub Tipe
+					{ data: "hesxxmh.nama",visible:false  },	//Status
+					{ data: "heyxxmh.nama",visible:false  },	//Tipe
 					{ data: "holxxmd_2.nama" },	//Area Kerja
 
-					{ data: "hemjbmh.tanggal_masuk" },
-					{ data: "hemjbmh.tanggal_akhir_kontrak" },
+					{ data: "hemjbmh.tanggal_masuk",visible:false  },
+					{ data: "hemjbmh.tanggal_akhir_kontrak",visible:false  },
 					{ 
 						data: "hemjbmh.grup_hk",
 						render: function (data){
@@ -1941,9 +1941,9 @@
 						}
 					},
 					{ data: "hemxxmh.gender" },
-					{ data: "gtxpkmh.kode" },
-					{ data: "hemxxmh.perkawinan" },
-					{ data: "hemxxmh.jumlah_anak" },
+					{ data: "gtxpkmh.kode",visible:false  },
+					{ data: "hemxxmh.perkawinan",visible:false  },
+					{ data: "hemxxmh.jumlah_anak",visible:false  },
 					{ 
 						data: "hemjbmh.is_harian_lepas",
 						render: function (data){
@@ -1952,7 +1952,7 @@
 							}else if(data == 1){
 								return 'Ya';
 							}
-						}
+						},visible:false 
 					},
 					{ 
 						data: "hemxxmh.is_active",
@@ -1964,7 +1964,7 @@
 							}else if(data == -9){
 								return '<span class="text-danger">Data Error</span>';
 							}
-						}
+						},visible:false 
 					}
 				],
 				buttons: [

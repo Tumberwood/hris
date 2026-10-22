@@ -57,6 +57,7 @@ if($_SESSION['user'] < 101){
 	$_SESSION['where_data_permission'] 	  = 0;
 
 	$_SESSION['id_hemxxmh'] = 1;
+	$_SESSION['id_hodxxmh'] = 1;
 	$_SESSION['str_arr_ha_heyxxmh'] = 0;
 	$_SESSION['str_arr_ha_heyxxmd'] = 0;
 	
@@ -83,8 +84,10 @@ if($_SESSION['user'] < 101){
 		// BEGIN get data hemxxmh
 		$qs_hemxxmh = "
 			SELECT 
-				id
+				a.id,
+				b.id_hodxxmh
 			FROM hemxxmh a
+			JOIN hemjbmh b ON b.id_hemxxmh = a.id
 			WHERE 
 				a.id_users = " . $_SESSION['user'];
 		$query_hemxxmh = $db->query($qs_hemxxmh);
@@ -92,6 +95,7 @@ if($_SESSION['user'] < 101){
 		if($c_ha_gcpxxmh  > 0){
 			$rs_hemxxmh = $query_gcpxxmh->results();
 			$_SESSION['id_hemxxmh'] = $rs_hemxxmh[0]>id;
+			$_SESSION['id_hodxxmh'] = $rs_hemxxmh[0]>id_hodxxmh;
 		}
 		// END get data hemxxmh
 		

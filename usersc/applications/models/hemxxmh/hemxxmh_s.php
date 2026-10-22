@@ -223,7 +223,7 @@
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
 		->leftJoin( 'hevgrmh','hevgrmh.id','=','hemjbmh.id_hevgrmh' )
 		->leftJoin( 'gtxpkmh','gtxpkmh.id','=','hemdcmh.id_gtxpkmh' )
-		->where( 'hemxxmh.id_users', $_SESSION['user'])
+		->where( 'hemjbmh.id_hodxxmh', $_SESSION['id_hodxxmh'])
 		;
 	
 	// do not erase
