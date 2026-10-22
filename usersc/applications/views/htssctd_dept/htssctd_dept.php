@@ -55,7 +55,7 @@
 				<h3 class="text-info">Format file harus dalam .xlsx dan disesuaikan dengan format template</h3>
 				<hr>
 				<div>
-					<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/template_jadwal_satpam.xlsx');">
+					<button type="button" class="btn btn-success" onclick="window.open('../../../files/uploads/template_upload_jadwal_dept.xlsx');">
 						<i class="fa fa-download"></i>&nbsp;&nbsp;<span class="bold">Template</span>
 					</button>
 				</div>
