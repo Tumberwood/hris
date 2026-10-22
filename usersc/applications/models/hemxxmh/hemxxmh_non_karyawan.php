@@ -73,6 +73,7 @@
 			Field::inst( 'hemxxmh.kode_finger' ),
 			Field::inst( 'hemxxmh.is_active' ),
 			Field::inst( 'hemxxmh.is_tukar' ),
+			Field::inst( 'hemxxmh.asal_non_karyawan' ),
 			Field::inst( 'hemxxmh.created_by' )
 				->set( Field::SET_CREATE )
 				->setValue($_SESSION['user']),

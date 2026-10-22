@@ -53,31 +53,7 @@
 								<editor-field name="hemxxmh.nama"></editor-field>
 							</div>
 							<div class="col-lg-6">
-								<editor-field name="hemxxmh.kode"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
 								<editor-field name="hemxxmh.kode_finger"></editor-field>
-							</div>
-							<!-- <div class="col-lg-6">
-								<editor-field name="hemdcmh.ktp_no"></editor-field>
-							</div> -->
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.no_bpjs_tk"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.no_bpjs_kes"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_hovxxmh"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_hodxxmh"></editor-field>
 							</div>
 						</div>
 						<div class="row">
@@ -85,147 +61,7 @@
 								<editor-field name="hemjbmh.id_hobxxmh"></editor-field>
 							</div>
 							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_hosxxmh"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_hevgrmh"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_hevxxmh"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_hetxxmh"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_heyxxmd"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_heyxxmh"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_hesxxmh"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_holxxmd_2"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.id_gtxpkmh"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.perkawinan"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.jumlah_anak"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.tanggal_masuk"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.tanggal_akhir_kontrak"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.grup_hk"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.jumlah_grup"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.is_pot_makan"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.is_npwp"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.is_tukar"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.npwp_no"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.npwp_alamat"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.gender"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.id_gctxxmh_lahir"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.tanggal_lahir"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.alamat"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.ktp_alamat"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.id_gctxxmh_domisili"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.id_gctxxmh_ktp"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.domisili_desa"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.ktp_desa"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.domisili_kecamatan"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.ktp_kecamatan"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.id_files_foto"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.is_non_karyawan"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="status_aktif"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.keterangan"></editor-field>
+								<editor-field name="hemxxmh.asal_non_karyawan"></editor-field>
 							</div>
 						</div>
 					</div>
@@ -236,32 +72,10 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Kode</th>
-                                <th>Kode Finger</th>
-                                <!-- <th>No KTP</th> -->
                                 <th>Nama</th>
-                                
-								<th>Divisi</th>
-								<th>Department</th>
-								<th>Unit Kerja</th>
-								<th>Jabatan</th>
-								<th>Grup Jabatan</th>
+                                <th>Kode Finger</th>
 								<th>Bagian</th>
-								<th>Skala Upah</th>
-								<th>Sub Tipe</th>
-								<th>Status</th>
-								<th>Tipe</th>
-								<th>Area Kerja</th>
-
-                                <th>Tanggal Join</th>
-                                <th>Tanggal Akhir Kontrak</th>
-                                <th>Grup HK</th>
-                                <th>Gender</th>
-                                <th>PTKP</th>
-                                <th>Status Pernikahan</th>
-                                <th>Jumlah Anak</th>
-                                <th>Harian Lepas</th>
-                                <th>Aktif</th>
+								<th>Asal</th>
                             </tr>
                         </thead>
                     </table>
@@ -862,6 +676,17 @@
 							},
 						}
 					},
+
+					{
+						label: "Asal <sup class='text-danger'>*<sup>", 
+						name: "hemxxmh.asal_non_karyawan",
+						type: "select",
+						placeholder : "Select",
+						options: [
+							{ "label": "Hitech", "value": "Hitech" },
+							{ "label": "PSG", "value": "PSG" },
+						]
+					},
 					{
 						label: "Skala Upah",
 						name: "hemjbmh.id_hevxxmh",
@@ -1448,58 +1273,6 @@
 			
 			edthemxxmh.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
-					// BEGIN of validasi hemjbmh.id_hevgrmh 
-					id_hevgrmh = edthemxxmh.field('hemjbmh.id_hevgrmh').val();
-					if(!id_hevgrmh || id_hevgrmh == ''){
-						edthemxxmh.field('hemjbmh.id_hevgrmh').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.id_hevgrmh 
-
-					id_gctxxmh_lahir = edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').val();
-					if(!id_gctxxmh_lahir || id_gctxxmh_lahir == ''){
-						edthemxxmh.field('hemxxmh.id_gctxxmh_lahir').error( 'Wajib diisi!' );
-					}
-					
-					gender = edthemxxmh.field('hemxxmh.gender').val();
-					if(!gender || gender == ''){
-						edthemxxmh.field('hemxxmh.gender').error( 'Wajib diisi!' );
-					}
-
-					tanggal_lahir = edthemxxmh.field('hemxxmh.tanggal_lahir').val();
-					if(!tanggal_lahir || tanggal_lahir == ''){
-						edthemxxmh.field('hemxxmh.tanggal_lahir').error( 'Wajib diisi!' );
-					}
-					
-					// BEGIN of validasi hemxxmh.kode 
-					kode = edthemxxmh.field('hemxxmh.kode').val();
-					if(!kode || kode == ''){
-						edthemxxmh.field('hemxxmh.kode').error( 'Wajib diisi!' );
-					}
-					
-					// BEGIN of cek unik hemxxmh.kode 
-					if(action == 'create'){
-						id_hemxxmh = 0;
-					}
-					
-					$.ajax( {
-						url: '../../../helpers/validate_fn_unique.php',
-						dataType: 'json',
-						type: 'POST',
-						async: false,
-						data: {
-							table_name: 'hemxxmh',
-							nama_field: 'kode',
-							nama_field_value: '"'+kode+'"',
-							id_transaksi: id_hemxxmh
-						},
-						success: function ( json ) {
-							if(json.data.count == 1){
-								edthemxxmh.field('hemxxmh.kode').error( 'Data tidak boleh kembar!' );
-							}
-						}
-					} );
-					// END of cek unik hemxxmh.kode 
-					// END of validasi hemxxmh.kode 
 
 					// BEGIN of validasi hemxxmh.nama 
 					nama = edthemxxmh.field('hemxxmh.nama').val();
@@ -1508,59 +1281,14 @@
 					}
 					// END of validasi hemxxmh.nama 
 					
-					// BEGIN of validasi hemxxmh.is_pot_makan 
-					is_pot_makan = edthemxxmh.field('hemxxmh.is_pot_makan').val();
-					if(!is_pot_makan || is_pot_makan == ''){
-						edthemxxmh.field('hemxxmh.is_pot_makan').error( 'Wajib diisi!' );
+
+					// BEGIN of validasi hemxxmh.asal_non_karyawan 
+					asal_non_karyawan = edthemxxmh.field('hemxxmh.asal_non_karyawan').val();
+					if(!asal_non_karyawan || asal_non_karyawan == ''){
+						edthemxxmh.field('hemxxmh.asal_non_karyawan').error( 'Wajib diisi!' );
 					}
-					// END of validasi hemxxmh.is_pot_makan 
+					// END of validasi hemxxmh.asal_non_karyawan 
 					
-					// BEGIN of validasi hemxxmh.is_tukar 
-					is_tukar = edthemxxmh.field('hemxxmh.is_tukar').val();
-					if(!is_tukar || is_tukar == ''){
-						edthemxxmh.field('hemxxmh.is_tukar').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemxxmh.is_tukar 
-
-					// BEGIN of validasi hemdcmh.ktp_no 
-					// ktp_no = edthemxxmh.field('hemdcmh.ktp_no').val();
-					// if(!ktp_no || ktp_no == ''){
-					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Wajib diisi!' );
-					// }
-					// // validasi min atau max angka
-					// if(ktp_no <= 0 ){
-					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus > 0' );
-					// }
-					
-					// // validasi angka
-					// if(isNaN(ktp_no) ){
-					// 	edthemxxmh.field('hemdcmh.ktp_no').error( 'Inputan harus berupa Angka!' );
-					// }
-					// END of validasi hemxxmh.kode_finger 
-
-					// BEGIN of validasi hemdcmh.no_bpjs_kes 
-					no_bpjs_kes = edthemxxmh.field('hemdcmh.no_bpjs_kes').val();
-					if(!no_bpjs_kes || no_bpjs_kes == ''){
-						edthemxxmh.field('hemdcmh.no_bpjs_kes').error( 'Wajib diisi!' );
-					}
-					// validasi min atau max angka
-					if(no_bpjs_kes <= 0 ){
-						edthemxxmh.field('hemdcmh.no_bpjs_kes').error( 'Inputan harus > 0' );
-					}
-					
-					// validasi angka
-					if(isNaN(no_bpjs_kes) ){
-						edthemxxmh.field('hemdcmh.no_bpjs_kes').error( 'Inputan harus berupa Angka!' );
-					}
-					// END of validasi hemxxmh.no_bpjs_kes 
-
-					// BEGIN of validasi hemdcmh.no_bpjs_tk 
-					no_bpjs_tk = edthemxxmh.field('hemdcmh.no_bpjs_tk').val();
-					if(!no_bpjs_tk || no_bpjs_tk == ''){
-						edthemxxmh.field('hemdcmh.no_bpjs_tk').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemxxmh.no_bpjs_tk 
-
 					// BEGIN of validasi hemxxmh.kode_finger 
 					kode_finger = edthemxxmh.field('hemxxmh.kode_finger').val();
 					if(!kode_finger || kode_finger == ''){
@@ -1577,34 +1305,6 @@
 					}
 					// END of validasi hemxxmh.kode_finger 
 
-					// BEGIN of validasi hemjbmh.id_hovxxmh 
-					id_hovxxmh = edthemxxmh.field('hemjbmh.id_hovxxmh').val();
-					if(!id_hovxxmh || id_hovxxmh == ''){
-						edthemxxmh.field('hemjbmh.id_hovxxmh').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.id_hovxxmh 
-
-					// BEGIN of validasi hemjbmh.id_hodxxmh 
-					id_hodxxmh = edthemxxmh.field('hemjbmh.id_hodxxmh').val();
-					if(!id_hodxxmh || id_hodxxmh == ''){
-						edthemxxmh.field('hemjbmh.id_hodxxmh').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.id_hodxxmh 
-
-					// BEGIN of validasi hemjbmh.id_hosxxmh 
-					id_hosxxmh = edthemxxmh.field('hemjbmh.id_hosxxmh').val();
-					if(!id_hosxxmh || id_hosxxmh == ''){
-						edthemxxmh.field('hemjbmh.id_hosxxmh').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.id_hosxxmh 
-
-					// BEGIN of validasi hemjbmh.id_hevxxmh 
-					// id_hevxxmh = edthemxxmh.field('hemjbmh.id_hevxxmh').val();
-					// if(!id_hevxxmh || id_hevxxmh == ''){
-					// 	edthemxxmh.field('hemjbmh.id_hevxxmh').error( 'Wajib diisi!' );
-					// }
-					// END of validasi hemjbmh.id_hevxxmh 
-
 					// BEGIN of validasi hemjbmh.id_hobxxmh 
 					id_hobxxmh = edthemxxmh.field('hemjbmh.id_hobxxmh').val();
 					if(!id_hobxxmh || id_hobxxmh == ''){
@@ -1612,80 +1312,6 @@
 					}
 					// END of validasi hemjbmh.id_hobxxmh 
 
-					is_npwp = edthemxxmh.field('hemdcmh.is_npwp').val();
-					if(!is_npwp || is_npwp == ''){
-						edthemxxmh.field('hemdcmh.is_npwp').error( 'Wajib diisi!' );
-					}
-					if (is_npwp == 1) {
-						// BEGIN of validasi hemdcmh.npwp_no 
-						npwp_no = edthemxxmh.field('hemdcmh.npwp_no').val();
-						if(!npwp_no || npwp_no == ''){
-							edthemxxmh.field('hemdcmh.npwp_no').error( 'Wajib diisi!' );
-						}
-								
-						if(isNaN(npwp_no) ){
-							edthemxxmh.field('hemdcmh.npwp_no').error( 'Inputan harus berupa Angka!' );
-						}
-						// END of validasi hemdcmh.npwp_no 
-
-						// BEGIN of validasi hemdcmh.npwp_alamat 
-						npwp_alamat = edthemxxmh.field('hemdcmh.npwp_alamat').val();
-						if(!npwp_alamat || npwp_alamat == ''){
-							edthemxxmh.field('hemdcmh.npwp_alamat').error( 'Wajib diisi!' );
-						}
-						// END of validasi hemdcmh.npwp_alamat 
-					}
-
-					// BEGIN of validasi hemjbmh.id_heyxxmd 
-					id_heyxxmd = edthemxxmh.field('hemjbmh.id_heyxxmd').val();
-					if(!id_heyxxmd || id_heyxxmd == ''){
-						edthemxxmh.field('hemjbmh.id_heyxxmd').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.id_heyxxmd 
-
-					// BEGIN of validasi hemjbmh.jumlah_grup 
-					jumlah_grup = edthemxxmh.field('hemjbmh.jumlah_grup').val();
-					if(!jumlah_grup || jumlah_grup == ''){
-						edthemxxmh.field('hemjbmh.jumlah_grup').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.jumlah_grup 
-
-					// BEGIN of validasi hemjbmh.id_hesxxmh 
-					id_hesxxmh = edthemxxmh.field('hemjbmh.id_hesxxmh').val();
-					if(!id_hesxxmh || id_hesxxmh == ''){
-						edthemxxmh.field('hemjbmh.id_hesxxmh').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.id_hesxxmh 
-
-					// BEGIN of validasi hemjbmh.id_holxxmd_2 
-					id_holxxmd_2 = edthemxxmh.field('hemjbmh.id_holxxmd_2').val();
-					if(!id_holxxmd_2 || id_holxxmd_2 == ''){
-						edthemxxmh.field('hemjbmh.id_holxxmd_2').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.id_holxxmd_2 
-
-					// BEGIN of validasi hemdcmh.id_gtxpkmh 
-					id_gtxpkmh = edthemxxmh.field('hemdcmh.id_gtxpkmh').val();
-					if(!id_gtxpkmh || id_gtxpkmh == ''){
-						edthemxxmh.field('hemdcmh.id_gtxpkmh').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemdcmh.id_gtxpkmh 
-
-					// BEGIN of validasi hemjbmh.tanggal_masuk 
-					tanggal_masuk = edthemxxmh.field('hemjbmh.tanggal_masuk').val();
-					if(!tanggal_masuk || tanggal_masuk == ''){
-						edthemxxmh.field('hemjbmh.tanggal_masuk').error( 'Wajib diisi!' );
-					}
-					// END of validasi hemjbmh.tanggal_masuk 
-
-					if (action == 'create') {
-						// BEGIN of validasi hemjbmh.grup_hk 
-						grup_hk = edthemxxmh.field('hemjbmh.grup_hk').val();
-						if(!grup_hk || grup_hk == ''){
-							edthemxxmh.field('hemjbmh.grup_hk').error( 'Wajib diisi!' );
-						}
-						// END of validasi hemjbmh.grup_hk 
-					}
 				}
 				
 				if ( edthemxxmh.inError() ) {

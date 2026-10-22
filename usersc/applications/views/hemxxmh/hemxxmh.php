@@ -1910,72 +1910,10 @@
 				},
 				columns: [
 					{ data: "hemxxmh.id",visible:false },
-					{ data: "hemxxmh.kode" },
+					{ data: "hemxxmh.nama" }, //nama
 					{ data: "hemxxmh.kode_finger" },
-					{ 
-						data: "hemdcmh.ktp_no",
-						render: function(data, type, row) {
-							if (data == null) return '';
-							return data.toString();
-						}
-
-					},
-					{ data: "hemxxmh.nama" }, //4
-					
-					{ data: "hovxxmh.nama" },	//divisi
-					{ data: "hodxxmh.nama" },	//dep
-					{ data: "hosxxmh.nama" },	//unit
-					{ data: "hetxxmh.nama" },	//jab
-					{ data: "hevgrmh.nama" },	//grup
 					{ data: "hobxxmh.nama" },	//Bagian
-					{ data: "hevxxmh.nama" },	//Skala
-					{ data: "heyxxmd.nama" },	//Sub Tipe
-					{ data: "hesxxmh.nama" },	//Status
-					{ data: "heyxxmh.nama" },	//Tipe
-					{ data: "holxxmd_2.nama" },	//Area Kerja
-
-					{ data: "hemjbmh.tanggal_masuk" },
-					{ data: "hemjbmh.tanggal_akhir_kontrak" },
-					{ 
-						data: "hemjbmh.grup_hk",
-						render: function (data){
-							if (data == 0){
-								return '';
-							}else if(data == 1){
-								return '5HK';
-							}else if(data == 2){
-								return '6HK';
-							}else{
-								return '<span class="text-danger"> Data Invalid</span>';
-							}
-						}
-					},
-					{ data: "hemxxmh.gender" },
-					{ data: "gtxpkmh.kode" },
-					{ data: "hemxxmh.perkawinan" },
-					{ data: "hemxxmh.jumlah_anak" },
-					{ 
-						data: "hemjbmh.is_harian_lepas",
-						render: function (data){
-							if (data == 0){
-								return 'Tidak';
-							}else if(data == 1){
-								return 'Ya';
-							}
-						}
-					},
-					{ 
-						data: "hemxxmh.is_active",
-						render: function (data){
-							if (data == 0){
-								return '<i class="fa fa-remove text-danger"></i>';
-							}else if(data == 1){
-								return '<i class="fa fa-check text-navy"></i>';
-							}else if(data == -9){
-								return '<span class="text-danger">Data Error</span>';
-							}
-						}
-					}
+					{ data: "hemxxmh.asal_non_karyawan" }, //asal
 				],
 				buttons: [
 
