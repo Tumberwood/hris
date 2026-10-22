@@ -51,7 +51,9 @@ $qs_payroll = $db
             -- AND j.jumlah_grup = 2
             AND j.id_hodxxmh = :id_hodxxmh
             GROUP BY a.id_hemxxmh, a.tanggal
-            ORDER BY a.tanggal;
+            ORDER BY a.tanggal
+            HAVING peg IS NOT NULL
+            ;
 
     ');
 
