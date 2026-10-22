@@ -915,6 +915,8 @@
                             JOIN bpjs_d b ON b.id_bpjs_h = a.id
                             WHERE a.tanggal_awal = :tanggal_awal
                             AND a.tanggal_akhir = :tanggal_akhir
+                            AND a.is_active = 1
+                            AND b.is_active = 1
                         ) update_bpjs ON update_bpjs.id_hemxxmh = p.id_hemxxmh
                     ),
                     pot_makan AS (
@@ -2583,6 +2585,8 @@
                             JOIN bpjs_d b ON b.id_bpjs_h = a.id
                             WHERE a.tanggal_awal = :tanggal_awal
                             AND a.tanggal_akhir = :tanggal_akhir
+                            AND a.is_active = 1
+                            AND b.is_active = 1
                         ) update_bpjs ON update_bpjs.id_hemxxmh = p.id_hemxxmh
                     ),
                     pot_makan AS (
