@@ -176,7 +176,9 @@
 		->leftJoin( 'htsxxmh','htsxxmh.id','=','htssctd.id_htsxxmh' )
 		->where( 'htssctd.tanggal', $start_date , '>=' )
 		->where( 'htssctd.tanggal', $end_date , '<=' )
-		->where( 'hemxxmh.id_users', $_SESSION['user'])
+		// ->where( 'hemxxmh.id_users', $_SESSION['user'])
+		
+		->where('hemjbmh.id_hodxxmh', $_SESSION['id_hodxxmh'] ?? 0)
 		;
 
 	// do not erase
