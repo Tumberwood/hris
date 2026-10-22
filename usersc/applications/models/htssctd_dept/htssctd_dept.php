@@ -19,6 +19,7 @@ $qs_payroll = $db
 	->bind(':id_hodxxmh', $id_hodxxmh)
     ->exec('SELECT
                 CONCAT(h.kode, " - ", h.nama) AS peg,
+                hod.nama dep,
                 a.id_hemxxmh,
                 b.kode,
                 shift,
@@ -28,6 +29,7 @@ $qs_payroll = $db
             FROM htssctd AS a
             LEFT JOIN hemxxmh AS h ON h.id = a.id_hemxxmh
             LEFT JOIN hemjbmh AS j ON j.id_hemxxmh = a.id_hemxxmh
+            LEFT JOIN hodxxmh AS hod ON hod.id = j.id_hodxxmh
             LEFT JOIN (
                 SELECT 
                     sh.id,
@@ -63,12 +65,14 @@ if (count($rs_payroll) > 0) {
         $id_hemxxmh = $row['id_hemxxmh'];
         $peg = $row['peg'];
         $bagian = $row['bagian'];
+        $dep = $row['dep'];
         $grup = $row['grup'];
 		// var_dump($peg);
         if (!isset($pivotedData[$id_hemxxmh])) {
             $pivotedData[$id_hemxxmh] = [
                 'id_hemxxmh' => $id_hemxxmh,
                 'Nama' => $peg,
+                'Departemen' => $dep,
                 'Bagian' => $bagian,
                 'Grup' => $grup
             ];
