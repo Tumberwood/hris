@@ -81,6 +81,8 @@
 				'hemxxmh.tanggal_lahir as tanggal_lahir',
 				'hemxxmh.gender as gender',
 				'hemxxmh.agama as agama',
+				'hemxxmh.pendidikan as pendidikan',
+				'hemxxmh.jurusan as jurusan',
 				'hemxxmh.is_tukar as is_tukar',
 				'hemxxmh.is_pot_makan as is_pot_makan',
 				'hemxxmh.no_rekening as no_rekening',
