@@ -44,6 +44,7 @@
 						5500 AS harga_catering_kary,
 
 						5500 AS harga_catering_staff,
+						5500 AS harga_catering_hl,
 
 
 						/* =========================
