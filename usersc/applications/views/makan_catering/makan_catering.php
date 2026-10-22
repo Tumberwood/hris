@@ -106,11 +106,7 @@
 								</th>
 
 								<th class="text-center">
-									Karyawan
-								</th>
-
-								<th class="text-center">
-									Staff
+									HL Umum
 								</th>
 
 								<th class="text-center">
@@ -122,11 +118,31 @@
 								</th>
 
 								<th class="text-center">
+									HL Umum
+								</th>
+
+								<th class="text-center">
 									Karyawan
 								</th>
 
 								<th class="text-center">
 									Staff
+								</th>
+
+								<th class="text-center">
+									HL Umum
+								</th>
+
+								<th class="text-center">
+									Karyawan
+								</th>
+
+								<th class="text-center">
+									Staff
+								</th>
+
+								<th class="text-center">
+									HL Umum
 								</th>
 							</tr>
 						</thead>
@@ -657,6 +673,13 @@
 							return data ?? 0;
 						}
 					},
+					{
+						data: "shift1_hl",
+						className: "text-center",
+						render: function(data) {
+							return data ?? 0;
+						}
+					},
 
 					// =========================
 					// SHIFT 2
@@ -675,6 +698,13 @@
 							return data ?? 0;
 						}
 					},
+					{
+						data: "shift2_hl",
+						className: "text-center",
+						render: function(data) {
+							return data ?? 0;
+						}
+					},
 
 					// =========================
 					// SHIFT 3
@@ -688,6 +718,13 @@
 					},
 					{
 						data: "shift3_staff",
+						className: "text-center",
+						render: function(data) {
+							return data ?? 0;
+						}
+					},
+					{
+						data: "shift3_hl",
 						className: "text-center",
 						render: function(data) {
 							return data ?? 0;
