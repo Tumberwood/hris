@@ -47,7 +47,7 @@ $qs_payroll = $db
 
             WHERE YEAR(a.tanggal) = YEAR(:start_date) AND MONTH(a.tanggal) = MONTH(:start_date) AND a.is_active = 1 
             -- AND j.jumlah_grup = 2
-            AND hemjbmh.id_hodxxmh = :id_hodxxmh
+            AND j.id_hodxxmh = :id_hodxxmh
             GROUP BY a.id_hemxxmh, a.tanggal
             ORDER BY a.tanggal;
 
