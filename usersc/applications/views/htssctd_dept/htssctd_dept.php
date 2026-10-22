@@ -83,16 +83,6 @@
 			<div class="ibox-content">
 				<div class="table-responsive">
 					<h3 id="judul"></h3>
-					<div class="alert alert-info alert-dismissable">
-						<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-						<b>Penjelasan Kode Shift:</b>
-						<ul>
-							<li><b>L &nbsp = &nbsp </b> OFF</li>
-							<li><b>1 &nbsp = &nbsp </b> PAGI 07:00-15:00 (NEW)</li>
-							<li><b>2 &nbsp = &nbsp </b> SORE 15:00-23:00 (NEW)</li>
-							<li><b>3 &nbsp = &nbsp </b> MALAM 23:00-07:00 (NEW)</li>
-						</ul>
-					</div>
                 	<div id="searchPanes1"></div>
 					<div id="tabel_atas"></div>
 				</div> <!-- end of table -->
@@ -151,7 +141,7 @@
 						});
 						
 						$.ajax( {
-							url: "../../models/htssctd_dept_fn_upload/htssctd_dept_fn_upload.php",
+							url: "../../models/htssctd_dept/htssctd_dept_fn_upload.php",
 							type: 'POST',
 							dataType: 'json',
 							data: fd_staff,
@@ -194,7 +184,7 @@
 				$('#judul').html("Tabel Upload Jadwal Bulan " + tanggal);
 				
 				$.ajax({
-					url: "../../models/htssctd_dept_fn_upload/htssctd_dept_fn_upload.php",
+					url: "../../models/htssctd_dept/htssctd_dept_fn_upload.php",
 					dataType: 'json',
 					type: 'POST',
 					data: {
