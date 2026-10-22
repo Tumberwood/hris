@@ -151,115 +151,78 @@
 						</tbody>
 
 <tfoot>
-
     <!-- TOTAL PORSI -->
     <tr class="font-weight-bold">
-        <td class="text-right">
-            Total
-        </td>
+        <td class="text-right">Total</td>
 
         <!-- Shift 1 -->
-        <td class="text-center">
-            <span id="sum_shift1_kary">0</span>
-        </td>
-
-        <td class="text-center">
-            <span id="sum_shift1_staff">0</span>
-        </td>
+        <td class="text-center"><span id="sum_shift1_kary">0</span></td>
+        <td class="text-center"><span id="sum_shift1_staff">0</span></td>
+        <td class="text-center"><span id="sum_shift1_hl">0</span></td>
 
         <!-- Shift 2 -->
-        <td class="text-center">
-            <span id="sum_shift2_kary">0</span>
-        </td>
-
-        <td class="text-center">
-            <span id="sum_shift2_staff">0</span>
-        </td>
+        <td class="text-center"><span id="sum_shift2_kary">0</span></td>
+        <td class="text-center"><span id="sum_shift2_staff">0</span></td>
+        <td class="text-center"><span id="sum_shift2_hl">0</span></td>
 
         <!-- Shift 3 -->
-        <td class="text-center">
-            <span id="sum_shift3_kary">0</span>
-        </td>
-
-        <td class="text-center">
-            <span id="sum_shift3_staff">0</span>
-        </td>
+        <td class="text-center"><span id="sum_shift3_kary">0</span></td>
+        <td class="text-center"><span id="sum_shift3_staff">0</span></td>
+        <td class="text-center"><span id="sum_shift3_hl">0</span></td>
 
         <!-- Total -->
-        <td class="text-center">
-            <span id="sum_total_kary">0</span>
-        </td>
-
-        <td class="text-center">
-            <span id="sum_total_staff">0</span>
-        </td>
+        <td class="text-center"><span id="sum_total_kary">0</span></td>
+        <td class="text-center"><span id="sum_total_staff">0</span></td>
+        <td class="text-center"><span id="sum_total_hl">0</span></td>
 
         <!-- Grand Total -->
-        <td class="text-center">
-            <span id="sum_grand_total">0</span>
-        </td>
+        <td class="text-center"><span id="sum_grand_total">0</span></td>
     </tr>
-
 
     <!-- JUDUL REKAP -->
     <tr>
-        <td colspan="10" class="bg-light font-weight-bold">
+        <td colspan="14" class="bg-light font-weight-bold">
             <i class="fa fa-calculator mr-1"></i>
             LAPORAN CATERING <span id="periode_catering"></span>
         </td>
     </tr>
 
-
     <!-- KARYAWAN -->
     <tr>
-        <td colspan="5" class="font-weight-bold">
+        <td colspan="7" class="font-weight-bold">
             Jumlah Makan Karyawan
         </td>
-
-        <td colspan="2" class="text-center font-weight-bold">
+        <td colspan="4" class="text-center font-weight-bold">
             <span id="footer_jumlah_karyawan">0</span>
             x <span id="footer_harga_catering_karyawan">0</span>
         </td>
-
         <td colspan="3" class="text-right font-weight-bold">
-            Rp
-            <span id="footer_harga_karyawan">0</span>
+            Rp <span id="footer_harga_karyawan">0</span>
         </td>
     </tr>
-
 
     <!-- STAFF -->
     <tr>
-        <td colspan="5" class="font-weight-bold">
+        <td colspan="7" class="font-weight-bold">
             Jumlah Makan Staff
         </td>
-
-        <td colspan="2" class="text-center font-weight-bold">
+        <td colspan="4" class="text-center font-weight-bold">
             <span id="footer_jumlah_staff">0</span>
             x <span id="footer_harga_catering_staff">0</span>
         </td>
-
         <td colspan="3" class="text-right font-weight-bold">
-            Rp
-            <span id="footer_harga_staff">0</span>
+            Rp <span id="footer_harga_staff">0</span>
         </td>
     </tr>
-
 
     <!-- GRAND TOTAL HARGA -->
     <tr>
-        <td colspan="7" class="font-weight-bold">
-            Total
-        </td>
-
+        <td colspan="11" class="font-weight-bold">Total</td>
         <td colspan="3" class="text-right font-weight-bold">
-            Rp
-            <span id="footer_total">0</span>
+            Rp <span id="footer_total">0</span>
         </td>
     </tr>
-
 </tfoot>
-
 					</table>
 				</div>
 			</div>
