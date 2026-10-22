@@ -214,6 +214,21 @@
             Rp <span id="footer_harga_staff">0</span>
         </td>
     </tr>
+    </tr>
+
+    <!-- HL -->
+    <tr>
+        <td colspan="7" class="font-weight-bold">
+            Jumlah Makan HL
+        </td>
+        <td colspan="4" class="text-center font-weight-bold">
+            <span id="footer_jumlah_hl">0</span>
+            x <span id="footer_harga_catering_hl">0</span>
+        </td>
+        <td colspan="3" class="text-right font-weight-bold">
+            Rp <span id="footer_harga_hl">0</span>
+        </td>
+    </tr>
 
     <!-- GRAND TOTAL HARGA -->
     <tr>
@@ -613,6 +628,7 @@
 					dataSrc: 'data.lembur'
 				},
 				order: [[ 0, "asc" ]],
+				responsive: false,
 				columns: [
 					{
 						data: "tanggal",
@@ -969,6 +985,31 @@ footerCallback: function (row, data, start, end, display) {
     // =====================================================
     $('#footer_harga_staff').html(
         formatNumber(total_harga_staff)
+    );
+
+
+
+    // =====================================================
+    // JUMLAH MAKAN hl
+    // =====================================================
+    $('#footer_jumlah_hl').html(
+        formatNumber(total_hl)
+    );
+
+
+    // =====================================================
+    // HARGA CATERING hl
+    // =====================================================
+    $('#footer_harga_catering_hl').html(
+        formatNumber(harga_hl)
+    );
+
+
+    // =====================================================
+    // TOTAL HARGA hl
+    // =====================================================
+    $('#footer_harga_hl').html(
+        formatNumber(total_harga_hl)
     );
 
 
