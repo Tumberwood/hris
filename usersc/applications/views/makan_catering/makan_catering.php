@@ -766,20 +766,13 @@
 				},
 
 footerCallback: function (row, data, start, end, display) {
-
     var api = this.api();
-
 
     // =====================================================
     // PARSE ANGKA
     // =====================================================
     var toNumber = function (value) {
-
-        if (
-            value === null ||
-            value === undefined ||
-            value === ''
-        ) {
+        if (value === null || value === undefined || value === '') {
             return 0;
         }
 
@@ -787,239 +780,148 @@ footerCallback: function (row, data, start, end, display) {
             return value;
         }
 
-        return parseFloat(value) || 0;
+        return parseFloat(
+            String(value).replace(/\./g, '').replace(/,/g, '.')
+        ) || 0;
     };
-
 
     // =====================================================
     // SEMUA DATA YANG TERFILTER
     // =====================================================
-    var rows = api
-        .rows({
-            search: 'applied'
-        })
-        .data();
-
+    var rows = api.rows({ search: 'applied' }).data();
 
     // =====================================================
-    // AMBIL HARGA DARI 1 DATA SAJA
+    // AMBIL HARGA DARI 1 DATA
     // =====================================================
     var harga_karyawan = 0;
     var harga_staff = 0;
+    var harga_hl = 0;
 
     if (rows.length > 0) {
-        harga_karyawan = toNumber(
-            rows[0].harga_catering_kary
-        );
-
-        harga_staff = toNumber(
-            rows[0].harga_catering_staff
-        );
+        harga_karyawan = toNumber(rows[0].harga_catering_kary);
+        harga_staff = toNumber(rows[0].harga_catering_staff);
+        harga_hl = toNumber(rows[0].harga_catering_hl);
     }
-
 
     // =====================================================
     // VARIABLE SUM
     // =====================================================
-    var shift1_kary  = 0;
+    var shift1_kary = 0;
     var shift1_staff = 0;
+    var shift1_hl = 0;
 
-    var shift2_kary  = 0;
+    var shift2_kary = 0;
     var shift2_staff = 0;
+    var shift2_hl = 0;
 
-    var shift3_kary  = 0;
+    var shift3_kary = 0;
     var shift3_staff = 0;
+    var shift3_hl = 0;
 
-    var total_kary   = 0;
-    var total_staff  = 0;
-
-    var grand_total  = 0;
-
+    var total_kary = 0;
+    var total_staff = 0;
+    var total_hl = 0;
+    var grand_total = 0;
 
     // =====================================================
     // LOOP DATA
     // =====================================================
     rows.each(function (item) {
-
         shift1_kary += toNumber(item.shift1_kary);
         shift1_staff += toNumber(item.shift1_staff);
+        shift1_hl += toNumber(item.shift1_hl);
 
         shift2_kary += toNumber(item.shift2_kary);
         shift2_staff += toNumber(item.shift2_staff);
+        shift2_hl += toNumber(item.shift2_hl);
 
         shift3_kary += toNumber(item.shift3_kary);
         shift3_staff += toNumber(item.shift3_staff);
+        shift3_hl += toNumber(item.shift3_hl);
 
         total_kary += toNumber(item.total_kary);
         total_staff += toNumber(item.total_staff);
+        total_hl += toNumber(item.total_hl);
 
         grand_total += toNumber(item.grand_total);
-
     });
-
 
     // =====================================================
     // TOTAL HARGA
     // =====================================================
-    var total_harga_karyawan =
-        total_kary * harga_karyawan;
-
-    var total_harga_staff =
-        total_staff * harga_staff;
+    var total_harga_karyawan = total_kary * harga_karyawan;
+    var total_harga_staff = total_staff * harga_staff;
+    var total_harga_hl = total_hl * harga_hl;
 
     var total_harga =
         total_harga_karyawan +
-        total_harga_staff;
-
+        total_harga_staff +
+        total_harga_hl;
 
     // =====================================================
     // FORMAT ANGKA
     // =====================================================
     var formatNumber = function (angka) {
-
         return new Intl.NumberFormat('id-ID', {
             maximumFractionDigits: 0
         }).format(angka);
-
     };
 
+    // =====================================================
+    // SHIFT 1
+    // =====================================================
+    $('#sum_shift1_kary').text(formatNumber(shift1_kary));
+    $('#sum_shift1_staff').text(formatNumber(shift1_staff));
+    $('#sum_shift1_hl').text(formatNumber(shift1_hl));
 
     // =====================================================
-    // SUM SHIFT 1
+    // SHIFT 2
     // =====================================================
-    $('#sum_shift1_kary').html(
-        formatNumber(shift1_kary)
-    );
-
-    $('#sum_shift1_staff').html(
-        formatNumber(shift1_staff)
-    );
-
+    $('#sum_shift2_kary').text(formatNumber(shift2_kary));
+    $('#sum_shift2_staff').text(formatNumber(shift2_staff));
+    $('#sum_shift2_hl').text(formatNumber(shift2_hl));
 
     // =====================================================
-    // SUM SHIFT 2
+    // SHIFT 3
     // =====================================================
-    $('#sum_shift2_kary').html(
-        formatNumber(shift2_kary)
-    );
-
-    $('#sum_shift2_staff').html(
-        formatNumber(shift2_staff)
-    );
-
+    $('#sum_shift3_kary').text(formatNumber(shift3_kary));
+    $('#sum_shift3_staff').text(formatNumber(shift3_staff));
+    $('#sum_shift3_hl').text(formatNumber(shift3_hl));
 
     // =====================================================
-    // SUM SHIFT 3
+    // TOTAL PER JENIS
     // =====================================================
-    $('#sum_shift3_kary').html(
-        formatNumber(shift3_kary)
-    );
+    $('#sum_total_kary').text(formatNumber(total_kary));
+    $('#sum_total_staff').text(formatNumber(total_staff));
+    $('#sum_total_hl').text(formatNumber(total_hl));
 
-    $('#sum_shift3_staff').html(
-        formatNumber(shift3_staff)
-    );
-
+    $('#sum_grand_total').text(formatNumber(grand_total));
 
     // =====================================================
-    // SUM TOTAL
+    // FOOTER KARYAWAN
     // =====================================================
-    $('#sum_total_kary').html(
-        formatNumber(total_kary)
-    );
-
-    $('#sum_total_staff').html(
-        formatNumber(total_staff)
-    );
-
+    $('#footer_jumlah_karyawan').text(formatNumber(total_kary));
+    $('#footer_harga_catering_karyawan').text(formatNumber(harga_karyawan));
+    $('#footer_harga_karyawan').text(formatNumber(total_harga_karyawan));
 
     // =====================================================
-    // SUM GRAND TOTAL
+    // FOOTER STAFF
     // =====================================================
-    $('#sum_grand_total').html(
-        formatNumber(grand_total)
-    );
-
-
-    // =====================================================
-    // JUMLAH MAKAN KARYAWAN
-    // =====================================================
-    $('#footer_jumlah_karyawan').html(
-        formatNumber(total_kary)
-    );
-
+    $('#footer_jumlah_staff').text(formatNumber(total_staff));
+    $('#footer_harga_catering_staff').text(formatNumber(harga_staff));
+    $('#footer_harga_staff').text(formatNumber(total_harga_staff));
 
     // =====================================================
-    // HARGA CATERING KARYAWAN
+    // FOOTER HL
     // =====================================================
-    $('#footer_harga_catering_karyawan').html(
-        formatNumber(harga_karyawan)
-    );
-
-
-    // =====================================================
-    // TOTAL HARGA KARYAWAN
-    // =====================================================
-    $('#footer_harga_karyawan').html(
-        formatNumber(total_harga_karyawan)
-    );
-
-
-    // =====================================================
-    // JUMLAH MAKAN STAFF
-    // =====================================================
-    $('#footer_jumlah_staff').html(
-        formatNumber(total_staff)
-    );
-
-
-    // =====================================================
-    // HARGA CATERING STAFF
-    // =====================================================
-    $('#footer_harga_catering_staff').html(
-        formatNumber(harga_staff)
-    );
-
-
-    // =====================================================
-    // TOTAL HARGA STAFF
-    // =====================================================
-    $('#footer_harga_staff').html(
-        formatNumber(total_harga_staff)
-    );
-
-
-
-    // =====================================================
-    // JUMLAH MAKAN hl
-    // =====================================================
-    $('#footer_jumlah_hl').html(
-        formatNumber(total_hl)
-    );
-
-
-    // =====================================================
-    // HARGA CATERING hl
-    // =====================================================
-    $('#footer_harga_catering_hl').html(
-        formatNumber(harga_hl)
-    );
-
-
-    // =====================================================
-    // TOTAL HARGA hl
-    // =====================================================
-    $('#footer_harga_hl').html(
-        formatNumber(total_harga_hl)
-    );
-
+    $('#footer_jumlah_hl').text(formatNumber(total_hl));
+    $('#footer_harga_catering_hl').text(formatNumber(harga_hl));
+    $('#footer_harga_hl').text(formatNumber(total_harga_hl));
 
     // =====================================================
     // GRAND TOTAL HARGA
     // =====================================================
-    $('#footer_total').html(
-        formatNumber(total_harga)
-    );
-
+    $('#footer_total').text(formatNumber(total_harga));
 }
 
 			} );
