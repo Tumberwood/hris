@@ -184,7 +184,7 @@
 				$('#judul').html("Tabel Upload Jadwal Bulan " + tanggal);
 				
 				$.ajax({
-					url: "../../models/htssctd_dept/htssctd_dept_fn_upload.php",
+					url: "../../models/htssctd_dept/htssctd_dept.php",
 					dataType: 'json',
 					type: 'POST',
 					data: {
