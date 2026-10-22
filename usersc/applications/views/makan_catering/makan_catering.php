@@ -748,6 +748,13 @@
 							return data ?? 0;
 						}
 					},
+					{
+						data: "total_hl",
+						className: "text-center font-weight-bold",
+						render: function(data) {
+							return data ?? 0;
+						}
+					},
 
 					// =========================
 					// GRAND TOTAL

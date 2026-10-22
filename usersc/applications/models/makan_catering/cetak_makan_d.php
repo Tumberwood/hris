@@ -61,6 +61,13 @@
 							AND x.jam_makan IS NOT NULL
 						) AS shift1_staff,
 
+						(
+							CASE 
+								WHEN hl.shift = 1 THEN IFNULL(hl.jumlah, 0)
+								ELSE 0
+							END
+						) AS shift1_hl,
+
 
 						/* =========================
 						SHIFT 2
@@ -77,6 +84,13 @@
 							AND x.jam_makan IS NOT NULL
 						) AS shift2_staff,
 
+						(
+							CASE 
+								WHEN hl.shift = 2 THEN IFNULL(hl.jumlah, 0)
+								ELSE 0
+							END
+						) AS shift2_hl,
+
 
 						/* =========================
 						SHIFT 3
@@ -92,6 +106,13 @@
 							AND x.sub = "STAFF"
 							AND x.jam_makan IS NOT NULL
 						) AS shift3_staff,
+
+						(
+							CASE 
+								WHEN hl.shift = 3 THEN IFNULL(hl.jumlah, 0)
+								ELSE 0
+							END
+						) AS shift3_hl,
 
 
 						/* =========================
@@ -111,13 +132,29 @@
 							AND x.jam_makan IS NOT NULL
 						) AS total_staff,
 
+						
+						(
+							CASE WHEN hl.shift = 1 THEN IFNULL(hl.jumlah, 0) ELSE 0 END
+							+ CASE WHEN hl.shift = 2 THEN IFNULL(hl.jumlah, 0) ELSE 0 END
+							+ CASE WHEN hl.shift = 3 THEN IFNULL(hl.jumlah, 0) ELSE 0 END
+						) AS total_hl,
+
 
 						/* =========================
 						GRAND TOTAL
 						========================= */
 						SUM(
 							x.jam_makan IS NOT NULL
-						) AS grand_total
+						) 
+						+
+						
+						(
+							CASE WHEN hl.shift = 1 THEN IFNULL(hl.jumlah, 0) ELSE 0 END
+							+ CASE WHEN hl.shift = 2 THEN IFNULL(hl.jumlah, 0) ELSE 0 END
+							+ CASE WHEN hl.shift = 3 THEN IFNULL(hl.jumlah, 0) ELSE 0 END
+						) 
+
+						AS grand_total
 
 
 					FROM
@@ -186,6 +223,7 @@
 
 					) x
 
+					LEFT JOIN makan_catering_hl_umum hl ON hl.tanggal= x.tanggal
 
 					GROUP BY
 						x.tanggal
