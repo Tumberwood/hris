@@ -96,6 +96,9 @@ if($_SESSION['user'] < 101){
 			$rs_hemxxmh = $query_gcpxxmh->results();
 			$_SESSION['id_hemxxmh'] = $rs_hemxxmh[0]->id;
 			$_SESSION['id_hodxxmh'] = $rs_hemxxmh[0]->id_hodxxmh;
+		} else {
+			$_SESSION['id_hemxxmh'] = 0;
+			$_SESSION['id_hodxxmh'] = 0;
 		}
 		// END get data hemxxmh
 		
