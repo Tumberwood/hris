@@ -223,29 +223,22 @@
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
 		->leftJoin( 'hevgrmh','hevgrmh.id','=','hemjbmh.id_hevgrmh' )
 		->leftJoin( 'gtxpkmh','gtxpkmh.id','=','hemdcmh.id_gtxpkmh' )
-
 		->where('hemjbmh.id_hodxxmh', $_SESSION['id_hodxxmh'] ?? 0)
-->where('hemjbmh.is_harian_lepas', 0)
-->where('hemjbmh.is_non_karyawan', 0)
-->where(function ($r) use ($tanggal_akhir) {
-    $r->where(function ($sub) {
-        $sub->where('hemjbmh.tanggal_keluar', NULL);
-    })
-    ->or_where(function ($sub) use ($tanggal_akhir) {
-        $sub->where(
-            'hemjbmh.tanggal_keluar',
-            $tanggal_akhir->format('Y-m-d'),
-            '>='
-        );
-    });
-});
+
+		->where( 'hemjbmh.is_harian_lepas', 0)
+		->where( 'hemjbmh.is_non_karyawan', 0)
+        ->where( function ( $r ) use ($tanggal_akhir) {
+            $r
+                ->where( 'hemjbmh.tanggal_keluar', NULL)
+                ->or_where( 'hemjbmh.tanggal_keluar', $tanggal_akhir->format('Y-m-d') , '>=');
+        } )
+		;
 	
 	// do not erase
 	// function show / hide inactive document
 	if ($show_inactive_status == 0){
 		$editor
-			->where( 'hemxxmh.is_active', 1)
-			;
+			->where( 'hemxxmh.is_active', 1);
 	}
 	
 	include( "hemxxmh_extra.php" );
