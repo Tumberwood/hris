@@ -2009,10 +2009,15 @@
                                 pot_ti + pot_non_ti AS pot_lembur,
 
                                 -- DURASI LEMBUR FINAL, JIKA KURANG DARI 0 MAKA DI NOL KAN AGAR TIDAK MINUS
-                                IF( durasi_lembur_total_jam - (pot_ti + pot_non_ti) <= 0,
-                                    0,
-                                    durasi_lembur_total_jam - (pot_ti + pot_non_ti)
-                                ) AS durasi_lembur_final,
+                                
+                                CASE
+                                    WHEN cek = 1
+                                        AND (st_clock_in = "No CI" OR st_clock_out = "No CO")
+                                    THEN 0
+                                    WHEN durasi_lembur_total_jam - (pot_ti + pot_non_ti) <= 0
+                                    THEN 0
+                                    ELSE durasi_lembur_total_jam - (pot_ti + pot_non_ti)
+                                END AS durasi_lembur_final,
 
                                 -- HITUNG HASIL AKHIR POT NON TI
                                 IF( (pot_jam_min_pot_ti - pot_non_ti) > 0,
