@@ -232,7 +232,7 @@
                 ->or_where( 'hemjbmh.tanggal_keluar', $tanggal_akhir->format('Y-m-d') , '>=');
         } )
 		
-		->where('hemjbmh.id_hodxxmh', $_SESSION['id_hodxxmh'] ?? 0)
+		->where('hemjbmh.id_hodxxmh', $_SESSION['id_hodxxmh'])
 		;
 	
 	// do not erase
