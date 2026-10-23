@@ -3,6 +3,7 @@
         ->on('postCreate',function( $editor, $id, $values, $row ) {
             // INSERT ke user extend
             $id_users = $values['udpxxsh']['id_users'];
+            $id_hemxxmh = $values['udpxxsh']['id_hemxxmh'];
             $sql_select_users_extend = $editor->db()
                 ->query('select', 'users_extend')
                 ->get('id')
@@ -84,6 +85,23 @@
                 }
             }
 
-        });
+            $qu_users_hemxxmh = $editor->db()
+                ->query('update', 'hemxxmh')
+                ->set('id_users',$id_users)
+                ->where('id',$id_hemxxmh)
+                ->exec();
+
+        })
+		->on('postEdit',function( $editor, $id, $values, $row ) {
+
+            $id_users = $values['udpxxsh']['id_users'];
+            $id_hemxxmh = $values['udpxxsh']['id_hemxxmh'];
+            
+            $qu_users_hemxxmh = $editor->db()
+                ->query('update', 'hemxxmh')
+                ->set('id_users',$id_users)
+                ->where('id',$id_hemxxmh)
+                ->exec();
+		})
    
 ?>

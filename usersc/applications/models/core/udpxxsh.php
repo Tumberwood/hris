@@ -24,6 +24,8 @@
 			Field::inst( 'udpxxsh.id' ),
 			Field::inst( 'udpxxsh.id_users' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
+			Field::inst( 'udpxxsh.id_hemxxmh' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'udpxxsh.kode' ),
 			Field::inst( 'udpxxsh.nama' ),
 			Field::inst( 'udpxxsh.keterangan' ),

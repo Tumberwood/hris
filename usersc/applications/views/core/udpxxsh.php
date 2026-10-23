@@ -143,6 +143,7 @@
 		// ------------- end of default variable
 
         var id_users_old = 0;
+        var id_hemxxmh_old = 0;
         var id_users;
         var id_gbrxxmh_old = 0;
         var id_heyxxmd_old = 0;
@@ -174,7 +175,8 @@
 						name: "nama_tabel",
 						def: "udpxxsh",
 						type: "hidden"
-					},  {
+					},  
+                    {
                         label: "Username",
 						name: "udpxxsh.id_users",
                         type: "select2",
@@ -209,7 +211,44 @@
                                 minimumResultsForSearch: -1,
                             },
                         }
-                    },  {
+                    },  
+                    {
+                        label: "Karyawan",
+						name: "udpxxsh.id_hemxxmh",
+                        type: "select2",
+                        opts: {
+                            placeholder : "Select",
+                            allowClear: true,
+                            multiple: false,
+                            ajax: {
+                                url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
+                                dataType: 'json',
+                                data: function (params) {
+                                    var query = {
+                                        id_hemxxmh_old: id_hemxxmh_old,
+                                        search: params.term || '',
+                                        page: params.page || 1
+                                    }
+                                        return query;
+                                },
+                                processResults: function (data, params) {
+                                    return {
+                                        results: data.results,
+                                        pagination: {
+                                            more: true
+                                        }
+                                    };
+                                },
+                                cache: true,
+                                minimumInputLength: 1,
+                                maximum: 10,
+                                delay: 500,
+                                maximumSelectionLength: 5,
+                                minimumResultsForSearch: -1,
+                            },
+                        }
+                    },  
+                    {
 						label: "Akses Data",
 						name: "udpxxsh.data_permission",
 						type: "select",
