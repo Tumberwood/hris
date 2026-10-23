@@ -223,7 +223,6 @@
 		->leftJoin( 'holxxmd_2','holxxmd_2.id','=','hemjbmh.id_holxxmd_2' )
 		->leftJoin( 'hevgrmh','hevgrmh.id','=','hemjbmh.id_hevgrmh' )
 		->leftJoin( 'gtxpkmh','gtxpkmh.id','=','hemdcmh.id_gtxpkmh' )
-		->where('hemjbmh.id_hodxxmh', $_SESSION['id_hodxxmh'] ?? 0)
 
 		->where( 'hemjbmh.is_harian_lepas', 0)
 		->where( 'hemjbmh.is_non_karyawan', 0)
@@ -232,6 +231,8 @@
                 ->where( 'hemjbmh.tanggal_keluar', NULL)
                 ->or_where( 'hemjbmh.tanggal_keluar', $tanggal_akhir->format('Y-m-d') , '>=');
         } )
+		
+		->where('hemjbmh.id_hodxxmh', $_SESSION['id_hodxxmh'] ?? 0)
 		;
 	
 	// do not erase
