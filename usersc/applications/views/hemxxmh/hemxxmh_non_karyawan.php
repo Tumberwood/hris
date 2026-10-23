@@ -680,12 +680,6 @@
 					{
 						label: "Asal <sup class='text-danger'>*<sup>", 
 						name: "hemxxmh.asal_non_karyawan",
-						type: "select",
-						placeholder : "Select",
-						options: [
-							{ "label": "Hitech", "value": "Hitech" },
-							{ "label": "PSG", "value": "PSG" },
-						]
 					},
 					{
 						label: "Skala Upah",
