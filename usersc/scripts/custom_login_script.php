@@ -92,7 +92,7 @@ if($_SESSION['user'] < 101){
 				a.id_users = " . $_SESSION['user'];
 		$query_hemxxmh = $db->query($qs_hemxxmh);
 		$c_ha_hemxxmh = $query_hemxxmh->count();
-		if($c_ha_gcpxxmh  > 0){
+		if($c_ha_hemxxmh  > 0){
 			$rs_hemxxmh = $query_gcpxxmh->results();
 			$_SESSION['id_hemxxmh'] = $rs_hemxxmh[0]>id;
 			$_SESSION['id_hodxxmh'] = $rs_hemxxmh[0]>id_hodxxmh;
