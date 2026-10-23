@@ -368,6 +368,7 @@
 				is_active      = udpxxsh_data.is_active;
                 id_users       = udpxxsh_data.id_users;
                 id_users_old   = udpxxsh_data.id_users;
+                id_hemxxmh_old   = udpxxsh_data.id_hemxxmh;
 				
 				// atur hak akses
 				tbl_details = [tbludpbrsd, tbludpeysd, tbludp_heyxxmd, tblucudasd];
@@ -381,6 +382,7 @@
 				// reload dipanggil di function CekDeselectHeader
 				id_udpxxsh = 0;
                 id_users = 0;
+                id_hemxxmh_old = 0;
                 id_users_old = 0;
 
 				// atur hak akses
