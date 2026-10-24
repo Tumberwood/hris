@@ -57,20 +57,20 @@
 
 			$db->commit();
 			$data = array(
-				"message" => "Upload Pondok Candra Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
+				"message" => "Upload HL Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
 				"type_message" => "success"
 			);
 			
 		}catch (PDOException $e){
 			$db->rollback();
 			$data = array(
-				"message" => "Upload Pondok Candra gagal," . $e,
+				"message" => "Upload HL gagal," . $e,
 				"type_message" => "danger"
 			);
 		}
 	}else{
 		$data = array(
-			"message" => "Upload Pondok Candra gagal, format file salah!",
+			"message" => "Upload HL gagal, format file salah!",
 			"type_message" => "danger"
 		);
 	}
