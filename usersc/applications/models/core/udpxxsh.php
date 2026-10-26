@@ -44,7 +44,7 @@
 			Field::inst( 'users.username' )
 				->set( Field::SET_NONE )
 		)
-		->leftJoin( 'hemxxmh','hemxxmh.id_users','=','udpxxsh.id_users' )
+		->leftJoin( 'hemxxmh','hemxxmh.id','=','udpxxsh.id_hemxxmh' )
 		->leftJoin( 'users','users.id','=','udpxxsh.id_users' )
 		->leftJoin( 'users_extend','users_extend.id','=','users.id' );
 	
