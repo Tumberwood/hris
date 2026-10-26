@@ -19,6 +19,7 @@
 	$sql = "SELECT
 				htlxxrh.id,
 				UPPER(htlxxrh.kode) AS kode,
+				hodxxmh.nama AS dep,
 				htlxxrh.nama AS nama,
 				htlxxrh.keterangan,
 				htlxxrh.is_active,
@@ -38,6 +39,7 @@
 			LEFT JOIN htpxxmh ON htlxxrh.jenis = 2 AND htpxxmh.id = htlxxrh.id_htlxxmh
 			LEFT JOIN hemxxmh ON hemxxmh.id = htlxxrh.id_hemxxmh
 			LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = htlxxrh.id_hemxxmh
+			LEFT JOIN hodxxmh ON hodxxmh.id = hemjbmh.id_hodxxmh
 			WHERE htlxxrh.is_active = 1 AND htlxxrh.id_htlxxmh <> 0 " . $where;
 		;
 

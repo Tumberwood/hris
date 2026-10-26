@@ -76,6 +76,7 @@
                                 <th>Tanggal</th>
                                 <th>Kode</th>
                                 <th>Nama</th>
+                                <th>Departemen</th>
                                 <th>Jenis</th>
                                 <th>Jam Awal</th>
                                 <th>Jam Akhir</th>
@@ -235,6 +236,7 @@
 					{ data: "tanggal" },
 					{ data: "kode" },
 					{ data: "hemxxmh_nama" },
+					{ data: "dep" },
 					{ data: "htlxxmh_nama" },
 					{ data: "jam_awal" },
 					{ data: "jam_akhir" },
