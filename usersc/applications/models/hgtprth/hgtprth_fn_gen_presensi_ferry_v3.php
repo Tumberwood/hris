@@ -529,11 +529,22 @@
                                     STR_TO_DATE(SUBSTRING_INDEX(concat_break_in,  "|",  1), "%Y-%m-%d %H:%i") AS break_in,
                                     STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i") AS break_out,
 
-                                    IF(
-                                        ceklok_out = STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i"), 
-                                            null,
-                                            ceklok_out
-                                    ) AS ceklok_out,
+                                    -- IF(
+                                    --     ceklok_out = STR_TO_DATE(SUBSTRING_INDEX(concat_break_out, "|",  1), "%Y-%m-%d %H:%i"), 
+                                    --         null,
+                                    --         ceklok_out
+                                    -- ) AS ceklok_out,
+                                    
+                                    CASE
+                                        WHEN concat_break_in = concat_break_out
+                                            THEN ceklok_out
+                                        WHEN ceklok_out = STR_TO_DATE(
+                                            SUBSTRING_INDEX(concat_break_out, "|", 1),
+                                            "%Y-%m-%d %H:%i"
+                                        )
+                                            THEN NULL
+                                        ELSE ceklok_out
+                                    END AS ceklok_out,
 
                                     IF(jam_makan IS NOT NULL, 1, 0) ceklok_makan,
                                     IF(makan_manual IS NOT NULL, 1, 0) is_makan_manual,
