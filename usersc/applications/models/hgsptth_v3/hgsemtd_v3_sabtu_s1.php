@@ -15,19 +15,10 @@
 		DataTables\Editor\Result;
 	
 	// ----------- do not erase
-	// $select_bagian = 0;
+	$select_bagian = 0;
 	$show_inactive_status = $_POST['show_inactive_status_hgsemtd_v3'];
-	// if (isset($_POST['select_bagian'])) {
-	// 	$select_bagian = $_POST['select_bagian'];
-	// }
-
-	// do not erase
-	$select_bagian = [];
 	if (isset($_POST['select_bagian'])) {
-		// pastikan array, ubah ke integer, buang nilai kosong/0
-		$select_bagian = array_filter(
-			array_map('intval', (array) $_POST['select_bagian'])
-		);
+		$select_bagian = $_POST['select_bagian'];
 	}
 	// -----------
 	// print_r($_POST['id_hgsptth_v3']);
@@ -88,22 +79,9 @@
 				->where( 'hgsemtd_v3.is_active', 1);
 		}
 
-		// if ($select_bagian > 0){
-		// 	$editor
-		// 	->where('hgsemtd_v3.id_holxxmd',$select_bagian);
-		// }
-
-		// Filter berdasarkan bagian
-		if (!empty($select_bagian)) {
-			$editor->where(function ($q) use ($select_bagian) {
-				foreach (array_values($select_bagian) as $i => $id_bagian) {
-					if ($i === 0) {
-						$q->where('hgsemtd_v3.id_holxxmd', $id_bagian);
-					} else {
-						$q->or_where('hgsemtd_v3.id_holxxmd', $id_bagian);
-					}
-				}
-			});
+		if ($select_bagian > 0){
+			$editor
+			->where('hgsemtd_v3.id_holxxmd',$select_bagian);
 		}
 		
 		include( "hgsemtd_v3_sabtu_extra.php" );
