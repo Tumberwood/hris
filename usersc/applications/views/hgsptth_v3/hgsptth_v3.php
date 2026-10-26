@@ -299,6 +299,7 @@
         $("#select_bagian").select2({
 			placeholder: 'Ketik atau TekanTanda Panah Kanan',
 			allowClear: true,
+			multiple: true,
 			ajax: {
 				url: "../../models/holxxmd/holxxmd_fn_opt.php",
 				dataType: 'json',
