@@ -116,7 +116,6 @@
 					"message" => "Upload Rencana Makan Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
 					"type_message" => "success",
 					"debug" => $emptyPeg,
-					"hem" => $rs_hemxxmh
 				);
 			}
 
