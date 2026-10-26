@@ -226,6 +226,7 @@
                                 data: function (params) {
                                     var query = {
                                         id_hemxxmh_old: id_hemxxmh_old,
+                                        is_active: 1,
                                         search: params.term || '',
                                         page: params.page || 1
                                     }

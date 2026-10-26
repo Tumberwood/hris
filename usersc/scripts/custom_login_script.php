@@ -69,6 +69,7 @@ if($_SESSION['user'] < 101){
 	$qs_udpxxsh = "
 		SELECT 
 			a.id as id,
+			a.id_hemxxmh,
 			a.data_permission as data_permission
 		FROM udpxxsh a
 		WHERE 
@@ -80,6 +81,7 @@ if($_SESSION['user'] < 101){
 	if($count_udpxxsh > 0){
 		$result_udpxxsh = $query_udpxxsh->results();
 		$_SESSION['where_data_permission'] = $result_udpxxsh[0]->data_permission;
+		$_SESSION['id_hemxxmh'] = $result_udpxxsh[0]->id_hemxxmh;
 
 		// BEGIN get data hemxxmh
 		$qs_hemxxmh = "
@@ -89,12 +91,11 @@ if($_SESSION['user'] < 101){
 			FROM hemxxmh a
 			JOIN hemjbmh b ON b.id_hemxxmh = a.id
 			WHERE 
-				a.id_users = " . $_SESSION['user'];
+				a.id_users = " . $_SESSION['id_hemxxmh'];
 		$query_hemxxmh = $db->query($qs_hemxxmh);
 		$c_ha_hemxxmh = $query_hemxxmh->count();
 		if($c_ha_hemxxmh  > 0){
 			$rs_hemxxmh = $query_hemxxmh->results();
-			$_SESSION['id_hemxxmh'] = $rs_hemxxmh[0]->id;
 			$_SESSION['id_hodxxmh'] = $rs_hemxxmh[0]->id_hodxxmh;
 		} else {
 			$_SESSION['id_hemxxmh'] = 0;
