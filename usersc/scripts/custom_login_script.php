@@ -91,7 +91,7 @@ if($_SESSION['user'] < 101){
 			FROM hemxxmh a
 			JOIN hemjbmh b ON b.id_hemxxmh = a.id
 			WHERE 
-				a.id_users = " . $_SESSION['id_hemxxmh'];
+				a.id = " . $_SESSION['id_hemxxmh'];
 		$query_hemxxmh = $db->query($qs_hemxxmh);
 		$c_ha_hemxxmh = $query_hemxxmh->count();
 		if($c_ha_hemxxmh  > 0){
