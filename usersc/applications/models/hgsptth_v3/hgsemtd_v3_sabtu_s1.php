@@ -93,9 +93,17 @@
 		// 	->where('hgsemtd_v3.id_holxxmd',$select_bagian);
 		// }
 
-		if ( ! empty($select_bagian) ) {
-			$editor
-				->where( 'hgsemtd_v3.id_holxxmd', array_values($select_bagian), 'IN' );
+		// Filter berdasarkan bagian
+		if (!empty($select_bagian)) {
+			$editor->where(function ($q) use ($select_bagian) {
+				foreach (array_values($select_bagian) as $i => $id_bagian) {
+					if ($i === 0) {
+						$q->where('hgsemtd_v3.id_holxxmd', $id_bagian);
+					} else {
+						$q->or_where('hgsemtd_v3.id_holxxmd', $id_bagian);
+					}
+				}
+			});
 		}
 		
 		include( "hgsemtd_v3_sabtu_extra.php" );
