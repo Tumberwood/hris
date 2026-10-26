@@ -72,8 +72,8 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nama</th>
                                 <th>Kode Finger</th>
+                                <th>Nama</th>
 								<th>Bagian</th>
 								<th>Asal</th>
                             </tr>
@@ -1374,8 +1374,8 @@
 				},
 				columns: [
 					{ data: "hemxxmh.id",visible:false },
-					{ data: "hemxxmh.nama" }, //nama
 					{ data: "hemxxmh.kode_finger" },
+					{ data: "hemxxmh.nama" }, //nama
 					{ data: "hobxxmh.nama" },	//Bagian
 					{ data: "hemxxmh.asal_non_karyawan" }, //asal
 				],
