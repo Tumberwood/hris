@@ -9,8 +9,11 @@
 	$end_date = $_POST['end_date'];
 	$where = " AND htlxxrh.tanggal BETWEEN '" . $start_date . "' AND '" . $end_date . "'";
 	
-	$id_hemxxmh = $_SESSION['id_hemxxmh'];
-	$where = $where . " AND htlxxrh.id_hemxxmh = " . $id_hemxxmh;
+	// $id_hemxxmh = $_SESSION['id_hemxxmh'];
+	// $where = $where . " AND htlxxrh.id_hemxxmh = " . $id_hemxxmh;
+		
+	$id_hodxxmh = $_SESSION['id_hodxxmh'];
+	$where = $where . " AND hemjbmh.id_hodxxmh = " . $id_hodxxmh;
 	
 	// Your SQL query
 	$sql = "SELECT
@@ -34,6 +37,7 @@
 			LEFT JOIN htlxxmh ON htlxxrh.jenis = 1 AND htlxxmh.id = htlxxrh.id_htlxxmh
 			LEFT JOIN htpxxmh ON htlxxrh.jenis = 2 AND htpxxmh.id = htlxxrh.id_htlxxmh
 			LEFT JOIN hemxxmh ON hemxxmh.id = htlxxrh.id_hemxxmh
+			LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = htlxxrh.id_hemxxmh
 			WHERE htlxxrh.is_active = 1 AND htlxxrh.id_htlxxmh <> 0 " . $where;
 		;
 
