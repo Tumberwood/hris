@@ -15,10 +15,20 @@
 		DataTables\Editor\Result;
 	
 	// ----------- do not erase
-	$select_bagian = 0;
-	$show_inactive_status = $_POST['show_inactive_status_hgsemtd_v3'];;
+	$show_inactive_status = $_POST['show_inactive_status_hgsemtd_v3'];
+	// do not erase
+
+	// $select_bagian = 0;
+	// if (isset($_POST['select_bagian'])) {
+	// 	$select_bagian = $_POST['select_bagian'];
+	// }
+
+	$select_bagian = [];
 	if (isset($_POST['select_bagian'])) {
-		$select_bagian = $_POST['select_bagian'];
+		// pastikan array, ubah ke integer, buang nilai kosong/0
+		$select_bagian = array_filter(
+			array_map('intval', (array) $_POST['select_bagian'])
+		);
 	}
 	// -----------
 	// print_r($_POST['id_hgsptth_v3']);
@@ -71,9 +81,14 @@
 				->where( 'hgsemtd_v3.is_active', 1);
 		}
 
-		if ($select_bagian > 0){
-			$editor
-			->where('hgsemtd_v3.id_holxxmd',$select_bagian);
+		if ( ! empty($select_bagian) ) {
+			$editor->where( function ( $q ) use ( $select_bagian ) {
+				$q->where( function ( $q2 ) use ( $select_bagian ) {
+					foreach ( $select_bagian as $id ) {
+						$q2->or_where( 'hgsemtd_v3.id_holxxmd', $id, '=' );
+					}
+				} );
+			} );
 		}
 		
 		include( "hgsemtd_v3_senjum_extra.php" );

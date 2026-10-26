@@ -16,13 +16,13 @@
 	
 	// ----------- do not erase
 	$show_inactive_status = $_POST['show_inactive_status_hgsemtd_v3'];
-	
+	// do not erase
+
 	// $select_bagian = 0;
 	// if (isset($_POST['select_bagian'])) {
 	// 	$select_bagian = $_POST['select_bagian'];
 	// }
 
-	// do not erase
 	$select_bagian = [];
 	if (isset($_POST['select_bagian'])) {
 		// pastikan array, ubah ke integer, buang nilai kosong/0
