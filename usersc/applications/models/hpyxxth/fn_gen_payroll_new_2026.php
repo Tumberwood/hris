@@ -3747,12 +3747,14 @@
             ->exec('INSERT INTO hpyemtd (
                         id_hpyxxth,
                         id_hemxxmh,
+                        pot_lain_after_pph,
                         gaji_terima
                     )
                     SELECT
                         :id_hpyxxth,
                         a.id_hemxxmh,
-                        -a.nominal AS gaji_terima
+                        -a.pot_lain_after_pph AS gaji_terima,
+                        ROUND(-a.nominal) AS gaji_terima
                     FROM hpy_piutang_d a
                     WHERE 1
                     AND a.is_active = 1
