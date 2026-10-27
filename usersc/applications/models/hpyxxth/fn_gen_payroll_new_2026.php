@@ -3406,6 +3406,9 @@
                         pot_makan,
                         pot_upah,
                         c_pot_upah,
+                    
+                        penambah_upah,
+                        c_penambah_upah,
 
                         pot_jam,
                         c_pot_jam,
