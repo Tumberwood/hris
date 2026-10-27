@@ -1668,8 +1668,8 @@
 					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					
-					{ data: "hpyemtd.c_penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0) },
+					{ data: "hpyemtd.penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0) },
 					
 					{ data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger", visible: false },
 					{ data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger", visible: false },
@@ -1972,8 +1972,8 @@
 					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					
-					{ data: "hpyemtd.c_penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0) },
+					{ data: "hpyemtd.penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0) },
 					
 					{ data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger", visible: false },
 					{ data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger", visible: false },
@@ -2255,8 +2255,8 @@
 					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					
-					{ data: "hpyemtd.c_penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
-					{ data: "hpyemtd.penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.c_penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0) },
+					{ data: "hpyemtd.penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0) },
 					
 					{ data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger", visible: false },
 					{ data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger", visible: false },
