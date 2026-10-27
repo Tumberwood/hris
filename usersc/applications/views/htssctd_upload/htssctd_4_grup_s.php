@@ -82,7 +82,6 @@
 		<div class="ibox ">
 			<div class="ibox-content">
 				<div class="table-responsive">
-					<h3 id="judul"></h3>
 					<div class="alert alert-info alert-dismissable">
 						<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
 						<b>Penjelasan Kode Shift:</b>
@@ -94,6 +93,7 @@
 						</ul>
 					</div>
                 	<div id="searchPanes1"></div>
+					<h3 id="judul"></h3>
 					<div id="tabel_atas"></div>
 				</div> <!-- end of table -->
 			</div>
