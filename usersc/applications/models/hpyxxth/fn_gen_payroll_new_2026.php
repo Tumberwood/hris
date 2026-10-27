@@ -1205,6 +1205,7 @@
                         FROM htsprrd pr
                         JOIN hemxxmh peg ON peg.id = pr.id_hemxxmh
                         JOIN hemjbmh job ON job.id_hemxxmh = peg.id
+                        LEFT JOIN fix_cost fc ON fc.id_hemxxmh = pr.id_hemxxmh
 
                         WHERE 1
                         AND pr.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
