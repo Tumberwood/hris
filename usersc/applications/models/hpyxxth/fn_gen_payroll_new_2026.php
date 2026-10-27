@@ -3754,7 +3754,7 @@
                     SELECT
                         :id_hpyxxth,
                         a.id_hemxxmh,
-                        -a.pot_lain_after_pph AS gaji_terima,
+                        -a.nominal AS gaji_terima,
                         CASE
                             WHEN -a.nominal < 0 THEN
                                 -CEIL(ABS(-a.nominal) / 100) * 100
