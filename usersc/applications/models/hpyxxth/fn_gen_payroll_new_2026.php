@@ -1126,7 +1126,7 @@
                                             ORDER BY a.tanggal_efektif DESC
                                             LIMIT 1
                                         ),0)
-                                        * pr.is_penambah_upah
+                                        * 1
                                     ),
 
                                     -- Rumus: ( (gp + tjab + fix_cost(masa kerja) + (tj lain)) / grup_hk (21 / 25) ) * is_penambah_upah
