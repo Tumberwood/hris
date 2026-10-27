@@ -164,6 +164,9 @@
 				Field::inst( 'hemdcmh.ktp_no' ),
 				Field::inst( 'hemdcmh.npwp_no' ),
 				
+				Field::inst( 'hpyemtd.penambah_upah' ),
+				Field::inst( 'hpyemtd.c_penambah_upah' ),
+				
 				Field::inst( 'hemxxmh.kode as kode' ),
 				Field::inst( 'hemxxmh.nama as nama' ),
 				Field::inst( 'hemxxmh.gender' ),

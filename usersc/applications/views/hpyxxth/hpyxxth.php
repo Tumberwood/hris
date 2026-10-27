@@ -194,6 +194,8 @@
 													<th class="text-center align-middle text-danger">22. Potongan makan</th>
 													<th class="text-center align-middle text-danger">23. Total Pot Upah (Hari)</th>
 													<th class="text-center align-middle text-danger">24. Potongan Upah (Rp)</th>
+													<th class="text-center align-middle text-danger">23a. Total Penambah Upah (Hari)</th>
+													<th class="text-center align-middle text-danger">24a. Penambah Upah (Rp)</th>
 													<th class="text-center align-middle text-danger">25. Total Pot Resign</th>
 													<th class="text-center align-middle text-danger">26. Potongan Resign (Rp)</th>
 													<th class="text-center align-middle text-danger">27. Total Pot Jam</th>
@@ -313,6 +315,8 @@
 													<th id="karyawan_71"></th>
 													<th id="karyawan_72"></th>
 													<th id="karyawan_73"></th>
+													<th id="karyawan_74"></th>
+													<th id="karyawan_75"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -374,6 +378,8 @@
 													<th class="text-center align-middle text-danger">22. Potongan makan</th>
 													<th class="text-center align-middle text-danger">23. Total Pot Upah (Hari)</th>
 													<th class="text-center align-middle text-danger">24. Potongan Upah (Rp)</th>
+													<th class="text-center align-middle text-danger">23a. Total Penambah Upah (Hari)</th>
+													<th class="text-center align-middle text-danger">24a. Penambah Upah (Rp)</th>
 													<th class="text-center align-middle text-danger">25. Total Pot Resign</th>
 													<th class="text-center align-middle text-danger">26. Potongan Resign (Rp)</th>
 													<th class="text-center align-middle text-danger">27. Total Pot Jam</th>
@@ -488,6 +494,8 @@
 													<th id="kontrak_68"></th>
 													<th id="kontrak_69"></th>
 													<th id="kontrak_70"></th>
+													<th id="kontrak_71"></th>
+													<th id="kontrak_72"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -549,6 +557,8 @@
 													<th class="text-center align-middle text-danger">22. Potongan makan</th>
 													<th class="text-center align-middle text-danger">23. Total Pot Upah (Hari)</th>
 													<th class="text-center align-middle text-danger">24. Potongan Upah (Rp)</th>
+													<th class="text-center align-middle text-danger">23a. Total Penambah Upah (Hari)</th>
+													<th class="text-center align-middle text-danger">24a. Penambah Upah (Rp)</th>
 													<th class="text-center align-middle text-danger">25. Total Pot Resign</th>
 													<th class="text-center align-middle text-danger">26. Potongan Resign (Rp)</th>
 													<th class="text-center align-middle text-danger">27. Total Pot Jam</th>
@@ -663,6 +673,8 @@
 													<th id="kbm_reg_68"></th>
 													<th id="kbm_reg_69"></th>
 													<th id="kbm_reg_70"></th>
+													<th id="kbm_reg_71"></th>
+													<th id="kbm_reg_72"></th>
 												</tr>
 											</tfoot>
 										</table>
@@ -1656,6 +1668,9 @@
 					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					
+					{ data: "hpyemtd.c_penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					
 					{ data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger", visible: false },
 					{ data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger", visible: false },
 
@@ -1741,7 +1756,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 73; i++) {
+					for (var i = 10; i <= 75; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -1957,6 +1972,9 @@
 					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					
+					{ data: "hpyemtd.c_penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					
 					{ data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger", visible: false },
 					{ data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger", visible: false },
 
@@ -2030,7 +2048,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 70; i++) {
+					for (var i = 10; i <= 72; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }
@@ -2237,6 +2255,9 @@
 					{ data: "hpyemtd.c_pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					{ data: "hpyemtd.pot_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
 					
+					{ data: "hpyemtd.c_penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					{ data: "hpyemtd.penambah_upah", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger" },
+					
 					{ data: "hpyemtd.c_pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger", visible: false },
 					{ data: "hpyemtd.pot_resign", render: $.fn.dataTable.render.number(',', '.', 0), class: "text-right text-danger", visible: false },
 
@@ -2310,7 +2331,7 @@
 					var api = this.api();
 					var numFormat = $.fn.dataTable.render.number( '\,', '.', 2, '' ).display; 
 
-					for (var i = 10; i <= 70; i++) {
+					for (var i = 10; i <= 72; i++) {
 						var columnIndex = i;
 						var sum_all = api.column(columnIndex).data().sum();
 						// Bisa dilakukan sum berdasarkan paginasi (sum per paginasi / tidak sum semua data) dengan menambahkan { page: 'current' }

@@ -80,6 +80,9 @@
 				Field::inst( 'hpyemtd.overtime_susulan' ),
 				Field::inst( 'hpyemtd.pot_lain' ),
 				
+				Field::inst( 'hpyemtd.penambah_upah' ),
+				Field::inst( 'hpyemtd.c_penambah_upah' ),
+				
 				// IDENTITAS TAMBAHAN
 				Field::inst( 'hpyemtd.nrp' ),
 				Field::inst( 'hpyemtd.departemen' ),

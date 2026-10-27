@@ -1106,6 +1106,112 @@
 
                         GROUP BY pr.id_hemxxmh
                     ),
+                    penambah_upah AS (
+                        SELECT
+                            pr.id_hemxxmh,
+                            
+                            ROUND(SUM(
+                                IF(
+                                    job.id_hesxxmh = 3 AND job.id_heyxxmd = 1,
+
+                                    -- penambah Upah Mati
+                                    (
+                                        IFNULL((
+                                            SELECT a.nominal
+                                            FROM htpr_hemxxmh a
+                                            WHERE a.id_hpcxxmh = 35
+                                                AND a.id_hemxxmh = pr.id_hemxxmh
+                                                AND a.tanggal_efektif <= pr.tanggal
+                                                AND a.is_active = 1
+                                            ORDER BY a.tanggal_efektif DESC
+                                            LIMIT 1
+                                        ),0)
+                                        * pr.is_penambah_upah
+                                    ),
+
+                                    -- Rumus: ( (gp + tjab + fix_cost(masa kerja) + (tj lain)) / grup_hk (21 / 25) ) * is_penambah_upah
+                                    (
+                                        (
+                                            (
+                                                -- GP
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 1
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
+
+                                                +
+
+                                                -- TJAB
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 32
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
+
+                                                +
+
+                                                -- TJ Khusus
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 133
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
+
+                                                +
+
+                                                -- TJ lain
+                                                IFNULL((
+                                                    SELECT a.nominal
+                                                    FROM htpr_hemxxmh a
+                                                    WHERE a.id_hpcxxmh = 102
+                                                        AND a.id_hemxxmh = pr.id_hemxxmh
+                                                        AND a.tanggal_efektif <= pr.tanggal
+                                                        AND a.is_active = 1
+                                                    ORDER BY a.tanggal_efektif DESC
+                                                    LIMIT 1
+                                                ),0)
+
+                                                +
+
+                                                IFNULL(fc.fix_cost,0)
+
+                                            )
+                                            /
+                                            IF(job.grup_hk = 1, 21, 25)
+                                        )
+                                        * 1
+                                    )
+                                )
+                            )) AS penambah_upah,
+
+                            SUM(1) AS c_penambah_upah
+
+                        FROM htsprrd pr
+                        JOIN hemxxmh peg ON peg.id = pr.id_hemxxmh
+                        JOIN hemjbmh job ON job.id_hemxxmh = peg.id
+
+                        WHERE 1
+                        AND pr.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                        AND job.tanggal_masukl BETWEEN :tanggal_awal AND :tanggal_akhir
+                        AND pr.st_jadwal <> "OFF"
+                        GROUP BY pr.id_hemxxmh
+                    ),
                     pot_jam AS (
                         SELECT
                             pr.id_hemxxmh,
@@ -2014,6 +2120,9 @@
                         IFNULL(pot_upah, 0) AS pot_upah,
                         IFNULL(c_pot_upah, 0) AS c_pot_upah,
                         
+                        IFNULL(penambah_upah, 0) AS penambah_upah,
+                        IFNULL(c_penambah_upah, 0) AS c_penambah_upah,
+                        
                         IFNULL(pot_jam, 0) AS pot_jam,
                         IFNULL(c_pot_jam, 0) AS c_pot_jam,
                         IFNULL(pendapatan_lain_before_pph,0 ) AS pendapatan_lain_before_pph,
@@ -2047,6 +2156,7 @@
                             + COALESCE(bpjs_kes_perusahaan,0)
                             + COALESCE(jkk,0)
                             + COALESCE(jkm,0)
+                            + COALESCE(penambah_upah,0)
                         )
                         -
                         (
@@ -2083,6 +2193,7 @@
                     LEFT JOIN pot_makan ON pot_makan.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN bpjs ON bpjs.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN pot_upah pu ON pu.id_hemxxmh = p.id_hemxxmh
+                    LEFT JOIN penambah_upah tu ON tu.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN pot_jam ON pot_jam.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN piut_kyw ON piut_kyw.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN komp_rekontrak ON komp_rekontrak.id_hemxxmh = p.id_hemxxmh
@@ -3137,6 +3248,9 @@
                             pot_makan,
                             pot_upah,
                             c_pot_upah,
+
+                            penambah_upah,
+                            c_penambah_upah,
 
                             pot_jam,
                             c_pot_jam,

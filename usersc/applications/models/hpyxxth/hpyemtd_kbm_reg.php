@@ -93,6 +93,9 @@
 				Field::inst( 'hpyemtd.no_rekening' ),
 				Field::inst( 'hpyemtd.ktp' ),
 				Field::inst( 'hpyemtd.npwp' ),
+				
+				Field::inst( 'hpyemtd.penambah_upah' ),
+				Field::inst( 'hpyemtd.c_penambah_upah' ),
 
 				// TAMBAHAN GAJI
 				Field::inst( 'hpyemtd.terima_lain' ),
