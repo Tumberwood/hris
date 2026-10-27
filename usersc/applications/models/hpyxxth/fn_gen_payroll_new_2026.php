@@ -3162,8 +3162,6 @@
                                     id_heyxxmd = 1,
                                     0,
                                     bruto_dasar_pph * (IFNULL(ter.persen, 0) / 100)
-                                    + pph21_resign
-                                    + pph21_tahunan
                                 ),
                                 0
                             ) AS pot_pph21,
