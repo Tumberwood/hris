@@ -781,7 +781,7 @@
 					}
 				],
 				ajax: {
-					url: "../../models/htsprrd/htsprrd.php",
+					url: "../../models/htsprrd/htsprrd_s_dep.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_htsprrd = show_inactive_status_htsprrd;
