@@ -61,7 +61,7 @@
 				</div>
 				<form id="frmUploadthimportcheckclock" enctype="multipart/form-data">
 					<div class="form-group row">
-						<label class="col-lg-2 col-form-label">File Jadwal Satpam</label>
+						<label class="col-lg-2 col-form-label">File Jadwal</label>
 						<div class="col-sm-4">
 							<div class="input-group">
 								<input type="file" name="filename" class="form-control" id="inputfilethimportjadwal_satpam">
