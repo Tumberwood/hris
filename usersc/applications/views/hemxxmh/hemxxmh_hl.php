@@ -94,17 +94,6 @@
 							<div class="col-lg-6">
 								<editor-field name="hemxxmh.kode_finger"></editor-field>
 							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.ktp_no"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.no_bpjs_tk"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.no_bpjs_kes"></editor-field>
-							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
@@ -116,23 +105,23 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_hobxxmh"></editor-field>
+								<editor-field name="hemjbmh.id_hetxxmh"></editor-field>
 							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_hosxxmh"></editor-field>
-							</div>
-						</div>
-						<div class="row">
 							<div class="col-lg-6">
 								<editor-field name="hemjbmh.id_hevgrmh"></editor-field>
 							</div>
+						</div>
+						<div class="row">
 							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_hetxxmh"></editor-field>
+								<editor-field name="hemjbmh.id_hobxxmh"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemjbmh.id_heyxxmd"></editor-field>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_heyxxmd"></editor-field>
+								<editor-field name="hemjbmh.id_hesxxmh"></editor-field>
 							</div>
 							<div class="col-lg-6">
 								<editor-field name="hemjbmh.id_heyxxmh"></editor-field>
@@ -140,123 +129,23 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
-								<editor-field name="hemjbmh.id_hesxxmh"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<!-- <div class="col-lg-6">
-								<editor-field name="hemjbmh.id_holxxmd_2"></editor-field>
-							</div> -->
-							<!-- <div class="col-lg-6">
-								<editor-field name="hemdcmh.id_gtxpkmh"></editor-field>
-							</div> -->
-						</div>
-						<!-- <div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.perkawinan"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.jumlah_anak"></editor-field>
-							</div>
-						</div> -->
-						<div class="row">
-							<div class="col-lg-6">
 								<editor-field name="hemjbmh.tanggal_masuk"></editor-field>
 							</div>
-							<!-- <div class="col-lg-6">
-								<editor-field name="hemjbmh.tanggal_akhir_kontrak"></editor-field>
-							</div> -->
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
 								<editor-field name="hemjbmh.grup_hk"></editor-field>
 							</div>
 							<div class="col-lg-6">
-								<editor-field name="hemjbmh.jumlah_grup"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.is_pot_makan"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.is_npwp"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.is_tukar"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.npwp_no"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.npwp_alamat"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
 								<editor-field name="hemxxmh.gender"></editor-field>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
-								<editor-field name="hemxxmh.id_gctxxmh_lahir"></editor-field>
-							</div>
-							<div class="col-lg-6">
 								<editor-field name="hemxxmh.tanggal_lahir"></editor-field>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.alamat"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.ktp_alamat"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.id_gctxxmh_domisili"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.id_gctxxmh_ktp"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.domisili_desa"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.ktp_desa"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.domisili_kecamatan"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="hemdcmh.ktp_kecamatan"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.id_files_foto"></editor-field>
-							</div>
-						</div>
-						<div class="row">
 							<div class="col-lg-6">
 								<editor-field name="hemjbmh.is_harian_lepas"></editor-field>
-							</div>
-							<div class="col-lg-6">
-								<editor-field name="status_aktif"></editor-field>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
-								<editor-field name="hemxxmh.keterangan"></editor-field>
 							</div>
 						</div>
 					</div>
