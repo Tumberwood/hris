@@ -62,58 +62,54 @@ $qs_payroll = $db
 
 $rs_payroll = $qs_payroll->fetchAll();
 
+// Jumlah hari dalam bulan dari start_date
+$daysInMonth = (int) date('t', strtotime($start_date));
+
 if (count($rs_payroll) > 0) {
-    // Create an associative array to hold the pivoted data
     $pivotedData = [];
 
     foreach ($rs_payroll as $row) {
         $id_hemxxmh = $row['id_hemxxmh'];
-        $peg = $row['peg'];
-        $bagian = $row['bagian'];
-        $grup = $row['grup'];
-		// var_dump($peg);
+
         if (!isset($pivotedData[$id_hemxxmh])) {
             $pivotedData[$id_hemxxmh] = [
                 'id_hemxxmh' => $id_hemxxmh,
-                'Nama' => $peg,
-                'Bagian' => $bagian,
-                'Grup' => $grup
+                'Nama'       => $row['peg'],
+                'Bagian'     => $row['bagian'],
+                'Grup'       => $row['grup'],
             ];
-        }
-		
-        $shift = $row['shift'];
-        $tanggal = $row['tanggal'];
 
-        $pivotedData[$id_hemxxmh][$tanggal] = $shift;
+            // Isi default "-" untuk semua tanggal
+            for ($d = 1; $d <= $daysInMonth; $d++) {
+                $pivotedData[$id_hemxxmh][$d] = '-';
+            }
+        }
+
+        // Timpa dengan shift yang sebenarnya
+        $pivotedData[$id_hemxxmh][(int)$row['tanggal']] = $row['shift'];
     }
 
-    // Convert the associative array into a numeric indexed array (optional)
     $pivotedData = array_values($pivotedData);
 
-    // Create an array of column definitions
-    $columns = [];
-    foreach ($pivotedData[0] as $key => $value) {
-        if ($key != 'id_hemxxmh') {
-            $columns[] = ['data' => $key, 'name' => $key];
-        }
+    // Kolom dibuat tetap: Nama, Bagian, Grup, 1..N
+    $columns = [
+        ['data' => 'Nama',   'name' => 'Nama'],
+        ['data' => 'Bagian', 'name' => 'Bagian'],
+        ['data' => 'Grup',   'name' => 'Grup'],
+    ];
+    for ($d = 1; $d <= $daysInMonth; $d++) {
+        $columns[] = ['data' => (string)$d, 'name' => (string)$d];
     }
 
-    // Prepare the results in the desired format
-    $results = [
-        'data' => $pivotedData,
-        'columns' => $columns
-    ];
-
-    // Output the results as JSON
-    echo json_encode($results);
+    echo json_encode([
+        'data'    => $pivotedData,
+        'columns' => $columns,
+    ]);
 } else {
-    // If no results found, prepare an empty result
-    $results = [
-        'data' => [],
-        'columns' => []
-    ];
-
-    echo json_encode($results);
+    echo json_encode([
+        'data'    => [],
+        'columns' => [],
+    ]);
 }
 
 // Close the database connection here (replace with your actual code)
