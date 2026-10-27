@@ -125,6 +125,7 @@
 							->bind(':tanggal', $tanggal)
 							->bind(':bagian', $bagian)
 							->bind(':grup', $grup)
+							->bind(':username', $_SESSION['username'])
 							->exec('INSERT INTO htssctd
 								(
 									id_hemxxmh,
@@ -155,7 +156,7 @@
 								SELECT
 									:id_hemxxmh,
 									:id_htsxxmh,
-									"Upload Jadwal S Dept",
+									CONCAT("Upload Jadwal S Dept. by: ", :username ) AS keterangan,
 									:tanggal,
 									htsxxmh.jam_awal,
 									htsxxmh.jam_akhir,
