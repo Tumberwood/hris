@@ -151,7 +151,7 @@
 						});
 						
 						$.ajax( {
-							url: "../../models/htssctd_upload/htssctd_upload_fn_jadwal_satpam.php",
+							url: "../../models/htssctd_upload/htssctd_upload_fn_jadwal_satpam_s_dept.php",
 							type: 'POST',
 							dataType: 'json',
 							data: fd_staff,
