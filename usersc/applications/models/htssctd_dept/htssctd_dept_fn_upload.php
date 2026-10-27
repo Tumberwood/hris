@@ -155,7 +155,7 @@
 								SELECT
 									:id_hemxxmh,
 									:id_htsxxmh,
-									"Upload Jadwal Satpam",
+									"Upload Jadwal S Dept",
 									:tanggal,
 									htsxxmh.jam_awal,
 									htsxxmh.jam_akhir,
@@ -253,7 +253,7 @@
 				);
 			} else {
 				$data = array(
-					"message" => "Upload Jadwal Satpam Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
+					"message" => "Upload Jadwal S Dept Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
 					"type_message" => "success",
 					"debug" => $emptyPeg,
 					"hem" => $rs_hemxxmh
@@ -265,13 +265,13 @@
 		}catch (PDOException $e){
 			$db->rollback();
 			$data = array(
-				"message" => "Upload Jadwal Satpam gagal," . $e,
+				"message" => "Upload Jadwal S Dept gagal," . $e,
 				"type_message" => "danger"
 			);
 		}
 	}else{
 		$data = array(
-			"message" => "Upload Jadwal Satpam gagal, format file salah!",
+			"message" => "Upload Jadwal S Dept gagal, format file salah!",
 			"type_message" => "danger"
 		);
 	}
