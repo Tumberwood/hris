@@ -184,36 +184,201 @@
                         SELECT
                             a.id_hemxxmh,
 
-                            SUM(a.lembur15) lembur15,
-                            SUM(a.lembur15_final) lembur15_final,
-                            ROUND(SUM(a.rp_lembur15), 0) rp_lembur15,
+                            SUM(a.lembur15) AS lembur15,
+                            SUM(a.lembur15_final) AS lembur15_final,
 
-                            SUM(a.lembur2) lembur2,
-                            SUM(a.lembur2_final) lembur2_final,
-                            ROUND(SUM(a.rp_lembur2), 0) rp_lembur2,
+                            ROUND(
+                                SUM(
+                                    CASE
+                                        WHEN p.id_hesxxmh IN (3, 8, 9)
+                                            THEN COALESCE(lm.nominal_lembur_mati, 0) * COALESCE(a.lembur15, 0)
+                                        ELSE (
+                                            (
+                                                COALESCE(gp.nominal_gp, 0)
+                                                + COALESCE(tj.nominal_jabatan, 0)
+                                                + COALESCE(tk.nominal_tj_khusus, 0)
+                                            ) / 173
+                                        ) * (COALESCE(a.lembur15, 0) * 1.5)
+                                    END
+                                ),
+                                0
+                            ) AS rp_lembur15,
 
-                            SUM(a.lembur3) lembur3,
-                            SUM(a.lembur3_final) lembur3_final,
-                            ROUND(SUM(a.rp_lembur3), 0) rp_lembur3,
+                            SUM(a.lembur2) AS lembur2,
+                            SUM(a.lembur2_final) AS lembur2_final,
 
-                            SUM(COALESCE(a.lembur15,0))
-                            + SUM(COALESCE(a.lembur2,0))
-                            + SUM(COALESCE(a.lembur3,0)) AS total_lembur_jam,
+                            ROUND(
+                                SUM(
+                                    CASE
+                                        WHEN p.id_hesxxmh IN (3, 8, 9)
+                                            THEN COALESCE(lm.nominal_lembur_mati, 0) * COALESCE(a.lembur2, 0)
+                                        ELSE (
+                                            (
+                                                COALESCE(gp.nominal_gp, 0)
+                                                + COALESCE(tj.nominal_jabatan, 0)
+                                                + COALESCE(tk.nominal_tj_khusus, 0)
+                                            ) / 173
+                                        ) * (COALESCE(a.lembur2, 0) * 2)
+                                    END
+                                ),
+                                0
+                            ) AS rp_lembur2,
 
-                            SUM(COALESCE(a.lembur15_final,0))
-                            + SUM(COALESCE(a.lembur2_final,0))
-                            + SUM(COALESCE(a.lembur3_final,0)) AS total_lembur_jam_final,
+                            SUM(a.lembur3) AS lembur3,
+                            SUM(a.lembur3_final) AS lembur3_final,
 
-                            ROUND(SUM(COALESCE(a.rp_lembur15, 0)), 0)
-                            + ROUND(SUM(COALESCE(a.rp_lembur2, 0)), 0)
-                            + ROUND(SUM(COALESCE(a.rp_lembur3, 0)), 0)
-                            AS total_rp_lembur,
-                            SUM(is_makan) sum_pot_makan
+                            ROUND(
+                                SUM(
+                                    CASE
+                                        WHEN p.id_hesxxmh IN (3, 8, 9)
+                                            THEN COALESCE(lm.nominal_lembur_mati, 0) * COALESCE(a.lembur3, 0)
+                                        ELSE (
+                                            (
+                                                COALESCE(gp.nominal_gp, 0)
+                                                + COALESCE(tj.nominal_jabatan, 0)
+                                                + COALESCE(tk.nominal_tj_khusus, 0)
+                                            ) / 173
+                                        ) * (COALESCE(a.lembur3, 0) * 3)
+                                    END
+                                ),
+                                0
+                            ) AS rp_lembur3,
+
+                            SUM(COALESCE(a.lembur15, 0))
+                                + SUM(COALESCE(a.lembur2, 0))
+                                + SUM(COALESCE(a.lembur3, 0)) AS total_lembur_jam,
+
+                            SUM(COALESCE(a.lembur15_final, 0))
+                                + SUM(COALESCE(a.lembur2_final, 0))
+                                + SUM(COALESCE(a.lembur3_final, 0)) AS total_lembur_jam_final,
+
+                            ROUND(
+                                SUM(
+                                    CASE
+                                        WHEN p.id_hesxxmh IN (3, 8, 9)
+                                            THEN COALESCE(lm.nominal_lembur_mati, 0)
+                                                * (
+                                                    COALESCE(a.lembur15, 0)
+                                                    + COALESCE(a.lembur2, 0)
+                                                    + COALESCE(a.lembur3, 0)
+                                                )
+                                        ELSE (
+                                            (
+                                                COALESCE(gp.nominal_gp, 0)
+                                                + COALESCE(tj.nominal_jabatan, 0)
+                                                + COALESCE(tk.nominal_tj_khusus, 0)
+                                            ) / 173
+                                        ) * (
+                                            (COALESCE(a.lembur15, 0) * 1.5)
+                                            + (COALESCE(a.lembur2, 0) * 2)
+                                            + (COALESCE(a.lembur3, 0) * 3)
+                                        )
+                                    END
+                                ),
+                                0
+                            ) AS total_rp_lembur,
+
+                            SUM(a.is_makan) AS sum_pot_makan
 
                         FROM htsprrd a
-                        JOIN pegawai p ON p.id_hemxxmh = a.id_hemxxmh
+
+                        JOIN pegawai p
+                            ON p.id_hemxxmh = a.id_hemxxmh
+
+                        -- Nominal lembur mati
+                        LEFT JOIN (
+                            SELECT
+                                id_hemxxmh,
+                                nominal AS nominal_lembur_mati
+                            FROM (
+                                SELECT
+                                    id_hemxxmh,
+                                    nominal,
+                                    ROW_NUMBER() OVER (
+                                        PARTITION BY id_hemxxmh
+                                        ORDER BY tanggal_efektif DESC, id DESC
+                                    ) AS row_num
+                                FROM htpr_hemxxmh
+                                WHERE id_hpcxxmh = 36
+                                AND tanggal_efektif <= :tanggal_awal
+                            ) x
+                            WHERE row_num = 1
+                        ) lm
+                            ON lm.id_hemxxmh = a.id_hemxxmh
+
+                        -- Gaji pokok
+                        LEFT JOIN (
+                            SELECT
+                                id_hemxxmh,
+                                nominal AS nominal_gp
+                            FROM (
+                                SELECT
+                                    id_hemxxmh,
+                                    nominal,
+                                    ROW_NUMBER() OVER (
+                                        PARTITION BY id_hemxxmh
+                                        ORDER BY tanggal_efektif DESC, id DESC
+                                    ) AS row_num
+                                FROM htpr_hemxxmh
+                                WHERE id_hpcxxmh = 1
+                                AND tanggal_efektif <= :tanggal_awal
+                            ) x
+                            WHERE row_num = 1
+                        ) gp
+                            ON gp.id_hemxxmh = a.id_hemxxmh
+
+                        -- Tunjangan jabatan
+                        LEFT JOIN (
+                            SELECT
+                                id_hemxxmh,
+                                nominal AS nominal_jabatan
+                            FROM (
+                                SELECT
+                                    h.id_hemxxmh,
+                                    h.nominal,
+                                    ROW_NUMBER() OVER (
+                                        PARTITION BY h.id_hemxxmh
+                                        ORDER BY h.tanggal_efektif DESC, h.id DESC
+                                    ) AS row_num
+                                FROM htpr_hemxxmh h
+                                INNER JOIN hemxxmh b
+                                    ON b.id = h.id_hemxxmh
+                                INNER JOIN hemjbmh c
+                                    ON c.id_hemxxmh = b.id
+                                WHERE h.id_hpcxxmh IN (32, 133)
+                                AND h.tanggal_efektif <= :tanggal_awal
+                            ) x
+                            WHERE row_num = 1
+                        ) tj
+                            ON tj.id_hemxxmh = a.id_hemxxmh
+
+                        -- Tunjangan khusus
+                        LEFT JOIN (
+                            SELECT
+                                id_hemxxmh,
+                                nominal AS nominal_tj_khusus
+                            FROM (
+                                SELECT
+                                    id_hemxxmh,
+                                    nominal,
+                                    ROW_NUMBER() OVER (
+                                        PARTITION BY id_hemxxmh
+                                        ORDER BY tanggal_efektif DESC, id DESC
+                                    ) AS row_num
+                                FROM htpr_hemxxmh
+                                WHERE id_hpcxxmh = 133
+                                AND tanggal_efektif <= :tanggal_awal
+                            ) x
+                            WHERE row_num = 1
+                        ) tk
+                            ON tk.id_hemxxmh = a.id_hemxxmh
+
                         WHERE a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                        AND NOT (id_hesxxmh IN (3,8,9) AND id_heyxxmd = 1)
+                        AND NOT (
+                            p.id_hesxxmh IN (3, 8, 9)
+                            AND p.id_heyxxmd = 1
+                        )
+
                         GROUP BY a.id_hemxxmh
                     ),
                     gaji_pokok AS (
@@ -3447,7 +3612,7 @@
                         gaji_bersih,
 
                         (gaji_bersih % 100) AS bulat,
-                        
+
                         CASE
                             WHEN gaji_bersih < 0 THEN
                                 -CEIL(ABS(gaji_bersih) / 100) * 100
