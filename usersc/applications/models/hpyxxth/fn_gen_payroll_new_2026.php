@@ -1209,7 +1209,7 @@
 
                         WHERE 1
                         AND pr.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                        AND job.tanggal_masukl BETWEEN :tanggal_awal AND :tanggal_akhir
+                        AND job.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
                         AND pr.st_jadwal <> "OFF"
                         GROUP BY pr.id_hemxxmh
                     ),
