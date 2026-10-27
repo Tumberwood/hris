@@ -194,8 +194,8 @@
 													<th class="text-center align-middle text-danger">22. Potongan makan</th>
 													<th class="text-center align-middle text-danger">23. Total Pot Upah (Hari)</th>
 													<th class="text-center align-middle text-danger">24. Potongan Upah (Rp)</th>
-													<th class="text-center align-middle text-danger">23a. Total Penambah Upah (Hari)</th>
-													<th class="text-center align-middle text-danger">24a. Penambah Upah (Rp)</th>
+													<th class="text-center align-middle ">23a. Total Penambah Upah (Hari)</th>
+													<th class="text-center align-middle ">24a. Penambah Upah (Rp)</th>
 													<th class="text-center align-middle text-danger">25. Total Pot Resign</th>
 													<th class="text-center align-middle text-danger">26. Potongan Resign (Rp)</th>
 													<th class="text-center align-middle text-danger">27. Total Pot Jam</th>
@@ -378,8 +378,8 @@
 													<th class="text-center align-middle text-danger">22. Potongan makan</th>
 													<th class="text-center align-middle text-danger">23. Total Pot Upah (Hari)</th>
 													<th class="text-center align-middle text-danger">24. Potongan Upah (Rp)</th>
-													<th class="text-center align-middle text-danger">23a. Total Penambah Upah (Hari)</th>
-													<th class="text-center align-middle text-danger">24a. Penambah Upah (Rp)</th>
+													<th class="text-center align-middle ">23a. Total Penambah Upah (Hari)</th>
+													<th class="text-center align-middle ">24a. Penambah Upah (Rp)</th>
 													<th class="text-center align-middle text-danger">25. Total Pot Resign</th>
 													<th class="text-center align-middle text-danger">26. Potongan Resign (Rp)</th>
 													<th class="text-center align-middle text-danger">27. Total Pot Jam</th>
@@ -557,8 +557,8 @@
 													<th class="text-center align-middle text-danger">22. Potongan makan</th>
 													<th class="text-center align-middle text-danger">23. Total Pot Upah (Hari)</th>
 													<th class="text-center align-middle text-danger">24. Potongan Upah (Rp)</th>
-													<th class="text-center align-middle text-danger">23a. Total Penambah Upah (Hari)</th>
-													<th class="text-center align-middle text-danger">24a. Penambah Upah (Rp)</th>
+													<th class="text-center align-middle ">23a. Total Penambah Upah (Hari)</th>
+													<th class="text-center align-middle ">24a. Penambah Upah (Rp)</th>
 													<th class="text-center align-middle text-danger">25. Total Pot Resign</th>
 													<th class="text-center align-middle text-danger">26. Potongan Resign (Rp)</th>
 													<th class="text-center align-middle text-danger">27. Total Pot Jam</th>
