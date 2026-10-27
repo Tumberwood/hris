@@ -1208,8 +1208,8 @@
                         LEFT JOIN fix_cost fc ON fc.id_hemxxmh = pr.id_hemxxmh
 
                         WHERE 1
-                        AND pr.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
-                        AND job.tanggal_masuk BETWEEN :tanggal_awal AND :tanggal_akhir
+                        AND pr.tanggal BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal)
+                        AND job.tanggal_masuk BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal)
                         AND pr.st_jadwal <> "OFF"
                         GROUP BY pr.id_hemxxmh
                     ),
