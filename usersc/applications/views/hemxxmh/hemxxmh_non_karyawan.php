@@ -79,8 +79,8 @@
                             </tr>
                         </thead>
                     </table>
-                    <legend>Detail</legend>
-					<div class="tabs-container">
+                    <legend hidden>Detail</legend>
+					<div class="tabs-container" hidden>
 						<ul class="nav nav-tabs" role="tablist">
 							<li><a class="nav-link active" data-toggle="tab" href="#tabhemfmmd"> Keluarga</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhemedmd"> Pendidikan</a></li>
