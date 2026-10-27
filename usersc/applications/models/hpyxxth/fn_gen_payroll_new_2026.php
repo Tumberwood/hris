@@ -3447,10 +3447,13 @@
                         gaji_bersih,
 
                         (gaji_bersih % 100) AS bulat,
-
-                        FLOOR(
-                            gaji_bersih - (gaji_bersih % 100)
-                        ) AS gaji_terima
+                        
+                        CASE
+                            WHEN gaji_bersih < 0 THEN
+                                -CEIL(ABS(gaji_bersih) / 100) * 100
+                            ELSE
+                                FLOOR(gaji_bersih / 100) * 100
+                        END AS gaji_terima
 
                     FROM payroll_final
                     HAVING gaji_bersih <> 0
@@ -3724,9 +3727,12 @@
 
                         (gaji_bersih % 100) AS bulat,
 
-                        FLOOR(
-                            gaji_bersih - (gaji_bersih % 100)
-                        ) AS gaji_terima
+                        CASE
+                            WHEN gaji_bersih < 0 THEN
+                                -CEIL(ABS(gaji_bersih) / 100) * 100
+                            ELSE
+                                FLOOR(gaji_bersih / 100) * 100
+                        END AS gaji_terima
 
                     FROM payroll_final
                     HAVING gaji_bersih <> 0
