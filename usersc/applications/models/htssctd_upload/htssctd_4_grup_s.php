@@ -16,6 +16,7 @@ $id_hodxxmh = $_SESSION['id_hodxxmh'] ?? 0;
 $qs_payroll = $db
     ->raw()
 	->bind(':start_date', $start_date)
+	->bind(':id_hodxxmh', $id_hodxxmh)
     ->exec('SELECT
                 CONCAT(h.kode, " - ", h.nama) AS peg,
                 a.id_hemxxmh,
