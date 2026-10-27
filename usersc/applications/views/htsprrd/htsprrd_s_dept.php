@@ -964,7 +964,7 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
-					{ 
+					,{ 
 						text: '<i class="fa fa-filter" aria-hidden="true"></i>',  
 						name: 'btnFilterAdvanced',
 						className: 'btn btn-primary',
