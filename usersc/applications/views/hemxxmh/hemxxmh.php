@@ -3803,6 +3803,10 @@
 				// do something
 			} );
 			
+			edthemjbmd.on( 'close', function () {
+				edthemjbmd.enable();
+			} );
+			
 			//start datatables
 			tblhemjbmd = $('#tblhemjbmd').DataTable( {
 				ajax: {
