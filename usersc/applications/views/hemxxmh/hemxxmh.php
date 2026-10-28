@@ -3712,9 +3712,6 @@
 						label: "Tanggal Awal",
 						name: "hemjbmd.tanggal_awal",
 						type: "datetime",
-						def: function () { 
-							return new Date(); 
-						},
 						opts:{
 							minDate: new Date('1900-01-01'),
 							firstDay: 0
@@ -3724,9 +3721,6 @@
 						label: "Tanggal Akhir",
 						name: "hemjbmd.tanggal_akhir",
 						type: "datetime",
-						def: function () { 
-							return new Date(); 
-						},
 						opts:{
 							minDate: new Date('1900-01-01'),
 							firstDay: 0
@@ -3741,10 +3735,21 @@
 					},	{
 						label: "Nama Atasan Langsung",
 						name: "hemjbmd.nama_atasan"
-					},	{
+					},	
+					{
 						label: "Gaji Terakhir",
 						name: "hemjbmd.gaji"
-					}
+					},
+					{
+						label: "Alasan Keluar",
+						name: "hemjbmd.alasan_keluar",
+						type: "textarea"
+					},
+					{
+						label: "Keterangan",
+						name: "hemjbmd.keterangan",
+						type: "textarea"
+					},
 				]
 			} );
 			

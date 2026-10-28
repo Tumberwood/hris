@@ -82,6 +82,7 @@
 				Field::inst( 'hemjbmd.jabatan_awal' ),
 				Field::inst( 'hemjbmd.jabatan_akhir' ),
 				Field::inst( 'hemjbmd.nama_atasan' ),
+				Field::inst( 'hemjbmd.alasan_keluar' ),
 
 				Field::inst( 'gctxxmh.nama' )
 			)
