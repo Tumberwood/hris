@@ -248,6 +248,14 @@
 								<editor-field name="hemxxmh.agama"></editor-field>
 							</div>
 						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.email"></editor-field>
+							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.no_hp"></editor-field>
+							</div>
+						</div>
 						
 						<div class="row">
 							<div class="col-lg-6">
@@ -1487,6 +1495,14 @@
 					{
 						label: "Jurusan",
 						name: "hemxxmh.jurusan",
+					},
+					{
+						label: "Email",
+						name: "hemxxmh.email",
+					},
+					{
+						label: "No. HP",
+						name: "hemxxmh.no_hp",
 					},
 					{
 						label: "Agama <sup class='text-danger'>*<sup>",

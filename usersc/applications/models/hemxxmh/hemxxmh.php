@@ -163,6 +163,8 @@
 			Field::inst( 'holxxmd_2.nama' ),
 			Field::inst( 'hevgrmh.nama' ),
 
+			Field::inst( 'hemxxmh.email' ),
+			Field::inst( 'hemxxmh.no_hp' ),
 			Field::inst( 'hemxxmh.gender' ),
 			Field::inst( 'hemxxmh.perkawinan' ),
 			Field::inst( 'hemxxmh.jumlah_anak' ),
