@@ -3766,6 +3766,7 @@
                     SELECT
                         :id_hpyxxth,
                         a.id_hemxxmh,
+                        -a.nominal AS pot_lain_after_pph,
                         -a.nominal AS gaji_terima,
                         -a.nominal - (
                             CASE
