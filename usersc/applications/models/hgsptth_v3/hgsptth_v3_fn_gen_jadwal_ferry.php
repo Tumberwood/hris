@@ -176,7 +176,7 @@
                         if(b.nama = "minggu", b.shift, 
                             if(jam.kode LIKE "malam%", 3, 
                                 if(jam.kode LIKE "pagi%", 1, 
-                                    if(jam.id IN (19, 56) OR jam.kode LIKE "%SORE 17:00%" , 3, 2)
+                                    if(jam.id IN (19, 56) OR jam.kode LIKE "%SORE 17:00%" OR (jam.kode LIKE "%SORE 16:00%" AND IFNULL(c.shift, shift_max) = 3 ), 3, 2)
                                 )
                             ) 
                         ) AS shift
