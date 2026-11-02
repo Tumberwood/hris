@@ -2445,6 +2445,54 @@
                         END AS tj_rumah_nganjuk
                         FROM pegawai p
                     ),
+                    
+                    pot_makan_nganjuk AS (
+                        SELECT
+                            p.id_hemxxmh,
+                            CASE
+                                WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal)
+                                THEN 
+                                (
+                                    IF(grup_hk = 1, 21, 25) - 
+                                    (
+                                        SELECT
+                                            COUNT(1) AS c_id
+                                        FROM htsprrd pr
+                                        WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND LAST_DAY(:tanggal_awal)
+                                        AND pr.id_hemxxmh = p.id_hemxxmh
+                                        AND pr.st_jadwal <> "OFF" 
+                                    )
+                                )
+                                * 25000
+
+                            ELSE  0
+                        END AS pot_makan_nganjuk
+                        FROM pegawai p
+                    ),
+                    pot_rumah_nganjuk AS (
+                        SELECT
+                            p.id_hemxxmh,
+                            CASE
+                                WHEN p.tanggal_keluar BETWEEN :tanggal_awal AND LAST_DAY(:tanggal_awal)
+                                THEN 
+                                (
+                                    IF(grup_hk = 1, 21, 25) - 
+                                    (
+                                        SELECT
+                                            COUNT(1) AS c_id
+                                        FROM htsprrd pr
+                                        WHERE pr.tanggal BETWEEN DATE_FORMAT(:tanggal_awal, "%Y-%m-01") AND LAST_DAY(:tanggal_awal)
+                                        AND pr.id_hemxxmh = p.id_hemxxmh
+                                        AND pr.st_jadwal <> "OFF" 
+                                    )
+                                )
+                                * 8000
+
+                            ELSE  0 
+                        END AS pot_rumah_nganjuk
+                        FROM pegawai p
+                    ),
+                    
                     bpjs AS (
                         SELECT
                             p.id_hemxxmh,
@@ -3111,6 +3159,9 @@
                         if(id_hesxxmh IN (8,9), tj_makan_nganjuk, 0) AS tj_makan_nganjuk,
                         if(id_hesxxmh IN (8,9), tj_rumah_nganjuk, 0) AS tj_rumah_nganjuk,
                         
+                        if(id_hesxxmh IN (8,9), pot_makan_nganjuk, 0) AS pot_makan_nganjuk,
+                        if(id_hesxxmh IN (8,9), pot_rumah_nganjuk, 0) AS pot_rumah_nganjuk,
+                        
                         -- BATAS HITUNG BRUTO
                         (
                             COALESCE(gp.gp, 0)
@@ -3124,6 +3175,9 @@
                         (
                             COALESCE(pot_upah, 0)
                             + COALESCE(pot_jam, 0)
+                            
+                            + IF(id_hesxxmh IN (8,9), COALESCE(pot_makan_nganjuk, 0), 0)
+                            + IF(id_hesxxmh IN (8,9), COALESCE(pot_rumah_nganjuk, 0), 0)
                         ) AS bruto,
 
                         jht_perusahaan,
@@ -3143,6 +3197,10 @@
                     LEFT JOIN gaji_pokok gp ON gp.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN tj_makan_nganjuk tmn ON tmn.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN tj_rumah_nganjuk trn ON trn.id_hemxxmh = p.id_hemxxmh
+                    
+                    LEFT JOIN pot_makan_nganjuk p_mn ON p_mn.id_hemxxmh = p.id_hemxxmh
+                    LEFT JOIN pot_rumah_nganjuk p_rn ON p_rn.id_hemxxmh = p.id_hemxxmh
+
                     LEFT JOIN pot_makan ON pot_makan.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN bpjs ON bpjs.id_hemxxmh = p.id_hemxxmh
                     LEFT JOIN pot_upah pu ON pu.id_hemxxmh = p.id_hemxxmh
@@ -3573,6 +3631,9 @@
                             
                             tj_makan_nganjuk,
                             tj_rumah_nganjuk,
+                            
+                            pot_makan_nganjuk,
+                            pot_rumah_nganjuk,
 
                             IF(
                                 id_heyxxmd = 1,
@@ -3723,6 +3784,9 @@
                         
                         tj_makan_nganjuk,
                         tj_rumah_nganjuk,
+                        
+                        pot_makan_nganjuk,
+                        pot_rumah_nganjuk,
 
                         gaji_bersih,
 

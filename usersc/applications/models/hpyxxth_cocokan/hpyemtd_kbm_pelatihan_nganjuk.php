@@ -106,8 +106,13 @@
 
 				// TAMBAHAN GAJI
 				Field::inst( 'hpyemtd_cocokan.terima_lain' ),
+				
 				Field::inst( 'hpyemtd_cocokan.tj_makan_nganjuk' ),
 				Field::inst( 'hpyemtd_cocokan.tj_rumah_nganjuk' ),
+
+				Field::inst( 'hpyemtd_cocokan.pot_makan_nganjuk' ),
+				Field::inst( 'hpyemtd_cocokan.pot_rumah_nganjuk' ),
+
 				Field::inst( 'hpyemtd_cocokan.gaji_bpjs_tk' ),
 				Field::inst( 'hpyemtd_cocokan.gaji_bpjs_kes' ),
 
@@ -222,8 +227,13 @@
 				Field::inst( 'hpyemtd.npwp' ),
 
 				Field::inst( 'hpyemtd.terima_lain' ),
+				
 				Field::inst( 'hpyemtd.tj_makan_nganjuk' ),
 				Field::inst( 'hpyemtd.tj_rumah_nganjuk' ),
+
+				Field::inst( 'hpyemtd.pot_makan_nganjuk' ),
+				Field::inst( 'hpyemtd.pot_rumah_nganjuk' ),
+
 				Field::inst( 'hpyemtd.gaji_bpjs_tk' ),
 				Field::inst( 'hpyemtd.gaji_bpjs_kes' ),
 
