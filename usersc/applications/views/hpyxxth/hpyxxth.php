@@ -788,8 +788,8 @@
 													<th>10. Total Lembur (Rp Final)</th>
 													<th>11. Tunjangan Makan</th>
 													<th>12. Tunjangan Rumah</th>
-													<th>11a. Potongan Tj Makan</th>
-													<th>12a. Potongan Tj Rumah</th>
+													<th class="text-danger">11a. Potongan Tj Makan</th>
+													<th class="text-danger">12a. Potongan Tj Rumah</th>
 													<th class="text-danger">13. Pot Lain</th>
 													<th>14. Pendapatan Lain</th>
 													<th class="text-danger">15. Total Pot Upah (Hari)</th>
@@ -3562,12 +3562,12 @@
 					{ 
 						data: "hpyemtd.pot_makan_nganjuk",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right text-danger "
+						class: "text-right "
 					},
 					{ 
 						data: "hpyemtd.pot_rumah_nganjuk",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right text-danger "
+						class: "text-right "
 					},
 					{ 
 						data: "hpyemtd.pot_lain_after_pph",
