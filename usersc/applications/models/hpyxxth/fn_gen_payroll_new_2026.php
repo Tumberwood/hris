@@ -3759,12 +3759,23 @@
                         id_hpyxxth,
                         id_hemxxmh,
                         pot_lain_after_pph,
+                        gaji_bersih,
+                        bulat,
                         gaji_terima
                     )
                     SELECT
                         :id_hpyxxth,
                         a.id_hemxxmh,
                         -a.nominal AS gaji_terima,
+                        -a.nominal - (
+                            CASE
+                                WHEN -a.nominal < 0 THEN
+                                    -CEIL(ABS(-a.nominal) / 100) * 100
+                                ELSE
+                                    FLOOR((-a.nominal) / 100) * 100
+                            END
+                        ) 
+                        AS bulat,
                         CASE
                             WHEN -a.nominal < 0 THEN
                                 -CEIL(ABS(-a.nominal) / 100) * 100
