@@ -3562,12 +3562,12 @@
 					{ 
 						data: "hpyemtd.pot_makan_nganjuk",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right "
+						class: "text-right text-danger "
 					},
 					{ 
 						data: "hpyemtd.pot_rumah_nganjuk",
 						render: $.fn.dataTable.render.number( ',', '.', 0,'','' ),
-						class: "text-right "
+						class: "text-right text-danger "
 					},
 					{ 
 						data: "hpyemtd.pot_lain_after_pph",
