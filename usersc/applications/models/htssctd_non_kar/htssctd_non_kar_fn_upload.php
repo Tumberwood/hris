@@ -52,14 +52,14 @@
 			$emptyPeg = array();
 			/**
              *                      : nama
-             * 0: NIK           : kode
+             * 0: Kode Finger           : kode
              * 1: Nama              
              * 2: Tanggal             
              * 3: Shift
              */
 			for($i = 1;$i < count($sheetData);$i++){
 				if ($sheetData[$i]['0'] != null) {
-					$kode 		= $sheetData[$i]['0'] ;
+					$kode_finger 		= $sheetData[$i]['0'] ;
 					
 					$tanggal_excel = new Carbon($sheetData[$i]['2']); //gunakan carbon untuk ambil data tanggal
 					$tanggal = $tanggal_excel->format('Y-m-d'); //format jadi 2023-09-12
@@ -80,13 +80,27 @@
 	
 					// print_r($id_htsxxmh);
 					//cari NIK
+					
 					$qs_hemxxmh = $db
-						->query('select', 'hemxxmh' )
-						->get(['id as id_hemxxmh'] )
-						->get(['count(id) as id'] )
-						->where('kode', $kode)
-						->exec();
-					$rs_hemxxmh = $qs_hemxxmh->fetch();	
+						->raw()
+						->bind(':kode_finger', $kode_finger)
+						->exec('SELECT
+									count(id) as id,
+									id as id_hemxxmh
+								FROM hemxxmh a
+								JOIN hemjbmh b ON b.id_hemxxmh = a.id
+								WHERE a.kode_finger = :kode_finger
+								AND b.is_non_karyawan = 1
+					');
+					$rs_hemxxmh = $qs_hemxxmh->fetch();
+
+					// $qs_hemxxmh = $db
+					// 	->query('select', 'hemxxmh a' )
+					// 	->get(['id as id_hemxxmh'] )
+					// 	->get(['count(id) as id'] )
+					// 	->where('kode_finger', $kode_finger)
+					// 	->exec();
+					// $rs_hemxxmh = $qs_hemxxmh->fetch();	
 					$id_hemxxmh = $rs_hemxxmh['id_hemxxmh'];
 	
 					if ($rs_hemxxmh['id'] == 0) {
