@@ -1440,93 +1440,25 @@
                     ),
                     komp_rekontrak AS (
                         SELECT
-                            a.id,
-
-                            b.id AS id_hemxxmh,
-
-                            -- b.id AS id_hemxxmh_lama,
-                            -- hl.id_hemxxmh_baru as id_hemxxmh,
-                            c.tanggal_keluar,
-                            FLOOR(
-                                (
-                                    (
-                                        (TIMESTAMPDIFF(MONTH, c.tanggal_masuk, c.tanggal_keluar) + 1) / 12.0
-                                    ) * (
-                                        IFNULL(gp.nominal, 0)
-                                        + IFNULL(tjab.nominal, 0)
-                                        + IFNULL(tkhusus.nominal, 0)
-                                    )
-                                ) / 100
-                            ) * 100 AS komp_rekontrak
-
-                        FROM hesxxtd a
-
-                        JOIN hemxxmh b 
-                            ON b.id = a.id_hemxxmh
-
-                        -- Mengambil MAX(id) per nama tanpa CTE WITH
-                        JOIN (
-                            SELECT nama, MAX(id) AS id_hemxxmh_baru
-                            FROM hemxxmh
-                            GROUP BY nama
-                        ) hl ON hl.nama = b.nama
-
-                        JOIN hemjbmh c 
-                            ON c.id_hemxxmh = b.id
-
-                        -- Left join untuk komponen GP (id_hpcxxmh = 1) terbaru
+                            p.id_hemxxmh,
+                            nominal_rekontrak AS komp_rekontrak
+                        FROM pegawai p
                         LEFT JOIN (
-                            SELECT 
-                                komp.id_hemxxmh,
-                                komp.nominal,
-                                komp.tanggal_efektif,
-                                ROW_NUMBER() OVER (
-                                    PARTITION BY komp.id_hemxxmh 
-                                    ORDER BY komp.tanggal_efektif DESC
-                                ) AS rn
-                            FROM htpr_hemxxmh komp
-                            WHERE komp.id_hpcxxmh = 1
-                            AND komp.is_active = 1
-                        ) gp ON gp.id_hemxxmh = hl.id_hemxxmh_baru 
-                            AND gp.rn = 1 
-                            AND gp.tanggal_efektif <= c.tanggal_keluar
-
-                        -- Left join untuk komponen TJAB (id_hpcxxmh = 32) terbaru
-                        LEFT JOIN (
-                            SELECT 
-                                komp.id_hemxxmh,
-                                komp.nominal,
-                                komp.tanggal_efektif,
-                                ROW_NUMBER() OVER (
-                                    PARTITION BY komp.id_hemxxmh 
-                                    ORDER BY komp.tanggal_efektif DESC
-                                ) AS rn
-                            FROM htpr_hemxxmh komp
-                            WHERE komp.id_hpcxxmh = 32
-                            AND komp.is_active = 1
-                        ) tjab ON tjab.id_hemxxmh = hl.id_hemxxmh_baru 
-                            AND tjab.rn = 1 
-                            AND tjab.tanggal_efektif <= c.tanggal_keluar
-
-                        -- Left join untuk komponen TJ Khusus (id_hpcxxmh = 133) terbaru
-                        LEFT JOIN (
-                            SELECT 
-                                komp.id_hemxxmh,
-                                komp.nominal,
-                                komp.tanggal_efektif,
-                                ROW_NUMBER() OVER (
-                                    PARTITION BY komp.id_hemxxmh 
-                                    ORDER BY komp.tanggal_efektif DESC
-                                ) AS rn
-                            FROM htpr_hemxxmh komp
-                            WHERE komp.id_hpcxxmh = 133
-                            AND komp.is_active = 1
-                        ) tkhusus ON tkhusus.id_hemxxmh = hl.id_hemxxmh_baru 
-                            AND tkhusus.rn = 1 
-                            AND tkhusus.tanggal_efektif <= c.tanggal_keluar
-
-                        WHERE a.tanggal_mulai BETWEEN :tanggal_awal AND :tanggal_akhir
-                        AND a.keputusan = "rekontrak"
+                            SELECT
+                                id_hemxxmh,
+                                IFNULL(nominal, 0) AS nominal_rekontrak
+                            FROM (
+                                SELECT
+                                    a.id_hemxxmh,
+                                    SUM(nominal) as nominal
+                                FROM hpy_piutang_d as a
+                                WHERE
+                                    a.tanggal BETWEEN :tanggal_awal AND :tanggal_akhir
+                                    AND id_hpcxxmh = 108
+                                    AND is_approve = 1
+                                GROUP BY id_hemxxmh
+                            ) AS subquery
+                        ) rekontrak ON rekontrak.id_hemxxmh = p.id_hemxxmh
                     ),
                     komp_sisa_cuti AS (
                         SELECT
