@@ -164,7 +164,7 @@
 							multiple: false,
 							ajax: {
 								// url: "../../models/hemxxmh/hemxxmh_fn_opt.php",
-								url: "../../models/hemxxmh/hemxxmh_fn_opt_include_hl_umum.php",
+								url: "../../models/hemxxmh/hemxxmh_fn_opt_include_non_karyawan.php",
 								dataType: 'json',
 								data: function (params) {
 									var query = {
