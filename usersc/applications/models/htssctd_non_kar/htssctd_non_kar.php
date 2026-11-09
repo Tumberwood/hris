@@ -17,7 +17,7 @@ $qs_payroll = $db
     ->raw()
 	->bind(':start_date', $start_date)
     ->exec('SELECT
-                CONCAT(h.kode, " - ", h.nama) AS peg,
+                CONCAT(h.kode_finger, " - ", h.nama) AS peg,
                 hod.nama dep,
                 a.id_hemxxmh,
                 b.kode,
