@@ -106,6 +106,14 @@
 							</div>
 						</div>
 					</div>
+					<div class="form-group row">
+						<label class="col-lg-2 col-form-label">File Checkclock <b>Makan HL & Umum</b></label>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input type="file" name="filename" class="form-control" id="inputfilethimportcheckclock_makan_hl">
+							</div>
+						</div>
+					</div>
 
 					<span class="input-group-append"> 
 						<button type="submit" id="submit_ceklok" class="btn btn-primary">Import</button>
@@ -545,6 +553,47 @@
 										'</div>'
 								});
 								$("#inputfilethimportcheckclock_hl").val('');
+								notifyprogress.close();
+								$('#submit_ceklok').show();
+							},
+							error: function (xhr, Status, err){
+								// console.log('x');
+							}
+						} );
+					}
+					
+					//makan_hl
+					var fd_makan_hl = new FormData();
+					var makan_hl = $('#inputfilethimportcheckclock_makan_hl')[0].files[0];
+					// console.log(makan_hl);
+					fd_makan_hl.append('filename',makan_hl);
+					
+					if (makan_hl != undefined) {
+						fd_makan_hl.append('filename',makan_hl);
+			
+						$.ajax( {
+							url: "../../models/gipxxsh/gipxxsh_fn_checkclock_makan_hl.php",
+							type: 'POST',
+							dataType: 'json',
+							data: fd_makan_hl,
+							async: false,
+							contentType: false,
+							processData: false,
+							success: function ( json ) {
+								
+								$.notify({
+									message: json.data.message
+								},{
+									type: json.data.type_message,
+									delay: 0,
+									showProgressbar: true, // To show a progress bar
+									template: 
+										'<div class="alert alert-{0} alert-dismissible" role="alert">' +
+											'<button type="button" class="close" data-notify="dismiss">×</button>' +
+											'<div data-notify="message">{2}</div>' +
+										'</div>'
+								});
+								$("#inputfilethimportcheckclock_makan_hl").val('');
 								notifyprogress.close();
 								$('#submit_ceklok').show();
 							},
