@@ -171,7 +171,7 @@
 								SELECT
 									:id_hemxxmh,
 									:id_htsxxmh,
-									CONCAT("Upload Jadwal S Dept. by: ", :username ) AS keterangan,
+									CONCAT("Upload Jadwal Non Karyawan. by: ", :username ) AS keterangan,
 									:tanggal,
 									htsxxmh.jam_awal,
 									htsxxmh.jam_akhir,
@@ -269,7 +269,7 @@
 				);
 			} else {
 				$data = array(
-					"message" => "Upload Jadwal S Dept Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
+					"message" => "Upload Jadwal Non Karyawan Berhasil.</br>" .$dataupload. " data berhasil di import.</br>" . $datakembar. " data kembar TIDAK di import.",
 					"type_message" => "success",
 					"debug" => $emptyPeg,
 					"hem" => $rs_hemxxmh
@@ -281,13 +281,13 @@
 		}catch (PDOException $e){
 			$db->rollback();
 			$data = array(
-				"message" => "Upload Jadwal S Dept gagal," . $e,
+				"message" => "Upload Jadwal Non Karyawan gagal," . $e,
 				"type_message" => "danger"
 			);
 		}
 	}else{
 		$data = array(
-			"message" => "Upload Jadwal S Dept gagal, format file salah!",
+			"message" => "Upload Jadwal Non Karyawan gagal, format file salah!",
 			"type_message" => "danger"
 		);
 	}
