@@ -205,7 +205,7 @@
 							allowClear: true,
 							multiple: false,
 							ajax: {
-								url: "../../models/hmsxxmh/hmsxxmh_fn_opt.php",
+								url: "../../models/hmsxxmh/hmsxxmh_fn_opt_hl.php",
 								dataType: 'json',
 								data: function (params) {
 									var query = {
@@ -485,7 +485,7 @@
 							allowClear: true,
 							multiple: false,
 							ajax: {
-								url: "../../models/hmsxxmh/hmsxxmh_fn_opt.php",
+								url: "../../models/hmsxxmh/hmsxxmh_fn_opt_hl.php",
 								dataType: 'json',
 								data: function (params) {
 									var query = {
