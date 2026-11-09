@@ -230,7 +230,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [3,4,5]
+						targets: [1,2,5]
 					},
 					{
 						searchPanes:{
