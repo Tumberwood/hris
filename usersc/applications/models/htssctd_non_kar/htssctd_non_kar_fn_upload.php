@@ -85,8 +85,8 @@
 						->raw()
 						->bind(':kode_finger', $kode_finger)
 						->exec('SELECT
-									count(id) as id,
-									id as id_hemxxmh
+									count(a.id) as id,
+									a.id as id_hemxxmh
 								FROM hemxxmh a
 								JOIN hemjbmh b ON b.id_hemxxmh = a.id
 								WHERE a.kode_finger = :kode_finger
@@ -100,7 +100,8 @@
 					// 	->get(['count(id) as id'] )
 					// 	->where('kode_finger', $kode_finger)
 					// 	->exec();
-					// $rs_hemxxmh = $qs_hemxxmh->fetch();	
+					// $rs_hemxxmh = $qs_hemxxmh->fetch();
+
 					$id_hemxxmh = $rs_hemxxmh['id_hemxxmh'];
 	
 					if ($rs_hemxxmh['id'] == 0) {
