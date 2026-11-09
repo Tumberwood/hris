@@ -76,7 +76,7 @@
         ->where('hemjbmh.id_heyxxmh', $w_id_heyxxmh, $s_id_heyxxmh, false )
         ->where('hemxxmh.id', $id_hemxxmh_old, '<>' )
         ->where('hemjbmh.is_harian_lepas', '0' )
-        ->where('hemjbmh.is_checkclock', '1' )
+        // ->where('hemjbmh.is_checkclock', '1' )
         ->where( function ( $r ) {
             $q = $_GET['search'];
             $r
