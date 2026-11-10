@@ -261,7 +261,7 @@
 			
 			id_periode_payroll_old = 0;
 			
-			$('#select_periode_payroll').select2('open');
+			// $('#select_periode_payroll').select2('open');
 
 			setTimeout(function() {
 				$('#select_periode_payroll').select2('close');
