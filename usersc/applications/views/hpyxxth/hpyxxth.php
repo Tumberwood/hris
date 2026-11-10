@@ -1373,41 +1373,59 @@
 								confirmButtonText: 'Yes',
 								cancelButtonText: 'No'
 							}).then((result) => {
+								
+								await autofillField(
+									'periode_payroll',
+									id_periode_payroll_old,
+									'is_approve'
+								);
 
-								if (result.isConfirmed) {
+								const is_approve = autofillData.is_approve;
 
-									var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+								if(is_approve == 1) {
 
-									notifyLoadingJerapah_v2();
-
-									$.ajax({
-										url: "../../models/hpyxxth/fn_gen_payroll_new_2026.php",
-										dataType: 'json',
-										type: 'POST',
-										data: {
-											id_hpyxxth		: id_hpyxxth,
-											tanggal_awal	: tanggal_awal_select,
-											tanggal_akhir	: tanggal_akhir_select,
-											timestamp		: timestamp
-										},
-										success: function ( json ) {
-
-											$.notify({
-												message: json.data.message
-											},{
-												type: json.data.type_message,
-												allow_dismiss: true,
-												delay: 0
-											});
-
-											tblhpyxxth.ajax.reload(function ( json ) {
-												notifyprogress.close();
-											}, false);
-										}
-									});
-
+									if (result.isConfirmed) {
+	
+										var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+	
+										notifyLoadingJerapah_v2();
+	
+										$.ajax({
+											url: "../../models/hpyxxth/fn_gen_payroll_new_2026.php",
+											dataType: 'json',
+											type: 'POST',
+											data: {
+												id_hpyxxth		: id_hpyxxth,
+												tanggal_awal	: tanggal_awal_select,
+												tanggal_akhir	: tanggal_akhir_select,
+												timestamp		: timestamp
+											},
+											success: function ( json ) {
+	
+												$.notify({
+													message: json.data.message
+												},{
+													type: json.data.type_message,
+													allow_dismiss: true,
+													delay: 0
+												});
+	
+												tblhpyxxth.ajax.reload(function ( json ) {
+													notifyprogress.close();
+												}, false);
+											}
+										});
+	
+									} else {
+	
+									}
 								} else {
-
+									Swal.fire({
+										icon: 'warning',
+										title: 'Maaf, Tidak Dapat Generate!',
+										text: 'Periode payroll harus di-approve terlebih dahulu untuk mengunci presensi.',
+										confirmButtonText: 'Mengerti'
+									});
 								}
 
 							});
