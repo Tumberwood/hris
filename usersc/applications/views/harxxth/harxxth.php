@@ -185,8 +185,8 @@
 			minViewMode: 'month' 
 		});
 
-		$('#start_date').datepicker('setDate', awal_bulan_dmy);
-		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		// $('#start_date').datepicker('setDate', awal_bulan_dmy);
+		// $('#end_date').datepicker('setDate', tanggal_hariini_dmy);
 
 		
 		//Select2 init
@@ -381,7 +381,7 @@
 						type: "readonly"
 					},
 					{
-						label: "Divisi Akhir",
+						label: "Divisi Akhir <sup class='text-danger'>*<sup>", 
 						name: "harxxth.id_hovxxmh_akhir",
 						type: "select2",
 						opts: {
@@ -427,7 +427,7 @@
 						type: "readonly"
 					},
 					{
-						label: "Department Akhir",
+						label: "Department Akhir <sup class='text-danger'>*<sup>", 
 						name: "harxxth.id_hodxxmh_akhir",
 						type: "select2",
 						opts: {
@@ -474,7 +474,7 @@
 						type: "readonly"
 					},
 					{
-						label: "Unit Kerja Akhir",
+						label: "Unit Kerja Akhir <sup class='text-danger'>*<sup>", 
 						name: "harxxth.id_hosxxmh_akhir",
 						type: "select2",
 						opts: {
@@ -520,7 +520,7 @@
 						type: "readonly"
 					},
 					{
-						label: "Level Akhir",
+						label: "Level Akhir <sup class='text-danger'>*<sup>", 
 						name: "harxxth.id_hevxxmh_akhir",
 						type: "select2",
 						opts: {
@@ -567,7 +567,7 @@
 						type: "readonly"
 					},
 					{
-						label: "Jabatan Akhir",
+						label: "Jabatan Akhir <sup class='text-danger'>*<sup>", 
 						name: "harxxth.id_hetxxmh_akhir",
 						type: "select2",
 						opts: {
@@ -614,7 +614,7 @@
 						type: "readonly"
 					},
 					{
-						label: "Area Kerja Akhir",
+						label: "Area Kerja Akhir <sup class='text-danger'>*<sup>", 
 						name: "harxxth.id_holxxmd_2_akhir",
 						type: "select2",
 						opts: {
@@ -702,7 +702,7 @@
 						type: "readonly"
 					},
 					{
-						label: "Grup Jabatan Akhir",
+						label: "Grup Jabatan Akhir <sup class='text-danger'>*<sup>", 
 						name: "harxxth.id_hevgrmh_akhir",
 						type: "select2",
 						opts: {
@@ -794,6 +794,26 @@
 					if(!id_harxxmh || id_harxxmh == ''){
 						edtharxxth.field('harxxth.id_harxxmh').error( 'Wajib diisi!' );
 					}
+					
+					const fields = [
+						'id_hovxxmh_akhir',
+						'id_hodxxmh_akhir',
+						'id_hosxxmh_akhir',
+						'id_hevxxmh_akhir',
+						'id_hetxxmh_akhir',
+						'id_holxxmd_2_akhir',
+						'id_hevgrmh_akhir'
+					];
+
+					fields.forEach(function(field) {
+
+						const value = edtharxxth.field(`harxxth.${field}`).val();
+
+						if (!value || value == '') {
+							edtharxxth.field(`harxxth.${field}`).error('Wajib diisi!');
+						}
+
+					});
 				}
 				
 				if ( edtharxxth.inError() ) {
