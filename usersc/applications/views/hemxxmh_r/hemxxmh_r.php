@@ -34,7 +34,7 @@
             <div class="ibox-content">
                 <form class="form-horizontal" id="frmhemxxmh">
                     <div class="form-group row">
-                        <label class="col-lg-2 col-form-label">per Tanggal</label>
+                        <label class="col-lg-2 col-form-label">per Tanggal Akhir Periode Lembur</label>
                         <div class="col-lg-5">
                             <div class="input-group input-daterange" id="periode">
                                 <input type="text" id="start_date" class="form-control" style="display:none">
