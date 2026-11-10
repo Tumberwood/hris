@@ -263,9 +263,9 @@
 			
 			// $('#select_periode_payroll').select2('open');
 
-			setTimeout(function() {
-				$('#select_periode_payroll').select2('close');
-			}, 5);
+			// setTimeout(function() {
+			// 	$('#select_periode_payroll').select2('close');
+			// }, 5);
 			
 			//start datatables editor
 			edtharxxth = new $.fn.dataTable.Editor( {
