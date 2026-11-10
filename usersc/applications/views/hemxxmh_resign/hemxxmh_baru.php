@@ -232,7 +232,7 @@
 					}
 				],
 				ajax: {
-					url: "../../models/hemxxmh_resign/hemxxmh_resign.php",
+					url: "../../models/hemxxmh_resign/hemxxmh_baru.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_hemxxmh = show_inactive_status_hemxxmh;
