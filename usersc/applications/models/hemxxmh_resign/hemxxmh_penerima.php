@@ -84,6 +84,8 @@
 				WHERE 1
 				AND b.tanggal_keluar >= :start_date
 				AND b.tanggal_keluar < :end_date
+				AND is_harian_lepas = 0
+				AND is_non_karyawan = 0
 
 				UNION ALL
 
