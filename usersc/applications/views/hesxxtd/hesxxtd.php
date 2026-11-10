@@ -21,6 +21,7 @@
                 <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
             </div>
             <div class="ibox-content">
+                <form class="form-horizontal" id="frmhemxxmh">
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label">Tanggal Masuk</label>
                         <div class="col-lg-5">
@@ -34,6 +35,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-lg-4">
+                            <button class="btn btn-primary" type="submit" id="go">Submit</button>
+                        </div>
+                    </div>
+                </form>
                 <div id="searchPanes1"></div>
             </div>
         </div>
@@ -107,6 +114,9 @@
 		
 		$(document).ready(function() {
 			//start datatables editor
+			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
+			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
+			
 			edthesxxtd = new $.fn.dataTable.Editor( {
 				ajax: {
 					url: "../../models/hesxxtd/hesxxtd.php",
@@ -696,6 +706,43 @@
 				// atur hak akses
 				CekDeselectHeaderH(tblhesxxtd);
 			} );
+
+			
+			$("#frmhemxxmh").submit(function(e) {
+				e.preventDefault();
+			}).validate({
+				rules: {
+					
+				},
+				submitHandler: function(frmhemxxmh) {
+					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
+					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
+					if ($('#select_hemxxmh').val() > 0) {
+						id_hemxxmh = $('#select_hemxxmh').val();
+					} else {
+						if (id_hem_get != 0) {
+							id_hemxxmh = id_hem_get;
+						} else {
+							id_hemxxmh = $('#select_hemxxmh').val();
+						}
+					}
+
+					notifyprogress = $.notify({
+						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
+					},{
+						z_index: 9999,
+						allow_dismiss: false,
+						type: 'info',
+						delay: 0
+					});
+
+					tblhemxxmh.rows().deselect();
+					tblhemxxmh.ajax.reload(function ( json ) {
+						notifyprogress.close();
+					}, false);
+					return false; 
+				}
+			});
 			
 		} );// end of document.ready
 	
