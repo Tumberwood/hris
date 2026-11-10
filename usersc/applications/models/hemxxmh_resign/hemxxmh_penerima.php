@@ -84,7 +84,7 @@
 				WHERE 1
 				AND is_harian_lepas = 0
 				AND is_non_karyawan = 0
-				-- AND is_checkclock = 1
+				AND is_checkclock = 1
 				AND 
 				(
 					b.tanggal_keluar IS NULL
