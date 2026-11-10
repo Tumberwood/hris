@@ -108,8 +108,8 @@
 			minViewMode: 'month' 
 		});
 
-		$('#start_date').datepicker('setDate', awal_bulan_dmy);
-		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		$('#start_date').datepicker('setDate', '');
+		$('#end_date').datepicker('setDate', '');
         // END datepicker init
 		
 		$(document).ready(function() {
