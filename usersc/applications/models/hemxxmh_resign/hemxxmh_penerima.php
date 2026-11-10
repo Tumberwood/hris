@@ -91,7 +91,7 @@
 					OR
 					b.tanggal_keluar >= :start_date
 				)
-				AND b.tanggal_masuk < :end_date
+				AND b.tanggal_masuk <= :end_date
 	' . $where);
 	$rs_data_sql = $qs_data_sql->fetchAll();
 	
