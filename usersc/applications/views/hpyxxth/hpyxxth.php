@@ -1361,73 +1361,83 @@
 						text: '<i class="fa fa-google"></i>',
 						name: 'btnGeneratePresensiNew',
 						className: 'btn btn-xs btn-outline',
-						titleAttr: '',
-						action: function ( e, dt, node, config ) {
+						titleAttr: 'Generate Payroll',
+						action: async function (e, dt, node, config) {
 
 							e.preventDefault();
-							Swal.fire({
+
+							// Ambil status approval periode payroll
+							await autofillField(
+								'periode_payroll',
+								id_periode_payroll_old,
+								'is_approve'
+							);
+
+							const is_approve = autofillData.is_approve;
+
+							// Validasi approval
+							if (is_approve != 1) {
+								Swal.fire({
+									icon: 'warning',
+									title: 'Maaf, Tidak Dapat Generate!',
+									text: 'Periode payroll harus di-approve terlebih dahulu untuk mengunci presensi.',
+									confirmButtonText: 'Mengerti'
+								});
+
+								return;
+							}
+
+							// Konfirmasi generate
+							const result = await Swal.fire({
 								title: 'Generate Payroll?',
-								text: 'Are you sure want to generate payroll?',
+								text: 'Apakah Anda yakin ingin melakukan generate payroll?',
 								icon: 'question',
 								showCancelButton: true,
-								confirmButtonText: 'Yes',
-								cancelButtonText: 'No'
-							}).then((result) => {
-								
-								await autofillField(
-									'periode_payroll',
-									id_periode_payroll_old,
-									'is_approve'
-								);
+								confirmButtonText: 'Ya, Generate',
+								cancelButtonText: 'Batal',
+								reverseButtons: true
+							});
 
-								const is_approve = autofillData.is_approve;
+							if (!result.isConfirmed) return;
 
-								if(is_approve == 1) {
+							// Generate payroll
+							var timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
 
-									if (result.isConfirmed) {
-	
-										var timestamp = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
-	
-										notifyLoadingJerapah_v2();
-	
-										$.ajax({
-											url: "../../models/hpyxxth/fn_gen_payroll_new_2026.php",
-											dataType: 'json',
-											type: 'POST',
-											data: {
-												id_hpyxxth		: id_hpyxxth,
-												tanggal_awal	: tanggal_awal_select,
-												tanggal_akhir	: tanggal_akhir_select,
-												timestamp		: timestamp
-											},
-											success: function ( json ) {
-	
-												$.notify({
-													message: json.data.message
-												},{
-													type: json.data.type_message,
-													allow_dismiss: true,
-													delay: 0
-												});
-	
-												tblhpyxxth.ajax.reload(function ( json ) {
-													notifyprogress.close();
-												}, false);
-											}
-										});
-	
-									} else {
-	
-									}
-								} else {
+							notifyLoadingJerapah_v2();
+
+							$.ajax({
+								url: "../../models/hpyxxth/fn_gen_payroll_new_2026.php",
+								dataType: 'json',
+								type: 'POST',
+								data: {
+									id_hpyxxth: id_hpyxxth,
+									tanggal_awal: tanggal_awal_select,
+									tanggal_akhir: tanggal_akhir_select,
+									timestamp: timestamp
+								},
+								success: function (json) {
+
+									$.notify({
+										message: json.data.message
+									}, {
+										type: json.data.type_message,
+										allow_dismiss: true,
+										delay: 0
+									});
+
+									tblhpyxxth.ajax.reload(function () {
+										notifyprogress.close();
+									}, false);
+								},
+								error: function () {
+									notifyprogress.close();
+
 									Swal.fire({
-										icon: 'warning',
-										title: 'Maaf, Tidak Dapat Generate!',
-										text: 'Periode payroll harus di-approve terlebih dahulu untuk mengunci presensi.',
-										confirmButtonText: 'Mengerti'
+										icon: 'error',
+										title: 'Generate Gagal!',
+										text: 'Terjadi kesalahan saat generate payroll.'
 									});
 								}
-
 							});
 
 						}
