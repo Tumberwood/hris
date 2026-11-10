@@ -37,6 +37,10 @@
 				LEFT JOIN hesxxmh d ON d.id = c.id_hesxxmh
 				LEFT JOIN heyxxmd e ON e.id = c.id_heyxxmd
 				WHERE a.tanggal BETWEEN :start_date AND :end_date AND a.is_active = 1
+				
+				AND is_harian_lepas = 0
+				AND is_non_karyawan = 0
+				
 				GROUP BY a.id_hemxxmh
 	');
 	$rs_data_sql = $qs_data_sql->fetchAll();
