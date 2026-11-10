@@ -30,6 +30,7 @@
 					SUM(IFNULL(lembur2,0)) AS sum_lembur2,
 					SUM(IFNULL(lembur3,0)) AS sum_lembur3,
 					SUM(IFNULL(lembur4,0)) AS sum_lembur4,
+					SUM(IFNULL(durasi_lembur_final, 0) AS sum_total_lembur,
 					SUM(IFNULL(a.is_makan,0)) AS sum_makan
 				FROM htsprrd a
 				LEFT JOIN hemxxmh b ON b.id = a.id_hemxxmh

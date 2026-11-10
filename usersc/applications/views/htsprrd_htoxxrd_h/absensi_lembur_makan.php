@@ -62,7 +62,7 @@
 								<th>Lembur 1.5</th>
 								<th>Lembur 2</th>
 								<th>Lembur 3</th>
-								<th>Lembur 4</th>
+								<th>Total Lembur</th>
 								<th>Makan</th>
 							</tr>
 						</thead>
@@ -186,7 +186,7 @@
 					{ data: "sum_lembur15" },
 					{ data: "sum_lembur2" },
 					{ data: "sum_lembur3" },
-					{ data: "sum_lembur4" },
+					{ data: "sum_total_lembur" },
 					{ 
 						data: "sum_makan",
 						render: $.fn.dataTable.render.number( ',', '.', 1,'','' ),
