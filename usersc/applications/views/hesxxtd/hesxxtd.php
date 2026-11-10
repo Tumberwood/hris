@@ -727,8 +727,8 @@
 						delay: 0
 					});
 
-					tblhemxxmh.rows().deselect();
-					tblhemxxmh.ajax.reload(function ( json ) {
+					tblhesxxtd.rows().deselect();
+					tblhesxxtd.ajax.reload(function ( json ) {
 						notifyprogress.close();
 					}, false);
 					return false; 
