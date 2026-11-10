@@ -717,15 +717,6 @@
 				submitHandler: function(frmhemxxmh) {
 					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
 					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
-					if ($('#select_hemxxmh').val() > 0) {
-						id_hemxxmh = $('#select_hemxxmh').val();
-					} else {
-						if (id_hem_get != 0) {
-							id_hemxxmh = id_hem_get;
-						} else {
-							id_hemxxmh = $('#select_hemxxmh').val();
-						}
-					}
 
 					notifyprogress = $.notify({
 						message: 'Processing ...</br> Jangan tutup halaman sampai notifikasi ini hilang!'
