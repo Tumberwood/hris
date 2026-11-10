@@ -99,6 +99,17 @@
 		$editor
 			->where( 'hesxxtd.kode', $_POST['kode']);
 	}
+	
+	
+	if (isset($_POST['start_date']) && $_POST['end_date'] != ''){
+		$start_date = $_POST['start_date'];
+		$end_date = $_POST['end_date'];
+
+		$editor
+		->where( 'hesxxtd.tanggal_mulai', $start_date, '>=' )
+		->where( 'hesxxtd.tanggal_mulai', $end_date, '<=' )
+		;
+	}
 
 	include( "hesxxtd_extra.php" );
 	include( "../../../helpers/edt_log.php" );

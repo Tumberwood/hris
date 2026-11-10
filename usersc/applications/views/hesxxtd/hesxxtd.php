@@ -21,6 +21,19 @@
                 <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
             </div>
             <div class="ibox-content">
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Tanggal Masuk</label>
+                        <div class="col-lg-5">
+                            <div class="input-group input-daterange" id="periode">
+                                <input type="text" id="start_date" class="form-control">
+                                <span class="input-group-addon" >to</span>
+                                <input type="text" id="end_date" class="form-control">
+                                <div class="input-group-addon">
+                                    <span class="fa fa-calendar"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <div id="searchPanes1"></div>
             </div>
         </div>
@@ -78,6 +91,25 @@
 		var is_need_generate_kode = 1;
 		var get_kode = new URLSearchParams(window.location.search).get('kode') || '';
 		
+		// BEGIN datepicker init
+		$('#periode').datepicker({
+			setDate: new Date(),
+			autoclose: true,
+			todayHighlight: true,
+			clearBtn: true,
+			format: "dd M yyyy",
+			minViewMode: 'month' 
+		});
+
+		if (tanggal_get === '') {
+			$('#start_date').datepicker('setDate', awal_bulan_dmy);
+			$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		} else {
+			$('#start_date').datepicker('setDate', new Date(tanggal_get));
+			$('#end_date').datepicker('setDate', new Date(tanggal_get));
+		}
+        // END datepicker init
+		
 		$(document).ready(function() {
 			//start datatables editor
 			edthesxxtd = new $.fn.dataTable.Editor( {
@@ -87,6 +119,8 @@
 					data: function (d){
 						d.show_inactive_status_hesxxtd = show_inactive_status_hesxxtd;
 						d.kode = get_kode;
+						d.start_date = start_date;
+						d.end_date = end_date;
 					}
 				},
 				table: "#tblhesxxtd",
@@ -560,6 +594,8 @@
 					data: function (d){
 						d.show_inactive_status_hesxxtd = show_inactive_status_hesxxtd;
 						d.kode = get_kode;
+						d.start_date = start_date;
+						d.end_date = end_date;
 					}
 				},
 				order: [[ 0, "desc" ]],
