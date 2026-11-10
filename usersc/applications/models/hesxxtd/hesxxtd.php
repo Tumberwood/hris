@@ -101,14 +101,19 @@
 	}
 	
 	
-	if (isset($_POST['start_date']) != 'Invalid date' && $_POST['end_date'] != 'Invalid date'){
+	if (
+		!empty($_POST['start_date']) &&
+		!empty($_POST['end_date']) &&
+		$_POST['start_date'] != 'Invalid date' &&
+		$_POST['end_date'] != 'Invalid date'
+	) {
+
 		$start_date = $_POST['start_date'];
-		$end_date = $_POST['end_date'];
+		$end_date   = $_POST['end_date'];
 
 		$editor
-		->where( 'hesxxtd.tanggal_mulai', $start_date, '>=' )
-		->where( 'hesxxtd.tanggal_mulai', $end_date, '<=' )
-		;
+			->where('hesxxtd.tanggal_mulai', $start_date, '>=')
+			->where('hesxxtd.tanggal_mulai', $end_date, '<=');
 	}
 
 	include( "hesxxtd_extra.php" );
