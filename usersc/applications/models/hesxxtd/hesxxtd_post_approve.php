@@ -45,6 +45,7 @@
 	$keputusan = $rs_hesxxtd['keputusan'];
 	$id_hemxxmh = $rs_hesxxtd['id_hemxxmh'];
 	$tanggal_selesai = $rs_hesxxtd['tanggal_selesai'];
+	$tanggal_keluar = date('Y-m-d', strtotime($tanggal_selesai . ' +1 day'));
 	$tanggal_mulai = $rs_hesxxtd['tanggal_mulai'];
 	$id_hesxxmh = $rs_hesxxtd['id_hesxxmh'];
 	$id_hesxxmh_tetap = $rs_hesxxtd['id_hesxxmh_tetap'];
@@ -271,7 +272,7 @@
 			->set('id_hesxxmh',$id_hesxxmh)
 			->set($rs_hemjbmh)
 			->set('tanggal_masuk',$tanggal_mulai)
-			->set('tanggal_keluar',$tanggal_selesai)
+			->set('tanggal_keluar',$tanggal_keluar)
 			->set('tanggal_akhir_kontrak',$tanggal_selesai)
 			->exec();
 
