@@ -156,7 +156,7 @@
 							firstDay: 0
 						},
 						format: 'DD MMM YYYY',
-						fieldInfo: 'Diisi awal bulan',
+						fieldInfo: 'Diisi awal bulan: 01 Oct 2026',
 					},	 	{
 						label: "Berakhir Tanggal",
 						name: "hpy_piutang_h.tanggal_akhir",
