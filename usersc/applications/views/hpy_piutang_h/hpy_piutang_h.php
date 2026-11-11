@@ -351,8 +351,8 @@
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthpy_piutang_h.field('finish_on').val(finish_on);
 				
-				edthtoxxth.field('kategori_dokumen').val('');
-				edthtoxxth.field('kategori_dokumen_value').val();
+				edthpy_piutang_h.field('kategori_dokumen').val('');
+				edthpy_piutang_h.field('kategori_dokumen_value').val();
 			});
 			
 			edthpy_piutang_h.on( 'close', function (e, json, data, action, xhr) {
