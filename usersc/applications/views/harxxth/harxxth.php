@@ -201,7 +201,7 @@
 		});
 
 		if (tanggal_get === '') {
-			$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
+			$('#start_date').datepicker('setDate', awal_bulan_dmy);
 			$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
 		} else {
 			$('#start_date').datepicker('setDate', new Date(tanggal_get));
