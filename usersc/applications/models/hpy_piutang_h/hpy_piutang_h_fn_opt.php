@@ -68,7 +68,7 @@
             ->query('select', 'hpy_piutang_h')
             ->get([
                 'hpy_piutang_h.id as id',
-                'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",hpcxxmh.nama ) as text'
+                'concat(hpy_piutang_h.kode, " - ", hemxxmh.kode," - ",hemxxmh.nama) as text'
             ])
             ->join('hemxxmh','hemxxmh.id = hpy_piutang_h.id_hemxxmh','LEFT')
             ->join('hpcxxmh','hpcxxmh.id = hpy_piutang_h.id_hpcxxmh','LEFT')
@@ -85,7 +85,7 @@
         ->query('select', 'hpy_piutang_h')
         ->get([
             'hpy_piutang_h.id as id',
-            'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",hpcxxmh.nama ) as text'
+            'concat(hpy_piutang_h.kode, " - ", hemxxmh.kode," - ",hemxxmh.nama) as text'
         ])
         ->join('hemxxmh','hemxxmh.id = hpy_piutang_h.id_hemxxmh','LEFT')
         ->join('hpcxxmh','hpcxxmh.id = hpy_piutang_h.id_hpcxxmh','LEFT')
