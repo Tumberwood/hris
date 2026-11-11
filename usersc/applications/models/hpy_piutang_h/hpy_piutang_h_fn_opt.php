@@ -16,10 +16,10 @@
     $offset      = ($page - 1) * $resultCount;
     // END select2 pagination preparation
 
-    if($_GET['id_hemxxmh_old'] > 0){
-        $id_hemxxmh_old = $_GET['id_hemxxmh_old'];
+    if($_GET['id_hpy_piutang_h_old'] > 0){
+        $id_hpy_piutang_h_old = $_GET['id_hpy_piutang_h_old'];
     }else{
-        $id_hemxxmh_old = 0;
+        $id_hpy_piutang_h_old = 0;
     }
 
     if (isset($_GET['id_heyxxmh'])) {
@@ -63,16 +63,17 @@
 
     // BEGIN query options self.
     // Hanya dipanggil jika field ada nilai id nya
-    if($id_hemxxmh_old > 0){
+    if($id_hpy_piutang_h_old > 0){
         $qs_hemxxmh_self = $db
-            ->query('select', 'hemxxmh')
+            ->query('select', 'hpy_piutang_h')
             ->get([
-                'hemxxmh.id as id',
+                'hpy_piutang_h.id as id',
                 'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",IFNULL(hetxxmh.nama,"Jabatan Missing") ) as text'
             ])
+            ->join('hemxxmh','hemxxmh.id = hpy_piutang_h.id_hemxxmh','LEFT')
             ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
             ->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
-            ->where('hemxxmh.id', $id_hemxxmh_old )
+            ->where('hpy_piutang_h.id', $id_hpy_piutang_h_old )
             ->exec();
         $rs_hemxxmh_self = $qs_hemxxmh_self->fetchAll();
     }else{
@@ -82,17 +83,18 @@
 
     // BEGIN query options all except self
     $qs_hemxxmh_all = $db
-        ->query('select', 'hemxxmh')
+        ->query('select', 'hpy_piutang_h')
         ->get([
-            'hemxxmh.id as id',
+            'hpy_piutang_h.id as id',
             'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",IFNULL(hetxxmh.nama,"Jabatan Missing") ) as text'
         ])
+		->join('hemxxmh','hemxxmh.id = hpy_piutang_h.id_hemxxmh','LEFT')
 		->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
 		->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
         ->where('hemxxmh.is_active',1)
         ->where('hemjbmh.id_heyxxmh', $w_id_heyxxmh, $s_id_heyxxmh, false )
         ->where('hemjbmh.id_hesxxmh', $w_id_hesxxmh, $s_id_hesxxmh)
-        ->where('hemxxmh.id', $id_hemxxmh_old, '<>' )
+        ->where('hpy_piutang_h.id', $id_hpy_piutang_h_old, '<>' )
         ->where('hemjbmh.is_harian_lepas', '0' )
         ->where('hemjbmh.is_non_karyawan', '0' )
         ->where('hemjbmh.is_checkclock', '1' )
