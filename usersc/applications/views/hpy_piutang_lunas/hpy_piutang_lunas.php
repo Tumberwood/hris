@@ -152,15 +152,11 @@
 					}
 				]
 			} );
-			edthpy_piutang_lunas.field('hpy_piutang_lunas.tenor').input().addClass('text-right');
 			edthpy_piutang_lunas.field('hpy_piutang_lunas.nominal').input().addClass('text-right');
-			edthpy_piutang_lunas.field('hpy_piutang_lunas.cicilan_per_bulan').input().addClass('text-right');
-			edthpy_piutang_lunas.field('hpy_piutang_lunas.cicilan_terakhir').input().addClass('text-right');
 
 			edthpy_piutang_lunas.on( 'preOpen', function( e, mode, action ) {
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthpy_piutang_lunas.field('start_on').val(start_on);
-				edthpy_piutang_lunas.field('hpy_piutang_lunas.tanggal_akhir').disable();
 				
 				if(action == 'create'){
 					tblhpy_piutang_lunas.rows().deselect();
