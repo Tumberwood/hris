@@ -353,6 +353,7 @@
 				
 				edthpy_piutang_h.field('kategori_dokumen').val('');
 				edthpy_piutang_h.field('kategori_dokumen_value').val();
+				edthpy_piutang_h.field('field_tanggal').val('created_on');
 			});
 			
 			edthpy_piutang_h.on( 'close', function (e, json, data, action, xhr) {
