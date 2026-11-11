@@ -78,6 +78,7 @@
 								<th>Bagian</th>
 								<th>Asal</th>
 								<th>Tanggal</th>
+								<th>Jadwal</th>
 								<th>Clock In</th>
 								<th>Clock Out</th>
 							</tr>
@@ -258,6 +259,7 @@
 					{ data: "bag" },
 					{ data: "asal" },
 					{ data: "tanggal" },
+					{ data: "shift" },
 					{ data: "clock_in" },
 					{ data: "clock_out" },
 				],

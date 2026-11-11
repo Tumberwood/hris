@@ -25,27 +25,50 @@
 		->raw()
 		->bind(':start_date', $start_date)
 		->bind(':end_date', $end_date)
-		->exec('SELECT DISTINCT
-					a.id,
-					hem.id AS id_hemxxmh,
-					hem.kode nik,
-					hem.nama,
+		->exec('SELECT
+					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
+					a.id_hemxxmh,
+					sf.kode AS shift,
 					kode_finger,
+					hem.kode AS nik,
+					hem.nama,
 					d.nama AS bag,
 					hem.asal_non_karyawan AS asal,
-					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
-					DATE_FORMAT(MIN(a.tanggal_jam), "%d %b %Y %H:%i:%s") AS clock_in,
-					DATE_FORMAT(MAX(a.tanggal_jam), "%d %b %Y %H:%i:%s") AS clock_out
-				FROM htsprtd a
-				JOIN hemxxmh hem ON hem.kode_finger = a.kode
-				JOIN hemjbmh jb ON jb.id_hemxxmh = hem.id
-				LEFT JOIN hobxxmh d ON d.id = jb.id_hobxxmh
+					DATE_FORMAT
+					(
+						(
+							SELECT MIN(ceklok.tanggal_jam)
+							FROM htsprtd ceklok
+							WHERE ceklok.kode = hem.kode_finger
+							AND ceklok.tanggal_jam BETWEEN
+								a.tanggaljam_awal_t1
+								AND a.tanggaljam_awal_t2
+						)    
+					, "%d %b %Y %H:%i:%s")
+					AS clock_in,
 
-				WHERE 1
+					DATE_FORMAT
+					(
+						(
+							SELECT MAX(ceklok.tanggal_jam)
+							FROM htsprtd ceklok
+							WHERE ceklok.kode = hem.kode_finger
+							AND ceklok.tanggal_jam BETWEEN
+								a.tanggaljam_akhir_t1
+								AND a.tanggaljam_akhir_t2
+						)    
+					, "%d %b %Y %H:%i:%s")
+					AS clock_out
+
+				FROM htssctd a
+
+				JOIN hemxxmh hem ON hem.id = a.id_hemxxmh
+				JOIN hemjbmh jb ON jb.id_hemxxmh = hem.id
+				JOIN htsxxmh sf ON sf.id = a.id_htsxxmh
+				LEFT JOIN hobxxmh d ON d.id = jb.id_hobxxmh
+				WHERE jb.is_non_karyawan = 1
+				AND a.is_active = 1
 				AND a.tanggal BETWEEN :start_date AND :end_date
-				AND jb.is_non_karyawan = 1
-				AND a.nama IN ("PMI")
-				GROUP BY a.tanggal, hem.id
 				' . $where
 				);
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
