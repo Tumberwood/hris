@@ -18,17 +18,16 @@ $qs_payroll = $db
 	->bind(':start_date', $start_date)
     ->exec('SELECT
                 CONCAT(h.kode_finger, " - ", h.nama) AS peg,
-                hod.nama dep,
+                hob.nama bag,
                 a.id_hemxxmh,
                 b.kode,
                 shift,
                 day(a.tanggal) AS tanggal,
-                c.h_bagian AS bagian,
-                c.h_grup AS grup
+                asal_non_karyawan AS asal
             FROM htssctd AS a
             LEFT JOIN hemxxmh AS h ON h.id = a.id_hemxxmh
             LEFT JOIN hemjbmh AS j ON j.id_hemxxmh = a.id_hemxxmh
-            LEFT JOIN hodxxmh AS hod ON hod.id = j.id_hodxxmh
+            LEFT JOIN hobxxmh AS hob ON hob.id = j.id_hobxxmh
             LEFT JOIN (
                 SELECT 
                     sh.id,
@@ -36,15 +35,6 @@ $qs_payroll = $db
                     sh.kode AS shift
                 FROM htsxxmh AS sh
             ) AS b ON b.id = a.id_htsxxmh
-            LEFT JOIN (
-                SELECT 
-                    id_hemxxmh,
-                    GROUP_CONCAT(DISTINCT sc.grup ORDER BY sc.grup SEPARATOR ",") AS h_grup,
-                    GROUP_CONCAT(DISTINCT sc.bagian ORDER BY sc.bagian SEPARATOR ",") AS h_bagian
-                FROM htssctd AS sc
-                WHERE sc.is_active = 1 AND YEAR(sc.tanggal) = YEAR(:start_date) AND MONTH(sc.tanggal) = MONTH(:start_date)
-                GROUP BY sc.id_hemxxmh
-            ) AS c ON c.id_hemxxmh = a.id_hemxxmh
 
             WHERE YEAR(a.tanggal) = YEAR(:start_date) AND MONTH(a.tanggal) = MONTH(:start_date) AND a.is_active = 1 
             -- AND j.jumlah_grup = 2
@@ -67,17 +57,15 @@ if (count($rs_payroll) > 0) {
     foreach ($rs_payroll as $row) {
         $id_hemxxmh = $row['id_hemxxmh'];
         $peg = $row['peg'];
-        $bagian = $row['bagian'];
-        $dep = $row['dep'];
-        $grup = $row['grup'];
+        $asal = $row['asal'];
+        $bag = $row['bag'];
 		// var_dump($peg);
         if (!isset($pivotedData[$id_hemxxmh])) {
             $pivotedData[$id_hemxxmh] = [
                 'id_hemxxmh' => $id_hemxxmh,
                 'Nama' => $peg,
-                'Departemen' => $dep,
-                'Bagian' => $bagian,
-                'Grup' => $grup
+                'Bagian' => $bag,
+                'Asal' => $asal,
             ];
         }
 		
