@@ -9,6 +9,18 @@
 <?php
 	$nama_tabel    = 'harxxth';
 	$nama_tabels_d = [];
+	
+	
+	if (isset($_GET['id_hemxxmh'])){
+		$id_hemxxmh		= $_GET['id_hemxxmh'];
+	} else {
+		$id_hemxxmh		= 0;
+	}
+	if (isset($_GET['start_date'])){
+		$awal		= ($_GET['start_date']);
+	} else {
+		$awal = null;
+	}
 ?>
 
 <!-- begin content here -->
@@ -174,6 +186,9 @@
 		var id_holxxmd_2_awal_old = 0, id_holxxmd_2_akhir_old = 0;
 		var id_hevgrmh_awal_old = 0, id_hevgrmh_akhir_old = 0;
 		var is_need_approval = 1, id_harxxmh_old = 0, id_hodxxmh = 0;
+		var id_periode_payroll_old = 0;
+		var id_hem_get = <?php echo $id_hemxxmh ?>;
+		var tanggal_get = "<?php echo $awal ?>";
 
 		// BEGIN datepicker init
 		$('#periode').datepicker({
@@ -185,9 +200,13 @@
 			minViewMode: 'month' 
 		});
 
-		// $('#start_date').datepicker('setDate', awal_bulan_dmy);
-		// $('#end_date').datepicker('setDate', tanggal_hariini_dmy);
-
+		if (tanggal_get === '') {
+			$('#start_date').datepicker('setDate', tanggal_hariini_dmy);
+			$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+		} else {
+			$('#start_date').datepicker('setDate', new Date(tanggal_get));
+			$('#end_date').datepicker('setDate', new Date(tanggal_get));
+		}
 		
 		//Select2 init
         $("#select_periode_payroll").select2({
@@ -259,13 +278,13 @@
 			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
 			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
 			
-			id_periode_payroll_old = 0;
+			id_periode_payroll_old = id_hem_get;
 			
-			// $('#select_periode_payroll').select2('open');
+			$('#select_periode_payroll').select2('open');
 
-			// setTimeout(function() {
-			// 	$('#select_periode_payroll').select2('close');
-			// }, 5);
+			setTimeout(function() {
+				$('#select_periode_payroll').select2('close');
+			}, 5);
 			
 			//start datatables editor
 			edtharxxth = new $.fn.dataTable.Editor( {
