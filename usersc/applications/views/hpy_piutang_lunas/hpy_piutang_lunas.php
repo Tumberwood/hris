@@ -143,7 +143,6 @@
 							firstDay: 0
 						},
 						format: 'DD MMM YYYY',
-						fieldInfo: 'Diisi awal bulan: 01 Oct 2026',
 					},
 					{
 						label: "Keterangan<sup class='text-danger'>*<sup>",
