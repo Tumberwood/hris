@@ -77,6 +77,7 @@
 								<th>Nama</th>
 								<th>Bagian</th>
 								<th>Asal</th>
+								<th>Hari</th>
 								<th>Tanggal</th>
 								<th>Jadwal</th>
 								<th>Clock In</th>
@@ -258,6 +259,7 @@
 					{ data: "nama" },
 					{ data: "bag" },
 					{ data: "asal" },
+					{ data: "hari" },
 					{ data: "tanggal" },
 					{ data: "shift" },
 					{ data: "clock_in" },

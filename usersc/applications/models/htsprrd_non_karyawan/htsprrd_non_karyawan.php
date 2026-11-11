@@ -27,6 +27,7 @@
 		->bind(':end_date', $end_date)
 		->exec('SELECT
 					a.id,
+					ELT(DAYOFWEEK(a.tanggal), "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu") AS hari,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
 					a.id_hemxxmh,
 					sf.kode AS shift,
