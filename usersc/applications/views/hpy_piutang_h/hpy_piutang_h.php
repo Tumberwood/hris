@@ -71,6 +71,18 @@
 				table: "#tblhpy_piutang_h",
 				fields: [ 
 					{
+						label: "kategori_dokumen",
+						name: "kategori_dokumen",
+						type: "hidden"
+					},	{
+						label: "kategori_dokumen_value",
+						name: "kategori_dokumen_value",
+						type: "hidden"
+					},	{
+						label: "field_tanggal",
+						name: "field_tanggal",
+						type: "hidden"
+					},	{
 						label: "start_on",
 						name: "start_on",
 						type: "hidden"
@@ -337,6 +349,9 @@
 			edthpy_piutang_h.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthpy_piutang_h.field('finish_on').val(finish_on);
+				
+				edthtoxxth.field('kategori_dokumen').val('');
+				edthtoxxth.field('kategori_dokumen_value').val();
 			});
 			
 			edthpy_piutang_h.on( 'close', function (e, json, data, action, xhr) {
