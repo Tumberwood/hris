@@ -15,42 +15,42 @@
 		DataTables\Editor\Result;
 	
 	// ----------- do not erase
-	$show_inactive_status = $_POST['show_inactive_status_hpy_piutang_h'];
+	$show_inactive_status = $_POST['show_inactive_status_hpy_piutang_lunas'];
 	// -----------
 	
-	$editor = Editor::inst( $db, 'hpy_piutang_h' )
+	$editor = Editor::inst( $db, 'hpy_piutang_lunas' )
 		->debug(true)
 		->fields(
-			Field::inst( 'hpy_piutang_h.id' ),
-			Field::inst( 'hpy_piutang_h.id_hemxxmh' )
+			Field::inst( 'hpy_piutang_lunas.id' ),
+			Field::inst( 'hpy_piutang_lunas.id_hemxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hpy_piutang_h.id_hpcxxmh' )
+			Field::inst( 'hpy_piutang_lunas.id_hpcxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
-			Field::inst( 'hpy_piutang_h.kode' )
+			Field::inst( 'hpy_piutang_lunas.kode' )
 				->setFormatter( function ( $val ) {
 					return strtoupper($val);
 				} ),
-			Field::inst( 'hpy_piutang_h.nama' )
+			Field::inst( 'hpy_piutang_lunas.nama' )
 				->setFormatter( function ( $val ) {
 					return ucwords($val);
 				} ),
-			Field::inst( 'hpy_piutang_h.keterangan' ),
-			Field::inst( 'hpy_piutang_h.is_active' ),
-			Field::inst( 'hpy_piutang_h.created_by' )
+			Field::inst( 'hpy_piutang_lunas.keterangan' ),
+			Field::inst( 'hpy_piutang_lunas.is_active' ),
+			Field::inst( 'hpy_piutang_lunas.created_by' )
 				->set( Field::SET_CREATE )
 				->setValue($_SESSION['user']),
-			Field::inst( 'hpy_piutang_h.created_on' )
+			Field::inst( 'hpy_piutang_lunas.created_on' )
 				->set( Field::SET_CREATE ),
-			Field::inst( 'hpy_piutang_h.last_edited_by' )
+			Field::inst( 'hpy_piutang_lunas.last_edited_by' )
 				->set( Field::SET_EDIT )
 				->setValue($_SESSION['user']),
-			Field::inst( 'hpy_piutang_h.is_approve' ),
-			Field::inst( 'hpy_piutang_h.is_defaultprogram' ),
-			Field::inst( 'hpy_piutang_h.nominal' ),
-			Field::inst( 'hpy_piutang_h.tenor' ),
-			Field::inst( 'hpy_piutang_h.cicilan_per_bulan' ),
-			Field::inst( 'hpy_piutang_h.cicilan_terakhir' ),
-			Field::inst( 'hpy_piutang_h.tanggal_mulai' )
+			Field::inst( 'hpy_piutang_lunas.is_approve' ),
+			Field::inst( 'hpy_piutang_lunas.is_defaultprogram' ),
+			Field::inst( 'hpy_piutang_lunas.nominal' ),
+			Field::inst( 'hpy_piutang_lunas.tenor' ),
+			Field::inst( 'hpy_piutang_lunas.cicilan_per_bulan' ),
+			Field::inst( 'hpy_piutang_lunas.cicilan_terakhir' ),
+			Field::inst( 'hpy_piutang_lunas.tanggal_mulai' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === '0000-00-00' || $val === null){
 						echo '';
@@ -63,7 +63,7 @@
 					'to' =>   'Y-m-d'
 				) ),
 			Field::inst( 'hpcxxmh.nama' ),
-			Field::inst( 'hpy_piutang_h.tanggal_akhir' )
+			Field::inst( 'hpy_piutang_lunas.tanggal_akhir' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === '0000-00-00' || $val === null){
 						echo '';
@@ -78,8 +78,8 @@
 
 			Field::inst( 'concat(hemxxmh.kode, " - ", hemxxmh.nama, " - ", hetxxmh.nama) as hemxxmh_data' )
 		)
-		->leftJoin( 'hemxxmh','hemxxmh.id','=','hpy_piutang_h.id_hemxxmh' )
-		->leftJoin( 'hpcxxmh','hpcxxmh.id','=','hpy_piutang_h.id_hpcxxmh' )
+		->leftJoin( 'hemxxmh','hemxxmh.id','=','hpy_piutang_lunas.id_hemxxmh' )
+		->leftJoin( 'hpcxxmh','hpcxxmh.id','=','hpy_piutang_lunas.id_hpcxxmh' )
 		->leftJoin( 'hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
 		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
 		;
@@ -88,10 +88,10 @@
 	// function show / hide inactive document
 	if ($show_inactive_status == 0){
 		$editor
-			->where( 'hpy_piutang_h.is_active', 1);
+			->where( 'hpy_piutang_lunas.is_active', 1);
 	}
 	
-	include( "hpy_piutang_h_extra.php" );
+	include( "hpy_piutang_lunas_extra.php" );
 	include( "../../../helpers/edt_log.php" );
 	
 	$editor
