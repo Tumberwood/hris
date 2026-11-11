@@ -1204,6 +1204,9 @@
 
 				if(action == 'create'){
 					tblhpyxxth.rows().deselect();
+					edthpyxxth.field('hpyxxth.id_periode_payroll').enable();
+				} else if(action == 'edit') {
+					edthpyxxth.field('hpyxxth.id_periode_payroll').disable();
 				}
 			});
 
