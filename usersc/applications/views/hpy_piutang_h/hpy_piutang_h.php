@@ -373,7 +373,7 @@
 				order: [[ 0, "desc" ]],
 				columns: [
 					{ data: "hpy_piutang_h.id",visible:false },
-					{ data: "kode" },
+					{ data: "hpy_piutang_h.kode" },
 					{ data: "hemxxmh_data" },
 					{ data: "hpcxxmh.nama" },
 					{ 
