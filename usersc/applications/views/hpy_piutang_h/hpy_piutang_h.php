@@ -22,6 +22,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Kode Transaksi</th>
                                 <th>Nama</th>
                                 <th>Komponen</th>
                                 <th>Nominal</th>
@@ -372,6 +373,7 @@
 				order: [[ 0, "desc" ]],
 				columns: [
 					{ data: "hpy_piutang_h.id",visible:false },
+					{ data: "kode" },
 					{ data: "hemxxmh_data" },
 					{ data: "hpcxxmh.nama" },
 					{ 
