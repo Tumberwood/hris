@@ -219,7 +219,7 @@
 		
 		$(document).ready(function() {
 			
-			id_periode_payroll_old = id_hem_get;
+			id_periode_payroll_old = 0;
 			
 			$('#select_periode_payroll').select2('open');
 
