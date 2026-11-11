@@ -26,6 +26,7 @@
 		->bind(':start_date', $start_date)
 		->bind(':end_date', $end_date)
 		->exec('SELECT
+					a.id,
 					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
 					a.id_hemxxmh,
 					sf.kode AS shift,
