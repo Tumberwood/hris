@@ -130,7 +130,8 @@ function hitung_cicilan(type = '') {
 
             if (tenor > 0) {
 
-                per_bulan = Math.ceil((nominal / tenor) / 1000) * 1000;
+                // per_bulan = Math.ceil((nominal / tenor) / 1000) * 1000;
+                per_bulan = Math.ceil(nominal / tenor);
 
                 edthpy_piutang_h
                     .field('hpy_piutang_h.cicilan_per_bulan')

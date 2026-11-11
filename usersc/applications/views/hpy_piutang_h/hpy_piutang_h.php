@@ -155,7 +155,8 @@
 							minDate: new Date('1900-01-01'),
 							firstDay: 0
 						},
-						format: 'DD MMM YYYY'
+						format: 'DD MMM YYYY',
+						fieldInfo: 'Diisi awal bulan',
 					},	 	{
 						label: "Berakhir Tanggal",
 						name: "hpy_piutang_h.tanggal_akhir",
