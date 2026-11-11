@@ -35,6 +35,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group row">												
+                        <label class="col-sm-2 col-form-label">Periode Payroll</label>
+                        <div class="col-sm-5">
+                            <select class="form-control" id="select_periode_payroll" name="select_periode_payroll"></select>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-lg-4">
                             <button class="btn btn-primary" type="submit" id="go">Submit</button>
@@ -120,6 +126,7 @@
 		var is_jenis = 0;
 		var plus_min = 0;
 		is_need_approval = 1;
+		var id_periode_payroll_old = 0;
 		// ------------- end of default variable
 		
 		// BEGIN datepicker init
@@ -135,7 +142,91 @@
 		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
         // END datepicker init
 		
+		//Select2 init
+        $("#select_periode_payroll").select2({
+			placeholder: 'Ketik atau TekanTanda Panah Kanan',
+			allowClear: true,
+			ajax: {
+				url: "../../models/periode_payroll/periode_payroll_fn_opt.php",
+				dataType: 'json',
+				data: function (params) {
+					var query = {
+						id_periode_payroll_old: id_periode_payroll_old,
+						search: params.term || '',
+						page: params.page || 1
+					}
+						return query;
+				},
+				processResults: function (data, params) {
+					if (id_hem_get > 0) {
+						var options = data.results.map(function (result) {
+							return {
+								id: result.id,
+								text: result.text
+							};
+						});
+
+						//add by ferry agar auto select 07 sep 23
+						if (params.page && params.page === 1) {
+							$('#select_periode_payroll').empty().select2({ data: options });
+						} else {
+							$('#select_periode_payroll').append(new Option(options[0].text, options[0].id, false, false)).trigger('change');
+						}
+
+						return {
+							results: options,
+							pagination: {
+								more: true
+							}
+						};
+					} else {
+						return {
+							results: data.results,
+							pagination: {
+								more: true
+							}
+						};
+					}
+				},
+				cache: true,
+				minimumInputLength: 1,
+				maximum: 10,
+				delay: 500,
+				maximumSelectionLength: 5,
+				minimumResultsForSearch: -1,
+			}
+			
+		});
+        // END select2 init
+
+		// Override tanggal ketika periode payroll dipilih
+		$('#select_periode_payroll').on('select2:select', async function (e) {
+			const val = $(this).val();
+
+			await autofillField(
+				'periode_payroll',
+				val,
+				'DATE_FORMAT(tanggal_awal, "%d %b %Y") AS tanggal_awal, DATE_FORMAT(tanggal_akhir, "%d %b %Y") AS tanggal_akhir'
+			);
+
+			const tanggal_awal = autofillData.tanggal_awal;
+			const tanggal_akhir = autofillData.tanggal_akhir;
+
+			$('#start_date').datepicker('setDate', tanggal_awal);
+			$('#end_date').datepicker('setDate', tanggal_akhir);
+
+		});
+		
 		$(document).ready(function() {
+			
+			id_periode_payroll_old = id_hem_get;
+			
+			$('#select_periode_payroll').select2('open');
+
+			setTimeout(function() {
+				$('#select_periode_payroll').select2('close');
+			}, 5);
+			
 			//start datatables editor
 			edthpy_piutang_d = new $.fn.dataTable.Editor( {
 				ajax: {
