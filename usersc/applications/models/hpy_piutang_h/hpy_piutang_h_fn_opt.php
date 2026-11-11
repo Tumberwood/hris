@@ -68,7 +68,7 @@
             ->query('select', 'hpy_piutang_h')
             ->get([
                 'hpy_piutang_h.id as id',
-                'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",IFNULL(hpcxxmh.nama,"Jabatan Missing") ) as text'
+                'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",hpcxxmh.nama ) as text'
             ])
             ->join('hemxxmh','hemxxmh.id = hpy_piutang_h.id_hemxxmh','LEFT')
             ->join('hpcxxmh','hpcxxmh.id = hpy_piutang_h.id_hpcxxmh','LEFT')
@@ -85,24 +85,18 @@
         ->query('select', 'hpy_piutang_h')
         ->get([
             'hpy_piutang_h.id as id',
-            'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",IFNULL(hetxxmh.nama,"Jabatan Missing") ) as text'
+            'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",hpcxxmh.nama ) as text'
         ])
-		->join('hemxxmh','hemxxmh.id = hpy_piutang_h.id_hemxxmh','LEFT')
-		->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
-		->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
+        ->join('hemxxmh','hemxxmh.id = hpy_piutang_h.id_hemxxmh','LEFT')
+        ->join('hpcxxmh','hpcxxmh.id = hpy_piutang_h.id_hpcxxmh','LEFT')
         ->where('hemxxmh.is_active',1)
-        ->where('hemjbmh.id_heyxxmh', $w_id_heyxxmh, $s_id_heyxxmh, false )
-        ->where('hemjbmh.id_hesxxmh', $w_id_hesxxmh, $s_id_hesxxmh)
         ->where('hpy_piutang_h.id', $id_hpy_piutang_h_old, '<>' )
-        ->where('hemjbmh.is_harian_lepas', '0' )
-        ->where('hemjbmh.is_non_karyawan', '0' )
-        ->where('hemjbmh.is_checkclock', '1' )
         ->where( function ( $r ) {
             $q = $_GET['search'];
             $r
                 ->where('hemxxmh.kode', '%' . $q . '%', 'LIKE' )
                 ->or_where('hemxxmh.nama', '%' . $q . '%', 'LIKE' )
-                ->or_where('hetxxmh.nama', '%' . $q . '%', 'LIKE' );
+                ->or_where('hpcxxmh.nama', '%' . $q . '%', 'LIKE' );
         } )
         ->order('hemxxmh.nama')
         ->limit($resultCount)

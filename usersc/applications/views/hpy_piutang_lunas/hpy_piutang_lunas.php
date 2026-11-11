@@ -51,6 +51,7 @@
 		var edthpy_piutang_lunas, tblhpy_piutang_lunas, show_inactive_status_hpy_piutang_lunas = 0, id_hpy_piutang_lunas;
 		var id_hemxxmh_old = 0;
 		var id_hpcxxmh_old = 0;
+		var id_hpy_piutang_h_old = 0;
 		is_need_approval = 1;
 		// ------------- end of default variable
 		
@@ -85,6 +86,55 @@
                         type: "hidden",
 						def: 1
 					}, 	
+					{
+						label: "Tanggal Pelunasan<sup class='text-danger'>*<sup>",
+						name: "hpy_piutang_lunas.tanggal_mulai",
+						type: "datetime",
+						def: function () { 
+							return new Date(); 
+						},
+						opts:{
+							minDate: new Date('1900-01-01'),
+							firstDay: 0
+						},
+						format: 'DD MMM YYYY',
+					},
+					{
+						label: "Piutang Karyawan <sup class='text-danger'>*<sup>",
+						name: "hpy_piutang_lunas.id_hpy_piutang_h",
+						type: "select2",
+						opts: {
+							placeholder : "Select",
+							allowClear: true,
+							multiple: false,
+							ajax: {
+								url: "../../models/hpy_piutang_h/hpy_piutang_h_fn_opt.php",
+								dataType: 'json',
+								data: function (params) {
+									var query = {
+										id_hpy_piutang_h_old: id_hpy_piutang_h_old,
+										search: params.term || '',
+										page: params.page || 1
+									}
+										return query;
+								},
+								processResults: function (data, params) {
+									return {
+										results: data.results,
+										pagination: {
+											more: true
+										}
+									};
+								},
+								cache: true,
+								minimumInputLength: 1,
+								maximum: 10,
+								delay: 500,
+								maximumSelectionLength: 5,
+								minimumResultsForSearch: -1,
+							},
+						}
+					},
 					{
 						label: "Karyawan <sup class='text-danger'>*<sup>",
 						name: "hpy_piutang_lunas.id_hemxxmh",
@@ -132,19 +182,6 @@
 						name: "hpy_piutang_lunas.nominal"
 					}, 	
 					{
-						label: "Tanggal Pelunasan<sup class='text-danger'>*<sup>",
-						name: "hpy_piutang_lunas.tanggal_mulai",
-						type: "datetime",
-						def: function () { 
-							return new Date(); 
-						},
-						opts:{
-							minDate: new Date('1900-01-01'),
-							firstDay: 0
-						},
-						format: 'DD MMM YYYY',
-					},
-					{
 						label: "Keterangan<sup class='text-danger'>*<sup>",
 						name: "hpy_piutang_lunas.keterangan",
 						type: "textarea"
@@ -168,6 +205,14 @@
 
             edthpy_piutang_lunas.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
+					
+					// BEGIN of validasi hpy_piutang_lunas.id_hpy_piutang_h 
+					id_hpy_piutang_h = edthpy_piutang_lunas.field('hpy_piutang_lunas.id_hpy_piutang_h').val();
+					if(!id_hpy_piutang_h || id_hpy_piutang_h == ''){
+						edthpy_piutang_lunas.field('hpy_piutang_lunas.id_hpy_piutang_h').error( 'Wajib diisi!' );
+					}
+					// END of validasi hpy_piutang_lunas.id_hpy_piutang_h 
+					
 					
 					// BEGIN of validasi hpy_piutang_lunas.id_hemxxmh 
 					id_hemxxmh = edthpy_piutang_lunas.field('hpy_piutang_lunas.id_hemxxmh').val();
@@ -298,6 +343,7 @@
 				is_active      = hpy_piutang_lunas_data.is_active;
 				id_hemxxmh_old      = hpy_piutang_lunas_data.id_hemxxmh;
 				id_hpcxxmh_old      = hpy_piutang_lunas_data.id_hpcxxmh;
+				id_hpy_piutang_h_old      = hpy_piutang_lunas_data.id_hpy_piutang_h;
 
 				// atur hak akses
 				CekSelectHeaderH(tblhpy_piutang_lunas);
@@ -308,6 +354,7 @@
 				id_hpy_piutang_lunas = '';
 				id_hemxxmh_old = 0;
 				id_hpcxxmh_old = 0;
+				id_hpy_piutang_h_old = 0;
 
 				// atur hak akses
 				CekDeselectHeaderH(tblhpy_piutang_lunas);

@@ -22,6 +22,8 @@
 		->debug(true)
 		->fields(
 			Field::inst( 'hpy_piutang_lunas.id' ),
+			Field::inst( 'hpy_piutang_lunas.id_hpy_piutang_h' )
+				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hpy_piutang_lunas.id_hemxxmh' )
 				->setFormatter( Format::ifEmpty( 0 ) ),
 			Field::inst( 'hpy_piutang_lunas.id_hpcxxmh' )
