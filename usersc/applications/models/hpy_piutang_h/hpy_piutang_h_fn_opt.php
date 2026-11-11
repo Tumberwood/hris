@@ -68,11 +68,10 @@
             ->query('select', 'hpy_piutang_h')
             ->get([
                 'hpy_piutang_h.id as id',
-                'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",IFNULL(hetxxmh.nama,"Jabatan Missing") ) as text'
+                'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",IFNULL(hpcxxmh.nama,"Jabatan Missing") ) as text'
             ])
             ->join('hemxxmh','hemxxmh.id = hpy_piutang_h.id_hemxxmh','LEFT')
-            ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
-            ->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
+            ->join('hpcxxmh','hpcxxmh.id = hpy_piutang_h.id_hpcxxmh','LEFT')
             ->where('hpy_piutang_h.id', $id_hpy_piutang_h_old )
             ->exec();
         $rs_hemxxmh_self = $qs_hemxxmh_self->fetchAll();
