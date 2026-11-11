@@ -125,6 +125,7 @@
 		var id_hpcxxmh_old = 0;
 		var is_jenis = 0;
 		var plus_min = 0;
+		var id_hem_get = 0;
 		is_need_approval = 1;
 		var id_periode_payroll_old = 0;
 		// ------------- end of default variable
