@@ -128,7 +128,7 @@
                                     SELECT ml.medical_leave
                                     FROM hemxxmh_medical_leave ml
                                     WHERE ml.id_hemxxmh = b.id
-                                    AND ml.tanggal_efektif > :tanggal_awal
+                                    AND ml.tanggal_efektif < :tanggal_akhir
                                     ORDER BY ml.tanggal_efektif DESC
                                     LIMIT 1
                                 ), 1
