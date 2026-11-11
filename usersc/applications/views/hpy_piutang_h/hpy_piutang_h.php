@@ -356,6 +356,14 @@
 				edthpy_piutang_h.field('field_tanggal').val('created_on');
 			});
 			
+			edthpy_piutang_h.on( 'postSubmit', function (e, json, data, action, xhr) {
+				// event setelah Create atau Edit, dibedakan dari parameter action
+				// action : "create" | "edit"
+				// do something
+				tblhpy_piutang_h.rows().deselect();
+				tblhpy_piutang_h.ajax.reload(null, false);
+			} );
+			
 			edthpy_piutang_h.on( 'close', function (e, json, data, action, xhr) {
 				edthpy_piutang_h.enable();
 			} );
