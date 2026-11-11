@@ -1351,7 +1351,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [3,4]
+						targets: [1,2,4]
 					},
 					{
 						searchPanes:{
