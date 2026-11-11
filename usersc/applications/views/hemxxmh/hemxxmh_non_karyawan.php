@@ -1338,7 +1338,7 @@
 			//start datatables
 			tblhemxxmh = $('#tblhemxxmh').DataTable( {
 				searchPanes:{
-					layout: 'columns-4'
+					layout: 'columns-3'
 				},
 				dom: 
 					"<P>"+
