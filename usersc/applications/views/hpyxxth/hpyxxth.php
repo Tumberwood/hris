@@ -1350,7 +1350,7 @@
 					// 	}
 					// },
 					{
-						text: '<i class="fa fa-google"></i>',
+						text: '<i class="fa fa-google"> Generate</i>',
 						name: 'btnGeneratePresensiNew',
 						className: 'btn btn-xs btn-outline',
 						titleAttr: 'Generate Payroll',
