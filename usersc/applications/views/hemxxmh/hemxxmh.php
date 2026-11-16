@@ -5288,7 +5288,7 @@
 						label: "Potong Makan / Catering <sup class='text-danger'>*<sup>",
 						name: "hemxxmh_makan.is_makan_catering",
 						type: "select2",
-						def: 1,
+						def: 0,
 						options: [
 							{ "label": "Potong Makan", "value": '0' },
 							{ "label": "Catering", "value": '1' },
