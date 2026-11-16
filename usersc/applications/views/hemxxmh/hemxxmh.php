@@ -322,7 +322,7 @@
 							<li><a class="nav-link" data-toggle="tab" href="#tabhtpxxth"> Izin</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhemjbrd"> Job History</a></li>
 							<li><a class="nav-link" data-toggle="tab" href="#tabhemxxmh_medical_leave"> Medical Leave</a></li>
-							<li><a class="nav-link" data-toggle="tab" href="#tabhemxxmh_makan"> Makan</a></li>
+							<li><a class="nav-link" data-toggle="tab" href="#tabhemxxmh_makan"> Memo Makan</a></li>
 						</ul>
 						<div class="tab-content">
 							<div role="tabpanel" id="tabhemfmmd" class="tab-pane active">
