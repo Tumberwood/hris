@@ -65,21 +65,21 @@ $qs_hpyxxth = $db
             IFNULL(a.lembur3, 0) AS lembur3,
 
             -- POTONGAN
-            IFNULL(a.pot_bpjs, 0) AS pot_bpjs,
-            IFNULL(a.pot_jht, 0) AS pot_jht,
-            IFNULL(a.pot_psiun, 0) AS pot_psiun,
+            IFNULL(a.bpjs_kes_karyawan, 0) AS pot_bpjs,
+            IFNULL(a.pot_jht_karyawan, 0) AS pot_jht,
+            IFNULL(a.pot_jp_karyawan, 0) AS pot_psiun,
             IFNULL(a.pot_pph21, 0) AS pot_pph21,
             IFNULL(a.jkk, 0) + IFNULL(a.jkm, 0) AS pot_jkkjkm,
-            IFNULL(a.pot_upah, 0) AS pot_upah,
+            IFNULL(a.pot_upah, 0) + IFNULL(a.pot_jam, 0) AS pot_upah,
             IFNULL(a.pot_makan, 0) AS pot_makan,
 
             (
-                IFNULL(a.pot_bpjs, 0)
-                + IFNULL(a.pot_jht, 0)
-                + IFNULL(a.pot_psiun, 0)
+                IFNULL(a.bpjs_kes_karyawan, 0)
+                + IFNULL(a.pot_jht_karyawan, 0)
+                + IFNULL(a.pot_jp_karyawan, 0)
                 + IFNULL(a.pot_pph21, 0)
                 + IFNULL(a.jkk, 0) + IFNULL(a.jkm, 0)
-                + IFNULL(a.pot_upah, 0)
+                + IFNULL(a.pot_upah, 0) + + IFNULL(a.pot_jam, 0)
                 + IFNULL(a.pot_makan, 0)
             ) AS total_pot,
 
