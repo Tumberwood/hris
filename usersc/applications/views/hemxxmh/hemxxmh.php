@@ -5383,7 +5383,7 @@
 						$table       = 'tblhemxxmh_makan';
 						$edt         = 'edthemxxmh_makan';
 						$show_status = '_hemxxmh_makan';
-						$table_name  = $nama_tabels_d[13];
+						$table_name  = $nama_tabels_d[14];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
 						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_d'];
