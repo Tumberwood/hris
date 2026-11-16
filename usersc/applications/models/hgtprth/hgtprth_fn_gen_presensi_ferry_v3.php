@@ -403,7 +403,20 @@
                                 jadwal.tanggaljam_akhir_t1,
                                 jadwal.tanggaljam_akhir_t2, 
                                 -- IF(a.is_pot_makan = 1 AND ceklok_makan > 0, ceklok_makan, 0) AS is_makan,
-                                IF(a.is_pot_makan = 1 AND ceklok_makan > 0, 1, 0) AS is_makan,
+                                -- IF(a.is_pot_makan = 1 AND ceklok_makan > 0, 1, 0) AS is_makan,
+                                IF(
+                                    (
+                                        makan.is_makan_catering = 1
+                                        OR (
+                                            makan.is_makan_catering IS NULL
+                                            AND a.is_pot_makan = 1
+                                        )
+                                    )
+                                    AND ceklok_makan > 0,
+                                    1,
+                                    0
+                                ) AS is_makan,
+
                                 is_makan_manual,
                                 break_in,
                                 break_out,
@@ -484,6 +497,31 @@
                                 ) resgn ON resgn.id_hemxxmh = j.id_hemxxmh
 
                             ) b ON b.id_hemxxmh = a.id
+                            
+                            -- HISTORY POTONG MAKAN
+                            LEFT JOIN (
+                                SELECT
+                                    id,
+                                    id_hemxxmh,
+                                    tanggal_efektif,
+                                    is_makan_catering
+                                FROM (
+                                    SELECT
+                                        id,
+                                        id_hemxxmh,
+                                        tanggal_efektif,
+                                        is_makan_catering,
+                                        ROW_NUMBER() OVER (
+                                            PARTITION BY id_hemxxmh
+                                            ORDER BY tanggal_efektif DESC, id DESC
+                                        ) AS row_num
+                                    FROM hemxxmh_makan
+                                    WHERE tanggal_efektif <= :tanggal
+                                    AND is_active = 1
+                                ) AS sub
+                                WHERE row_num = 1
+                            ) AS makan ON makan.id_hemxxmh = a.id
+
 
                             LEFT JOIN hosxxmh bagian on bagian.id = b.id_hosxxmh
 
