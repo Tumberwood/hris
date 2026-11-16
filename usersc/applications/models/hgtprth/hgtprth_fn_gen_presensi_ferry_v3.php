@@ -404,18 +404,10 @@
                                 jadwal.tanggaljam_akhir_t2, 
                                 -- IF(a.is_pot_makan = 1 AND ceklok_makan > 0, ceklok_makan, 0) AS is_makan,
                                 -- IF(a.is_pot_makan = 1 AND ceklok_makan > 0, 1, 0) AS is_makan,
-                                IF(
-                                    (
-                                        makan.is_makan_catering = 1
-                                        OR (
-                                            makan.is_makan_catering IS NULL
-                                            AND a.is_pot_makan = 1
-                                        )
-                                    )
-                                    AND ceklok_makan > 0,
-                                    1,
-                                    0
-                                ) AS is_makan,
+                                CASE
+                                    WHEN makan.is_makan_catering = 1 THEN 0
+                                    ELSE IF(a.is_pot_makan = 1 AND ceklok_makan > 0, 1, 0)
+                                END AS is_makan,
 
                                 is_makan_manual,
                                 break_in,
