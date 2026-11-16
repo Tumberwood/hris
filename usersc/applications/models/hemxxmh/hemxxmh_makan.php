@@ -61,7 +61,6 @@
 				->where( 'hemxxmh_makan.is_active', 1);
 		}
 		
-		include( "hemxxmh_makan_extra.php" );
 		include( "../../../helpers/edt_log.php" );
 		
 		$editor
