@@ -72,7 +72,7 @@
 					'to' =>   'H:i:s'
 				) ),
 
-			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' ),
+			Field::inst( 'concat(COALESCE(NULLIF(hemxxmh.kode, ""), hemxxmh.kode_finger), ," - ",hemxxmh.nama) as hemxxmh_data' ),
 			Field::inst( 'hodxxmh.nama' ),
 			Field::inst( 'hobxxmh.nama' ),
 			Field::inst( 'hetxxmh.nama' ),
