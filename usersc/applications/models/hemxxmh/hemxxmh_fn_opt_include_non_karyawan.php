@@ -53,6 +53,7 @@
             ->get([
                 'hemxxmh.id as id',
                 'concat(IF(hemxxmh.kode <> "", hemxxmh.kode, hemxxmh.kode_finger) ," - ",hemxxmh.nama," - ",IFNULL(hetxxmh.nama, hemxxmh.asal_non_karyawan) ) as text'
+                'concat(IF(hemxxmh.kode <> "", hemxxmh.kode, hemxxmh.kode_finger) ," - ",hemxxmh.nama," - ",IFNULL(hetxxmh.nama, hemxxmh.asal_non_karyawan) ) as text'
             ])
             ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
             ->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
@@ -70,6 +71,7 @@
         ->get([
             'hemxxmh.id as id',
             'concat(IF(hemxxmh.kode <> "", hemxxmh.kode, hemxxmh.kode_finger) ," - ",hemxxmh.nama," - ",IFNULL(hetxxmh.nama, hemxxmh.asal_non_karyawan) ) as text'
+            'concat(IF(hemxxmh.kode <> "", hemxxmh.kode, hemxxmh.kode_finger) ," - ",hemxxmh.nama," - ",IFNULL(hetxxmh.nama, hemxxmh.asal_non_karyawan) ) as text'
         ])
 		->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
 		->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
@@ -82,6 +84,7 @@
             $r
                 ->where('hemxxmh.kode', '%' . $q . '%', 'LIKE' )
                 ->or_where('hemxxmh.nama', '%' . $q . '%', 'LIKE' )
+                ->or_where('hemxxmh.kode_finger', '%' . $q . '%', 'LIKE' )
                 ->or_where('hetxxmh.nama', '%' . $q . '%', 'LIKE' );
         } )
         ->where( function ( $r ) {
