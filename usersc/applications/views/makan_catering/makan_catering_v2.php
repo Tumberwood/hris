@@ -488,7 +488,7 @@
 			
 // --------- start _detail --------------- //
 
-			//start datatables editor
+			//start datatables editor tes
 			edtcetak_makan_d = new $.fn.dataTable.Editor( {
 				ajax: {
 					url: "../../models/makan_catering/cetak_makan_d_v2.php",
