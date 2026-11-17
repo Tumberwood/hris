@@ -180,7 +180,8 @@ $baris = function ($label, $nilai, $format = 'rupiah') use ($rupiah, $decimal) {
 
 $mpdf = new \Mpdf\Mpdf([
     'mode' => 'utf-8',
-    'format' => [95, 140],
+    // Ukuran kertas slip: lebar 9 cm x tinggi 13,5 cm
+    'format' => [90, 135],
 
     'margin_left' => 4,
     'margin_right' => 4,
