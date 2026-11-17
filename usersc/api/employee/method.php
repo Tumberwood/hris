@@ -111,6 +111,8 @@ class Employee
 						het.nama jabatan,
 
 						a.kode nik,
+						a.kode_finger,
+						ktp_no,
 						a.nama nama_pegawai,
 						a.gender jenis_kelamin,
 						CASE
@@ -121,6 +123,7 @@ class Employee
 						job.tanggal_keluar AS tanggal_keluar
 					FROM hemxxmh a
 					JOIN hemjbmh job ON job.id_hemxxmh = a.id
+					LEFT JOIN hemdcmh doc ON doc.id_hemxxmh = a.id
 					LEFT JOIN hodxxmh dep ON dep.id = job.id_hodxxmh
 					LEFT JOIN hovxxmh divisi ON divisi.id = job.id_hovxxmh
 					LEFT JOIN hetxxmh jab ON jab.id = job.id_hetxxmh
