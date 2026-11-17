@@ -181,8 +181,8 @@
     $qd_htsprrd = $db
         ->query('delete', 'htsprrd')
         ->where('htsprrd.tanggal',$tanggal)
-        // ->where( 'htsprrd.id_hemxxmh', '(SELECT hemxxmh.id FROM hemxxmh LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = hemxxmh.id WHERE hemjbmh.id_heyxxmh = ' . $id_heyxxmh . ')', 'IN', false )
-        ->where( 'htsprrd.id_hemxxmh', '(SELECT hemxxmh.id FROM hemxxmh LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = hemxxmh.id WHERE is_harian_lepas = 0 AND hemjbmh.id_heyxxmh = ' . $id_heyxxmh . ')', 'IN', false )
+        ->where( 'htsprrd.id_hemxxmh', '(SELECT hemxxmh.id FROM hemxxmh LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = hemxxmh.id WHERE hemjbmh.id_heyxxmh = ' . $id_heyxxmh . ')', 'IN', false )
+        // ->where( 'htsprrd.id_hemxxmh', '(SELECT hemxxmh.id FROM hemxxmh LEFT JOIN hemjbmh ON hemjbmh.id_hemxxmh = hemxxmh.id WHERE is_harian_lepas = 0 AND hemjbmh.id_heyxxmh = ' . $id_heyxxmh . ')', 'IN', false )
         ->exec();
     // END delete old data
     
@@ -206,7 +206,7 @@
         } )
         ->where('hemjbmh.tanggal_masuk', $tanggal, '<=' )
         ->where('hemxxmh.is_active', 1 )
-        ->where('hemjbmh.is_harian_lepas', 0 )
+        // ->where('hemjbmh.is_harian_lepas', 0 )
         ->where('hemjbmh.is_non_karyawan', 0 )
         ->where('hemjbmh.is_checkclock', 1 ) // skip yang tidak perlu checkclock
         ->where('hemjbmh.id_heyxxmh', $id_heyxxmh ) // skip yang tidak perlu checkclock
