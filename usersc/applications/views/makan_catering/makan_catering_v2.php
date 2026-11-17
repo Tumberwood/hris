@@ -491,7 +491,7 @@
 			//start datatables editor
 			edtcetak_makan_d = new $.fn.dataTable.Editor( {
 				ajax: {
-					url: "../../models/makan_catering/cetak_makan_d.php",
+					url: "../../models/makan_catering/cetak_makan_d_v2.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_cetak_makan_d = show_inactive_status_cetak_makan_d;
@@ -619,7 +619,7 @@
 			//start datatables
 			tblcetak_makan_d = $('#tblcetak_makan_d').DataTable( {
 				ajax: {
-					url: "../../models/makan_catering/cetak_makan_d.php",
+					url: "../../models/makan_catering/cetak_makan_d_v2.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_cetak_makan_d = show_inactive_status_cetak_makan_d;
