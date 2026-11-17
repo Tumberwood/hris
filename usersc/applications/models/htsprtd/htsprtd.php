@@ -74,12 +74,15 @@
 
 			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' ),
 			Field::inst( 'hodxxmh.nama' ),
+			Field::inst( 'hobxxmh.nama' ),
 			Field::inst( 'hetxxmh.nama' ),
 			Field::inst( 'heyxxmd.nama' ),
+			Field::inst( 'hemxxmh.asal_non_karyawan' ),
 		)
 		->leftJoin( 'hemxxmh','hemxxmh.kode_finger','=','htsprtd.kode' )
 		->leftJoin('hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id' )
 		->leftJoin( 'hodxxmh','hodxxmh.id','=','hemjbmh.id_hodxxmh' )
+		->leftJoin( 'hobxxmh','hobxxmh.id','=','hemjbmh.id_hobxxmh' )
 		->leftJoin( 'hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh' )
 		->leftJoin( 'heyxxmd','heyxxmd.id','=','hemjbmh.id_heyxxmd' )
 		;

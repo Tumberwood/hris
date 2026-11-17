@@ -67,6 +67,8 @@
                                 <th>Nama</th>
 								<th>Department</th>
 								<th>Jabatan</th>
+								<th>Bagian</th>
+								<th>Asal</th>
 								<th>Type</th>
                                 <th>Mesin</th>
                                 <th>Jam</th>
@@ -734,6 +736,8 @@
 					{ data: "hemxxmh_data" },
 					{ data: "hodxxmh.nama" },
 					{ data: "hetxxmh.nama" },
+					{ data: "hobxxmh.asal_non_karyawan" },
+					{ data: "hemxxmh.nama" },
 					{ data: "heyxxmd.nama" },
 					{ data: "htsprtd.nama" },
 					{ data: "htsprtd.jam" },
