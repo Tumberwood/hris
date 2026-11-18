@@ -53,7 +53,6 @@
             ->get([
                 'hemxxmh.id as id',
                 'concat(IF(hemxxmh.kode <> "", hemxxmh.kode, hemxxmh.kode_finger) ," - ",hemxxmh.nama," - ",IFNULL(hetxxmh.nama, hemxxmh.asal_non_karyawan) ) as text'
-                'concat(IF(hemxxmh.kode <> "", hemxxmh.kode, hemxxmh.kode_finger) ," - ",hemxxmh.nama," - ",IFNULL(hetxxmh.nama, hemxxmh.asal_non_karyawan) ) as text'
             ])
             ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
             ->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
@@ -70,7 +69,6 @@
         ->query('select', 'hemxxmh')
         ->get([
             'hemxxmh.id as id',
-            'concat(IF(hemxxmh.kode <> "", hemxxmh.kode, hemxxmh.kode_finger) ," - ",hemxxmh.nama," - ",IFNULL(hetxxmh.nama, hemxxmh.asal_non_karyawan) ) as text'
             'concat(IF(hemxxmh.kode <> "", hemxxmh.kode, hemxxmh.kode_finger) ," - ",hemxxmh.nama," - ",IFNULL(hetxxmh.nama, hemxxmh.asal_non_karyawan) ) as text'
         ])
 		->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
