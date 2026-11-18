@@ -60,6 +60,8 @@
 								<th>Jenis</th>
 								<th>Jabatan</th>
 								<th>Department</th>
+								<th>Bagian</th>
+								<th>Asal</th>
 								<th>Keterangan </th>
 								<th>Jam Awal</th>
 								<th>Jam Akhir</th>
@@ -451,6 +453,8 @@
 					{ data: "htpxxmh.nama" },
 					{ data: "hetxxmh.nama" },
 					{ data: "hodxxmh.nama" },
+					{ data: "hobxxmh.nama" },
+					{ data: "hemxxmh.asal_non_karyawan" },
 					{ data: "htpxxth.keterangan" },
 					{ data: "htpxxth.jam_awal" },
 					{ data: "htpxxth.jam_akhir" },

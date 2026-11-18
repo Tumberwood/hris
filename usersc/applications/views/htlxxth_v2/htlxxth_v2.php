@@ -60,6 +60,8 @@
                                 <th>Karyawan</th>
 								<th>Jabatan</th>
 								<th>Department</th>
+								<th>Bagian</th>
+								<th>Asal</th>
                                 <th>Jenis</th>
                                 <th>Tanggal Awal</th>
                                 <th>Tanggal Akhir</th>
@@ -434,6 +436,8 @@
 					{ data: "hemxxmh_data" },
 					{ data: "hetxxmh.nama" },
 					{ data: "hodxxmh.nama" },
+					{ data: "hobxxmh.nama" },
+					{ data: "hemxxmh.asal_non_karyawan" },
 					{ data: "htlxxmh.nama" },
 					{ data: "htlxxth.tanggal_awal" },
 					{ data: "htlxxth.tanggal_akhir" },

@@ -89,11 +89,20 @@
 					'from' => 'H:i',
 					'to' =>   'H:i:s'
 				) ),
-			Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' ),
+			// Field::inst( 'concat(hemxxmh.kode," - ",hemxxmh.nama) as hemxxmh_data' ),
+			Field::inst('
+				CASE
+					WHEN hemjbmh.is_non_karyawan = 0
+					THEN CONCAT(hemxxmh.kode, " - ", hemxxmh.nama)
+					ELSE CONCAT(hemxxmh.kode_finger, " - ", hemxxmh.nama)
+				END AS hemxxmh_data
+			'),
 
 			Field::inst( 'htpxxmh.nama' ),
 			Field::inst( 'hetxxmh.nama' ),
-			Field::inst( 'hodxxmh.nama' )
+			Field::inst( 'hemxxmh.asal_non_karyawan' ),
+			Field::inst( 'hodxxmh.nama' ),
+			Field::inst( 'hobxxmh.nama' ),
 		)
 		->leftJoin( 'hemxxmh','hemxxmh.id','=','htpxxth.id_hemxxmh' )
 		->leftJoin( 'htpxxmh','htpxxmh.id','=','htpxxth.id_htpxxmh' )
@@ -101,6 +110,7 @@
 		->leftJoin('hemjbmh','hemjbmh.id_hemxxmh','=','hemxxmh.id','LEFT' )
 		->leftJoin('hetxxmh','hetxxmh.id','=','hemjbmh.id_hetxxmh','LEFT' )
 		->leftJoin('hodxxmh','hodxxmh.id','=','hemjbmh.id_hodxxmh','LEFT' )
+		->leftJoin('hobxxmh','hobxxmh.id','=','hemjbmh.id_hobxxmh','LEFT' )
 
 		->where( 'htpxxth.tanggal', $start_date, '>=' )
 		->where( 'htpxxth.tanggal', $end_date, '<=' );
@@ -117,12 +127,12 @@
 			->where( 'htpxxth.id_hemxxmh', $_POST['id_hemxxmh']);
 	}
 	
-	if ($_SESSION['user'] > 100){
-		$editor
-			->where( function ( $q ) {
-				$q->where('hemjbmh.id_heyxxmh', '(' . $_SESSION['str_arr_ha_heyxxmh'] . ')', 'IN', false );
-			} );
-	}
+	// if ($_SESSION['user'] > 100){
+	// 	$editor
+	// 		->where( function ( $q ) {
+	// 			$q->where('hemjbmh.id_heyxxmh', '(' . $_SESSION['str_arr_ha_heyxxmh'] . ')', 'IN', false );
+	// 		} );
+	// }
 	
 	include( "../../../helpers/kode_fn_generate_c.php" );
 	include( "htpxxth_v2_extra.php" );

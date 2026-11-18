@@ -32,12 +32,17 @@
 				htlxxrh.is_defaultprogram,
 				DATE_FORMAT(htlxxrh.tanggal, '%d %b %Y') AS tanggal,
 				IFNULL(htlxxmh.nama, htpxxmh.nama)  AS htlxxmh_nama,
-				concat(hemxxmh.kode, ' - ' ,hemxxmh.nama) AS hemxxmh_nama
+				CASE
+					WHEN hemjbmh.is_non_karyawan = 0
+						THEN CONCAT(hemxxmh.kode, ' - ', hemxxmh.nama)
+					ELSE CONCAT(hemxxmh.kode_finger, ' - ', hemxxmh.nama)
+				END AS hemxxmh_nama
 			FROM
 				htlxxrh
 			LEFT JOIN htlxxmh ON htlxxrh.jenis = 1 AND htlxxmh.id = htlxxrh.id_htlxxmh
 			LEFT JOIN htpxxmh ON htlxxrh.jenis = 2 AND htpxxmh.id = htlxxrh.id_htlxxmh
 			LEFT JOIN hemxxmh ON hemxxmh.id = htlxxrh.id_hemxxmh
+			LEFT JOIN hemjbmh ON hemxxmh.id = hemjbmh.id_hemxxmh
 			WHERE htlxxrh.is_active = 1 AND htlxxrh.id_htlxxmh <> 0 " . $where;
 		;
 
