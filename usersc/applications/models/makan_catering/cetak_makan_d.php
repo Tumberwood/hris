@@ -45,6 +45,8 @@
 						5500 AS harga_catering_staff,
 						5500 AS harga_catering_hl,
 						5500 AS harga_catering_non_kary,
+						5500 AS harga_catering_spv,
+						5500 AS harga_catering_koor,
 
 						/* =========================
 						SHIFT 1
@@ -63,6 +65,8 @@
 
 						MAX(IFNULL(hl.hl_shift1, 0)) AS shift1_hl,
 						MAX(IFNULL(nk.nk_shift1, 0)) AS shift1_non_kary,
+						MAX(IFNULL(sk.spv_shift1, 0)) AS shift1_spv,
+						MAX(IFNULL(sk.koor_shift1, 0)) AS shift1_koor,
 
 						/* =========================
 						SHIFT 2
@@ -81,6 +85,8 @@
 
 						MAX(IFNULL(hl.hl_shift2, 0)) AS shift2_hl,
 						MAX(IFNULL(nk.nk_shift2, 0)) AS shift2_non_kary,
+						MAX(IFNULL(sk.spv_shift2, 0)) AS shift2_spv,
+						MAX(IFNULL(sk.koor_shift2, 0)) AS shift2_koor,
 
 						/* =========================
 						SHIFT 3
@@ -99,6 +105,8 @@
 
 						MAX(IFNULL(hl.hl_shift3, 0)) AS shift3_hl,
 						MAX(IFNULL(nk.nk_shift3, 0)) AS shift3_non_kary,
+						MAX(IFNULL(sk.spv_shift3, 0)) AS shift3_spv,
+						MAX(IFNULL(sk.koor_shift3, 0)) AS shift3_koor,
 
 						/* =========================
 						TOTAL KARYAWAN
@@ -135,22 +143,53 @@
 						) AS total_non_kary,
 
 						/* =========================
+						TOTAL SUPERVISOR
+						========================= */
+						MAX(
+							IFNULL(sk.spv_shift1, 0)
+							+ IFNULL(sk.spv_shift2, 0)
+							+ IFNULL(sk.spv_shift3, 0)
+						) AS total_spv,
+
+						/* =========================
+						TOTAL KOORDINATOR
+						========================= */
+						MAX(
+							IFNULL(sk.koor_shift1, 0)
+							+ IFNULL(sk.koor_shift2, 0)
+							+ IFNULL(sk.koor_shift3, 0)
+						) AS total_koor,
+
+						/* =========================
 						GRAND TOTAL
 						========================= */
 						SUM(x.jam_makan IS NOT NULL)
+
 						+ MAX(
 							IFNULL(hl.hl_shift1, 0)
 							+ IFNULL(hl.hl_shift2, 0)
 							+ IFNULL(hl.hl_shift3, 0)
 						)
+
 						+ MAX(
 							IFNULL(nk.nk_shift1, 0)
 							+ IFNULL(nk.nk_shift2, 0)
 							+ IFNULL(nk.nk_shift3, 0)
+						)
+
+						+ MAX(
+							IFNULL(sk.spv_shift1, 0)
+							+ IFNULL(sk.spv_shift2, 0)
+							+ IFNULL(sk.spv_shift3, 0)
+						)
+
+						+ MAX(
+							IFNULL(sk.koor_shift1, 0)
+							+ IFNULL(sk.koor_shift2, 0)
+							+ IFNULL(sk.koor_shift3, 0)
 						) AS grand_total
 
-					FROM
-					(
+					FROM (
 						SELECT
 							a.tanggal,
 							d.nama AS sub,
@@ -161,15 +200,13 @@
 							========================= */
 							COALESCE(
 								(
-									SELECT
-										p.nominal
+									SELECT p.nominal
 									FROM htpr_hemxxmh p
 									WHERE p.id_hpcxxmh = 34
 										AND p.id_hemxxmh = b.id
 										AND p.tanggal_efektif <= a.tanggal
 										AND p.is_active = 1
-									ORDER BY
-										p.tanggal_efektif DESC
+									ORDER BY p.tanggal_efektif DESC
 									LIMIT 1
 								),
 								0
@@ -373,6 +410,53 @@
 						GROUP BY h.tanggal_jadwal
 
 					) nk ON nk.tanggal_jadwal = x.tanggal
+
+					/* =========================
+					SUPERVISOR DAN KOORDINATOR
+					========================= */
+					LEFT JOIN (
+						SELECT
+							tanggal,
+
+							SUM(CASE
+								WHEN nama = "Supervisor" AND shift = "1"
+									THEN jumlah ELSE 0
+							END) AS spv_shift1,
+
+							SUM(CASE
+								WHEN nama = "Supervisor" AND shift = "2"
+									THEN jumlah ELSE 0
+							END) AS spv_shift2,
+
+							SUM(CASE
+								WHEN nama = "Supervisor" AND shift = "3"
+									THEN jumlah ELSE 0
+							END) AS spv_shift3,
+
+							SUM(CASE
+								WHEN nama = "Koordinator" AND shift = "1"
+									THEN jumlah ELSE 0
+							END) AS koor_shift1,
+
+							SUM(CASE
+								WHEN nama = "Koordinator" AND shift = "2"
+									THEN jumlah ELSE 0
+							END) AS koor_shift2,
+
+							SUM(CASE
+								WHEN nama = "Koordinator" AND shift = "3"
+									THEN jumlah ELSE 0
+							END) AS koor_shift3
+
+						FROM makan_catering_spv_koor
+
+						WHERE is_active = 1
+							AND tanggal BETWEEN :start_date AND :end_date
+							AND nama IN ("Supervisor", "Koordinator")
+
+						GROUP BY tanggal
+
+					) sk ON sk.tanggal = x.tanggal
 
 					GROUP BY
 						x.tanggal
