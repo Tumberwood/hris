@@ -567,6 +567,17 @@
                         'usersc/helpers/button_fn_generate.php';
 
                 ?>
+                ,{
+                    text: '<i class="fa fa-print">WOI</i>',
+                    name: 'btnPrint',
+                    className: 'btn btn-outline',
+                    titleAttr: 'Print Slip Gaji',
+                    action: function ( e, dt, node, config ) {
+                        e.preventDefault(); 
+                        var url = $(this).attr('href'); 
+                        window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=3', 'hpyxxth');
+                    }
+                },
 
             ],
 
