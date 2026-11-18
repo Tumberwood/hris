@@ -29,10 +29,10 @@
 					peg.id,
 					peg.kode,
 					peg.nama,
-					a.tanggal,
+					DATE_FORMAT(a.tanggal , "%d %b %Y") AS tanggal,
 					a.nominal,
-					jb.tanggal_masuk,
-					jb.tanggal_akhir_kontrak
+					DATE_FORMAT(jb.tanggal_masuk, "%d %b %Y") AS tanggal_masuk,
+					DATE_FORMAT(jb.tanggal_akhir_kontrak, "%d %b %Y") AS tanggal_akhir_kontrak
 				FROM hpy_piutang_d a
 				JOIN hemxxmh b ON b.id = a.id_hemxxmh
 				JOIN hesxxtd c ON c.nik_baru = b.kode
