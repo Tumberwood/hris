@@ -81,7 +81,9 @@
 								<th>Tanggal</th>
 								<th>Jadwal</th>
 								<th>Clock In</th>
+								<th>Status In</th>
 								<th>Clock Out</th>
+								<th>Status Out</th>
 							</tr>
 						</thead>
                     </table>
@@ -254,17 +256,66 @@
 				order: [[ 1, "asc" ]],
 				responsive: false,
 				columns: [
-					{ data: "id", visible: false },
-					{ data: "kode_finger" },
-					{ data: "nama" },
-					{ data: "bag" },
-					{ data: "asal" },
-					{ data: "hari" },
-					{ data: "tanggal" },
-					{ data: "shift" },
-					{ data: "clock_in" },
-					{ data: "clock_out" },
-				],
+    { data: "id", visible: false },
+    { data: "kode_finger" },
+    { data: "nama" },
+    { data: "bag" },
+    { data: "asal" },
+    { data: "hari" },
+    { data: "tanggal" },
+
+    // JADWAL: SHIFT ATAU JENIS ABSEN
+    {
+        data: null,
+        render: function(data, type, row) {
+            return row.shift || row.jenis_absen || '-';
+        }
+    },
+
+    // CLOCK IN
+    {
+        data: "clock_in",
+        defaultContent: "-"
+    },
+
+    // STATUS IN
+    {
+        data: null,
+        render: function(data, type, row) {
+            if (row.kode_absen) {
+                return `<b>${row.jenis_absen || '-'}</b> [${row.kode_absen}]`;
+            }
+
+            if (row.kode_izin_in) {
+                return `<b>${row.kode_grup_izin_in || '-'}</b> [${row.kode_izin_in}]`;
+            }
+
+            return '-';
+        }
+    },
+
+    // CLOCK OUT
+    {
+        data: "clock_out",
+        defaultContent: "-"
+    },
+
+    // STATUS OUT
+    {
+        data: null,
+        render: function(data, type, row) {
+            if (row.kode_absen) {
+                return `<b>${row.jenis_absen || '-'}</b> [${row.kode_absen}]`;
+            }
+
+            if (row.kode_izin_out) {
+                return `<b>${row.kode_grup_izin_out || '-'}</b> [${row.kode_izin_out}]`;
+            }
+
+            return '-';
+        }
+    }
+],
 				buttons: [
 					// BEGIN breaking generate button
 					<?php

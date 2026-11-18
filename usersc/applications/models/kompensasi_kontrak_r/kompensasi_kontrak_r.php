@@ -26,34 +26,22 @@
 		->bind(':start_date', $start_date)
 		->bind(':end_date', $end_date)
 		->exec('SELECT
-					a.id,
-					a.id_hemxxmh,
-					DATE_FORMAT(a.tanggal, "%d %b %Y") tanggal,
-					jb.id_heyxxmh,
-					hem.kode nik,
-					hem.nama,
-					d.nama AS dep,
-					e.nama AS jab,
-					f.nama AS area,
-					sub.nama AS sub_tipe,
-					st.nama AS status_peg,
-					a.st_jadwal,
-					a.status_presensi_in,
-					a.is_pot_upah
-				FROM htsprrd a
-				JOIN hemxxmh hem ON hem.id = a.id_hemxxmh
-				JOIN hemjbmh jb ON jb.id_hemxxmh = a.id_hemxxmh
-
-				LEFT JOIN hodxxmh d ON d.id = jb.id_hodxxmh
-				LEFT JOIN hetxxmh e ON e.id = jb.id_hetxxmh
-				LEFT JOIN holxxmd_2 f ON f.id = a.id_holxxmd_2
-				
-				LEFT JOIN heyxxmd sub ON sub.id = jb.id_heyxxmd
-				LEFT JOIN hesxxmh st ON st.id = jb.id_hesxxmh
-
+					peg.id,
+					peg.kode,
+					peg.nama,
+					a.tanggal,
+					a.nominal,
+					jb.tanggal_masuk,
+					jb.tanggal_akhir_kontrak
+				FROM hpy_piutang_d a
+				JOIN hemxxmh b ON b.id = a.id_hemxxmh
+				JOIN hesxxtd c ON c.nik_baru = b.kode
+				JOIN hemxxmh peg ON peg.id = c.id_hemxxmh
+				JOIN hemjbmh jb ON jb.id_hemxxmh = peg.id
 				WHERE 1
-					AND a.tanggal BETWEEN :start_date AND :end_date
-					AND a.is_pot_upah = 1
+				AND a.id_hpcxxmh = 108
+				AND a.tanggal BETWEEN :start_date AND :end_date
+				ORDER BY a.id DESC
 				' 
 				);
 	$rs_htsprrd = $qs_htsprrd->fetchAll();
