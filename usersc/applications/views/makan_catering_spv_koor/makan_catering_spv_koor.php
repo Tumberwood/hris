@@ -174,41 +174,58 @@
 			});
 
             edtmakan_catering_spv_koor.on( 'preSubmit', function (e, data, action) {
-				if(action != 'remove'){
+				if (action != 'remove') {
 
-					tanggal = edtmakan_catering_spv_koor.field('makan_catering_spv_koor.tanggal').val();
-					if(!tanggal || tanggal == ''){
-						edtmakan_catering_spv_koor.field('makan_catering_spv_koor.tanggal').error( 'Wajib diisi!' );
-					}
+				tanggal = edtmakan_catering_spv_koor.field('makan_catering_spv_koor.tanggal').val();
+				nama    = edtmakan_catering_spv_koor.field('makan_catering_spv_koor.nama').val();
+				shift   = edtmakan_catering_spv_koor.field('makan_catering_spv_koor.shift').val();
+				jumlah  = edtmakan_catering_spv_koor.field('makan_catering_spv_koor.jumlah').val();
 
-					nama = edtmakan_catering_spv_koor.field('makan_catering_spv_koor.nama').val();
-					if(!nama || nama == ''){
-						edtmakan_catering_spv_koor.field('makan_catering_spv_koor.nama').error( 'Wajib diisi!' );
-					}
+				// Validasi wajib
+				if (!tanggal) edtmakan_catering_spv_koor.field('makan_catering_spv_koor.tanggal').error('Wajib diisi!');
+				if (!nama) edtmakan_catering_spv_koor.field('makan_catering_spv_koor.nama').error('Wajib diisi!');
+				if (!shift) edtmakan_catering_spv_koor.field('makan_catering_spv_koor.shift').error('Wajib diisi!');
+				if (!jumlah) edtmakan_catering_spv_koor.field('makan_catering_spv_koor.jumlah').error('Wajib diisi!');
 
-					shift = edtmakan_catering_spv_koor.field('makan_catering_spv_koor.shift').val();
-					if(!shift || shift == ''){
-						edtmakan_catering_spv_koor.field('makan_catering_spv_koor.shift').error( 'Wajib diisi!' );
-					}
-
-					// BEGIN of validasi makan_catering_spv_koor.jumlah 
-					jumlah = edtmakan_catering_spv_koor.field('makan_catering_spv_koor.jumlah').val();
-					if(!jumlah || jumlah == ''){
-						edtmakan_catering_spv_koor.field('makan_catering_spv_koor.jumlah').error( 'Wajib diisi!' );
-					}
-					// validasi min atau max angka
-					if(jumlah <= 0 ){
-						edtmakan_catering_spv_koor.field('makan_catering_spv_koor.jumlah').error( 'Inputan harus > 0' );
-					}
-					
-					// validasi angka
-					if(isNaN(jumlah) ){
-						edtmakan_catering_spv_koor.field('makan_catering_spv_koor.jumlah').error( 'Inputan harus berupa Angka!' );
-					}
-					// END of validasi makan_catering_spv_koor.jumlah 
-
-					
+				// Validasi jumlah
+				if (jumlah !== '' && isNaN(jumlah)) {
+					edtmakan_catering_spv_koor.field('makan_catering_spv_koor.jumlah').error('Inputan harus berupa angka!');
+				} else if (jumlah !== '' && Number(jumlah) <= 0) {
+					edtmakan_catering_spv_koor.field('makan_catering_spv_koor.jumlah').error('Inputan harus > 0');
 				}
+
+				// Cek kombinasi unik
+				if (tanggal && nama && shift) {
+
+					if (action == 'create') id_makan_catering_spv_koor = 0;
+
+					$.ajax({
+						url: '../../../helpers/validate_fn_unique.php',
+						dataType: 'json',
+						type: 'POST',
+						async: false,
+						data: {
+							table_name: 'makan_catering_spv_koor',
+							nama_field: 'tanggal,shift,nama',
+							nama_field_value: [
+								'"' + moment(tanggal).format('YYYY-MM-DD') + '"',
+								'"' + String(shift) + '"',
+								'"' + String(nama) + '"'
+							].join(','),
+							id_transaksi: id_makan_catering_spv_koor
+						},
+						success: function(json) {
+							if (json.data.count > 0) {
+								var pesan = 'Kombinasi Tanggal, Shift, dan Nama sudah ada!';
+
+								edtmakan_catering_spv_koor.field('makan_catering_spv_koor.tanggal').error(pesan);
+								edtmakan_catering_spv_koor.field('makan_catering_spv_koor.shift').error(pesan);
+								edtmakan_catering_spv_koor.field('makan_catering_spv_koor.nama').error(pesan);
+							}
+						}
+					});
+				}
+			}
 				
 				if ( edtmakan_catering_spv_koor.inError() ) {
 					return false;
