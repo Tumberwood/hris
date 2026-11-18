@@ -73,7 +73,7 @@
         ])
 		->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
 		->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
-        ->where('hemjbmh.id_heyxxmh', $w_id_heyxxmh, $s_id_heyxxmh, false )
+        // ->where('hemjbmh.id_heyxxmh', $w_id_heyxxmh, $s_id_heyxxmh, false )
         ->where('hemxxmh.id', $id_hemxxmh_old, '<>' )
         ->where('hemjbmh.is_harian_lepas', '0' )
         // ->where('hemjbmh.is_checkclock', '1' )
