@@ -480,27 +480,6 @@
                 {
                     data: "nama",
                     defaultContent: '-',
-
-                    render: function(data, type, row) {
-
-                        if (type !== 'display') {
-                            return data;
-                        }
-
-                        var id = row.id_hemxxmh || '';
-                        var tanggal = row.tanggal || '';
-
-                        var url =
-                            "../dashboard/d_hr_report_presensi.php?id_hemxxmh=" +
-                            encodeURIComponent(id) +
-                            "&start_date=" +
-                            encodeURIComponent(tanggal);
-
-                        return '<a href="' + url + '" target="_blank">' +
-                            data +
-                            '</a>';
-
-                    }
                 },
 
                 // TANGGAL
@@ -566,18 +545,30 @@
                     include $abs_us_root.$us_url_root.
                         'usersc/helpers/button_fn_generate.php';
 
-                ?>
-                ,{
-                    text: '<i class="fa fa-print">WOI</i>',
+                ?>,
+                {
+                    text: '<i class="fa fa-print"></i>',
                     name: 'btnPrint',
                     className: 'btn btn-outline',
-                    titleAttr: 'Print Slip Gaji',
-                    action: function ( e, dt, node, config ) {
-                        e.preventDefault(); 
-                        var url = $(this).attr('href'); 
-                        window.open('hpyxxth_print.php?id_hpyxxth=' + id_hpyxxth + '&id_heyxxmd=3', 'hpyxxth');
+                    titleAttr: 'Print Kompensasi Kontrak',
+                    action: function (e, dt, node, config) {
+                        e.preventDefault();
+
+                        const start_date = $('#start_date').val();
+                        const end_date = $('#end_date').val();
+
+                        const params = new URLSearchParams({
+                            start_date: start_date,
+                            end_date: end_date,
+                        });
+
+                        window.open(
+                            'kompensasi_kontrak_r_print.php?' + params.toString(),
+                            'kompensasi_kontrak'
+                        );
                     }
                 },
+
 
             ],
 
