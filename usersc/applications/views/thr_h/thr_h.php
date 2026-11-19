@@ -98,7 +98,6 @@
 <?php require_once $abs_us_root . $us_url_root . 'usersc/templates/' . $settings->template . '/template_js_datatables_load.php'; ?>
 <script src="<?=$us_url_root?>usersc/helpers/hakaksescrud_hd_fn.js"></script>
 
-<?php require_once $abs_us_root . $us_url_root . 'usersc/applications/views/thr_h/fn/thr_h_fn.php'; ?>
 
 <!-- BEGIN datatables here -->
 <script type="text/javascript">
