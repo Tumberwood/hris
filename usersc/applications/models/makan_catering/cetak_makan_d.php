@@ -63,7 +63,11 @@
 							AND x.jam_makan IS NOT NULL
 						) AS shift1_staff,
 
-						MAX(IFNULL(hl.hl_shift1, 0)) AS shift1_hl,
+						MAX(
+							IFNULL(hl.hl_shift1, 0)
+							+ IFNULL(input_hl_umum.input_hl_shift1, 0)
+						) AS shift1_hl,
+
 						MAX(IFNULL(nk.nk_shift1, 0)) AS shift1_non_kary,
 						MAX(IFNULL(sk.spv_shift1, 0)) AS shift1_spv,
 						MAX(IFNULL(sk.koor_shift1, 0)) AS shift1_koor,
@@ -83,7 +87,11 @@
 							AND x.jam_makan IS NOT NULL
 						) AS shift2_staff,
 
-						MAX(IFNULL(hl.hl_shift2, 0)) AS shift2_hl,
+						MAX(
+							IFNULL(hl.hl_shift2, 0)
+							+ IFNULL(input_hl_umum.input_hl_shift2, 0)
+						) AS shift2_hl,
+
 						MAX(IFNULL(nk.nk_shift2, 0)) AS shift2_non_kary,
 						MAX(IFNULL(sk.spv_shift2, 0)) AS shift2_spv,
 						MAX(IFNULL(sk.koor_shift2, 0)) AS shift2_koor,
@@ -103,7 +111,11 @@
 							AND x.jam_makan IS NOT NULL
 						) AS shift3_staff,
 
-						MAX(IFNULL(hl.hl_shift3, 0)) AS shift3_hl,
+						MAX(
+							IFNULL(hl.hl_shift3, 0)
+							+ IFNULL(input_hl_umum.input_hl_shift3, 0)
+						) AS shift3_hl,
+
 						MAX(IFNULL(nk.nk_shift3, 0)) AS shift3_non_kary,
 						MAX(IFNULL(sk.spv_shift3, 0)) AS shift3_spv,
 						MAX(IFNULL(sk.koor_shift3, 0)) AS shift3_koor,
@@ -126,11 +138,15 @@
 
 						/* =========================
 						TOTAL HL
+						CEKLOK + INPUT MANUAL
 						========================= */
 						MAX(
 							IFNULL(hl.hl_shift1, 0)
+							+ IFNULL(input_hl_umum.input_hl_shift1, 0)
 							+ IFNULL(hl.hl_shift2, 0)
+							+ IFNULL(input_hl_umum.input_hl_shift2, 0)
 							+ IFNULL(hl.hl_shift3, 0)
+							+ IFNULL(input_hl_umum.input_hl_shift3, 0)
 						) AS total_hl,
 
 						/* =========================
@@ -167,8 +183,11 @@
 
 						+ MAX(
 							IFNULL(hl.hl_shift1, 0)
+							+ IFNULL(input_hl_umum.input_hl_shift1, 0)
 							+ IFNULL(hl.hl_shift2, 0)
+							+ IFNULL(input_hl_umum.input_hl_shift2, 0)
 							+ IFNULL(hl.hl_shift3, 0)
+							+ IFNULL(input_hl_umum.input_hl_shift3, 0)
 						)
 
 						+ MAX(
@@ -313,7 +332,6 @@
 
 								WHERE c.is_harian_lepas = 1
 									AND a.nama = "MAKAN HL UMUM"
-
 							) z
 
 							WHERE z.shift IS NOT NULL
@@ -323,11 +341,9 @@
 								z.kode,
 								z.shift,
 								z.tanggal_jadwal
-
 						) h
 
 						GROUP BY h.tanggal_jadwal
-
 					) hl ON hl.tanggal_jadwal = x.tanggal
 
 					/* =========================
@@ -394,7 +410,6 @@
 
 								WHERE c.is_non_karyawan = 1
 									AND LOWER(TRIM(a.nama)) = "makan"
-
 							) z
 
 							WHERE z.shift IS NOT NULL
@@ -404,11 +419,9 @@
 								z.kode,
 								z.shift,
 								z.tanggal_jadwal
-
 						) h
 
 						GROUP BY h.tanggal_jadwal
-
 					) nk ON nk.tanggal_jadwal = x.tanggal
 
 					/* =========================
@@ -455,14 +468,44 @@
 							AND nama IN ("Supervisor", "Koordinator")
 
 						GROUP BY tanggal
-
 					) sk ON sk.tanggal = x.tanggal
+
+					/* =========================
+					INPUT HL UMUM
+					========================= */
+					LEFT JOIN (
+						SELECT
+							tanggal,
+
+							SUM(CASE
+								WHEN shift = "1"
+									THEN jumlah ELSE 0
+							END) AS input_hl_shift1,
+
+							SUM(CASE
+								WHEN shift = "2"
+									THEN jumlah ELSE 0
+							END) AS input_hl_shift2,
+
+							SUM(CASE
+								WHEN shift = "3"
+									THEN jumlah ELSE 0
+							END) AS input_hl_shift3
+
+						FROM makan_catering_hl_umum
+
+						WHERE is_active = 1
+							AND tanggal BETWEEN :start_date AND :end_date
+
+						GROUP BY tanggal
+					) input_hl_umum ON input_hl_umum.tanggal = x.tanggal
 
 					GROUP BY
 						x.tanggal
 
 					ORDER BY
 						x.tanggal
+
 		');
 		$rs_data_sql = $qs_data_sql->fetchAll();
 
