@@ -710,7 +710,7 @@
 						searchPanes:{
 							show: true,
 						},
-						targets: [1,4,5,6,7]
+						targets: [1,4,6,7,9]
 					},
 					{
 						searchPanes:{
