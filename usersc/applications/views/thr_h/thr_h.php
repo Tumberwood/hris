@@ -317,7 +317,7 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
-					{
+					,{
 						text: '<i class="fa fa-google"></i>ENERATE',
 						name: 'btnGen',
 						className: 'btn btn-xs btn-outline',
@@ -361,6 +361,31 @@
 							} );
 						}
 					},
+					{
+						text: '<i class="fa fa-print"></i>',
+						name: 'btnPrint',
+						className: 'btn btn-outline',
+						titleAttr: 'Print Slip THR',
+						action: function (e, dt, node, config) {
+							e.preventDefault();
+
+							const selected = dt.row({ selected: true }).data();
+
+							if (!selected) {
+								alert('Silakan pilih transaksi THR terlebih dahulu.');
+								return;
+							}
+
+							const params = new URLSearchParams({
+								id_thr_h: selected.id
+							});
+
+							window.open(
+								'thr_h_print.php?' + params.toString(),
+								'print_thr'
+							);
+						}
+					},
 				],
 				rowCallback: function( row, data, index ) {
 					if ( data.thr_h.is_active == 0 ) {
@@ -374,6 +399,7 @@
 				tbl_details = [tblthr_d];
 				CekInitHeaderHD(tblthr_h, tbl_details);
 				tblthr_h.button( 'btnGen:name' ).disable();
+				tblthr_h.button( 'btnPrint:name' ).disable();
 			} );
 			
 			tblthr_h.on( 'select', function( e, dt, type, indexes ) {
@@ -393,6 +419,7 @@
 				tbl_details = [tblthr_d];
 				CekSelectHeaderHD(tblthr_h, tbl_details);
 				tblthr_h.button( 'btnGen:name' ).enable();
+				tblthr_h.button( 'btnPrint:name' ).enable();
 
 			} );
 			
@@ -408,6 +435,7 @@
 				tbl_details = [tblthr_d];
 				CekDeselectHeaderHD(tblthr_h, tbl_details);
 				tblthr_h.button( 'btnGen:name' ).disable();
+				tblthr_h.button( 'btnPrint:name' ).disable();
 			} );
 			
 // --------- start _detail --------------- //
