@@ -57,7 +57,7 @@
                                 <th>ID</th>
                                 <th>Kode</th>
                                 <th>Periode Lembur</th>
-                                <th>Tanggal Hari Raya</th>
+                                <th>Tanggal Hari Raya Pertama</th>
                                 <th>Keterangan</th>
                             </tr>
                         </thead>
@@ -209,7 +209,7 @@
 						}
 					},
 					{
-						label: "Tanggal Hari Raya <sup class='text-danger'>*<sup>",
+						label: "Tanggal Hari Raya Pertama <sup class='text-danger'>*<sup>",
 						name: "thr_h.tanggal_hari_raya",
 						type: "datetime",
 						def: function () { 
