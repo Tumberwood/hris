@@ -57,7 +57,6 @@
 				->where( 'thr_d.is_active', 1);
 		}
 		
-		include( "thr_d_extra.php" );
 		include( "../../../helpers/edt_log.php" );
 		
 		$editor

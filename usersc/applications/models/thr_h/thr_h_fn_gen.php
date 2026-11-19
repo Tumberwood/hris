@@ -13,361 +13,412 @@
         DataTables\Editor\Result;
 
     // ==========================================
-    // DEFINISI VARIABLE AJAX
+    // RESPONSE JSON
     // ==========================================
-    $data      = array();
-    $rs_opt    = array();
-    $c_rs_opt  = 0;
-    $morePages = 0;
+    header('Content-Type: application/json; charset=utf-8');
 
-    // ==========================================
-    // PARAMETER
-    // ==========================================
-    $id_thr_h = (int) ($_POST['id_thr_h'] ?? 0);
+    try {
 
-    if ($id_thr_h <= 0) {
-        throw new Exception('ID transaksi THR tidak valid.');
-    }
+        // ==========================================
+        // DEFINISI VARIABLE AJAX
+        // ==========================================
+        $data      = array();
+        $rs_opt    = array();
+        $c_rs_opt  = 0;
+        $morePages = 0;
 
-    // ==========================================
-    // AMBIL HEADER THR
-    // ==========================================
-    $qs_thr = $db
-        ->query('select', 'thr_h')
-        ->get([
-            'id',
-            'kode',
-            'nama',
-            'keterangan',
-            'tanggal_awal',
-            'tanggal_akhir',
-            'tanggal_hari_raya',
-        ])
-        ->where('id', $id_thr_h)
-        ->exec();
+        // ==========================================
+        // PARAMETER
+        // ==========================================
+        $id_thr_h = (int) ($_POST['id_thr_h'] ?? 0);
 
-    $rs_thr = $qs_thr->fetch();
+        if ($id_thr_h <= 0) {
+            throw new Exception('ID transaksi THR tidak valid.');
+        }
 
-    if (!$rs_thr) {
-        throw new Exception('Data header THR tidak ditemukan.');
-    }
+        // ==========================================
+        // AMBIL HEADER THR
+        // ==========================================
+        $qs_thr = $db
+            ->query('select', 'thr_h')
+            ->get([
+                'id',
+                'kode',
+                'nama',
+                'keterangan',
+                'tanggal_awal',
+                'tanggal_akhir',
+                'tanggal_hari_raya',
+            ])
+            ->where('id', $id_thr_h)
+            ->exec();
 
-    // ==========================================
-    // VALIDASI TANGGAL
-    // ==========================================
-    if (
-        empty($rs_thr['tanggal_awal']) ||
-        empty($rs_thr['tanggal_akhir']) ||
-        empty($rs_thr['tanggal_hari_raya'])
-    ) {
-        throw new Exception('Tanggal periode payroll atau Hari Raya belum diisi.');
-    }
+        $rs_thr = $qs_thr->fetch();
 
-    $tanggal_awal      = $rs_thr['tanggal_awal'];
-    $tanggal_akhir     = $rs_thr['tanggal_akhir'];
-    $tanggal_hari_raya = $rs_thr['tanggal_hari_raya'];
+        if (!$rs_thr) {
+            throw new Exception('Data header THR tidak ditemukan.');
+        }
 
-    // Nama detail transaksi payroll
-    $nama_thr = 'THR - ' . $id_thr_h;
+        // ==========================================
+        // VALIDASI TANGGAL
+        // ==========================================
+        if (
+            empty($rs_thr['tanggal_awal']) ||
+            empty($rs_thr['tanggal_akhir']) ||
+            empty($rs_thr['tanggal_hari_raya'])
+        ) {
+            throw new Exception('Tanggal periode payroll atau Hari Raya belum diisi.');
+        }
 
-    // ==========================================
-    // AMBIL DATA PEGAWAI DAN HITUNG THR
-    // ==========================================
-    $qs_thr_detail = $db
-        ->raw()
-        ->bind(':tanggal_awal', $tanggal_awal)
-        ->bind(':tanggal_akhir', $tanggal_akhir)
-        ->bind(':tanggal_hari_raya', $tanggal_hari_raya)
-        ->exec('
+        $tanggal_awal      = $rs_thr['tanggal_awal'];
+        $tanggal_akhir     = $rs_thr['tanggal_akhir'];
+        $tanggal_hari_raya = $rs_thr['tanggal_hari_raya'];
 
-            WITH
+        // Nama detail transaksi payroll
+        $nama_thr = 'THR - ' . $id_thr_h;
 
-            -- ==========================================
-            -- PARAMETER THR
-            -- ==========================================
-            param AS (
-                SELECT
-                    DATE(:tanggal_awal) AS tanggal_awal,
-                    DATE(:tanggal_akhir) AS tanggal_akhir,
-                    DATE(:tanggal_hari_raya) AS tanggal_hari_raya,
+        // ==========================================
+        // AMBIL DATA PEGAWAI DAN HITUNG THR
+        // ==========================================
+        $qs_thr_detail = $db
+            ->raw()
+            ->bind(':tanggal_awal', $tanggal_awal)
+            ->bind(':tanggal_akhir', $tanggal_akhir)
+            ->bind(':tanggal_hari_raya', $tanggal_hari_raya)
+            ->exec('
 
-                    DATE_SUB(
-                        DATE(:tanggal_hari_raya),
-                        INTERVAL 30 DAY
-                    ) AS tanggal_awal_puasa
-            ),
+                WITH
 
-            -- ==========================================
-            -- KOMPONEN GAJI TERAKHIR
-            -- ==========================================
-            komponen_terakhir AS (
-                SELECT
-                    a.id_hemxxmh,
-                    a.id_hpcxxmh,
-                    a.nominal,
+                -- ==========================================
+                -- PARAMETER THR
+                -- ==========================================
+                param AS (
+                    SELECT
+                        DATE(:tanggal_awal) AS tanggal_awal,
+                        DATE(:tanggal_akhir) AS tanggal_akhir,
+                        DATE(:tanggal_hari_raya) AS tanggal_hari_raya,
 
-                    ROW_NUMBER() OVER (
-                        PARTITION BY
-                            a.id_hemxxmh,
-                            a.id_hpcxxmh
-                        ORDER BY
-                            a.tanggal_efektif DESC
-                    ) AS urutan
+                        DATE_SUB(
+                            DATE(:tanggal_hari_raya),
+                            INTERVAL 30 DAY
+                        ) AS tanggal_awal_puasa
+                ),
 
-                FROM htpr_hemxxmh a
+                -- ==========================================
+                -- KOMPONEN GAJI TERAKHIR
+                -- ==========================================
+                komponen_terakhir AS (
+                    SELECT
+                        a.id_hemxxmh,
+                        a.id_hpcxxmh,
+                        a.nominal,
 
-                CROSS JOIN param p
+                        ROW_NUMBER() OVER (
+                            PARTITION BY
+                                a.id_hemxxmh,
+                                a.id_hpcxxmh
+                            ORDER BY
+                                a.tanggal_efektif DESC
+                        ) AS urutan
 
-                WHERE
-                    a.id_hpcxxmh IN (1, 32, 133)
-                    AND a.tanggal_efektif <= p.tanggal_hari_raya
-                    AND a.is_active = 1
-            ),
+                    FROM htpr_hemxxmh a
 
-            -- ==========================================
-            -- PIVOT KOMPONEN GAJI
-            -- ==========================================
-            komponen_gaji AS (
-                SELECT
-                    a.id_hemxxmh,
+                    CROSS JOIN param p
 
-                    IFNULL(
-                        MAX(
-                            CASE
-                                WHEN a.id_hpcxxmh = 1
-                                THEN a.nominal
-                            END
-                        ), 0
-                    ) AS gaji_pokok,
+                    WHERE
+                        a.id_hpcxxmh IN (1, 32, 133)
+                        AND a.tanggal_efektif <= p.tanggal_hari_raya
+                        AND a.is_active = 1
+                ),
 
-                    IFNULL(
-                        MAX(
-                            CASE
-                                WHEN a.id_hpcxxmh = 32
-                                THEN a.nominal
-                            END
-                        ), 0
-                    ) AS tunjangan_jabatan,
+                -- ==========================================
+                -- PIVOT KOMPONEN GAJI
+                -- ==========================================
+                komponen_gaji AS (
+                    SELECT
+                        a.id_hemxxmh,
 
-                    IFNULL(
-                        MAX(
-                            CASE
-                                WHEN a.id_hpcxxmh = 133
-                                THEN a.nominal
-                            END
-                        ), 0
-                    ) AS tunjangan_khusus
+                        IFNULL(
+                            MAX(
+                                CASE
+                                    WHEN a.id_hpcxxmh = 1
+                                    THEN a.nominal
+                                END
+                            ), 0
+                        ) AS gaji_pokok,
 
-                FROM komponen_terakhir a
+                        IFNULL(
+                            MAX(
+                                CASE
+                                    WHEN a.id_hpcxxmh = 32
+                                    THEN a.nominal
+                                END
+                            ), 0
+                        ) AS tunjangan_jabatan,
 
-                WHERE a.urutan = 1
+                        IFNULL(
+                            MAX(
+                                CASE
+                                    WHEN a.id_hpcxxmh = 133
+                                    THEN a.nominal
+                                END
+                            ), 0
+                        ) AS tunjangan_khusus
 
-                GROUP BY a.id_hemxxmh
-            ),
+                    FROM komponen_terakhir a
 
-            -- ==========================================
-            -- PEGAWAI AKTIF DALAM PERIODE PAYROLL
-            -- ==========================================
-            pegawai AS (
-                SELECT
-                    peg.id,
-                    peg.kode,
-                    peg.nama,
-                    sta.nama AS stats,
+                    WHERE a.urutan = 1
 
-                    job.tanggal_masuk,
-                    job.tanggal_keluar,
+                    GROUP BY a.id_hemxxmh
+                ),
 
-                    p.tanggal_awal,
-                    p.tanggal_akhir,
-                    p.tanggal_hari_raya,
-                    p.tanggal_awal_puasa,
+                -- ==========================================
+                -- PEGAWAI AKTIF DALAM PERIODE PAYROLL
+                -- ==========================================
+                pegawai AS (
+                    SELECT
+                        peg.id,
+                        peg.kode,
+                        peg.nama,
+                        sta.nama AS stats,
 
-                    DATEDIFF(
-                        p.tanggal_hari_raya,
-                        job.tanggal_masuk
-                    ) AS masa_kerja_hari,
-
-                    TIMESTAMPDIFF(
-                        MONTH,
                         job.tanggal_masuk,
-                        p.tanggal_hari_raya
-                    ) AS masa_kerja_bulan,
+                        job.tanggal_keluar,
 
-                    IFNULL(kg.gaji_pokok, 0) AS gaji_pokok,
+                        p.tanggal_awal,
+                        p.tanggal_akhir,
+                        p.tanggal_hari_raya,
+                        p.tanggal_awal_puasa,
 
-                    IFNULL(
-                        kg.tunjangan_jabatan, 0
-                    ) AS tunjangan_jabatan,
+                        DATEDIFF(
+                            p.tanggal_hari_raya,
+                            job.tanggal_masuk
+                        ) AS masa_kerja_hari,
 
-                    IFNULL(
-                        kg.tunjangan_khusus, 0
-                    ) AS tunjangan_khusus,
+                        TIMESTAMPDIFF(
+                            MONTH,
+                            job.tanggal_masuk,
+                            p.tanggal_hari_raya
+                        ) AS masa_kerja_bulan,
 
-                    (
-                        IFNULL(kg.gaji_pokok, 0)
-                        + IFNULL(kg.tunjangan_jabatan, 0)
-                        + IFNULL(kg.tunjangan_khusus, 0)
-                    ) AS total_upah_thr
+                        IFNULL(kg.gaji_pokok, 0) AS gaji_pokok,
 
-                FROM hemxxmh peg
+                        IFNULL(
+                            kg.tunjangan_jabatan, 0
+                        ) AS tunjangan_jabatan,
 
-                JOIN hemjbmh job
-                    ON job.id_hemxxmh = peg.id
+                        IFNULL(
+                            kg.tunjangan_khusus, 0
+                        ) AS tunjangan_khusus,
 
-                JOIN hesxxmh sta
-                    ON sta.id = job.id_hesxxmh
+                        (
+                            IFNULL(kg.gaji_pokok, 0)
+                            + IFNULL(kg.tunjangan_jabatan, 0)
+                            + IFNULL(kg.tunjangan_khusus, 0)
+                        ) AS total_upah_thr
 
-                LEFT JOIN komponen_gaji kg
-                    ON kg.id_hemxxmh = peg.id
+                    FROM hemxxmh peg
 
-                CROSS JOIN param p
+                    JOIN hemjbmh job
+                        ON job.id_hemxxmh = peg.id
 
-                WHERE
-                    job.tanggal_masuk <= p.tanggal_akhir
+                    JOIN hesxxmh sta
+                        ON sta.id = job.id_hesxxmh
 
-                    AND (
-                        job.tanggal_keluar IS NULL
-                        OR job.tanggal_keluar >= p.tanggal_awal
-                    )
-            ),
+                    LEFT JOIN komponen_gaji kg
+                        ON kg.id_hemxxmh = peg.id
 
-            -- ==========================================
-            -- PENENTUAN KELAYAKAN THR
-            -- ==========================================
-            kelayakan AS (
+                    CROSS JOIN param p
+
+                    WHERE
+                        job.tanggal_masuk <= p.tanggal_akhir
+
+                        AND (
+                            job.tanggal_keluar IS NULL
+                            OR job.tanggal_keluar >= p.tanggal_awal
+                        )
+                ),
+
+                -- ==========================================
+                -- PENENTUAN KELAYAKAN THR
+                -- ==========================================
+                kelayakan AS (
+                    SELECT
+                        a.*,
+
+                        CASE
+                            WHEN a.stats = "PELATIHAN"
+                                THEN 0
+
+                            WHEN DATE_ADD(
+                                a.tanggal_masuk,
+                                INTERVAL 1 MONTH
+                            ) > a.tanggal_hari_raya
+                                THEN 0
+
+                            WHEN a.stats = "KONTRAK"
+                                AND (
+                                    a.tanggal_keluar IS NULL
+                                    OR a.tanggal_keluar >= a.tanggal_hari_raya
+                                )
+                                THEN 1
+
+                            WHEN a.stats = "TETAP"
+                                THEN 1
+
+                            ELSE NULL
+                        END AS is_dapat_thr
+
+                    FROM pegawai a
+                ),
+
+                -- ==========================================
+                -- PERHITUNGAN NOMINAL THR
+                -- ==========================================
+                perhitungan_thr AS (
+                    SELECT
+                        a.*,
+
+                        CASE
+                            WHEN a.is_dapat_thr = 1 THEN
+                                ROUND(
+                                    a.total_upah_thr
+                                    * LEAST(a.masa_kerja_bulan, 12)
+                                    / 12,
+                                    2
+                                )
+                            ELSE 0
+                        END AS nominal_thr
+
+                    FROM kelayakan a
+                )
+
+                -- ==========================================
+                -- HASIL AKHIR
+                -- ==========================================
                 SELECT
-                    a.*,
+                    a.id,
+                    a.kode,
+                    a.nama,
+                    a.stats,
 
-                    CASE
-                        WHEN a.stats = "PELATIHAN"
-                            THEN 0
+                    a.tanggal_masuk,
+                    a.tanggal_keluar,
 
-                        WHEN DATE_ADD(
-                            a.tanggal_masuk,
-                            INTERVAL 1 MONTH
-                        ) > a.tanggal_hari_raya
-                            THEN 0
+                    a.masa_kerja_hari,
+                    a.masa_kerja_bulan,
 
-                        WHEN a.stats = "KONTRAK"
-                            AND (
-                                a.tanggal_keluar IS NULL
-                                OR a.tanggal_keluar >= a.tanggal_hari_raya
-                            )
-                            THEN 1
+                    a.gaji_pokok,
+                    a.tunjangan_jabatan,
+                    a.tunjangan_khusus,
 
-                        WHEN a.stats = "TETAP"
-                            THEN 1
+                    a.total_upah_thr,
+                    a.is_dapat_thr,
+                    a.nominal_thr
 
-                        ELSE NULL
-                    END AS is_dapat_thr
+                FROM perhitungan_thr a
 
-                FROM pegawai a
-            ),
+                WHERE a.is_dapat_thr = 1
 
-            -- ==========================================
-            -- PERHITUNGAN NOMINAL THR
-            -- ==========================================
-            perhitungan_thr AS (
-                SELECT
-                    a.*,
+                ORDER BY a.nama
 
-                    CASE
-                        WHEN a.is_dapat_thr = 1 THEN
-                            ROUND(
-                                a.total_upah_thr
-                                * LEAST(a.masa_kerja_bulan, 12)
-                                / 12,
-                                2
-                            )
-                        ELSE 0
-                    END AS nominal_thr
-
-                FROM kelayakan a
-            )
-
-            -- ==========================================
-            -- HASIL AKHIR
-            -- ==========================================
-            SELECT
-                a.id,
-                a.kode,
-                a.nama,
-                a.stats,
-
-                a.tanggal_masuk,
-                a.tanggal_keluar,
-
-                a.masa_kerja_hari,
-                a.masa_kerja_bulan,
-
-                a.gaji_pokok,
-                a.tunjangan_jabatan,
-                a.tunjangan_khusus,
-
-                a.total_upah_thr,
-                a.is_dapat_thr,
-                a.nominal_thr
-
-            FROM perhitungan_thr a
-
-            WHERE a.is_dapat_thr = 1
-
-            ORDER BY a.nama
-
-        ');
-
-    // ==========================================
-    // HAPUS DETAIL THR LAMA
-    // ==========================================
-    $qd_thr_lama = $db
-        ->query('delete', 'thr_d')
-        ->where('id_thr_h', $id_thr_h)
-        ->exec();
-
-    // ==========================================
-    // HAPUS DETAIL PAYROLL THR LAMA
-    // ==========================================
-    $qd_piutang_lama = $db
-        ->query('delete', 'hpy_piutang_d')
-        ->where('kode', $rs_thr['kode'])
-        ->where('nama', $nama_thr)
-        ->where('id_hpcxxmh', 110)
-        ->exec();
-
-    // ==========================================
-    // INSERT DETAIL THR DAN PAYROLL
-    // ==========================================
-    while ($rs_detail = $qs_thr_detail->fetch()) {
+            ');
 
         // ==========================================
-        // INSERT KE THR_D
+        // HAPUS DETAIL THR LAMA
         // ==========================================
-        $qi_thr_d = $db
-            ->query('insert', 'thr_d')
-            ->set('id_thr_h', $id_thr_h)
-            ->set('id_hemxxmh', $rs_detail['id'])
-            ->set('kode', $rs_detail['kode'])
-            ->set('nama', $rs_detail['nama'])
-            ->set('keterangan', $rs_thr['keterangan'])
-            ->set('nominal', $rs_detail['nominal_thr'])
-            ->set('is_active', 1)
+        $qd_thr_lama = $db
+            ->query('delete', 'thr_d')
+            ->where('id_thr_h', $id_thr_h)
             ->exec();
 
         // ==========================================
-        // INSERT KE HPY_PIUTANG_D
+        // HAPUS DETAIL PAYROLL THR LAMA
         // ==========================================
-        $qi_hpy_piutang_d = $db
-            ->query('insert', 'hpy_piutang_d')
-            ->set('kode', $rs_thr['kode'])
-            ->set('id_hemxxmh', $rs_detail['id'])
-            ->set('id_hpcxxmh', 110)
-            ->set('nama', $nama_thr)
-            ->set('keterangan', $rs_thr['keterangan'])
-            ->set('nominal', $rs_detail['nominal_thr'])
-            ->set('is_approve', 1)
-            ->set('tanggal', $tanggal_hari_raya)
+        $qd_piutang_lama = $db
+            ->query('delete', 'hpy_piutang_d')
+            ->where('kode', $rs_thr['kode'])
+            ->where('nama', $nama_thr)
+            ->where('id_hpcxxmh', 110)
             ->exec();
+
+        // ==========================================
+        // INSERT DETAIL THR DAN PAYROLL
+        // ==========================================
+        $jumlah_tergenerate = 0;
+        $total_nominal_thr = 0;
+
+        while ($rs_detail = $qs_thr_detail->fetch()) {
+
+            // ==========================================
+            // INSERT KE THR_D
+            // ==========================================
+            $qi_thr_d = $db
+                ->query('insert', 'thr_d')
+                ->set('id_thr_h', $id_thr_h)
+                ->set('id_hemxxmh', $rs_detail['id'])
+                ->set('kode', $rs_detail['kode'])
+                ->set('nama', $rs_detail['nama'])
+                ->set('keterangan', $rs_thr['keterangan'])
+                ->set('nominal', $rs_detail['nominal_thr'])
+                ->set('is_active', 1)
+                ->exec();
+
+            // ==========================================
+            // INSERT KE HPY_PIUTANG_D
+            // ==========================================
+            $qi_hpy_piutang_d = $db
+                ->query('insert', 'hpy_piutang_d')
+                ->set('kode', $rs_thr['kode'])
+                ->set('id_hemxxmh', $rs_detail['id'])
+                ->set('id_hpcxxmh', 110)
+                ->set('nama', $nama_thr)
+                ->set('keterangan', $rs_thr['keterangan'])
+                ->set('nominal', $rs_detail['nominal_thr'])
+                ->set('is_approve', 1)
+                ->set('tanggal', $tanggal_hari_raya)
+                ->exec();
+
+            // ==========================================
+            // HITUNG JUMLAH GENERATE
+            // ==========================================
+            $jumlah_tergenerate++;
+
+            $total_nominal_thr += (float) $rs_detail['nominal_thr'];
+        }
+
+        // ==========================================
+        // RESPONSE BERHASIL
+        // ==========================================
+        echo json_encode([
+            'success' => true,
+            'data' => [
+                'message' => 'Generate THR berhasil. ' .
+                    number_format($jumlah_tergenerate, 0, ',', '.') .
+                    ' pegawai berhasil diproses.',
+
+                'type_message' => 'success',
+                'jumlah' => $jumlah_tergenerate,
+                'total_nominal' => $total_nominal_thr
+            ]
+        ]);
+
+    } catch (Throwable $e) {
+
+        // ==========================================
+        // RESPONSE GAGAL
+        // ==========================================
+        http_response_code(500);
+
+        echo json_encode([
+            'success' => false,
+            'data' => [
+                'message' => 'Generate THR gagal: ' . $e->getMessage(),
+                'type_message' => 'danger',
+                'jumlah' => 0
+            ]
+        ]);
     }
 
+    exit;
 ?>

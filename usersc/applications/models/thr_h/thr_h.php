@@ -75,7 +75,7 @@
 					'from' => 'd M Y',
 					'to' =>   'Y-m-d'
 				) ),
-			Field::inst( 'periode_payroll.tanggal_hari_raya' )
+			Field::inst( 'thr_h.tanggal_hari_raya' )
 				->getFormatter( function ( $val, $data, $opts ) {
 					if ($val === '0000-00-00' || $val === null){
 						echo '';
@@ -89,7 +89,6 @@
 				) ),
 		)
 		->leftJoin( 'periode_payroll','periode_payroll.id','=','thr_h.id_periode_payroll' )
-		->where( 'is_resign', 0 )
 		;	
 	// do not erase
 	// function show / hide inactive document

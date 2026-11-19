@@ -41,18 +41,17 @@ $qs_thr = $db
 
             peg.nama AS nama_pegawai,
             peg.kode AS nik,
+            bag.nama AS bagian,
 
             h.kode AS kode_thr,
             h.nama AS nama_thr,
             h.tanggal_hari_raya
 
         FROM thr_d d
-
-        JOIN thr_h h
-            ON h.id = d.id_thr_h
-
-        JOIN hemxxmh peg
-            ON peg.id = d.id_hemxxmh
+        JOIN thr_h h ON h.id = d.id_thr_h
+        JOIN hemxxmh peg ON peg.id = d.id_hemxxmh
+        JOIN hemjbmh job ON job.id_hemxxmh = peg.id
+        JOIN hobxxmh bag ON bag.id = job.id_hobxxmh
 
         WHERE
             d.id_thr_h = :id_thr_h
@@ -237,7 +236,7 @@ foreach ($rs_thr as $index => $record) {
 
     // Bagian belum dipetakan karena relasi tabel bagian
     // belum tersedia pada struktur yang diberikan.
-    $bagian = '-';
+    $bagian = $esc($record['bagian']);
 
     // =================================================
     // HTML SLIP THR

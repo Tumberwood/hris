@@ -317,7 +317,7 @@
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
 					// END breaking generate button
-					,{
+					{
 						text: '<i class="fa fa-google"></i>ENERATE',
 						name: 'btnGen',
 						className: 'btn btn-xs btn-outline',
@@ -377,7 +377,7 @@
 							}
 
 							const params = new URLSearchParams({
-								id_thr_h: selected.id
+								id_thr_h: id_thr_h
 							});
 
 							window.open(
@@ -472,7 +472,7 @@
 						$table_name  = $nama_tabels_d[0];
 
 						$arr_buttons_tools 		= ['show_hide','copy','excel','colvis'];;
-						$arr_buttons_action 	= ['create', 'edit', 'nonaktif_d'];
+						$arr_buttons_action 	= [];
 						$arr_buttons_approve 	= [];
 						include $abs_us_root.$us_url_root. 'usersc/helpers/button_fn_generate.php'; 
 					?>
