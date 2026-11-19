@@ -319,8 +319,8 @@
 					?>
 					// END breaking generate button
 					{
-						text: '<i class="fa fa-google"></i>',
-						name: 'btnGeneratePresensi',
+						text: '<i class="fa fa-google"></i>ENERATE',
+						name: 'btnGen',
 						className: 'btn btn-xs btn-outline',
 						titleAttr: '',
 						action: function ( e, dt, node, config ) {
@@ -374,6 +374,7 @@
 				// atur hak akses
 				tbl_details = [tblthr_d];
 				CekInitHeaderHD(tblthr_h, tbl_details);
+				tblthr_h.button( 'btnGen:name' ).disable();
 			} );
 			
 			tblthr_h.on( 'select', function( e, dt, type, indexes ) {
@@ -392,6 +393,7 @@
 				// atur hak akses
 				tbl_details = [tblthr_d];
 				CekSelectHeaderHD(tblthr_h, tbl_details);
+				tblthr_h.button( 'btnGen:name' ).enable();
 
 			} );
 			
@@ -406,6 +408,7 @@
 				// atur hak akses
 				tbl_details = [tblthr_d];
 				CekDeselectHeaderHD(tblthr_h, tbl_details);
+				tblthr_h.button( 'btnGen:name' ).disable();
 			} );
 			
 // --------- start _detail --------------- //
