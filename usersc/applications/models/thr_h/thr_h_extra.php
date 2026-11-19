@@ -33,7 +33,19 @@
 			');
 		})
 		->on('preRemove',function( $editor, $id, $values ) {
-			// script diletakkan disini
+			$id_thr_h = $id;
+			$nama_thr = 'THR - ' . $id_thr_h;
+
+			$editor->db()
+				->query('delete', 'hpy_piutang_d')
+				->where('nama', $nama_thr)
+				->where('id_hpcxxmh', 110)
+				->exec();
+			
+			$editor->db()
+				->query('delete', 'thr_d')
+				->where('id_thr_h', $id_thr_h)
+				->exec();
 		})
 		->on('postRemove',function( $editor, $id, $values ) {
 			// script diletakkan disini
