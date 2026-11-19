@@ -67,7 +67,7 @@
     $tanggal_akhir     = $rs_thr['tanggal_akhir'];
     $tanggal_hari_raya = $rs_thr['tanggal_hari_raya'];
 
-    // Nama detail unik berdasarkan ID transaksi THR
+    // Nama detail transaksi payroll
     $nama_thr = 'THR - ' . $id_thr_h;
 
     // ==========================================
@@ -307,36 +307,7 @@
 
                 a.total_upah_thr,
                 a.is_dapat_thr,
-                a.nominal_thr,
-
-                CASE
-                    WHEN a.stats = "PELATIHAN"
-                        THEN "Status pelatihan"
-
-                    WHEN DATE_ADD(
-                        a.tanggal_masuk,
-                        INTERVAL 1 MONTH
-                    ) > a.tanggal_hari_raya
-                        THEN "Masa kerja kurang dari 1 bulan"
-
-                    WHEN a.stats = "KONTRAK"
-                        AND a.tanggal_keluar < a.tanggal_hari_raya
-                        THEN "Kontrak berakhir sebelum Hari Raya"
-
-                    WHEN a.stats = "KONTRAK"
-                        THEN "Kontrak aktif sampai Hari Raya"
-
-                    WHEN a.stats = "TETAP"
-                        AND a.tanggal_keluar BETWEEN
-                            a.tanggal_awal_puasa
-                            AND a.tanggal_hari_raya
-                        THEN "Resign selama periode puasa - tetap mendapat THR"
-
-                    WHEN a.stats = "TETAP"
-                        THEN "Status tetap - mendapat THR"
-
-                    ELSE "Status pegawai belum ditentukan"
-                END AS keterangan_thr
+                a.nominal_thr
 
             FROM perhitungan_thr a
 
@@ -350,6 +321,14 @@
     // HAPUS DETAIL THR LAMA
     // ==========================================
     $qd_thr_lama = $db
+        ->query('delete', 'thr_d')
+        ->where('id_thr_h', $id_thr_h)
+        ->exec();
+
+    // ==========================================
+    // HAPUS DETAIL PAYROLL THR LAMA
+    // ==========================================
+    $qd_piutang_lama = $db
         ->query('delete', 'hpy_piutang_d')
         ->where('kode', $rs_thr['kode'])
         ->where('nama', $nama_thr)
@@ -357,11 +336,28 @@
         ->exec();
 
     // ==========================================
-    // INSERT DETAIL THR BARU
+    // INSERT DETAIL THR DAN PAYROLL
     // ==========================================
     while ($rs_detail = $qs_thr_detail->fetch()) {
 
-        $qi_thr_detail = $db
+        // ==========================================
+        // INSERT KE THR_D
+        // ==========================================
+        $qi_thr_d = $db
+            ->query('insert', 'thr_d')
+            ->set('id_thr_h', $id_thr_h)
+            ->set('id_hemxxmh', $rs_detail['id'])
+            ->set('kode', $rs_detail['kode'])
+            ->set('nama', $rs_detail['nama'])
+            ->set('keterangan', $rs_thr['keterangan'])
+            ->set('nominal', $rs_detail['nominal_thr'])
+            ->set('is_active', 1)
+            ->exec();
+
+        // ==========================================
+        // INSERT KE HPY_PIUTANG_D
+        // ==========================================
+        $qi_hpy_piutang_d = $db
             ->query('insert', 'hpy_piutang_d')
             ->set('kode', $rs_thr['kode'])
             ->set('id_hemxxmh', $rs_detail['id'])
