@@ -1,7 +1,8 @@
+
 <?php 
     require_once( "../../../../users/init.php" );
-	require_once( "../../../../usersc/lib/DataTables.php" );
-	require_once( "../../../../usersc/helpers/datatables_fn_debug.php" );
+    require_once( "../../../../usersc/lib/DataTables.php" );
+    require_once( "../../../../usersc/helpers/datatables_fn_debug.php" );
 
     // BEGIN definisi variable untuk fn_ajax_results.php
     $data      = array();
@@ -15,6 +16,10 @@
     $resultCount = 10;
     $offset      = ($page - 1) * $resultCount;
     // END select2 pagination preparation
+
+    // BEGIN parameter tanggal
+    $tanggal = $_GET['tanggal'];
+    // END parameter tanggal
 
     if($_GET['id_hpy_piutang_h_old'] > 0){
         $id_hpy_piutang_h_old = $_GET['id_hpy_piutang_h_old'];
@@ -61,6 +66,35 @@
         $s_id_hesxxmh = '<>';
     }
 
+    // ==========================================
+    // RAW QUERY FILTER PIUTANG
+    // Hanya untuk query ALL
+    // ==========================================
+    $qs_piutang = $db
+        ->raw()
+        ->bind(':tanggal', $tanggal)
+        ->exec("
+            SELECT
+                a.id_hpy_piutang_h
+            FROM hpy_piutang_d a
+            WHERE 1
+                AND a.id_hpy_piutang_h > 0
+                AND a.id_hpy_piutang_lunas = 0
+                AND a.tanggal >= :tanggal
+            GROUP BY a.id_hpy_piutang_h
+        ");
+
+    $rs_piutang = $qs_piutang->fetchAll();
+    $id_piutang = '(' . implode(',', array_map(
+        'intval',
+        array_column($rs_piutang, 'id_hpy_piutang_h')
+    )) . ')';
+
+    // Jika kosong, hasilkan (0)
+    if ($id_piutang == '()') {
+        $id_piutang = '(0)';
+    }
+
     // BEGIN query options self.
     // Hanya dipanggil jika field ada nilai id nya
     if($id_hpy_piutang_h_old > 0){
@@ -74,6 +108,7 @@
             ->join('hpcxxmh','hpcxxmh.id = hpy_piutang_h.id_hpcxxmh','LEFT')
             ->where('hpy_piutang_h.id', $id_hpy_piutang_h_old )
             ->exec();
+
         $rs_hemxxmh_self = $qs_hemxxmh_self->fetchAll();
     }else{
         $rs_hemxxmh_self = [];
@@ -91,17 +126,19 @@
         ->join('hpcxxmh','hpcxxmh.id = hpy_piutang_h.id_hpcxxmh','LEFT')
         ->where('hemxxmh.is_active',1)
         ->where('hpy_piutang_h.id', $id_hpy_piutang_h_old, '<>' )
+        ->where('hpy_piutang_h.id', $id_piutang, 'IN', false)
         ->where( function ( $r ) {
             $q = $_GET['search'];
             $r
                 ->where('hemxxmh.kode', '%' . $q . '%', 'LIKE' )
                 ->or_where('hemxxmh.nama', '%' . $q . '%', 'LIKE' )
-                ->or_where('hpcxxmh.nama', '%' . $q . '%', 'LIKE' );
+                ->or_where('hpy_piutang_h.kode', '%' . $q . '%', 'LIKE' );
         } )
-        ->order('hemxxmh.nama')
+        ->order('hpy_piutang_h.id desc')
         ->limit($resultCount)
         ->offset($offset)
         ->exec();
+
     $rs_hemxxmh_all = $qs_hemxxmh_all->fetchAll();
     // END query options all except self
     
@@ -111,6 +148,7 @@
     }else{
         $rs_opt = $rs_hemxxmh_all;
     }
+
     $c_rs_opt = count($rs_opt);    
     // END menggabungkan options
 

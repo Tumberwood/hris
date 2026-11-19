@@ -95,6 +95,7 @@
 	
 	include( "hpy_piutang_lunas_extra.php" );
 	include( "../../../helpers/edt_log.php" );
+	include( "../../../helpers/kode_fn_generate_c.php" );
 	
 	$editor
 		->process( $_POST )

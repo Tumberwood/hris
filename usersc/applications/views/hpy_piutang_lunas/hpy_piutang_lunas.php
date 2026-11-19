@@ -68,6 +68,18 @@
 				table: "#tblhpy_piutang_lunas",
 				fields: [ 
 					{
+						label: "kategori_dokumen",
+						name: "kategori_dokumen",
+						type: "hidden"
+					},	{
+						label: "kategori_dokumen_value",
+						name: "kategori_dokumen_value",
+						type: "hidden"
+					},	{
+						label: "field_tanggal",
+						name: "field_tanggal",
+						type: "hidden"
+					},	{
 						label: "start_on",
 						name: "start_on",
 						type: "hidden"
@@ -111,8 +123,10 @@
 								url: "../../models/hpy_piutang_h/hpy_piutang_h_fn_opt.php",
 								dataType: 'json',
 								data: function (params) {
+									let tanggal = moment(edthpy_piutang_lunas.field('hpy_piutang_lunas.tanggal_mulai').val()).format('YYYY-MM-DD');
 									var query = {
 										id_hpy_piutang_h_old: id_hpy_piutang_h_old,
+										tanggal: tanggal,
 										search: params.term || '',
 										page: params.page || 1
 									}
@@ -182,6 +196,11 @@
 						name: "hpy_piutang_lunas.nominal"
 					}, 	
 					{
+						label: "Terbilang",
+						name: "hpy_piutang_lunas.terbilang",
+						type: "textarea"
+					}, 	
+					{
 						label: "Keterangan<sup class='text-danger'>*<sup>",
 						name: "hpy_piutang_lunas.keterangan",
 						type: "textarea"
@@ -193,6 +212,9 @@
 			edthpy_piutang_lunas.on( 'preOpen', function( e, mode, action ) {
 				start_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthpy_piutang_lunas.field('start_on').val(start_on);
+				edthpy_piutang_lunas.field('hpy_piutang_lunas.id_hemxxmh').disable();
+				edthpy_piutang_lunas.field('hpy_piutang_lunas.nominal').disable();
+				edthpy_piutang_lunas.field('hpy_piutang_lunas.terbilang').disable();
 				
 				if(action == 'create'){
 					tblhpy_piutang_lunas.rows().deselect();
@@ -202,6 +224,80 @@
 			edthpy_piutang_lunas.on("open", function (e, mode, action) {
 				$(".modal-dialog").addClass("modal-lg");
 			});
+
+			edthpy_piutang_lunas.dependent( 'hpy_piutang_lunas.id_hpy_piutang_h', function ( val, data, callback ) {
+				var id_hpy_piutang_h = edthpy_piutang_lunas.field('hpy_piutang_lunas.id_hpy_piutang_h').val();
+				let tanggal_mulai = moment(edthpy_piutang_lunas.field('hpy_piutang_lunas.tanggal_mulai').val()).format('YYYY-MM-DD');
+
+				if (id_hpy_piutang_h > 0) {
+					console.log('tanggal_mulai: '+tanggal_mulai);
+
+					autofillField('hpy_piutang_h', id_hpy_piutang_h, 
+						`
+						id_hemxxmh,
+						(
+							SELECT
+								SUM(a.nominal) AS nominal
+							FROM hpy_piutang_d a
+							WHERE 1
+							AND a.id_hpy_piutang_h = ${id_hpy_piutang_h}
+							AND a.tanggal >= '${tanggal_mulai}'
+							AND a.is_active = 1
+							AND a.id_hpy_piutang_lunas = 0
+						) AS nominal
+						`
+					);
+					id_hemxxmh_old = autofillData.id_hemxxmh;
+					console.log(id_hemxxmh_old);
+					edthpy_piutang_lunas.field('hpy_piutang_lunas.id_hemxxmh').val(id_hemxxmh_old);
+					
+					var nominal_old = autofillData.nominal;
+					console.log(nominal_old);
+					edthpy_piutang_lunas.field('hpy_piutang_lunas.nominal').val(nominal_old);
+
+					// Isi ke field terbilang (sesuaikan nama field-nya jika berbeda)
+    				edthpy_piutang_lunas.field('hpy_piutang_lunas.terbilang').val(terbilang(nominal_old));
+
+				}
+				return {}
+			}, {event: 'keyup change'});
+
+			edthpy_piutang_lunas.dependent( 'hpy_piutang_lunas.tanggal_mulai', function ( val, data, callback ) {
+				var id_hpy_piutang_h = edthpy_piutang_lunas.field('hpy_piutang_lunas.id_hpy_piutang_h').val();
+				let tanggal_mulai = moment(edthpy_piutang_lunas.field('hpy_piutang_lunas.tanggal_mulai').val()).format('YYYY-MM-DD');
+
+				if (id_hpy_piutang_h > 0) {
+					console.log('tanggal_mulai: '+tanggal_mulai);
+
+					autofillField('hpy_piutang_h', id_hpy_piutang_h, 
+						`
+						id_hemxxmh,
+						(
+							SELECT
+								SUM(a.nominal) AS nominal
+							FROM hpy_piutang_d a
+							WHERE 1
+							AND a.id_hpy_piutang_h = ${id_hpy_piutang_h}
+							AND a.tanggal >= '${tanggal_mulai}'
+							AND a.is_active = 1
+							AND a.id_hpy_piutang_lunas = 0
+						) AS nominal
+						`
+					);
+					id_hemxxmh_old = autofillData.id_hemxxmh;
+					console.log(id_hemxxmh_old);
+					edthpy_piutang_lunas.field('hpy_piutang_lunas.id_hemxxmh').val(id_hemxxmh_old);
+					
+					var nominal_old = autofillData.nominal;
+					console.log(nominal_old);
+					edthpy_piutang_lunas.field('hpy_piutang_lunas.nominal').val(nominal_old);
+
+					// Isi ke field terbilang (sesuaikan nama field-nya jika berbeda)
+    				edthpy_piutang_lunas.field('hpy_piutang_lunas.terbilang').val(terbilang(nominal_old));
+
+				}
+				return {}
+			}, {event: 'keyup change'});
 
             edthpy_piutang_lunas.on( 'preSubmit', function (e, data, action) {
 				if(action != 'remove'){
@@ -259,6 +355,10 @@
 			edthpy_piutang_lunas.on('initSubmit', function(e, action) {
 				finish_on = moment().format('YYYY-MM-DD HH:mm:ss');
 				edthpy_piutang_lunas.field('finish_on').val(finish_on);
+				
+				edthpy_piutang_lunas.field('kategori_dokumen').val('');
+				edthpy_piutang_lunas.field('kategori_dokumen_value').val();
+				edthpy_piutang_lunas.field('field_tanggal').val('created_on');
 			});
 			
 			edthpy_piutang_lunas.on( 'close', function (e, json, data, action, xhr) {
@@ -362,6 +462,30 @@
 			
 		} );// end of document.ready
 	
+	</script>
+
+	<script>
+		function terbilang(angka) {
+			angka = Math.floor(Math.abs(Number(angka) || 0));
+			if (angka === 0) return 'Nol Rupiah';
+
+			const huruf = ['', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas'];
+
+			function konversi(n) {
+				if (n < 12) return ' ' + huruf[n];
+				if (n < 20) return konversi(n - 10) + ' Belas';
+				if (n < 100) return konversi(Math.floor(n / 10)) + ' Puluh' + konversi(n % 10);
+				if (n < 200) return ' Seratus' + konversi(n - 100);
+				if (n < 1000) return konversi(Math.floor(n / 100)) + ' Ratus' + konversi(n % 100);
+				if (n < 2000) return ' Seribu' + konversi(n - 1000);
+				if (n < 1000000) return konversi(Math.floor(n / 1000)) + ' Ribu' + konversi(n % 1000);
+				if (n < 1000000000) return konversi(Math.floor(n / 1000000)) + ' Juta' + konversi(n % 1000000);
+				if (n < 1000000000000) return konversi(Math.floor(n / 1000000000)) + ' Miliar' + konversi(n % 1000000000);
+				return konversi(Math.floor(n / 1000000000000)) + ' Triliun' + konversi(n % 1000000000000);
+			}
+
+			return konversi(angka).trim().replace(/\s+/g, ' ') + ' Rupiah';
+		}
 	</script>
 
 <!-- END datatables here -->
