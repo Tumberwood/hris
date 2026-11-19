@@ -14,6 +14,46 @@
 <!-- begin content here -->
 
 <div class="row">
+    <div class="col">
+        <div class="ibox collapsed" id="iboxfilter">
+            <div class="ibox-title">
+                <h5 class="text-navy">Filter</h5>&nbsp
+                <button class="btn btn-primary btn-xs collapse-link"><i class="fa fa-chevron-up"></i></button>
+            </div>
+            <div class="ibox-content">
+                <form class="form-horizontal" id="frmmakan_catering_hl_umum">
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label">Periode</label>
+                        <div class="col-lg-5">
+                            <div class="input-group input-daterange" id="periode">
+                                <input type="text" id="start_date" class="form-control">
+                                <span class="input-group-addon">to</span>
+                                <input type="text" id="end_date" class="form-control">
+                                <div class="input-group-addon">
+                                    <span class="fa fa-calendar"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">												
+                        <label class="col-sm-2 col-form-label">Periode Payroll</label>
+                        <div class="col-sm-5">
+                            <select class="form-control" id="select_periode_payroll" name="select_periode_payroll"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-4">
+                            <button class="btn btn-primary" type="submit" id="go">Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <div id="searchPanes1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
 	<div class="col">
 		<div class="ibox ">
 			<div class="ibox-title">
@@ -82,14 +122,92 @@
 		var edtmakan_catering_hl_umum, tblmakan_catering_hl_umum, show_inactive_status_makan_catering_hl_umum = 0, id_makan_catering_hl_umum;
 		// ------------- end of default variable
 		
+		// BEGIN datepicker init
+		$('#periode').datepicker({
+			setDate: new Date(),
+			autoclose: true,
+			todayHighlight: true,
+			clearBtn: true,
+			format: "dd M yyyy",
+			minViewMode: 'month' 
+		});
+		
+		$('#start_date').datepicker('setDate', awal_bulan_dmy);
+		$('#end_date').datepicker('setDate', tanggal_hariini_dmy);
+        // END datepicker init
+		
+		//Select2 init
+        $("#select_periode_payroll").select2({
+			placeholder: 'Ketik atau TekanTanda Panah Kanan',
+			allowClear: true,
+			ajax: {
+				url: "../../models/periode_payroll/periode_payroll_fn_opt.php",
+				dataType: 'json',
+				data: function (params) {
+					var query = {
+						id_periode_payroll_old: 0,
+						search: params.term || '',
+						page: params.page || 1
+					}
+						return query;
+				},
+				processResults: function (data, params) {
+					return {
+						results: data.results,
+						pagination: {
+							more: true
+						}
+					};
+				},
+				cache: true,
+				minimumInputLength: 1,
+				maximum: 10,
+				delay: 500,
+				maximumSelectionLength: 5,
+				minimumResultsForSearch: -1,
+			}
+			
+		});
+        // END select2 init
+
+		// Override tanggal ketika periode payroll dipilih
+		$('#select_periode_payroll').on('select2:select', async function (e) {
+			const val = $(this).val();
+
+			await autofillField(
+				'periode_payroll',
+				val,
+				'DATE_FORMAT(tanggal_awal, "%d %b %Y") AS tanggal_awal, DATE_FORMAT(tanggal_akhir, "%d %b %Y") AS tanggal_akhir'
+			);
+
+			const tanggal_awal = autofillData.tanggal_awal;
+			const tanggal_akhir = autofillData.tanggal_akhir;
+
+			$('#start_date').datepicker('setDate', tanggal_awal);
+			$('#end_date').datepicker('setDate', tanggal_akhir);
+
+		});
+		
 		$(document).ready(function() {
-			//start datatables editor
+			start_date = moment($('#start_date').val()).format('YYYY-MM-DD');
+			end_date   = moment($('#end_date').val()).format('YYYY-MM-DD');
+			
+			id_periode_payroll_old = 0;
+			
+			$('#select_periode_payroll').select2('open');
+
+			setTimeout(function() {
+				$('#select_periode_payroll').select2('close');
+			}, 5);
+
 			edtmakan_catering_hl_umum = new $.fn.dataTable.Editor( {
 				ajax: {
 					url: "../../models/makan_catering_hl_umum/makan_catering_hl_umum.php",
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_makan_catering_hl_umum = show_inactive_status_makan_catering_hl_umum;
+						d.start_date = start_date;
+						d.end_date = end_date;
 					}
 				},
 				table: "#tblmakan_catering_hl_umum",
@@ -211,6 +329,8 @@
 					type: 'POST',
 					data: function (d){
 						d.show_inactive_status_makan_catering_hl_umum = show_inactive_status_makan_catering_hl_umum;
+						d.start_date = start_date;
+						d.end_date = end_date;
 					}
 				},
 				order: [[ 1, "asc" ]],
@@ -330,6 +450,26 @@
 				}
 			});
 			// END upload data
+			
+			$("#frmmakan_catering_hl_umum").submit(function(e) {
+				e.preventDefault();
+			}).validate({
+				rules: {
+					
+				},
+				submitHandler: function(frmmakan_catering_hl_umum) {
+					start_date 		= moment($('#start_date').val()).format('YYYY-MM-DD');
+					end_date 		= moment($('#end_date').val()).format('YYYY-MM-DD');
+
+					notifyLoadingDomba();
+
+					tblmakan_catering_hl_umum.rows().deselect();
+					tblmakan_catering_hl_umum.ajax.reload(function ( json ) {
+						notifyprogress.close();
+					}, false);
+					return false; 
+				}
+			});
 			
 		} );// end of document.ready
 	

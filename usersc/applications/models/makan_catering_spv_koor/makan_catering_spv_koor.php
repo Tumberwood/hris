@@ -15,6 +15,8 @@
 		DataTables\Editor\Result;
 	
 	// ----------- do not erase
+	$start_date = $_POST['start_date'];
+	$end_date = $_POST['end_date'];
 	$show_inactive_status = $_POST['show_inactive_status_makan_catering_spv_koor'];
 	// -----------
 	
@@ -56,7 +58,9 @@
 					'from' => 'd M Y',
 					'to' =>   'Y-m-d'
 				) ),
-		);
+		)
+		->where( 'makan_catering_spv_koor.tanggal', $start_date, '>=' )
+		->where( 'makan_catering_spv_koor.tanggal', $end_date, '<=' );
 	
 	// do not erase
 	// function show / hide inactive document
