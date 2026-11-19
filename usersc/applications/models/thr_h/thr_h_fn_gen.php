@@ -319,6 +319,7 @@
                 FROM perhitungan_thr a
 
                 WHERE a.is_dapat_thr = 1
+                AND a.nominal_thr > 0
 
                 ORDER BY a.nama
 
