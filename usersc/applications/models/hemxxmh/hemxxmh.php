@@ -89,6 +89,7 @@
 			Field::inst( 'hemxxmh.is_approve' ),
 			Field::inst( 'hemxxmh.is_pot_makan' ),
 			Field::inst( 'hemxxmh.is_defaultprogram' ),
+			Field::inst( 'hemxxmh.no_rekening' ),
 			
 			Field::inst( 'hemjbmh.tanggal_masuk' )
 				->getFormatter( function ( $val, $data, $opts ) {

@@ -171,6 +171,9 @@
 							<div class="col-lg-6">
 								<editor-field name="hemxxmh.gender"></editor-field>
 							</div>
+							<div class="col-lg-6">
+								<editor-field name="hemxxmh.no_rekening"></editor-field>
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-6">
@@ -706,6 +709,10 @@
 					{
 						label: "Nama <sup class='text-danger'>*<sup>",
 						name: "hemxxmh.nama"
+					}, 	
+					{
+						label: "No Rekening <sup class='text-danger'>*<sup>",
+						name: "hemxxmh.no_rekening"
 					}, 	
 					{
 						label: "Foto",
@@ -1673,6 +1680,12 @@
 					nama = edthemxxmh.field('hemxxmh.nama').val();
 					if(!nama || nama == ''){
 						edthemxxmh.field('hemxxmh.nama').error( 'Wajib diisi!' );
+					}
+
+					// BEGIN of validasi hemxxmh.no_rekening 
+					no_rekening = edthemxxmh.field('hemxxmh.no_rekening').val();
+					if(!no_rekening || no_rekening == ''){
+						edthemxxmh.field('hemxxmh.no_rekening').error( 'Wajib diisi!' );
 					}
 					
 					//Validasi nama unik
