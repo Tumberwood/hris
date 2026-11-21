@@ -1623,7 +1623,7 @@
                                             -- 22 Sep 2026, Tasklist 81. Kalau CO nya kurang dari jam izin maka pake jam izin
                                             OR TIME(ceklok_out) < jam_akhir_izin_out,
 
-                                            if(jam_akhir_izin_out < "04:00:00",
+                                            if(jam_akhir_izin_out < "06:00:00",
                                                 -- jika kurang dari jam 4 maka bukan today dan harus di +1 day
                                                 date_add(tanggal_jam_izin_akhir_out, INTERVAL 1 DAY),
                                                 tanggal_jam_izin_akhir_out
