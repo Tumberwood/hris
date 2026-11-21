@@ -373,7 +373,7 @@
 
 							FROM (
 								SELECT
-									b.kode,
+									b.kode_finger AS kode,
 
 									CASE
 										WHEN TIME(a.tanggal_jam) >= "10:00:00"
