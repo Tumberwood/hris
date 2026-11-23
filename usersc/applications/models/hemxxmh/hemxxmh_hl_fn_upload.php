@@ -1,341 +1,737 @@
 <?php
-	require_once( "../../../../users/init.php" );
-	require_once( "../../../../usersc/lib/DataTables.php" );
-	require_once( "../../../../usersc/helpers/datatables_fn_debug.php" );
-	require_once( "../../../../usersc/vendor/autoload.php" );
+require_once("../../../../users/init.php");
+    require_once("../../../../usersc/lib/DataTables.php");
+    require_once("../../../../usersc/helpers/datatables_fn_debug.php");
+    require_once("../../../../usersc/vendor/autoload.php");
 
-	use Carbon\Carbon;
-	use PhpOffice\PhpSpreadsheet\Spreadsheet;
-	use PhpOffice\PhpSpreadsheet\Reader\Csv;
-	use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+    use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
 
-	// BEGIN definisi variable untuk fn_ajax_results.php
+    // =========================================================
+    // HELPER PARSING TANGGAL EXCEL
+    // =========================================================
+    function parseTanggalExcel($value) {
+
+        if ($value instanceof DateTimeInterface) {
+            return $value->format('Y-m-d');
+        }
+
+        if ($value === null || trim((string)$value) === '') {
+            return null;
+        }
+
+        $value = trim((string)$value);
+
+        // Serial number Excel
+        if (is_numeric($value)) {
+            return ExcelDate::excelToDateTimeObject((float)$value)
+                ->format('Y-m-d');
+        }
+
+        // Format Jepang: 2007年4月18日
+        // Contoh: 1212122007年4月18日
+        if (preg_match('/(\d{4})年(\d{1,2})月(\d{1,2})日/u', $value, $matches)) {
+
+            $tahun = (int)$matches[1];
+            $bulan = (int)$matches[2];
+            $hari  = (int)$matches[3];
+
+            if (checkdate($bulan, $hari, $tahun)) {
+                return sprintf('%04d-%02d-%02d', $tahun, $bulan, $hari);
+            }
+        }
+
+        // Format tanggal umum
+        foreach (['Y-m-d', 'd/m/Y', 'm/d/Y', 'd-m-Y', 'Y/m/d'] as $format) {
+
+            $date = DateTime::createFromFormat('!' . $format, $value);
+
+            if ($date && $date->format($format) === $value) {
+                return $date->format('Y-m-d');
+            }
+        }
+
+        throw new Exception('Format tanggal tidak valid: ' . $value);
+    }
+
+    // BEGIN definisi variable untuk fn_ajax_results.php
     $data      = array();
     $rs_opt    = array();
     $c_rs_opt  = 0;
     $morePages = 0;
     // END definisi variable untuk fn_ajax_results.php
 
-	$file_mimes = array(
-		'application/octet-stream', 
-		'application/vnd.ms-excel', 
-		'application/x-csv', 
-		'text/x-csv', 
-		'text/csv', 
-		'application/csv', 
-		'application/excel', 
-		'application/vnd.msexcel', 
-		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-	);
+    $file_mimes = array(
+        'application/octet-stream',
+        'application/vnd.ms-excel',
+        'application/x-csv',
+        'text/x-csv',
+        'text/csv',
+        'application/csv',
+        'application/excel',
+        'application/vnd.msexcel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    );
+
+    if (
+        isset($_FILES['filename']['name']) &&
+        in_array($_FILES['filename']['type'], $file_mimes)
+    ) {
+
+        $arr_file = explode('.', $_FILES['filename']['name']);
+        $extension = strtolower(end($arr_file));
+
+        if ('csv' == $extension) {
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+        } elseif ('xls' == $extension) {
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+        } else {
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        }
+
+        $spreadsheet = $reader->load($_FILES['filename']['tmp_name']);
+
+        // Ambil nilai mentah Excel, bukan formatted value
+        $sheetData = $spreadsheet->getActiveSheet()
+            ->toArray(null, true, false, false);
+
+        // =========================================================
+        // PENGECEKAN TEMPLATE EXCEL
+        // =========================================================
+        $header_first_col = isset($sheetData[0][0])
+            ? trim((string)$sheetData[0][0])
+            : '';
+
+        if (strtoupper($header_first_col) !== 'NIK KTP') {
+
+            $data = array(
+                'message' => "Format template Excel salah! Header kolom pertama harus 'NIK KTP'.",
+                'type_message' => 'danger'
+            );
+
+            require_once("../../../../usersc/helpers/fn_ajax_results.php");
+            exit();
+        }
+
+        // =========================================================
+
+        try {
+
+            $db->transaction();
+
+            $datakembar        = 0;
+            $dataupload        = 0;
+            $emptyPeg          = array();
+            $datakembar_detail = array();
+
+            for ($i = 1; $i < count($sheetData); $i++) {
+
+                if (!empty($sheetData[$i][0])) {
+
+                    // =========================================================
+                    // DATA EXCEL
+                    // =========================================================
+                    $ktp_no      = $sheetData[$i][0]; // NIK KTP
+                    $kode_finger = $sheetData[$i][1]; // KODE FINGER
+                    $nama        = $sheetData[$i][2]; // NAMA
+                    $bagian      = $sheetData[$i][4]; // BAGIAN
+                    $gender      = $sheetData[$i][5]; // JENIS KELAMIN
+
+                    if ($gender == 'L') {
+                        $gender = 'Laki-laki';
+                    } else {
+                        $gender = 'Perempuan';
+                    }
+
+                    // =========================================================
+                    // PARSING TANGGAL
+                    // =========================================================
+                    $tanggal_lahir = parseTanggalExcel($sheetData[$i][6] ?? null);
+
+                    $tanggal_masuk = parseTanggalExcel($sheetData[$i][7] ?? null);
+
+                    $no_bpjs_tk = $sheetData[$i][8]; // NO. BPJS TK
+                    $alamat     = $sheetData[$i][9]; // ALAMAT
+
+                    // =========================================================
+                    // AMBIL ID BAGIAN DARI MASTER hobxxmh
+                    // =========================================================
+                    $qs_hobxxmh = $db
+                        ->query('select', 'hobxxmh')
+                        ->get(['id as id_hobxxmh'])
+                        ->where('nama', $bagian)
+                        ->exec();
+
+                    $rs_hobxxmh = $qs_hobxxmh->fetch();
+
+                    $id_hobxxmh = isset($rs_hobxxmh['id_hobxxmh'])
+                        ? $rs_hobxxmh['id_hobxxmh']
+                        : 0;
+
+                    if ($id_hobxxmh == 0) {
+
+                        $emptyPeg[] = array(
+                            'rowIndex' => $i + 1,
+                            'field'    => 'Bagian tidak ditemukan: ' . $bagian
+                        );
+                    }
+
+                    // =========================================================
+                    // CEK DUPLIKASI BERDASARKAN kode_finger
+                    // =========================================================
+                    $qs_hem = $db
+                        ->query('select', 'hemxxmh')
+                        ->get([
+                            'id',
+                            'nama'
+                        ])
+                        ->where('kode_finger', $kode_finger)
+                        ->where('nama', $nama)
+                        ->exec();
+
+                    $rs_hem = $qs_hem->fetch();
+
+                    if (!$rs_hem) {
+
+                        // =====================================================
+                        // 1. INSERT hemxxmh
+                        // =====================================================
+                        $insert_query = $db->raw()
+                            ->bind(':kode_finger', $kode_finger)
+                            ->bind(':kode', $kode_finger)
+                            ->bind(':nama', $nama)
+                            ->bind(':gender', $gender)
+                            ->bind(':tanggal_lahir', $tanggal_lahir)
+                            ->exec('
+                                INSERT INTO hemxxmh (
+                                    kode_finger,
+                                    kode,
+                                    nama,
+                                    tanggal_lahir,
+                                    gender
+                                ) VALUES (
+                                    :kode_finger,
+                                    :kode,
+                                    :nama,
+                                    :tanggal_lahir,
+                                    :gender
+                                )
+                            ');
+
+                        // Ambil ID hasil insert
+                        $id_hemxxmh = $insert_query->insertId();
+
+                        // =====================================================
+                        // 2. INSERT hemdcmh
+                        // =====================================================
+                        $db->raw()
+                            ->bind(':id_hemxxmh', $id_hemxxmh)
+                            ->bind(':ktp_no', $ktp_no)
+                            ->bind(':no_bpjs_tk', $no_bpjs_tk)
+                            ->bind(':alamat', $alamat)
+                            ->exec('
+                                INSERT INTO hemdcmh (
+                                    id_hemxxmh,
+                                    ktp_no,
+                                    no_bpjs_tk,
+                                    alamat
+                                ) VALUES (
+                                    :id_hemxxmh,
+                                    :ktp_no,
+                                    :no_bpjs_tk,
+                                    :alamat
+                                )
+                            ');
+
+                        // =====================================================
+                        // 3. INSERT hemjbmh
+                        // =====================================================
+                        $db->raw()
+                            ->bind(':id_hemxxmh', $id_hemxxmh)
+                            ->bind(':id_hobxxmh', $id_hobxxmh)
+                            ->bind(':tanggal_masuk', $tanggal_masuk)
+                            ->exec('
+                                INSERT INTO hemjbmh (
+                                    id_hemxxmh,
+                                    id_hobxxmh,
+                                    tanggal_masuk,
+                                    is_harian_lepas
+                                ) VALUES (
+                                    :id_hemxxmh,
+                                    :id_hobxxmh,
+                                    :tanggal_masuk,
+                                    1
+                                )
+                            ');
+
+                        // =====================================================
+                        // 4. INSERT hemjbrd
+                        // =====================================================
+                        $db->raw()
+                            ->bind(':id_hemxxmh', $id_hemxxmh)
+                            ->bind(':id_harxxmh', 1)
+                            ->bind(':is_email_status', 1)
+                            ->bind(':tanggal_awal', $tanggal_masuk)
+                            ->exec('
+                                INSERT INTO hemjbrd (
+                                    id_hemxxmh,
+                                    id_harxxmh,
+                                    is_email_status,
+                                    tanggal_awal
+                                ) VALUES (
+                                    :id_hemxxmh,
+                                    :id_harxxmh,
+                                    :is_email_status,
+                                    :tanggal_awal
+                                )
+                            ');
+
+                        $dataupload++;
+
+                    } else {
+
+                        // =====================================================
+                        // DATA KEMBAR
+                        // =====================================================
+                        $datakembar++;
+
+                        $datakembar_detail[] = array(
+                            'rowIndex'      => $i + 1,
+                            'kode_finger'   => $kode_finger,
+                            'nama_excel'    => $nama,
+                            'id_hemxxmh'    => $rs_hem['id'],
+                            'nama_database' => $rs_hem['nama']
+                        );
+                    }
+                }
+            }
+
+            // =========================================================
+            // CEK MASTER BAGIAN
+            // =========================================================
+            if (count($emptyPeg) >= 1) {
+
+                $errorMessage = '';
+
+                foreach ($emptyPeg as $index => $emptyPegawai) {
+
+                    $rowIndex = $emptyPegawai['rowIndex'];
+
+                    $errorMessage .=
+                        'Baris ' .
+                        $rowIndex .
+                        ' (' .
+                        $emptyPegawai['field'] .
+                        ')';
+
+                    if ($index < count($emptyPeg) - 1) {
+                        $errorMessage .= ', ';
+                    }
+                }
+
+                $data = array(
+                    'message' =>
+                        'Master Bagian tidak ditemukan: ' .
+                        $errorMessage,
+                    'type_message' => 'danger',
+                    'data_kembar' => $datakembar_detail
+                );
+
+            } else {
+
+                $data = array(
+                    'message' =>
+                        'Upload Data Berhasil.</br>' .
+                        $dataupload .
+                        ' data berhasil diimport.</br>' .
+                        $datakembar .
+                        ' data kembar TIDAK diimport.',
+                    'type_message' => 'success',
+
+                    'debug'       => $emptyPeg,
+                    'data_kembar' => $datakembar_detail
+                );
+            }
+
+            $db->commit();
+
+        } catch (Throwable $e) {
+
+            try {
+                $db->rollback();
+            } catch (Throwable $rollbackError) {
+                // Abaikan error rollback
+            }
+
+            $data = array(
+                'message' =>
+                    'Upload gagal.<br>' .
+                    '<b>Error:</b> ' .
+                    htmlspecialchars($e->getMessage()),
+                'type_message' => 'danger',
+                'data_kembar' => isset($datakembar_detail)
+                    ? $datakembar_detail
+                    : array()
+            );
+        }
+
+    } else {
+
+        $data = array(
+            'message' => 'Upload gagal, format file salah!',
+            'type_message' => 'danger'
+        );
+    }
+
+    // =========================================================
+    // TAMPILKAN RESULTS
+    // =========================================================
+    require_once("../../../../usersc/helpers/fn_ajax_results.php");
+
+
+
+
+
+
+
+
+
+	// require_once( "../../../../users/init.php" );
+	// require_once( "../../../../usersc/lib/DataTables.php" );
+	// require_once( "../../../../usersc/helpers/datatables_fn_debug.php" );
+	// require_once( "../../../../usersc/vendor/autoload.php" );
+
+	// use Carbon\Carbon;
+	// use PhpOffice\PhpSpreadsheet\Spreadsheet;
+	// use PhpOffice\PhpSpreadsheet\Reader\Csv;
+	// use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+
+	// // BEGIN definisi variable untuk fn_ajax_results.php
+    // $data      = array();
+    // $rs_opt    = array();
+    // $c_rs_opt  = 0;
+    // $morePages = 0;
+    // // END definisi variable untuk fn_ajax_results.php
+
+	// $file_mimes = array(
+	// 	'application/octet-stream', 
+	// 	'application/vnd.ms-excel', 
+	// 	'application/x-csv', 
+	// 	'text/x-csv', 
+	// 	'text/csv', 
+	// 	'application/csv', 
+	// 	'application/excel', 
+	// 	'application/vnd.msexcel', 
+	// 	'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+	// );
 	
-	if(isset($_FILES['filename']['name']) && in_array($_FILES['filename']['type'], $file_mimes)) {
+	// if(isset($_FILES['filename']['name']) && in_array($_FILES['filename']['type'], $file_mimes)) {
 		
-		$arr_file = explode('.', $_FILES['filename']['name']);
-		$extension = end($arr_file);
+	// 	$arr_file = explode('.', $_FILES['filename']['name']);
+	// 	$extension = end($arr_file);
 
-        if('csv' == $extension) {
-			$reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
-		} elseif('xls' == $extension) {
-			$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-		} else {
-			$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-		}
+    //     if('csv' == $extension) {
+	// 		$reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+	// 	} elseif('xls' == $extension) {
+	// 		$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+	// 	} else {
+	// 		$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+	// 	}
  
-		$spreadsheet = $reader->load($_FILES['filename']['tmp_name']);
-		$sheetData = $spreadsheet->getActiveSheet()->toArray();
+	// 	$spreadsheet = $reader->load($_FILES['filename']['tmp_name']);
+	// 	$sheetData = $spreadsheet->getActiveSheet()->toArray();
 		
-		// =========================================================
-		// PENGECEKAN TEMPLATE EXCEL
-		// =========================================================
-		$header_first_col = isset($sheetData[0]['0']) ? trim($sheetData[0]['0']) : '';
+	// 	// =========================================================
+	// 	// PENGECEKAN TEMPLATE EXCEL
+	// 	// =========================================================
+	// 	$header_first_col = isset($sheetData[0]['0']) ? trim($sheetData[0]['0']) : '';
 
-		if (strtoupper($header_first_col) !== 'NIK KTP') {
-			$data = array(
-				"message" => "Format template Excel salah! Header kolom pertama harus 'NIK KTP'.",
-				"type_message" => "danger"
-			);
+	// 	if (strtoupper($header_first_col) !== 'NIK KTP') {
+	// 		$data = array(
+	// 			"message" => "Format template Excel salah! Header kolom pertama harus 'NIK KTP'.",
+	// 			"type_message" => "danger"
+	// 		);
 
-			require_once( "../../../../usersc/helpers/fn_ajax_results.php" );
-			exit();
-		}
-		// =========================================================
+	// 		require_once( "../../../../usersc/helpers/fn_ajax_results.php" );
+	// 		exit();
+	// 	}
+	// 	// =========================================================
 
-		try{
-			$db->transaction();
+	// 	try{
+	// 		$db->transaction();
 			
-			$datakembar       = 0;
-			$dataupload       = 0;
-			$emptyPeg         = array();
-			$datakembar_detail = array();
+	// 		$datakembar       = 0;
+	// 		$dataupload       = 0;
+	// 		$emptyPeg         = array();
+	// 		$datakembar_detail = array();
 
-			for($i = 1; $i < count($sheetData); $i++){
+	// 		for($i = 1; $i < count($sheetData); $i++){
 
-				if ($sheetData[$i]['0'] != null) {
+	// 			if ($sheetData[$i]['0'] != null) {
 
-					// =========================================================
-					// DATA EXCEL
-					// =========================================================
-					$ktp_no        = $sheetData[$i]['0']; // NIK KTP
-					$kode_finger   = $sheetData[$i]['1']; // KODE FINGER
-					$nama          = $sheetData[$i]['2']; // NAMA
-					$bagian        = $sheetData[$i]['4']; // BAGIAN
-					$gender = $sheetData[$i]['5']; // JENIS KELAMIN
+	// 				// =========================================================
+	// 				// DATA EXCEL
+	// 				// =========================================================
+	// 				$ktp_no        = $sheetData[$i]['0']; // NIK KTP
+	// 				$kode_finger   = $sheetData[$i]['1']; // KODE FINGER
+	// 				$nama          = $sheetData[$i]['2']; // NAMA
+	// 				$bagian        = $sheetData[$i]['4']; // BAGIAN
+	// 				$gender = $sheetData[$i]['5']; // JENIS KELAMIN
 
-					if ($gender == 'L') {
-						$gender = 'Laki-laki';
-					} else {
-						$gender = 'Perempuan';
-					}
+	// 				if ($gender == 'L') {
+	// 					$gender = 'Laki-laki';
+	// 				} else {
+	// 					$gender = 'Perempuan';
+	// 				}
 
-					// Parsing Tanggal
-					$tanggal_lahir = !empty($sheetData[$i]['6'])
-						? Carbon::parse($sheetData[$i]['6'])->format('Y-m-d')
-						: null;
+	// 				// Parsing Tanggal
+	// 				$tanggal_lahir = !empty($sheetData[$i]['6'])
+	// 					? Carbon::parse($sheetData[$i]['6'])->format('Y-m-d')
+	// 					: null;
 
-					$tanggal_masuk = !empty($sheetData[$i]['7'])
-						? Carbon::parse($sheetData[$i]['7'])->format('Y-m-d')
-						: null;
+	// 				$tanggal_masuk = !empty($sheetData[$i]['7'])
+	// 					? Carbon::parse($sheetData[$i]['7'])->format('Y-m-d')
+	// 					: null;
 
-					$no_bpjs_tk    = $sheetData[$i]['8']; // NO. BPJS TK
-					$alamat        = $sheetData[$i]['9']; // ALAMAT
+	// 				$no_bpjs_tk    = $sheetData[$i]['8']; // NO. BPJS TK
+	// 				$alamat        = $sheetData[$i]['9']; // ALAMAT
 
-					// Default
+	// 				// Default
 
-					// =========================================================
-					// AMBIL ID BAGIAN DARI MASTER hobxxmh
-					// =========================================================
-					$qs_hobxxmh = $db
-						->query('select', 'hobxxmh')
-						->get(['id as id_hobxxmh'])
-						->where('nama', $bagian)
-						->exec();
+	// 				// =========================================================
+	// 				// AMBIL ID BAGIAN DARI MASTER hobxxmh
+	// 				// =========================================================
+	// 				$qs_hobxxmh = $db
+	// 					->query('select', 'hobxxmh')
+	// 					->get(['id as id_hobxxmh'])
+	// 					->where('nama', $bagian)
+	// 					->exec();
 
-					$rs_hobxxmh = $qs_hobxxmh->fetch();
+	// 				$rs_hobxxmh = $qs_hobxxmh->fetch();
 
-					$id_hobxxmh = isset($rs_hobxxmh['id_hobxxmh'])
-						? $rs_hobxxmh['id_hobxxmh']
-						: 0;
+	// 				$id_hobxxmh = isset($rs_hobxxmh['id_hobxxmh'])
+	// 					? $rs_hobxxmh['id_hobxxmh']
+	// 					: 0;
 
-					if ($id_hobxxmh == 0) {
+	// 				if ($id_hobxxmh == 0) {
 
-						$emptyPeg[] = array(
-							'rowIndex' => $i + 1,
-							'field'    => 'Bagian tidak ditemukan: ' . $bagian
-						);
-					}
+	// 					$emptyPeg[] = array(
+	// 						'rowIndex' => $i + 1,
+	// 						'field'    => 'Bagian tidak ditemukan: ' . $bagian
+	// 					);
+	// 				}
 
-					// =========================================================
-					// CEK DUPLIKASI BERDASARKAN kode_finger
-					// =========================================================
-					$qs_hem = $db
-						->query('select', 'hemxxmh')
-						->get([
-							'id',
-							'nama'
-						])
-						->where('kode_finger', $kode_finger)
-						->where('nama', $nama)
-						->exec();
+	// 				// =========================================================
+	// 				// CEK DUPLIKASI BERDASARKAN kode_finger
+	// 				// =========================================================
+	// 				$qs_hem = $db
+	// 					->query('select', 'hemxxmh')
+	// 					->get([
+	// 						'id',
+	// 						'nama'
+	// 					])
+	// 					->where('kode_finger', $kode_finger)
+	// 					->where('nama', $nama)
+	// 					->exec();
 
-					$rs_hem = $qs_hem->fetch();
+	// 				$rs_hem = $qs_hem->fetch();
 
-					if(!$rs_hem){
+	// 				if(!$rs_hem){
 
-						// =====================================================
-						// 1. INSERT hemxxmh
-						// =====================================================
-						$insert_query = $db->raw()
-							->bind(':kode_finger', $kode_finger)
-							->bind(':kode', $kode_finger)
-							->bind(':nama', $nama)
-							->bind(':gender', $gender)
-							->exec('
-								INSERT INTO hemxxmh (
-									kode_finger,
-									kode,
-									nama,
-									gender
-								) VALUES (
-									:kode_finger,
-									:kode,
-									:nama,
-									:gender
-								)
-							');
+	// 					// =====================================================
+	// 					// 1. INSERT hemxxmh
+	// 					// =====================================================
+	// 					$insert_query = $db->raw()
+	// 						->bind(':kode_finger', $kode_finger)
+	// 						->bind(':kode', $kode_finger)
+	// 						->bind(':nama', $nama)
+	// 						->bind(':gender', $gender)
+	// 						->exec('
+	// 							INSERT INTO hemxxmh (
+	// 								kode_finger,
+	// 								kode,
+	// 								nama,
+	// 								gender
+	// 							) VALUES (
+	// 								:kode_finger,
+	// 								:kode,
+	// 								:nama,
+	// 								:gender
+	// 							)
+	// 						');
 
-						// Ambil ID hasil insert
-						$id_hemxxmh = $insert_query->insertId();
+	// 					// Ambil ID hasil insert
+	// 					$id_hemxxmh = $insert_query->insertId();
 
-						// =====================================================
-						// 2. INSERT hemdcmh
-						// =====================================================
-						$db->raw()
-							->bind(':id_hemxxmh', $id_hemxxmh)
-							->bind(':ktp_no', $ktp_no)
-							->bind(':no_bpjs_tk', $no_bpjs_tk)
-							->bind(':tanggal_lahir', $tanggal_lahir)
-							->bind(':alamat', $alamat)
-							->exec('
-								INSERT INTO hemdcmh (
-									id_hemxxmh,
-									ktp_no,
-									no_bpjs_tk,
-									tanggal_lahir,
-									alamat
-								) VALUES (
-									:id_hemxxmh,
-									:ktp_no,
-									:no_bpjs_tk,
-									:tanggal_lahir,
-									:alamat
-								)
-							');
+	// 					// =====================================================
+	// 					// 2. INSERT hemdcmh
+	// 					// =====================================================
+	// 					$db->raw()
+	// 						->bind(':id_hemxxmh', $id_hemxxmh)
+	// 						->bind(':ktp_no', $ktp_no)
+	// 						->bind(':no_bpjs_tk', $no_bpjs_tk)
+	// 						->bind(':tanggal_lahir', $tanggal_lahir)
+	// 						->bind(':alamat', $alamat)
+	// 						->exec('
+	// 							INSERT INTO hemdcmh (
+	// 								id_hemxxmh,
+	// 								ktp_no,
+	// 								no_bpjs_tk,
+	// 								tanggal_lahir,
+	// 								alamat
+	// 							) VALUES (
+	// 								:id_hemxxmh,
+	// 								:ktp_no,
+	// 								:no_bpjs_tk,
+	// 								:tanggal_lahir,
+	// 								:alamat
+	// 							)
+	// 						');
 
-						// =====================================================
-						// 3. INSERT hemjbmh
-						// =====================================================
-						$db->raw()
-							->bind(':id_hemxxmh', $id_hemxxmh)
-							->bind(':id_hobxxmh', $id_hobxxmh)
-							->bind(':tanggal_masuk', $tanggal_masuk)
-							->exec('
-								INSERT INTO hemjbmh (
-									id_hemxxmh,
-									id_hobxxmh,
-									tanggal_masuk,
-									is_harian_lepas
-								) VALUES (
-									:id_hemxxmh,
-									:id_hobxxmh,
-									:tanggal_masuk,
-									1
-								)
-							');
+	// 					// =====================================================
+	// 					// 3. INSERT hemjbmh
+	// 					// =====================================================
+	// 					$db->raw()
+	// 						->bind(':id_hemxxmh', $id_hemxxmh)
+	// 						->bind(':id_hobxxmh', $id_hobxxmh)
+	// 						->bind(':tanggal_masuk', $tanggal_masuk)
+	// 						->exec('
+	// 							INSERT INTO hemjbmh (
+	// 								id_hemxxmh,
+	// 								id_hobxxmh,
+	// 								tanggal_masuk,
+	// 								is_harian_lepas
+	// 							) VALUES (
+	// 								:id_hemxxmh,
+	// 								:id_hobxxmh,
+	// 								:tanggal_masuk,
+	// 								1
+	// 							)
+	// 						');
 
-						// =====================================================
-						// 5. INSERT hemjbrd
-						// =====================================================
-						$db->raw()
-							->bind(':id_hemxxmh', $id_hemxxmh)
-							->bind(':id_harxxmh', 1)
-							->bind(':is_email_status', 1)
-							->bind(':tanggal_awal', $tanggal_masuk)
-							->exec('
-								INSERT INTO hemjbrd (
-									id_hemxxmh,
-									id_harxxmh,
-									is_email_status,
-									tanggal_awal
-								) VALUES (
-									:id_hemxxmh,
-									:id_harxxmh,
-									:is_email_status,
-									:tanggal_awal
-								)
-							');
+	// 					// =====================================================
+	// 					// 5. INSERT hemjbrd
+	// 					// =====================================================
+	// 					$db->raw()
+	// 						->bind(':id_hemxxmh', $id_hemxxmh)
+	// 						->bind(':id_harxxmh', 1)
+	// 						->bind(':is_email_status', 1)
+	// 						->bind(':tanggal_awal', $tanggal_masuk)
+	// 						->exec('
+	// 							INSERT INTO hemjbrd (
+	// 								id_hemxxmh,
+	// 								id_harxxmh,
+	// 								is_email_status,
+	// 								tanggal_awal
+	// 							) VALUES (
+	// 								:id_hemxxmh,
+	// 								:id_harxxmh,
+	// 								:is_email_status,
+	// 								:tanggal_awal
+	// 							)
+	// 						');
 
-						$dataupload++;
+	// 					$dataupload++;
 
-					} else {
+	// 				} else {
 
-						// =====================================================
-						// DATA KEMBAR
-						// =====================================================
-						$datakembar++;
+	// 					// =====================================================
+	// 					// DATA KEMBAR
+	// 					// =====================================================
+	// 					$datakembar++;
 
-						$datakembar_detail[] = array(
-							'rowIndex'       => $i + 1,
-							'kode_finger'    => $kode_finger,
-							'nama_excel'     => $nama,
-							'id_hemxxmh'     => $rs_hem['id'],
-							'nama_database'  => $rs_hem['nama']
-						);
-					}
-				}
-			}
+	// 					$datakembar_detail[] = array(
+	// 						'rowIndex'       => $i + 1,
+	// 						'kode_finger'    => $kode_finger,
+	// 						'nama_excel'     => $nama,
+	// 						'id_hemxxmh'     => $rs_hem['id'],
+	// 						'nama_database'  => $rs_hem['nama']
+	// 					);
+	// 				}
+	// 			}
+	// 		}
 			
-			// =========================================================
-			// CEK MASTER BAGIAN
-			// =========================================================
-			if (count($emptyPeg) >= 1) {
+	// 		// =========================================================
+	// 		// CEK MASTER BAGIAN
+	// 		// =========================================================
+	// 		if (count($emptyPeg) >= 1) {
 
-				$errorMessage = "";
+	// 			$errorMessage = "";
 
-				foreach ($emptyPeg as $index => $emptyPegawai) {
+	// 			foreach ($emptyPeg as $index => $emptyPegawai) {
 
-					$rowIndex = $emptyPegawai['rowIndex'];
+	// 				$rowIndex = $emptyPegawai['rowIndex'];
 
-					$errorMessage .=
-						"Baris " .
-						$rowIndex .
-						" (" .
-						$emptyPegawai['field'] .
-						")";
+	// 				$errorMessage .=
+	// 					"Baris " .
+	// 					$rowIndex .
+	// 					" (" .
+	// 					$emptyPegawai['field'] .
+	// 					")";
 
-					if ($index < count($emptyPeg) - 1) {
-						$errorMessage .= ", ";
-					}
-				}
+	// 				if ($index < count($emptyPeg) - 1) {
+	// 					$errorMessage .= ", ";
+	// 				}
+	// 			}
 
-				$data = array(
-					"message" =>
-						"Master Bagian tidak ditemukan: " .
-						$errorMessage,
-					"type_message" => "danger",
-					"data_kembar" => $datakembar_detail
-				);
+	// 			$data = array(
+	// 				"message" =>
+	// 					"Master Bagian tidak ditemukan: " .
+	// 					$errorMessage,
+	// 				"type_message" => "danger",
+	// 				"data_kembar" => $datakembar_detail
+	// 			);
 
-			} else {
+	// 		} else {
 
-				$data = array(
-					"message" =>
-						"Upload Data Berhasil.</br>" .
-						$dataupload .
-						" data berhasil diimport.</br>" .
-						$datakembar .
-						" data kembar TIDAK diimport.",
-					"type_message" => "success",
+	// 			$data = array(
+	// 				"message" =>
+	// 					"Upload Data Berhasil.</br>" .
+	// 					$dataupload .
+	// 					" data berhasil diimport.</br>" .
+	// 					$datakembar .
+	// 					" data kembar TIDAK diimport.",
+	// 				"type_message" => "success",
 
-					// Data Bagian yang tidak ditemukan
-					"debug" => $emptyPeg,
+	// 				// Data Bagian yang tidak ditemukan
+	// 				"debug" => $emptyPeg,
 
-					// Data yang dianggap kembar
-					"data_kembar" => $datakembar_detail
-				);
-			}
+	// 				// Data yang dianggap kembar
+	// 				"data_kembar" => $datakembar_detail
+	// 			);
+	// 		}
 
-			$db->commit();
+	// 		$db->commit();
 
-		} catch (Throwable $e) {
+	// 	} catch (Throwable $e) {
 
-			try {
-				$db->rollback();
-			} catch (Throwable $rollbackError) {
-				// Abaikan error rollback
-			}
+	// 		try {
+	// 			$db->rollback();
+	// 		} catch (Throwable $rollbackError) {
+	// 			// Abaikan error rollback
+	// 		}
 
-			$data = array(
-				"message" =>
-					"Upload gagal.<br>" .
-					"<b>Error:</b> " .
-					htmlspecialchars($e->getMessage()),
-				"type_message" => "danger",
-				"data_kembar" => isset($datakembar_detail)
-					? $datakembar_detail
-					: array()
-			);
-		}
+	// 		$data = array(
+	// 			"message" =>
+	// 				"Upload gagal.<br>" .
+	// 				"<b>Error:</b> " .
+	// 				htmlspecialchars($e->getMessage()),
+	// 			"type_message" => "danger",
+	// 			"data_kembar" => isset($datakembar_detail)
+	// 				? $datakembar_detail
+	// 				: array()
+	// 		);
+	// 	}
 
-	} else {
+	// } else {
 
-		$data = array(
-			"message" => "Upload gagal, format file salah!",
-			"type_message" => "danger"
-		);
-	}
+	// 	$data = array(
+	// 		"message" => "Upload gagal, format file salah!",
+	// 		"type_message" => "danger"
+	// 	);
+	// }
 
-	// =========================================================
-	// TAMPILKAN RESULTS
-	// =========================================================
-    require_once( "../../../../usersc/helpers/fn_ajax_results.php" );
+	// // =========================================================
+	// // TAMPILKAN RESULTS
+	// // =========================================================
+    // require_once( "../../../../usersc/helpers/fn_ajax_results.php" );
 ?>

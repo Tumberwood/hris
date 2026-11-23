@@ -711,8 +711,10 @@
 						name: "hemxxmh.nama"
 					}, 	
 					{
-						label: "No Rekening <sup class='text-danger'>*<sup>",
-						name: "hemxxmh.no_rekening"
+						// label: "No Rekening <sup class='text-danger'>*<sup>",
+						label: "No Rekening",
+						name: "hemxxmh.no_rekening",
+						type: "readonly"
 					}, 	
 					{
 						label: "Foto",
@@ -1683,10 +1685,10 @@
 					}
 
 					// BEGIN of validasi hemxxmh.no_rekening 
-					no_rekening = edthemxxmh.field('hemxxmh.no_rekening').val();
-					if(!no_rekening || no_rekening == ''){
-						edthemxxmh.field('hemxxmh.no_rekening').error( 'Wajib diisi!' );
-					}
+					// no_rekening = edthemxxmh.field('hemxxmh.no_rekening').val();
+					// if(!no_rekening || no_rekening == ''){
+					// 	edthemxxmh.field('hemxxmh.no_rekening').error( 'Wajib diisi!' );
+					// }
 					
 					//Validasi nama unik
 					// $.ajax( {
