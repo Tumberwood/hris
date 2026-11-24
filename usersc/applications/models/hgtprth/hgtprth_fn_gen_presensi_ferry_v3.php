@@ -1656,20 +1656,20 @@
                                 
                             CASE
                                 -- TI Gedung 3 (SHIFT 2), untuk jabatan Koordinator Printing / Laminasi (Bagian dry / extru/solvent free) tidak kena potongan TI
-                                WHEN 
-                                    is_istirahat = 2 AND -- Lembur TI
-                                    id_holxxmd_2 = 1 AND -- GEDUNG 3
-                                    
-                                    -- jabatan Koordinator Printing / Laminasi (Bagian dry / extru/solvent free)
-                                    (   id_hetxxmh = 55 OR
-                                        bagian LIKE "%dry%" OR
-                                        bagian LIKE "%extru%" OR
-                                        bagian LIKE "%solvent free%" 
-                                    )
-                                    AND durasi_break_menit > 0
-                                    -- Shift 2
-                                    AND (shift LIKE "SIANG%" OR shift LIKE "SORE%")
-                                THEN 0
+                                -- WHEN 
+                                --     is_istirahat = 2 AND -- Lembur TI
+                                --     id_holxxmd_2 = 1 AND -- GEDUNG 3
+                                --     
+                                --     -- jabatan Koordinator Printing / Laminasi (Bagian dry / extru/solvent free)
+                                --     (   id_hetxxmh = 55 OR
+                                --         bagian LIKE "%dry%" OR
+                                --         bagian LIKE "%extru%" OR
+                                --         bagian LIKE "%solvent free%" 
+                                --     )
+                                --     AND durasi_break_menit > 0
+                                --     -- Shift 2
+                                --     AND (shift LIKE "SIANG%" OR shift LIKE "SORE%")
+                                -- THEN 0
                                 
                                 -- Laki2 -> Shift 1 atau Lembur Hari Libur (Jadwal OFF tapi lembur Pagi) 
                                 WHEN gender = "Laki-laki" 
