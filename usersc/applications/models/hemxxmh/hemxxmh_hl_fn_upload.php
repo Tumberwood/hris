@@ -131,7 +131,7 @@ require_once("../../../../users/init.php");
                     // DATA EXCEL
                     // =========================================================
                     $ktp_no      = $sheetData[$i][0]; // NIK KTP
-                    $kode_finger = $sheetData[$i][1]; // KODE FINGER
+                    $kode_finger = 'HL' . $sheetData[$i][1]; // KODE FINGER
                     $nama        = $sheetData[$i][2]; // NAMA
                     $bagian      = $sheetData[$i][4]; // BAGIAN
                     $gender      = $sheetData[$i][5]; // JENIS KELAMIN
@@ -253,11 +253,17 @@ require_once("../../../../users/init.php");
                                 INSERT INTO hemjbmh (
                                     id_hemxxmh,
                                     id_hobxxmh,
+                                    id_heyxxmh,
+                                    jumlah_grup,
+                                    grup_hk,
                                     tanggal_masuk,
                                     is_harian_lepas
                                 ) VALUES (
                                     :id_hemxxmh,
                                     :id_hobxxmh,
+                                    2,
+                                    1,
+                                    1,
                                     :tanggal_masuk,
                                     1
                                 )
