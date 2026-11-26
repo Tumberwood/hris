@@ -52,10 +52,10 @@
             ->query('select', 'hemxxmh')
             ->get([
                 'hemxxmh.id as id',
-                'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",IFNULL(hetxxmh.nama,"Jabatan Missing") ) as text'
+                'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",IFNULL(hobxxmh.nama,"Jabatan Missing") ) as text'
             ])
             ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
-            ->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
+            ->join('hobxxmh','hobxxmh.id = hemjbmh.id_hobxxmh','LEFT')
             ->where('hemxxmh.id', $id_hemxxmh_old )
             ->exec();
         $rs_hemxxmh_self = $qs_hemxxmh_self->fetchAll();
@@ -69,10 +69,10 @@
         ->query('select', 'hemxxmh')
         ->get([
             'hemxxmh.id as id',
-            'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",IFNULL(hetxxmh.nama,"Jabatan Missing") ) as text'
+            'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",IFNULL(hobxxmh.nama,"Jabatan Missing") ) as text'
         ])
 		->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
-		->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
+		->join('hobxxmh','hobxxmh.id = hemjbmh.id_hobxxmh','LEFT')
         ->where('hemjbmh.id_heyxxmh', $w_id_heyxxmh, $s_id_heyxxmh, false )
         ->where('hemxxmh.id', $id_hemxxmh_old, '<>' )
         ->where('hemjbmh.is_harian_lepas', '1' )
@@ -81,7 +81,7 @@
             $r
                 ->where('hemxxmh.kode', '%' . $q . '%', 'LIKE' )
                 ->or_where('hemxxmh.nama', '%' . $q . '%', 'LIKE' )
-                ->or_where('hetxxmh.nama', '%' . $q . '%', 'LIKE' );
+                ->or_where('hobxxmh.nama', '%' . $q . '%', 'LIKE' );
         } )
         ->where( function ( $r ) {
             $r
