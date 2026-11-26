@@ -39,7 +39,7 @@
             ->query('select', 'hemxxmh')
             ->get([
                 'hemxxmh.id as id',
-                'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",hetxxmh.nama) as text'
+                'CONCAT(hemxxmh.kode, " - ", hemxxmh.nama, " - ", IFNULL(hetxxmh.nama, IF(is_harian_lepas = 1, "HL-Umum", ""))) as text'
             ])
             ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
             ->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
@@ -56,14 +56,14 @@
         ->query('select', 'hemxxmh')
         ->get([
             'hemxxmh.id as id',
-            'concat(hemxxmh.kode," - ",hemxxmh.nama," - ",hetxxmh.nama) as text'
+            'CONCAT(hemxxmh.kode, " - ", hemxxmh.nama, " - ", IFNULL(hetxxmh.nama, IF(is_harian_lepas = 1, "HL-Umum", ""))) as text'
         ])
 		->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT')
 		->join('hetxxmh','hetxxmh.id = hemjbmh.id_hetxxmh','LEFT')
         ->where('hemxxmh.is_active',1)
         ->where('hemjbmh.id_heyxxmh', $id_heyxxmh )
         ->where('hemxxmh.id', $id_hemxxmh_old, '<>' )
-        ->where('hemjbmh.is_harian_lepas', '0' )
+        // ->where('hemjbmh.is_harian_lepas', '0' )
         ->where('hemjbmh.is_non_karyawan', '0' )
         ->where( function ( $r ) {
             $q = $_GET['search'];
