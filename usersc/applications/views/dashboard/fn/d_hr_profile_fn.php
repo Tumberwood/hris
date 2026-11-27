@@ -58,7 +58,7 @@
                     render() {
                         const chart = this;
                         const total = chart.series[0].data.reduce((sum, p) => sum + p.y, 0);
-                        const text = `Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`;
+                        const text = `Total Pegawai: <b>${Highcharts.numberFormat(total, 0)}</b>`;
 
                         // update elemen HTML di bawah chart
                         $('#total_type').html(text);
@@ -66,7 +66,7 @@
                 }
             },
             title: {
-                text: 'Karyawan per Tipe',
+                text: 'Pegawai per Tipe',
                 align: 'left'
             },
             tooltip: {
@@ -117,7 +117,7 @@
                     render() {
                         const chart = this;
                         const total = chart.series[0].data.reduce((sum, p) => sum + p.y, 0);
-                        const text = `Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`;
+                        const text = `Total Pegawai: <b>${Highcharts.numberFormat(total, 0)}</b>`;
 
                         // update elemen HTML di bawah chart
                         $('#total_status').html(text);
@@ -125,7 +125,7 @@
                 }
             },
             title: {
-                text: 'Karyawan per Status',
+                text: 'Pegawai per Status',
                 align: 'left'
             },
             xAxis: {
@@ -195,7 +195,7 @@
                     render() {
                         const chart = this;
                         const total = chart.series[0].data.reduce((sum, p) => sum + p.y, 0);
-                        const text = `Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`;
+                        const text = `Total Pegawai: <b>${Highcharts.numberFormat(total, 0)}</b>`;
 
                         // update elemen HTML di bawah chart
                         $('#total_level').html(text);
@@ -203,7 +203,7 @@
                 }
             },
             title: {
-                text: 'Karyawan per Level',
+                text: 'Pegawai per Skala Upah',
                 align: 'left'
             },
             xAxis: {
@@ -266,12 +266,12 @@
                         return seriesSum + (serie.data || []).reduce((pSum, p) => pSum + (p.y || 0), 0);
                         }, 0);
 
-                        $('#total_dept').html(`Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`);
+                        $('#total_dept').html(`Total Pegawai: <b>${Highcharts.numberFormat(total, 0)}</b>`);
                     }
                 }
             },
             title: {
-                text: 'Karyawan per Department',
+                text: 'Pegawai per Department',
                 align: 'left'
             },
             // subtitle: {
@@ -335,7 +335,7 @@
                     render() {
                         const chart = this;
                         const total = chart.series[0].data.reduce((sum, p) => sum + p.y, 0);
-                        const text = `Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`;
+                        const text = `Total Pegawai: <b>${Highcharts.numberFormat(total, 0)}</b>`;
 
                         // update elemen HTML di bawah chart
                         $('#total_age').html(text);
@@ -343,7 +343,7 @@
                 }
             },
             title: {
-                text: 'Karyawan per Usia',
+                text: 'Pegawai per Usia',
                 align: 'left'
             },
             // subtitle: {
@@ -375,7 +375,7 @@
                     point: {
                         events: {
                             click: function () {
-                                const usia = this.category; // 🔥 ambil kategori (usia)
+                                const usia = this.category; // ðŸ”¥ ambil kategori (usia)
 
                                 // panggil function table
                                 tableUsia(usia);
@@ -417,7 +417,7 @@
                     render() {
                         const chart = this;
                         const total = chart.series[0].data.reduce((sum, p) => sum + p.y, 0);
-                        const text = `Total Karyawan: <b>${Highcharts.numberFormat(total, 0)}</b>`;
+                        const text = `Total Pegawai: <b>${Highcharts.numberFormat(total, 0)}</b>`;
 
                         // update elemen HTML di bawah chart
                         $('#total_mk').html(text);
@@ -425,7 +425,7 @@
                 }
             },
             title: {
-                text: 'Karyawan per Masa Kerja',
+                text: 'Pegawai per Masa Kerja',
                 align: 'left'
             },
             // subtitle: {
@@ -457,7 +457,7 @@
                     point: {
                         events: {
                             click: function () {
-                                const mk = this.category; // 🔥 ambil kategori (mk)
+                                const mk = this.category; // ðŸ”¥ ambil kategori (mk)
 
                                 // panggil function table
                                 tablemk(mk);
@@ -501,7 +501,7 @@
                 usia: usia,
             },
             success: function (json) {
-                // kalau table sudah ada → reset dulu
+                // kalau table sudah ada â†’ reset dulu
                 if ($.fn.dataTable.isDataTable('#tblusia')) {
                     $('#tblusia').DataTable().clear().destroy();
                     $('#tblusia tbody').empty();
@@ -537,7 +537,7 @@
                 mk: mk,
             },
             success: function (json) {
-                // kalau table sudah ada → reset dulu
+                // kalau table sudah ada â†’ reset dulu
                 if ($.fn.dataTable.isDataTable('#tblmk')) {
                     $('#tblmk').DataTable().clear().destroy();
                     $('#tblmk tbody').empty();
@@ -571,7 +571,7 @@
             data: {
             },
             success: function (json) {
-                // kalau table sudah ada → reset dulu
+                // kalau table sudah ada â†’ reset dulu
                 if ($.fn.dataTable.isDataTable('#tblhtlxxrh')) {
                     $('#tblhtlxxrh').DataTable().clear().destroy();
                     $('#tblhtlxxrh tbody').empty();
@@ -616,7 +616,7 @@
             data: {
             },
             success: function (json) {
-                // kalau table sudah ada → reset dulu
+                // kalau table sudah ada â†’ reset dulu
                 if ($.fn.dataTable.isDataTable('#tblhovxxmh')) {
                     $('#tblhovxxmh').DataTable().clear().destroy();
                     $('#tblhovxxmh tbody').empty();
@@ -661,7 +661,7 @@
             data: {
             },
             success: function (json) {
-                // kalau table sudah ada → reset dulu
+                // kalau table sudah ada â†’ reset dulu
                 if ($.fn.dataTable.isDataTable('#tblhodxxmh')) {
                     $('#tblhodxxmh').DataTable().clear().destroy();
                     $('#tblhodxxmh tbody').empty();
@@ -706,7 +706,7 @@
             data: {
             },
             success: function (json) {
-                // kalau table sudah ada → reset dulu
+                // kalau table sudah ada â†’ reset dulu
                 if ($.fn.dataTable.isDataTable('#tblhobxxmh')) {
                     $('#tblhobxxmh').DataTable().clear().destroy();
                     $('#tblhobxxmh tbody').empty();
