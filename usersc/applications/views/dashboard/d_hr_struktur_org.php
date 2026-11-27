@@ -13,12 +13,6 @@
     $nama_tabels_d = [];
 ?>
 
-<!-- OrgChart CSS -->
-<!-- <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/orgchart/3.1.3/css/jquery.orgchart.min.css"
-> -->
-
 <style>
 
     /* ========================================
@@ -50,7 +44,7 @@
 
 
     /* ========================================
-       TITLE / HEADER MERAH
+       TITLE / HEADER BIRU
     ======================================== */
 
     .orgchart .node .title {
@@ -63,6 +57,10 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+
+        background-color: #233645 !important;
+        border-color: #233645 !important;
+        color: #ffffff !important;
 
         font-size: 14px !important;
         font-weight: 700 !important;
@@ -101,6 +99,8 @@
         line-height: 16px !important;
 
         text-align: center !important;
+        color: #ffffff !important;
+
         z-index: 2;
     }
 
@@ -113,6 +113,10 @@
         width: 100% !important;
         min-height: 30px !important;
         height: auto !important;
+
+        background-color: #ffffff !important;
+        border-color: #233645 !important;
+        color: #233645 !important;
 
         font-size: 13px !important;
         font-weight: 500 !important;
@@ -129,33 +133,24 @@
 
 
     /* ========================================
-       JARAK ANTAR NODE
-    ======================================== */
-
-    .orgchart .nodes {
-        padding: 15px 0;
-    }
-
-
-    /* ========================================
        GARIS PENGHUBUNG
+       PERTAHANKAN GEOMETRI BAWAAN ORGCHART
     ======================================== */
 
     .orgchart .lines .topLine {
-        border-top: 2px solid #e57373 !important;
+        border-top-color: #233645 !important;
     }
 
     .orgchart .lines .leftLine {
-        border-left: 2px solid #e57373 !important;
+        border-left-color: #233645 !important;
     }
 
     .orgchart .lines .rightLine {
-        border-right: 2px solid #e57373 !important;
+        border-right-color: #233645 !important;
     }
 
     .orgchart .lines .downLine {
-        background-color: #e57373 !important;
-        width: 2px !important;
+        background-color: #233645 !important;
     }
 
 </style>
@@ -207,7 +202,9 @@
 ?>
 
 <!-- OrgChart JS -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/orgchart/3.1.3/js/jquery.orgchart.min.js"></script> -->
+<!--
+<script src="https://cdnjs.cloudflare.com/ajax/libs/orgchart/3.1.3/js/jquery.orgchart.min.js"></script>
+-->
 
 
 <script type="text/javascript">
