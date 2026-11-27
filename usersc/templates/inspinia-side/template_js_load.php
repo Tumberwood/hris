@@ -28,3 +28,4 @@
 <script src="<?=$us_url_root?>usersc/templates/<?=$settings->template?>/assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="<?=$us_url_root?>usersc/templates/<?=$settings->template?>/assets/js/plugins/jquery-validation/additional-methods.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="<?=$us_url_root?>usersc/templates/<?=$settings->template?>/assets/js/plugins/orgchart/jquery.orgchart.min.js"></script>

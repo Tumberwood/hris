@@ -14,10 +14,10 @@
 ?>
 
 <!-- OrgChart CSS -->
-<link
+<!-- <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/orgchart/3.1.3/css/jquery.orgchart.min.css"
->
+> -->
 
 <style>
 
@@ -207,7 +207,7 @@
 ?>
 
 <!-- OrgChart JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/orgchart/3.1.3/js/jquery.orgchart.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/orgchart/3.1.3/js/jquery.orgchart.min.js"></script> -->
 
 
 <script type="text/javascript">

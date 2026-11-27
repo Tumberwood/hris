@@ -11,6 +11,7 @@
 <link href="<?=$us_url_root?>usersc/templates/<?=$settings->template?>/assets/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 <link href="<?=$us_url_root?>usersc/templates/<?=$settings->template?>/assets/css/plugins/selectize/selectize.bootstrap3.min.css" rel="stylesheet">
 <link href="<?=$us_url_root?>usersc/templates/<?=$settings->template?>/assets/css/plugins/quill/quill.snow.css" rel="stylesheet">
+<link href="<?=$us_url_root?>usersc/templates/<?=$settings->template?>/assets/css/plugins/orgchart/jquery.orgchart.min.css" rel="stylesheet">
 
 <style>
 	.select2-dropdown{
