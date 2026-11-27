@@ -22,25 +22,29 @@
     // $tanggal_akhir = $_POST['tanggal_akhir'];
     $tanggal_akhir = new Carbon();
     ;
-
+    
     $qs_hemxxmh = $db
-        ->query('select', 'hemxxmh' )
-        ->get([
-            'hemxxmh.gender as hemxxmh_gender',
-            'count(hemxxmh.id) as c_gender'
-        ] )
-        ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
-        ->where( 'hemjbmh.is_harian_lepas', 0 )
-        // ->where('hemxxmh.is_active', 1 )
-        ->where( function ( $r ) use ($tanggal_akhir) {
-            $r
-                ->where( 'hemjbmh.tanggal_keluar', NULL)
-                // ->or_where( 'hemjbmh.tanggal_keluar', '0000-00-00')
-                ->or_where( 'hemjbmh.tanggal_keluar', $tanggal_akhir->format('Y-m-d') , '>=');
-        } )
-        ->group_by('hemxxmh.gender')
-        ->order('hemxxmh.gender')
-        ->exec();
+        ->raw()
+        ->bind(':tanggal_akhir', $tanggal_akhir->format('Y-m-d'))
+        ->exec("
+            SELECT
+                hemxxmh.gender AS hemxxmh_gender,
+                COUNT(hemxxmh.id) AS c_gender
+            FROM hemxxmh
+            LEFT JOIN hemjbmh
+                ON hemjbmh.id_hemxxmh = hemxxmh.id
+            WHERE 1
+                AND hemjbmh.is_harian_lepas = 0
+                AND hemjbmh.is_non_karyawan = 0 
+                AND hemxxmh.gender <> ''
+                AND (
+                    hemjbmh.tanggal_keluar IS NULL
+                    OR hemjbmh.tanggal_keluar >= :tanggal_akhir
+                )
+            GROUP BY hemxxmh.gender
+            ORDER BY hemxxmh.gender
+        ");
+
     $rs_hemxxmh = $qs_hemxxmh->fetchAll();
 
     $data = array(

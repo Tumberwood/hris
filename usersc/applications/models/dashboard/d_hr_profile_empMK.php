@@ -27,6 +27,7 @@
         ] )
         ->join('hemjbmh','hemjbmh.id_hemxxmh = hemxxmh.id','LEFT' )
         ->where( 'hemjbmh.is_harian_lepas', 0 )
+        ->where( 'hemjbmh.is_non_karyawan', 0 )
         ->where( function ( $r ) use ($tanggal_akhir) {
             $r
                 ->where( 'hemjbmh.tanggal_keluar', NULL)

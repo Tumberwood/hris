@@ -261,12 +261,12 @@
 						type: "select",
 						placeholder : "Select",
 						options: [
-							{ "label": "Rekontrak", "value": "Rekontrak" },
 							{ "label": "Kontrak", "value": "Kontrak" },
 							{ "label": "Perpanjangan Latihan", "value": "Perpanjangan Latihan" },
-							{ "label": "Tetap", "value": "Tetap" },
+							{ "label": "Rekontrak", "value": "Rekontrak" },
 							{ "label": "Reguler", "value": "Reguler" },
-							{ "label": "Terminasi", "value": "Terminasi" }
+							{ "label": "Tetap", "value": "Tetap" },
+							{ "label": "Terminasi", "value": "Terminasi" },
 						]
 					},	
 					{
