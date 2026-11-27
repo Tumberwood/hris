@@ -34,16 +34,32 @@ $root = $qRoot->fetch(PDO::FETCH_ASSOC);
 $qs = $db->raw()->exec("
     SELECT
         a.id,
-        a.kode AS name,
-        a.nama AS title,
+        a.nama AS name,
+        CONCAT(COALESCE(c.c_total, 0), ' Orang') AS title,
         a.id_hetxxmh_al AS parent_id,
         a.urutan
     FROM hetxxmh a
-    WHERE 
-        a.urutan > 0 
+    LEFT JOIN (
+        SELECT
+            b.id_hetxxmh,
+            IFNULL(COUNT(a.id), 0) AS c_total
+        FROM hemxxmh a
+        LEFT JOIN hemjbmh b
+            ON b.id_hemxxmh = a.id
+        WHERE
+            (b.tanggal_keluar IS NULL OR b.tanggal_keluar >= CURDATE())
+            AND b.is_harian_lepas = 0
+            AND b.is_non_karyawan = 0
+        GROUP BY b.id_hetxxmh
+    ) c
+        ON c.id_hetxxmh = a.id
+    WHERE
+        a.urutan > 0
         AND a.is_active = 1
         AND a.id_hetxxmh_al > 0
-    ORDER BY a.urutan, a.id
+    ORDER BY
+        a.urutan,
+        a.id
 ");
 
 $rows = $qs->fetchAll(PDO::FETCH_ASSOC);
